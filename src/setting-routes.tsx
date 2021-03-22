@@ -1,57 +1,179 @@
-import Overview from "views/pages/user/overview/Overview";
-import Alerts from "views/pages/user/alerts/Alerts";
-import Compliance from "views/pages/user/compliance/Compliance";
-import Dispatch from "views/pages/user/dispatch/Dispatch";
-import Documents from "views/pages/user/documents/Documents";
-import FuelEnergy from "views/pages/user/fuel-energy/FuelEnergy";
-import InternalTools from "views/pages/user/internal-tools/InternalTools";
-import Maintenance from "views/pages/user/maintenance/Maintenance";
-import Messages from "views/pages/user/messages/Messages";
-import Reports from "views/pages/user/reports/Reports";
-import Safety from "views/pages/user/safety/Safety";
-import Settings from "views/pages/user/settings/Settings";
-import General from "views/pages/user/settings/General";
-import UserRoles from "views/pages/user/settings/UserRoles";
-import Drivers from "views/pages/user/settings/Drivers";
+import General from "views/pages/user/settings/org/General";
+import UserRoles from "views/pages/user/settings/org/UserRoles";
+import Drivers from "views/pages/user/settings/org/Drivers";
+import Tags from "views/pages/user/settings/org/Tags";
+import FeatureManagement from "views/pages/user/settings/org/FeatureManagement";
+import ActivityLog from "views/pages/user/settings/org/ActivityLog";
+import Apps from "views/pages/user/settings/org/Apps";
+import Billing from "views/pages/user/settings/org/Billing";
 
-import Assets from "views/pages/user/overview/Assets";
+import Devices from "views/pages/user/settings/devices/Devices";
+import Configuration from "views/pages/user/settings/devices/Configuration";
 
-// @material-ui/icons
-import OverviewIcon from "components/Icons/OverviewIcon";
-import ComplianceIcon from "components/Icons/ComplianceIcon";
-import SafetyIcon from "components/Icons/SafetyIcon";
-import MaintenanceIcon from "components/Icons/MaintenanceIcon";
-import DispatchIcon from "components/Icons/DispatchIcon";
-import FuelEnergyIcon from "components/Icons/FuelEnergyIcon";
-import DocumentsIcon from "components/Icons/DocumentsIcon";
-import ReportsIcon from "components/Icons/ReportsIcon";
-import InternalToolsIcon from "components/Icons/InternalToolsIcon";
-import MessagesIcon from "components/Icons/MessagesIcon";
-import AlertsIcon from "components/Icons/AlertsIcon";
-import SettingsIcon from "components/Icons/SettingsIcon";
+import AddressesGeofences from "views/pages/user/settings/fleet/AddressesGeofences";
+import Compliance from "views/pages/user/settings/fleet/Compliance";
+import Dispatch from "views/pages/user/settings/fleet/Dispatch";
+import DriverActivity from "views/pages/user/settings/fleet/DriverActivity";
+import DriverApp from "views/pages/user/settings/fleet/DriverApp";
+import FuelEnergy from "views/pages/user/settings/fleet/FuelEnergy";
+import Maps from "views/pages/user/settings/fleet/Maps";
+import Safety from "views/pages/user/settings/fleet/Safety";
 
-import VehicleRegisterPage from "views/pages/auth/VehicleRegisterPage";
+import AlertContacts from "views/pages/user/settings/link-sharing/AlertContacts";
+import LiveSharing from "views/pages/user/settings/link-sharing/LiveSharing";
+import ScheduledReports from "views/pages/user/settings/link-sharing/ScheduledReports";
+
+import APITokens from "views/pages/user/settings/developer/APITokens";
+import DeveloperMetrics from "views/pages/user/settings/developer/DeveloperMetrics";
+import Webhooks from "views/pages/user/settings/developer/Webhooks";
 
 const dashRoutes = [
   {
-    path: "/general",
+    path: "/org/general",
     name: "General",
-    icon: AlertsIcon,
     component: General,
     layout: "/setting"
   },
   {
-    path: "/drivers",
+    path: "/org/user-roles",
+    name: "User & Roles",
+    component: UserRoles,
+    layout: "/setting"
+  },
+  {
+    path: "/org/drivers",
     name: "Drivers",
-    icon: AlertsIcon,
     component: Drivers,
     layout: "/setting"
   },
   {
-    path: "/user-roles",
-    name: "User & Roles",
-    icon: AlertsIcon,
-    component: UserRoles,
+    path: "/org/tags",
+    name: "Tags",
+    component: Tags,
+    layout: "/setting"
+  },
+  {
+    path: "/org/feature-management",
+    name: "Feature Management",
+    component: FeatureManagement,
+    layout: "/setting"
+  },
+  {
+    path: "/org/activity-log",
+    name: "Activity Log",
+    component: ActivityLog,
+    layout: "/setting"
+  },
+  {
+    path: "/org/apps",
+    name: "Apps",
+    component: Apps,
+    layout: "/setting"
+  },
+  {
+    path: "/org/billing",
+    name: "Billing",
+    component: Billing,
+    layout: "/setting"
+  },
+  // Devices
+  {
+    path: "/device/devices",
+    name: "Devices",
+    component: Devices,
+    layout: "/setting"
+  },
+  {
+    path: "/device/configuration",
+    name: "Configuration",
+    component: Configuration,
+    layout: "/setting"
+  },
+  // Flett
+  {
+    path: "/fleet/driver-app",
+    name: "Driver App",
+    component: DriverApp,
+    layout: "/setting"
+  },
+  {
+    path: "/fleet/safety",
+    name: "Safety",
+    component: Safety,
+    layout: "/setting"
+  },
+  {
+    path: "/fleet/compliance",
+    name: "Compliance",
+    component: Compliance,
+    layout: "/setting"
+  },
+  {
+    path: "/fleet/dispatch",
+    name: "Dispatch",
+    component: Dispatch,
+    layout: "/setting"
+  },
+  {
+    path: "/fleet/fuel-energy",
+    name: "Fuel & Energy",
+    component: FuelEnergy,
+    layout: "/setting"
+  },
+  {
+    path: "/fleet/driver-activity",
+    name: "Driver Activity",
+    component: DriverActivity,
+    layout: "/setting"
+  },
+  {
+    path: "/fleet/add-geo",
+    name: "Addresses/Geofences",
+    component: AddressesGeofences,
+    layout: "/setting"
+  },
+  {
+    path: "/fleet/maps",
+    name: "Maps",
+    component: Maps,
+    layout: "/setting"
+  },
+  // Link -sharing
+  {
+    path: "/link-sharing/alert-contacts",
+    name: "Alert Contacts",
+    component: AlertContacts,
+    layout: "/setting"
+  },
+  {
+    path: "/link-sharing/scheduled-reports",
+    name: "Scheduled Reports",
+    component: ScheduledReports,
+    layout: "/setting"
+  },
+  {
+    path: "/link-sharing/live-sharing",
+    name: "Live Sharing",
+    component: LiveSharing,
+    layout: "/setting"
+  },
+  // developer
+  {
+    path: "/developer/metrics",
+    name: "Developer Metrics",
+    component: DeveloperMetrics,
+    layout: "/setting"
+  },
+  {
+    path: "/developer/api-tokens",
+    name: "API Tokens",
+    component: APITokens,
+    layout: "/setting"
+  },
+  {
+    path: "/developer/webhooks",
+    name: "Webhooks",
+    component: Webhooks,
     layout: "/setting"
   },
 ];

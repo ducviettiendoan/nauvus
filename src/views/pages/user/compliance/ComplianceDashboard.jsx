@@ -135,7 +135,7 @@ const rows = [
 
 const useStyles = makeStyles(styles);
 
-export default function Compliance() {
+export default function ComplianceDashboard() {
   const classes = useStyles();
 
   const [page, setPage] = React.useState(0);
