@@ -1,0 +1,57 @@
+.safety-card {
+    padding: 20px;
+    border: 1px solid #ECECF2;
+    border-radius: 12px;
+    margin: 8px;
+}
+
+.content{
+ font-size: 14px;
+
+}
+.safety-button {
+    border-radius: 28px !important;
+
+}
+
+.safety-button .MuiButton-label {
+    text-transform: none!important;
+} 
+
+.liveButton {
+    background-color: #25345C !important;
+    color: #ffffff !important;
+}
+
+.reloadButton {
+    border-radius: 50%!important;
+    height: 50px!important;
+    width: 50px!important;
+    min-width: 0!important;
+    background-color: #25345C !important;
+    color: #ffffff !important;
+    margin-top: 20px!important;
+}
+
+.reviewButton {
+    color: #C4C4C4 !important;
+    border: 1px solid #ECECF2!important;
+}
+
+.dismissButton {
+    color: #25345C !important;
+}
+
+.dismissButton:hover {
+    background-color: none !important; 
+}
+
+
+.safety-tab {
+    box-shadow: none!important;
+}
+
+.safety-tab .MuiTab-wrapper {
+    font-weight: 900;
+    font-size: 18px;
+}
