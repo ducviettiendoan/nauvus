@@ -33,37 +33,33 @@ function TabPanel(props) {
   );
 }
 
-function defectCreateData(asset, currentLocation, lastDvirStatus, count, unresolvedDefects) {
-  return { asset, currentLocation, lastDvirStatus, count, unresolvedDefects };
-}
-
-function dvirsCreateData(asset, currentDriver, makeModel, batteryVoltage, engineHours, odometer, checkEngineLight) {
-  return { asset, currentDriver, makeModel, batteryVoltage, engineHours, odometer, checkEngineLight};
-}
-
 const defectRows = [
-  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
+  {asset : 'Vehicle 101',currentLocation: "8.1 mi SSE Rockford, IL",lastDvirStatus: "Safe",count: 1,unresolvedDefects: "Fuel Sysrem Feb 20, 5:13 AM"},
+  {asset : 'Vehicle 101',currentLocation: "8.1 mi SSE Rockford, IL",lastDvirStatus: "Safe",count: 1,unresolvedDefects: "Fuel Sysrem Feb 20, 5:13 AM"},
+  {asset : 'Vehicle 101',currentLocation: "8.1 mi SSE Rockford, IL",lastDvirStatus: "Safe",count: 1,unresolvedDefects: "Fuel Sysrem Feb 20, 5:13 AM"},
+  {asset : 'Vehicle 101',currentLocation: "8.1 mi SSE Rockford, IL",lastDvirStatus: "Safe",count: 1,unresolvedDefects: "Fuel Sysrem Feb 20, 5:13 AM"},
+  {asset : 'Vehicle 101',currentLocation: "8.1 mi SSE Rockford, IL",lastDvirStatus: "Safe",count: 1,unresolvedDefects: "Fuel Sysrem Feb 20, 5:13 AM"},
+  {asset : 'Vehicle 101',currentLocation: "8.1 mi SSE Rockford, IL",lastDvirStatus: "Safe",count: 1,unresolvedDefects: "Fuel Sysrem Feb 20, 5:13 AM"},
+  {asset : 'Vehicle 101',currentLocation: "8.1 mi SSE Rockford, IL",lastDvirStatus: "Safe",count: 1,unresolvedDefects: "Fuel Sysrem Feb 20, 5:13 AM"},
+  {asset : 'Vehicle 101',currentLocation: "8.1 mi SSE Rockford, IL",lastDvirStatus: "Safe",count: 1,unresolvedDefects: "Fuel Sysrem Feb 20, 5:13 AM"},
+  {asset : 'Vehicle 101',currentLocation: "8.1 mi SSE Rockford, IL",lastDvirStatus: "Safe",count: 1,unresolvedDefects: "Fuel Sysrem Feb 20, 5:13 AM"},
+  {asset : 'Vehicle 101',currentLocation: "8.1 mi SSE Rockford, IL",lastDvirStatus: "Safe",count: 1,unresolvedDefects: "Fuel Sysrem Feb 20, 5:13 AM"},
+  {asset : 'Vehicle 101',currentLocation: "8.1 mi SSE Rockford, IL",lastDvirStatus: "Safe",count: 1,unresolvedDefects: "Fuel Sysrem Feb 20, 5:13 AM"},
+  {asset : 'Vehicle 101',currentLocation: "8.1 mi SSE Rockford, IL",lastDvirStatus: "Safe",count: 1,unresolvedDefects: "Fuel Sysrem Feb 20, 5:13 AM"},
 ];
 
 const divrsRows = [
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
+  {asset : '115',currentDriver: "Shahid Mamino",makeModel: "Freightline R/SCT 120",batteryVoltage: 14.3,engineHours: "46,567",odometer :"69,469",checkEngineLight: "Off"},
+  {asset : '115',currentDriver: "Shahid Mamino",makeModel: "Freightline R/SCT 120",batteryVoltage: 14.3,engineHours: "46,567",odometer :"69,469",checkEngineLight: "Off"},
+  {asset : '115',currentDriver: "Shahid Mamino",makeModel: "Freightline R/SCT 120",batteryVoltage: 14.3,engineHours: "46,567",odometer :"69,469",checkEngineLight: "Off"},
+  {asset : '115',currentDriver: "Shahid Mamino",makeModel: "Freightline R/SCT 120",batteryVoltage: 14.3,engineHours: "46,567",odometer :"69,469",checkEngineLight: "Off"},
+  {asset : '115',currentDriver: "Shahid Mamino",makeModel: "Freightline R/SCT 120",batteryVoltage: 14.3,engineHours: "46,567",odometer :"69,469",checkEngineLight: "Off"},
+  {asset : '115',currentDriver: "Shahid Mamino",makeModel: "Freightline R/SCT 120",batteryVoltage: 14.3,engineHours: "46,567",odometer :"69,469",checkEngineLight: "Off"},
+  {asset : '115',currentDriver: "Shahid Mamino",makeModel: "Freightline R/SCT 120",batteryVoltage: 14.3,engineHours: "46,567",odometer :"69,469",checkEngineLight: "Off"},
+  {asset : '115',currentDriver: "Shahid Mamino",makeModel: "Freightline R/SCT 120",batteryVoltage: 14.3,engineHours: "46,567",odometer :"69,469",checkEngineLight: "Off"},
+  {asset : '115',currentDriver: "Shahid Mamino",makeModel: "Freightline R/SCT 120",batteryVoltage: 14.3,engineHours: "46,567",odometer :"69,469",checkEngineLight: "Off"},
+  {asset : '115',currentDriver: "Shahid Mamino",makeModel: "Freightline R/SCT 120",batteryVoltage: 14.3,engineHours: "46,567",odometer :"69,469",checkEngineLight: "Off"},
+  {asset : '115',currentDriver: "Shahid Mamino",makeModel: "Freightline R/SCT 120",batteryVoltage: 14.3,engineHours: "46,567",odometer :"69,469",checkEngineLight: "Off"}
 ];
 
 function a11yProps(index) {
@@ -136,11 +132,11 @@ export default function TableMaintenance() {
   };
 
   const defectHeadCells = [
-    { id: 'asset', numeric: false, disablePadding: true, label: 'Asset' },
-    { id: 'currentLocation', numeric: true, disablePadding: false, label: 'Current Location' },
-    { id: 'lastDvirStatus', numeric: true, disablePadding: false, label: 'Last Dvir Status' },
-    { id: 'count', numeric: true, disablePadding: false, label: 'Count' },
-    { id: 'unresolvedDefects', numeric: true, disablePadding: false, label: 'Unresolved Defects' },
+    { id: 'asset', numeric: false, disablePadding: true, label: 'Asset',formatter: 'Asset' },
+    { id: 'currentLocation', numeric: true, disablePadding: false, label: 'Current Location',formatter: 'Current Location' },
+    { id: 'lastDvirStatus', numeric: true, disablePadding: false, label: 'Last Dvir Status',formatter: 'Last Dvir Status' },
+    { id: 'count', numeric: true, disablePadding: false, label: 'Count',formatter: 'Count' },
+    { id: 'unresolvedDefects', numeric: true, disablePadding: false, label: 'Unresolved Defects',formatter: 'Unresolved Defects' },
   ];
   const dvirsHeadCells = [
     { id: 'asset', numeric: false, disablePadding: true, label: 'Asset' },
@@ -192,12 +188,12 @@ export default function TableMaintenance() {
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <TabPanel value={value} index={0} className="tabPanel">
-            <TableComponent rows={defectRows} headCells={defectHeadCells} />
+            <TableComponent rows={defectRows} headCells={defectHeadCells}/>
           </TabPanel>
         </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           <TabPanel value={value} index={1} className="tabPanel">
-            <TableComponent rows={divrsRows} headCells={dvirsHeadCells} />
+            <TableComponent rows={divrsRows} headCells={dvirsHeadCells}/>
           </TabPanel>
         </GridItem>
       </GridContainer>
