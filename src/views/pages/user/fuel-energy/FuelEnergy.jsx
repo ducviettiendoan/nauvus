@@ -23,6 +23,12 @@ import AppBar from "@material-ui/core/AppBar";
 import TableComponent from "../../../Components/Table";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
+import { Grid } from "@material-ui/core";
+import CustomInput from "components/CustomInput/CustomInput.js";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Search from "@material-ui/icons/Search";
+import { InfoOutlined, MoreHoriz } from "@material-ui/icons";
+import Button from "components/CustomButtons/Button.js";
 
 const styles = {
   cardTitle,
@@ -73,7 +79,48 @@ const styles = {
   cardTestimonialDescription: {
     fontStyle: "italic",
     color: "#999999"
-  }
+  },
+  searchMapContainer: {
+    position: "absolute",
+    top: "10px",
+    left: "10px",
+  },
+  btnSearchOnMap: {
+    background: "white",
+    padding: "0px 20px 0px 20px",
+    borderRadius: "36px",
+    height: "40px",
+    border: "1px solid #C4C4C4",
+  },
+  inputAdornmentIcon: {
+    color: "#8181A5",
+    fontSize: "18px",
+    marginLeft: "0 !important;"
+  },
+  toogleDrawer: {
+    color: "#25345C !important",
+    background: "white",
+    width: '40px !important',
+    height: '40px !important',
+    minWidth: '40px !important',
+    marginTop: "-10px",
+    marginRight: "10px"
+  },
+  txtInfoMain: {
+    fontWeight: "bold",
+    fontSize: "18px",
+    lineHeight: "27px",
+    color: "#25345C",
+  },
+  txtInfoSub: {
+    fontSize: "14px",
+    lineHeight: "21px",
+    color: "#25345C",
+  },
+  moreAction: {
+    background: "#FFFFFF !important",
+    border: "1px solid #ECEEF0 !important"
+  },
 };
 
 const HeadCells = [
@@ -177,14 +224,55 @@ export default function FuelEnergy() {
               <Card testimonial>
 
                 <CardBody >
-                  <h5 className={classes.cardTestimonialDescription} style={{ textAlign: "left" }}>
-                    <Alert severity="info" style={{background: "white", borderStyle: "solid", borderColor: "#C4C4C4"}}>
-                      <AlertTitle>Efficiency Benchmarks</AlertTitle>
-                    Efficiency benchmarks are now available for select vehicle makes and models. To turn on this feature, go here.
-                    </Alert>
-                  </h5>
+                  <Card>
+                    <CardBody>
+                      <div className="ml-5" style={{ textAlign: "left" }}>
+                        <div className={classes.txtInfoMain}>Efficiency Benchmarks</div>
+                        <div className={`mb-4 ${classes.txtInfoSub}`}>
+                          Efficiency benchmarks are now available for select vehicle makes and models. To turn on this feature, go here.
+                        </div>
+                      </div>
+                      <div style={{ position: "absolute", top: "16px" }}>
+                        <InfoOutlined />
+                      </div>
+                    </CardBody>
+                  </Card>
+                  <Grid container spacing={3} justifyContent="space-between">
+                    <Grid item xs={6} style={{ textAlign: "left" }}>
+                      <CustomInput
+                        formControlProps={{
+                          className: classes.btnSearchOnMap
+                        }}
+                        inputProps={{
+                          id: "btn-search-on-map",
+                          placeholder: "Search",
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <Search className={classes.inputAdornmentIcon} />
+                            </InputAdornment>
+                          ),
+                          onChange: event => {
+                            setUsername(event.target.value);
+                          },
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={6} style={{ textAlign: "right" }}>
+                      <>
+                        <Button
+                          color="white"
+                          aria-label="edit"
+                          justIcon
+                          round
+                          className={`btn-36 ${classes.moreAction} mr-2`}
+                        >
+                          <MoreHoriz />
+                        </Button>
+                      </>
+                    </Grid>
+                  </Grid>
                 </CardBody>
-                <GridContainer style={{padding: 16}}>
+                <GridContainer style={{ padding: 16 }}>
                   <GridItem xs={12} sm={12} md={12}>
                     <GridContainer>
                       <GridItem xs={6} sm={6} md={6}>
