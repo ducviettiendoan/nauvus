@@ -110,7 +110,7 @@ export default function ComplianceDashboard() {
                 <GridItem xs={3} className={classes.filterButton} >
                   {/* <Button className={classes.filterButtonText}>Filter</Button> */}
                   <IconButton className={classes.filterButtonText}>
-                    <LocalBarOutlined />
+                    <img src="/Images/Icon/filter.svg" className={classes.filterIcon}/>
                   Filter
                   </IconButton>
                 </GridItem>

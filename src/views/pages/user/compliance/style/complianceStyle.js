@@ -81,12 +81,16 @@ const complianceStyle = {
   filterButtonText: {
     textTransform: "none",
     fontSize: "14px",
+    color: "#25345C"
   },
   table: {
     minWidth: "100%",
   },
   tableHead: {
     backgroundColor: "#ECEEF0"
+  },
+  filterIcon: {
+    marginRight: 8
   }
 }
 
