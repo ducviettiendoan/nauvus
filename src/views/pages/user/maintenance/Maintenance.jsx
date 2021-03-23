@@ -90,7 +90,7 @@ const styles = {
     textAlign: "right",
     display: "flex",
     alignItems: "center",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
   },
   selectForm: {
     width: "138px",
@@ -122,8 +122,10 @@ export default function Maintenance() {
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
               <Card testimonial>
+
                 <GridContainer style={{padding: 16}}>
                   <GridItem xs={12} sm={12} md={12}>
+
                     <GridContainer style={{padding: "0 16px",alignItems: "center"}}>
                       <GridItem xs={3} sm={3} md={3} className={classes.searchBar}>
                         <IconButton type="submit" aria-label="search">
@@ -168,6 +170,7 @@ export default function Maintenance() {
                         {/*</form>*/}
                       </GridItem>
                     </GridContainer>
+                  
                   </GridItem>
                 </GridContainer>
                 <TableMaintenance />

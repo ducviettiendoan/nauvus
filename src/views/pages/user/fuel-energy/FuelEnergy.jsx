@@ -271,7 +271,9 @@ export default function FuelEnergy() {
                       </>
                     </Grid>
                   </Grid>
+                
                 </CardBody>
+
                 <GridContainer style={{ padding: 16 }}>
                   <GridItem xs={12} sm={12} md={12}>
                     <GridContainer>
@@ -284,9 +286,9 @@ export default function FuelEnergy() {
                         </AppBar>
                       </GridItem>
                     </GridContainer>
-
                   </GridItem>
                 </GridContainer>
+                
                 <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
                     <TabPanel value={value} index={0} className="tabPanel">
@@ -299,6 +301,7 @@ export default function FuelEnergy() {
                     </TabPanel>
                   </GridItem>
                 </GridContainer>
+              
               </Card>
             </GridItem>
           </GridContainer>
