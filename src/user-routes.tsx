@@ -7,6 +7,7 @@ import UnassignedHOS from "views/pages/user/compliance/UnassignedHOS";
 import DriverHOSAudit from "views/pages/user/compliance/DriverHOSAudit";
 import DutyStatusSummary from "views/pages/user/compliance/DutyStatusSummary";
 import HOSAuditTransfer from "views/pages/user/compliance/HOSAuditTransfer";
+import FuelPurchase from "views/pages/user/fuel-energy/FuelPurchase";
 
 import Dispatch from "views/pages/user/dispatch/Dispatch";
 import Documents from "views/pages/user/documents/Documents";
@@ -131,11 +132,25 @@ const dashRoutes = [
     layout: "/user"
   },
   {
-    path: "/fuel-energy",
+    collapse: true,
     name: "Fuel & Energy",
     icon: FuelEnergyIcon,
-    component: FuelEnergy,
-    layout: "/user"
+    state: "fuelEnergyCollapse",
+    layout: "/user",
+    views: [
+      {
+        path: "/fuel-energy/dashboard",
+        name: "Fuel & Energy",
+        component: FuelEnergy,
+        layout: "/user"
+      },
+      {
+        path: "/fuel-energy/fuel-purchase",
+        name: "Fuel Purchase",
+        component: FuelPurchase,
+        layout: "/user"
+      },
+    ]
   },
   {
     path: "/documents",
