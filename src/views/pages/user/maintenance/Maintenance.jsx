@@ -113,6 +113,41 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
+function defectCreateData(asset, currentLocation, lastDvirStatus, count, unresolvedDefects) {
+  return { asset, currentLocation, lastDvirStatus, count, unresolvedDefects };
+}
+
+function dvirsCreateData(asset, currentDriver, makeModel, batteryVoltage, engineHours, odometer, checkEngineLight) {
+  return { asset, currentDriver, makeModel, batteryVoltage, engineHours, odometer, checkEngineLight};
+}
+
+const defectRows = [
+  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
+  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
+  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
+  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
+  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
+  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
+  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
+  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
+  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
+];
+
+const divrsRows = [
+  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
+  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
+  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
+  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
+  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
+  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
+  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
+  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
+  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
+  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
+];
+
+
+
 export default function Maintenance() {
   const classes = useStyles();
   return (
