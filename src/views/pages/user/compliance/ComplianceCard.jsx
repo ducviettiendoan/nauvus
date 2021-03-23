@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	cardHeader: {
 		backgroundColor: "#ECEEF0",
-		padding: "20px 35px 20px 35px"
+		padding: "20px 35px 20px 35px",
 	},
 	cardFooter: {
 		display: "flex",
@@ -51,6 +51,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 	cardHeaderTitle: {
 		textAlign: "left", 
+		height: "45px",
+		display: "flex",
+		alignItems: "center",
 		// fontFamily: "Lato", 
 		fontSize: "17px",
 	},
@@ -58,7 +61,10 @@ const useStyles = makeStyles((theme) => ({
 		textAlign: "right", 
 		// fontFamily: "Lato", 
 		fontSize: "14px",
-		cursor: "pointer"
+		cursor: "pointer",
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "flex-end"
 	},
 	cardBodyTitle1: {
 		textAlign: "left",
@@ -85,10 +91,10 @@ export default function ComplianceCard(props) {
 			<CardHeader
 				title={
 					<Grid container>
-						<Grid item xs={6} className={classes.cardHeaderTitle}>
+						<Grid item xs={8} sm={12} md={8} className={classes.cardHeaderTitle}>
 							{sampleTitle}
 						</Grid>
-						<Grid item xs={6} className={classes.cardHeaderSubTitle}>
+						<Grid item xs={4} sm={12} md={4} className={classes.cardHeaderSubTitle}>
 							<Link>View Details</Link>
 						</Grid>
 					</Grid>}
@@ -130,26 +136,26 @@ export default function ComplianceCard(props) {
 
 				<div>
 					<Grid container className={classes.cardFooter}>
-						<Grid item xs={6} className={classes.cardFooterTitle} >
+						<Grid item xs={6} sm={12} md={12} lg={6} className={classes.cardFooterTitle} >
 							<RadioButton radioColor="red" checked={true} />
 							In Violation
 						</Grid>
-						<Grid item xs={3} className={classes.cardFooterData}  >
+						<Grid item xs={3} sm={6} md={6} lg={3} className={classes.cardFooterData}  >
 							1.8%
 						</Grid>
-						<Grid item xs={3} className={classes.cardFooterData} >
+						<Grid item xs={3} sm={6} md={6} lg={3} className={classes.cardFooterData} >
 							3h 31min
 						</Grid>
 					</Grid>
 					<Grid container className={classes.cardFooter}>
-						<Grid item xs={6} style={{ textAlign: "left" }} className={classes.cardFooterTitle} >
+						<Grid item xs={6} sm={12} md={12} lg={6} style={{ textAlign: "left" }} className={classes.cardFooterTitle} >
 							<RadioButton radioColor="green" checked={true} />
 							Compliant
 						</Grid>
-						<Grid item xs={3} className={classes.cardFooterData} >
+						<Grid item xs={3} sm={6} md={6} lg={3} className={classes.cardFooterData} >
 							40%
 						</Grid>
-						<Grid item xs={3} className={classes.cardFooterData} >
+						<Grid item xs={3} sm={6} md={6} lg={3} className={classes.cardFooterData} >
 							188h 28min
 						</Grid>
 					</Grid>

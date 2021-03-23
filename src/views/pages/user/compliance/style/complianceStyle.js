@@ -91,7 +91,19 @@ const complianceStyle = {
   },
   filterIcon: {
     marginRight: 8
-  }
+  },
+  btnSearchOnMap: {
+    background: "white",
+    padding: "0px 20px 0px 20px",
+    borderRadius: "36px",
+    height: "40px",
+    border: "1px solid #C4C4C4",
+  },
+  inputAdornmentIcon: {
+    color: "#8181A5",
+    fontSize: "18px",
+    marginLeft: "0 !important;"
+  },
 }
 
 export default complianceStyle
