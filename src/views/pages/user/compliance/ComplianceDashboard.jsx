@@ -9,14 +9,15 @@ import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import ComplianceCard from "./ComplianceCard";
-import { Grid, TablePagination } from "@material-ui/core";
+import { Grid, InputAdornment, TablePagination } from "@material-ui/core";
+import CustomInput from "components/CustomInput/CustomInput.js";
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
 import LocalBarOutlined from "@material-ui/icons/LocalBarOutlined";
 import complianceStyle from './style/complianceStyle';
 import TableComponent from "../../../Components/Table";
-
+import Search from "@material-ui/icons/Search";
 const columns = [
   { id: "driver", label: 'Driver', minWidth: 350 },
   { id: "hour", label: 'Hours in Violation', minWidth: 600 },
@@ -57,7 +58,7 @@ export default function ComplianceDashboard() {
             spacing={2}
             className={classes.gridCardContainer}
           >
-            <Grid item xs={4} sm={3} xl={4} md={4}>
+            <Grid item xs={12} sm={4}>
               <ComplianceCard
                 sampleData={[
                   { x: " ", y: 60 },
@@ -69,7 +70,7 @@ export default function ComplianceDashboard() {
                 sampleLabelRadius={20}
               />
             </Grid>
-            <Grid item xs={4} sm={3} xl={4} md={4}>
+            <Grid item xs={12} sm={4}>
               <ComplianceCard sampleData={[
                 { x: " ", y: 30 },
                 { x: "70%", y: 70 }
@@ -80,7 +81,7 @@ export default function ComplianceDashboard() {
                 sampleLabelRadius={20}
               />
             </Grid>
-            <Grid item xs={4} sm={3} xl={4} md={4}>
+            <Grid item xs={12} sm={4}>
               <ComplianceCard sampleData={[
                 { x: " ", y: 90 },
                 { x: "10%", y: 10 }
@@ -99,12 +100,29 @@ export default function ComplianceDashboard() {
                 container
                 justify="space-between"
               >
-                <GridItem xs={3} className={classes.searchBar}>
-                  <IconButton type="submit" aria-label="search">
+                <GridItem xs={4}>
+                  {/* <IconButton type="submit" aria-label="search">
                     <SearchIcon />
                   </IconButton>
                   <InputBase
                     placeholder="Search Drivers"
+                  /> */}
+                  <CustomInput
+                    formControlProps={{
+                      className: classes.btnSearchOnMap
+                    }}
+                    inputProps={{
+                      id: "btn-search-on-map",
+                      placeholder: "Search",
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <Search className={classes.inputAdornmentIcon} />
+                        </InputAdornment>
+                      ),
+                      onChange: event => {
+                        setUsername(event.target.value);
+                      },
+                    }}
                   />
                 </GridItem>
                 <GridItem xs={3} className={classes.filterButton} >

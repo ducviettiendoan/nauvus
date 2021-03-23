@@ -93,8 +93,6 @@ const Card = () => {
                         <Select style={{color: "#C4C4C4"}}
                         native
                         value={"1"}
-                        // onChange={handleChange}
-                        // label="Age"
                         className={classes.selectForm}
                         >
                         <option value={1}>Review</option>
