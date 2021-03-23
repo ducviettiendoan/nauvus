@@ -67,3 +67,41 @@
     justify-content: flex-end;
     align-items: center;
 }
+
+.searchBar{
+    text-align: left;
+    height: 45px;
+    border: 1px solid #C4C4C4;
+    box-sizing: border-box;
+    border-radius: 32px;
+}
+.headerRight{
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.filterButton{
+    height: 45px;
+    border: 1px solid #C4C4C4;
+    box-sizing: border-box;
+    border-radius: 32px;
+    max-width: 100px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.filterButton > button {
+    font-size: 14px;
+}
+
+.filterButtonText{
+    text-transform: none;
+    font-size: 14px !important;
+    color: #25345C !important;
+    border-radius: 32px !important;
+    border: 1px solid #C4C4C4 !important;
+}
+.filterIcon {
+    margin-right: 8px;
+}

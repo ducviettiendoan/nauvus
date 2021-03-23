@@ -24,6 +24,10 @@ import {
   roseColor,
 } from "assets/jss/material-dashboard-pro-react.js";
 import { AppBar, Box, InputBase, Tabs, Typography } from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 
 const styles = {
   cardTitle,
@@ -74,7 +78,7 @@ const styles = {
   cardTestimonialDescription: {
     // fontStyle: italics
     color: "#999999"
-  }
+  },
 };
 
 // const useStyles = makeStyles(styles);
@@ -162,14 +166,49 @@ export default function Safety(){
             <GridItem xs={12} sm={12} md={12}>
               <Card testimonial>
                 <CardBody className="body">
-                  <AppBar className="safety-tab" position="static">
-                    <AntTabs  value={value} onChange={handleChange}>
-                      <AntTab label="Inbox List" {...a11yProps(0)} />
-                      <AntTab label="Resolved List" {...a11yProps(1)} />
-                      <AntTab label="Dismissed" {...a11yProps(2)} />
-                      <AntTab label="Starred" {...a11yProps(2)} />
-                    </AntTabs>
-                  </AppBar>
+                  <GridContainer style={{padding: 16}}>
+                    <GridItem xs={12} sm={12} md={12}>
+                      <GridContainer style={{padding: "0 16px",alignItems: "center"}}>
+                        <GridItem xs={6} sm={6} md={6}>
+                          <AppBar className="safety-tab" position="static">
+                            <AntTabs  value={value} onChange={handleChange}>
+                              <AntTab label="Inbox List" {...a11yProps(0)} />
+                              <AntTab label="Resolved List" {...a11yProps(1)} />
+                              <AntTab label="Dismissed" {...a11yProps(2)} />
+                              <AntTab label="Starred" {...a11yProps(2)} />
+                            </AntTabs>
+                          </AppBar>
+                        </GridItem>
+                        <GridItem xs={6} sm={6} md={6} className="headerRight">
+                          <FormControl variant="outlined" className="moreIcon">
+                            <IconButton>
+                              <MoreHorizIcon fontSize="large" />
+                            </IconButton>
+                          </FormControl>
+                        </GridItem>
+                      </GridContainer>
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer style={{padding: 16}}>
+                    <GridItem xs={12} sm={12} md={12}>
+                      <GridContainer style={{padding: "0 16px",alignItems: "center"}}>
+                        <GridItem xs={3} sm={3} md={3} className="searchBar">
+                          <IconButton type="submit" aria-label="search">
+                            <SearchIcon/>
+                          </IconButton>
+                          <InputBase
+                            placeholder="Search Drivers"
+                          />
+                        </GridItem>
+                        <GridItem xs={9} sm={9} md={9} className="headerRight">
+                          <IconButton className="filterButtonText">
+                            <img src="/Images/Icon/filter.svg" className="filterIcon"/>
+                            Filter
+                          </IconButton>
+                        </GridItem>
+                      </GridContainer>
+                    </GridItem>
+                  </GridContainer>
                   <TabPanel value={value} index={0}>
                     <SafetyCard/>
                     <SafetyCard/>
