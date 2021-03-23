@@ -2,27 +2,16 @@ import React from "react";
 import PropTypes from 'prop-types';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 //material-ui/lab components
 import { Alert, AlertTitle } from '@material-ui/lab';
 // @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
 
 import { withStyles } from '@material-ui/core/styles';
 
@@ -30,6 +19,16 @@ import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
+import AppBar from "@material-ui/core/AppBar";
+import TableComponent from "../../../Components/Table";
+import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
+import { Grid } from "@material-ui/core";
+import CustomInput from "components/CustomInput/CustomInput.js";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Search from "@material-ui/icons/Search";
+import { InfoOutlined, MoreHoriz } from "@material-ui/icons";
+import Button from "components/CustomButtons/Button.js";
 
 const styles = {
   cardTitle,
@@ -80,36 +79,61 @@ const styles = {
   cardTestimonialDescription: {
     fontStyle: "italic",
     color: "#999999"
-  }
+  },
+  searchMapContainer: {
+    position: "absolute",
+    top: "10px",
+    left: "10px",
+  },
+  btnSearchOnMap: {
+    background: "white",
+    padding: "0px 20px 0px 20px",
+    borderRadius: "36px",
+    height: "40px",
+    border: "1px solid #C4C4C4",
+  },
+  inputAdornmentIcon: {
+    color: "#8181A5",
+    fontSize: "18px",
+    marginLeft: "0 !important;"
+  },
+  toogleDrawer: {
+    color: "#25345C !important",
+    background: "white",
+    width: '40px !important',
+    height: '40px !important',
+    minWidth: '40px !important',
+    marginTop: "-10px",
+    marginRight: "10px"
+  },
+  txtInfoMain: {
+    fontWeight: "bold",
+    fontSize: "18px",
+    lineHeight: "27px",
+    color: "#25345C",
+  },
+  txtInfoSub: {
+    fontSize: "14px",
+    lineHeight: "21px",
+    color: "#25345C",
+  },
+  moreAction: {
+    background: "#FFFFFF !important",
+    border: "1px solid #ECEEF0 !important"
+  },
 };
 
-const columns = [
-  { id: 'vehicle', label: 'Vehicle', minWidth: 150 },
-  { id: 'efficiency', label: 'Efficiency', minWidth: 100 },
-  {
-    id: 'fuelUsed',
-    label: 'Fuel Used',
-    minWidth: 80,
-  },
-  {
-    id: 'energyUsed',
-    label: 'Energy Used',
-    minWidth: 100,
-    // align: 'right',
-    // format: (value) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'distance',
-    label: 'Distance',
-    minWidth: 100,
-    // align: 'right',
-    // format: (value) => value.toFixed(2),
-  },
-  { id: 'drivingElectric', label: '%Driving Electric', minWidth: 50 },
-  { id: 'carbonEmissions', label: 'Est. Carbon Emissions', minWidth: 100 },
-  { id: 'cost', label: 'Est. Cost', minWidth: 100 },
-  { id: 'totalEngineRunTime', label: 'Total Engine Run Time', minWidth: 100 },
-  { id: 'idleTime', label: 'Idle Time(%)', minWidth: 100 },
+const HeadCells = [
+  { id: 'vehicle', numeric: false, disablePadding: true, label: 'Vehicle' },
+  { id: 'efficiency', numeric: true, disablePadding: false, label: 'Efficiency' },
+  { id: 'fuelUsed', numeric: true, disablePadding: false, label: 'Fuel Used' },
+  { id: 'energyUsed', numeric: true, disablePadding: false, label: 'Energy Used' },
+  { id: 'distance', numeric: true, disablePadding: false, label: 'Distance' },
+  { id: 'drivingElectric', numeric: true, disablePadding: false, label: 'Driving Electric' },
+  { id: 'carbonEmissions', numeric: true, disablePadding: false, label: 'Carbon Emissions' },
+  { id: 'cost', numeric: true, disablePadding: false, label: 'Cost' },
+  { id: 'totalEngineRunTime', numeric: true, disablePadding: false, label: 'Total Engine Run Time' },
+  { id: 'idleTime', numeric: true, disablePadding: false, label: 'Distance' },
 ];
 
 function createData(vehicle, efficiency, fuelUsed, energyUsed, distance, drivingElectric, carbonEmissions, cost, totalEngineRunTime, idleTime) {
@@ -126,7 +150,7 @@ const rows = [
   createData('Vehicle 101', '39.1 MPG', '2.0 gal', '0.0 kWh', '78.1 mi', '0.0', '39.2 lb', 'C$10.76', '3h 20m', '10s (0.1%)'),
   createData('Vehicle 101', '39.1 MPG', '2.0 gal', '0.0 kWh', '78.1 mi', '0.0', '39.2 lb', 'C$10.76', '3h 20m', '10s (0.1%)'),
   createData('Vehicle 101', '39.1 MPG', '2.0 gal', '0.0 kWh', '78.1 mi', '0.0', '39.2 lb', 'C$10.76', '3h 20m', '10s (0.1%)'),
-  createData('Vehicle 101', '39.1 MPG', '2.0 gal', '0.0 kWh', '78.1 mi', '0.0', '39.2 lb', 'C$10.76', '3h 20m', '10s (0.1%)'),
+  createData('Vehicle 102', '39.1 MPG', '2.0 gal', '0.0 kWh', '78.1 mi', '0.0', '39.2 lb', 'C$10.76', '3h 20m', '10s (0.1%)'),
 ];
 
 
@@ -143,11 +167,11 @@ function TabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {/* {value === index && (
+      {value === index && (
         <Box p={3}>
           <Typography>{children}</Typography>
         </Box>
-      )} */}
+      )}
     </div>
   );
 }
@@ -185,18 +209,7 @@ const AntTab = withStyles((theme) => ({
 
 export default function FuelEnergy() {
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [value, setValue] = React.useState(0);
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -211,68 +224,81 @@ export default function FuelEnergy() {
               <Card testimonial>
 
                 <CardBody >
-                  <h5 className={classes.cardTestimonialDescription} style={{ textAlign: "left" }}>
-                    <Alert severity="info" style={{background: "white", borderStyle: "solid", borderColor: "#C4C4C4"}}>
-                      <AlertTitle>Efficiency Benchmarks</AlertTitle>
-                    Efficiency benchmarks are now available for select vehicle makes and models. To turn on this feature, go here.
-                    </Alert>
-
-                      <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-                        <AntTab label="Vehicle" {...a11yProps(0)} />
-                        <AntTab label="Driver" {...a11yProps(1)} />
-                      </Tabs>
-                    
-                  </h5>
+                  <Card>
+                    <CardBody>
+                      <div className="ml-5" style={{ textAlign: "left" }}>
+                        <div className={classes.txtInfoMain}>Efficiency Benchmarks</div>
+                        <div className={`mb-4 ${classes.txtInfoSub}`}>
+                          Efficiency benchmarks are now available for select vehicle makes and models. To turn on this feature, go here.
+                        </div>
+                      </div>
+                      <div style={{ position: "absolute", top: "16px" }}>
+                        <InfoOutlined />
+                      </div>
+                    </CardBody>
+                  </Card>
+                  <Grid container spacing={3} justifyContent="space-between">
+                    <Grid item xs={6} style={{ textAlign: "left" }}>
+                      <CustomInput
+                        formControlProps={{
+                          className: classes.btnSearchOnMap
+                        }}
+                        inputProps={{
+                          id: "btn-search-on-map",
+                          placeholder: "Search",
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <Search className={classes.inputAdornmentIcon} />
+                            </InputAdornment>
+                          ),
+                          onChange: event => {
+                            setUsername(event.target.value);
+                          },
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={6} style={{ textAlign: "right" }}>
+                      <>
+                        <Button
+                          color="white"
+                          aria-label="edit"
+                          justIcon
+                          round
+                          className={`btn-36 ${classes.moreAction} mr-2`}
+                        >
+                          <MoreHoriz />
+                        </Button>
+                      </>
+                    </Grid>
+                  </Grid>
                 </CardBody>
-                <Paper className={classes.root}>
-                  <TableContainer className={classes.container}>
-                    <Table stickyHeader aria-label="sticky table">
-                      <TableHead >
-                        <TableRow>
-                          {columns.map((column) => (
-                            <TableCell
-                              key={column.id}
-                              align={column.align}
-                              style={{
-                                minWidth: column.minWidth, background: "#ECEEF0", fontWeight: "bold"
-                              }}
-                            >
-                              {column.label}
-                            </TableCell>
-                          ))}
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                          return (
-                            <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                              {columns.map((column) => {
-                                const value = row[column.id];
-                                return (
-                                  <TableCell key={column.id} align={column.align}>
-                                    {column.format && typeof value === 'number' ? column.format(value) : value}
-                                  </TableCell>
-                                );
-                              })}
-                            </TableRow>
-                          );
-                        })}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                  <TablePagination
-                    rowsPerPageOptions={[10, 25, 100]}
-                    component="div"
-                    count={rows.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onChangePage={handleChangePage}
-                    onChangeRowsPerPage={handleChangeRowsPerPage}
-                  />
-                </Paper>
-                <CardFooter testimonial>
-                  <h6 className={classes.cardCategory}>@nauvus</h6>
-                </CardFooter>
+                <GridContainer style={{ padding: 16 }}>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <GridContainer>
+                      <GridItem xs={6} sm={6} md={6}>
+                        <AppBar position="static" className="appBar">
+                          <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
+                            <Tab label="Vehicle" {...a11yProps(0)} />
+                            <Tab label="Driver" {...a11yProps(1)} />
+                          </Tabs>
+                        </AppBar>
+                      </GridItem>
+                    </GridContainer>
+
+                  </GridItem>
+                </GridContainer>
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TabPanel value={value} index={0} className="tabPanel">
+                      <TableComponent rows={rows} headCells={HeadCells} />
+                    </TabPanel>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <TabPanel value={value} index={1} className="tabPanel">
+                      <TableComponent rows={rows} headCells={HeadCells} />
+                    </TabPanel>
+                  </GridItem>
+                </GridContainer>
               </Card>
             </GridItem>
           </GridContainer>
