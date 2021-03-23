@@ -250,10 +250,7 @@ export default function FuelEnergy() {
                             <InputAdornment position="start">
                               <Search className={classes.inputAdornmentIcon} />
                             </InputAdornment>
-                          ),
-                          onChange: event => {
-                            setUsername(event.target.value);
-                          },
+                          )
                         }}
                       />
                     </Grid>

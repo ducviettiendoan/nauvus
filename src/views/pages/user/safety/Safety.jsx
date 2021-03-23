@@ -10,14 +10,15 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import PropTypes from 'prop-types';
-import SearchIcon from '@material-ui/icons/Search';
 import SafetyCard from "./Card.jsx"
+import CustomInput from "components/CustomInput/CustomInput.js";
 import Tab from '@material-ui/core/Tab';
 import "./Safety.css";
 import ReplayIcon from '@material-ui/icons/Replay';
 import Button from "@material-ui/core/Button"
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-
+import InputAdornment from "@material-ui/core/InputAdornment";
+import Search from "@material-ui/icons/Search";
 
 import {
   cardTitle,
@@ -90,8 +91,8 @@ function TabPanel(props) {
     <div
       role="tabpanel"
       hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
+      id={`scrollable-force-tabpanel-${index}`}
+      aria-labelledby={`scrollable-force-tab-${index}`}
       {...other}
     >
       {value === index && (
@@ -111,8 +112,8 @@ TabPanel.propTypes = {
 
 function a11yProps(index) {
   return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    id: `scrollable-force-tab-${index}`,
+    'aria-controls': `scrollable-force-tabpanel-${index}`,
   };
 }
 
@@ -121,9 +122,21 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
   },
+  btnSearchOnMap: {
+    background: "white",
+    padding: "0px 20px 0px 20px",
+    borderRadius: "36px",
+    height: "40px",
+    border: "1px solid #C4C4C4",
+  },
+  inputAdornmentIcon: {
+    color: "#8181A5",
+    fontSize: "18px",
+    marginLeft: "0 !important;",
+  },
 }));
 
-const AntTabs = withStyles({
+const AntTabs = withStyles((theme) => ({
   root: {
     color: "#25345C",
     background: "white",
@@ -131,7 +144,7 @@ const AntTabs = withStyles({
   indicator: {
     backgroundColor: '#1890ff',
   },
-})(Tabs);
+}))((props) => <Tabs  {...props}/>) ;
 
 const AntTab = withStyles((theme) => ({
   root: {
@@ -169,17 +182,17 @@ export default function Safety(){
                   <GridContainer style={{padding: 16}}>
                     <GridItem xs={12} sm={12} md={12}>
                       <GridContainer style={{padding: "0 16px",alignItems: "center"}}>
-                        <GridItem xs={6} sm={6} md={6}>
+                        <GridItem xs={8} sm={10} md={10}>
                           <AppBar className="safety-tab" position="static">
-                            <AntTabs  value={value} onChange={handleChange}>
+                            <AntTabs variant="scrollable" scrollButtons="auto" scrollButtons="on" value={value} onChange={handleChange}>
                               <AntTab label="Inbox List" {...a11yProps(0)} />
                               <AntTab label="Resolved List" {...a11yProps(1)} />
                               <AntTab label="Dismissed" {...a11yProps(2)} />
-                              <AntTab label="Starred" {...a11yProps(2)} />
+                              <AntTab label="Starred" {...a11yProps(3)} />
                             </AntTabs>
                           </AppBar>
                         </GridItem>
-                        <GridItem xs={6} sm={6} md={6} className="headerRight">
+                        <GridItem xs={4} sm={2} md={2} className="headerRight">
                           <FormControl variant="outlined" className="moreIcon">
                             <IconButton>
                               <MoreHorizIcon fontSize="large" />
@@ -192,13 +205,21 @@ export default function Safety(){
                   <GridContainer style={{padding: 16}}>
                     <GridItem xs={12} sm={12} md={12}>
                       <GridContainer style={{padding: "0 16px",alignItems: "center"}}>
-                        <GridItem xs={3} sm={3} md={3} className="searchBar">
-                          <IconButton type="submit" aria-label="search">
-                            <SearchIcon/>
-                          </IconButton>
-                          <InputBase
-                            placeholder="Search Drivers"
-                          />
+                        <GridItem xs={3} sm={3} md={3}>
+                        <CustomInput
+                          formControlProps={{
+                            className: classes.btnSearchOnMap
+                          }}
+                          inputProps={{
+                            id: "btn-search-on-map",
+                            placeholder: "Search",
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <Search className={classes.inputAdornmentIcon} />
+                              </InputAdornment>
+                            )
+                          }}
+                        />
                         </GridItem>
                         <GridItem xs={9} sm={9} md={9} className="headerRight">
                           <IconButton className="filterButtonText">
@@ -218,12 +239,11 @@ export default function Safety(){
                     </Button>
                   </TabPanel>
                   <TabPanel value={value} index={1}>
-                    Item Two
                   </TabPanel>
                   <TabPanel value={value} index={2}>
-                    Item Three
                   </TabPanel>
-                  
+                  <TabPanel value={value} index={3}>
+                  </TabPanel>
                 </CardBody>
               </Card>
             </GridItem>

@@ -55,19 +55,19 @@ const Card = () => {
   return (
     <div className="safety-card">
       <Grid container spacing={3}>
-        <Grid item xs={3} >
-            <Grid container spacing ={3}>
-                <Grid item xs={1}>
+        <Grid item xs={12} lg={3}  >
+            <Grid container spacing={3}>
+                <Grid item xs={1} >
                     {star}
                 </Grid>
 
-                <Grid item xs={11}>
+                <Grid item xs={12} lg={11}>
                     <img style={{width: "100%"}} src={NightTime} alt="picture"/>
                 </Grid>
 
             </Grid>
         </Grid>
-        <Grid item xs={5} style={{textAlign: "left", paddingTop: "12px"}}>
+        <Grid item xs={12} sm={6} lg={5} style={{ display: "flex", flexDirection: "column" , alignItems: "flex-start", paddingTop: "12px"}}>
             <div>
                 <FiberManualRecordIcon style={{color: "#F4BE5E", fontSize: 17}} /> 
                 <b><span style={{color: "#25345C", fontSize: "18px"}}> Crash</span> <span style={{color: "#C4C4C4", fontSize: "18px"}}>2.10G</span></b>
@@ -82,13 +82,14 @@ const Card = () => {
             </Button>
 
         </Grid>
-        <Grid item xs={4}>
-            <Grid container>
-                <Grid item xs={12} className="sideButton">
+        <Grid item xs={12} sm={6} lg={4}>
+            <Grid container className="sideButton" justify="flex-end" spacing={1}>
+                <Grid item xs={12} sm={6} className="sideButtonChild">
                     <Link href="#" onClick={preventDefault} className="dismissButton">
                         Dismiss
                     </Link>
-                    <span style={{paddingLeft: "40px"}}></span>
+                </Grid>
+                <Grid item xs={12} sm={6} className="sideButtonChild">
                     <FormControl variant="outlined">
                         <Select style={{color: "#C4C4C4"}}
                         native
