@@ -91,12 +91,12 @@ export default (state: AuthenticationState = initialState, action): Authenticati
 };
 
 export const getUserInfo = () => async (dispatch) => {
-  // let cUser = await Auth.currentUserInfo();
+  let cUser = await Auth.currentUserInfo();
 
   await dispatch({
     type: ACTION_TYPES.GET_SESSION,
-    payload: axios.get('/me')
-    // payload: cUser
+    // payload: axios.get('/me')
+    payload: cUser
   });
 
   // let cUser = await Auth.currentUserInfo();
