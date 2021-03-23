@@ -13,10 +13,9 @@ import RadioButton from '../../../Components/RadioButton'
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		maxWidth: 431,
 		fontFamily: 'Lato',
 		fontSize: 14,
-		margin: "auto!important"
+		margin: "auto!important",
 	},
 	media: {
 		height: 0,
@@ -35,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
 	avatar: {
 		backgroundColor: red[500],
 	},
+	cardHeader: {
+		backgroundColor: "#ECEEF0",
+		padding: "20px 35px 20px 35px"
+	},
 	cardFooter: {
 		display: "flex",
 		alignItems: "center"
@@ -43,42 +46,62 @@ const useStyles = makeStyles((theme) => ({
 		fontWeight: "bold",
 	},
 	cardFooterTitle: {
-		fontWeight: 400
+		fontWeight: 400,
+		textAlign: "left",
+	},
+	cardHeaderTitle: {
+		textAlign: "left", 
+		// fontFamily: "Lato", 
+		fontSize: "17px",
+	},
+	cardHeaderSubTitle: {
+		textAlign: "right", 
+		// fontFamily: "Lato", 
+		fontSize: "14px",
+		cursor: "pointer"
+	},
+	cardBodyTitle1: {
+		textAlign: "left",
+		paddingLeft: 9
+	},
+	cardBodyTitle2: {
+		textAlign: "right",
+		paddingRight: 22
 	}
 }));
 
 export default function ComplianceCard(props) {
-	const { sampleData, sampleTitle } = props
+	const { sampleData, sampleTitle, sampleLabelRadius } = props
 
 	const classes = useStyles();
-	const [expanded, setExpanded] = React.useState(false);
+	// const [expanded, setExpanded] = React.useState(false);
 
-	const handleExpandClick = () => {
-		setExpanded(!expanded);
-	};
+	// const handleExpandClick = () => {
+	// 	setExpanded(!expanded);
+	// };
 
 	return (
 		<Card className={classes.root}>
 			<CardHeader
 				title={
 					<Grid container>
-						<Grid item xs={6} style={{ textAlign: "left", fontFamily: "Lato", fontSize: "15px" }}>
+						<Grid item xs={6} className={classes.cardHeaderTitle}>
 							{sampleTitle}
 						</Grid>
-						<Grid item xs={6} style={{ textAlign: "right", fontFamily: "Lato", fontSize: "11px" }}>
-							<Link style={{cursor: "pointer"}}>View Details</Link>
+						<Grid item xs={6} className={classes.cardHeaderSubTitle}>
+							<Link>View Details</Link>
 						</Grid>
 					</Grid>}
-				style={{ backgroundColor: "#ECEEF0" }}
+				className={classes.cardHeader}
 			/>
 			<CardContent>
 				<Grid container>
-					<Grid item xs={6} style={{ textAlign: "left" }}>
-						<RadioButton  checked={true} />
+					<Grid item xs={6} className={classes.cardBodyTitle1}> 
+						<RadioButton checked={true} />
 						Hour
           </Grid>
-					<Grid item xs={6} style={{ textAlign: "right" }}>
-						<RadioButton  radioColor="default"  disabled={true} />
+					<Grid item xs={6} className={classes.cardBodyTitle2}> 
+						<RadioButton radioColor="default" disabled={true} />
 						Logs
           </Grid>
 				</Grid>
@@ -88,16 +111,27 @@ export default function ComplianceCard(props) {
 					width={250}
 					height={250}
 					colorScale={["#EB7580", "#44D485"]}
-					labelRadius={({ innerRadius }) => innerRadius + 20}
+					labelRadius={sampleLabelRadius}
 					innerRadius={0}
-					style={{ labels: { fill: "white", fontSize: 15, fontWeight: "bold" } }}
+					// radius={({ datum }) => 10 + datum.y * 0.3}
+					style={{
+						data: {
+							fillOpacity: 0.9,
+							stroke: "#ffffff",
+							strokeWidth: 3,
+						}, 
+						labels: { 
+							fill: "white", 
+							fontSize: 13, 
+							fontWeight: "bold" 
+						} }}
 					standalone={true}
 				/>
 
 				<div>
 					<Grid container className={classes.cardFooter}>
-						<Grid item xs={6} style={{ textAlign: "left" }} className={classes.cardFooterTitle} >
-							<RadioButton radioColor="red" checked={true}  />
+						<Grid item xs={6} className={classes.cardFooterTitle} >
+							<RadioButton radioColor="red" checked={true} />
 							In Violation
 						</Grid>
 						<Grid item xs={3} className={classes.cardFooterData}  >

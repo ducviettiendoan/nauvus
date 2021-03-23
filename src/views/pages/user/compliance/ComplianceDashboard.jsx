@@ -3,22 +3,13 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
-import TextField from '@material-ui/core/TextField';
-import {
-  cardTitle,
-  roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
 import ComplianceCard from "./ComplianceCard";
 import { Grid, TablePagination } from "@material-ui/core";
-import Button from '@material-ui/core/Button';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
@@ -29,95 +20,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
 import LocalBarOutlined from "@material-ui/icons/LocalBarOutlined"
-
-const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0"
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem"
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px"
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px"
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px"
-    }
-  },
-  iconRose: {
-    color: roseColor
-  },
-  marginTop30: {
-    marginTop: "30px"
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px"
-    }
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  },
-  gridCardContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingTop: "10px"
-  },
-  searchBar: {
-    textAlign: "left",
-    height: "45px",
-    border: "1px solid #C4C4C4",
-    boxSizing: "border-box",
-    borderRadius: "32px",
-    maxWidth: "300px"
-  },
-  filterButton: {
-    height: "45px",
-    border: "1px solid #C4C4C4",
-    boxSizing: "border-box",
-    borderRadius: "32px",
-    maxWidth: "100px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  filterButtonText: {
-    textTransform: "none",
-    fontSize: "14px",
-  },
-  table: {
-    minWidth: "100%",
-  },
-  tableHead: {
-    backgroundColor: "#ECEEF0"
-  }
-};
+import complianceStyle from './style/complianceStyle'
 
 const columns = [
   { id: "driver", label: 'Driver', minWidth: 350 },
@@ -133,7 +37,7 @@ const rows = [
   createData('Ali Singh', '2h 8min'),
 ];
 
-const useStyles = makeStyles(styles);
+const useStyles = makeStyles(complianceStyle);
 
 export default function ComplianceDashboard() {
   const classes = useStyles();
@@ -154,10 +58,6 @@ export default function ComplianceDashboard() {
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
-          {/* <CardBody backgroundColor={"#E5E5E5"} style={{ maxWidth: "1600px", margin: "auto" }}>
-
-          </CardBody> */}
-``
           <Grid
             container
             spacing={2}
@@ -166,32 +66,36 @@ export default function ComplianceDashboard() {
             <Grid item xs={4} sm={3} xl={4} md={4}>
               <ComplianceCard
                 sampleData={[
-                  { x: "60%", y: 60 },
+                  { x: " ", y: 60 },
                   { x: "40%", y: 40 }
                 ]}
                 sampleTitle={
                   "HOS Violations"
                 }
+                sampleLabelRadius={20}
               />
             </Grid>
             <Grid item xs={4} sm={3} xl={4} md={4}>
               <ComplianceCard sampleData={[
-                { x: "50%", y: 50 },
-                { x: "50%", y: 50 }
+                { x: " ", y: 30 },
+                { x: "70%", y: 70 }
               ]}
                 sampleTitle={
                   "Unidentified Driving"
                 }
+                sampleLabelRadius={20}
               />
             </Grid>
             <Grid item xs={4} sm={3} xl={4} md={4}>
               <ComplianceCard sampleData={[
-                { x: "30%", y: 30 },
-                { x: "70%", y: 70 }
+                { x: " ", y: 90 },
+                { x: "10%", y: 10 }
               ]}
                 sampleTitle={
                   "Unassigned Segments"
-                }/>
+                }
+                sampleLabelRadius={50}
+                />
             </Grid>
           </Grid>
 
@@ -257,7 +161,6 @@ export default function ComplianceDashboard() {
               </TableContainer>
             </Paper>
           </Card>
-
         </GridItem>
       </GridContainer>
     </div>
