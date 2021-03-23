@@ -200,9 +200,6 @@ export default function TableMaintenance() {
             <TableComponent rows={divrsRows} headCells={dvirsHeadCells} />
           </TabPanel>
         </GridItem>
-        <TabPanel value={value} index={2}>
-          Item Three
-        </TabPanel>
       </GridContainer>
     </div>
   );

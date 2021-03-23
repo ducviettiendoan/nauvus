@@ -13,15 +13,9 @@ import { Grid, TablePagination } from "@material-ui/core";
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import LocalBarOutlined from "@material-ui/icons/LocalBarOutlined"
-import complianceStyle from './style/complianceStyle'
+import LocalBarOutlined from "@material-ui/icons/LocalBarOutlined";
+import complianceStyle from './style/complianceStyle';
+import TableComponent from "../../../Components/Table";
 
 const columns = [
   { id: "driver", label: 'Driver', minWidth: 350 },
@@ -122,44 +116,11 @@ export default function ComplianceDashboard() {
                 </GridItem>
               </Grid>
             </CardBody>
-
-            <Paper className={classes.root}>
-              <TableContainer className={classes.container}>
-                <Table stickyHeader aria-label="sticky table">
-                  <TableHead >
-                    <TableRow>
-                      {columns.map((column) => (
-                        <TableCell
-                          key={column.id}
-                          align={column.align}
-                          style={{
-                            minWidth: column.minWidth, background: "#ECEEF0", fontWeight: "bold"
-                          }}
-                        >
-                          {column.label}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                      return (
-                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === 'number' ? column.format(value) : value}
-                              </TableCell>
-                            );
-                          })}
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Paper>
+            <GridContainer>
+              <GridItem xs={12} sm={12} md={12}>
+                <TableComponent rows={rows} headCells={columns} />
+              </GridItem>
+            </GridContainer>
           </Card>
         </GridItem>
       </GridContainer>
