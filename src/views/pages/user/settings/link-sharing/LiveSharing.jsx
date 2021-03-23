@@ -3,18 +3,24 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
 // core components
+import PropTypes from 'prop-types';
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
+import TableComponent from "../../../../Components/Table"
+import CustomInput from "../../../../../components/CustomInput/CustomInput"
+import ControlPointIcon from '@material-ui/icons/ControlPoint';
+import SearchIcon from '@material-ui/icons/Search';
 
 import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
+import { AppBar, Box, Button, IconButton, InputAdornment, InputBase, Paper, Tab, Tabs, Typography } from "@material-ui/core";
+import { Search } from "@material-ui/icons";
 
 const styles = {
   cardTitle,
@@ -65,13 +71,108 @@ const styles = {
   cardTestimonialDescription: {
     fontStyle: "italic",
     color: "#999999"
-  }
+  },
+  liveSharingHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+  liveSharingTitle: {
+    fontWeight: 700,
+    fontSize: 18
+  },
+  btnCreateLink: {
+    padding: "5px, 10px",
+    background: "#25345C",
+    color: "white",
+    borderRadius: 28,
+    textTransform: "none",
+    height: 46
+  },
+  tableContainer: {
+    paddingLeft: 0,
+    paddingRight: 0
+  },
+  btnSearchTable: {
+    background: "white",
+    padding: "0px 20px 0px 20px",
+    borderRadius: "36px",
+    height: "50px",
+    border: "1px solid #C4C4C4",
+    float: "right",
+    margin: "0, 0",
+    marginTop: 10,
+    marginBottom: 10,
+    marginRight: 20
+  },
+  inputAdornmentIcon: {
+    color: "#8181A5",
+    fontSize: "18px",
+    marginLeft: "0 !important;"
+  },
 };
+
+const HeadCells = [
+  { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
+  { id: 'linkExpires', numeric: true, disablePadding: false, label: 'Link Expires' },
+];
+
+function createData(name, linkExpires) {
+  return { name, linkExpires };
+}
+
+const rows = [
+  createData('GR9X-6AN-3N5', 'Never'),
+  createData('GR9X-6AN-3N5', 'Never'),
+  createData('GR9X-6AN-3N5', 'Never'),
+  createData('GR9X-6AN-3N5', 'Never'),
+  createData('GR9X-6AN-3N5', 'Never'),
+  createData('GR9X-6AN-3N5', 'Never'),
+  createData('GR9X-6AN-3N5', 'Never'),
+  createData('GR9X-6AN-3N5', 'Never'),
+];
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Typography>{children}</Typography>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
 
 const useStyles = makeStyles(styles);
 
 export default function LiveSharing() {
   const classes = useStyles();
+
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <div>
       <GridContainer>
@@ -79,17 +180,49 @@ export default function LiveSharing() {
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
               <Card testimonial>
-                <div className={classes.testimonialIcon}>
-                  <FormatQuote />
-                </div>
-                <CardBody>
-                  <h5 className={classes.cardTestimonialDescription}>
-                    No Data LiveSharing
-                  </h5>
+                <CardBody className={classes.liveSharingHeader}>
+                  <div className={classes.liveSharingTitle}>Live Sharing List</div>
+                  <div>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      className={classes.btnCreateLink}
+                      startIcon={<ControlPointIcon />}
+                    >
+                      Create Link
+                    </Button>
+                  </div>
                 </CardBody>
-                <CardFooter testimonial>
-                  <h6 className={classes.cardCategory}>@nauvus</h6>
-                </CardFooter>
+
+
+                <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" indicatorColor="primary" textColor="primary" >
+                  <Tab label="By Accet" {...a11yProps(0)} />
+                  <Tab label="By Location" {...a11yProps(1)} />
+                  <Tab label="By Recurring Route" {...a11yProps(2)} />
+                </Tabs>
+
+
+                <TabPanel value={value} index={0} className={classes.tableContainer} >
+
+                  <div className={classes.btnSearchTable}>
+                    <IconButton type="submit" aria-label="search">
+                      <SearchIcon />
+                    </IconButton>
+                    <InputBase
+                      placeholder="Search assets"
+                    />
+                  </div>
+
+                  <TableComponent rows={rows} headCells={HeadCells} />
+                </TabPanel>
+
+                <TabPanel value={value} index={1}>
+                  Item Two
+                </TabPanel>
+
+                <TabPanel value={value} index={2}>
+                  Item Three
+                </TabPanel>
               </Card>
             </GridItem>
           </GridContainer>
