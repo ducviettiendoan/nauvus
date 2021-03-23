@@ -186,9 +186,6 @@ export default function Safety(){
                   </TabPanel>
                   
                 </CardBody>
-                <CardFooter  testimonial>
-                  <h6 className={classes.cardCategory}>@nauvus</h6>
-                </CardFooter>
               </Card>
             </GridItem>
           </GridContainer>
