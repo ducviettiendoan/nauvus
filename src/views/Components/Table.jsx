@@ -10,6 +10,9 @@ import {makeStyles} from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import TableHead from "@material-ui/core/TableHead";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
+import Pagination from "../../components/Pagination/Pagination";
+import {Row} from "reactstrap";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,11 +61,15 @@ const useStyles = makeStyles((theme) => ({
       borderBottom: "0px"
     },
     marginRight: 8
+  },
+  formatterText: {
+    color: "#C4C4C4",
+    fontSize: 14
   }
 }));
 
 function EnhancedTableHead(props) {
-  const { classes, order, orderBy, onRequestSort, headCells } = props;
+  const { classes, order, orderBy, onRequestSort, headCells, action } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
@@ -91,6 +98,18 @@ function EnhancedTableHead(props) {
             </TableSortLabel>
           </TableCell>
         ))}
+        {
+          action.length > 0
+          ?
+            (
+              <TableCell
+                align={'left'}
+              >
+               Action
+              </TableCell>
+            )
+            : ""
+        }
       </TableRow>
     </TableHead>
   );
@@ -122,6 +141,7 @@ function stableSort(array, comparator) {
   return stabilizedThis.map((el) => el[0]);
 }
 
+
 EnhancedTableHead.propTypes = {
   classes: PropTypes.object.isRequired,
   numSelected: PropTypes.number.isRequired,
@@ -146,7 +166,14 @@ export default function TableComponent(props) {
     setOrderBy(property);
   };
 
-  const { rows, headCells} = props
+  let { rows, headCells, action} = props
+
+  if (typeof action === 'undefined'){
+    action = []
+  }
+
+  console.log(action)
+
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -174,6 +201,7 @@ export default function TableComponent(props) {
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
               headCells={headCells}
+              action={action}
             />
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
@@ -188,8 +216,60 @@ export default function TableComponent(props) {
                       className="tableRow"
                     >
                       {headCells.map((n, i) => {
-                        return (<TableCell key={n.id} align="left">{row[n.id]}</TableCell>)
+                        {
+                          if(i == 0) {
+                            return (
+                              <TableCell key={n.id} component={"th"} align="left">
+                                <b>{row[n.id]}</b>
+                                <p className={classes.formatterText}>{n.formatter}</p>
+                              </TableCell>
+                            )
+                          }else {
+                            return (
+                              <TableCell key={n.id} align="left">
+                                {row[n.id]}
+                                <p className={classes.formatterText}>{n.formatter}</p>
+                              </TableCell>)
+                          }
+                        }
                       })}
+                      {
+                        action.length > 0
+                        ?
+                          (
+                            <TableCell align="left">
+                              {
+                                action.map(item =>
+                                  {
+                                    {
+                                      if (item == 'edit'){
+                                        return (
+                                          <IconButton aria-label="upload picture" component="span">
+                                            <img src="/Images/Icon/edit.svg" alt=""/>
+                                          </IconButton>
+                                        )
+                                      }else if (item == 'delete'){
+                                        return (
+                                          <IconButton aria-label="upload picture" component="span">
+                                            <img src="/Images/Icon/delete.svg" alt=""/>
+                                          </IconButton>
+                                        )
+                                      }else if (item == 'copy'){
+                                        return (
+                                          <IconButton aria-label="upload picture" component="span">
+                                            <img src="/Images/Icon/copy.svg" alt=""/>
+                                          </IconButton>
+                                        )
+                                      }
+                                    }
+                                  }
+                                )
+
+                              }
+                            </TableCell>
+                          )
+                        : ""
+                      }
                     </TableRow>
                   );
                 })}
@@ -201,6 +281,16 @@ export default function TableComponent(props) {
             </TableBody>
           </Table>
         </TableContainer>
+        {/*<Row className="justify-content-center">*/}
+        {/*  <Pagination*/}
+        {/*    pages={[*/}
+        {/*      { text: "PREV" },*/}
+        {/*      { active: true, text: 1 },*/}
+        {/*      { text: "NEXT" }*/}
+        {/*    ]}*/}
+        {/*    color="info"*/}
+        {/*  />*/}
+        {/*</Row>*/}
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
