@@ -11,16 +11,13 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import TableComponent from "../../../../Components/Table"
 import ControlPointIcon from '@material-ui/icons/ControlPoint';
-import SearchIcon from '@material-ui/icons/Search';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
-import { IconButton, InputBase, Tab, Tabs, Typography } from "@material-ui/core";
 import Button from "components/CustomButtons/Button.js";
 import { MoreHoriz } from "@material-ui/icons";
-import SearchBox from "../../../../../components/SearchBox/SearchBox";
+import SearchBox from "components/SearchBox/SearchBox";
 
 const styles = {
   cardTitle,
@@ -80,12 +77,13 @@ const styles = {
   liveSharingTitle: {
     fontWeight: 700,
     fontSize: 18,
-    textAlign: "left"
+    textAlign: "left",
+    color: "#25345C"
   },
-  liveSharingBtn: {
+  liveSharingButton: {
     textAlign: "right",
   },
-  btnCreateLink: {
+  createLinkButton: {
     padding: "14px, 16px!important",
     background: "#25345C",
     color: "white",
@@ -94,7 +92,7 @@ const styles = {
     height: 46,
     fontSize: 14,
     marginRight: 8,
-    "&:hover" : {
+    "&:hover": {
       background: "#25345C !important"
     },
     fontWeight: 700
@@ -112,13 +110,6 @@ const styles = {
     "& input::placeholder": {
       fontSize: "14px"
     }
-  },
-  btnMoreHorizon: {
-    border: "1px solid rgba(18, 18, 18, 0.1)",
-    width: "36px",
-    height: "36px",
-    borderRadius: "50%",
-    marginLeft: "10px"
   },
   moreAction: {
     background: "#FFFFFF !important",
@@ -162,19 +153,16 @@ export default function AlertContacts() {
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
-
               <Card testimonial>
                 <CardBody>
-                  
                   <GridContainer className={classes.liveSharingHeader}>
                     <GridItem xs={3} sm={3} md={3} className={classes.liveSharingTitle}>
                       Alert Contacts List
                     </GridItem>
-                    <GridItem xs={9} sm={9} md={9} className={classes.liveSharingBtn}>
+                    <GridItem xs={9} sm={9} md={9} className={classes.liveSharingButton}>
                       <Button
-                        variant="contained"
-                        color="secondary"
-                        className={classes.btnCreateLink}
+                        round
+                        className="btn-round-active mr-2"
                         startIcon={<ControlPointIcon />}
                       >
                         Add contact
@@ -189,21 +177,19 @@ export default function AlertContacts() {
                         <MoreHoriz />
                       </Button>
                     </GridItem>
-                    {/* <GridItem>
-                      
-                    </GridItem> */}
                   </GridContainer>
                   <GridContainer className={classes.liveSharingHeader}>
                     <GridItem xs={12} sm={12} md={12} className={classes.searchBox}>
                       <SearchBox placeholder={"Search contacts"} />
                     </GridItem>
                   </GridContainer>
-                  
                 </CardBody>
-
-                <TableComponent rows={rows} headCells={HeadCells} action={["edit", "delete"]} />
+                <TableComponent
+                  rows={rows}
+                  headCells={HeadCells}
+                  action={["edit", "delete"]}
+                />
               </Card>
-
             </GridItem>
           </GridContainer>
         </GridItem>

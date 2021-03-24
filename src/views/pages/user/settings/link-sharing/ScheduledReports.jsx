@@ -15,7 +15,7 @@ import {
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
 import Button from "components/CustomButtons/Button.js";
-import SearchBox from "../../../../../components/SearchBox/SearchBox";
+import SearchBox from "components/SearchBox/SearchBox";
 
 const styles = {
   cardTitle,
@@ -75,23 +75,11 @@ const styles = {
   liveSharingTitle: {
     fontWeight: 700,
     fontSize: 18,
-    textAlign: "left"
+    textAlign: "left",
+    color: "#25345C"
   },
-  liveSharingBtn: {
+  liveSharingButton: {
     textAlign: "right",
-  },
-  btnCreateLink: {
-    padding: "5px, 10px",
-    background: "#25345C",
-    color: "white",
-    borderRadius: 28,
-    textTransform: "none",
-    height: 46,
-    fontSize: 14,
-    "&:hover" : {
-      background: "#25345C !important"
-    },
-    fontWeight: 700
   },
   tableContainer: {
     paddingLeft: 0,
@@ -135,18 +123,15 @@ export default function ScheduledReports() {
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
-
               <Card testimonial>
                 <CardBody>
                   <GridContainer className={classes.liveSharingHeader}>
                     <GridItem xs={3} sm={3} md={3} className={classes.liveSharingTitle}>
                       Scheduled Reports  List
                     </GridItem>
-                    <GridItem xs={9} sm={9} md={9} className={classes.liveSharingBtn}>
+                    <GridItem xs={9} sm={9} md={9} className={classes.liveSharingButton}>
                       <Button
-                        variant="contained"
-                        color="secondary"
-                        className={classes.btnCreateLink}
+                        round className="btn-round-active"
                         startIcon={<ControlPointIcon />}
                       >
                         Add a Scheduled Report
@@ -158,12 +143,13 @@ export default function ScheduledReports() {
                       <SearchBox placeholder={"Search contacts"} />
                     </GridItem>
                   </GridContainer>
-
                 </CardBody>
-
-                <TableComponent rows={rows} headCells={HeadCells} action={["edit", "delete"]} />
+                <TableComponent
+                  rows={rows}
+                  headCells={HeadCells}
+                  action={["edit", "delete"]}
+                />
               </Card>
-
             </GridItem>
           </GridContainer>
         </GridItem>
