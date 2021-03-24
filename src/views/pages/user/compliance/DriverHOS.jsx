@@ -30,6 +30,7 @@ import {
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
 import TableComponent from "../../../Components/Table";
+import SearchBox from "../../../../components/SearchBox/SearchBox";
 
 
 
@@ -169,6 +170,9 @@ const styles = {
     display: "flex",
     alignItems: "center",
     textAlign: "left"
+  },
+  buttonSearch: {
+    border: "1px solid #C4C4C4 !important",
   }
 };
 
@@ -325,7 +329,7 @@ export default function DriverHOS() {
 
                   <Grid container spacing={3} justifyContent="space-between">
                     <Grid item xs={6} style={{ textAlign: "left" }}>
-                      <CustomInput
+                      {/* <CustomInput
                         formControlProps={{
                           className: classes.btnSearchOnMap
                         }}
@@ -341,6 +345,9 @@ export default function DriverHOS() {
                           //   setUsername(event.target.value);
                           // },
                         }}
+                      /> */}
+                      <SearchBox 
+                        placeholder={"Search driver"}
                       />
                     </Grid>
                     <Grid item xs={6} style={{ textAlign: "right" }}>

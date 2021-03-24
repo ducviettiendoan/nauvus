@@ -3,7 +3,6 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
@@ -11,12 +10,12 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import TableComponent from "../../../../Components/Table"
 import ControlPointIcon from '@material-ui/icons/ControlPoint';
-import SearchIcon from '@material-ui/icons/Search';
 import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
-import { Button, IconButton, InputBase, Tab, Tabs, Typography } from "@material-ui/core";
+import Button from "components/CustomButtons/Button.js";
+import SearchBox from "../../../../../components/SearchBox/SearchBox";
 
 const styles = {
   cardTitle,
@@ -75,7 +74,11 @@ const styles = {
   },
   liveSharingTitle: {
     fontWeight: 700,
-    fontSize: 18
+    fontSize: 18,
+    textAlign: "left"
+  },
+  liveSharingBtn: {
+    textAlign: "right",
   },
   btnCreateLink: {
     padding: "5px, 10px",
@@ -90,32 +93,10 @@ const styles = {
     paddingLeft: 0,
     paddingRight: 0
   },
-  btnSearchTable: {
-    background: "white",
-    padding: "0px 20px 0px 20px",
-    borderRadius: "36px",
-    height: "50px",
-    width: "252px",
-    color: "#C4C4C4",
-    border: "1px solid #C4C4C4",
-    float: "right",
-    margin: "0, 0",
-    marginTop: 10,
-    marginBottom: 10,
-    marginRight: 20,
-    display: "flex",
-    fontSize: 14
-  },
-  inputAdornmentIcon: {
-    color: "#8181A5",
-    fontSize: "18px",
-    marginLeft: "0 !important;"
-  },
-  inputBase: {
-    "& input::placeholder": {
-      fontSize: "14px"
-    }
-  },
+  searchBox: {
+    marginTop: "16px !important",
+    textAlign: "right"
+  }
 };
 
 const HeadCells = [
@@ -152,34 +133,31 @@ export default function ScheduledReports() {
             <GridItem xs={12} sm={12} md={12}>
 
               <Card testimonial>
-                <CardBody className={classes.liveSharingHeader}>
-                  <div className={classes.liveSharingTitle}>Scheduled Reports List</div>
-                  <div>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      className={classes.btnCreateLink}
-                      startIcon={<ControlPointIcon />}
-                    >
-                      Add a Scheduled Report
-                    </Button>
-                  </div>
+                <CardBody>
+                  <GridContainer className={classes.liveSharingHeader}>
+                    <GridItem xs={3} sm={3} md={3} className={classes.liveSharingTitle}>
+                      Scheduled Reports  List
+                    </GridItem>
+                    <GridItem xs={9} sm={9} md={9} className={classes.liveSharingBtn}>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        className={classes.btnCreateLink}
+                        startIcon={<ControlPointIcon />}
+                      >
+                        Add a Scheduled Report
+                      </Button>
+                    </GridItem>
+                  </GridContainer>
+                  <GridContainer className={classes.liveSharingHeader}>
+                    <GridItem xs={12} sm={12} md={12} className={classes.searchBox}>
+                      <SearchBox placeholder={"Search contacts"} />
+                    </GridItem>
+                  </GridContainer>
+
                 </CardBody>
 
-                <div>
-                  <div className={classes.btnSearchTable}>
-                    <IconButton type="submit" aria-label="search">
-                      <SearchIcon />
-                    </IconButton>
-                    <InputBase
-                      className={classes.inputBase}
-                      placeholder="Search scheduled reports"
-                    />
-                  </div>
-                </div>
-
-
-                <TableComponent rows={rows} headCells={HeadCells} />
+                <TableComponent rows={rows} headCells={HeadCells} action={["edit", "delete"]} />
               </Card>
 
             </GridItem>

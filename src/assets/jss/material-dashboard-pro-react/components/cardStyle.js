@@ -16,7 +16,7 @@ const cardStyle = {
     border: "0",
     marginBottom: "30px",
     marginTop: "30px",
-    borderRadius: "6px",
+    borderRadius: "12px",
     color: "rgba(" + hexToRgb(blackColor) + ", 0.87)",
     background: whiteColor,
     width: "100%",
@@ -33,7 +33,7 @@ const cardStyle = {
     boxShadow: "none"
   },
   cardProfile: {
-    marginTop: "30px",
+    marginTop: "17px",
     textAlign: "center"
   },
   cardBlog: {

@@ -17,7 +17,10 @@ import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
-import { Button, IconButton, InputBase, Tab, Tabs, Typography } from "@material-ui/core";
+import { IconButton, InputBase, Tab, Tabs, Typography } from "@material-ui/core";
+import Button from "components/CustomButtons/Button.js";
+import { MoreHoriz } from "@material-ui/icons";
+import SearchBox from "../../../../../components/SearchBox/SearchBox";
 
 const styles = {
   cardTitle,
@@ -76,7 +79,11 @@ const styles = {
   },
   liveSharingTitle: {
     fontWeight: 700,
-    fontSize: 18
+    fontSize: 18,
+    textAlign: "left"
+  },
+  liveSharingBtn: {
+    textAlign: "right",
   },
   btnCreateLink: {
     padding: "14px, 16px!important",
@@ -85,27 +92,12 @@ const styles = {
     borderRadius: 28,
     textTransform: "none",
     height: 46,
-    fontSize: 14
+    fontSize: 14,
+    marginRight: 8
   },
   tableContainer: {
     paddingLeft: 0,
     paddingRight: 0
-  },
-  btnSearchTable: {
-    background: "white",
-    padding: "0px 20px 0px 20px",
-    borderRadius: "32px",
-    height: "45px",
-    width: "252px",
-    color: "#C4C4C4",
-    border: "1px solid #ECEEF0",
-    float: "right",
-    margin: "0, 0",
-    marginTop: 10,
-    marginBottom: 10,
-    marginRight: 20,
-    display: "flex",
-    fontSize: 14
   },
   inputAdornmentIcon: {
     color: "#8181A5",
@@ -124,6 +116,14 @@ const styles = {
     borderRadius: "50%",
     marginLeft: "10px"
   },
+  moreAction: {
+    background: "#FFFFFF !important",
+    border: "1px solid #ECEEF0 !important"
+  },
+  searchBox: {
+    marginTop: "16px !important",
+    textAlign: "right"
+  }
 };
 
 const HeadCells = [
@@ -160,38 +160,44 @@ export default function AlertContacts() {
             <GridItem xs={12} sm={12} md={12}>
 
               <Card testimonial>
-                <CardBody className={classes.liveSharingHeader}>
-                  <div className={classes.liveSharingTitle}>Alert Contacts List</div>
-                  <div>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      className={classes.btnCreateLink}
-                      startIcon={<ControlPointIcon />}
-                    >
-                      Add contact
-                    </Button>
-
-                    <IconButton className={classes.btnMoreHorizon}>
-                      <MoreHorizIcon />
-                    </IconButton>
-                  </div>
+                <CardBody>
+                  
+                  <GridContainer className={classes.liveSharingHeader}>
+                    <GridItem xs={3} sm={3} md={3} className={classes.liveSharingTitle}>
+                      Alert Contacts List
+                    </GridItem>
+                    <GridItem xs={9} sm={9} md={9} className={classes.liveSharingBtn}>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        className={classes.btnCreateLink}
+                        startIcon={<ControlPointIcon />}
+                      >
+                        Add contact
+                      </Button>
+                      <Button
+                        color="white"
+                        aria-label="edit"
+                        justIcon
+                        round
+                        className={`btn-36 ${classes.moreAction} mr-2`}
+                      >
+                        <MoreHoriz />
+                      </Button>
+                    </GridItem>
+                    {/* <GridItem>
+                      
+                    </GridItem> */}
+                  </GridContainer>
+                  <GridContainer className={classes.liveSharingHeader}>
+                    <GridItem xs={12} sm={12} md={12} className={classes.searchBox}>
+                      <SearchBox placeholder={"Search contacts"} />
+                    </GridItem>
+                  </GridContainer>
+                  
                 </CardBody>
 
-                <div>
-                  <div className={classes.btnSearchTable}>
-                    <IconButton type="submit" aria-label="search">
-                      <SearchIcon />
-                    </IconButton>
-                    <InputBase
-                      className={classes.inputBase}
-                      placeholder="Search contacts"
-                    />
-                  </div>
-                </div>
-
-
-                <TableComponent rows={rows} headCells={HeadCells} />
+                <TableComponent rows={rows} headCells={HeadCells} action={["edit", "delete"]} />
               </Card>
 
             </GridItem>
