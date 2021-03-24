@@ -1,0 +1,40 @@
+.moreIcon {
+    background: #FFFFFF;
+    border: 1px solid rgba(18, 18, 18, 0.1) !important;
+    box-sizing: border-box;
+    border-radius: 28px;
+    margin-right: 8px !important;
+}
+
+.moreIcon > button {
+    padding: 3px;
+}
+
+.liveButton {
+    background-color: #27AE60 !important;
+    border-radius: 28px !important;
+    color: #ffffff !important;
+}
+
+.appBar{
+    background-color: #ffffff !important;
+    box-shadow: unset !important;
+    color: #25345C !important;
+}
+
+.tableHead{
+    background-color: #ECEEF0;
+}
+
+.tableHead > tr > th {
+    padding: 20px;
+}
+.tabPanel > div {
+    padding: 0px;
+}
+.tableRow{
+    color: #25345C;
+}
+.tableRow > td {
+    padding: 20px;
+}

@@ -70,7 +70,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function Compliance() {
+export default function Webhooks() {
   const classes = useStyles();
   return (
     <div>
@@ -84,7 +84,7 @@ export default function Compliance() {
                 </div>
                 <CardBody>
                   <h5 className={classes.cardTestimonialDescription}>
-                    No Data
+                    No Data Webhooks
                   </h5>
                 </CardBody>
                 <CardFooter testimonial>

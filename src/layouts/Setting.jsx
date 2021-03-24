@@ -13,7 +13,7 @@ import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 // import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
-import ExtraSideBar from "components/Sidebar/ExtraSideBar";
+import ExtraSettingSideBar from "components/Sidebar/ExtraSettingSideBar";
 
 import routes from "user-routes";
 import settingRoutes from "setting-routes";
@@ -225,7 +225,7 @@ export function Dashboard(props) {
                 <>
                   <div id="main">
                     <div className="extraSidebar">
-                      <ExtraSideBar />
+                      <ExtraSettingSideBar />
                     </div>
                     <div className="extraContainer">{ renderDataContent() }</div>
                   </div>

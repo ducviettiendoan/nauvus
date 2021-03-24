@@ -1,6 +1,14 @@
 import Overview from "views/pages/user/overview/Overview";
 import Alerts from "views/pages/user/alerts/Alerts";
-import Compliance from "views/pages/user/compliance/Compliance";
+import ComplianceDashboard from "views/pages/user/compliance/ComplianceDashboard";
+import DriverHOS from "views/pages/user/compliance/DriverHOS";
+import HOSVialations from "views/pages/user/compliance/HOSVialations";
+import UnassignedHOS from "views/pages/user/compliance/UnassignedHOS";
+import DriverHOSAudit from "views/pages/user/compliance/DriverHOSAudit";
+import DutyStatusSummary from "views/pages/user/compliance/DutyStatusSummary";
+import HOSAuditTransfer from "views/pages/user/compliance/HOSAuditTransfer";
+import FuelPurchase from "views/pages/user/fuel-energy/FuelPurchase";
+
 import Dispatch from "views/pages/user/dispatch/Dispatch";
 import Documents from "views/pages/user/documents/Documents";
 import FuelEnergy from "views/pages/user/fuel-energy/FuelEnergy";
@@ -59,11 +67,55 @@ const dashRoutes = [
     layout: "/user"
   },
   {
-    path: "/compliance",
+    collapse: true,
     name: "Compliance",
     icon: ComplianceIcon,
-    component: Compliance,
-    layout: "/user"
+    state: "complianceCollapse",
+    layout: "/user",
+    views: [
+      {
+        path: "/compliance/dashboard",
+        name: "Compliance",
+        component: ComplianceDashboard,
+        layout: "/user"
+      },
+      {
+        path: "/compliance/driver-hos",
+        name: "Driver HOS",
+        component: DriverHOS,
+        layout: "/user"
+      },
+      {
+        path: "/compliance/hos-vialations",
+        name: "HOS Vialations",
+        component: HOSVialations,
+        layout: "/user"
+      },
+      {
+        path: "/compliance/unassigned-hos",
+        name: "Unassigned HOS",
+        component: UnassignedHOS,
+        layout: "/user"
+      },
+      {
+        path: "/compliance/driver-hos-audit",
+        name: "Driver HOS audit",
+        component: DriverHOSAudit,
+        layout: "/user"
+      },
+      {
+        path: "/compliance/duty-status-summary",
+        name: "Duty status Summary",
+        component: DutyStatusSummary,
+        layout: "/user"
+      },
+      {
+        path: "/compliance/hos-audit-transfer",
+        name: "HOS Audit transfer",
+        component: HOSAuditTransfer,
+        layout: "/user"
+      },
+    ]
   },
   {
     path: "/maintenance",
@@ -80,11 +132,25 @@ const dashRoutes = [
     layout: "/user"
   },
   {
-    path: "/fuel-energy",
+    collapse: true,
     name: "Fuel & Energy",
     icon: FuelEnergyIcon,
-    component: FuelEnergy,
-    layout: "/user"
+    state: "fuelEnergyCollapse",
+    layout: "/user",
+    views: [
+      {
+        path: "/fuel-energy/dashboard",
+        name: "Fuel & Energy",
+        component: FuelEnergy,
+        layout: "/user"
+      },
+      {
+        path: "/fuel-energy/fuel-purchase",
+        name: "Fuel Purchase",
+        component: FuelPurchase,
+        layout: "/user"
+      },
+    ]
   },
   {
     path: "/documents",
@@ -122,19 +188,11 @@ const dashRoutes = [
     layout: "/user"
   },
   {
-    path: "/general",
+    path: "/org/general",
     name: "Settings",
     icon: SettingsIcon,
     component: Settings,
     layout: "/setting"
-    // views: [
-    //   {
-    //     path: "/register-vehicle",
-    //     name: "Register vehicle",
-    //     component: VehicleRegisterPage,
-    //     layout: "/auth"
-    //   }
-    // ]
   },
 ];
 export default dashRoutes;

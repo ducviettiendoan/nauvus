@@ -1,0 +1,127 @@
+.safety-card {
+    padding: 20px;
+    border: 1px solid #ECECF2;
+    border-radius: 12px;
+    margin: 8px;
+}
+
+.content {
+ font-size: 16px;
+ color: #C4C4C4; 
+ padding-top: 15px;
+ margin-bottom: 30px;
+ text-align: left;
+}
+.safety-button {
+    border-radius: 28px !important;
+
+}
+
+.safety-button .MuiButton-label {
+    text-transform: none!important;
+    
+} 
+
+.driverButton {
+    background-color: #25345C !important;
+    color: #ffffff !important;
+    height: 48px;
+    width: 147px;
+    
+}
+
+.reloadButton {
+    border-radius: 50%!important;
+    height: 50px!important;
+    width: 50px!important;
+    min-width: 0!important;
+    background-color: #25345C !important;
+    color: #ffffff !important;
+    margin-top: 20px!important;
+}
+
+.reviewButton {
+    color: #C4C4C4 !important;
+    border: 1px solid #ECECF2!important;
+}
+
+.dismissButton {
+    color: #25345C !important;
+}
+
+.dismissButton:hover {
+    background-color: none !important; 
+}
+
+
+.safety-tab {
+    box-shadow: none!important;
+}
+
+.safety-tab .MuiTab-wrapper {
+    font-weight: 900;
+    font-size: 18px;
+}
+
+.sideButton{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.sideButtonChild{
+    display: flex;
+    justify-content: flex-end;
+}
+
+@media only screen and (max-width: 600px){
+    .sideButtonChild{
+        justify-content: center;
+    }
+    .driverButton {
+        margin: auto!important
+    }
+}
+
+.searchBar{
+    text-align: left;
+    height: 45px;
+    border: 1px solid #C4C4C4;
+    box-sizing: border-box;
+    border-radius: 32px;
+}
+.headerRight{
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.filterButton{
+    height: 45px;
+    border: 1px solid #C4C4C4;
+    box-sizing: border-box;
+    border-radius: 32px;
+    max-width: 100px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.filterButton > button {
+    font-size: 14px;
+}
+
+.filterButtonText{
+    text-transform: none;
+    font-size: 14px !important;
+    color: #25345C;
+    border: 1px solid #C4C4C4 !important;
+    border-radius: 32px !important;
+    width: 100px !important;
+    min-width: 100px !important;
+    height: 40px;
+    position: absolute;
+    align-items: center !important
+}
+.filterIcon {
+    margin-top: 13px;
+}
