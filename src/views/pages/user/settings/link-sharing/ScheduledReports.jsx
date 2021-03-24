@@ -8,20 +8,19 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import TableComponent from "../../../../../components/Table/CustomTable"
+import TableComponent from "components/Table/CustomTable"
 import ControlPointIcon from '@material-ui/icons/ControlPoint';
 import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
 import Button from "components/CustomButtons/Button.js";
-import SearchBox from "../../../../../components/SearchBox/SearchBox";
-import ArrowDownIcon from "../../../../../components/Icons/ArrowDownIcon";
-import ArrowLeftIcon from "../../../../../components/Icons/ArrowLeftIcon";
-import ArrowRightIcon from "../../../../../components/Icons/ArrowRightIcon";
-import ArrowUpIcon from "../../../../../components/Icons/ArrowUpIcon";
-import PaginationV2 from "../../../../../components/Pagination/PaginationV2";
-
+import ArrowDownIcon from "components/Icons/ArrowDownIcon";
+import ArrowLeftIcon from "components/Icons/ArrowLeftIcon";
+import ArrowRightIcon from "components/Icons/ArrowRightIcon";
+import ArrowUpIcon from "components/Icons/ArrowUpIcon";
+import PaginationV2 from "components/Pagination/PaginationV2";
+import SearchBox from "components/SearchBox/SearchBox";
 const styles = {
   cardTitle,
   cardTitleWhite: {
@@ -80,23 +79,11 @@ const styles = {
   liveSharingTitle: {
     fontWeight: 700,
     fontSize: 18,
-    textAlign: "left"
+    textAlign: "left",
+    color: "#25345C"
   },
-  liveSharingBtn: {
+  liveSharingButton: {
     textAlign: "right",
-  },
-  btnCreateLink: {
-    padding: "5px, 10px",
-    background: "#25345C",
-    color: "white",
-    borderRadius: 28,
-    textTransform: "none",
-    height: 46,
-    fontSize: 14,
-    "&:hover" : {
-      background: "#25345C !important"
-    },
-    fontWeight: 700
   },
   tableContainer: {
     paddingLeft: 0,
@@ -140,18 +127,15 @@ export default function ScheduledReports() {
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
-
               <Card testimonial>
                 <CardBody>
                   <GridContainer className={classes.liveSharingHeader}>
                     <GridItem xs={3} sm={3} md={3} className={classes.liveSharingTitle}>
                       Scheduled Reports  List
                     </GridItem>
-                    <GridItem xs={9} sm={9} md={9} className={classes.liveSharingBtn}>
+                    <GridItem xs={9} sm={9} md={9} className={classes.liveSharingButton}>
                       <Button
-                        variant="contained"
-                        color="secondary"
-                        className={classes.btnCreateLink}
+                        round className="btn-round-active"
                         startIcon={<ControlPointIcon />}
                       >
                         Add a Scheduled Report
@@ -160,29 +144,17 @@ export default function ScheduledReports() {
                   </GridContainer>
                   <GridContainer className={classes.liveSharingHeader}>
                     <GridItem xs={12} sm={12} md={12} className={classes.searchBox}>
-                      <SearchBox placeholder={"Search contacts"} />
+                      <SearchBox placeholder={"Search scheduled reports"} />
                     </GridItem>
                   </GridContainer>
-
                 </CardBody>
-
-                <TableComponent rows={rows} headCells={HeadCells} action={["edit", "delete"]} />
+                <TableComponent
+                  rows={rows}
+                  headCells={HeadCells}
+                  action={["edit", "delete"]}
+                />
               </Card>
-
             </GridItem>
-            <PaginationV2
-              pages={[
-                { text: <ArrowDownIcon/>, arrow : true,disabled : true },
-                { text: <ArrowLeftIcon/>, arrow : true,disabled : true },
-                { active: true, text: 1 },
-                { text: 2 },
-                { text: 3 },
-                { text: 4 },
-                { text: 5 },
-                { text: <ArrowRightIcon/>, arrow : true },
-                { text: <ArrowUpIcon/>, arrow : true },
-              ]}
-            />
           </GridContainer>
         </GridItem>
       </GridContainer>

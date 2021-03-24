@@ -5,7 +5,7 @@ const paginationStyle = {
     borderRadius: "4px",
     display: "flex",
     alignItems: "center",
-    margin: "0px 0px 0px 30px"
+    margin: "20px 0px 20px 30px"
   },
   paginationArrowLi: {
     display: "inline",

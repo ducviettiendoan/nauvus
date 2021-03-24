@@ -125,7 +125,7 @@ function EnhancedTableHead(props) {
           ?
             (
               <TableCell
-                align={'left'}
+                align={'right'}
                 className={classes.headText}
               >
                 Actions
@@ -258,7 +258,7 @@ export default function TableComponent(props) {
                         action.length > 0
                         ?
                           (
-                            <TableCell style={{borderBottom: 0}} align="left">
+                            <TableCell style={{borderBottom: 0}} align="right">
                               {
                                 action.map(item =>
                                   {
@@ -302,6 +302,19 @@ export default function TableComponent(props) {
             </TableBody>
           </Table>
         </TableContainer>
+        <PaginationV2
+          pages={[
+            { text: <ArrowDownIcon/>, arrow : true,disabled : true },
+            { text: <ArrowLeftIcon/>, arrow : true,disabled : true },
+            { active: true, text: 1 },
+            { text: 2 },
+            { text: 3 },
+            { text: 4 },
+            { text: 5 },
+            { text: <ArrowRightIcon/>, arrow : true },
+            { text: <ArrowUpIcon/>, arrow : true },
+          ]}
+        />
         {/*<Row className="justify-content-center">*/}
         {/*  <Pagination*/}
         {/*    pages={[*/}
