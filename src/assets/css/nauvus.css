@@ -231,7 +231,9 @@
   font-size: 18px !important;
 }
 
-
+.table-settings {
+  text-align: left;
+}
 .table-settings table thead {
   background: #ECEEF0 !important;
   border-collapse: collapse !important;

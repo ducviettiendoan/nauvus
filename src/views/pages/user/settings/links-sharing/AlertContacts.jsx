@@ -141,12 +141,14 @@ const styles = {
     fontSize: '16px',
     lineHeight: '24px',
     marginTop: '14px',
-    color: '#25345C'
+    color: '#25345C',
+    marginLeft: '24px'
   },
   textSub : {
     fontSize: '16px',
     lineHeight: '24px',
-    marginTop: '14px'
+    marginTop: '14px',
+    marginLeft: '24px'
   },
   iconButton: {
     '&:hover': {
