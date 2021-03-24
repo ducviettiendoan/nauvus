@@ -70,7 +70,8 @@ const styles = {
     padding: "0px 0px 0px 16px !important"
   },
   cardMultipleContent: {
-    paddingLeft: "6px !important"
+    paddingLeft: "6px !important",
+    paddingBottom: "20px !important"
   },
   gridContent: {
     display: "flex",
