@@ -8,7 +8,7 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import IOSSwitch from "components/CustomButtons/IOSSwitchButton"
+import Switch from "components/CustomSwitch/Switch.jsx"
 
 import {
   cardTitle,
@@ -150,7 +150,7 @@ export default function Configuration() {
                           By default, the Samsara Vehicle Gateway uses a small amount of vehicle battery when idle.
                         </GridItem>
                       </CardBody>
-                      <IOSSwitch checked={checkedState.checkedA} onChange={handleChange} name="checkedA" />
+                      <Switch checked={checkedState.checkedA} onChange={handleChange} name="checkedA" />
                     </GridItem>
                     <Divider variant="fullWidth" light />
 
@@ -164,7 +164,7 @@ export default function Configuration() {
                         By default, the Samsara Vehicle Gateway uses a small amount of vehicle battery when idle.
                       </GridItem>
                       </CardBody>
-                      <IOSSwitch checked={checkedState.checkedB} onChange={handleChange} name="checkedB" />
+                      <Switch checked={checkedState.checkedB} onChange={handleChange} name="checkedB" />
                     </GridItem>
                     <Divider variant="fullWidth" light />
 
@@ -178,7 +178,7 @@ export default function Configuration() {
                           By default, the Samsara Vehicle Gateway uses a small amount of vehicle battery when idle.
                         </GridItem>
                       </CardBody>
-                      <IOSSwitch checked={checkedState.checkedC} onChange={handleChange} name="checkedC" />
+                      <Switch checked={checkedState.checkedC} onChange={handleChange} name="checkedC" />
                     </GridItem>
                     <Divider variant="fullWidth" light />
 
@@ -192,7 +192,7 @@ export default function Configuration() {
                           By default, the Samsara Vehicle Gateway uses a small amount of vehicle battery when idle.
                         </GridItem>
                       </CardBody>
-                      <IOSSwitch checked={checkedState.checkedD} onChange={handleChange} name="checkedD" />
+                      <Switch checked={checkedState.checkedD} onChange={handleChange} name="checkedD" />
                     </GridItem>
                     <Divider variant="fullWidth" light />
                   </GridItem>
