@@ -17,11 +17,6 @@ import {
 } from "assets/jss/material-dashboard-pro-react.js";
 import Button from "components/CustomButtons/Button.js";
 import { MoreHoriz } from "@material-ui/icons";
-import ArrowDownIcon from "components/Icons/ArrowDownIcon";
-import ArrowLeftIcon from "components/Icons/ArrowLeftIcon";
-import ArrowRightIcon from "components/Icons/ArrowRightIcon";
-import ArrowUpIcon from "components/Icons/ArrowUpIcon";
-import PaginationV2 from "components/Pagination/PaginationV2";
 import SearchBox from "components/SearchBox/SearchBox";
 
 const styles = {

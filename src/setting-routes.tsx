@@ -19,9 +19,9 @@ import FuelEnergy from "views/pages/user/settings/fleet/FuelEnergy";
 import Maps from "views/pages/user/settings/fleet/Maps";
 import Safety from "views/pages/user/settings/fleet/Safety";
 
-import AlertContacts from "views/pages/user/settings/link-sharing/AlertContacts";
-import LiveSharing from "views/pages/user/settings/link-sharing/LiveSharing";
-import ScheduledReports from "views/pages/user/settings/link-sharing/ScheduledReports";
+import AlertContacts from "views/pages/user/settings/links-sharing/AlertContacts";
+import LiveSharing from "views/pages/user/settings/links-sharing/LiveSharing";
+import ScheduledReports from "views/pages/user/settings/links-sharing/ScheduledReports";
 
 import APITokens from "views/pages/user/settings/developer/APITokens";
 import DeveloperMetrics from "views/pages/user/settings/developer/DeveloperMetrics";
@@ -140,19 +140,19 @@ const dashRoutes = [
   },
   // Link -sharing
   {
-    path: "/link-sharing/alert-contacts",
+    path: "/links-sharing/alert-contacts",
     name: "Alert Contacts",
     component: AlertContacts,
     layout: "/setting"
   },
   {
-    path: "/link-sharing/scheduled-reports",
+    path: "/links-sharing/scheduled-reports",
     name: "Scheduled Reports",
     component: ScheduledReports,
     layout: "/setting"
   },
   {
-    path: "/link-sharing/live-sharing",
+    path: "/links-sharing/live-sharing",
     name: "Live Sharing",
     component: LiveSharing,
     layout: "/setting"
