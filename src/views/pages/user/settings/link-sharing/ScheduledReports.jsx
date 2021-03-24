@@ -8,7 +8,7 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import TableComponent from "../../../../Components/Table"
+import TableComponent from "../../../../../components/Table/CustomTable"
 import ControlPointIcon from '@material-ui/icons/ControlPoint';
 import {
   cardTitle,
@@ -16,6 +16,11 @@ import {
 } from "assets/jss/material-dashboard-pro-react.js";
 import Button from "components/CustomButtons/Button.js";
 import SearchBox from "../../../../../components/SearchBox/SearchBox";
+import ArrowDownIcon from "../../../../../components/Icons/ArrowDownIcon";
+import ArrowLeftIcon from "../../../../../components/Icons/ArrowLeftIcon";
+import ArrowRightIcon from "../../../../../components/Icons/ArrowRightIcon";
+import ArrowUpIcon from "../../../../../components/Icons/ArrowUpIcon";
+import PaginationV2 from "../../../../../components/Pagination/PaginationV2";
 
 const styles = {
   cardTitle,
@@ -165,6 +170,19 @@ export default function ScheduledReports() {
               </Card>
 
             </GridItem>
+            <PaginationV2
+              pages={[
+                { text: <ArrowDownIcon/>, arrow : true,disabled : true },
+                { text: <ArrowLeftIcon/>, arrow : true,disabled : true },
+                { active: true, text: 1 },
+                { text: 2 },
+                { text: 3 },
+                { text: 4 },
+                { text: 5 },
+                { text: <ArrowRightIcon/>, arrow : true },
+                { text: <ArrowUpIcon/>, arrow : true },
+              ]}
+            />
           </GridContainer>
         </GridItem>
       </GridContainer>

@@ -10,17 +10,17 @@ import {makeStyles} from "@material-ui/core/styles";
 import PropTypes from "prop-types";
 import TableHead from "@material-ui/core/TableHead";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
-import Pagination from "../../components/Pagination/Pagination";
+import Pagination from "../Pagination/Pagination";
 import {Row} from "reactstrap";
 import IconButton from "@material-ui/core/IconButton";
-import PaginationV2 from "./Pagination/PaginationV2";
-import ArrowDownIcon from "../../components/Icons/ArrowDownIcon";
-import ArrowLeftIcon from "../../components/Icons/ArrowLeftIcon";
-import ArrowRightIcon from "../../components/Icons/ArrowRightIcon";
-import ArrowUpIcon from "../../components/Icons/ArrowUpIcon";
-import EditIcon from "../../components/Icons/EditIcon";
-import DeleteIcon from "../../components/Icons/DeleteIcon";
-import CopyIcon from "../../components/Icons/CopyIcon";
+import PaginationV2 from "../Pagination/PaginationV2";
+import ArrowDownIcon from "../Icons/ArrowDownIcon";
+import ArrowLeftIcon from "../Icons/ArrowLeftIcon";
+import ArrowRightIcon from "../Icons/ArrowRightIcon";
+import ArrowUpIcon from "../Icons/ArrowUpIcon";
+import EditIcon from "../Icons/EditIcon";
+import DeleteIcon from "../Icons/DeleteIcon";
+import CopyIcon from "../Icons/CopyIcon";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,7 +81,8 @@ const useStyles = makeStyles((theme) => ({
   headText: {
     fontWeight: "bold",
     color: "#25345C",
-    fontSize:12
+    fontSize:12,
+    maxWidth: 150
   },
   actionIcon : {
     padding: 6
@@ -124,7 +125,7 @@ function EnhancedTableHead(props) {
           ?
             (
               <TableCell
-                align={'right'}
+                align={'left'}
                 className={classes.headText}
               >
                 Actions
@@ -188,7 +189,7 @@ export default function TableComponent(props) {
     setOrderBy(property);
   };
 
-  let { rows, headCells, action} = props
+  let { rows, headCells, action, styles} = props
 
   if (typeof action === 'undefined'){
     action = []
@@ -239,14 +240,14 @@ export default function TableComponent(props) {
                         {
                           if(i == 0) {
                             return (
-                              <TableCell key={n.id} component={"th"} align="left">
+                              <TableCell style={{borderBottom: 0}} key={n.id} component={"th"} align="left">
                                 <b className={classes.rowText}>{row[n.id]}</b>
                                 <p className={classes.formatterText}>{n.formatter}</p>
                               </TableCell>
                             )
                           }else {
                             return (
-                              <TableCell key={n.id} align="left">
+                              <TableCell style={{borderBottom: 0}} key={n.id} align="left">
                                 <p className={classes.rowText}>{row[n.id]}</p>
                                 <p className={classes.formatterText}>{n.formatter}</p>
                               </TableCell>)
@@ -257,7 +258,7 @@ export default function TableComponent(props) {
                         action.length > 0
                         ?
                           (
-                            <TableCell align="right">
+                            <TableCell style={{borderBottom: 0}} align="left">
                               {
                                 action.map(item =>
                                   {
@@ -311,19 +312,6 @@ export default function TableComponent(props) {
         {/*    color="info"*/}
         {/*  />*/}
         {/*</Row>*/}
-        <PaginationV2
-          pages={[
-            { text: <ArrowDownIcon/>, arrow : true,disabled : true },
-            { text: <ArrowLeftIcon/>, arrow : true,disabled : true },
-            { active: true, text: 1 },
-            { text: 2 },
-            { text: 3 },
-            { text: 4 },
-            { text: 5 },
-            { text: <ArrowRightIcon/>, arrow : true },
-            { text: <ArrowUpIcon/>, arrow : true },
-          ]}
-        />
       </Paper>
     </div>
   );

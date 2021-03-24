@@ -6,11 +6,11 @@ import cx from "classnames";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 
-import styles from "assets/jss/material-dashboard-pro-react/components/paginationStyle.js";
-import GridContainer from "../../../components/Grid/GridContainer";
-import GridItem from "../../../components/Grid/GridItem";
-import './paginationStyle.css'
-import {pagination} from "../../../utils/common-utils";
+import styles from "assets/jss/material-dashboard-pro-react/components/paginationStyleV2.js";
+import GridContainer from "../Grid/GridContainer";
+import GridItem from "../Grid/GridItem";
+// import './paginationStyle.css'
+import {pagination} from "../../utils/common-utils";
 import Select from "@material-ui/core/Select";
 
 const useStyles = makeStyles(styles);
@@ -19,21 +19,21 @@ export default function Pagination(props) {
   const classes = useStyles();
   const { pages, color } = props;
   return (
-    <GridContainer className="paginationBg">
+    <GridContainer>
       <GridItem xs={12}>
         <GridContainer>
           <GridItem xs={6}>
-            <ul className={classes.pagination} style={{display:"flex",alignItems: "center",marginLeft:16}}>
+            <ul className={classes.pagination}>
               {pages.map((prop, key) => {
                 const paginationLink = cx({
-                  ["paginationLink"]: !prop.active,
-                  ["paginationLinkActive"]: prop.active,
-                  ["paginationDisabled"]: prop.disabled,
-                  ['paginationArrow']: prop.arrow,
-                  ['paginationNumber']: !prop.arrow
+                  [classes.paginationLink]: !prop.active,
+                  [classes.paginationLinkActive]: prop.active,
+                  [classes.paginationDisabled]: prop.disabled,
+                  [classes.paginationArrow]: prop.arrow,
+                  [classes.paginationNumber]: !prop.arrow
                 });
                 return (
-                  <li className={prop.arrow ? "paginationArrowLi" : "paginationLi"} style={{display:"inline"}} key={key}>
+                  <li className={prop.arrow ? classes.paginationArrowLi : classes.paginationLi} key={key}>
                     {prop.onClick !== undefined ? (
                       <Button onClick={prop.onClick} className={paginationLink}>
                         {prop.text}
@@ -51,19 +51,19 @@ export default function Pagination(props) {
               })}
             </ul>
           </GridItem>
-          <GridItem xs={6} className="paginationPage">
-            <ul className="paginationRow">
-              <li className="paginationShowing">
+          <GridItem xs={6} className={classes.paginationPage}>
+            <ul className={classes.paginationRow}>
+              <li className={classes.paginationShowing}>
                 Showing 1-6 of 50
               </li>
-              <li className="paginationItemsPerPage">
+              <li className={classes.paginationItemsPerPage}>
                 <span>
                   Items per page:
                 </span>
                 <Select
                   native
                   value={"1"}
-                  className="paginationSelectPage"
+                  className={classes.paginationSelectPage}
                 >
                   <option value={1}>5</option>
                   <option value={2}>10</option>

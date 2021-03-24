@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Select from "@material-ui/core/Select";
 import FormControl from "@material-ui/core/FormControl";
-import TableComponent from "../../../../Components/Table";
+import TableComponent from "../../../../../components/Table/CustomTable";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

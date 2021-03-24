@@ -13,7 +13,7 @@ import { Grid, InputAdornment, TablePagination } from "@material-ui/core";
 import CustomInput from "components/CustomInput/CustomInput.js";
 import IconButton from '@material-ui/core/IconButton';
 import complianceStyle from './style/complianceStyle';
-import TableComponent from "../../../Components/Table";
+import TableComponent from "../../../../components/Table/CustomTable";
 import Search from "@material-ui/icons/Search";
 import FilterIcon from "../../../../components/Icons/FilterIcon";
 const columns = [
