@@ -90,7 +90,7 @@ const styles = {
     alignItems: "flex-start",
     padding: "0px 0px !important"
   },
-  itemHeader: {
+  headerItem: {
     fontWeight: 700,
     fontSize: 14,
     color: "#25345C",
@@ -99,7 +99,7 @@ const styles = {
     lineHeight: "21px",
     overflow: "hidden"
   },
-  itemContent: {
+  contentItem: {
     color: "#B4B4B4",
     fontWeight: 700,
     fontSize: 14,
@@ -143,10 +143,10 @@ export default function Configuration() {
                   <GridItem className={classes.cardMultipleContent}>
                     <GridItem xs={12} sm={12} md={12} className={classes.gridContent} >
                       <CardBody className={classes.cardItem}>
-                        <GridItem className={classes.itemHeader} >
+                        <GridItem className={classes.headerItem} >
                           Enable Vehicle Battery Conservation Mode
                         </GridItem>
-                        <GridItem className={classes.itemContent} >
+                        <GridItem className={classes.contentItem} >
                           By default, the Samsara Vehicle Gateway uses a small amount of vehicle battery when idle.
                         </GridItem>
                       </CardBody>
@@ -157,10 +157,10 @@ export default function Configuration() {
 
                     <GridItem xs={12} sm={12} md={12} className={classes.gridContent} >
                       <CardBody className={classes.cardItem}>
-                        <GridItem className={classes.itemHeader} >
+                        <GridItem className={classes.headerItem} >
                           Enable Vehicle Battery Conservation Mode
                     </GridItem>
-                      <GridItem className={classes.itemContent} >
+                      <GridItem className={classes.contentItem} >
                         By default, the Samsara Vehicle Gateway uses a small amount of vehicle battery when idle.
                       </GridItem>
                       </CardBody>
@@ -171,10 +171,10 @@ export default function Configuration() {
 
                     <GridItem xs={12} sm={12} md={12} className={classes.gridContent} >
                       <CardBody className={classes.cardItem}>
-                        <GridItem className={classes.itemHeader} >
+                        <GridItem className={classes.headerItem} >
                           Enable Vehicle Battery Conservation Mode
                         </GridItem>
-                        <GridItem className={classes.itemContent} >
+                        <GridItem className={classes.contentItem} >
                           By default, the Samsara Vehicle Gateway uses a small amount of vehicle battery when idle.
                         </GridItem>
                       </CardBody>
@@ -185,10 +185,10 @@ export default function Configuration() {
 
                     <GridItem xs={12} sm={12} md={12} className={classes.gridContent} >
                       <CardBody className={classes.cardItem}>
-                        <GridItem className={classes.itemHeader} >
+                        <GridItem className={classes.headerItem} >
                           Enable Vehicle Battery Conservation Mode
                         </GridItem>
-                        <GridItem className={classes.itemContent} >
+                        <GridItem className={classes.contentItem} >
                           By default, the Samsara Vehicle Gateway uses a small amount of vehicle battery when idle.
                         </GridItem>
                       </CardBody>
