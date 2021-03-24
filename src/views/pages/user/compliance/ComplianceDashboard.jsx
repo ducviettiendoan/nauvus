@@ -11,13 +11,11 @@ import CardBody from "components/Card/CardBody.js";
 import ComplianceCard from "./ComplianceCard";
 import { Grid, InputAdornment, TablePagination } from "@material-ui/core";
 import CustomInput from "components/CustomInput/CustomInput.js";
-import SearchIcon from '@material-ui/icons/Search';
-import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
-import LocalBarOutlined from "@material-ui/icons/LocalBarOutlined";
 import complianceStyle from './style/complianceStyle';
 import TableComponent from "../../../Components/Table";
 import Search from "@material-ui/icons/Search";
+import FilterIcon from "../../../../components/Icons/FilterIcon";
 const columns = [
   { id: "driver", label: 'Driver', minWidth: 350 },
   { id: "hour", label: 'Hours in Violation', minWidth: 600 },
@@ -126,9 +124,8 @@ export default function ComplianceDashboard() {
                   />
                 </GridItem>
                 <GridItem xs={3} className={classes.filterButton} >
-                  {/* <Button className={classes.filterButtonText}>Filter</Button> */}
                   <IconButton className={classes.filterButtonText}>
-                    <img src="/Images/Icon/filter.svg" className={classes.filterIcon}/>
+                    <FilterIcon className={classes.filterIcon}/>
                   Filter
                   </IconButton>
                 </GridItem>

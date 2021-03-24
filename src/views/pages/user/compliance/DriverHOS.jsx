@@ -11,15 +11,8 @@ import GridItem from "components/Grid/GridItem.js";
 import { FormControl, Grid, Icon, IconButton, Select } from "@material-ui/core";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import AppBar from "@material-ui/core/AppBar";
-import CustomInput from "components/CustomInput/CustomInput.js";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Search from "@material-ui/icons/Search";
 import { MoreHoriz } from "@material-ui/icons";
 import Button from "components/CustomButtons/Button.js";
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
@@ -31,6 +24,9 @@ import {
 } from "assets/jss/material-dashboard-pro-react.js";
 import TableComponent from "../../../Components/Table";
 import SearchBox from "../../../../components/SearchBox/SearchBox";
+import FilterIcon from "../../../../components/Icons/FilterIcon";
+import ColumnIcon from "../../../../components/Icons/ColumnIcon";
+import CircleIcon from "../../../../components/Icons/CircleIcon";
 
 
 
@@ -140,7 +136,7 @@ const styles = {
     alignItems: "center !important",
   },
   filterIcon: {
-    marginRight: 8
+    marginTop: 13
   },
   headerRight: {
     textAlign: "right",
@@ -258,21 +254,21 @@ export default function DriverHOS() {
                     <GridItem xs={3} sm={3} md={3} className={classes.searchBar}>
                       <GridContainer justifyContent={"start"}>
                         <GridItem xs={6} sm={6} md={6} className={classes.hosData}>
-                          <FiberManualRecordIcon
-                            fontSize={"small"}
+                          <CircleIcon
                             style={{
                               color: "FF808B",
-                              fontSize: 16
+                              fontSize: 30,
+                              marginTop:18
                             }}
                           />
                           <div>In Violation</div>
                         </GridItem>
                         <GridItem xs={6} sm={6} md={6} className={classes.hosData}>
-                          <FiberManualRecordIcon
-                            fontSize={"small"}
+                          <CircleIcon
                             style={{
                               color: "E5B435",
-                              fontSize: 16
+                              fontSize: 30,
+                              marginTop:18
                             }}
                           />
                           <div>Nearing violation</div>
@@ -364,13 +360,13 @@ export default function DriverHOS() {
                       </> */}
                       <Grid item xs={6}>
                         <IconButton className={classes.filterButtonText2}>
-                          <img src="/Images/Icon/column.svg" className={classes.filterIcon} />
+                          <ColumnIcon className={classes.filterIcon}/>
                         Manage Column
                         </IconButton>
                       </Grid>
                       <Grid item xs={6}>
                         <IconButton className={classes.filterButtonText}>
-                          <img src="/Images/Icon/filter.svg" className={classes.filterIcon} />
+                          <FilterIcon className={classes.filterIcon}/>
                         Filter
                         </IconButton>
                       </Grid>

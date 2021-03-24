@@ -32,6 +32,9 @@
 .tabPanel > div {
     padding: 0px;
 }
+.tableRow{
+    color: #25345C;
+}
 .tableRow > td {
     padding: 20px;
 }

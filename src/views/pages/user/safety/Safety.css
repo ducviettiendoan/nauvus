@@ -113,10 +113,15 @@
 .filterButtonText{
     text-transform: none;
     font-size: 14px !important;
-    color: #25345C !important;
-    border-radius: 32px !important;
+    color: #25345C;
     border: 1px solid #C4C4C4 !important;
+    border-radius: 32px !important;
+    width: 100px !important;
+    min-width: 100px !important;
+    height: 40px;
+    position: absolute;
+    align-items: center !important
 }
 .filterIcon {
-    margin-right: 8px;
+    margin-top: 13px;
 }

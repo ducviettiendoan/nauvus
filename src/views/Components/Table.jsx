@@ -13,6 +13,14 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Pagination from "../../components/Pagination/Pagination";
 import {Row} from "reactstrap";
 import IconButton from "@material-ui/core/IconButton";
+import PaginationV2 from "./Pagination/PaginationV2";
+import ArrowDownIcon from "../../components/Icons/ArrowDownIcon";
+import ArrowLeftIcon from "../../components/Icons/ArrowLeftIcon";
+import ArrowRightIcon from "../../components/Icons/ArrowRightIcon";
+import ArrowUpIcon from "../../components/Icons/ArrowUpIcon";
+import EditIcon from "../../components/Icons/EditIcon";
+import DeleteIcon from "../../components/Icons/DeleteIcon";
+import CopyIcon from "../../components/Icons/CopyIcon";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,6 +73,18 @@ const useStyles = makeStyles((theme) => ({
   formatterText: {
     color: "#C4C4C4",
     fontSize: 14
+  },
+  rowText: {
+    fontSize:16,
+    color: "#25345C"
+  },
+  headText: {
+    fontWeight: "bold",
+    color: "#25345C",
+    fontSize:12
+  },
+  actionIcon : {
+    padding: 6
   }
 }));
 
@@ -88,6 +108,7 @@ function EnhancedTableHead(props) {
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : 'asc'}
               onClick={createSortHandler(headCell.id)}
+              className={classes.headText}
             >
               {headCell.label}
               {orderBy === headCell.id ? (
@@ -103,9 +124,10 @@ function EnhancedTableHead(props) {
           ?
             (
               <TableCell
-                align={'left'}
+                align={'right'}
+                className={classes.headText}
               >
-               Action
+                Actions
               </TableCell>
             )
             : ""
@@ -172,8 +194,6 @@ export default function TableComponent(props) {
     action = []
   }
 
-  console.log(action)
-
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -220,14 +240,14 @@ export default function TableComponent(props) {
                           if(i == 0) {
                             return (
                               <TableCell key={n.id} component={"th"} align="left">
-                                <b>{row[n.id]}</b>
+                                <b className={classes.rowText}>{row[n.id]}</b>
                                 <p className={classes.formatterText}>{n.formatter}</p>
                               </TableCell>
                             )
                           }else {
                             return (
                               <TableCell key={n.id} align="left">
-                                {row[n.id]}
+                                <p className={classes.rowText}>{row[n.id]}</p>
                                 <p className={classes.formatterText}>{n.formatter}</p>
                               </TableCell>)
                           }
@@ -237,27 +257,27 @@ export default function TableComponent(props) {
                         action.length > 0
                         ?
                           (
-                            <TableCell align="left">
+                            <TableCell align="right">
                               {
                                 action.map(item =>
                                   {
                                     {
                                       if (item == 'edit'){
                                         return (
-                                          <IconButton aria-label="upload picture" component="span">
-                                            <img src="/Images/Icon/edit.svg" alt=""/>
+                                          <IconButton className={classes.actionIcon} aria-label="upload picture" component="span">
+                                            <EditIcon style={{color:"#ffffff"}} />
                                           </IconButton>
                                         )
                                       }else if (item == 'delete'){
                                         return (
-                                          <IconButton aria-label="upload picture" component="span">
-                                            <img src="/Images/Icon/delete.svg" alt=""/>
+                                          <IconButton className={classes.actionIcon} aria-label="upload picture" component="span">
+                                            <DeleteIcon style={{color:"#C4C4C4"}} />
                                           </IconButton>
                                         )
                                       }else if (item == 'copy'){
                                         return (
-                                          <IconButton aria-label="upload picture" component="span">
-                                            <img src="/Images/Icon/copy.svg" alt=""/>
+                                          <IconButton className={classes.actionIcon} aria-label="upload picture" component="span">
+                                            <CopyIcon style={{color:"#ffffff"}} />
                                           </IconButton>
                                         )
                                       }
@@ -291,14 +311,18 @@ export default function TableComponent(props) {
         {/*    color="info"*/}
         {/*  />*/}
         {/*</Row>*/}
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
+        <PaginationV2
+          pages={[
+            { text: <ArrowDownIcon/>, arrow : true,disabled : true },
+            { text: <ArrowLeftIcon/>, arrow : true,disabled : true },
+            { active: true, text: 1 },
+            { text: 2 },
+            { text: 3 },
+            { text: 4 },
+            { text: 5 },
+            { text: <ArrowRightIcon/>, arrow : true },
+            { text: <ArrowUpIcon/>, arrow : true },
+          ]}
         />
       </Paper>
     </div>

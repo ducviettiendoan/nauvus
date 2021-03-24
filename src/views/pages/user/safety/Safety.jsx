@@ -29,6 +29,7 @@ import IconButton from "@material-ui/core/IconButton";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import FilterIcon from "../../../../components/Icons/FilterIcon";
 
 const styles = {
   cardTitle,
@@ -128,12 +129,17 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "36px",
     height: "40px",
     border: "1px solid #C4C4C4",
+    marginBottom:"0 !important"
   },
   inputAdornmentIcon: {
     color: "#8181A5",
     fontSize: "18px",
     marginLeft: "0 !important;",
   },
+  headerLeft: {
+    display: "flex",
+    justifyContent: "flex-start"
+  }
 }));
 
 const AntTabs = withStyles((theme) => ({
@@ -205,7 +211,7 @@ export default function Safety(){
                   <GridContainer style={{padding: 16}}>
                     <GridItem xs={12} sm={12} md={12}>
                       <GridContainer style={{padding: "0 16px",alignItems: "center"}}>
-                        <GridItem xs={3} sm={3} md={3}>
+                        <GridItem xs={6} sm={6} md={6} className={classes.headerLeft}>
                         <CustomInput
                           formControlProps={{
                             className: classes.btnSearchOnMap
@@ -221,9 +227,9 @@ export default function Safety(){
                           }}
                         />
                         </GridItem>
-                        <GridItem xs={9} sm={9} md={9} className="headerRight">
+                        <GridItem xs={6} sm={6} md={6} className="headerRight">
                           <IconButton className="filterButtonText">
-                            <img src="/Images/Icon/filter.svg" className="filterIcon"/>
+                            <FilterIcon className="filterIcon"/>
                             Filter
                           </IconButton>
                         </GridItem>

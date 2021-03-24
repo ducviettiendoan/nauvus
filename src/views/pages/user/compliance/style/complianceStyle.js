@@ -90,7 +90,7 @@ const complianceStyle = {
     backgroundColor: "#ECEEF0"
   },
   filterIcon: {
-    marginRight: 8
+    marginTop: 13
   },
   btnSearchOnMap: {
     background: "white",

@@ -11,18 +11,13 @@ import GridItem from "components/Grid/GridItem.js";
 import { FormControl, Grid, Icon, IconButton, Select } from "@material-ui/core";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import AppBar from "@material-ui/core/AppBar";
 import CustomInput from "components/CustomInput/CustomInput.js";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Search from "@material-ui/icons/Search";
 import { MoreHoriz } from "@material-ui/icons";
 import Button from "components/CustomButtons/Button.js";
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 
 
 import {
@@ -30,6 +25,8 @@ import {
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
 import TableComponent from "../../../Components/Table";
+import FilterIcon from "../../../../components/Icons/FilterIcon";
+import ColumnIcon from "../../../../components/Icons/ColumnIcon";
 
 
 
@@ -139,7 +136,7 @@ const styles = {
     alignItems: "center !important",
   },
   filterIcon: {
-    marginRight: 8
+    marginTop: 13
   },
   headerRight: {
     textAlign: "right",
@@ -334,13 +331,13 @@ export default function DriverHOS() {
                     <GridItem style={{ textAlign: "right" }}>
                       <GridItem>
                         <IconButton className={classes.filterButtonText2}>
-                          <img src="/Images/Icon/column.svg" className={classes.filterIcon} />
+                          <ColumnIcon className={classes.filterIcon}/>
                         Manage Column
                         </IconButton>
                       </GridItem>
                       <GridItem>
                         <IconButton className={classes.filterButtonText}>
-                          <img src="/Images/Icon/filter.svg" className={classes.filterIcon} />
+                          <FilterIcon className={classes.filterIcon}/>
                         Filter
                         </IconButton>
                       </GridItem>
