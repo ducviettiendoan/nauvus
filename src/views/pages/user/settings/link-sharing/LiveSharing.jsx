@@ -9,19 +9,15 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
 import TableComponent from "../../../../Components/Table"
-import CustomInput from "../../../../../components/CustomInput/CustomInput"
 import ControlPointIcon from '@material-ui/icons/ControlPoint';
-import SearchIcon from '@material-ui/icons/Search';
-
 import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
 import { Tabs, Typography } from "@material-ui/core";
 import Button from "components/CustomButtons/Button.js";
-import SearchBox from "../../../../../components/SearchBox/SearchBox";
+import SearchBox from "components/SearchBox/SearchBox";
 
 const styles = {
   cardTitle,
@@ -81,12 +77,13 @@ const styles = {
   liveSharingTitle: {
     fontWeight: 700,
     fontSize: 18,
-    textAlign: "left"
+    textAlign: "left",
+    color: "#25345C"
   },
-  liveSharingBtn: {
+  liveSharingButton: {
     textAlign: "right",
   },
-  btnCreateLink: {
+  createLinkButton: {
     background: "#25345C",
     color: "white",
     borderRadius: 28,
@@ -94,7 +91,11 @@ const styles = {
     height: 46,
     fontSize: 14,
     marginRight: 21,
-    marginTop: 17
+    marginTop: 17,
+    "&:hover": {
+      background: "#25345C !important"
+    },
+    fontWeight: 700
   },
   tableContainer: {
     paddingLeft: 0,
@@ -108,35 +109,16 @@ const styles = {
   topHeader: {
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    marginTop: 15
   },
   topHeaderTitle: {
-    textAlign: "left"
+    textAlign: "left",
   },
   topHeaderButton: {
-    textAlign: "right"
+    textAlign: "right",
   },
-  btnTabs: {
-    background: "#FFFFFF",
-    color: "#25345C",
-    borderRadius: 28,
-    textTransform: "none",
-    height: 46,
-    fontSize: 13,
-    marginRight: 9,
-    marginTop: 17,
-    fontWeight: 700,
-  }
 };
-
-// const AntTabs = withStyles({
-//   root: {
-//     borderBottom: 'none !important',
-//   },
-//   // indicator: {
-//   //   backgroundColor: '#1890ff',
-//   // },
-// })(Tabs);
 
 const HeadCells = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
@@ -206,24 +188,41 @@ export default function LiveSharing() {
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
               <GridContainer className={classes.topHeader}>
-                <GridItem xs={12} sm={12} md={5} xl={5} className={classes.topHeaderTitle}>
-                  <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" indicatorColor="" textColor="" variant="scrollable" position="static">
-                    <Button variant="contained"
-                      color="secondary"
-                      className={classes.btnTabs} label="By Accet" {...a11yProps(0)}>By Accet</Button>
-                    <Button variant="contained"
-                      color="secondary"
-                      className={classes.btnTabs} label="By Location" {...a11yProps(1)} disabled={true} >By Location</Button>
-                    <Button variant="contained"
-                      color="secondary"
-                      className={classes.btnTabs} label="By Recurring Route" {...a11yProps(2)} disabled={true} >By Recurring Route</Button>
+                <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
+                  <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    variant="scrollable"
+                    position="static"
+                    indicatorColor=""
+                  >
+                    <Button
+                      className="btn-round-white mr-2"
+                      label="By Accet" {...a11yProps(0)}
+                    >
+                      By Accet
+                    </Button>
+                    <Button
+                      className="btn-round-white mr-2"
+                      label="By Location" {...a11yProps(1)}
+                      disabled={true}
+                    >
+                      By Location
+                    </Button>
+                    <Button
+                      className="btn-round-white mr-2 "
+                      label="By Recurring Route"
+                      {...a11yProps(2)}
+                      disabled={true}
+                    >
+                      By Recurring Route
+                    </Button>
                   </Tabs>
                 </GridItem>
-                <GridItem xs={12} sm={12} md={7} xl={7} className={classes.topHeaderButton}>
+                <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <Button
-                    variant="contained"
-                    color="secondary"
-                    className={classes.btnCreateLink}
+                    round
+                    className="btn-round-active mr-4"
                     startIcon={<ControlPointIcon />}
                   >
                     Create Link
@@ -236,31 +235,32 @@ export default function LiveSharing() {
                     <GridItem xs={12} sm={3} md={3} className={classes.liveSharingTitle}>
                       22
                     </GridItem>
-                    <GridItem xs={12} sm={9} md={9} className={classes.liveSharingBtn}>
+                    <GridItem xs={12} sm={9} md={9} className={classes.liveSharingButton}>
                       <SearchBox placeholder={"Search assets"} />
                     </GridItem>
-                    {/* <GridItem>
-                      
-                    </GridItem> */}
                   </GridContainer>
                 </CardBody>
-
-
-
-
-
                 <TabPanel value={value} index={0} className={classes.tableContainer} >
-                  <TableComponent rows={rows} headCells={HeadCells} action={["edit", "delete", "copy"]} />
+                  <TableComponent
+                    rows={rows}
+                    headCells={HeadCells}
+                    action={["edit", "delete", "copy"]}
+                  />
                 </TabPanel>
-
                 <TabPanel value={value} index={1} >
-                  <TableComponent rows={rows} headCells={HeadCells} action={["edit", "delete", "copy"]} />
+                  <TableComponent
+                    rows={rows}
+                    headCells={HeadCells}
+                    action={["edit", "delete", "copy"]}
+                  />
                 </TabPanel>
-
                 <TabPanel value={value} index={2}>
-                  <TableComponent rows={rows} headCells={HeadCells} action={["edit", "delete", "copy"]} />
+                  <TableComponent
+                    rows={rows}
+                    headCells={HeadCells}
+                    action={["edit", "delete", "copy"]}
+                  />
                 </TabPanel>
-
               </Card>
             </GridItem>
           </GridContainer>
