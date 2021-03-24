@@ -14,7 +14,7 @@ import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
-import { Divider, Grid } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
 
 const styles = {
   cardTitle,
