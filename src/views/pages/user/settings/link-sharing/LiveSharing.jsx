@@ -94,7 +94,11 @@ const styles = {
     height: 46,
     fontSize: 14,
     marginRight: 21,
-    marginTop: 17
+    marginTop: 17,
+    "&:hover" : {
+      background: "#25345C !important"
+    },
+    fontWeight: 700
   },
   tableContainer: {
     paddingLeft: 0,
@@ -126,6 +130,10 @@ const styles = {
     marginRight: 9,
     marginTop: 17,
     fontWeight: 700,
+    "&:hover" : {
+      background: "#FFFFFF !important",
+      color: "#25345C",
+    },
   }
 };
 

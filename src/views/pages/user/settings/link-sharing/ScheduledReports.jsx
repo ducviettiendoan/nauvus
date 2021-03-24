@@ -87,7 +87,11 @@ const styles = {
     borderRadius: 28,
     textTransform: "none",
     height: 46,
-    fontSize: 14
+    fontSize: 14,
+    "&:hover" : {
+      background: "#25345C !important"
+    },
+    fontWeight: 700
   },
   tableContainer: {
     paddingLeft: 0,

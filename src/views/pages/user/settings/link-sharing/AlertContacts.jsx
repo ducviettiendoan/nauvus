@@ -93,7 +93,11 @@ const styles = {
     textTransform: "none",
     height: 46,
     fontSize: 14,
-    marginRight: 8
+    marginRight: 8,
+    "&:hover" : {
+      background: "#25345C !important"
+    },
+    fontWeight: 700
   },
   tableContainer: {
     paddingLeft: 0,
