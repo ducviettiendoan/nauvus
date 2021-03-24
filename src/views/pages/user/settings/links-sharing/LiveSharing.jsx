@@ -17,7 +17,7 @@ import {
 } from "assets/jss/material-dashboard-pro-react.js";
 import { Tabs, Typography } from "@material-ui/core";
 import Button from "components/CustomButtons/Button.js";
-import SearchBox from "components/SearchBox/SearchBox";
+import SettingSearchBox from "components/SearchBox/SettingSearchBox";
 
 const styles = {
   cardTitle,
@@ -236,7 +236,7 @@ export default function LiveSharing() {
                       22
                     </GridItem>
                     <GridItem xs={12} sm={9} md={9} className={classes.liveSharingButton}>
-                      <SearchBox placeholder={"Search assets"} />
+                      <SettingSearchBox placeholder={"Search assets"} />
                     </GridItem>
                   </GridContainer>
                 </CardBody>

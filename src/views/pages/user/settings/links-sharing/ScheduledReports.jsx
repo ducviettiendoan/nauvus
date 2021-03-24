@@ -15,7 +15,7 @@ import {
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
 import Button from "components/CustomButtons/Button.js";
-import SearchBox from "components/SearchBox/SearchBox";
+import SettingSearchBox from "components/SearchBox/SettingSearchBox";
 const styles = {
   cardTitle,
   cardTitleWhite: {
@@ -139,7 +139,7 @@ export default function ScheduledReports() {
                   </GridContainer>
                   <GridContainer className={classes.liveSharingHeader}>
                     <GridItem xs={12} sm={12} md={12} className={classes.searchBox}>
-                      <SearchBox placeholder={"Search scheduled reports"} />
+                      <SettingSearchBox placeholder={"Search scheduled reports"} />
                     </GridItem>
                   </GridContainer>
                 </CardBody>

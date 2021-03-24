@@ -140,19 +140,19 @@ const dashRoutes = [
   },
   // Link -sharing
   {
-    path: "/links-sharing/alert-contacts",
+    path: "/link-sharing/alert-contacts",
     name: "Alert Contacts",
     component: AlertContacts,
     layout: "/setting"
   },
   {
-    path: "/links-sharing/scheduled-reports",
+    path: "/link-sharing/scheduled-reports",
     name: "Scheduled Reports",
     component: ScheduledReports,
     layout: "/setting"
   },
   {
-    path: "/links-sharing/live-sharing",
+    path: "/link-sharing/live-sharing",
     name: "Live Sharing",
     component: LiveSharing,
     layout: "/setting"

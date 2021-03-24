@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
 import FormatQuote from "@material-ui/icons/FormatQuote";
+import AddOutlined from "@material-ui/icons/AddOutlined";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
@@ -17,7 +18,23 @@ import {
 } from "assets/jss/material-dashboard-pro-react.js";
 import Button from "components/CustomButtons/Button.js";
 import { MoreHoriz } from "@material-ui/icons";
-import SearchBox from "components/SearchBox/SearchBox";
+import SettingSearchBox from "components/SearchBox/SettingSearchBox";
+
+import EditIcon from "components/Icons/EditIcon";
+import DeleteIcon from "components/Icons/DeleteIcon";
+import CopyIcon from "components/Icons/CopyIcon";
+
+import BootstrapTable from "react-bootstrap-table-next";
+import ToolkitProvider from "react-bootstrap-table2-toolkit";
+import { pagination } from 'utils/common-utils';
+import { Row } from "reactstrap";
+import Paging from "components/Pagination/Paging";
+import Pagination from "components/Pagination/Pagination";
+import PaginationV2 from "components/Pagination/PaginationV2";
+import ArrowDownIcon from "components/Icons/ArrowDownIcon";
+import ArrowLeftIcon from "components/Icons/ArrowLeftIcon";
+import ArrowRightIcon from "components/Icons/ArrowRightIcon";
+import ArrowUpIcon from "components/Icons/ArrowUpIcon";
 
 const styles = {
   cardTitle,
@@ -118,35 +135,75 @@ const styles = {
   searchBox: {
     marginTop: "16px !important",
     textAlign: "right"
+  },
+  textName : {
+    fontWeight: 'bold',
+    fontSize: '16px',
+    lineHeight: '24px',
+    marginTop: '14px',
+    color: '#25345C'
+  },
+  textSub : {
+    fontSize: '16px',
+    lineHeight: '24px',
+    marginTop: '14px'
+  },
+  iconButton: {
+    '&:hover': {
+      color: '#25345C !important',
+    },
   }
 };
 
-const HeadCells = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
-  { id: 'phone', numeric: true, disablePadding: false, label: 'Phone' },
-  { id: 'email', numeric: true, disablePadding: false, label: 'Email' },
-];
 
-function createData(name, phone, email) {
-  return { name, phone, email };
-}
-
-const rows = [
-  createData('Esther Howard', "(347) 555-0133", 'debra.holt@example.com'),
-  createData('Esther Howard', "(347) 555-0133", 'debra.holt@example.com'),
-  createData('Esther Howard', "(347) 555-0133", 'debra.holt@example.com'),
-  createData('Esther Howard', "(347) 555-0133", 'debra.holt@example.com'),
-  createData('Esther Howard', "(347) 555-0133", 'debra.holt@example.com'),
-  createData('Esther Howard', "(347) 555-0133", 'debra.holt@example.com'),
-  createData('Esther Howard', "(347) 555-0133", 'debra.holt@example.com'),
-  createData('Esther Howard', "(347) 555-0133", 'debra.holt@example.com'),
-  createData('Esther Howard', "(347) 555-0133", 'debra.holt@example.com'),
+const dumpData = [
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com'},
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com'},
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com'},
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com'},
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com'},
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com'},
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com'},
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com'},
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com'},
 ];
 
 const useStyles = makeStyles(styles);
 
-export default function AlertContacts() {
+export default function AlertContacts(props) {
   const classes = useStyles();
+
+  const formatName = (cell, row) => {
+    return <>
+      <div className={ classes.textName }>{cell}</div>
+    </>
+  }
+
+  const formatPhone = (cell, row) => {
+    return <>
+      <div className={ classes.textSub }>{cell}</div>
+    </>
+  }
+
+  const formatEmail = (cell, row) => {
+    return <>
+      <div className={ classes.textSub }>{cell}</div>
+    </>
+  }
+
+  const addActionButton = () => {
+    return (
+      <>
+        <Button justIcon color="twitter" simple>
+          <EditIcon className={ classes.iconButton } style={{color:"#ffffff", width: '22px', height: '22px'}} />
+        </Button>
+        <Button justIcon color="google" simple>
+          <DeleteIcon className={ classes.iconButton } style={{color:"#C4C4C4", width: '24px', height: '24px'}} />
+        </Button>
+      </>
+    )
+  }
+
   return (
     <div>
       <GridContainer>
@@ -163,7 +220,7 @@ export default function AlertContacts() {
                       <Button
                         round
                         className="btn-round-active mr-2"
-                        startIcon={<ControlPointIcon />}
+                        startIcon={<AddOutlined />}
                       >
                         Add contact
                       </Button>
@@ -180,15 +237,72 @@ export default function AlertContacts() {
                   </GridContainer>
                   <GridContainer className={classes.liveSharingHeader}>
                     <GridItem xs={12} sm={12} md={12} className={classes.searchBox}>
-                      <SearchBox placeholder={"Search contacts"} />
+                      <SettingSearchBox placeholder={"Search contacts"} />
                     </GridItem>
                   </GridContainer>
                 </CardBody>
-                <TableComponent
-                  rows={rows}
-                  headCells={HeadCells}
-                  action={["edit", "delete"]}
-                />
+                <div>
+                  <ToolkitProvider
+                      data={ dumpData }
+                      keyField="_id"
+                      columns={[
+                        {
+                          dataField: "name",
+                          text: "Name",
+                          formatter: formatName
+                        },
+                        {
+                          dataField: "phone",
+                          text: "Phone",
+                          formatter: formatPhone
+                        },
+                        {
+                          dataField: "email",
+                          text: "Email",
+                          formatter: formatEmail
+                        },
+                        {
+                            dataField: "action",
+                            text: "",
+                            formatter: addActionButton
+                        } 
+                        ]}
+                            >
+                              {props => (
+                                <div className="table table-settings">
+                                    <BootstrapTable
+                                      {...props.baseProps}
+                                      bootstrap4={true}
+                                      // pagination={pagination}
+                                      bordered={false}
+                                    />
+                                    <Row className="justify-content-center">
+                                      {/* <Pagination
+                                        pages={[
+                                          { text: "PREV" },
+                                          { active: true, text: 1 },
+                                          { text: "NEXT" }
+                                        ]}
+                                        color="info"
+                                      /> */}
+                                      <PaginationV2
+                                        pages={[
+                                          { text: <ArrowDownIcon/>, arrow : true,disabled : true },
+                                          { text: <ArrowLeftIcon/>, arrow : true,disabled : true },
+                                          { active: true, text: 1 },
+                                          { text: 2 },
+                                          { text: 3 },
+                                          { text: 4 },
+                                          { text: 5 },
+                                          { text: <ArrowRightIcon/>, arrow : true },
+                                          { text: <ArrowUpIcon/>, arrow : true },
+                                        ]}
+                                      />
+                                    </Row>
+                                </div>
+                              )}
+                  </ToolkitProvider>
+                </div>
               </Card>
             </GridItem>
           </GridContainer>
