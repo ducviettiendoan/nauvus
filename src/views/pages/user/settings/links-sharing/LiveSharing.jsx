@@ -25,6 +25,10 @@ import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import EditIcon from "../../../../../components/Icons/EditIcon";
 import DeleteIcon from "../../../../../components/Icons/DeleteIcon";
 import CopyIcon from "../../../../../components/Icons/CopyIcon";
+import ArrowDownIcon from "../../../../../components/Icons/ArrowDownIcon";
+import ArrowLeftIcon from "../../../../../components/Icons/ArrowLeftIcon";
+import ArrowRightIcon from "../../../../../components/Icons/ArrowRightIcon";
+import ArrowUpIcon from "../../../../../components/Icons/ArrowUpIcon";
 
 const styles = {
   cardTitle,
@@ -336,7 +340,22 @@ export default function LiveSharing() {
                                           { text: <ArrowUpIcon/>, arrow : true },
                                         ]}
                                       /> */}
-                          <GenPaginationV1 total={ 200 } page={ 1 } size={ 10 } />
+                          <GenPaginationV1
+                            total={ 200 }
+                            page={ 1 }
+                            size={ 10 }
+                            pages={[
+                              { text: <ArrowDownIcon/>, arrow : true,disabled : true },
+                              { text: <ArrowLeftIcon/>, arrow : true,disabled : true },
+                              { active: true, text: 1 },
+                              { text: 2 },
+                              { text: 3 },
+                              { text: 4 },
+                              { text: 5 },
+                              { text: <ArrowRightIcon/>, arrow : true },
+                              { text: <ArrowUpIcon/>, arrow : true },
+                            ]}
+                          />
                         </Row>
                       </div>
                     )}
