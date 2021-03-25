@@ -598,37 +598,6 @@ export default function UserRoles() {
                           bootstrap4={true}
                           bordered={false}
                         />
-                        <Row className="justify-content-center">
-                          {/* <PaginationV2
-                                        pages={[
-                                          { text: <ArrowDownIcon/>, arrow : true,disabled : true },
-                                          { text: <ArrowLeftIcon/>, arrow : true,disabled : true },
-                                          { active: true, text: 1 },
-                                          { text: 2 },
-                                          { text: 3 },
-                                          { text: 4 },
-                                          { text: 5 },
-                                          { text: <ArrowRightIcon/>, arrow : true },
-                                          { text: <ArrowUpIcon/>, arrow : true },
-                                        ]}
-                                      /> */}
-                          <GenPaginationV1
-                            total={ 200 }
-                            page={ 1 }
-                            size={ 10 }
-                            pages={[
-                              { text: <ArrowDownIcon/>, arrow : true,disabled : true },
-                              { text: <ArrowLeftIcon/>, arrow : true,disabled : true },
-                              { active: true, text: 1 },
-                              { text: 2 },
-                              { text: 3 },
-                              { text: 4 },
-                              { text: 5 },
-                              { text: <ArrowRightIcon/>, arrow : true },
-                              { text: <ArrowUpIcon/>, arrow : true },
-                            ]}
-                          />
-                        </Row>
                       </div>
                     )}
                   </ToolkitProvider>
@@ -650,6 +619,7 @@ export default function UserRoles() {
               </TabPanel>
             </GridItem>
           </GridContainer>
+          <GenPaginationV1 total={29} page={1} size={10} />
         </GridItem>
       </GridContainer>
     </div>
