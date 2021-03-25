@@ -3,18 +3,14 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
 import AddOutlined from "@material-ui/icons/AddOutlined";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import TableComponent from "components/Table/CustomTable"
-import ControlPointIcon from '@material-ui/icons/ControlPoint';
 import {
   cardTitle,
-  roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
 import Button from "components/CustomButtons/Button.js";
 import { MoreHoriz } from "@material-ui/icons";
@@ -31,6 +27,7 @@ import { Row } from "reactstrap";
 import Paging from "components/Pagination/Paging";
 import Pagination from "components/Pagination/Pagination";
 import PaginationV2 from "components/Pagination/PaginationV2";
+import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 import ArrowDownIcon from "components/Icons/ArrowDownIcon";
 import ArrowLeftIcon from "components/Icons/ArrowLeftIcon";
 import ArrowRightIcon from "components/Icons/ArrowRightIcon";
@@ -38,20 +35,6 @@ import ArrowUpIcon from "components/Icons/ArrowUpIcon";
 
 const styles = {
   cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0"
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem"
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px"
-  },
   icon: {
     color: "#333333",
     margin: "10px auto 0",
@@ -69,23 +52,6 @@ const styles = {
       fontSize: "55px"
     }
   },
-  iconRose: {
-    color: roseColor
-  },
-  marginTop30: {
-    marginTop: "30px"
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px"
-    }
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  },
   liveSharingHeader: {
     display: "flex",
     justifyContent: "space-between",
@@ -99,34 +65,6 @@ const styles = {
   },
   liveSharingButton: {
     textAlign: "right",
-  },
-  createLinkButton: {
-    padding: "14px, 16px!important",
-    background: "#25345C",
-    color: "white",
-    borderRadius: 28,
-    textTransform: "none",
-    height: 46,
-    fontSize: 14,
-    marginRight: 8,
-    "&:hover": {
-      background: "#25345C !important"
-    },
-    fontWeight: 700
-  },
-  tableContainer: {
-    paddingLeft: 0,
-    paddingRight: 0
-  },
-  inputAdornmentIcon: {
-    color: "#8181A5",
-    fontSize: "18px",
-    marginLeft: "0 !important;"
-  },
-  inputBase: {
-    "& input::placeholder": {
-      fontSize: "14px"
-    }
   },
   moreAction: {
     background: "#FFFFFF !important",
@@ -275,19 +213,10 @@ export default function AlertContacts(props) {
                                     <BootstrapTable
                                       {...props.baseProps}
                                       bootstrap4={true}
-                                      // pagination={pagination}
                                       bordered={false}
                                     />
                                     <Row className="justify-content-center">
-                                      {/* <Pagination
-                                        pages={[
-                                          { text: "PREV" },
-                                          { active: true, text: 1 },
-                                          { text: "NEXT" }
-                                        ]}
-                                        color="info"
-                                      /> */}
-                                      <PaginationV2
+                                      {/* <PaginationV2
                                         pages={[
                                           { text: <ArrowDownIcon/>, arrow : true,disabled : true },
                                           { text: <ArrowLeftIcon/>, arrow : true,disabled : true },
@@ -299,7 +228,8 @@ export default function AlertContacts(props) {
                                           { text: <ArrowRightIcon/>, arrow : true },
                                           { text: <ArrowUpIcon/>, arrow : true },
                                         ]}
-                                      />
+                                      /> */}
+                                      <GenPaginationV1 total={ 200 } page={ 1 } size={ 10 } />
                                     </Row>
                                 </div>
                               )}
