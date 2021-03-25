@@ -3,6 +3,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
+import AddOutlined from "@material-ui/icons/AddOutlined";
 import FormatQuote from "@material-ui/icons/FormatQuote";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
@@ -10,8 +11,15 @@ import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import Button from "components/CustomButtons/Button.js";
-import ControlPointIcon from '@material-ui/icons/ControlPoint';
-import TableComponent from "../../../../Components/Table"
+
+import EditIcon from "components/Icons/EditIcon";
+import DeleteIcon from "components/Icons/DeleteIcon";
+import DotIcon from "components/Icons/DotIcon.jsx";
+
+import BootstrapTable from "react-bootstrap-table-next";
+import ToolkitProvider from "react-bootstrap-table2-toolkit";
+import { Row } from "reactstrap";
+//import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 
 import {
   cardTitle,
@@ -71,12 +79,15 @@ const styles = {
   apiTokensHeader: {
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    marginTop: 15
   },
   apiTokensTitle: {
+    textAlign: "left",
     fontWeight: 700,
     fontSize: 18,
-    textAlign: "left"
+    color: "#25345C",
+    padding: "0 16px !important"
   },
   apiTokensBtn: {
     textAlign: "right",
@@ -101,29 +112,66 @@ const styles = {
     textAlign: "right",
     fontSize: 15,
     fontWeight: 400
-  }
+  },
+  alignItemsCenter: {
+    display: "flex",
+    alignItems: "center",
+    paddingTop: 20,
+    marginLeft: '24px'
+  },
+  textName: {
+    fontWeight: 'bold',
+    fontSize: '16px',
+    lineHeight: '24px',
+    color: '#25345C',
+    marginLeft: '24px',
+    marginTop: '25px'
+  },
+  textSub: {
+    fontWeight: '400',
+    fontSize: '16px',
+    lineHeight: '24px',
+    marginTop: '25px',
+    marginLeft: '24px',
+    color: "#25345C",
+  },
+  textScope: {
+    fontSize: '16px',
+    lineHeight: '24px',
+    fontWeight: '400',
+
+  },
+  textStatus: {
+    fontSize: '16px',
+    lineHeight: '24px',
+    marginTop: '12px',
+    marginBottom: '14px',
+    marginLeft: '24px',
+    padding: "12px 14px",
+    color: "#27AE60",
+    background: "rgba(39, 174, 96, 0.1)",
+    borderRadius: 23,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontWeight:700,
+    width: 71
+  },
+  iconButton: {
+    '&:hover': {
+      color: '#25345C !important',
+    },
+  },
 };
 
-const HeadCells = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
-  { id: 'accessToken', numeric: true, disablePadding: false, label: 'Access Token' },
-  { id: 'scope', numeric: true, disablePadding: false, label: 'Scope' },
-  { id: 'version', numeric: true, disablePadding: false, label: 'Version' },
-  { id: 'status', numeric: true, disablePadding: false, label: 'Status' },
-];
-
-function createData(name, accessToken, scope, version, status) {
-  return { name, accessToken, scope, version, status };
-}
-
-const rows = [
-  createData('Truckmate', 'nauvus_api_IsXNeRyK8fPRSs9z0IcSeQ9sJhrchX', 'Full Admin', '2021-02-16', 'Latest'),
-  createData('Truckmate', 'nauvus_api_IsXNeRyK8fPRSs9z0IcSeQ9sJhrchX', 'Full Admin', '2021-02-16', 'Latest'),
-  createData('Truckmate', 'nauvus_api_IsXNeRyK8fPRSs9z0IcSeQ9sJhrchX', 'Full Admin', '2021-02-16', 'Latest'),
-  createData('Truckmate', 'nauvus_api_IsXNeRyK8fPRSs9z0IcSeQ9sJhrchX', 'Full Admin', '2021-02-16', 'Latest'),
-  createData('Truckmate', 'nauvus_api_IsXNeRyK8fPRSs9z0IcSeQ9sJhrchX', 'Full Admin', '2021-02-16', 'Latest'),
-  createData('Truckmate', 'nauvus_api_IsXNeRyK8fPRSs9z0IcSeQ9sJhrchX', 'Full Admin', '2021-02-16', 'Latest'),
-
+const dumpData = [
+  { name: 'Truckmate', accessTokens: "nauvus_api_IsXNeRyK8fPRSs9z0IcSeQ9sJhrchX", scope: 'Full Admin', version: "2021-02-16", status: "Latest" },
+  { name: 'Truckmate', accessTokens: "nauvus_api_IsXNeRyK8fPRSs9z0IcSeQ9sJhrchX", scope: 'Full Admin', version: "2021-02-16", status: "Latest" },
+  { name: 'Truckmate', accessTokens: "nauvus_api_IsXNeRyK8fPRSs9z0IcSeQ9sJhrchX", scope: 'Full Admin', version: "2021-02-16", status: "Latest" },
+  { name: 'Truckmate', accessTokens: "nauvus_api_IsXNeRyK8fPRSs9z0IcSeQ9sJhrchX", scope: 'Full Admin', version: "2021-02-16", status: "Latest" },
+  { name: 'Truckmate', accessTokens: "nauvus_api_IsXNeRyK8fPRSs9z0IcSeQ9sJhrchX", scope: 'Full Admin', version: "2021-02-16", status: "Latest" },
+  { name: 'Truckmate', accessTokens: "nauvus_api_IsXNeRyK8fPRSs9z0IcSeQ9sJhrchX", scope: 'Full Admin', version: "2021-02-16", status: "Latest" },
+  
 ];
 
 
@@ -131,6 +179,52 @@ const useStyles = makeStyles(styles);
 
 export default function APITokens() {
   const classes = useStyles();
+
+  const formatName = (cell, row) => {
+    return <>
+      <div className={classes.textName}>{cell}</div>
+    </>
+  }
+
+  const formatTokens = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+  const formatScope = (cell, row) => {
+    return <>
+      <div className={classes.alignItemsCenter}>
+        <div><DotIcon style={{color: "#7CE7AC",marginTop:10}}/></div>
+        <div className={classes.textScope}>{cell}</div>
+      </div>
+    </>
+  }
+
+  const formatVersion = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+  const formatStatus = (cell, row) => {
+    return <>
+      <div className={classes.textStatus}>{cell}</div>
+    </>
+  }
+
+  const addActionButton = () => {
+    return (
+      <>
+        <Button justIcon color="twitter" simple>
+          <EditIcon className={classes.iconButton} style={{ color: "#ffffff", width: '22px', height: '22px' }} />
+        </Button>
+        <Button justIcon color="google" simple>
+          <DeleteIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
+        </Button>
+      </>
+    )
+  }
   return (
     <div>
       <GridContainer>
@@ -138,25 +232,75 @@ export default function APITokens() {
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
 
-
-              <Card testimonial>
-
-                <CardBody>
                   <GridContainer className={classes.apiTokensHeader}>
-                    <GridItem xs={3} sm={3} md={3} className={classes.apiTokensTitle}>
+                    <GridItem xs={12} sm={11} md={8} xl={6} className={classes.apiTokensTitle}>
                       6 Tokens
                     </GridItem>
-                    <GridItem xs={9} sm={9} md={9} className={classes.apiTokensBtn}>
+                    <GridItem xs={12} sm={4} md={4} xl={6} className={classes.apiTokensBtn}>
                       <Button
-                        className="btn-round-active"
-                        startIcon={<ControlPointIcon />}
+                        round
+                        className="btn-round-active mr-2"
+                        startIcon={<AddOutlined />}
                       >
                         Add an API Token
                       </Button>
                     </GridItem>
                   </GridContainer>
-                </CardBody>
-                <TableComponent rows={rows} headCells={HeadCells} action={["edit", "delete"]} />
+              <Card testimonial>
+                  
+                {/* <CardBody>
+                  
+                </CardBody> */}
+                <ToolkitProvider
+                      data={ dumpData }
+                      keyField="_id"
+                      columns={[
+                        {
+                          dataField: "name",
+                          text: "Name",
+                          formatter: formatName
+                        },
+                        {
+                          dataField: "accessTokens",
+                          text: "Acces Tokens",
+                          formatter: formatTokens
+                        },
+                        {
+                          dataField: "scope",
+                          text: "Scope",
+                          formatter: formatScope
+                        },
+                        {
+                          dataField: "version",
+                          text: "Version",
+                          formatter: formatVersion
+                        },
+                        {
+                          dataField: "status",
+                          text: "Status",
+                          formatter: formatStatus
+                        },
+                        {
+                            dataField: "action",
+                            text: "Actions",
+                            formatter: addActionButton
+                        } 
+                        ]}
+                            >
+                              {props => (
+                                <div className="table table-settings">
+                                    <BootstrapTable
+                                      {...props.baseProps}
+                                      bootstrap4={true}
+                                      bordered={false}
+                                    />
+                                    <Row className="justify-content-center">
+                                      
+                          {/* <GenPaginationV1 total={29} page={1} size={10} /> */}
+                        </Row>
+                      </div>
+                    )}
+                  </ToolkitProvider>
                 <CardBody>
                   <GridContainer className={classes.apiTokensHeader}>
                     <GridItem className={classes.apiTokensGuide}>
