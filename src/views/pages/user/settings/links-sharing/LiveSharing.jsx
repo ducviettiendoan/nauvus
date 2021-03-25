@@ -205,7 +205,7 @@ export default function LiveSharing() {
                     <Button
                       className="btn-round-white mr-2"
                       label="By Location" {...a11yProps(1)}
-                      disabled={true}
+                      // disabled={true}
                     >
                       By Location
                     </Button>

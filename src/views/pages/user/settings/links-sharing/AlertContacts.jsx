@@ -165,6 +165,12 @@ export default function AlertContacts(props) {
                         Add contact
                       </Button>
                       <Button
+                        round
+                        className="btn-round-gray mr-2"
+                      >
+                        Add contact
+                      </Button>
+                      <Button
                         color="white"
                         aria-label="edit"
                         justIcon
