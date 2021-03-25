@@ -129,8 +129,12 @@ const styles = {
   },
   bigCard: {
     marginTop: "0px!important",
-    marginBottom: "20px!important"
+    marginBottom: "20px!important",
+    height: "90%",
     // margin: "0px 16px 20px 16px!important",
+  },
+  bigCardGridItem: {
+    padding: "0 8px!important",
   }
 };
 
@@ -159,8 +163,10 @@ export default function DeveloperMetrics() {
             <GridItem xs={12} sm={12} md={12}>
               <Card testimonial>
                 <CardBody className="body">
-                  <GridContainer spacing={2}>
-                    <GridItem className={classes.bigCard} component={Card} xs={3}>
+                  <GridContainer spacing={2} alignItems="stretch">
+                    <GridItem className={classes.bigCardGridItem} xs={3}>
+                      <Card className={classes.bigCard}>
+                        <CardBody>
                           <h5 className={classes.boldBlueLeft + " pl-2 my-3"}>
                             Summary
                           </h5>
@@ -182,8 +188,12 @@ export default function DeveloperMetrics() {
                               <div className={classes.boldBlueLeft}>99.99%</div>
                             </div>
                           </div>
+                        </CardBody>
+                      </Card>
                     </GridItem>
-                    <GridItem className={classes.bigCard} component={Card} xs={9}>
+                    <GridItem className={classes.bigCardGridItem} xs={9}>
+                      <Card className={classes.bigCard}>
+                        <CardBody>
                           <GridContainer >
                             <GridItem xs={6}>
                               <h4 className={classes.boldBlueLeft + " my-4" }>
@@ -211,6 +221,8 @@ export default function DeveloperMetrics() {
                               <EChart/>
                             </GridItem>
                           </GridContainer>
+                        </CardBody>
+                      </Card>
                     </GridItem>
                   </GridContainer>
                 </CardBody>
