@@ -203,7 +203,7 @@ export default function AlertContacts(props) {
                         },
                         {
                             dataField: "action",
-                            text: "",
+                            text: "Actions",
                             formatter: addActionButton
                         } 
                         ]}

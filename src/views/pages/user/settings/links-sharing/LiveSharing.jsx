@@ -18,6 +18,13 @@ import {
 import { Tabs, Typography } from "@material-ui/core";
 import Button from "components/CustomButtons/Button.js";
 import SettingSearchBox from "components/SearchBox/SettingSearchBox";
+import BootstrapTable from "react-bootstrap-table-next";
+import {Row} from "reactstrap";
+import GenPaginationV1 from "../../../../../components/Pagination/GenPaginationV1";
+import ToolkitProvider from "react-bootstrap-table2-toolkit";
+import EditIcon from "../../../../../components/Icons/EditIcon";
+import DeleteIcon from "../../../../../components/Icons/DeleteIcon";
+import CopyIcon from "../../../../../components/Icons/CopyIcon";
 
 const styles = {
   cardTitle,
@@ -118,6 +125,25 @@ const styles = {
   topHeaderButton: {
     textAlign: "right",
   },
+  textName: {
+    fontWeight: 'bold',
+    fontSize: '16px',
+    lineHeight: '24px',
+    marginTop: '14px',
+    color: '#25345C',
+    marginLeft: '24px'
+  },
+  textSub: {
+    fontSize: '16px',
+    lineHeight: '24px',
+    marginTop: '14px',
+    marginLeft: '24px'
+  },
+  iconButton: {
+    '&:hover': {
+      color: '#25345C !important',
+    },
+  }
 };
 
 const HeadCells = [
@@ -125,19 +151,18 @@ const HeadCells = [
   { id: 'linkExpires', numeric: true, disablePadding: false, label: 'Link Expires' },
 ];
 
-function createData(name, linkExpires) {
-  return { name, linkExpires };
-}
-
-const rows = [
-  createData('GR9X-6AN-3N5', 'Never'),
-  createData('GR9X-6AN-3N5', 'Never'),
-  createData('GR9X-6AN-3N5', 'Never'),
-  createData('GR9X-6AN-3N5', 'Never'),
-  createData('GR9X-6AN-3N5', 'Never'),
-  createData('GR9X-6AN-3N5', 'Never'),
-  createData('GR9X-6AN-3N5', 'Never'),
-  createData('GR9X-6AN-3N5', 'Never'),
+const dumpData = [
+  { name: 'GR9X-6AN-3N5',linkExpires : 'Never'},
+  { name: 'GR9X-6AN-3N5',linkExpires : 'Never'},
+  { name: 'GR9X-6AN-3N5',linkExpires : 'Never'},
+  { name: 'GR9X-6AN-3N5',linkExpires : 'Never'},
+  { name: 'GR9X-6AN-3N5',linkExpires : 'Never'},
+  { name: 'GR9X-6AN-3N5',linkExpires : 'Never'},
+  { name: 'GR9X-6AN-3N5',linkExpires : 'Never'},
+  { name: 'GR9X-6AN-3N5',linkExpires : 'Never'},
+  { name: 'GR9X-6AN-3N5',linkExpires : 'Never'},
+  { name: 'GR9X-6AN-3N5',linkExpires : 'Never'},
+  { name: 'GR9X-6AN-3N5',linkExpires : 'Never'}
 ];
 
 function TabPanel(props) {
@@ -180,6 +205,34 @@ export default function LiveSharing() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const formatName = (cell, row) => {
+    return <>
+      <div className={ classes.textName }>{cell}</div>
+    </>
+  }
+
+  const formatLinkExpires = (cell, row) => {
+    return <>
+      <div className={ classes.textSub }>{cell}</div>
+    </>
+  }
+
+  const addActionButton = () => {
+    return (
+      <>
+        <Button justIcon color="twitter" simple>
+          <EditIcon className={ classes.iconButton } style={{color:"#ffffff", width: '22px', height: '22px'}} />
+        </Button>
+        <Button justIcon color="google" simple>
+          <DeleteIcon className={ classes.iconButton } style={{color:"#C4C4C4", width: '24px', height: '24px'}} />
+        </Button>
+        <Button justIcon color="google" simple>
+          <CopyIcon className={ classes.iconButton } style={{color:"#ffffff", width: '22px', height: '22px'}} />
+        </Button>
+      </>
+    )
+  }
 
   return (
     <div>
@@ -241,25 +294,67 @@ export default function LiveSharing() {
                   </GridContainer>
                 </CardBody>
                 <TabPanel value={value} index={0} className={classes.tableContainer} >
-                  <TableComponent
-                    rows={rows}
-                    headCells={HeadCells}
-                    action={["edit", "delete", "copy"]}
-                  />
+                  <ToolkitProvider
+                    data={ dumpData }
+                    keyField="_id"
+                    columns={[
+                      {
+                        dataField: "name",
+                        text: "Name",
+                        formatter: formatName
+                      },
+                      {
+                        dataField: "linkExpires",
+                        text: "Link Expires",
+                        formatter: formatLinkExpires
+                      },
+                      {
+                        dataField: "action",
+                        text: "",
+                        formatter: addActionButton
+                      }
+                    ]}
+                  >
+                    {props => (
+                      <div className="table table-settings">
+                        <BootstrapTable
+                          {...props.baseProps}
+                          bootstrap4={true}
+                          bordered={false}
+                        />
+                        <Row className="justify-content-center">
+                          {/* <PaginationV2
+                                        pages={[
+                                          { text: <ArrowDownIcon/>, arrow : true,disabled : true },
+                                          { text: <ArrowLeftIcon/>, arrow : true,disabled : true },
+                                          { active: true, text: 1 },
+                                          { text: 2 },
+                                          { text: 3 },
+                                          { text: 4 },
+                                          { text: 5 },
+                                          { text: <ArrowRightIcon/>, arrow : true },
+                                          { text: <ArrowUpIcon/>, arrow : true },
+                                        ]}
+                                      /> */}
+                          <GenPaginationV1 total={ 200 } page={ 1 } size={ 10 } />
+                        </Row>
+                      </div>
+                    )}
+                  </ToolkitProvider>
                 </TabPanel>
                 <TabPanel value={value} index={1} >
-                  <TableComponent
-                    rows={rows}
-                    headCells={HeadCells}
-                    action={["edit", "delete", "copy"]}
-                  />
+                  {/*<TableComponent*/}
+                  {/*  rows={rows}*/}
+                  {/*  headCells={HeadCells}*/}
+                  {/*  action={["edit", "delete", "copy"]}*/}
+                  {/*/>*/}
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                  <TableComponent
-                    rows={rows}
-                    headCells={HeadCells}
-                    action={["edit", "delete", "copy"]}
-                  />
+                  {/*<TableComponent*/}
+                  {/*  rows={rows}*/}
+                  {/*  headCells={HeadCells}*/}
+                  {/*  action={["edit", "delete", "copy"]}*/}
+                  {/*/>*/}
                 </TabPanel>
               </Card>
             </GridItem>
