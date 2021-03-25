@@ -296,7 +296,7 @@ export default function LiveSharing() {
                     <Tab
                       className={classes.tabItemStyles}
                       label="By Location" {...a11yProps(1)}
-                      disabled={true}
+                      // disabled={true}
                     >
                       By Location
                     </Tab>

@@ -39,7 +39,9 @@ const styles = {
   },
   extraSidebarSearchContainer: {
     height: '68px',
-    borderBottom: '1px solid #25345c1f'
+    borderBottom: '1px solid #25345c1f',
+    marginLeft: '-18px',
+    marginRight: '-18px',
   },
   btnSearch: {
     fontWeight: 'bold',
