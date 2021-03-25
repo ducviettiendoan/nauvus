@@ -3,38 +3,29 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
+import AddOutlined from "@material-ui/icons/AddOutlined";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import TableComponent from "components/Table/CustomTable"
-import ControlPointIcon from '@material-ui/icons/ControlPoint';
 import {
   cardTitle,
-  roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
 import Button from "components/CustomButtons/Button.js";
 import { MoreHoriz } from "@material-ui/icons";
-import SearchBox from "components/SearchBox/SearchBox";
+import SettingSearchBox from "components/SearchBox/SettingSearchBox";
+
+import EditIcon from "components/Icons/EditIcon";
+import DeleteIcon from "components/Icons/DeleteIcon";
+
+import BootstrapTable from "react-bootstrap-table-next";
+import ToolkitProvider from "react-bootstrap-table2-toolkit";
+import { Row } from "reactstrap";
+import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 
 const styles = {
   cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0"
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem"
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px"
-  },
   icon: {
     color: "#333333",
     margin: "10px auto 0",
@@ -52,23 +43,6 @@ const styles = {
       fontSize: "55px"
     }
   },
-  iconRose: {
-    color: roseColor
-  },
-  marginTop30: {
-    marginTop: "30px"
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px"
-    }
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  },
   liveSharingHeader: {
     display: "flex",
     justifyContent: "space-between",
@@ -83,34 +57,6 @@ const styles = {
   liveSharingButton: {
     textAlign: "right",
   },
-  createLinkButton: {
-    padding: "14px, 16px!important",
-    background: "#25345C",
-    color: "white",
-    borderRadius: 28,
-    textTransform: "none",
-    height: 46,
-    fontSize: 14,
-    marginRight: 8,
-    "&:hover": {
-      background: "#25345C !important"
-    },
-    fontWeight: 700
-  },
-  tableContainer: {
-    paddingLeft: 0,
-    paddingRight: 0
-  },
-  inputAdornmentIcon: {
-    color: "#8181A5",
-    fontSize: "18px",
-    marginLeft: "0 !important;"
-  },
-  inputBase: {
-    "& input::placeholder": {
-      fontSize: "14px"
-    }
-  },
   moreAction: {
     background: "#FFFFFF !important",
     border: "1px solid #ECEEF0 !important"
@@ -118,77 +64,192 @@ const styles = {
   searchBox: {
     marginTop: "16px !important",
     textAlign: "right"
-  }
+  },
+  textName: {
+    fontWeight: 'bold',
+    fontSize: '16px',
+    lineHeight: '24px',
+    marginTop: '14px',
+    color: '#25345C',
+    marginLeft: '24px'
+  },
+  textSub: {
+    fontSize: '16px',
+    lineHeight: '24px',
+    marginTop: '14px',
+    marginLeft: '24px'
+  },
+  iconButton: {
+    '&:hover': {
+      color: '#25345C !important',
+    },
+  },
+  topHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 15
+  },
+  topHeaderTitle: {
+    textAlign: "left",
+    fontWeight: 700,
+    fontSize: 18,
+    color: "#25345C",
+    padding: "0 16px !important"
+  },
+  topHeaderButton: {
+    textAlign: "right",
+  },
 };
 
-const HeadCells = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
-  { id: 'phone', numeric: true, disablePadding: false, label: 'Phone' },
-  { id: 'email', numeric: true, disablePadding: false, label: 'Email' },
-];
 
-function createData(name, phone, email) {
-  return { name, phone, email };
-}
-
-const rows = [
-  createData('Esther Howard', "(347) 555-0133", 'debra.holt@example.com'),
-  createData('Esther Howard', "(347) 555-0133", 'debra.holt@example.com'),
-  createData('Esther Howard', "(347) 555-0133", 'debra.holt@example.com'),
-  createData('Esther Howard', "(347) 555-0133", 'debra.holt@example.com'),
-  createData('Esther Howard', "(347) 555-0133", 'debra.holt@example.com'),
-  createData('Esther Howard', "(347) 555-0133", 'debra.holt@example.com'),
-  createData('Esther Howard', "(347) 555-0133", 'debra.holt@example.com'),
-  createData('Esther Howard', "(347) 555-0133", 'debra.holt@example.com'),
-  createData('Esther Howard', "(347) 555-0133", 'debra.holt@example.com'),
+const dumpData = [
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
 ];
 
 const useStyles = makeStyles(styles);
 
-export default function AlertContacts() {
+export default function AlertContacts(props) {
   const classes = useStyles();
+
+  const formatName = (cell, row) => {
+    return <>
+      <div className={classes.textName}>{cell}</div>
+    </>
+  }
+
+  const formatPhone = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+  const formatEmail = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+  const addActionButton = () => {
+    return (
+      <>
+        <Button justIcon color="twitter" simple>
+          <EditIcon className={classes.iconButton} style={{ color: "#ffffff", width: '22px', height: '22px' }} />
+        </Button>
+        <Button justIcon color="google" simple>
+          <DeleteIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
+        </Button>
+      </>
+    )
+  }
+
   return (
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
+
+              <GridContainer className={classes.topHeader}>
+                <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
+                  Alert Contacts  List
+                </GridItem>
+                <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
+                  <Button
+                    round
+                    className="btn-round-active w-150 mr-2"
+                    startIcon={<AddOutlined />}
+                  >
+                    Add Contact
+                  </Button>
+                  <Button
+                    color="white"
+                    aria-label="edit"
+                    justIcon
+                    round
+                    className={`btn-36 ${classes.moreAction} mr-2`}
+                  >
+                    <MoreHoriz />
+                  </Button>
+                </GridItem>
+              </GridContainer>
+
+
               <Card testimonial>
                 <CardBody>
                   <GridContainer className={classes.liveSharingHeader}>
                     <GridItem xs={3} sm={3} md={3} className={classes.liveSharingTitle}>
-                      Alert Contacts List
+                      21 Assets
                     </GridItem>
                     <GridItem xs={9} sm={9} md={9} className={classes.liveSharingButton}>
-                      <Button
-                        round
-                        className="btn-round-active mr-2"
-                        startIcon={<ControlPointIcon />}
-                      >
-                        Add contact
-                      </Button>
-                      <Button
-                        color="white"
-                        aria-label="edit"
-                        justIcon
-                        round
-                        className={`btn-36 ${classes.moreAction} mr-2`}
-                      >
-                        <MoreHoriz />
-                      </Button>
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer className={classes.liveSharingHeader}>
-                    <GridItem xs={12} sm={12} md={12} className={classes.searchBox}>
-                      <SearchBox placeholder={"Search contacts"} />
+                      <GridItem xs={12} sm={12} md={12} className={classes.searchBox}>
+                        <SettingSearchBox placeholder={"Search contacts"} />
+                      </GridItem>
                     </GridItem>
                   </GridContainer>
                 </CardBody>
-                <TableComponent
-                  rows={rows}
-                  headCells={HeadCells}
-                  action={["edit", "delete"]}
-                />
+                <div>
+                  <ToolkitProvider
+                      data={ dumpData }
+                      keyField="_id"
+                      columns={[
+                        {
+                          dataField: "name",
+                          text: "Name",
+                          formatter: formatName
+                        },
+                        {
+                          dataField: "phone",
+                          text: "Phone",
+                          formatter: formatPhone
+                        },
+                        {
+                          dataField: "email",
+                          text: "Email",
+                          formatter: formatEmail
+                        },
+                        {
+                            dataField: "action",
+                            text: "Actions",
+                            formatter: addActionButton
+                        } 
+                        ]}
+                            >
+                              {props => (
+                                <div className="table table-settings">
+                                    <BootstrapTable
+                                      {...props.baseProps}
+                                      bootstrap4={true}
+                                      bordered={false}
+                                    />
+                                    <Row className="justify-content-center">
+                                      {/* <PaginationV2
+                                        pages={[
+                                          { text: <ArrowDownIcon/>, arrow : true,disabled : true },
+                                          { text: <ArrowLeftIcon/>, arrow : true,disabled : true },
+                                          { active: true, text: 1 },
+                                          { text: 2 },
+                                          { text: 3 },
+                                          { text: 4 },
+                                          { text: 5 },
+                                          { text: <ArrowRightIcon/>, arrow : true },
+                                          { text: <ArrowUpIcon/>, arrow : true },
+                                        ]}
+                                      /> */}
+                          <GenPaginationV1 total={29} page={1} size={10} />
+                        </Row>
+                      </div>
+                    )}
+                  </ToolkitProvider>
+                </div>
               </Card>
             </GridItem>
           </GridContainer>
