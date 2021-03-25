@@ -82,10 +82,12 @@ const styles = {
     fontWeight: 700,
     fontSize: 18,
     textAlign: "left",
-    color: "#25345C"
+    color: "#25345C",
+    marginTop: '-17px'
   },
   liveSharingButton: {
     textAlign: "right",
+    marginTop: '2px'
   },
   tableContainer: {
     paddingLeft: 0,
@@ -218,8 +220,8 @@ export default function ScheduledReports() {
                   </Button>
                 </GridItem>
               </GridContainer>
-              <Card testimonial>
-                <CardBody>
+              <Card>
+                <CardBody style={{ height: '74px' }}>
                   <GridContainer className={classes.liveSharingHeader}>
                     <GridItem xs={3} sm={3} md={3} className={classes.liveSharingTitle}>
                       2 reports

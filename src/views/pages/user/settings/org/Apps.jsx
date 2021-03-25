@@ -1,8 +1,6 @@
 import React from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-// @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
@@ -36,39 +34,8 @@ const styles = {
     color: "#999999",
     marginTop: "10px",
   },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px",
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px",
-    },
-  },
-  iconRose: {
-    color: roseColor,
-  },
   marginTop30: {
     marginTop: "30px",
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px",
-    },
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999",
   },
 
   button: {
@@ -85,39 +52,8 @@ const styles = {
     opacity: "0.4",
   },
 
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px",
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px",
-    },
-  },
-  iconRose: {
-    color: roseColor,
-  },
   marginTop30: {
     marginTop: "30px",
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px",
-    },
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999",
   },
   cardContainer: {
     padding: "0px 0px 0px `16px `!important",
@@ -151,7 +87,7 @@ const styles = {
     fontSize: 14,
     color: "#25345C",
     fontFamily: "Lato",
-    padding: "23px 0px 15px 0px !important",
+    padding: "0px 0px 15px 0px !important",
     lineHeight: "21px",
     overflow: "hidden",
   },
@@ -160,7 +96,7 @@ const styles = {
     fontWeight: 700,
     fontSize: 14,
     fontFamily: "Lato",
-    padding: "0px 0px 20px 0px !important",
+    padding: "0px 0px 15px 0px !important",
     lineHeight: "21px",
     overflow: "hidden",
   },
@@ -178,7 +114,7 @@ const styles = {
   image:{
       width: "100%",
       height: "80px",
-      padding: "35px 10px 0px 0px",
+      padding: "12px 10px 0px 0px",
   },
 
   flexGrid:{
@@ -373,6 +309,7 @@ export default function Apps() {
                   />
                 </GridItem>
               </GridContainer>
+              <Divider variant="fullWidth" light style={{ marginTop: '-10px' }} />
             </GridItem>
           </CardBody>
         </Card>

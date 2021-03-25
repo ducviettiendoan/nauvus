@@ -144,9 +144,7 @@ const styles = {
   textStatus: {
     fontSize: '16px',
     lineHeight: '24px',
-    marginTop: '12px',
-    marginBottom: '14px',
-    marginLeft: '24px',
+    margin: '16px',
     padding: "12px 14px",
     color: "#27AE60",
     background: "rgba(39, 174, 96, 0.1)",
@@ -155,7 +153,8 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     fontWeight:700,
-    width: 71
+    width: 71,
+    height: '41px'
   },
   iconButton: {
     '&:hover': {
@@ -304,7 +303,7 @@ export default function APITokens() {
                       </div>
                     )}
                   </ToolkitProvider>
-                <CardBody>
+                <CardBody style={{ marginTop: '-40px'}}>
                   <GridContainer className={classes.apiTokensHeader}>
                     <GridItem className={classes.apiTokensGuide}>
                       Developer Documentation and Guides

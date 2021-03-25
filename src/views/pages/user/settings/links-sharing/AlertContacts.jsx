@@ -52,10 +52,12 @@ const styles = {
     fontWeight: 700,
     fontSize: 18,
     textAlign: "left",
-    color: "#25345C"
+    color: "#25345C",
+    marginTop: '-17px'
   },
   liveSharingButton: {
     textAlign: "right",
+    marginTop: '2px'
   },
   moreAction: {
     background: "#FFFFFF !important",
@@ -179,11 +181,11 @@ export default function AlertContacts(props) {
               </GridContainer>
 
 
-              <Card testimonial>
-                <CardBody>
+              <Card>
+                <CardBody style={{ height: '74px' }}>
                   <GridContainer className={classes.liveSharingHeader}>
                     <GridItem xs={3} sm={3} md={3} className={classes.liveSharingTitle}>
-                      21 Assets
+                      2 contacts
                     </GridItem>
                     <GridItem xs={9} sm={9} md={9} className={classes.liveSharingButton}>
                       <SettingSearchBox placeholder={"Search contacts"} />

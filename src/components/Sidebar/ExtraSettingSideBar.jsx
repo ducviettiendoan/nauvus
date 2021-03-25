@@ -167,16 +167,16 @@ export function ExtraSideBar(props) {
           </ListItem>
           <Collapse in={isOpenList(`DEVICES`)} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItem button className={classes.nested}>
-                <Link to="/setting/device/devices">
+              <Link to="/setting/device/devices">
+                <ListItem button className={classes.nested}>
                   <ListItemText primary="Devices" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                </Link>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <Link to="/setting/device/configuration">
-                  <ListItemText primary="Configuration" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                </Link>
-              </ListItem>
+                </ListItem>
+              </Link>
+              <Link to="/setting/device/configuration">
+                <ListItem button className={classes.nested}>
+                    <ListItemText primary="Configuration" classes={ {primary: classes.txtListItemPrimarySub} }/>
+                </ListItem>
+              </Link>
             </List>
           </Collapse>
 
@@ -187,46 +187,46 @@ export function ExtraSideBar(props) {
           </ListItem>
           <Collapse in={isOpenList(`FLEET`)} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItem button className={classes.nested}>
-                <Link to="/setting/fleet/driver-app">
-                  <ListItemText primary="Driver App" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                </Link>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <Link to="/setting/fleet/safety">
-                  <ListItemText primary="Safety" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                </Link>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <Link to="/setting/fleet/compliance">
-                  <ListItemText primary="Compliance" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                </Link>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <Link to="/setting/fleet/dispatch">
-                  <ListItemText primary="Dispatch" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                </Link>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <Link to="/setting/fleet/fuel-energy">
-                  <ListItemText primary="Fuel & Energy" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                </Link>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <Link to="/setting/fleet/driver-activity">
-                  <ListItemText primary="Driver Activity" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                </Link>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <Link to="/setting/fleet/add-geo">
-                  <ListItemText primary="Addresses/Geofences" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                </Link>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <Link to="/setting/fleet/maps">
-                  <ListItemText primary="Maps" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                </Link>
-              </ListItem>
+              <Link to="/setting/fleet/driver-app">
+                <ListItem button className={classes.nested}>
+                    <ListItemText primary="Driver App" classes={ {primary: classes.txtListItemPrimarySub} }/>
+                </ListItem>
+              </Link>
+              <Link to="/setting/fleet/safety">
+                <ListItem button className={classes.nested}>
+                    <ListItemText primary="Safety" classes={ {primary: classes.txtListItemPrimarySub} }/>
+                </ListItem>
+              </Link>
+              <Link to="/setting/fleet/compliance">
+                <ListItem button className={classes.nested}>
+                    <ListItemText primary="Compliance" classes={ {primary: classes.txtListItemPrimarySub} }/>
+                </ListItem>
+              </Link>
+              <Link to="/setting/fleet/dispatch">
+                <ListItem button className={classes.nested}>
+                    <ListItemText primary="Dispatch" classes={ {primary: classes.txtListItemPrimarySub} }/>
+                </ListItem>
+              </Link>
+              <Link to="/setting/fleet/fuel-energy">
+                <ListItem button className={classes.nested}>
+                    <ListItemText primary="Fuel & Energy" classes={ {primary: classes.txtListItemPrimarySub} }/>
+                </ListItem>
+              </Link>
+              <Link to="/setting/fleet/driver-activity">
+                <ListItem button className={classes.nested}>
+                    <ListItemText primary="Driver Activity" classes={ {primary: classes.txtListItemPrimarySub} }/>
+                </ListItem>
+              </Link>
+              <Link to="/setting/fleet/add-geo">
+                <ListItem button className={classes.nested}>
+                    <ListItemText primary="Addresses/Geofences" classes={ {primary: classes.txtListItemPrimarySub} }/>
+                </ListItem>
+              </Link>
+              <Link to="/setting/fleet/maps">
+                <ListItem button className={classes.nested}>
+                    <ListItemText primary="Maps" classes={ {primary: classes.txtListItemPrimarySub} }/>
+                </ListItem>
+              </Link>
             </List>
           </Collapse>
 
@@ -237,21 +237,21 @@ export function ExtraSideBar(props) {
           </ListItem>
           <Collapse in={isOpenList(`LinksSharing`)} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItem button className={classes.nested}>
-                <Link to="/setting/link-sharing/alert-contacts">
-                  <ListItemText primary="Alert Contacts" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                </Link>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <Link to="/setting/link-sharing/scheduled-reports">
-                  <ListItemText primary="Scheduled Reports" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                </Link>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <Link to="/setting/link-sharing/live-sharing">
-                  <ListItemText primary="Live Sharing" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                </Link>
-              </ListItem>
+            <Link to="/setting/link-sharing/alert-contacts">
+                <ListItem button className={classes.nested}>
+                    <ListItemText primary="Alert Contacts" classes={ {primary: classes.txtListItemPrimarySub} }/>
+                </ListItem>
+              </Link>
+              <Link to="/setting/link-sharing/scheduled-reports">
+                <ListItem button className={classes.nested}>
+                    <ListItemText primary="Scheduled Reports" classes={ {primary: classes.txtListItemPrimarySub} }/>
+                </ListItem>
+              </Link>
+              <Link to="/setting/link-sharing/live-sharing">
+                <ListItem button className={classes.nested}>
+                    <ListItemText primary="Live Sharing" classes={ {primary: classes.txtListItemPrimarySub} }/>
+                </ListItem>
+              </Link>
             </List>
           </Collapse>
 
@@ -262,21 +262,21 @@ export function ExtraSideBar(props) {
           </ListItem>
           <Collapse in={isOpenList(`DEVELOPER`)} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItem button className={classes.nested}>
-                <Link to="/setting/developer/metrics">
-                  <ListItemText primary="Developer Metrics" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                </Link>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <Link to="/setting/developer/api-tokens">
-                  <ListItemText primary="API Tokens" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                </Link>
-              </ListItem>
-              <ListItem button className={classes.nested}>
-                <Link to="/setting/developer/webhooks">
-                  <ListItemText primary="Webhooks" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                </Link>
-              </ListItem>
+              <Link to="/setting/developer/metrics">
+                <ListItem button className={classes.nested}>
+                    <ListItemText primary="Developer Metrics" classes={ {primary: classes.txtListItemPrimarySub} }/>
+                </ListItem>
+              </Link>
+              <Link to="/setting/developer/api-tokens">
+                <ListItem button className={classes.nested}>
+                    <ListItemText primary="API Tokens" classes={ {primary: classes.txtListItemPrimarySub} }/>
+                </ListItem>
+              </Link>
+              <Link to="/setting/developer/webhooks">
+                <ListItem button className={classes.nested}>
+                    <ListItemText primary="Webhooks" classes={ {primary: classes.txtListItemPrimarySub} }/>
+                </ListItem>
+              </Link>
             </List>
           </Collapse>
         </List>
