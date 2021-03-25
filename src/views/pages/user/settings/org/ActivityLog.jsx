@@ -15,6 +15,16 @@ import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
+import Button from "../../../../../components/CustomButtons/Button";
+import AddOutlined from "@material-ui/icons/AddOutlined";
+import {MoreHoriz} from "@material-ui/icons";
+import SettingSearchBox from "../../../../../components/SearchBox/SettingSearchBox";
+import ToolkitProvider from "react-bootstrap-table2-toolkit";
+import BootstrapTable from "react-bootstrap-table-next";
+import {Row} from "reactstrap";
+import GenPaginationV1 from "../../../../../components/Pagination/GenPaginationV1";
+import EditIcon from "../../../../../components/Icons/EditIcon";
+import DeleteIcon from "../../../../../components/Icons/DeleteIcon";
 
 const styles = {
   cardTitle,
@@ -65,13 +75,84 @@ const styles = {
   cardTestimonialDescription: {
     fontStyle: "italic",
     color: "#999999"
-  }
+  },
+  activityHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+  activityTitle: {
+    fontWeight: 700,
+    fontSize: 18,
+    textAlign: "left",
+    color: "#25345C"
+  },
+  activityButton: {
+    textAlign: "right",
+  },
+  searchBox: {
+    marginTop: "16px !important",
+    textAlign: "right"
+  },
+  textName: {
+    fontSize: '16px',
+    lineHeight: '24px',
+    marginTop: '14px',
+    marginLeft: '24px',
+    color: "#25345C",
+    fontWeight: 400
+  },
+  textSub: {
+    fontSize: '16px',
+    lineHeight: '24px',
+    marginBottom: 16,
+    marginLeft: '24px',
+    color: "#25345C",
+    fontWeight: 400
+  },
+  iconButton: {
+    '&:hover': {
+      color: '#25345C !important',
+    },
+  },
 };
+
+const dumpData = [
+  { logEvent: 'dolores.chambers@example.com', operation: "updated org id '74287':", date: 'March 17th, 12:16 am' },
+  { logEvent: 'dolores.chambers@example.com', operation: "updated org id '74287':", date: 'March 17th, 12:16 am' },
+  { logEvent: 'dolores.chambers@example.com', operation: "updated org id '74287':", date: 'March 17th, 12:16 am' },
+  { logEvent: 'dolores.chambers@example.com', operation: "updated org id '74287':", date: 'March 17th, 12:16 am' },
+  { logEvent: 'dolores.chambers@example.com', operation: "updated org id '74287':", date: 'March 17th, 12:16 am' },
+  { logEvent: 'dolores.chambers@example.com', operation: "updated org id '74287':", date: 'March 17th, 12:16 am' },
+
+];
 
 const useStyles = makeStyles(styles);
 
+
+
 export default function ActivityLog() {
   const classes = useStyles();
+
+  const formatLogEvent = (cell, row) => {
+    return <>
+      <div className={classes.textName}>{cell}</div>
+    </>
+  }
+
+  const formatOperation = (cell, row) => {
+    return <>
+      <div className={classes.textName}>{cell}</div>
+      <div className={classes.textSub}>changed MessagePushNotificationsEnabled from false to true.</div>
+    </>
+  }
+
+  const formatDate = (cell, row) => {
+    return <>
+      <div className={classes.textName}>{cell}</div>
+    </>
+  }
+
   return (
     <div>
       <GridContainer>
@@ -79,17 +160,67 @@ export default function ActivityLog() {
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
               <Card testimonial>
-                <div className={classes.testimonialIcon}>
-                  <FormatQuote />
-                </div>
                 <CardBody>
-                  <h5 className={classes.cardTestimonialDescription}>
-                    No Data Drive
-                  </h5>
+                  <GridContainer className={classes.activityHeader}>
+                    <GridItem xs={3} sm={3} md={3} className={classes.activityTitle}>
+                      120 events
+                    </GridItem>
+                    <GridItem xs={9} sm={9} md={9} className={classes.activityButton}>
+                      <GridItem xs={12} sm={12} md={12} className={classes.searchBox}>
+                        <SettingSearchBox placeholder={"Search events"} />
+                      </GridItem>
+                    </GridItem>
+                  </GridContainer>
                 </CardBody>
-                <CardFooter testimonial>
-                  <h6 className={classes.cardCategory}>@nauvus</h6>
-                </CardFooter>
+                <div>
+                  <ToolkitProvider
+                    data={ dumpData }
+                    keyField="_id"
+                    columns={[
+                      {
+                        dataField: "logEvent",
+                        text: "Log Event",
+                        formatter: formatLogEvent
+                      },
+                      {
+                        dataField: "operation",
+                        text: "Operation",
+                        formatter: formatOperation
+                      },
+                      {
+                        dataField: "date",
+                        text: "Date",
+                        formatter: formatDate
+                      }
+                    ]}
+                  >
+                    {props => (
+                      <div className="table table-settings">
+                        <BootstrapTable
+                          {...props.baseProps}
+                          bootstrap4={true}
+                          bordered={false}
+                        />
+                        <Row className="justify-content-center">
+                          {/* <PaginationV2
+                                        pages={[
+                                          { text: <ArrowDownIcon/>, arrow : true,disabled : true },
+                                          { text: <ArrowLeftIcon/>, arrow : true,disabled : true },
+                                          { active: true, text: 1 },
+                                          { text: 2 },
+                                          { text: 3 },
+                                          { text: 4 },
+                                          { text: 5 },
+                                          { text: <ArrowRightIcon/>, arrow : true },
+                                          { text: <ArrowUpIcon/>, arrow : true },
+                                        ]}
+                                      /> */}
+                          <GenPaginationV1 total={29} page={1} size={10} />
+                        </Row>
+                      </div>
+                    )}
+                  </ToolkitProvider>
+                </div>
               </Card>
             </GridItem>
           </GridContainer>
