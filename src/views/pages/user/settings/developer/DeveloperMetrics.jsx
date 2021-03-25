@@ -17,11 +17,14 @@ import {
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
 import Button from "../../../../../components/CustomButtons/Button";
-import Charts from "../../../../Charts/Charts";
+import EChart from "components/CustomLineChart/EChart";
 import withStyles from "@material-ui/core/styles/withStyles";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import {MoreHoriz} from "@material-ui/icons";
+import {Filter1Outlined, MoreHoriz} from "@material-ui/icons";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
+import SearchBox from "../../../../../components/SearchBox/SearchBox";
+import FilterIcon from "../../../../../components/Icons/FilterIcon";
+import CardContent from "@material-ui/core/CardContent";
 
 const styles = {
   cardTitle,
@@ -92,7 +95,13 @@ const styles = {
   colorGrey: {
     color: "#C4C4C4"
   },
-  percent: {
+  colorGreen: {
+    color: "#27AE60"
+  },
+  colorRed: {
+    color: "#E53935"
+  },
+  boldBlueLeft: {
     color: "#25345C",
     fontWeight: "700",
     textAlign: "left"
@@ -109,6 +118,19 @@ const styles = {
   },
   textStart: {
     textAlign: "left"
+  },
+  noPadding: {
+    padding: "0!important",
+    margin: "0!important"
+  },
+  chartLegend: {
+    fontSize: 12,
+    verticalAlign: "baseline"
+  },
+  bigCard: {
+    marginTop: "0px!important",
+    marginBottom: "20px!important"
+    // margin: "0px 16px 20px 16px!important",
   }
 };
 
@@ -131,23 +153,20 @@ const useStyles = makeStyles(styles);
 export default function DeveloperMetrics() {
   const classes = useStyles();
   return (
-    <div>
       <GridContainer className="developer-metric-wrapper">
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
               <Card testimonial>
                 <CardBody className="body">
-                  <GridContainer>
-                    <GridItem xs={3}>
-                      <Card>
-                        <CardBody>
-                          <h5 className={classes.percent + " pl-2 my-3"}>
+                  <GridContainer spacing={2}>
+                    <GridItem className={classes.bigCard} component={Card} xs={3}>
+                          <h5 className={classes.boldBlueLeft + " pl-2 my-3"}>
                             Summary
                           </h5>
                           <div className={`${classes.displayFlex} ${classes.colorBlue}`}>
                             <div>Progress</div>
-                            <div className={classes.percent}>99.99%</div>
+                            <div className={classes.boldBlueLeft}>99.99%</div>
                           </div>
                           <div className="mt-2 mb-4">
                             <BorderLinearProgress variant="determinate" value={99.99} />
@@ -155,23 +174,19 @@ export default function DeveloperMetrics() {
                           <div className={"py-2 " + classes.fontSize16} >
                             <div className={classes.displayFlex}>
                               <div className={classes.colorGrey}>Availability Rate</div>
-                              <div className={classes.percent}>99.99%</div>
+                              <div className={classes.boldBlueLeft}>99.99%</div>
                             </div>
                             <hr className="my-2"/>
                             <div className={classes.displayFlex}>
                               <div className={classes.colorGrey}>Success Rate</div>
-                              <div className={classes.percent}>99.99%</div>
+                              <div className={classes.boldBlueLeft}>99.99%</div>
                             </div>
                           </div>
-                        </CardBody>
-                      </Card>
                     </GridItem>
-                    <GridItem xs={9}>
-                      <Card >
-                        <CardBody>
-                          <GridContainer>
+                    <GridItem className={classes.bigCard} component={Card} xs={9}>
+                          <GridContainer >
                             <GridItem xs={6}>
-                              <h4 className={classes.percent + " my-4" }>
+                              <h4 className={classes.boldBlueLeft + " my-4" }>
                                 API Volume
                               </h4>
                             </GridItem>
@@ -183,19 +198,19 @@ export default function DeveloperMetrics() {
                                   round
                                   className={`btn-36 ${classes.chartAction} mr-2`}
                               >
-                                <TimelineIcon/>
+                                <TimelineIcon className={classes.colorBlue}/>
                               </Button>
                             </GridItem>
                             <GridItem xs={12} className={classes.textStart + " " + classes.colorBlue}>
-                              <FiberManualRecordIcon className="mr-1" style={{color: "#27AE60", fontSize: 17}} />
+                              <FiberManualRecordIcon className={ classes.chartLegend + " " + classes.colorGreen + " mr-1"}  />
                               Successes
-                              <FiberManualRecordIcon className="ml-3 mr-1" style={{color: "#E53935", fontSize: 17}} />
+                              <FiberManualRecordIcon className={ classes.chartLegend + " " + classes.colorRed +  " ml-3 mr-1"}  />
                               Errors
-
+                            </GridItem>
+                            <GridItem xs={12} className={classes.noPadding}>
+                              <EChart/>
                             </GridItem>
                           </GridContainer>
-                        </CardBody>
-                      </Card>
                     </GridItem>
                   </GridContainer>
                 </CardBody>
@@ -206,6 +221,5 @@ export default function DeveloperMetrics() {
         <GridItem>
         </GridItem>
       </GridContainer>
-    </div>
   );
 }
