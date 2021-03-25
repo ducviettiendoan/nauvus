@@ -26,7 +26,9 @@ import DeleteButton from "components/CustomButtons/DeleteButton";
 
 import { Row, Col } from "reactstrap";
 import GeneralOrganization from "./components/GeneralOrganization";
-
+import GeneralLanguageRegion from "./components/GeneralLanguageRegion";
+import GeneralConnection from "./components/GeneralConnection";
+import GeneralAdvanced from "./components/GeneralAdvanced";
 
 const styles = {
   cardContainer: {
@@ -138,6 +140,9 @@ export default function General() {
                   <div className={classes.contentContainer}>
                     <div className={classes.areaGrow}>
                       { tab === 1 && <GeneralOrganization /> }
+                      { tab === 2 && <GeneralLanguageRegion /> }
+                      { tab === 3 && <GeneralConnection /> }
+                      { tab === 4 && <GeneralAdvanced /> }
                     </div>
                     <div className={classes.areaMenu}>
                       <List className={classes.root}>
