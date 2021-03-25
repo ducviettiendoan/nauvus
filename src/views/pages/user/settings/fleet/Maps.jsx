@@ -74,10 +74,12 @@ const styles = {
     marginLeft: '24px'
   },
   textSub: {
+    fontWeight: 400,
     fontSize: '16px',
     lineHeight: '24px',
     marginTop: '14px',
-    marginLeft: '24px'
+    marginLeft: '24px',
+    color: '#25345C',
   },
   iconButton: {
     '&:hover': {

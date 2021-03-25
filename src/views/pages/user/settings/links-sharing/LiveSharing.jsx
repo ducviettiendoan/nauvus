@@ -195,10 +195,6 @@ const dumpData = [
   { name: 'GR9X-6AN-3N5', linkExpires: 'Never' },
   { name: 'GR9X-6AN-3N5', linkExpires: 'Never' },
   { name: 'GR9X-6AN-3N5', linkExpires: 'Never' },
-  { name: 'GR9X-6AN-3N5', linkExpires: 'Never' },
-  { name: 'GR9X-6AN-3N5', linkExpires: 'Never' },
-  { name: 'GR9X-6AN-3N5', linkExpires: 'Never' },
-  { name: 'GR9X-6AN-3N5', linkExpires: 'Never' }
 ];
 
 function TabPanel(props) {
@@ -296,7 +292,7 @@ export default function LiveSharing() {
                     <Tab
                       className={classes.tabItemStyles}
                       label="By Location" {...a11yProps(1)}
-                      // disabled={true}
+                    // disabled={true}
                     >
                       By Location
                     </Tab>
@@ -304,7 +300,6 @@ export default function LiveSharing() {
                       className={classes.tabItemStyles}
                       label="By Recurring Route"
                       {...a11yProps(2)}
-                      disabled={true}
                     >
                       By Recurring Route
                     </Tab>
@@ -366,8 +361,10 @@ export default function LiveSharing() {
                   </ToolkitProvider>
                 </TabPanel>
                 <TabPanel value={value} index={1} >
+                  <div>No Location</div>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
+                  <div>No Route</div>
                 </TabPanel>
               </Card>
 

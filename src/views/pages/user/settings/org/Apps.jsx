@@ -329,7 +329,7 @@ export default function Apps() {
                         md={3}
                         className={classes.flexGrid}
                       >
-                        <Button round className="btn-round-gray">
+                        <Button round className="btn-round-gray w-150 h-41">
                           Go to Marketplace
                         </Button>
                       </GridItem>
@@ -349,7 +349,7 @@ export default function Apps() {
 
                 <GridItem
                   xs={11}
-                  sm={9}
+                  sm={8}
                   md={9}
                   lg={10}
                   xl={11}

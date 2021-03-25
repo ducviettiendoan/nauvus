@@ -162,6 +162,9 @@ const styles = {
       color: '#25345C !important',
     },
   },
+  actionIcon: {
+    marginTop: "10px"
+  }
 };
 
 const dumpData = [
@@ -215,14 +218,14 @@ export default function APITokens() {
 
   const addActionButton = () => {
     return (
-      <>
+      <div className={classes.actionIcon}>
         <Button justIcon color="twitter" simple>
           <EditIcon className={classes.iconButton} style={{ color: "#ffffff", width: '22px', height: '22px' }} />
         </Button>
         <Button justIcon color="google" simple>
           <DeleteIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
         </Button>
-      </>
+      </div>
     )
   }
   return (

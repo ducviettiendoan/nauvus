@@ -75,6 +75,11 @@
   border-radius: 28px !important;
   text-transform: initial !important;
   font-size: 13px !important;
+  line-height: 17px !important;
+  /* font-family: Lato!important; */
+  font-style: normal!important;
+  font-weight: bold!important;
+  color: #25345C!important;
 }
 
 .btn-round-white-2 {
