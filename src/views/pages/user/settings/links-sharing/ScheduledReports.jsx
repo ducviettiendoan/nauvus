@@ -9,13 +9,14 @@ import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import TableComponent from "components/Table/CustomTable"
-import ControlPointIcon from '@material-ui/icons/ControlPoint';
 import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
 import Button from "components/CustomButtons/Button.js";
 import SettingSearchBox from "components/SearchBox/SettingSearchBox";
+import AddOutlined from "@material-ui/icons/AddOutlined";
+
 const styles = {
   cardTitle,
   cardTitleWhite: {
@@ -87,7 +88,23 @@ const styles = {
   searchBox: {
     marginTop: "16px !important",
     textAlign: "right"
-  }
+  },
+  topHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 15
+  },
+  topHeaderTitle: {
+    textAlign: "left",
+    fontWeight: 700,
+    fontSize: 18,
+    color: "#25345C",
+    padding: "0 16px !important"
+  },
+  topHeaderButton: {
+    textAlign: "right",
+  },
 };
 
 const HeadCells = [
@@ -122,32 +139,43 @@ export default function ScheduledReports() {
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
+
+              <GridContainer className={classes.topHeader}>
+                <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
+                  Schedule Reports List
+                </GridItem>
+                <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
+                  <Button
+                    round
+                    className="btn-round-active mr-2"
+                    startIcon={<AddOutlined />}
+                  >
+                    Add Schedule Reports
+                  </Button>
+                </GridItem>
+              </GridContainer>
+
+
+
               <Card testimonial>
                 <CardBody>
+
                   <GridContainer className={classes.liveSharingHeader}>
                     <GridItem xs={3} sm={3} md={3} className={classes.liveSharingTitle}>
-                      Scheduled Reports  List
+                      2 reports
                     </GridItem>
                     <GridItem xs={9} sm={9} md={9} className={classes.liveSharingButton}>
-                      <Button
-                        round className="btn-round-active"
-                        startIcon={<ControlPointIcon />}
-                      >
-                        Add a Scheduled Report
-                      </Button>
-                    </GridItem>
-                  </GridContainer>
-                  <GridContainer className={classes.liveSharingHeader}>
-                    <GridItem xs={12} sm={12} md={12} className={classes.searchBox}>
                       <SettingSearchBox placeholder={"Search scheduled reports"} />
                     </GridItem>
                   </GridContainer>
+
                 </CardBody>
                 <TableComponent
                   rows={rows}
                   headCells={HeadCells}
                   action={["edit", "delete"]}
                 />
+
               </Card>
             </GridItem>
           </GridContainer>
