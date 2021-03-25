@@ -1,6 +1,6 @@
 import React from "react";
 // @material-ui/core components
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
 // core components
@@ -10,12 +10,11 @@ import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import TableComponent from "components/Table/CustomTable"
-import ControlPointIcon from '@material-ui/icons/ControlPoint';
 import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
-import { Tabs, Typography } from "@material-ui/core";
+import { Tab, Tabs, Typography } from "@material-ui/core";
 import Button from "components/CustomButtons/Button.js";
 import SettingSearchBox from "components/SearchBox/SettingSearchBox";
 import BootstrapTable from "react-bootstrap-table-next";
@@ -29,6 +28,7 @@ import ArrowDownIcon from "../../../../../components/Icons/ArrowDownIcon";
 import ArrowLeftIcon from "../../../../../components/Icons/ArrowLeftIcon";
 import ArrowRightIcon from "../../../../../components/Icons/ArrowRightIcon";
 import ArrowUpIcon from "../../../../../components/Icons/ArrowUpIcon";
+import AddOutlined from "@material-ui/icons/AddOutlined";
 
 const styles = {
   cardTitle,
@@ -146,6 +146,38 @@ const styles = {
   iconButton: {
     '&:hover': {
       color: '#25345C !important',
+    }
+  },
+  tabStyles: {
+    centered: {
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+  },
+  tabItemStyles: {
+    backgroundColor: "#FFFFFF",
+    position: 'relative',
+    display: 'block',
+    border: '1px inner',
+    borderRadius: '30px',
+    textAlign: 'center',
+    transition: 'all .5s',
+    padding: '12px 22px 12px 22px',
+    color: '#555555',
+    height: 'auto',
+    marginRight: '8px',
+    float: 'none',
+    textTransform: 'none !important',
+    minWidth: 'auto !important',
+    minHeight: '41px !important',
+    fontWeight: 700,
+    fontSize: 14,
+    '&$selected': {
+      '&, &:hover': {
+        color: '#FFFFFF',
+        backgroundColor: '#00acc1',
+        boxShadow: '0 7px 10px -5px rgba(76, 175, 80, 0.4)',
+      },
     },
   }
 };
@@ -244,43 +276,45 @@ export default function LiveSharing() {
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
+
               <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
                   <Tabs
                     value={value}
                     onChange={handleChange}
-                    variant="scrollable"
-                    position="static"
+                    className={classes.tabStyles}
                     indicatorColor=""
+                    position="static"
+                    variant="scrollable"
                   >
-                    <Button
-                      className="btn-round-white mr-2"
+                    <Tab
+                      className={classes.tabItemStyles}
                       label="By Accet" {...a11yProps(0)}
                     >
                       By Accet
-                    </Button>
-                    <Button
-                      className="btn-round-white mr-2"
+                    </Tab>
+                    <Tab
+                      className={classes.tabItemStyles}
                       label="By Location" {...a11yProps(1)}
                       disabled={true}
                     >
                       By Location
-                    </Button>
-                    <Button
-                      className="btn-round-white mr-2 "
+                    </Tab>
+                    <Tab
+                      className={classes.tabItemStyles}
                       label="By Recurring Route"
                       {...a11yProps(2)}
                       disabled={true}
                     >
                       By Recurring Route
-                    </Button>
+                    </Tab>
                   </Tabs>
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <Button
                     round
                     className="btn-round-active mr-4"
-                    startIcon={<ControlPointIcon />}
+                    startIcon={<AddOutlined />}
                   >
                     Create Link
                   </Button>
