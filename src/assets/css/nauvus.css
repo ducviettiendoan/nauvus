@@ -7,6 +7,21 @@
 .w-98 {
   width: 98px !important;
 }
+.w-56 {
+  width: 56px !important;
+}
+.h-24 {
+  height: 24px !important;
+}
+.w-101 {
+  width: 101px !important;
+}
+.h-41 {
+  height: 41px !important;
+}
+.w-122 {
+  width: 122px !important;
+}
 .btn-round-active {
   background: #25345C !important;
   border-radius: 28px !important;
@@ -19,6 +34,30 @@
   font-weight: bold!important;
 }
 
+.btn-round-red {
+  background: #E53935 !important;
+  border-radius: 28px !important;
+  padding: 0px 0px 0px 0px !important;
+  text-transform: initial !important;
+  font-size: 14px !important;
+  line-height: 17px !important;
+  /* font-family: Lato!important; */
+  font-style: normal!important;
+  /* font-weight: bold!important; */
+}
+
+.btn-round-red-2 {
+  background: #E53935 !important;
+  border-radius: 28px !important;
+  padding: 5px 0px 5px 0px !important;
+  text-transform: initial !important;
+  font-size: 12px !important;
+  line-height: 17px !important;
+  /* font-family: Lato!important; */
+  font-style: normal!important;
+  /* font-weight: bold!important; */
+}
+
 .btn-round-white {
   background: #fff !important;
   border-radius: 28px !important;
@@ -29,6 +68,33 @@
   font-style: normal!important;
   font-weight: bold!important;
   color: #25345C!important;
+}
+
+.btn-round-white-2 {
+  background: #FFFFFF !important;
+  border-radius: 22px !important;
+  text-transform: initial !important;
+  font-size: 14px !important;
+  line-height: 17px !important;
+  /* font-family: Lato!important; */
+  font-style: normal!important;
+  font-weight: bold!important;
+  color: #25345C!important;
+  border: 1px solid #ECEEF0 !important;
+  margin-left: 0px !important;
+}
+
+.btn-round-white-3 {
+  background: #fff !important;
+  text-transform: initial !important;
+  font-size: 14px !important;
+  line-height: 17px !important;
+  /* font-family: Lato!important; */
+  font-style: normal!important;
+  font-weight: bold!important;
+  color: #25345C!important;
+  border: 1px solid black;
+  margin: 0px 0px !important;
 }
 
 .btn-round-active-2 {
