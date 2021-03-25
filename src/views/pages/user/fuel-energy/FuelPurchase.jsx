@@ -13,7 +13,7 @@ import CardFooter from "components/Card/CardFooter.js";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import { AppBar, Box, InputBase, Tabs, Typography,Tab } from "@material-ui/core";
-import TableComponent from "../../../Components/Table";
+import TableComponent from "../../../../components/Table/CustomTable";
 
 
 import {

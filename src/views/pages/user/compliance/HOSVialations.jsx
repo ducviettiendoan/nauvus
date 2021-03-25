@@ -24,7 +24,7 @@ import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
-import TableComponent from "../../../Components/Table";
+import TableComponent from "../../../../components/Table/CustomTable";
 import FilterIcon from "../../../../components/Icons/FilterIcon";
 import ColumnIcon from "../../../../components/Icons/ColumnIcon";
 
