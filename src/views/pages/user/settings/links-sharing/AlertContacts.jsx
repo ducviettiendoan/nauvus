@@ -244,7 +244,7 @@ export default function AlertContacts(props) {
                                           { text: <ArrowUpIcon/>, arrow : true },
                                         ]}
                                       /> */}
-                          <GenPaginationV1 total={200} page={1} size={10} />
+                          <GenPaginationV1 total={29} page={1} size={10} />
                         </Row>
                       </div>
                     )}

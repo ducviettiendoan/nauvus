@@ -27,7 +27,7 @@ export default function GenPaginationV1(props) {
 		<>
 			<Row>
 				<Col>
-					<Pagination count={11} defaultPage={6} siblingCount={0} boundaryCount={2} showFirstButton showLastButton />
+					<Pagination count={ props.total } defaultPage={1} siblingCount={0} boundaryCount={2} showFirstButton showLastButton />
 				</Col>
 				<Col>
 					<ul className={classes.paginationRow}>
