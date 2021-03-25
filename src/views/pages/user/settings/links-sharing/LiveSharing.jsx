@@ -296,7 +296,6 @@ export default function LiveSharing() {
                     <Tab
                       className={classes.tabItemStyles}
                       label="By Location" {...a11yProps(1)}
-                      disabled={true}
                     >
                       By Location
                     </Tab>
@@ -304,7 +303,6 @@ export default function LiveSharing() {
                       className={classes.tabItemStyles}
                       label="By Recurring Route"
                       {...a11yProps(2)}
-                      disabled={true}
                     >
                       By Recurring Route
                     </Tab>
