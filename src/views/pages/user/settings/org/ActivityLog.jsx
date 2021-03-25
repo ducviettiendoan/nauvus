@@ -215,7 +215,6 @@ export default function ActivityLog() {
                                           { text: <ArrowUpIcon/>, arrow : true },
                                         ]}
                                       /> */}
-                          <GenPaginationV1 total={29} page={1} size={10} />
                         </Row>
                       </div>
                     )}
@@ -224,6 +223,7 @@ export default function ActivityLog() {
               </Card>
             </GridItem>
           </GridContainer>
+          <GenPaginationV1 total={29} page={1} size={10} />
         </GridItem>
       </GridContainer>
     </div>
