@@ -52,7 +52,7 @@ export default function RadioButton(props) {
     const { radioColor } = props
     
     const classes = useStyles();
-    console.log(radioColor)
+    // console.log(radioColor)
 
     switch (radioColor) {
         case "green":

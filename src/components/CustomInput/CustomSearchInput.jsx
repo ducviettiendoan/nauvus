@@ -24,14 +24,15 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function CustomSearchInput(props) {
+  const { placeholder } = props
   const classes = useStyles();
   return (
     <div style={{ marginTop: '18px' }}>
       <Input
         id="input-extrabar-search"
         classes={{ input: classes.inputSearch }}
-        defaultValue="Find what you need..."
-        // placeholder="Find what you need..."
+        // defaultValue="Find what you need..."
+        placeholder={placeholder || "Find what you need..."} 
         disableUnderline="true"
         startAdornment={
           <InputAdornment position="start">
