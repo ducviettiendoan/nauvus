@@ -21,6 +21,9 @@ import Select from "@material-ui/core/Select";
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Button from "@material-ui/core/Button";
 import TableMaintenance from "./components/tableMaintenance";
+import DropDown from "../../../../components/Icons/DropDownIcon";
+import DropDownIcon from "../../../../components/Icons/DropDownIcon";
+import CustomDropdown from "../../../../components/CustomDropdown/CustomDropdown";
 
 
 const styles = {
@@ -98,16 +101,27 @@ const styles = {
     background: "#FFFFFF",
     boxSizing: "border-box",
     borderRadius: "20px",
+    "& >select" : {
+      paddingRight:"0 !important",
+      width: "100%",
+      zIndex: "1000",
+    },
     "&::before": {
       borderBottom: "0px"
     },
     "& > select:focus": {
-      backgroundColor: "#FFFFFF"
+      backgroundColor: "unset"
     },
     "&:hover": {
       borderBottom: "0px"
     },
     marginRight: 8
+  },
+  dropDownIcon: {
+    color: "#C4C4C4",
+    cursor: "pointer",
+    position:"absolute",
+    right: 8,
   }
 };
 
@@ -178,6 +192,9 @@ export default function Maintenance() {
                             // onChange={handleChange}
                             // label="Age"
                             className={classes.selectForm}
+                            IconComponent={() => (
+                              <DropDownIcon className={classes.dropDownIcon} />
+                            )}
                           >
                             <option value={1}>1.1 Weeks</option>
                           </Select>
