@@ -368,9 +368,6 @@ const dumpData = [
 export default function UserRoles() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const [selected, setSelected] = React.useState([]);
-  const [hasSelected, setHasSelected] = useState(false)
-  const [selectedAll, setSelectedAll] = useState(false)
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

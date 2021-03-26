@@ -18,7 +18,6 @@ import Messages from "views/pages/user/messages/Messages";
 import Reports from "views/pages/user/reports/Reports";
 import Safety from "views/pages/user/safety/Safety";
 import Settings from "views/pages/user/settings/Settings";
-
 import Assets from "views/pages/user/overview/Assets";
 
 // @material-ui/icons
