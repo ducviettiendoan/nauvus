@@ -19,9 +19,9 @@ import FuelEnergy from "views/pages/user/settings/fleet/FuelEnergy";
 import Maps from "views/pages/user/settings/fleet/Maps";
 import Safety from "views/pages/user/settings/fleet/Safety";
 
-import AlertContacts from "views/pages/user/settings/link-sharing/AlertContacts";
-import LiveSharing from "views/pages/user/settings/link-sharing/LiveSharing";
-import ScheduledReports from "views/pages/user/settings/link-sharing/ScheduledReports";
+import AlertContacts from "views/pages/user/settings/links-sharing/AlertContacts";
+import LiveSharing from "views/pages/user/settings/links-sharing/LiveSharing";
+import ScheduledReports from "views/pages/user/settings/links-sharing/ScheduledReports";
 
 import APITokens from "views/pages/user/settings/developer/APITokens";
 import DeveloperMetrics from "views/pages/user/settings/developer/DeveloperMetrics";

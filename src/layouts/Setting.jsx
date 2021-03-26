@@ -36,7 +36,7 @@ export function Dashboard(props) {
   const { ...rest } = props;
   // states and functions
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [miniActive, setMiniActive] = React.useState(false);
+  const [miniActive, setMiniActive] = React.useState(true);
   const [image, setImage] = React.useState("");
   const [color, setColor] = React.useState("blue");
   const [bgColor, setBgColor] = React.useState("white");
@@ -176,7 +176,7 @@ export function Dashboard(props) {
         <AdminNavbar
           sidebarMinimize={sidebarMinimize.bind(this)}
           miniActive={miniActive}
-          brandText={getActiveRoute(routes)}
+          brandText={getActiveRoute(settingRoutes)}
           handleDrawerToggle={handleDrawerToggle}
           {...rest}
         />

@@ -20,7 +20,7 @@ import {
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
 import AppBar from "@material-ui/core/AppBar";
-import TableComponent from "../../../Components/Table";
+import TableComponent from "../../../../components/Table/CustomTable";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { Grid } from "@material-ui/core";

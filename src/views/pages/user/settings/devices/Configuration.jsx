@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
 // core components
@@ -15,7 +15,7 @@ import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
-import { Divider, Grid } from "@material-ui/core";
+import {Divider, Grid} from "@material-ui/core";
 import RadioButton from "../../../../Components/RadioButton";
 import SearchBox from "../../../../../components/SearchBox/SearchBox";
 
@@ -186,19 +186,15 @@ export default function Configuration() {
   });
 
   const handleChange = (event) => {
-    setCheckedState({ ...checkedState, [event.target.name]: event.target.checked });
+    setCheckedState({...checkedState, [event.target.name]: event.target.checked});
   };
 
   const [sliderValue, setSliderValue] = useState({
     sliderA: 0,
-    sliderA: 0,
-    sliderA: 0,
-    sliderA: 0,
   })
 
   const handleSliderChange = (event) => {
-    setSliderValue({ ...sliderValue, [event.target.name]: event.target.value })
-    console.log(sliderValue)
+    setSliderValue({...sliderValue, [event.target.name]: event.target.value})
   }
 
   return (
@@ -212,78 +208,75 @@ export default function Configuration() {
                   <GridItem xs={3} sm={3} md={3} className={classes.configTitle}>
                     Device Configuration
                   </GridItem>
-
-
                   <GridItem className={classes.cardMultipleContent}>
-                    <GridItem xs={12} sm={12} md={12} className={classes.gridContent} >
+                    <GridItem xs={12} sm={12} md={12} className={classes.gridContent}>
                       <CardBody className={classes.cardItem}>
-                        <GridItem className={classes.headerItem} >
+                        <GridItem className={classes.headerItem}>
                           Enable Vehicle Battery Conservation Mode
                         </GridItem>
-                        <GridItem className={classes.contentItem} >
-                          By default, the Samsara Vehicle Gateway uses a small amount of vehicle battery when idle. This is the recommended setting for most vehicles.
-                          Vehicle Battery Conservation Mode further reduces consumption of the vehicle battery by the Gateway when the vehicle is not in use, and is intended
+                        <GridItem className={classes.contentItem}>
+                          By default, the Samsara Vehicle Gateway uses a small amount of vehicle battery when idle. This
+                          is the recommended setting for most vehicles.
+                          Vehicle Battery Conservation Mode further reduces consumption of the vehicle battery by the
+                          Gateway when the vehicle is not in use, and is intended
                           for vehicles that are subject to battery drain under default settings.
                         </GridItem>
-                        <GridItem className={classes.contentItem} >
-                          When in Vehicle Battery Conservation Mode, Gateway functionality including WiFi hotspot connectivity and camera video retrieval will not be available.
-                          The Gateway will wake when vehicle motion resumes, resulting in reduced GPS tracking accuracy at the beginning of a trip.
+                        <GridItem className={classes.contentItem}>
+                          When in Vehicle Battery Conservation Mode, Gateway functionality including WiFi hotspot
+                          connectivity and camera video retrieval will not be available.
+                          The Gateway will wake when vehicle motion resumes, resulting in reduced GPS tracking accuracy
+                          at the beginning of a trip.
                         </GridItem>
                       </CardBody>
-                      <Switch checked={checkedState.checkedA} onChange={handleChange} name="checkedA" />
+                      <Switch checked={checkedState.checkedA} onChange={handleChange} name="checkedA"/>
                     </GridItem>
-
                     {checkedState.checkedA === true
-                      && (
-                        <GridItem className={classes.advancedSettings}>
-                          <GridItem className={classes.advancedTitle}>Advanced Settings</GridItem>
-                          <GridItem className={classes.advancedTagContainer}>
-                            <GridItem className={classes.advancedChoice}>Vehicles this applies to:</GridItem>
-                            <GridItem className={classes.tagChoice}>
-                              <GridItem className={classes.radioButtonGroup}>
-                                <Grid item>
-                                  <RadioButton checked={true} />
-                                  All Vehicles
-                                </Grid>
-                                <Grid item>
-                                  <RadioButton checked={false} />
-                                  Specific Tags
-                                </Grid>
-                              </GridItem>
-
-                              <GridItem className={classes.inputWrapper}>
-                                <SearchBox placeholder={"Search contacts"} />
-                              </GridItem>
+                    && (
+                      <GridItem className={classes.advancedSettings}>
+                        <GridItem className={classes.advancedTitle}>Advanced Settings</GridItem>
+                        <GridItem className={classes.advancedTagContainer}>
+                          <GridItem className={classes.advancedChoice}>Vehicles this applies to:</GridItem>
+                          <GridItem className={classes.tagChoice}>
+                            <GridItem className={classes.radioButtonGroup}>
+                              <Grid item>
+                                <RadioButton checked={true}/>
+                                All Vehicles
+                              </Grid>
+                              <Grid item>
+                                <RadioButton checked={false}/>
+                                Specific Tags
+                              </Grid>
+                            </GridItem>
+                            <GridItem className={classes.inputWrapper}>
+                              <SearchBox placeholder={"Search contacts"}/>
                             </GridItem>
                           </GridItem>
-                          <GridItem className={classes.engineTitle}>Engine shut-off time</GridItem>
-                          <GridItem className={classes.engineDescription}>Minimum time the engine must be off for Battery Conservation Mode to be enabled.</GridItem>
-                          <GridItem>
-                            <CustomSlider valueSlider={sliderValue.sliderA} allSlider={sliderValue} setSliderValue={setSliderValue} name="sliderA" />
-                          </GridItem>
                         </GridItem>
-                      )
+                        <GridItem className={classes.engineTitle}>Engine shut-off time</GridItem>
+                        <GridItem className={classes.engineDescription}>Minimum time the engine must be off for Battery
+                          Conservation Mode to be enabled.</GridItem>
+                        <GridItem>
+                          <CustomSlider valueSlider={sliderValue.sliderA} allSlider={sliderValue}
+                                        setSliderValue={setSliderValue} name="sliderA"/>
+                        </GridItem>
+                      </GridItem>
+                    )
                     }
-
-                    <Divider variant="fullWidth" light />
-
-
-                    <GridItem xs={12} sm={12} md={12} className={classes.gridContent} >
+                    <Divider variant="fullWidth" light/>
+                    <GridItem xs={12} sm={12} md={12} className={classes.gridContent}>
                       <CardBody className={classes.cardItem}>
-                        <GridItem className={classes.headerItem} >
+                        <GridItem className={classes.headerItem}>
                           Enable Vehicle Battery Conservation Mode
                         </GridItem>
-                        <GridItem className={classes.contentItem} >
+                        <GridItem className={classes.contentItem}>
                           By default, the Samsara Vehicle Gateway uses a small amount of vehicle battery when idle.
                         </GridItem>
                       </CardBody>
-                      <Switch checked={checkedState.checkedB} onChange={handleChange} name="checkedB" />
+                      <Switch checked={checkedState.checkedB} onChange={handleChange} name="checkedB"/>
                     </GridItem>
-                    <Divider variant="fullWidth" light />
-
+                    <Divider variant="fullWidth" light/>
                   </GridItem>
                 </CardBody>
-
               </Card>
             </GridItem>
           </GridContainer>

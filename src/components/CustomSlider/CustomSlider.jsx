@@ -3,9 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Slider from '@material-ui/core/Slider';
 
 const useStyles = makeStyles((theme) => ({
-  // root: {
-  //   width: 960,
-  // },
   margin: {
     height: theme.spacing(3),
   },
@@ -28,10 +25,10 @@ function valuetext(value) {
 
 export default function CustomSlider(props) {
   const { valueSlider, allSlider, setSliderValue, name } = props
+
   const classes = useStyles();
 
   const handleChange = (event, val) => {
-    console.log(val)
     setSliderValue({...allSlider, [event.target.name]: val})
   }
 

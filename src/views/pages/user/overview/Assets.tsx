@@ -1,6 +1,9 @@
 import React from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+// import { makeStyles } from "@material-ui/core/styles";
+import { Theme, makeStyles } from '@material-ui/core';
+import { BaseCSSProperties } from '@material-ui/core/styles/withStyles';
+
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
 import FormatQuote from "@material-ui/icons/FormatQuote";
@@ -107,10 +110,15 @@ const styles = {
   }
 };
 
-const useStyles = makeStyles(styles);
+interface StyleProps {
+  root: BaseCSSProperties,
+}
+
+const useStyles = makeStyles<Theme, StyleProps>(() => styles as any);
+
 
 export function Assets(props) {
-  const classes = useStyles();
+  const classes = useStyles({} as StyleProps);
 
   React.useEffect(() => {
     async function fetchVehicles() {

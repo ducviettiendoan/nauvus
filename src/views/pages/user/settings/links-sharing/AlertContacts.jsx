@@ -52,21 +52,19 @@ const styles = {
     fontWeight: 700,
     fontSize: 18,
     textAlign: "left",
-    color: "#25345C"
+    color: "#25345C",
+    marginTop: '-17px'
   },
   liveSharingButton: {
     textAlign: "right",
+    marginTop: '2px'
   },
   moreAction: {
     background: "#FFFFFF !important",
     border: "1px solid #ECEEF0 !important"
   },
-  searchBox: {
-    marginTop: "16px !important",
-    textAlign: "right"
-  },
   textName: {
-    fontWeight: 400,
+    fontWeight: 'bold',
     fontSize: '16px',
     lineHeight: '24px',
     marginTop: '14px',
@@ -74,12 +72,12 @@ const styles = {
     marginLeft: '24px'
   },
   textSub: {
-    fontWeight: 400,
+    fontWeight: '400',
+    color: '#25345C',
     fontSize: '16px',
     lineHeight: '24px',
     marginTop: '14px',
-    marginLeft: '24px',
-    color: '#25345C',
+    marginLeft: '24px'
   },
   iconButton: {
     '&:hover': {
@@ -102,26 +100,22 @@ const styles = {
   topHeaderButton: {
     textAlign: "right",
   },
-  actionButton: {
-    textAlign: "right"
-  }
 };
 
 
 const dumpData = [
-  { name: 'GR9X-6AN-3N5'},
-  { name: 'GR9X-6AN-3N5'},
-  { name: 'GR9X-6AN-3N5'},
-  { name: 'GR9X-6AN-3N5'},
-  { name: 'GR9X-6AN-3N5'},
-  { name: 'GR9X-6AN-3N5'},
-  { name: 'GR9X-6AN-3N5'},
-  { name: 'GR9X-6AN-3N5'}
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
+  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
 ];
 
 const useStyles = makeStyles(styles);
 
-export default function Maps(props) {
+export default function AlertContacts(props) {
   const classes = useStyles();
 
   const formatName = (cell, row) => {
@@ -130,16 +124,28 @@ export default function Maps(props) {
     </>
   }
 
+  const formatPhone = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+  const formatEmail = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
   const addActionButton = () => {
     return (
-      <div className={classes.actionButton}>
+      <>
         <Button justIcon color="twitter" simple>
           <EditIcon className={classes.iconButton} style={{ color: "#ffffff", width: '22px', height: '22px' }} />
         </Button>
         <Button justIcon color="google" simple>
           <DeleteIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
         </Button>
-      </div>
+      </>
     )
   }
 
@@ -152,7 +158,7 @@ export default function Maps(props) {
 
               <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                  Map Customization List
+                  Alert Contacts  List
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <Button
@@ -160,16 +166,35 @@ export default function Maps(props) {
                     className="btn-round-active w-150 mr-2"
                     startIcon={<AddOutlined />}
                   >
-                    Upload Image
+                    Add Contact
+                  </Button>
+                  <Button
+                    color="white"
+                    aria-label="edit"
+                    justIcon
+                    round
+                    className={`btn-36 ${classes.moreAction} mr-2`}
+                  >
+                    <MoreHoriz />
                   </Button>
                 </GridItem>
               </GridContainer>
 
 
-              <Card testimonial>
+              <Card>
+                <CardBody style={{ height: '74px' }}>
+                  <GridContainer className={classes.liveSharingHeader}>
+                    <GridItem xs={3} sm={3} md={3} className={classes.liveSharingTitle}>
+                      2 contacts
+                    </GridItem>
+                    <GridItem xs={9} sm={9} md={9} className={classes.liveSharingButton}>
+                      <SettingSearchBox placeholder={"Search contacts"} />
+                    </GridItem>
+                  </GridContainer>
+                </CardBody>
                 <div>
                   <ToolkitProvider
-                    data={ dumpData }
+                    data={dumpData}
                     keyField="_id"
                     columns={[
                       {
@@ -178,8 +203,18 @@ export default function Maps(props) {
                         formatter: formatName
                       },
                       {
+                        dataField: "phone",
+                        text: "Phone",
+                        formatter: formatPhone
+                      },
+                      {
+                        dataField: "email",
+                        text: "Email",
+                        formatter: formatEmail
+                      },
+                      {
                         dataField: "action",
-                        text: "",
+                        text: "Actions",
                         formatter: addActionButton
                       }
                     ]}
@@ -205,7 +240,6 @@ export default function Maps(props) {
                                           { text: <ArrowUpIcon/>, arrow : true },
                                         ]}
                                       /> */}
-
                         </Row>
                       </div>
                     )}
