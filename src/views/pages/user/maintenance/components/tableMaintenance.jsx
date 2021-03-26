@@ -12,6 +12,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Select from "@material-ui/core/Select";
 import FormControl from "@material-ui/core/FormControl";
 import TableComponent from "../../../../../components/Table/CustomTable";
+import DropDownIcon from "../../../../../components/Icons/DropDownIcon";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -107,11 +108,16 @@ const useStyles = makeStyles((theme) => ({
     background: "#FFFFFF",
     boxSizing: "border-box",
     borderRadius: "20px",
+    "& > select": {
+      width: "100%",
+      zIndex: "1000",
+      paddingRight: "0px !important"
+    },
     "&::before": {
       borderBottom: "0px"
     },
     "& > select:focus": {
-      backgroundColor: "#FFFFFF"
+      backgroundColor: "unset"
     },
     "& > fieldset": {
       border: 0
@@ -120,6 +126,12 @@ const useStyles = makeStyles((theme) => ({
       borderBottom: "0px"
     },
     marginRight: 8
+  },
+  dropDownIcon: {
+    position:"absolute",
+    right: 0,
+    color: "#C4C4C4",
+    cursor: "pointer"
   }
 }));
 
@@ -166,6 +178,9 @@ export default function TableMaintenance() {
                   native
                   value={"1"}
                   className={classes.button}
+                  IconComponent={() => (
+                    <DropDownIcon className={classes.dropDownIcon} />
+                  )}
                 >
                   <option value={1}>Tags</option>
                 </Select>
@@ -175,6 +190,9 @@ export default function TableMaintenance() {
                   native
                   value={"1"}
                   className={classes.button}
+                  IconComponent={() => (
+                    <DropDownIcon className={classes.dropDownIcon} />
+                  )}
                 >
                   <option value={1}>Defects</option>
                   <option value={2}>Faults</option>
