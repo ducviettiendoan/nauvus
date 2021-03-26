@@ -70,6 +70,21 @@
   color: #25345C!important;
 }
 
+.btn-round-white-2 {
+  background: #fff !important;
+  border-radius: 22px !important;
+  text-transform: initial !important;
+  font-size: 14px !important;
+  line-height: 17px !important;
+  font-family: Lato!important;
+  font-style: normal!important;
+  font-weight: bold!important;
+  background: rgba(37, 52, 92, 0.1) !important;
+  width: 138px;
+  height: 41px;
+  color: #25345C !important;
+}
+
 .btn-round-gray {
   background: rgba(37, 52, 92, 0.1)!important;
   border-radius: 28px !important;

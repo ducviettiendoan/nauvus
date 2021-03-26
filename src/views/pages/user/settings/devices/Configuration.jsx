@@ -277,6 +277,7 @@ export default function Configuration() {
                     <Divider variant="fullWidth" light/>
                   </GridItem>
                 </CardBody>
+
               </Card>
             </GridItem>
           </GridContainer>
