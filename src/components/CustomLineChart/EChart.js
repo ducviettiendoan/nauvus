@@ -6,8 +6,8 @@ import Button from "../CustomButtons/Button";
 import TimelineIcon from "@material-ui/icons/Timeline";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import GridContainer from "../Grid/GridContainer";
-import {cardTitle, roseColor} from "../../assets/jss/material-dashboard-pro-react";
 import {makeStyles} from "@material-ui/core/styles";
+import Calendar from "../Calendar/Calendar";
 // render echarts option.
 
 const styles = {
@@ -63,6 +63,7 @@ const useStyles = makeStyles(styles);
 
 const EChart = (props) => {
     const classes = useStyles()
+    //Mock Data for References
     // const mockData = {
     //     title: {
     //         text: "API Volume"
@@ -146,15 +147,23 @@ const EChart = (props) => {
                     </h4>
                 </GridItem>
                 <GridItem xs={6} className={classes.textEnd}>
-                    <Button
-                        color="white"
-                        aria-label="edit"
-                        justIcon
-                        round
-                        className={`btn-36 ${classes.chartAction} mr-2`}
-                    >
-                        <TimelineIcon className={classes.colorBlue}/>
-                    </Button>
+                    <GridContainer justify="flex-end" alignItems="center">
+                        <GridItem className={classes.noPadding}>
+                            <Calendar style={{background: "red"}}/>
+                        </GridItem>
+                        <GridItem className={classes.noPadding}>
+                            <Button
+                                color="white"
+                                aria-label="edit"
+                                justIcon
+                                round
+                                className={`btn-36 ${classes.chartAction} mr-3`}
+                            >
+                                <TimelineIcon className={classes.colorBlue}/>
+                            </Button>
+                        </GridItem>
+                    </GridContainer>
+
                 </GridItem>
                 <GridItem xs={12} className={classes.textStart + " " + classes.colorBlue}>
                     {series.map(e => {

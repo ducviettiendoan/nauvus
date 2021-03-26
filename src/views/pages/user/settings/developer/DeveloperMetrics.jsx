@@ -7,18 +7,15 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
-import TimelineIcon from '@material-ui/icons/Timeline';
+
 
 import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
-import Button from "../../../../../components/CustomButtons/Button";
 import EChart from "components/CustomLineChart/EChart";
 import withStyles from "@material-ui/core/styles/withStyles";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 
 
 const styles = {
@@ -118,10 +115,6 @@ const styles = {
     padding: "0!important",
     margin: "0!important"
   },
-  chartLegend: {
-    fontSize: 12,
-    verticalAlign: "baseline"
-  },
   bigCard: {
     marginTop: "0px!important",
     marginBottom: "20px!important",
@@ -147,14 +140,6 @@ const BorderLinearProgress = withStyles((theme) => ({
 }))(LinearProgress);
 
 const useStyles = makeStyles(styles);
-
-var base = +new Date(2021, 3, 16);
-var oneDay = 24 * 3600 * 1000;
-var valueBase = Math.random() * 300;
-var valueBase2 = Math.random() * 50;
-var data = [];
-var data2 = [];
-
 const mockData = {
   title: {
     text: "API Volume"
@@ -210,23 +195,23 @@ export default function DeveloperMetrics() {
                           <h5 className={classes.boldBlueLeft + " pl-2 my-3"}>
                             Summary
                           </h5>
-                          <div className={`${classes.displayFlex} ${classes.colorBlue}`}>
-                            <div>Progress</div>
-                            <div className={classes.boldBlueLeft}>99.99%</div>
-                          </div>
+                          <GridContainer justify="space-between" className={classes.colorBlue}>
+                            <GridItem>Progress</GridItem>
+                            <GridItem className={classes.boldBlueLeft}>99.99%</GridItem>
+                          </GridContainer>
                           <div className="mt-2 mb-4">
                             <BorderLinearProgress variant="determinate" value={99.99} />
                           </div>
                           <div className={"py-2 " + classes.fontSize16} >
-                            <div className={classes.displayFlex}>
-                              <div className={classes.colorGrey}>Availability Rate</div>
-                              <div className={classes.boldBlueLeft}>99.99%</div>
-                            </div>
+                            <GridContainer justify="space-between">
+                              <GridItem className={classes.colorGrey}>Availability Rate</GridItem>
+                              <GridItem className={classes.boldBlueLeft}>99.99%</GridItem>
+                            </GridContainer>
                             <hr className="my-2"/>
-                            <div className={classes.displayFlex}>
-                              <div className={classes.colorGrey}>Success Rate</div>
-                              <div className={classes.boldBlueLeft}>99.99%</div>
-                            </div>
+                            <GridContainer justify="space-between">
+                              <GridItem className={classes.colorGrey}>Success Rate</GridItem>
+                              <GridItem className={classes.boldBlueLeft}>99.99%</GridItem>
+                            </GridContainer>
                           </div>
                         </CardBody>
                       </Card>
