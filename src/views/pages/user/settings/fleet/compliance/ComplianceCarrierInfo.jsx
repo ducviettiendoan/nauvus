@@ -2,24 +2,17 @@ import React from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
-// core components
-import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 
 import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
-import {Divider, Grid} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import {Col, Row} from "reactstrap";
 import Button from "../../../../../../components/CustomButtons/Button";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import Face from "@material-ui/icons/Face";
 import TodoIcon from "../../../../../../components/Icons/TodoIcon";
 import CompanyIcon from "../../../../../../components/Icons/CompanyIcon";
 import BuildingIcon from "../../../../../../components/Icons/BuildingIcon";

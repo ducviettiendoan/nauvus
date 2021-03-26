@@ -6,25 +6,18 @@ import {makeStyles} from "@material-ui/core/styles";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import Switch from "components/CustomSwitch/Switch.jsx"
-import CustomSlider from "components/CustomSlider/CustomSlider"
 
 import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
 import {Divider, Grid} from "@material-ui/core";
-import SearchBox from "../../../../../../components/SearchBox/SearchBox";
-import RadioButton from "../../../../../Components/RadioButton";
 import Button from "../../../../../../components/CustomButtons/Button";
 import EditIcon from "../../../../../../components/Icons/EditIcon";
-import DeleteIcon from "../../../../../../components/Icons/DeleteIcon";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import {Row} from "reactstrap";
-import AddOutlined from "@material-ui/icons/AddOutlined";
 import AddIcon from "../../../../../../components/Icons/AddIcon";
 
 const styles = {

@@ -2,27 +2,11 @@ import React from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
-// core components
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
-import TextField from '@material-ui/core/TextField';
-import Button from "components/CustomButtons/Button.js";
-
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 
-import OrganizationIcon from "components/Icons/OrganizationIcon";
-import LanguageIcon from "components/Icons/LanguageIcon";
-import ConnectionIcon from "components/Icons/ConnectionIcon";
-import AdvancedIcon from "components/Icons/AdvancedIcon";
-import DeleteButton from "components/CustomButtons/DeleteButton";
 
 import {Row, Col} from "reactstrap";
 import ComplianceCarrierInfo from "./ComplianceCarrierInfo";

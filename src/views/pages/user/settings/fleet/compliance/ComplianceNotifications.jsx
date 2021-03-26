@@ -1,23 +1,16 @@
 import React, {useState} from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
-// @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
-// core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import Switch from "components/CustomSwitch/Switch.jsx"
-import CustomSlider from "components/CustomSlider/CustomSlider"
 
 import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
-import {Divider, Grid} from "@material-ui/core";
-import SearchBox from "../../../../../../components/SearchBox/SearchBox";
-import RadioButton from "../../../../../Components/RadioButton";
+import {Divider} from "@material-ui/core";
 
 const styles = {
   cardTitle,

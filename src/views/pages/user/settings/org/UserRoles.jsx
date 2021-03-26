@@ -28,17 +28,10 @@ import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import {Row} from "reactstrap";
 import GenPaginationV1 from "../../../../../components/Pagination/GenPaginationV1";
-import ArrowDownIcon from "../../../../../components/Icons/ArrowDownIcon";
-import ArrowLeftIcon from "../../../../../components/Icons/ArrowLeftIcon";
-import ArrowRightIcon from "../../../../../components/Icons/ArrowRightIcon";
-import ArrowUpIcon from "../../../../../components/Icons/ArrowUpIcon";
 import EditIcon from "../../../../../components/Icons/EditIcon";
-import CopyIcon from "../../../../../components/Icons/CopyIcon";
 import PropTypes from "prop-types";
 import avatar from "assets/img/faces/avatar.jpg";
 import DotIcon from "../../../../../components/Icons/DotIcon";
-import Checkbox from "@material-ui/core/Checkbox";
-import Check from "@material-ui/icons/Check";
 import Chip from "@material-ui/core/Chip";
 
 const styles = {
