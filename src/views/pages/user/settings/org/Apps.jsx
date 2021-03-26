@@ -14,7 +14,7 @@ import Logo from "assets/img/logo_nauvus_text.svg";
 import {
   cardTitle,
 } from "assets/jss/material-dashboard-pro-react.js";
-import {Tab, Tabs, Typography} from "@material-ui/core";
+import {Typography} from "@material-ui/core";
 import PropTypes from "prop-types";
 import RoundedTabs from "../../../../../components/CustomTabs/RoundedTabs";
 import FormatQuote from "@material-ui/icons/FormatQuote";

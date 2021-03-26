@@ -22,6 +22,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Button from "@material-ui/core/Button";
 import TableMaintenance from "./components/tableMaintenance";
 import Calendar from "../../../../components/Calendar/Calendar";
+import DropDownIcon from "../../../../components/Icons/DropDownIcon";
 
 
 const styles = {
