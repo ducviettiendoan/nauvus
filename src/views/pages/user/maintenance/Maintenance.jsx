@@ -21,6 +21,7 @@ import Select from "@material-ui/core/Select";
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Button from "@material-ui/core/Button";
 import TableMaintenance from "./components/tableMaintenance";
+import Calendar from "../../../../components/Calendar/Calendar";
 
 
 const styles = {
@@ -181,6 +182,9 @@ export default function Maintenance() {
                           >
                             <option value={1}>1.1 Weeks</option>
                           </Select>
+                        </FormControl>
+                        <FormControl variant="outlined">
+                          <Calendar />
                         </FormControl>
                         <FormControl variant="outlined" className="moreIcon">
                           <IconButton>

@@ -219,11 +219,11 @@ const sidebarStyle = theme => ({
     paddingLeft: "10px",
     paddingRight: "10px",
     transition: "all 300ms linear",
-    margin: "10px 15px 0",
+    margin: "8px 20px 0",
     borderRadius: "3px",
     position: "relative",
     display: "block",
-    padding: "10px 15px",
+    padding: "4px 15px",
     backgroundColor: "transparent",
     ...defaultFont,
     width: "auto",
@@ -242,8 +242,9 @@ const sidebarStyle = theme => ({
     height: "24px",
     float: "left",
     position: "inherit",
-    top: "6px",
-    marginRight: "15px",
+    top: "7px",
+    left: "-4px",
+    marginRight: "5px",
     textAlign: "center",
     verticalAlign: "middle",
     //opacity: "0.8"
@@ -395,8 +396,8 @@ const sidebarStyle = theme => ({
   blue: {
     "&,&:hover,&:focus": {
       color: blackColor,
-      backgroundColor: "rgba(94, 129, 244, 0.1)",
-      borderRadius: "24px"
+      backgroundColor: "rgba(37, 52, 92, 0.1)",
+      borderRadius: "28px"
       // boxShadow:
       //   "0 12px 20px -10px rgba(" +
       //   hexToRgb(infoColor[0]) +

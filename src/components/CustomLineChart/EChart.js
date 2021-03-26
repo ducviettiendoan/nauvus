@@ -134,7 +134,7 @@ const EChart = (props) => {
             type: 'value',
             position: 'right'
         },
-        series: series.map((e) => {return {...e, type: "line"}})
+        series: series.map((e) => {return {...e, type: "line", smooth: "true"}})
 
     };
     return(

@@ -25,12 +25,10 @@ import AdvancedIcon from "components/Icons/AdvancedIcon";
 import DeleteButton from "components/CustomButtons/DeleteButton";
 
 import { Row, Col } from "reactstrap";
-import OrganizationUpload from "components/CustomUpload/OrganizationUpload";
-
-import {
-  cardTitle,
-  roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
+import GeneralOrganization from "./components/GeneralOrganization";
+import GeneralLanguageRegion from "./components/GeneralLanguageRegion";
+import GeneralConnection from "./components/GeneralConnection";
+import GeneralAdvanced from "./components/GeneralAdvanced";
 
 const styles = {
   cardContainer: {
@@ -129,7 +127,8 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function Settings() {
+export default function General() {
+  const [tab, setTab] = React.useState(1);
   const classes = useStyles();
   return (
     <div>
@@ -140,65 +139,40 @@ export default function Settings() {
               <Col>
                   <div className={classes.contentContainer}>
                     <div className={classes.areaGrow}>
-                      <OrganizationUpload />
-                      <div>
-                        <Row style={{marginTop: '20px', paddingRight: '16px'}}>
-                          <Col>
-                            <TextField
-                              id="standard-full-width"
-                              label="Organisation name"
-                              placeholder="Global Company"
-                              fullWidth
-                              margin="normal"
-                              InputLabelProps={{
-                                shrink: true,
-                                classes: { root: classes.textFieldRoot }
-                              }}
-                              InputProps={{
-                                classes: { input: classes.textInputRoot }
-                              }}
-                            />
-                          </Col>
-                          <Col>
-                            <TextField
-                                id="standard-full-width1"
-                                label="Driver Fleet ID"
-                                placeholder="Driver Fleet ID"
-                                fullWidth
-                                margin="normal"
-                                InputLabelProps={{
-                                  shrink: true,
-                                  classes: { root: classes.textFieldRoot }
-                                }}
-                                InputProps={{
-                                  classes: { input: classes.textInputRoot }
-                                }}
-                              />
-                          </Col>
-                        </Row>
-                      </div>
+                      { tab === 1 && <GeneralOrganization /> }
+                      { tab === 2 && <GeneralLanguageRegion /> }
+                      { tab === 3 && <GeneralConnection /> }
+                      { tab === 4 && <GeneralAdvanced /> }
                     </div>
                     <div className={classes.areaMenu}>
                       <List className={classes.root}>
-                        <ListItem button classes={{ root: classes.listItemRoot, button: classes.listItemButton }} style={{ borderBottom: '1px solid #ECEEF0' }}>
+                        <ListItem button 
+                          onClick={ () => setTab(1) }
+                          classes={{ root: classes.listItemRoot, button: classes.listItemButton }} style={{ borderBottom: '1px solid #ECEEF0' }}>
                             <ListItemIcon classes={{ root: classes.iconRoot }}>
                                 <OrganizationIcon className={classes.icons} />
                             </ListItemIcon>
                             <ListItemText classes={{ root: classes.itemTextRoot, primary: classes.primaryText, secondary: classes.secondaryText }} primary="Organization Information" secondary="Profile foto, name & language" />
                         </ListItem>
-                        <ListItem button classes={{ root: classes.listItemRoot, button: classes.listItemButton }} style={{ borderBottom: '1px solid #ECEEF0' }}>
+                        <ListItem button 
+                          onClick={ () => setTab(2) }
+                          classes={{ root: classes.listItemRoot, button: classes.listItemButton }} style={{ borderBottom: '1px solid #ECEEF0' }}>
                             <ListItemIcon classes={{ root: classes.iconRoot }}>
                                 <LanguageIcon className={classes.icons} />
                             </ListItemIcon>
                             <ListItemText classes={{ root: classes.itemTextRoot, primary: classes.primaryText, secondary: classes.secondaryText }} primary="Language and Region" secondary="Description" />
                         </ListItem>
-                        <ListItem button classes={{ root: classes.listItemRoot, button: classes.listItemButton }} style={{ borderBottom: '1px solid #ECEEF0' }}>
+                        <ListItem button 
+                          onClick={ () => setTab(3) }
+                          classes={{ root: classes.listItemRoot, button: classes.listItemButton }} style={{ borderBottom: '1px solid #ECEEF0' }}>
                             <ListItemIcon classes={{ root: classes.iconRoot }}>
                                 <ConnectionIcon className={classes.icons} />
                             </ListItemIcon>
                             <ListItemText classes={{ root: classes.itemTextRoot, primary: classes.primaryText, secondary: classes.secondaryText }} primary="Connection" secondary="Description" />
                         </ListItem>
-                        <ListItem button classes={{ root: classes.listItemRoot, button: classes.listItemButton }}>
+                        <ListItem button 
+                          onClick={ () => setTab(4) }
+                          classes={{ root: classes.listItemRoot, button: classes.listItemButton }}>
                             <ListItemIcon classes={{ root: classes.iconRoot }}>
                                 <AdvancedIcon className={classes.icons} />
                             </ListItemIcon>

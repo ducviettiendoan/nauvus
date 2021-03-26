@@ -1,20 +1,23 @@
-import React from "react";
+import React, {useState} from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
+import Switch from "components/CustomSwitch/Switch.jsx"
+import CustomSlider from "components/CustomSlider/CustomSlider"
 
 import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
+import {Divider, Grid} from "@material-ui/core";
+import RadioButton from "../../../../Components/RadioButton";
+import SearchBox from "../../../../../components/SearchBox/SearchBox";
 
 const styles = {
   cardTitle,
@@ -65,31 +68,215 @@ const styles = {
   cardTestimonialDescription: {
     fontStyle: "italic",
     color: "#999999"
-  }
+  },
+  cardContainer: {
+    padding: "0px 0px 0px 16px !important"
+  },
+  cardMultipleContent: {
+    paddingLeft: "6px !important",
+    paddingBottom: "20px !important"
+  },
+  gridContent: {
+    display: "flex",
+    padding: "0px 0px 0px 0px !important"
+  },
+  configTitle: {
+    fontSize: 18,
+    fontFamily: "Lato",
+    fontWeight: "bold",
+    color: "#25345C",
+    fontStyle: "normal",
+    padding: "10px 0px 20px 0px !important"
+  },
+  cardItem: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    padding: "0px 0px !important"
+  },
+  headerItem: {
+    fontWeight: 700,
+    fontSize: 14,
+    color: "#25345C",
+    fontFamily: "Lato",
+    padding: "9px 0px 15px 0px !important",
+    lineHeight: "21px",
+    overflow: "hidden"
+  },
+  contentItem: {
+    color: "#B4B4B4",
+    fontWeight: 700,
+    fontSize: 14,
+    fontFamily: "Lato",
+    padding: "0px 0px 20px 0px !important",
+    lineHeight: "21px",
+    overflow: "hidden"
+  },
+  advancedSettings: {
+    padding: "2px 0px 0px 0px !important",
+    marginLeft: "-6px !important",
+  },
+  advancedTitle: {
+    padding: "0px 0px 16px 0px !important",
+    fontFamily: "Lato",
+    fontStyle: "normal",
+    fontWeight: "bold",
+    fontSize: "14px",
+    lineHeight: "21px",
+    color: "#25345C"
+  },
+  advancedTagContainer: {
+    padding: "0px 0px 0px 0px !important",
+  },
+  advancedChoice: {
+    fontFamily: "Lato",
+    fontStyle: "normal",
+    fontWeight: 400,
+    fontSize: "14px",
+    lineHeight: "21px",
+    color: "#25345C",
+    padding: "0px 0px 16px 0px !important",
+  },
+  tagChoice: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: "0px 0px 0px 0px !important"
+  },
+  radioButtonGroup: {
+    display: "flex",
+    flexDirection: "row",
+    padding: "0px 0px 0px 0px !important"
+  },
+  inputWrapper: {
+    textAlign: "right",
+    padding: "0px 0px 0px 0px !important"
+  },
+  engineTitle: {
+    padding: "0px 0px 16px 0px !important",
+    fontSize: "16px",
+    lineHeight: "21px",
+    fontFamily: "Lato",
+    fontStyle: "normal",
+    fontWeight: 400,
+    color: "#25345C",
+  },
+  engineDescription: {
+    padding: "0px 0px 24px 0px !important",
+    fontSize: "16px",
+    lineHeight: "21px",
+    fontFamily: "Lato",
+    fontStyle: "normal",
+    fontWeight: "normal",
+    color: "#B4B4B4",
+  },
+
 };
 
 const useStyles = makeStyles(styles);
 
 export default function Configuration() {
   const classes = useStyles();
+
+  const [checkedState, setCheckedState] = useState({
+    checkedA: false,
+    checkedB: false,
+    checkedC: false,
+    checkedD: false,
+  });
+
+  const handleChange = (event) => {
+    setCheckedState({...checkedState, [event.target.name]: event.target.checked});
+  };
+
+  const [sliderValue, setSliderValue] = useState({
+    sliderA: 0,
+  })
+
+  const handleSliderChange = (event) => {
+    setSliderValue({...sliderValue, [event.target.name]: event.target.value})
+  }
+
   return (
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
-              <Card testimonial>
-                <div className={classes.testimonialIcon}>
-                  <FormatQuote />
-                </div>
-                <CardBody>
-                  <h5 className={classes.cardTestimonialDescription}>
-                    No Data
-                  </h5>
+              <Card>
+                <CardBody className={classes.cardContainer}>
+                  <GridItem xs={3} sm={3} md={3} className={classes.configTitle}>
+                    Device Configuration
+                  </GridItem>
+                  <GridItem className={classes.cardMultipleContent}>
+                    <GridItem xs={12} sm={12} md={12} className={classes.gridContent}>
+                      <CardBody className={classes.cardItem}>
+                        <GridItem className={classes.headerItem}>
+                          Enable Vehicle Battery Conservation Mode
+                        </GridItem>
+                        <GridItem className={classes.contentItem}>
+                          By default, the Samsara Vehicle Gateway uses a small amount of vehicle battery when idle. This
+                          is the recommended setting for most vehicles.
+                          Vehicle Battery Conservation Mode further reduces consumption of the vehicle battery by the
+                          Gateway when the vehicle is not in use, and is intended
+                          for vehicles that are subject to battery drain under default settings.
+                        </GridItem>
+                        <GridItem className={classes.contentItem}>
+                          When in Vehicle Battery Conservation Mode, Gateway functionality including WiFi hotspot
+                          connectivity and camera video retrieval will not be available.
+                          The Gateway will wake when vehicle motion resumes, resulting in reduced GPS tracking accuracy
+                          at the beginning of a trip.
+                        </GridItem>
+                      </CardBody>
+                      <Switch checked={checkedState.checkedA} onChange={handleChange} name="checkedA"/>
+                    </GridItem>
+                    {checkedState.checkedA === true
+                    && (
+                      <GridItem className={classes.advancedSettings}>
+                        <GridItem className={classes.advancedTitle}>Advanced Settings</GridItem>
+                        <GridItem className={classes.advancedTagContainer}>
+                          <GridItem className={classes.advancedChoice}>Vehicles this applies to:</GridItem>
+                          <GridItem className={classes.tagChoice}>
+                            <GridItem className={classes.radioButtonGroup}>
+                              <Grid item>
+                                <RadioButton checked={true}/>
+                                All Vehicles
+                              </Grid>
+                              <Grid item>
+                                <RadioButton checked={false}/>
+                                Specific Tags
+                              </Grid>
+                            </GridItem>
+                            <GridItem className={classes.inputWrapper}>
+                              <SearchBox placeholder={"Search contacts"}/>
+                            </GridItem>
+                          </GridItem>
+                        </GridItem>
+                        <GridItem className={classes.engineTitle}>Engine shut-off time</GridItem>
+                        <GridItem className={classes.engineDescription}>Minimum time the engine must be off for Battery
+                          Conservation Mode to be enabled.</GridItem>
+                        <GridItem>
+                          <CustomSlider valueSlider={sliderValue.sliderA} allSlider={sliderValue}
+                                        setSliderValue={setSliderValue} name="sliderA"/>
+                        </GridItem>
+                      </GridItem>
+                    )
+                    }
+                    <Divider variant="fullWidth" light/>
+                    <GridItem xs={12} sm={12} md={12} className={classes.gridContent}>
+                      <CardBody className={classes.cardItem}>
+                        <GridItem className={classes.headerItem}>
+                          Enable Vehicle Battery Conservation Mode
+                        </GridItem>
+                        <GridItem className={classes.contentItem}>
+                          By default, the Samsara Vehicle Gateway uses a small amount of vehicle battery when idle.
+                        </GridItem>
+                      </CardBody>
+                      <Switch checked={checkedState.checkedB} onChange={handleChange} name="checkedB"/>
+                    </GridItem>
+                    <Divider variant="fullWidth" light/>
+                  </GridItem>
                 </CardBody>
-                <CardFooter testimonial>
-                  <h6 className={classes.cardCategory}>@nauvus</h6>
-                </CardFooter>
               </Card>
             </GridItem>
           </GridContainer>
