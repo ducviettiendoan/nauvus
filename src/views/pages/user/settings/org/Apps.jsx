@@ -13,7 +13,6 @@ import Logo from "assets/img/logo_nauvus_text.svg";
 
 import {
   cardTitle,
-  roseColor,
 } from "assets/jss/material-dashboard-pro-react.js";
 import {Tab, Tabs, Typography} from "@material-ui/core";
 import PropTypes from "prop-types";

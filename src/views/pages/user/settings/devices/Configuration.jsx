@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
 // core components
@@ -9,13 +9,15 @@ import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import Switch from "components/CustomSwitch/Switch.jsx"
+import CustomSlider from "components/CustomSlider/CustomSlider"
 
 import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
-import { Divider } from "@material-ui/core";
-
+import {Divider, Grid} from "@material-ui/core";
+import RadioButton from "../../../../Components/RadioButton";
+import SearchBox from "../../../../../components/SearchBox/SearchBox";
 
 const styles = {
   cardTitle,
@@ -76,8 +78,7 @@ const styles = {
   },
   gridContent: {
     display: "flex",
-    padding: "0px 0px 0px 0px !important",
-    alignItems: "center"
+    padding: "0px 0px 0px 0px !important"
   },
   configTitle: {
     fontSize: 18,
@@ -111,10 +112,65 @@ const styles = {
     lineHeight: "21px",
     overflow: "hidden"
   },
-  switchButton: {
+  advancedSettings: {
+    padding: "2px 0px 0px 0px !important",
+    marginLeft: "-6px !important",
+  },
+  advancedTitle: {
+    padding: "0px 0px 16px 0px !important",
+    fontFamily: "Lato",
+    fontStyle: "normal",
+    fontWeight: "bold",
+    fontSize: "14px",
+    lineHeight: "21px",
+    color: "#25345C"
+  },
+  advancedTagContainer: {
+    padding: "0px 0px 0px 0px !important",
+  },
+  advancedChoice: {
+    fontFamily: "Lato",
+    fontStyle: "normal",
+    fontWeight: 400,
+    fontSize: "14px",
+    lineHeight: "21px",
+    color: "#25345C",
+    padding: "0px 0px 16px 0px !important",
+  },
+  tagChoice: {
     display: "flex",
-    alignItems: "center"
-  }
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: "0px 0px 0px 0px !important"
+  },
+  radioButtonGroup: {
+    display: "flex",
+    flexDirection: "row",
+    padding: "0px 0px 0px 0px !important"
+  },
+  inputWrapper: {
+    textAlign: "right",
+    padding: "0px 0px 0px 0px !important"
+  },
+  engineTitle: {
+    padding: "0px 0px 16px 0px !important",
+    fontSize: "16px",
+    lineHeight: "21px",
+    fontFamily: "Lato",
+    fontStyle: "normal",
+    fontWeight: 400,
+    color: "#25345C",
+  },
+  engineDescription: {
+    padding: "0px 0px 24px 0px !important",
+    fontSize: "16px",
+    lineHeight: "21px",
+    fontFamily: "Lato",
+    fontStyle: "normal",
+    fontWeight: "normal",
+    color: "#B4B4B4",
+  },
+
 };
 
 const useStyles = makeStyles(styles);
@@ -122,17 +178,24 @@ const useStyles = makeStyles(styles);
 export default function Configuration() {
   const classes = useStyles();
 
-  const [checkedState, setCheckedState] = React.useState({
+  const [checkedState, setCheckedState] = useState({
     checkedA: false,
     checkedB: false,
     checkedC: false,
     checkedD: false,
-    checkedE: false,
   });
 
   const handleChange = (event) => {
-    setCheckedState({ ...checkedState, [event.target.name]: event.target.checked });
+    setCheckedState({...checkedState, [event.target.name]: event.target.checked});
   };
+
+  const [sliderValue, setSliderValue] = useState({
+    sliderA: 0,
+  })
+
+  const handleSliderChange = (event) => {
+    setSliderValue({...sliderValue, [event.target.name]: event.target.value})
+  }
 
   return (
     <div>
@@ -146,54 +209,72 @@ export default function Configuration() {
                     Device Configuration
                   </GridItem>
                   <GridItem className={classes.cardMultipleContent}>
-                    <GridItem xs={12} sm={12} md={12} className={classes.gridContent} >
+                    <GridItem xs={12} sm={12} md={12} className={classes.gridContent}>
                       <CardBody className={classes.cardItem}>
-                        <GridItem className={classes.headerItem} >
+                        <GridItem className={classes.headerItem}>
                           Enable Vehicle Battery Conservation Mode
                         </GridItem>
-                        <GridItem className={classes.contentItem} >
-                          By default, the Samsara Vehicle Gateway uses a small amount of vehicle battery when idle.
+                        <GridItem className={classes.contentItem}>
+                          By default, the Samsara Vehicle Gateway uses a small amount of vehicle battery when idle. This
+                          is the recommended setting for most vehicles.
+                          Vehicle Battery Conservation Mode further reduces consumption of the vehicle battery by the
+                          Gateway when the vehicle is not in use, and is intended
+                          for vehicles that are subject to battery drain under default settings.
+                        </GridItem>
+                        <GridItem className={classes.contentItem}>
+                          When in Vehicle Battery Conservation Mode, Gateway functionality including WiFi hotspot
+                          connectivity and camera video retrieval will not be available.
+                          The Gateway will wake when vehicle motion resumes, resulting in reduced GPS tracking accuracy
+                          at the beginning of a trip.
                         </GridItem>
                       </CardBody>
-                      <Switch checked={checkedState.checkedA} onChange={handleChange} name="checkedA" />
+                      <Switch checked={checkedState.checkedA} onChange={handleChange} name="checkedA"/>
                     </GridItem>
-                    <Divider variant="fullWidth" light />
-                    <GridItem xs={12} sm={12} md={12} className={classes.gridContent} >
-                      <CardBody className={classes.cardItem}>
-                        <GridItem className={classes.headerItem} >
-                          Enable Vehicle Battery Conservation Mode
-                    </GridItem>
-                      <GridItem className={classes.contentItem} >
-                        By default, the Samsara Vehicle Gateway uses a small amount of vehicle battery when idle.
+                    {checkedState.checkedA === true
+                    && (
+                      <GridItem className={classes.advancedSettings}>
+                        <GridItem className={classes.advancedTitle}>Advanced Settings</GridItem>
+                        <GridItem className={classes.advancedTagContainer}>
+                          <GridItem className={classes.advancedChoice}>Vehicles this applies to:</GridItem>
+                          <GridItem className={classes.tagChoice}>
+                            <GridItem className={classes.radioButtonGroup}>
+                              <Grid item>
+                                <RadioButton checked={true}/>
+                                All Vehicles
+                              </Grid>
+                              <Grid item>
+                                <RadioButton checked={false}/>
+                                Specific Tags
+                              </Grid>
+                            </GridItem>
+                            <GridItem className={classes.inputWrapper}>
+                              <SearchBox placeholder={"Search contacts"}/>
+                            </GridItem>
+                          </GridItem>
+                        </GridItem>
+                        <GridItem className={classes.engineTitle}>Engine shut-off time</GridItem>
+                        <GridItem className={classes.engineDescription}>Minimum time the engine must be off for Battery
+                          Conservation Mode to be enabled.</GridItem>
+                        <GridItem>
+                          <CustomSlider valueSlider={sliderValue.sliderA} allSlider={sliderValue}
+                                        setSliderValue={setSliderValue} name="sliderA"/>
+                        </GridItem>
                       </GridItem>
-                      </CardBody>
-                      <Switch checked={checkedState.checkedB} onChange={handleChange} name="checkedB" />
-                    </GridItem>
-                    <Divider variant="fullWidth" light />
-                    <GridItem xs={12} sm={12} md={12} className={classes.gridContent} >
+                    )
+                    }
+                    <Divider variant="fullWidth" light/>
+                    <GridItem xs={12} sm={12} md={12} className={classes.gridContent}>
                       <CardBody className={classes.cardItem}>
-                        <GridItem className={classes.headerItem} >
+                        <GridItem className={classes.headerItem}>
                           Enable Vehicle Battery Conservation Mode
                         </GridItem>
-                        <GridItem className={classes.contentItem} >
+                        <GridItem className={classes.contentItem}>
                           By default, the Samsara Vehicle Gateway uses a small amount of vehicle battery when idle.
                         </GridItem>
                       </CardBody>
-                      <Switch checked={checkedState.checkedC} onChange={handleChange} name="checkedC" />
+                      <Switch checked={checkedState.checkedB} onChange={handleChange} name="checkedB"/>
                     </GridItem>
-                    <Divider variant="fullWidth" light />
-                    <GridItem xs={12} sm={12} md={12} className={classes.gridContent} >
-                      <CardBody className={classes.cardItem}>
-                        <GridItem className={classes.headerItem} >
-                          Enable Vehicle Battery Conservation Mode
-                        </GridItem>
-                        <GridItem className={classes.contentItem} >
-                          By default, the Samsara Vehicle Gateway uses a small amount of vehicle battery when idle.
-                        </GridItem>
-                      </CardBody>
-                      <Switch checked={checkedState.checkedD} onChange={handleChange} name="checkedD" />
-                    </GridItem>
-                    <Divider variant="fullWidth" light />
+                    <Divider variant="fullWidth" light/>
                   </GridItem>
                 </CardBody>
               </Card>

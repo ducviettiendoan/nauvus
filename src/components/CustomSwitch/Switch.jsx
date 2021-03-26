@@ -52,14 +52,14 @@ const styles = (theme) => ({
 
 const useStyles = makeStyles(styles);
 
-const CustomSwitch = () => {
-  const [toggled, setToggled] = React.useState(false);
+const CustomSwitch = (props) => {
+  const { checked, onChange, name } = props
   const classes = useStyles();
 
   return (
     <div>
       <Switch
-        checked={toggled}
+        checked={checked}
         classes={{
           root: classes.root,
           switchBase: classes.switchBase,
@@ -67,7 +67,8 @@ const CustomSwitch = () => {
           track: classes.track,
           checked: classes.checked,
         }}
-        onChange={e => setToggled(e.target.checked)}
+        name={name}
+        onChange={onChange}
       />
     </div>
   );
