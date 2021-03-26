@@ -14,8 +14,9 @@ import SettingSearchBox from "components/SearchBox/SettingSearchBox";
 
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import { Row } from "reactstrap";
 import GenPaginationV1 from "components/Pagination/GenPaginationV1";
+
+import Button from "components/CustomButtons/Button.js";
 
 import {
   cardTitle,
@@ -24,6 +25,10 @@ import {
 import avatar from "assets/img/faces/avatar.jpg";
 import { Tab, Tabs, Typography } from "@material-ui/core";
 import PropTypes from 'prop-types'
+
+import VerifiedIcon from "components/Icons/VerifiedIcon"
+import CardIcon from "components/Icons/CardIcon"
+import HelpIcon from "components/Icons/HelpIcon"
 
 const styles = {
   cardTitle,
@@ -155,18 +160,87 @@ const styles = {
     alignItems: "center",
     marginTop: 15
   },
-  avatarImage : {
-    width : 40,
+  userHeader: {
+    paddingTop: "27px"
+  },
+  avatarImage: {
+    width: 40,
     height: 40,
     borderRadius: "50%",
-    
+
   },
   status: {
-    textAlign: "left",
-    padding: '0 !important'
+    padding: "0px 0px 0px 0px !important",
+    textAlign: "left"
   },
   avatar: {
-    padding: '0 !important',
+    padding: "0px 0px 0px 0px !important",
+    textAlign: "center",
+    
+  },
+  statusName: {
+    color: "#25345C",
+    fontWeight: "700",
+    padding: "0px 0px 0px 0px !important",
+  },
+  statusVerify: {
+    color: "#B4B4B4",
+    fontWeight: "400",
+    fontSize: "14px",
+    padding: "0px 0px 0px 0px !important",
+  },
+  paymentData: {
+    marginTop: "50px"
+  },
+  paymentTitle: {
+    fontSize: "18px",
+    fontWeight: "700",
+    color: "#25345C"
+  },
+  paymentType: {
+    fontSize: "14px",
+    fontWeight: "700",
+    color: "#B4B4B4"
+  },
+  paymentAmount: {
+    fontSize: "18px",
+    fontWeight: "700",
+    color: "#25345C",
+    lineHeight: "21px"
+  },
+  paymentView: {
+    fontSize: "12px",
+    fontWeight: "700",
+    color: "#25345C",
+    marginTop: "40px",
+    marginBottom: "20px",
+    marginLeft: "11px"
+  },
+  paymentInfo: {
+    padding: "0 !important",
+    marginTop: "20px"
+  },
+  
+  card: {
+    paddingRight: "0 !important",
+    marginTop: "25px",
+    marginRight: "11px",
+    marginLeft: "11px"
+  },
+  cardInfo: {
+    paddingRight: "0 !important",
+    marginTop: "25px",
+    marginLeft: "11px"
+  },
+  paymentSection: {
+    border: "1px solid #ECEEF0",
+    borderRadius: "12px",
+    margin: "15px",
+  }, 
+  helpBtn: {
+    // marginLeft: "10px"
+    textAlign: "right"
+
   }
 };
 
@@ -201,12 +275,19 @@ function a11yProps(index) {
   };
 }
 
-const dumpData = [
+const dumpDataInvoice = [
   { dueDate: '02/03/2021', po: "Signed Agreement", invoice: '30510326', amount: "$627.12", remainingBalance: "$14.05", status: "Overdue" },
   { dueDate: '02/03/2021', po: "Signed Agreement", invoice: '30510326', amount: "$627.12", remainingBalance: "$14.05", status: "Overdue" },
   { dueDate: '02/03/2021', po: "Signed Agreement", invoice: '30510326', amount: "$627.12", remainingBalance: "$14.05", status: "Overdue" },
   { dueDate: '02/03/2021', po: "Signed Agreement", invoice: '30510326', amount: "$627.12", remainingBalance: "$14.05", status: "Overdue" },
   { dueDate: '02/03/2021', po: "Signed Agreement", invoice: '30510326', amount: "$627.12", remainingBalance: "$14.05", status: "Overdue" },
+  { dueDate: '02/03/2021', po: "Signed Agreement", invoice: '30510326', amount: "$627.12", remainingBalance: "$14.05", status: "Overdue" },
+  { dueDate: '02/03/2021', po: "Signed Agreement", invoice: '30510326', amount: "$627.12", remainingBalance: "$14.05", status: "Overdue" },
+  { dueDate: '02/03/2021', po: "Signed Agreement", invoice: '30510326', amount: "$627.12", remainingBalance: "$14.05", status: "Overdue" },
+
+];
+
+const dumpDataSummary = [
   { dueDate: '02/03/2021', po: "Signed Agreement", invoice: '30510326', amount: "$627.12", remainingBalance: "$14.05", status: "Overdue" },
   { dueDate: '02/03/2021', po: "Signed Agreement", invoice: '30510326', amount: "$627.12", remainingBalance: "$14.05", status: "Overdue" },
   { dueDate: '02/03/2021', po: "Signed Agreement", invoice: '30510326', amount: "$627.12", remainingBalance: "$14.05", status: "Overdue" },
@@ -286,101 +367,242 @@ export default function Billing() {
                   Invoice
                 </Tab>
               </Tabs>
-              
 
-                
-                <TabPanel value={value} index={1} className={classes.tableContainer} >
+
+
+              <TabPanel value={value} index={1} className={classes.tableContainer} >
                 <Card testimonial>
-                <CardBody>
-                  <GridContainer className={classes.invoiceHeader}>
-                    <GridItem xs={3} sm={3} md={3} className={classes.invoiceTitle}>
-                      21 Assets
+                  <CardBody>
+                    <GridContainer className={classes.invoiceHeader}>
+                      <GridItem xs={3} sm={3} md={3} className={classes.invoiceTitle}>
+                        21 Assets
                     </GridItem>
-                    <GridItem xs={9} sm={9} md={9} className={classes.invoiceButton}>
-                      <GridItem xs={12} sm={12} md={12} className={classes.searchBox}>
-                        <SettingSearchBox placeholder={"Search contacts"} />
-                      </GridItem>
-                    </GridItem>
-                  </GridContainer>
-                </CardBody>
-                <ToolkitProvider
-                  data={dumpData}
-                  keyField="_id"
-                  columns={[
-                    {
-                      dataField: "dueDate",
-                      text: "Due Date",
-                      formatter: formatDueDate
-                    },
-                    {
-                      dataField: "po",
-                      text: "PO",
-                      formatter: formatPO
-                    },
-                    {
-                      dataField: "invoice",
-                      text: "Invoice",
-                      formatter: formatInvoice
-                    },
-                    {
-                      dataField: "amount",
-                      text: "Amount",
-                      formatter: formatAmount
-                    },
-                    {
-                      dataField: "remainingBalance",
-                      text: "Remaining Balance",
-                      formatter: formatRemainingBalance
-                    },
-                    {
-                      dataField: "status",
-                      text: "Status",
-                      formatter: formatStatus
-                    }
-
-                  ]}
-                >
-                  {props => (
-                    <div className="table table-settings">
-                      <BootstrapTable
-                        {...props.baseProps}
-                        bootstrap4={true}
-                        bordered={false}
-                      />
-                    
-                    </div>
-                  )}
-                </ToolkitProvider>
-                </Card>
-                <GenPaginationV1 total={29} page={1} size={10} />
-                </TabPanel>
-
-                <TabPanel value={value} index={0} className={classes.tableContainer} >
-                  <Card>
-                  <GridContainer className={classes.userHeader} xs={6} sm={6} md={6}>
-                    <GridItem xs={2} sm={2} md={2} className={classes.avatar}>
-                    <div><img src={avatar} alt="user-avatar" className={classes.avatarImage}/></div>
-                    </GridItem>
-                    <GridItem xs={6} sm={6} md={6} className={classes.status}>
-                    <GridContainer xs={12} sm={12} md={12}>
-                      <GridItem xs={12} sm={12} md={12} className={classes.status}>
-                      Account status, Johnny Bowers
-                      </GridItem>
-                      <GridItem xs={12} sm={12} md={12} className={classes.status}>
-                      Your account is current
+                      <GridItem xs={9} sm={9} md={9} className={classes.invoiceButton}>
+                        <GridItem xs={12} sm={12} md={12} className={classes.searchBox}>
+                          <SettingSearchBox placeholder={"Search contacts"} />
+                        </GridItem>
                       </GridItem>
                     </GridContainer>
-                    </GridItem>
-                    
-                    <GridItem className={classes.helpButton}> 
+                  </CardBody>
+                  <ToolkitProvider
+                    data={dumpDataInvoice}
+                    keyField="_id"
+                    columns={[
+                      {
+                        dataField: "dueDate",
+                        text: "Due Date",
+                        formatter: formatDueDate
+                      },
+                      {
+                        dataField: "po",
+                        text: "PO",
+                        formatter: formatPO
+                      },
+                      {
+                        dataField: "invoice",
+                        text: "Invoice",
+                        formatter: formatInvoice
+                      },
+                      {
+                        dataField: "amount",
+                        text: "Amount",
+                        formatter: formatAmount
+                      },
+                      {
+                        dataField: "remainingBalance",
+                        text: "Remaining Balance",
+                        formatter: formatRemainingBalance
+                      },
+                      {
+                        dataField: "status",
+                        text: "Status",
+                        formatter: formatStatus
+                      }
 
-                    </GridItem>
-                  </GridContainer>
+                    ]}
+                  >
+                    {props => (
+                      <div className="table table-settings">
+                        <BootstrapTable
+                          {...props.baseProps}
+                          bootstrap4={true}
+                          bordered={false}
+                        />
+
+                      </div>
+                    )}
+                  </ToolkitProvider>
+                </Card>
+                <GenPaginationV1 total={29} page={1} size={10} />
+              </TabPanel>
+
+              <TabPanel value={value} index={0} className={classes.tableContainer} >
+                <Card>
+                  <CardBody>
+                    <GridItem xs={12} sm={12} md={12} >
+                    <GridContainer className={classes.userHeader}>
+                      <GridItem xs={1} sm={1} md={1} className={classes.avatar}>
+                        <img src={avatar} alt="user-avatar" className={classes.avatarImage} />
+                      </GridItem>
+                      <GridItem xs={10} sm={9} md={9} className={classes.status}>
+                        <GridItem xs={12} sm={12} md={12} className={classes.statusName}>
+                          Account status, Johnny Bowers
+                      </GridItem>
+                        <GridItem xs={12} sm={12} md={12} className={classes.statusVerify}>
+                          <VerifiedIcon style={{ color: "#FFFFFF", width: '16px', height: '16px', marginRight: '11px' }} />
+                      Your account is current
+                      </GridItem>
+                      </GridItem>
+                      <GridItem xs={1} sm={1} md={1} className={classes.helpBtn}>
+                        <Button
+                        round
+                        className="btn-round-white"
+                        startIcon={<HelpIcon style={{ color: "#FFFFFF", width: '16px', height: '16px', top: "3px" }}/>}
+                  >
+                    Help
+                  </Button>
+                        {/* Help */}
+                      </GridItem>
+                          </GridContainer>
+
+                    </GridItem >
+                  <GridItem xs={12} sm={12} md={12}>
+                    <GridContainer className={classes.paymentData}>
+                      <GridItem xs={6} sm={6} md={6} className={classes.paymentTitle}>
+                        Your Account
+                        <GridContainer>
+                        <GridItem xs={10} sm={10} md={10} lg={5} className={classes.paymentSection}>
+
+                          <GridContainer >
+                          <GridItem xs={1} sm={1} md={1} className={classes.card}>
+                            <CardIcon style={{ color: "#FFFFFF", width: '18px', height: '21px' }} />
+                          </GridItem>
+                          <GridItem xs={9} sm={9} md={9} className={classes.paymentInfo}>
+                            <GridItem xs={12} sm={12} md={12} className={classes.paymentType}>
+                            Upcoming payment
+                            </GridItem>
+                            <GridItem xs={12} sm={12} md={12} className={classes.paymentAmount}>
+                            $30,659,45
+                            </GridItem>
+                            
+                          </GridItem>
+                          <GridItem xs={12} sm={12} md={12} className={classes.paymentView}>
+                              View All
+                            </GridItem>
+                            
+                          </GridContainer>
+                          </GridItem>
+
+                          <GridItem xs={3} sm={3} md={5} className={classes.paymentSection}>
+                          <GridContainer>
+                          <GridItem xs={1} sm={1} md={1} className={classes.card}>
+                            <CardIcon style={{ color: "#FFFFFF", width: '18px', height: '21px' }} />
+                          </GridItem>
+                          <GridItem xs={9} sm={9} md={9} className={classes.paymentInfo}>
+                            <GridItem xs={12} sm={12} md={12} className={classes.paymentType}>
+                            Last payment
+                            </GridItem>
+                            <GridItem xs={12} sm={12} md={12} className={classes.paymentAmount}>
+                            $28,750,00
+                            </GridItem>
+                            
+                          </GridItem>
+                          <GridItem xs={12} sm={12} md={12} className={classes.paymentView}>
+                              View All
+                            </GridItem>
+                          </GridContainer>
+                          </GridItem>
+                          </GridContainer>
+                      </GridItem>
+
+
+                      <GridItem xs={6} sm={6} md={6} className={classes.paymentTitle}>
+                        Payment Method
+                        <GridContainer>
+                        <GridItem xs={7} sm={7} md={7} className={classes.paymentSection}>
+
+                          <GridContainer >
+                          <GridItem xs={1} sm={1} md={1} className={classes.cardInfo} >
+                            <CardIcon style={{ color: "#FFFFFF", width: '18px', height: '21px' }} />
+                          </GridItem>
+                          <GridItem xs={10} sm={10} md={10} className={classes.paymentInfo}>
+                            <GridItem xs={12} sm={12} md={12} className={classes.paymentType}>
+                            Exp 1/2025
+                            </GridItem>
+                            <GridItem xs={12} sm={12} md={12} className={classes.paymentAmount}>
+                            MASTERCARD ••••1887
+                            </GridItem>
+                            
+                          </GridItem>
+                          <GridItem xs={12} sm={12} md={12} className={classes.paymentView}>
+                          Change payment method
+                            </GridItem>
+                            
+                          </GridContainer>
+                          </GridItem>
+
+                      
+                          </GridContainer>
+                      </GridItem>
+                      </GridContainer>
+
                     
-                  </Card>
-                </TabPanel>
-              
-              
+                    </GridItem>
+                  </CardBody>
+                  
+                  <ToolkitProvider
+                    data={dumpDataSummary}
+                    keyField="_id"
+                    columns={[
+                      {
+                        dataField: "dueDate",
+                        text: "Due Date",
+                        formatter: formatDueDate
+                      },
+                      {
+                        dataField: "po",
+                        text: "PO",
+                        formatter: formatPO
+                      },
+                      {
+                        dataField: "invoice",
+                        text: "Invoice",
+                        formatter: formatInvoice
+                      },
+                      {
+                        dataField: "amount",
+                        text: "Amount",
+                        formatter: formatAmount
+                      },
+                      {
+                        dataField: "remainingBalance",
+                        text: "Remaining Balance",
+                        formatter: formatRemainingBalance
+                      },
+                      {
+                        dataField: "status",
+                        text: "Status",
+                        formatter: formatStatus
+                      }
+
+                    ]}
+                  >
+                    {props => (
+                      <div className="table table-settings">
+                        <BootstrapTable
+                          {...props.baseProps}
+                          bootstrap4={true}
+                          bordered={false}
+                        />
+
+                      </div>
+                    )}
+                  </ToolkitProvider>
+
+                </Card>
+              </TabPanel>
+
+
             </GridItem>
           </GridContainer>
         </GridItem>
