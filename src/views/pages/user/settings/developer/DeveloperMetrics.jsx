@@ -2,8 +2,6 @@ import React from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
@@ -20,11 +18,8 @@ import Button from "../../../../../components/CustomButtons/Button";
 import EChart from "components/CustomLineChart/EChart";
 import withStyles from "@material-ui/core/styles/withStyles";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import {Filter1Outlined, MoreHoriz} from "@material-ui/icons";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
-import SearchBox from "../../../../../components/SearchBox/SearchBox";
-import FilterIcon from "../../../../../components/Icons/FilterIcon";
-import CardContent from "@material-ui/core/CardContent";
+
 
 const styles = {
   cardTitle,
@@ -131,7 +126,6 @@ const styles = {
     marginTop: "0px!important",
     marginBottom: "20px!important",
     height: "90%",
-    // margin: "0px 16px 20px 16px!important",
   },
   bigCardGridItem: {
     padding: "0 8px!important",
@@ -153,6 +147,52 @@ const BorderLinearProgress = withStyles((theme) => ({
 }))(LinearProgress);
 
 const useStyles = makeStyles(styles);
+
+var base = +new Date(2021, 3, 16);
+var oneDay = 24 * 3600 * 1000;
+var valueBase = Math.random() * 300;
+var valueBase2 = Math.random() * 50;
+var data = [];
+var data2 = [];
+
+const mockData = {
+  title: {
+    text: "API Volume"
+  },
+  series: [
+    {
+      color: '#27AE60',
+      name: 'Successes',
+      data: [
+        ["2021-3-17 11:59:00", 288],
+        ["2021-3-18 11:59:00", 291],
+        ["2021-3-18 14:59:00", 301],
+        ["2021-3-19 11:59:00", 291],
+        ["2021-3-20 11:59:00", 292],
+        ["2021-3-21 11:59:00", 282],
+        ["2021-3-22 11:59:00", 278],
+        ["2021-3-23 11:59:00", 286],
+        ["2021-3-24 11:59:00", 288],
+        ["2021-3-25 11:59:00", 288]
+      ]
+    },
+    {
+      color: '#E53935',
+      name: 'Errors',
+      data: [
+        ["2021-3-17 11:59:00", 1],
+        ["2021-3-18 11:59:00", 1],
+        ["2021-3-19 11:59:00", 1],
+        ["2021-3-20 11:59:00", 1],
+        ["2021-3-21 11:59:00", 1],
+        ["2021-3-22 11:59:00", 1],
+        ["2021-3-23 11:59:00", 1],
+        ["2021-3-24 11:59:00", 1],
+        ["2021-3-25 11:59:00", 1]
+      ]
+    }
+  ],
+}
 
 export default function DeveloperMetrics() {
   const classes = useStyles();
@@ -194,33 +234,7 @@ export default function DeveloperMetrics() {
                     <GridItem className={classes.bigCardGridItem} xs={9}>
                       <Card className={classes.bigCard}>
                         <CardBody>
-                          <GridContainer >
-                            <GridItem xs={6}>
-                              <h4 className={classes.boldBlueLeft + " my-4" }>
-                                API Volume
-                              </h4>
-                            </GridItem>
-                            <GridItem xs={6} className={classes.textEnd}>
-                              <Button
-                                  color="white"
-                                  aria-label="edit"
-                                  justIcon
-                                  round
-                                  className={`btn-36 ${classes.chartAction} mr-2`}
-                              >
-                                <TimelineIcon className={classes.colorBlue}/>
-                              </Button>
-                            </GridItem>
-                            <GridItem xs={12} className={classes.textStart + " " + classes.colorBlue}>
-                              <FiberManualRecordIcon className={ classes.chartLegend + " " + classes.colorGreen + " mr-1"}  />
-                              Successes
-                              <FiberManualRecordIcon className={ classes.chartLegend + " " + classes.colorRed +  " ml-3 mr-1"}  />
-                              Errors
-                            </GridItem>
-                            <GridItem xs={12} className={classes.noPadding}>
-                              <EChart/>
-                            </GridItem>
-                          </GridContainer>
+                          <EChart data={mockData} />
                         </CardBody>
                       </Card>
                     </GridItem>
