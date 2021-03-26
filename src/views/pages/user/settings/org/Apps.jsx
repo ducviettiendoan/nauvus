@@ -1,6 +1,6 @@
 import React from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
@@ -8,15 +8,18 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import Button from "@material-ui/core/Button";
 import Switch from "components/CustomSwitch/Switch.jsx";
-import { Divider } from "@material-ui/core";
+import {Divider} from "@material-ui/core";
 import Logo from "assets/img/logo_nauvus_text.svg";
 
 import {
   cardTitle,
   roseColor,
 } from "assets/jss/material-dashboard-pro-react.js";
-import { Tab, Tabs, Typography } from "@material-ui/core";
+import {Tab, Tabs, Typography} from "@material-ui/core";
 import PropTypes from "prop-types";
+import RoundedTabs from "../../../../../components/CustomTabs/RoundedTabs";
+import FormatQuote from "@material-ui/icons/FormatQuote";
+import CardFooter from "../../../../../components/Card/CardFooter";
 
 const styles = {
   cardTitle,
@@ -37,7 +40,6 @@ const styles = {
   marginTop30: {
     marginTop: "30px",
   },
-
   button: {
     textTransform: "none",
     borderRadius: "22px",
@@ -50,10 +52,6 @@ const styles = {
   enabledButton: {
     backgroundColor: "#FFFFFF",
     opacity: "0.4",
-  },
-
-  marginTop30: {
-    marginTop: "30px",
   },
   cardContainer: {
     padding: "0px 0px 0px `16px `!important",
@@ -104,56 +102,27 @@ const styles = {
     display: "flex",
     alignItems: "center",
   },
-  tabStyles: {
-    centered: {
-      alignItems: "center",
-      justifyContent: "center",
-    },
+
+  image: {
+    width: "100%",
+    height: "80px",
+    padding: "12px 10px 0px 0px",
   },
 
-  image:{
-      width: "100%",
-      height: "80px",
-      padding: "12px 10px 0px 0px",
-  },
-
-  flexGrid:{
+  flexGrid: {
     display: "flex",
     justifyContent: "flex-end",
     paddingLeft: "0px !important",
   },
 
-  tabItemStyles: {
-    backgroundColor: "#FFFFFF",
-    position: "relative",
-    display: "block",
-    border: "1px inner",
-    borderRadius: "30px",
-    textAlign: "center",
-    transition: "all .5s",
-    padding: "12px 22px 12px 22px",
-    color: "#25345C",
-    height: "auto",
-    marginRight: "8px",
-    float: "none",
-    textTransform: "none !important",
-    minWidth: "auto !important",
-    minHeight: "41px !important",
-    fontWeight: 700,
-    marginTop: "16px",
-    fontSize: 14,
-    "&$selected": {
-      "&, &:hover": {
-        color: "#FFFFFF",
-        backgroundColor: "#00acc1",
-        boxShadow: "0 7px 10px -5px rgba(76, 175, 80, 0.4)",
-      },
-    },
-  },
+  tabsContainer: {
+    paddingTop: "16px !important",
+    paddingLeft: "0px !important"
+  }
 };
 
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+  const {children, value, index, ...other} = props;
 
   return (
     <div
@@ -174,13 +143,6 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
 const useStyles = makeStyles(styles);
 
 export default function Apps() {
@@ -197,36 +159,27 @@ export default function Apps() {
   };
 
   const [value, setValue] = React.useState(0);
-  const handleChangeTab = (event, newValue) => {
+
+  const handleChangeTab = (newValue) => {
     setValue(newValue);
   };
 
+  const tabs = [
+    {
+      id: 0,
+      name: "Available Apps"
+    },
+    {
+      id: 1,
+      name: "Enabled Apps (1)"
+    },
+  ]
+
   return (
     <div>
-      <Tabs
-        value={value}
-        onChange={handleChangeTab}
-        className={classes.tabStyles}
-        indicatorColor=""
-        position="static"
-        variant="scrollable"
-      >
-        <Tab
-          className={classes.tabItemStyles}
-          label="Available Apps"
-          {...a11yProps(0)}
-        >
-          Available Apps
-        </Tab>
-        <Tab
-          className={`${classes.tabItemStyles} ${classes.enabledButton}`}
-          label="Enabled Apps (1)"
-          {...a11yProps(1)}
-        >
-          Enabled Apps (1)
-        </Tab>
-      </Tabs>
-
+      <GridItem className={classes.tabsContainer}>
+        <RoundedTabs tabs={tabs} tabValue={handleChangeTab}/>
+      </GridItem>
       <TabPanel value={value} index={0}>
         <Card testmonial>
           <CardBody className={classes.cardContainer}>
@@ -273,7 +226,7 @@ export default function Apps() {
                   </GridItem>
                 </GridContainer>
               </CardBody>
-              <Divider variant="fullWidth" light />
+              <Divider variant="fullWidth" light/>
               <GridContainer>
                 <GridItem xs={12} sm={3} md={3} lg={2} xl={1}>
                   <img
@@ -309,14 +262,24 @@ export default function Apps() {
                   />
                 </GridItem>
               </GridContainer>
-              <Divider variant="fullWidth" light style={{ marginTop: '-10px' }} />
+              <Divider variant="fullWidth" light style={{marginTop: '-10px'}}/>
             </GridItem>
           </CardBody>
         </Card>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Card testmonial>
-          <CardBody>No Data</CardBody>
+        <Card testimonial>
+          <div className={classes.testimonialIcon}>
+            <FormatQuote/>
+          </div>
+          <CardBody>
+            <h5 className={classes.cardTestimonialDescription}>
+              No Data
+            </h5>
+          </CardBody>
+          <CardFooter testimonial>
+            <h6 className={classes.cardCategory}>@nauvus</h6>
+          </CardFooter>
         </Card>
       </TabPanel>
     </div>
