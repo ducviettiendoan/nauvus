@@ -52,18 +52,16 @@ const styles = {
     fontWeight: 700,
     fontSize: 18,
     textAlign: "left",
-    color: "#25345C"
+    color: "#25345C",
+    marginTop: '-17px'
   },
   liveSharingButton: {
     textAlign: "right",
+    marginTop: '2px'
   },
   moreAction: {
     background: "#FFFFFF !important",
     border: "1px solid #ECEEF0 !important"
-  },
-  searchBox: {
-    marginTop: "16px !important",
-    textAlign: "right"
   },
   textName: {
     fontWeight: 'bold',
@@ -74,6 +72,8 @@ const styles = {
     marginLeft: '24px'
   },
   textSub: {
+    fontWeight: '400',
+    color: '#25345C',
     fontSize: '16px',
     lineHeight: '24px',
     marginTop: '14px',
@@ -104,8 +104,6 @@ const styles = {
 
 
 const dumpData = [
-  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
-  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
   { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
   { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
   { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
@@ -183,55 +181,53 @@ export default function AlertContacts(props) {
               </GridContainer>
 
 
-              <Card testimonial>
-                <CardBody>
+              <Card>
+                <CardBody style={{ height: '74px' }}>
                   <GridContainer className={classes.liveSharingHeader}>
                     <GridItem xs={3} sm={3} md={3} className={classes.liveSharingTitle}>
-                      21 Assets
+                      2 contacts
                     </GridItem>
                     <GridItem xs={9} sm={9} md={9} className={classes.liveSharingButton}>
-                      <GridItem xs={12} sm={12} md={12} className={classes.searchBox}>
-                        <SettingSearchBox placeholder={"Search contacts"} />
-                      </GridItem>
+                      <SettingSearchBox placeholder={"Search contacts"} />
                     </GridItem>
                   </GridContainer>
                 </CardBody>
                 <div>
                   <ToolkitProvider
-                      data={ dumpData }
-                      keyField="_id"
-                      columns={[
-                        {
-                          dataField: "name",
-                          text: "Name",
-                          formatter: formatName
-                        },
-                        {
-                          dataField: "phone",
-                          text: "Phone",
-                          formatter: formatPhone
-                        },
-                        {
-                          dataField: "email",
-                          text: "Email",
-                          formatter: formatEmail
-                        },
-                        {
-                            dataField: "action",
-                            text: "Actions",
-                            formatter: addActionButton
-                        } 
-                        ]}
-                            >
-                              {props => (
-                                <div className="table table-settings">
-                                    <BootstrapTable
-                                      {...props.baseProps}
-                                      bootstrap4={true}
-                                      bordered={false}
-                                    />
-                                    <Row className="justify-content-center">
-                                      {/* <PaginationV2
+                    data={dumpData}
+                    keyField="_id"
+                    columns={[
+                      {
+                        dataField: "name",
+                        text: "Name",
+                        formatter: formatName
+                      },
+                      {
+                        dataField: "phone",
+                        text: "Phone",
+                        formatter: formatPhone
+                      },
+                      {
+                        dataField: "email",
+                        text: "Email",
+                        formatter: formatEmail
+                      },
+                      {
+                        dataField: "action",
+                        text: "Actions",
+                        formatter: addActionButton
+                      }
+                    ]}
+                  >
+                    {props => (
+                      <div className="table table-settings">
+                        <BootstrapTable
+                          {...props.baseProps}
+                          bootstrap4={true}
+                          bordered={false}
+                        />
+                        <Row className="justify-content-center">
+                          {/* <PaginationV2
                                         pages={[
                                           { text: <ArrowDownIcon/>, arrow : true,disabled : true },
                                           { text: <ArrowLeftIcon/>, arrow : true,disabled : true },
@@ -244,13 +240,13 @@ export default function AlertContacts(props) {
                                           { text: <ArrowUpIcon/>, arrow : true },
                                         ]}
                                       /> */}
-                          <GenPaginationV1 total={29} page={1} size={10} />
                         </Row>
                       </div>
                     )}
                   </ToolkitProvider>
                 </div>
               </Card>
+              <GenPaginationV1 total={29} page={1} size={10} />
             </GridItem>
           </GridContainer>
         </GridItem>

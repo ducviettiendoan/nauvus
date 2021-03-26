@@ -82,10 +82,12 @@ const styles = {
     fontWeight: 700,
     fontSize: 18,
     textAlign: "left",
-    color: "#25345C"
+    color: "#25345C",
+    marginTop: '-17px'
   },
   liveSharingButton: {
     textAlign: "right",
+    marginTop: '2px'
   },
   tableContainer: {
     paddingLeft: 0,
@@ -104,6 +106,8 @@ const styles = {
     marginLeft: '24px'
   },
   textSub : {
+    fontWeight: '400',
+    color: '#25345C',
     fontSize: '16px',
     lineHeight: '24px',
     marginTop: '14px',
@@ -216,12 +220,8 @@ export default function ScheduledReports() {
                   </Button>
                 </GridItem>
               </GridContainer>
-
-
-
-              <Card testimonial>
-                <CardBody>
-
+              <Card>
+                <CardBody style={{ height: '74px' }}>
                   <GridContainer className={classes.liveSharingHeader}>
                     <GridItem xs={3} sm={3} md={3} className={classes.liveSharingTitle}>
                       2 reports
@@ -300,6 +300,7 @@ export default function ScheduledReports() {
                   )}
                 </ToolkitProvider>
               </Card>
+              <GenPaginationV1 total={29} page={1} size={10} />
             </GridItem>
           </GridContainer>
         </GridItem>

@@ -89,10 +89,12 @@ const styles = {
     fontWeight: 700,
     fontSize: 18,
     textAlign: "left",
-    color: "#25345C"
+    color: "#25345C",
+    marginTop: '-17px'
   },
   liveSharingButton: {
     textAlign: "right",
+    marginTop: "2px"
   },
   createLinkButton: {
     background: "#25345C",
@@ -195,10 +197,6 @@ const dumpData = [
   { name: 'GR9X-6AN-3N5', linkExpires: 'Never' },
   { name: 'GR9X-6AN-3N5', linkExpires: 'Never' },
   { name: 'GR9X-6AN-3N5', linkExpires: 'Never' },
-  { name: 'GR9X-6AN-3N5', linkExpires: 'Never' },
-  { name: 'GR9X-6AN-3N5', linkExpires: 'Never' },
-  { name: 'GR9X-6AN-3N5', linkExpires: 'Never' },
-  { name: 'GR9X-6AN-3N5', linkExpires: 'Never' }
 ];
 
 function TabPanel(props) {
@@ -318,12 +316,12 @@ export default function LiveSharing() {
                   </Button>
                 </GridItem>
               </GridContainer>
-              <Card testimonial>
-                <CardBody >
+              <Card>
+                <CardBody style={{ height: '74px' }}>
                   <GridContainer className={classes.liveSharingHeader}>
                     <GridItem xs={12} sm={3} md={3} className={classes.liveSharingTitle}>
-                      22
-                    </GridItem>
+                      22 assets
+                    </GridItem> 
                     <GridItem xs={12} sm={9} md={9} className={classes.liveSharingButton}>
                       <SettingSearchBox placeholder={"Search assets"} />
                     </GridItem>
@@ -364,8 +362,10 @@ export default function LiveSharing() {
                   </ToolkitProvider>
                 </TabPanel>
                 <TabPanel value={value} index={1} >
+                  <div>No Location</div>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
+                  <div>No Route</div>
                 </TabPanel>
               </Card>
 

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
 import FormatQuote from "@material-ui/icons/FormatQuote";
@@ -39,6 +39,7 @@ import avatar from "assets/img/faces/avatar.jpg";
 import DotIcon from "../../../../../components/Icons/DotIcon";
 import Checkbox from "@material-ui/core/Checkbox";
 import Check from "@material-ui/icons/Check";
+import Chip from "@material-ui/core/Chip";
 
 const styles = {
   cardTitle,
@@ -142,6 +143,7 @@ const styles = {
     fontSize: 16,
     color: "#25345C",
     fontWeight: 700,
+    paddingRight: "8px !important"
   },
   selected: {
     height: 24,
@@ -158,10 +160,15 @@ const styles = {
     boxShadow: "unset !important",
     fontSize: 14,
     fontWeight: 700,
-    padding:0,
-    "&:hover" : {
+    padding: 0,
+    "&:hover": {
       color: "#25345C"
     }
+  },
+  chipSelected: {
+    display: "flex",
+    alignItems: "center",
+    paddingLeft: "0px !important"
   },
   headContainer: {
     display: "flex",
@@ -171,7 +178,7 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
-    "& > div" : {
+    "& > div": {
       marginBottom: "0 !important",
       marginRight: 8
     }
@@ -183,7 +190,7 @@ const styles = {
     color: '#25345C',
     marginLeft: '8px'
   },
-  textEmail:{
+  textEmail: {
     fontSize: '16px',
     lineHeight: '24px',
     marginTop: '25px',
@@ -213,7 +220,7 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    fontWeight:700,
+    fontWeight: 700,
     width: 165
   },
   actionButton: {
@@ -230,14 +237,14 @@ const styles = {
     paddingTop: 20,
     marginLeft: '24px'
   },
-  avatarImage : {
-    width : 40,
+  avatarImage: {
+    width: 40,
     height: 40,
     borderRadius: "50%"
   },
   selectStyle: {
-    marginTop:27,
-    marginLeft:12
+    marginTop: 27,
+    marginLeft: 12
   },
   checkedIcon: {
     width: "20px",
@@ -261,12 +268,28 @@ const styles = {
       backgroundColor: "unset"
     }
   },
+  chip: {
+    background: "#ECEEF0",
+    color: "#25345C",
+    fontSize: 12,
+    marginRight: 8
+  },
+  indeterminateIcon: {
+    width: 20,
+    height: 20
+  },
+  checkBoxIcon: {
+    width: 20,
+    height: 20,
+    marginTop: 30,
+    marginLeft: 12
+  }
 };
 
 const useStyles = makeStyles(styles);
 
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+  const {children, value, index, ...other} = props;
 
   return (
     <div
@@ -298,12 +321,48 @@ function a11yProps(index) {
 }
 
 const dumpData = [
-  { id: 1, user: 'Cameron Williamson', email : 'jessica.hanson@example.com', roles: "Admin", access: "Entire Organisation"},
-  { id: 2, user: 'Cameron Williamson',email : 'jessica.hanson@example.com', roles: "Admin", access: "Entire Organisation"},
-  { id: 3, user: 'Cameron Williamson',email : 'jessica.hanson@example.com', roles: "Admin", access: "Entire Organisation"},
-  { id: 4, user: 'Cameron Williamson',email : 'jessica.hanson@example.com', roles: "Admin", access: "Entire Organisation"},
-  { id: 5, user: 'Cameron Williamson',email : 'jessica.hanson@example.com', roles: "Admin", access: "Entire Organisation"},
-  { id: 6, user: 'Cameron Williamson',email : 'jessica.hanson@example.com', roles: "Admin", access: "Entire Organisation"},
+  {
+    id: 1,
+    user: 'Cameron Williamson',
+    email: 'jessica.hanson@example.com',
+    roles: "Admin",
+    access: "Entire Organisation"
+  },
+  {
+    id: 2,
+    user: 'Cameron Williamson',
+    email: 'jessica.hanson@example.com',
+    roles: "Admin",
+    access: "Entire Organisation"
+  },
+  {
+    id: 3,
+    user: 'Cameron Williamson',
+    email: 'jessica.hanson@example.com',
+    roles: "Admin",
+    access: "Entire Organisation"
+  },
+  {
+    id: 4,
+    user: 'Cameron Williamson',
+    email: 'jessica.hanson@example.com',
+    roles: "Admin",
+    access: "Entire Organisation"
+  },
+  {
+    id: 5,
+    user: 'Cameron Williamson',
+    email: 'jessica.hanson@example.com',
+    roles: "Admin",
+    access: "Entire Organisation"
+  },
+  {
+    id: 6,
+    user: 'Cameron Williamson',
+    email: 'jessica.hanson@example.com',
+    roles: "Admin",
+    access: "Entire Organisation"
+  },
 ];
 
 export default function UserRoles() {
@@ -315,10 +374,18 @@ export default function UserRoles() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  const [chipData, setChipData] = React.useState([
+    {key: 0, label: 'Standard Admin'},
+    {key: 1, label: 'Full admin'},
+  ]);
 
-  console.log(selected)
+  const handleDelete = (chipToDelete) => () => {
+    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+  };
 
-
+  const handleClearAll = () => {
+    setChipData([])
+  }
 
   const formatName = (cell, row) => {
     return <>
@@ -331,14 +398,14 @@ export default function UserRoles() {
 
   const formatEmail = (cell, row) => {
     return <>
-      <div className={ classes.textEmail }>{cell}</div>
+      <div className={classes.textEmail}>{cell}</div>
     </>
   }
 
   const formatRoles = (cell, row) => {
     return <>
       <div className={classes.alignItemsCenter}>
-        <div><DotIcon style={{color: "#7CE7AC",marginTop:10}}/></div>
+        <div><DotIcon style={{color: "#7CE7AC", marginTop: 10}}/></div>
         <div className={classes.textRoles}>{cell}</div>
       </div>
     </>
@@ -346,7 +413,7 @@ export default function UserRoles() {
 
   const formatAccess = (cell, row) => {
     return <>
-      <div className={ classes.textAccess }>{cell}</div>
+      <div className={classes.textAccess}>{cell}</div>
     </>
   }
 
@@ -354,97 +421,35 @@ export default function UserRoles() {
     return (
       <div className={classes.actionButton}>
         <Button justIcon color="twitter" simple>
-          <EditIcon className={ classes.iconButton } style={{color:"#ffffff", width: '22px', height: '22px'}} />
+          <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
         </Button>
         <Button justIcon color="google" simple>
-          <DeleteIcon className={ classes.iconButton } style={{color:"#C4C4C4", width: '24px', height: '24px'}} />
+          <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
         </Button>
       </div>
     )
   }
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = dumpData.map((n) => n.id);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
+  const selectRow = {
+    mode: 'checkbox',
+    clickToSelect: true,
+    style: {background: "linear-gradient(0deg,#ECEEF0,#ECEEF0)"},
+    classes: 'customSelectRow',
+    selectionHeaderRenderer: ({indeterminate, ...rest}) => (
+      <input
+        type="checkbox"
+        className={classes.indeterminateIcon}
+        ref={(input) => {
+          if (input) input.indeterminate = indeterminate;
+        }}
+        {...rest}
+      />
+    ),
+    selectionRenderer: ({mode, ...rest}) => (
+      <input className={classes.checkBoxIcon} type={mode} {...rest} />
+    )
+
   };
-
-  const selectAll = () => {
-    return (
-      <>
-        <Checkbox
-          tabIndex={-1}
-          onClick={(event) => handleSelectAllClick(event)}
-          checkedIcon={<Check className={classes.checkedIcon} />}
-          icon={hasSelected ? <Check className={classes.checkedIcon} /> : <Check className={classes.uncheckedIcon} />}
-          classes={{
-            checked: classes.checked,
-            root: classes.checkRoot
-          }}
-        />
-      </>
-    )
-  }
-
-  const handleSelect = (event, id) => {
-    const selectedIndex = selected.indexOf(id);
-    if (selected.includes(id)){
-      selected.splice(selectedIndex, 1)
-    }else {
-      selected.push(id)
-    }
-
-    setSelected(selected)
-
-    if (selected.length > 0) {
-      setHasSelected(true)
-    }else {
-      setHasSelected(false)
-    }
-
-    // const selectedIndex = selected.indexOf(id);
-    // let newSelected = [];
-    //
-    // if (selectedIndex === -1) {
-    //   newSelected = newSelected.concat(selected, id);
-    // } else if (selectedIndex === 0) {
-    //   newSelected = newSelected.concat(selected.slice(1));
-    // } else if (selectedIndex === selected.length - 1) {
-    //   newSelected = newSelected.concat(selected.slice(0, -1));
-    // } else if (selectedIndex > 0) {
-    //   newSelected = newSelected.concat(
-    //     selected.slice(0, selectedIndex),
-    //     selected.slice(selectedIndex + 1),
-    //   );
-    // }
-    //
-    // setSelected(newSelected);
-  }
-
-  const formatSelect = (cell,row) => {
-    return (
-      <div className={classes.selectStyle}>
-        <Checkbox
-          tabIndex={-1}
-          onClick={(event) => handleSelect(event,cell)}
-          checkedIcon={<Check className={classes.checkedIcon} />}
-          icon={selected.includes(cell) ? <Check className={classes.checkedIcon} /> :<Check className={classes.uncheckedIcon} />}
-          classes={{
-            checked: classes.checked,
-            root: classes.checkRoot
-          }}
-        />
-      </div>
-    )
-  }
-
-  useEffect(() => {
-    // Update the document title using the browser API
-    console.log("ok")
-  });
 
   return (
     <div>
@@ -487,7 +492,7 @@ export default function UserRoles() {
                   <Button
                     round
                     className="btn-round-active mr-2"
-                    startIcon={<AddOutlined />}
+                    startIcon={<AddOutlined/>}
                   >
                     Invite User
                   </Button>
@@ -498,42 +503,45 @@ export default function UserRoles() {
                     round
                     className={`btn-36 ${classes.moreAction} mr-2`}
                   >
-                    <MoreHoriz />
+                    <MoreHoriz/>
                   </Button>
                 </GridItem>
               </GridContainer>
-              <TabPanel value={value} index={0} className={classes.tableContainer} >
+              <TabPanel value={value} index={0} className={classes.tableContainer}>
                 <Card testimonial>
                   <CardBody>
                     <GridContainer>
                       <GridItem xs={12} sm={12} md={6}>
                         <GridContainer className={classes.headContainer}>
                           <GridItem xl={3} className={classes.userRolesTitle}>
-                            2 selected for
+                            {chipData.length} selected for
                           </GridItem>
-                          <GridItem xl={8} className={classes.headContainer}>
-                            <Button
-                              round
-                              className={`btn-round-active ${classes.selected} mr-2`}
-                            >
-                              Standard Admin
-                              {/*<CloseIcon width={16} height={16} />*/}
-                            </Button>
-                            <Button
-                              round
-                              className={`btn-round-active ${classes.selected} mr-2`}
-                            >
-                              Full admin
-                              {/*<CloseIcon width={16} height={16} />*/}
-                            </Button>
-                            <Button className={classes.clearAll}>
-                              Clear All
-                            </Button>
+                          <GridItem xl={8} className={classes.chipSelected}>
+                            {
+                              chipData.map(data => (
+                                <Chip
+                                  deleteIcon={<CloseIcon/>}
+                                  label={data.label}
+                                  onDelete={handleDelete(data)}
+                                  className={classes.chip}
+                                />
+                              ))
+                            }
+                            {
+                              chipData.length > 0
+                                ?
+                                (
+                                  <Button onClick={handleClearAll} className={classes.clearAll}>
+                                    Clear All
+                                  </Button>
+                                )
+                                : ""
+                            }
                           </GridItem>
                         </GridContainer>
                       </GridItem>
                       <GridItem xs={12} sm={12} md={6} className={classes.headLeft}>
-                        <SettingSearchBox placeholder={"Search gateways"} />
+                        <SettingSearchBox placeholder={"Search gateways"}/>
                         <Button
                           color="white"
                           aria-label="edit"
@@ -541,7 +549,7 @@ export default function UserRoles() {
                           round
                           className={`btn-36 ${classes.moreAction} mr-2`}
                         >
-                          <FilterIcon style={{marginTop:10,marginLeft: 7, color: "#25345C"}}/>
+                          <FilterIcon style={{marginTop: 10, marginLeft: 7, color: "#25345C"}}/>
                         </Button>
                         <Button
                           color="white"
@@ -550,20 +558,15 @@ export default function UserRoles() {
                           round
                           className={`btn-36 ${classes.moreAction} mr-2`}
                         >
-                          <DeleteIcon style={{marginTop:7,marginLeft: 6, color: "#25345C"}}/>
+                          <DeleteIcon style={{marginTop: 7, marginLeft: 6, color: "#25345C"}}/>
                         </Button>
                       </GridItem>
                     </GridContainer>
                   </CardBody>
                   <ToolkitProvider
-                    data={ dumpData }
-                    keyField="_id"
+                    data={dumpData}
+                    // keyField="_id"
                     columns={[
-                      {
-                        dataField: "id",
-                        text: selectAll(),
-                        formatter: formatSelect
-                      },
                       {
                         dataField: "user",
                         text: "User",
@@ -597,29 +600,36 @@ export default function UserRoles() {
                           {...props.baseProps}
                           bootstrap4={true}
                           bordered={false}
+                          keyField='id'
+                          selectRow={selectRow}
+
                         />
                       </div>
                     )}
                   </ToolkitProvider>
                 </Card>
               </TabPanel>
-              <TabPanel value={value} index={1} >
-                {/*<TableComponent*/}
-                {/*  rows={rows}*/}
-                {/*  headCells={HeadCells}*/}
-                {/*  action={["edit", "delete", "copy"]}*/}
-                {/*/>*/}
+              <TabPanel value={value} index={1}>
+                <Card testimonial>
+                  <CardBody>
+                    <GridContainer>
+                      No content
+                    </GridContainer>
+                  </CardBody>
+                </Card>
               </TabPanel>
               <TabPanel value={value} index={2}>
-                {/*<TableComponent*/}
-                {/*  rows={rows}*/}
-                {/*  headCells={HeadCells}*/}
-                {/*  action={["edit", "delete", "copy"]}*/}
-                {/*/>*/}
+                <Card testimonial>
+                  <CardBody>
+                    <GridContainer>
+                      No content
+                    </GridContainer>
+                  </CardBody>
+                </Card>
               </TabPanel>
             </GridItem>
           </GridContainer>
-          <GenPaginationV1 total={29} page={1} size={10} />
+          <GenPaginationV1 total={29} page={1} size={10}/>
         </GridItem>
       </GridContainer>
     </div>
