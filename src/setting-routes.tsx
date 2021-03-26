@@ -11,7 +11,7 @@ import Devices from "views/pages/user/settings/devices/Devices";
 import Configuration from "views/pages/user/settings/devices/Configuration";
 
 import AddressesGeofences from "views/pages/user/settings/fleet/AddressesGeofences";
-import Compliance from "views/pages/user/settings/fleet/Compliance";
+import Compliance from "views/pages/user/settings/fleet/compliance/Compliance";
 import Dispatch from "views/pages/user/settings/fleet/Dispatch";
 import DriverActivity from "views/pages/user/settings/fleet/DriverActivity";
 import DriverApp from "views/pages/user/settings/fleet/DriverApp";
