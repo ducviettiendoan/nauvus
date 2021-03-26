@@ -1,6 +1,6 @@
 import React from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
 import FormatQuote from "@material-ui/icons/FormatQuote";
@@ -9,7 +9,6 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import "./DriverActivity.css"
 import {
   cardTitle,
   roseColor
@@ -27,6 +26,7 @@ import EditIcon from "../../../../../components/Icons/EditIcon";
 import DeleteIcon from "../../../../../components/Icons/DeleteIcon";
 import AddOutlined from "@material-ui/icons/AddOutlined";
 import {MoreHoriz} from "@material-ui/icons";
+import CardFooter from "../../../../../components/Card/CardFooter";
 
 const styles = {
   cardTitle,
@@ -78,10 +78,6 @@ const styles = {
     fontStyle: "italic",
     color: "#999999"
   },
-  tabsContainer: {
-    paddingTop: "16px !important",
-    paddingLeft: "0px !important"
-  },
   liveSharingHeader: {
     display: "flex",
     justifyContent: "space-between",
@@ -121,7 +117,20 @@ const styles = {
     padding: "12px 16px",
     borderRadius: "28px",
     textAlign: "center"
-  }
+  },
+  topHeaderButton: {
+    textAlign: "right",
+  },
+  moreAction: {
+    background: "#FFFFFF !important",
+    border: "1px solid #ECEEF0 !important"
+  },
+  topHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 15
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -130,15 +139,15 @@ function TabPanel(props) {
   const {children, value, index, ...other} = props;
 
   return (
-      <div
-          role="tabpanel"
-          hidden={value !== index}
-          id={`simple-tabpanel-${index}`}
-          aria-labelledby={`simple-tab-${index}`}
-          {...other}
-      >
-        {value === index && <Typography>{children}</Typography>}
-      </div>
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Typography>{children}</Typography>}
+    </div>
   );
 }
 
@@ -149,12 +158,12 @@ TabPanel.propTypes = {
 };
 
 const dumpData = [
-  { hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday","Thursday"], tags: ['Tags'] },
-  { hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday","Thursday"], tags: ['Tags'] },
-  { hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday","Thursday"], tags: ['Tags'] },
-  { hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday","Thursday"], tags: ['Tags'] },
-  { hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday","Thursday"], tags: ['Tags'] },
-  { hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday","Thursday"], tags: ['Tags'] },
+  {hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday", "Thursday"], tags: ['Tags']},
+  {hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday", "Thursday"], tags: ['Tags']},
+  {hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday", "Thursday"], tags: ['Tags']},
+  {hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday", "Thursday"], tags: ['Tags']},
+  {hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday", "Thursday"], tags: ['Tags']},
+  {hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday", "Thursday"], tags: ['Tags']},
 ];
 
 export default function DriverActivity() {
@@ -169,7 +178,7 @@ export default function DriverActivity() {
     return <div className={classes.textSub}>
       {
         cell.map((ele) => {
-          return (<div >{ele}</div>)
+          return (<div>{ele}</div>)
         })
       }
     </div>
@@ -179,7 +188,7 @@ export default function DriverActivity() {
     return <div className={classes.textSub}>
       {
         cell.map((ele) => {
-          return (<div >{ele}</div>)
+          return (<div>{ele}</div>)
         })
       }
     </div>
@@ -189,22 +198,22 @@ export default function DriverActivity() {
     return <div className={classes.textSub}>
       {
         cell.map((ele) => {
-          return (<span className={classes.tagButton} >{ele}</span>)
+          return (<span className={classes.tagButton}>{ele}</span>)
         })
       }
-    </div >
+    </div>
   }
 
   const addActionButton = () => {
     return (
-        <>
-          <Button justIcon color="twitter" simple>
-            <EditIcon className={classes.iconButton} style={{ color: "#ffffff", width: '22px', height: '22px' }} />
-          </Button>
-          <Button justIcon color="google" simple>
-            <DeleteIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
-          </Button>
-        </>
+      <>
+        <Button justIcon color="twitter" simple>
+          <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+        </Button>
+        <Button justIcon color="google" simple>
+          <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
+        </Button>
+      </>
     )
   }
 
@@ -223,83 +232,105 @@ export default function DriverActivity() {
   ]
   return (
     <div>
-      <GridContainer>
+      <GridContainer className={classes.topHeader}>
         <GridItem xs={12} sm={11} md={8} xl={6} className={classes.tabsContainer}>
           <RoundedTabs tabs={tabs} tabValue={handleChangeTab}/>
         </GridItem>
         <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
           <Button
-              round
-              className="btn-round-active w-150 mr-2"
-              startIcon={<AddOutlined />}
+            round
+            className="btn-round-active w-150 mr-2"
+            startIcon={<AddOutlined/>}
           >
             Add Contact
           </Button>
           <Button
-              color="white"
-              aria-label="edit"
-              justIcon
-              round
-              className={`btn-36 ${classes.moreAction} mr-2`}
+            color="white"
+            aria-label="edit"
+            justIcon
+            round
+            className={`btn-36 ${classes.moreAction} mr-2`}
           >
-            <MoreHoriz />
+            <MoreHoriz/>
           </Button>
         </GridItem>
       </GridContainer>
-          <TabPanel value={value} index={0}>
-              <Card>
-                <CardBody style={{ height: '74px' }}>
-                  <GridContainer className={classes.liveSharingHeader}>
-                    <GridItem xs={3} sm={3} md={3} className={classes.liveSharingTitle}>
-                      2 selected for
-                    </GridItem>
-                    <GridItem xs={9} sm={9} md={9} className={classes.liveSharingButton}>
-                      <SettingSearchBox placeholder={"Search contacts"} />
-                    </GridItem>
-                  </GridContainer>
-                </CardBody>
-                <div>
-                  <ToolkitProvider
-                      data={dumpData}
-                      keyField="_id"
-                      columns={[
-                        {
-                          dataField: "hours",
-                          text: "Hours",
-                          formatter: formatHours
-                        },
-                        {
-                          dataField: "workingDays",
-                          text: "Working Days",
-                          formatter: formatWorkingDays
-                        },
-                        {
-                          dataField: "tags",
-                          text: "Tags",
-                          formatter: formatTags
-                        },
-                        {
-                          dataField: "action",
-                          text: "Actions",
-                          formatter: addActionButton
-                        }
-                      ]}
-                  >
-                    {props => (
-                        <div className="table table-settings">
-                          <BootstrapTable
-                              {...props.baseProps}
-                              bootstrap4={true}
-                              bordered={false}
-                          />
+      <TabPanel value={value} index={0}>
+        <Card>
+          <CardBody style={{height: '74px'}}>
+            <GridContainer className={classes.liveSharingHeader}>
+              <GridItem xs={3} sm={3} md={3} className={classes.liveSharingTitle}>
+                2 selected for
+              </GridItem>
+              <GridItem xs={9} sm={9} md={9} className={classes.liveSharingButton}>
+                <SettingSearchBox placeholder={"Search contacts"}/>
+              </GridItem>
+            </GridContainer>
+          </CardBody>
+          <div>
+            <ToolkitProvider
+              data={dumpData}
+              keyField="_id"
+              columns={[
+                {
+                  dataField: "hours",
+                  text: "Hours",
+                  formatter: formatHours
+                },
+                {
+                  dataField: "workingDays",
+                  text: "Working Days",
+                  formatter: formatWorkingDays
+                },
+                {
+                  dataField: "tags",
+                  text: "Tags",
+                  formatter: formatTags
+                },
+                {
+                  dataField: "action",
+                  text: "Actions",
+                  formatter: addActionButton
+                }
+              ]}
+            >
+              {props => (
+                <div className="table table-settings">
+                  <BootstrapTable
+                    {...props.baseProps}
+                    bootstrap4={true}
+                    bordered={false}
+                  />
 
-                        </div>
-                    )}
-                  </ToolkitProvider>
                 </div>
-              </Card>
-              <GenPaginationV1 total={29} page={1} size={10} />
-          </TabPanel>
+              )}
+            </ToolkitProvider>
+            <Button
+              className="btn-round-white-3 h-41 mb-4"
+              startIcon={<AddOutlined/>}
+              style={{boxShadow: "none", marginBottom: "10px"}}
+            >
+              Add working hours
+            </Button>
+          </div>
+        </Card>
+        <GenPaginationV1 total={29} page={1} size={10}/>
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <Card testimonial>
+          <div className={classes.testimonialIcon}>
+            <FormatQuote/>
+          </div>
+          <CardBody>
+            <h5 className={classes.cardTestimonialDescription}>
+              No Data
+            </h5>
+          </CardBody>
+          <CardFooter testimonial>
+            <h6 className={classes.cardCategory}>@nauvus</h6>
+          </CardFooter>
+        </Card>
+      </TabPanel>
     </div>
   );
 }
