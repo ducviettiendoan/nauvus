@@ -91,7 +91,8 @@ const styles = {
   },
   headContainer: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    marginTop: "5px"
   },
   headLeft: {
     display: "flex",
@@ -155,9 +156,10 @@ const styles = {
   tagButton: {
     color: "#27AE60",
     background: "#e9f7ef",
-    padding: "12px 16px",
+    padding: "11px 16px",
     borderRadius: "28px",
-    textAlign: "center"
+    textAlign: "center",
+    height: "41px"
   },
   topHeaderButton: {
     textAlign: "right",
@@ -236,7 +238,7 @@ export default function DriverActivity() {
   }
 
   const formatTags = (cell, row) => {
-    return <div className={classes.textSub}>
+    return <div className={classes.textSub} style={{ marginTop: "28px" }}>
       {
         cell.map((ele) => {
           return (<span className={classes.tagButton}>{ele}</span>)
@@ -247,14 +249,14 @@ export default function DriverActivity() {
 
   const addActionButton = () => {
     return (
-      <>
+      <div style={{ marginTop: "15px" }}>
         <Button justIcon color="twitter" simple>
           <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
         </Button>
         <Button justIcon color="google" simple>
           <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
         </Button>
-      </>
+      </div>
     )
   }
 

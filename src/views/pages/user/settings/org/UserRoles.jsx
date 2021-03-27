@@ -165,7 +165,8 @@ const styles = {
   },
   headContainer: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    marginTop: "8px"
   },
   headLeft: {
     display: "flex",
@@ -203,8 +204,8 @@ const styles = {
   textAccess: {
     fontSize: '16px',
     lineHeight: '24px',
-    marginTop: '12px',
-    marginBottom: '14px',
+    marginTop: '16px',
+    marginBottom: '15px',
     marginLeft: '24px',
     padding: "12px 14px",
     color: "#27AE60",
@@ -214,7 +215,8 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     fontWeight: 700,
-    width: 165
+    width: 165,
+    height: "41px"
   },
   actionButton: {
     marginTop: 14

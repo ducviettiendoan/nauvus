@@ -13,6 +13,7 @@ import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 
 import Button from "components/CustomButtons/Button.js";
+import { Row, Col } from "reactstrap";
 
 import {
   cardTitle,
@@ -80,15 +81,15 @@ const styles = {
     fontWeight: '400',
     fontSize: '16px',
     lineHeight: '24px',
-    marginTop: '25px',
+    marginTop: '16px',
     marginLeft: '24px',
     color: "#25345C",
   },
   textStatus: {
     fontSize: '14px',
     lineHeight: '24px',
-    marginTop: '12px',
-    marginBottom: '14px',
+    marginTop: '7px',
+    marginBottom: '8px',
     marginLeft: '24px',
     padding: "12px 14px",
     color: "#FFFFFF",
@@ -98,7 +99,8 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     fontWeight: 700,
-    width: 87
+    width: 87,
+    height: 41
   },
   invoiceHeader: {
     display: "flex",
@@ -163,16 +165,18 @@ const styles = {
     width: 40,
     height: 40,
     borderRadius: "50%",
-
+    marginTop: "-20px",
+    marginRight: "20px"
   },
   status: {
     padding: "0px 0px 0px 0px !important",
-    textAlign: "left"
+    textAlign: "left",
+    display: 'inline-block'
   },
   avatar: {
     padding: "0px 0px 0px 0px !important",
     textAlign: "center",
-    
+    display: 'inline-block'
   },
   statusName: {
     color: "#25345C",
@@ -371,7 +375,7 @@ export default function Billing() {
                   <CardBody>
                     <GridContainer className={classes.invoiceHeader}>
                       <GridItem xs={3} sm={3} md={3} className={classes.invoiceTitle}>
-                        21 Assets
+                      21 Invoices
                     </GridItem>
                       <GridItem xs={9} sm={9} md={9} className={classes.invoiceButton}>
                         <GridItem xs={12} sm={12} md={12} className={classes.searchBox}>
@@ -435,33 +439,33 @@ export default function Billing() {
               <TabPanel value={value} index={0} className={classes.tableContainer} >
                 <Card>
                   <CardBody>
-                    <GridItem xs={12} sm={12} md={12} >
-                    <GridContainer className={classes.userHeader}>
-                      <GridItem xs={1} sm={1} md={1} className={classes.avatar}>
-                        <img src={avatar} alt="user-avatar" className={classes.avatarImage} />
-                      </GridItem>
-                      <GridItem xs={10} sm={9} md={9} className={classes.status}>
-                        <GridItem xs={12} sm={12} md={12} className={classes.statusName}>
-                          Account status, Johnny Bowers
-                      </GridItem>
-                        <GridItem xs={12} sm={12} md={12} className={classes.statusVerify}>
-                          <VerifiedIcon style={{ color: "#FFFFFF", width: '16px', height: '16px', marginRight: '11px' }} />
-                      Your account is current
-                      </GridItem>
-                      </GridItem>
-                      <GridItem xs={1} sm={1} md={1} className={classes.helpBtn}>
-                        <Button
-                        round
-                        className="btn-round-white"
-                        startIcon={<HelpIcon style={{ color: "#FFFFFF", width: '16px', height: '16px', top: "3px" }}/>}
-                  >
-                    Help
-                  </Button>
-                        {/* Help */}
-                      </GridItem>
-                          </GridContainer>
-
-                    </GridItem >
+                    <Row className={classes.userHeader}>
+                      <Col>
+                        <div className={classes.avatar}>
+                          <img src={avatar} alt="user-avatar" className={classes.avatarImage} />
+                        </div>
+                        <div className={classes.status}>
+                          <div className={classes.statusName}>
+                            Account status, Johnny Bowers
+                          </div>
+                          <div className={classes.statusVerify}>
+                            <VerifiedIcon style={{ color: "#FFFFFF", width: '16px', height: '16px', marginRight: '11px' }} />
+                            Your account is current
+                          </div>
+                        </div>
+                      </Col>
+                      <Col>
+                        <div className={classes.helpBtn}>
+                          <Button
+                            round
+                            className="btn-round-white"
+                            startIcon={<HelpIcon style={{ color: "#FFFFFF", width: '16px', height: '16px', top: "3px" }}/>}
+                          >
+                            Help
+                          </Button>
+                        </div>
+                      </Col>
+                    </Row>
                   <GridItem xs={12} sm={12} md={12}>
                     <GridContainer className={classes.paymentData}>
                       <GridItem xs={6} sm={6} md={6} className={classes.paymentTitle}>
