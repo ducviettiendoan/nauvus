@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import CustomInput from "components/CustomInput/CustomInput.js";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon18 from "components/Icons/SearchIcon18";
-import Input from '@material-ui/core/Input';
+import TextField from '@material-ui/core/TextField';
 
 const styles = {
   iconRoot: {
@@ -16,7 +16,8 @@ const styles = {
     fontSize: '14px',
     lineHeight: '17px',
     color: '#25345C',
-    '::placeholder': {
+    '&::placeholder': {
+      textOverflow: 'ellipsis !important',
       color: '#25345C'
     },
   },
@@ -28,18 +29,19 @@ export default function CustomSearchInput(props) {
   const classes = useStyles();
   return (
     <div style={{ marginTop: '18px' }}>
-      <Input
-        id="input-extrabar-search"
-        classes={{ input: classes.inputSearch }}
-        // defaultValue="Find what you need..."
-        placeholder={placeholder || "Find what you need..."} 
-        disableUnderline="true"
-        startAdornment={
-          <InputAdornment position="start">
-            <SearchIcon18 classes={{ root: classes.iconRoot }} />
-          </InputAdornment>
-        }
-      />
+        <TextField
+          id="input-extrabar-search"
+          placeholder="Find what you need..."
+          InputProps={{
+            classes: {input: classes.inputSearch},
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon18 classes={{ root: classes.iconRoot }} />
+              </InputAdornment>
+            ),
+            disableUnderline: true
+          }}
+        />
     </div>
   );
 }

@@ -6,7 +6,6 @@ import defaultImage from "assets/img/Upload.png";
 const styles = {
   organizationUpload: {
     height: "206px",
-    marginRight: "16px",
     border: "1px dashed #25345C",
     boxSizing: "border-box",
     borderRadius: "12px",
