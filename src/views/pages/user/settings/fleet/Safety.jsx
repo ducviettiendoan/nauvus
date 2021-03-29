@@ -1,6 +1,6 @@
 import React from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 
 // core components
@@ -14,11 +14,15 @@ import {
 } from "assets/jss/material-dashboard-pro-react.js";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import EditIcon from "components/Icons/EditIcon";
-import { Typography } from "@material-ui/core";
+import {Typography} from "@material-ui/core";
 import PropTypes from "prop-types";
 import SafetyScore from "./components/SafetyScore"
 import SafetyHarshEvents from "./components/SafetyHarshEvents"
 import SafetyEventDetection from "./components/SafetyEventDetection"
+import FormatQuote from "@material-ui/icons/FormatQuote";
+import CardBody from "components/Card/CardBody";
+import CardFooter from "components/Card/CardFooter";
+import Card from "components/Card/Card";
 
 const styles = {
   cardTitle,
@@ -147,7 +151,7 @@ const styles = {
 };
 
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+  const {children, value, index, ...other} = props;
 
   return (
     <div
@@ -189,23 +193,35 @@ export default function Safety() {
             <GridItem xs={12} sm={12} md={12}>
               <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                  <RoundedTabs tabs={["Safety Score", "Harsh Events", "Event Detection", "Coaching"]} tabValue={handleChangeTab} />
+                  <RoundedTabs tabs={["Safety Score", "Harsh Events", "Event Detection", "Coaching"]}
+                               tabValue={handleChangeTab}/>
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <Button
                     round
                     className="btn-round-active mr-4"
-                    startIcon={<EditIcon />}
+                    startIcon={<EditIcon/>}
                   >
                     Edit Individual Vehicles
                   </Button>
                 </GridItem>
               </GridContainer>
-
-              {value === 0 && <SafetyScore />}
-              {value === 1 && <SafetyHarshEvents />}
-              {value === 2 && <SafetyEventDetection />}
-
+              {value === 0 && <SafetyScore/>}
+              {value === 1 && <SafetyHarshEvents/>}
+              {value === 2 && <SafetyEventDetection/>}
+              {value === 3 && <Card testimonial>
+                <div className={classes.testimonialIcon}>
+                  <FormatQuote/>
+                </div>
+                <CardBody>
+                  <h5 className={classes.cardTestimonialDescription}>
+                    No Data
+                  </h5>
+                </CardBody>
+                <CardFooter testimonial>
+                  <h6 className={classes.cardCategory}>@nauvus</h6>
+                </CardFooter>
+              </Card>}
             </GridItem>
           </GridContainer>
         </GridItem>
