@@ -306,14 +306,6 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
-
 const dumpData = [
   {
     id: 1,
@@ -374,7 +366,7 @@ const dumpData = [
 export default function AddressesGeofences() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  
+
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Standard Admin'},
     {key: 1, label: 'Full admin'},
@@ -399,7 +391,7 @@ export default function AddressesGeofences() {
 
   const formatName = (cell, row) => {
     return <>
-      <div style={{ marginTop: "12px"}}>
+      <div style={{marginTop: "12px"}}>
         <div className={classes.textRoles}>{row.name}</div>
         <div className={classes.textEmail}>ID: {row.number}</div>
       </div>
@@ -445,14 +437,9 @@ export default function AddressesGeofences() {
             <GridItem xs={12} sm={12} md={12}>
               <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                  <RoundedTabs tabs={[ {
-                      id: 0,
-                      name: "Valid Addresses (2)"
-                    },
-                    {
-                      id: 1,
-                      name: "Invalid Addresses (0)"
-                    }, ]} tabValue={handleChangeTab}/>
+                  <RoundedTabs tabs={[
+                    "Valid Addresses (2)",
+                    "Invalid Addresses (0)"]} tabValue={handleChangeTab}/>
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <Button

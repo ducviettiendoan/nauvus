@@ -260,20 +260,6 @@ export default function LiveSharing() {
       </>
     )
   }
-  const tabs = [
-    {
-      id: 0,
-      name: "By Accet"
-    },
-    {
-      id: 1,
-      name: "By Location"
-    },
-    {
-      id: 2,
-      name: "By Recurring Route"
-    },
-  ]
 
   const handleChangeTab = (newValue) => {
     setValue(newValue);
@@ -288,7 +274,7 @@ export default function LiveSharing() {
 
               <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                  <RoundedTabs tabs={tabs} tabValue={handleChangeTab}/>
+                  <RoundedTabs tabs={["By Accet", "By Location", "By Recurring Route"]} tabValue={handleChangeTab}/>
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <Button
@@ -348,7 +334,7 @@ export default function LiveSharing() {
                 <TabPanel value={value} index={1} className={classes.tableContainer}>
                   <Card testimonial>
                     <div className={classes.testimonialIcon}>
-                      <FormatQuote />
+                      <FormatQuote/>
                     </div>
                     <CardBody>
                       <h5 className={classes.cardTestimonialDescription}>
@@ -363,7 +349,7 @@ export default function LiveSharing() {
                 <TabPanel value={value} index={2} className={classes.tableContainer}>
                   <Card testimonial>
                     <div className={classes.testimonialIcon}>
-                      <FormatQuote />
+                      <FormatQuote/>
                     </div>
                     <CardBody>
                       <h5 className={classes.cardTestimonialDescription}>

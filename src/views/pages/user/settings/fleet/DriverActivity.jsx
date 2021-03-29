@@ -263,16 +263,6 @@ export default function DriverActivity() {
   const handleChangeTab = (newValue) => {
     setValue(newValue);
   };
-  const tabs = [
-    {
-      id: 0,
-      name: "Working Hours"
-    },
-    {
-      id: 1,
-      name: "Max Distance"
-    },
-  ]
 
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Standard Admin'},
@@ -289,7 +279,7 @@ export default function DriverActivity() {
     <div>
       <GridContainer className={classes.topHeader}>
         <GridItem xs={12} sm={11} md={8} xl={6} className={classes.tabsContainer}>
-          <RoundedTabs tabs={tabs} tabValue={handleChangeTab}/>
+          <RoundedTabs tabs={["Working Hours", "Max Distance"]} tabValue={handleChangeTab}/>
         </GridItem>
         <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
           <Button

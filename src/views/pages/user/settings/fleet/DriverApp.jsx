@@ -166,21 +166,6 @@ export default function DriverApp() {
 
   const [value, setValue] = React.useState(0);
 
-  const tabs = [
-    {
-      id: 0,
-      name: "General"
-    },
-    {
-      id: 1,
-      name: "Dvirs"
-    },
-    {
-      id: 2,
-      name: "Routes"
-    },
-  ]
-
   const handleChangeTab = (newValue) => {
     setValue(newValue);
   };
@@ -193,7 +178,7 @@ export default function DriverApp() {
             <GridItem xs={12} sm={12} md={12}>
               <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                  <RoundedTabs tabs={tabs} tabValue={handleChangeTab}/>
+                  <RoundedTabs tabs={["General", "Dvirs", "Routes"]} tabValue={handleChangeTab}/>
                 </GridItem>
               </GridContainer>
               { value === 0 && <DriverAppGeneral />}
