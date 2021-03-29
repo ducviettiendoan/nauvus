@@ -60,6 +60,8 @@ export default function RoundedTabs(props) {
     setValue(newValue)
   };
 
+
+
   const classes = useStyles()
 
   return (
@@ -73,13 +75,15 @@ export default function RoundedTabs(props) {
         variant="scrollable"
       >
         {tabs.map((tab) => {
+          let tabName = tab
+          let tabLabel = tabName.replace(/\s/g, '')
           return (
             <Tab
               className={classes.tabItemStyles}
-              label={tab.name}
-              {...a11yProps(tab.id)}
+              label={tabName}
+              {...a11yProps(tabLabel)}
             >
-              {tab.name}
+              {tabName}
             </Tab>
           )
         })}

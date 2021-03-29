@@ -163,21 +163,10 @@ export default function Apps() {
     setValue(newValue);
   };
 
-  const tabs = [
-    {
-      id: 0,
-      name: "Available Apps"
-    },
-    {
-      id: 1,
-      name: "Enabled Apps (1)"
-    },
-  ]
-
   return (
     <div>
       <GridItem className={classes.tabsContainer}>
-        <RoundedTabs tabs={tabs} tabValue={handleChangeTab}/>
+        <RoundedTabs tabs={["Available Apps", "Enabled Apps (1)"]} tabValue={handleChangeTab}/>
       </GridItem>
       <TabPanel value={value} index={0}>
         <Card testmonial>

@@ -379,7 +379,7 @@ export default function DeveloperMetrics() {
           <GridItem xs={12} sm={12} md={12}>
             <GridContainer className={classes.topHeader}>
               <GridItem xs={12} sm={12} md={12} xl={12} className={classes.topHeaderTitle}>
-                <RoundedTabs tabs={tabs} tabValue={handleChangeTab}/>
+                <RoundedTabs tabs={["API Traffic", "Webhook Traffic"]} tabValue={handleChangeTab}/>
               </GridItem>
             </GridContainer>
             <TabPanel value={value} index={0} className={classes.tableContainer}>

@@ -26,6 +26,7 @@ import PropTypes from 'prop-types'
 import VerifiedIcon from "components/Icons/VerifiedIcon"
 import CardIcon from "components/Icons/CardIcon"
 import HelpIcon from "components/Icons/HelpIcon"
+import RoundedTabs from "../../../../../components/CustomTabs/RoundedTabs";
 
 const styles = {
   cardTitle,
@@ -268,13 +269,6 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
-
 const dumpDataInvoice = [
   { dueDate: '02/03/2021', po: "Signed Agreement", invoice: '30510326', amount: "$627.12", remainingBalance: "$14.05", status: "Overdue" },
   { dueDate: '02/03/2021', po: "Signed Agreement", invoice: '30510326', amount: "$627.12", remainingBalance: "$14.05", status: "Overdue" },
@@ -300,9 +294,11 @@ export default function Billing() {
   const classes = useStyles();
 
   const [value, setValue] = React.useState(0);
-  const handleChange = (event, newValue) => {
+
+  const handleChangeTab = (newValue) => {
     setValue(newValue);
   };
+
   const formatDueDate = (cell, row) => {
     return <>
       <div className={classes.textSub}>{cell}</div>
@@ -346,30 +342,7 @@ export default function Billing() {
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer className={classes.topHeader}>
             <GridItem xs={12} sm={12} md={12} className={classes.topHeaderTitle}>
-              <Tabs
-                value={value}
-                onChange={handleChange}
-                className={classes.tabStyles}
-                indicatorColor=""
-                position="static"
-                variant="scrollable"
-              >
-                <Tab
-                  className={classes.tabItemStyles}
-                  label="Summary" {...a11yProps(0)}
-                >
-                  Summary
-                    </Tab>
-                <Tab
-                  className={classes.tabItemStyles}
-                  label="Invoice" {...a11yProps(1)}
-                >
-                  Invoice
-                </Tab>
-              </Tabs>
-
-
-
+              <RoundedTabs tabs={["Summary", "Invoice"]} tabValue={handleChangeTab}/>
               <TabPanel value={value} index={1} className={classes.tableContainer} >
                 <Card testimonial>
                   <CardBody>

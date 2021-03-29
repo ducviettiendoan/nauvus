@@ -33,6 +33,7 @@ import PropTypes from "prop-types";
 import avatar from "assets/img/faces/avatar.jpg";
 import DotIcon from "../../../../../components/Icons/DotIcon";
 import Chip from "@material-ui/core/Chip";
+import RoundedTabs from "../../../../../components/CustomTabs/RoundedTabs";
 
 const styles = {
   cardTitle,
@@ -307,14 +308,6 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
-
 const dumpData = [
   {
     id: 1,
@@ -363,7 +356,8 @@ const dumpData = [
 export default function UserRoles() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const handleChange = (event, newValue) => {
+
+  const handleChangeTab = (newValue) => {
     setValue(newValue);
   };
   const [chipData, setChipData] = React.useState([
@@ -451,34 +445,7 @@ export default function UserRoles() {
             <GridItem xs={12} sm={12} md={12}>
               <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                  <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    className={classes.tabStyles}
-                    indicatorColor=""
-                    position="static"
-                    variant="scrollable"
-                  >
-                    <Tab
-                      className={classes.tabItemStyles}
-                      label="Users" {...a11yProps(0)}
-                    >
-                      Users
-                    </Tab>
-                    <Tab
-                      className={classes.tabItemStyles}
-                      label="Roles" {...a11yProps(1)}
-                    >
-                      Roles
-                    </Tab>
-                    <Tab
-                      className={classes.tabItemStyles}
-                      label="Pending Invitations"
-                      {...a11yProps(2)}
-                    >
-                      Pending Invitations
-                    </Tab>
-                  </Tabs>
+                  <RoundedTabs tabs={["Users", "Roles", "Pending Invitations"]} tabValue={handleChangeTab}/>
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <Button
