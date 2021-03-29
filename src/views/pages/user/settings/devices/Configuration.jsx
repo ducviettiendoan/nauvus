@@ -261,8 +261,12 @@ export default function Configuration() {
                               <GridItem className={classes.engineDescription}>Minimum time the engine must be off for Battery
                             Conservation Mode to be enabled.</GridItem>
                               <GridItem className={classes.sliderContainer}>
-                                <CustomSlider valueSlider={sliderValue[device]} allSlider={sliderValue}
-                                  setSliderValue={setSliderValue} name={device} />
+                                <CustomSlider
+                                  allSlider={sliderValue}
+                                  step={1} min={0} max={252} sliderDefaultValue={84}
+                                  setSliderValue={setSliderValue}
+                                  name={device}
+                                  type={"hours"} />
                               </GridItem>
                               <GridItem className={classes.buttonContainer}>
                                 <Button

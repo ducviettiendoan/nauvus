@@ -40,17 +40,6 @@ const useStyles = makeStyles({
   }
 });
 
-const marks = [
-  {
-    value: 0,
-    label: <GridItem className="slider-mark min-mark padding-0">min</GridItem>,
-  },
-  {
-    value: 252,
-    label: <GridItem className="slider-mark max-mark padding-0">max</GridItem>,
-  }
-];
-
 function valuetext(value) {
   return `${value} hours`;
 }
@@ -59,19 +48,43 @@ function labelText(value) {
   return `${value} hours`;
 }
 
-function valueLabelFormat(value) {
-  return (
-    <GridItem className="slider-thumb-container padding-0">
-      <GridItem className="slider-thumb-header pading-0">{value} hours</GridItem>
-      <GridItem className="slider-thumb-content padding-0">
-        {Math.floor(value / 24)} days {value % 24} hours
-      </GridItem>
-    </GridItem>
-  );
-}
-
 export default function CustomSlider(props) {
-  const { valueSlider, allSlider, setSliderValue, name } = props
+  const { allSlider, setSliderValue, name, type, step, min, max, sliderDefaultValue } = props
+
+  const valueLabelFormat = (value) => {
+    switch (type) {
+      case "hours":
+        return (
+          <GridItem className="slider-thumb-container padding-0">
+            <GridItem className="slider-thumb-header pading-0">{value} hours</GridItem>
+            <GridItem className="slider-thumb-content padding-0">
+              {Math.floor(value / 24)} days {value % 24} hours
+            </GridItem>
+          </GridItem>
+        );
+
+      case "sensitivity":
+        return (
+          <GridItem className="slider-thumb-container padding-0">
+            <GridItem className="slider-thumb-header pading-0">{value} G</GridItem>
+          </GridItem>
+        )
+
+      default:
+        break;
+    }
+  }
+
+  const marks = [
+    {
+      value: min,
+      label: <GridItem className="slider-mark min-mark padding-0">min</GridItem>,
+    },
+    {
+      value: max,
+      label: <GridItem className="slider-mark max-mark padding-0">max</GridItem>,
+    }
+  ];
 
   const classes = useStyles();
 
@@ -89,15 +102,15 @@ export default function CustomSlider(props) {
           track: classes.track,
           thumb: classes.thumb
         }}
-        defaultValue={84}
+        defaultValue={sliderDefaultValue}
         getAriaValueText={valuetext}
         aria-labelledby="discrete-slider-restrict"
-        step={1}
+        step={step}
         valueLabelDisplay="on"
         name={name}
         marks={marks}
-        min={0}
-        max={252}
+        min={min}
+        max={max}
         getAriaLabel={labelText}
         valueLabelFormat={valueLabelFormat}
         onChange={handleChange}
