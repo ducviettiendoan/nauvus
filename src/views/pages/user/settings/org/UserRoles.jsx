@@ -165,8 +165,8 @@ const styles = {
     paddingLeft: "0px !important"
   },
   headContainer: {
-    display: "flex",
     alignItems: "center",
+    textAlign: "left",
     marginTop: "8px"
   },
   headLeft: {
@@ -472,10 +472,10 @@ export default function UserRoles() {
                     <GridContainer>
                       <GridItem xs={12} sm={12} md={6}>
                         <GridContainer className={classes.headContainer}>
-                          <GridItem xl={3} className={classes.userRolesTitle}>
+                          <GridItem xl={2} className={classes.userRolesTitle}>
                             {chipData.length} selected for
                           </GridItem>
-                          <GridItem xl={8} className={classes.chipSelected}>
+                          <GridItem xl={10} className={classes.chipSelected}>
                             {
                               chipData.map(data => (
                                 <Chip

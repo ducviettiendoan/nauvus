@@ -20,7 +20,7 @@ const styles = {
     textAlign: 'center',
     transition: 'all .5s',
     padding: '12px 22px 12px 22px',
-    color: '#555555',
+    color: '#25345C',
     height: 'auto',
     marginRight: '8px',
     float: 'none',

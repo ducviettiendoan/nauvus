@@ -304,22 +304,6 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-
-const tabs = [
-  {
-    id: 0,
-    name: "Active Drivers"
-  },
-  {
-    id: 1,
-    name: "Deactivated Drivers"
-  },
-]
-
-const handleChangeTab = (newValue) => {
-  setValue(newValue);
-};
-
 const dumpData = [
   {
     id: 1,
@@ -489,7 +473,7 @@ export default function Drivers() {
             <GridItem xs={12} sm={12} md={12}>
               <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                  <RoundedTabs tabs={tabs} tabValue={handleChangeTab}/>
+                  <RoundedTabs tabs={["Active Drivers", "Deactivated Drivers"]} tabValue={handleChangeTab}/>
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <Button
@@ -510,7 +494,7 @@ export default function Drivers() {
                   </Button>
                 </GridItem>
               </GridContainer>
-              <TabPanel value={value} index={0} className={classes.tableContainer}>
+              <TabPanel value={value} index={0}>
                 <Card testimonial>
                   <CardBody>
                     <GridContainer>

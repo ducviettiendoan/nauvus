@@ -374,17 +374,6 @@ export default function Devices() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
-  const tabs = [
-    {
-      id: 0,
-      name: "Gateways"
-    },
-    {
-      id: 1,
-      name: "Sensors"
-    },
-  ]
-
   const handleChangeTab = (newValue) => {
     setValue(newValue);
   };
@@ -489,7 +478,7 @@ export default function Devices() {
             <GridItem xs={12} sm={12} md={12}>
               <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                  <RoundedTabs tabs={tabs} tabValue={handleChangeTab}/>
+                  <RoundedTabs tabs={["Gateways", "Sensors"]} tabValue={handleChangeTab}/>
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <Button
