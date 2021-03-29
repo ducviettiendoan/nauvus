@@ -11,11 +11,11 @@ import {
 } from "assets/jss/material-dashboard-pro-react.js";
 import TextField from "@material-ui/core/TextField";
 import {Col, Row} from "reactstrap";
-import Button from "../../../../../../components/CustomButtons/Button";
+import Button from "components/CustomButtons/Button";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import TodoIcon from "../../../../../../components/Icons/TodoIcon";
-import CompanyIcon from "../../../../../../components/Icons/CompanyIcon";
-import BuildingIcon from "../../../../../../components/Icons/BuildingIcon";
+import TodoIcon from "components/Icons/TodoIcon";
+import CompanyIcon from "components/Icons/CompanyIcon";
+import BuildingIcon from "components/Icons/BuildingIcon";
 
 const styles = {
   cardTitle,
