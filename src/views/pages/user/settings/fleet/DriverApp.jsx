@@ -32,7 +32,11 @@ import AddOutlined from "@material-ui/icons/AddOutlined";
 import RoundedTabs from "../../../../../components/CustomTabs/RoundedTabs";
 import FormatQuote from "@material-ui/icons/FormatQuote";
 import CardFooter from "../../../../../components/Card/CardFooter";
+import Switch from "components/CustomSwitch/Switch.jsx"
+import { Divider } from "@material-ui/core";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
+import TextField from "@material-ui/core/TextField";
 import DriverAppDvirs from "./components/DriverAppDvirs";
 import DriverAppGeneral from "./components/DriverAppGeneral";
 import DriverAppRoutes from "./components/DriverAppRoutes";
@@ -134,9 +138,11 @@ const styles = {
   },
   topHeaderTitle: {
     textAlign: "left",
+    marginLeft: "15px"
   },
   topHeaderButton: {
     textAlign: "right",
+    
   },
   textName: {
     fontWeight: 'bold',
@@ -157,6 +163,63 @@ const styles = {
       color: '#25345C !important',
     }
   },
+  gridContent: {
+    display: "flex",
+    alignItems: "center",
+    padding: "0px 0px 0px 0px !important"
+  },
+  cardItem: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    padding: "0px 0px !important"
+  },
+
+  headerItem: {
+    fontWeight: 700,
+    fontSize: 14,
+    color: "#25345C",
+    fontFamily: "Lato",
+    padding: "9px 0px 15px 0px !important",
+    lineHeight: "21px",
+    overflow: "hidden",
+
+  },
+
+  contentItem: {
+    color: "#B4B4B4",
+    fontWeight: 700,
+    fontSize: 14,
+    fontFamily: "Lato",
+    padding: "0px 0px 20px 0px !important",
+    lineHeight: "21px",
+    overflow: "hidden",
+
+  },
+  cardMultipleContent: {
+    paddingLeft: "6px !important",
+    paddingBottom: "20px !important"
+  },
+  contentContainer: {
+    display: "flex",
+    margin: "16px 7px 16px 16px",
+    paddingLeft: "20px",
+
+  },
+  textFieldRoot: {
+    fontWeight: 'normal',
+    fontSize: '14px',
+    lineHeight: '21px',
+    color: '#C4C4C4'
+  },
+  textInputRoot: {
+    fontWeight: 'bold',
+    fontSize: '14px',
+    lineHeight: '21px',
+    color: '#25345C'
+  },
+
+
 };
 
 const useStyles = makeStyles(styles);
@@ -166,43 +229,37 @@ export default function DriverApp() {
 
   const [value, setValue] = React.useState(0);
 
-  const tabs = [
-    {
-      id: 0,
-      name: "General"
-    },
-    {
-      id: 1,
-      name: "Dvirs"
-    },
-    {
-      id: 2,
-      name: "Routes"
-    },
-  ]
-
   const handleChangeTab = (newValue) => {
     setValue(newValue);
   };
+  const handleChange = (event) => {
+  };
 
   return (
-    <div>
+    <div style={{paddingTop: "16px"}}>
+
+      <RoundedTabs tabs={["General", "Dvirs", "Routes"]} tabValue={handleChangeTab}/>
+
+      <Card style={{padding:"0px 20px", marginTop: "16px"}}>
+
       <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
-              <GridContainer className={classes.topHeader}>
-                <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                  <RoundedTabs tabs={tabs} tabValue={handleChangeTab}/>
-                </GridItem>
-              </GridContainer>
-              { value === 0 && <DriverAppGeneral />}
-              { value === 1 && <DriverAppDvirs />}
-              { value === 2 && <DriverAppRoutes />}
-            </GridItem>
-          </GridContainer>
-        </GridItem>
+          <GridItem xs={12} sm={12} md={12}>
+            <GridContainer>
+              <GridItem xs={12} sm={12} md={12}>
+                <GridContainer className={classes.topHeader}>
+                  <GridItem xs={12} sm={11} md={6} xl={3} className={classes.topHeaderTitle}>
+                  
+                  </GridItem>
+                </GridContainer>
+                {value === 0 && <DriverAppGeneral />}
+                {value === 1 && <DriverAppDvirs />}
+                {value === 2 && <DriverAppRoutes />}
+
+              </GridItem>
+            </GridContainer>
+          </GridItem>
       </GridContainer>
+      </Card>
     </div>
   );
 }

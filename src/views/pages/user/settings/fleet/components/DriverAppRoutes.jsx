@@ -19,6 +19,8 @@ import Button from "components/CustomButtons/Button.js";
 import SettingSearchBox from "components/SearchBox/SettingSearchBox";
 import BootstrapTable from "react-bootstrap-table-next";
 import {Row} from "reactstrap";
+import FormatQuote from "@material-ui/icons/FormatQuote";
+import CardFooter from "../../../../../../components/Card/CardFooter";
 
 const styles = {
   cardTitle,
@@ -120,8 +122,16 @@ export default function DriverAppRoutes() {
   };
 
   return (
-    <div>
-      cccc
-    </div>
+    <Card testimonial>
+      <div className={classes.testimonialIcon}>
+        <FormatQuote />
+      </div>
+      <CardBody>
+        <h5 className={classes.cardTestimonialDescription}>No Data</h5>
+      </CardBody>
+      <CardFooter testimonial>
+        <h6 className={classes.cardCategory}>@nauvus</h6>
+      </CardFooter>
+    </Card>
   );
 }
