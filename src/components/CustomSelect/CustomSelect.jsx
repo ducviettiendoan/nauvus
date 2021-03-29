@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import {deepPurple} from '@material-ui/core/colors';
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 const styles = {
     selectContainer: {
@@ -75,7 +74,7 @@ const CustomSelect = (props) => {
 
     const iconComponent = (props) => {
         return (
-            <ExpandMoreIcon className={props.className + " " + classes.icon}/>
+            <ExpandMoreIcon className={props.className + " " + classes.icon} />
         )
     };
 
@@ -101,13 +100,13 @@ const CustomSelect = (props) => {
         <FormControl className={classes.selectContainer}>
             <Select
                 disableUnderline
-                classes={{root: classes.select}}
+                classes={{ root: classes.select }}
                 MenuProps={menuProps}
                 IconComponent={iconComponent}
                 value={val}
                 onChange={handleChange}
             >
-                {values.map((value, i) => <MenuItem key={i} value={i}>{value}</MenuItem>) }
+                {values.map((value, i) => <MenuItem key={i} value={i}>{value}</MenuItem>)}
             </Select>
         </FormControl>
     );

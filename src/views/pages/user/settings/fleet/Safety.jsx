@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
@@ -6,8 +6,6 @@ import { makeStyles } from "@material-ui/core/styles";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
 import Button from "components/CustomButtons/Button.js";
 
 import {
@@ -16,12 +14,11 @@ import {
 } from "assets/jss/material-dashboard-pro-react.js";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import EditIcon from "components/Icons/EditIcon";
-import {Divider, Grid, Typography} from "@material-ui/core";
-import CustomSwitch from "../../../../../components/CustomSwitch/Switch";
-import FormatQuote from "@material-ui/icons/FormatQuote";
-import CardFooter from "../../../../../components/Card/CardFooter";
+import { Typography } from "@material-ui/core";
 import PropTypes from "prop-types";
-import CustomSelect from "../../../../../components/CustomSelect/CustomSelect";
+import SafetyScore from "./components/SafetyScore"
+import SafetyHarshEvents from "./components/SafetyHarshEvents"
+import SafetyEventDetection from "./components/SafetyEventDetection"
 
 const styles = {
   cardTitle,
@@ -150,20 +147,20 @@ const styles = {
 };
 
 function TabPanel(props) {
-  const {children, value, index, ...other} = props;
+  const { children, value, index, ...other } = props;
 
   return (
-      <div
-          role="tabpanel"
-          hidden={value !== index}
-          id={`simple-tabpanel-${index}`}
-          aria-labelledby={`simple-tab-${index}`}
-          {...other}
-      >
-        {value === index && (
-            <Typography>{children}</Typography>
-        )}
-      </div>
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Typography>{children}</Typography>
+      )}
+    </div>
   );
 }
 
@@ -180,33 +177,6 @@ export default function Safety() {
 
   const [value, setValue] = React.useState(0);
 
-  const [checkedState, setCheckedState] = useState({
-    checkedA: false,
-  });
-
-  const handleChange = (event) => {
-    setCheckedState({...checkedState, [event.target.name]: event.target.checked});
-  };
-
-  const tabs = [
-    {
-      id: 0,
-      name: "Safety Score"
-    },
-    {
-      id: 1,
-      name: "Harsh Events"
-    },
-    {
-      id: 2,
-      name: "Event Detection"
-    },
-    {
-      id: 3,
-      name: "Coaching"
-    },
-  ]
-
   const handleChangeTab = (newValue) => {
     setValue(newValue);
   };
@@ -219,7 +189,7 @@ export default function Safety() {
             <GridItem xs={12} sm={12} md={12}>
               <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                  <RoundedTabs tabs={tabs} tabValue={handleChangeTab} />
+                  <RoundedTabs tabs={["Safety Score", "Harsh Events", "Event Detection", "Coaching"]} tabValue={handleChangeTab} />
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <Button
@@ -232,78 +202,9 @@ export default function Safety() {
                 </GridItem>
               </GridContainer>
 
-              <TabPanel value={value} index={0}>
-                <Card>
-                  <CardBody className={classes.cardContainer}>
-                    <GridItem className={classes.cardMultipleContent}>
-                      <GridItem xs={12} sm={12} md={12} className={classes.gridContent}>
-                        <CardBody className={classes.cardItem}>
-                          <GridItem className={classes.headerWithButton}>
-                            <GridItem className={classes.headerItem}>
-                              Safety Score Configuration
-                            </GridItem>
-                            <CustomSwitch checked={checkedState.checkedA} onChange={handleChange} name="checkedA" />
-                          </GridItem>
-                          <GridItem className={classes.contentItem}>
-                            Set relative importance of safety scores and weights of safety infractions
-                          </GridItem>
-                          <Button
-                              round
-                              className="btn-round-white-2"
-                          >
-                            Configure Scores
-                          </Button>
-                        </CardBody>
-
-                      </GridItem>
-                      <Divider variant="fullWidth" light/>
-                    </GridItem>
-                  </CardBody>
-
-                </Card>
-              </TabPanel>
-
-              <TabPanel value={value} index={1}>
-                <Card>
-                  <CardBody className={classes.cardContainer}>
-                    <GridItem className={classes.cardMultipleContent}>
-                      <GridItem xs={12} sm={12} md={12} className={classes.vehicleHeaderContainer}>
-                        <GridItem className={classes.vehicleHeader}>Vehicle Type</GridItem>
-                        <GridItem className={classes.vehicleSelect}>
-                          <CustomSelect values={["Automatic", "2", "3"]} />
-                        </GridItem>
-                      </GridItem>
-                    </GridItem>
-                  </CardBody>
-
-                </Card>
-              </TabPanel>
-
-              <TabPanel value={value} index={2}>
-                <Card>
-                  <CardBody>
-                    <h5 className={classes.cardTestimonialDescription}>
-                      No Data
-                    </h5>
-                  </CardBody>
-                </Card>
-              </TabPanel>
-
-              <TabPanel value={value} index={2}>
-                <Card testimonial>
-                  <div className={classes.testimonialIcon}>
-                    <FormatQuote />
-                  </div>
-                  <CardBody>
-                    <h5 className={classes.cardTestimonialDescription}>
-                      No Data
-                    </h5>
-                  </CardBody>
-                  <CardFooter testimonial>
-                    <h6 className={classes.cardCategory}>@nauvus</h6>
-                  </CardFooter>
-                </Card>
-              </TabPanel>
+              {value === 0 && <SafetyScore />}
+              {value === 1 && <SafetyHarshEvents />}
+              {value === 2 && <SafetyEventDetection />}
 
             </GridItem>
           </GridContainer>

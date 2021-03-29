@@ -14,7 +14,7 @@ import Logo from "assets/img/logo_nauvus_text.svg";
 import {
   cardTitle,
 } from "assets/jss/material-dashboard-pro-react.js";
-import {Tab, Tabs, Typography} from "@material-ui/core";
+import {Typography} from "@material-ui/core";
 import PropTypes from "prop-types";
 import RoundedTabs from "../../../../../components/CustomTabs/RoundedTabs";
 import FormatQuote from "@material-ui/icons/FormatQuote";
@@ -163,21 +163,10 @@ export default function Apps() {
     setValue(newValue);
   };
 
-  const tabs = [
-    {
-      id: 0,
-      name: "Available Apps"
-    },
-    {
-      id: 1,
-      name: "Enabled Apps (1)"
-    },
-  ]
-
   return (
     <div>
       <GridItem className={classes.tabsContainer}>
-        <RoundedTabs tabs={tabs} tabValue={handleChangeTab}/>
+        <RoundedTabs tabs={["Available Apps", "Enabled Apps (1)"]} tabValue={handleChangeTab}/>
       </GridItem>
       <TabPanel value={value} index={0}>
         <Card testmonial>

@@ -20,7 +20,7 @@ const styles = {
     textAlign: 'center',
     transition: 'all .5s',
     padding: '12px 22px 12px 22px',
-    color: '#555555',
+    color: '#25345C',
     height: 'auto',
     marginRight: '8px',
     float: 'none',
@@ -60,6 +60,8 @@ export default function RoundedTabs(props) {
     setValue(newValue)
   };
 
+
+
   const classes = useStyles()
 
   return (
@@ -73,13 +75,15 @@ export default function RoundedTabs(props) {
         variant="scrollable"
       >
         {tabs.map((tab) => {
+          let tabName = tab
+          let tabLabel = tabName.replace(/\s/g, '')
           return (
             <Tab
               className={classes.tabItemStyles}
-              label={tab.name}
-              {...a11yProps(tab.id)}
+              label={tabName}
+              {...a11yProps(tabLabel)}
             >
-              {tab.name}
+              {tabName}
             </Tab>
           )
         })}

@@ -22,6 +22,18 @@
 .w-122 {
   width: 122px !important;
 }
+.w-62 {
+  width: 62px !important;
+}
+.w-74 {
+  width: 74px !important;
+}
+.w-77 {
+  width: 77px !important;
+}
+.w-138 {
+  width: 138px !important;
+}
 .btn-round-active {
   background: #25345C !important;
   border-radius: 28px !important;
@@ -349,6 +361,52 @@
 
 .table-settings tbody tr:nth-of-type(even) {
   background-color:  #FAFAFA !important;
+}
+
+.slider-thumb-container {
+  background: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 21px;
+}
+
+.slider-thumb-header {
+  color: #25345C;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.slider-thumb-content {
+  color: #B4B4B4;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 21px;
+}
+
+.slider-mark {
+  color: #B4B4B4;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 21px;
+  position: relative;
+  top: -55px
+}
+
+.min-mark {
+  left: 10px;
+}
+.max-mark {
+  right: 10px;
 }
 
 /* 

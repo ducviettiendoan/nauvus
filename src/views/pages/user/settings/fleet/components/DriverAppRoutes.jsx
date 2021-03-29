@@ -1,20 +1,24 @@
 import React from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
 // core components
+import PropTypes from 'prop-types';
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
-
+import TableComponent from "components/Table/CustomTable"
 import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
+import {Tab, Tabs, Typography} from "@material-ui/core";
+import Button from "components/CustomButtons/Button.js";
+import SettingSearchBox from "components/SearchBox/SettingSearchBox";
+import BootstrapTable from "react-bootstrap-table-next";
+import {Row} from "reactstrap";
 
 const styles = {
   cardTitle,
@@ -62,39 +66,62 @@ const styles = {
       height: "40px"
     }
   },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  }
+  liveSharingHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+  tableContainer: {
+    paddingLeft: 0,
+    paddingRight: 0
+  },
+  inputAdornmentIcon: {
+    color: "#8181A5",
+    fontSize: "18px",
+    marginLeft: "0 !important;"
+  },
+  topHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 15
+  },
+  topHeaderTitle: {
+    textAlign: "left",
+  },
+  topHeaderButton: {
+    textAlign: "right",
+  },
+  textName: {
+    fontWeight: 'bold',
+    fontSize: '16px',
+    lineHeight: '24px',
+    marginTop: '14px',
+    color: '#25345C',
+    marginLeft: '24px'
+  },
+  textSub: {
+    fontSize: '16px',
+    lineHeight: '24px',
+    marginTop: '14px',
+    marginLeft: '24px'
+  },
 };
 
 const useStyles = makeStyles(styles);
 
-export default function Compliance() {
+export default function DriverAppRoutes() {
   const classes = useStyles();
+
+  const [value, setValue] = React.useState(0);
+
+  const handleChangeTab = (newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card testimonial>
-                <div className={classes.testimonialIcon}>
-                  <FormatQuote />
-                </div>
-                <CardBody>
-                  <h5 className={classes.cardTestimonialDescription}>
-                    No Data Drive
-                  </h5>
-                </CardBody>
-                <CardFooter testimonial>
-                  <h6 className={classes.cardCategory}>@nauvus</h6>
-                </CardFooter>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </GridItem>
-      </GridContainer>
+      cccc
     </div>
   );
 }
