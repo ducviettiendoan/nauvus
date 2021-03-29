@@ -7,12 +7,9 @@ import FormatQuote from "@material-ui/icons/FormatQuote";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-
-import RoundedTabs from "components/CustomTabs/RoundedTabs";
-import DriverEfficiency from "./fuel&energy/DriverEfficiency";
-import FuelCards from "./fuel&energy/FuelCards";
-import FuelCost from "./fuel&energy/FuelCost";
-import VehicleFuelTypes from "./fuel&energy/VehicleFuelTypes";
+import Card from "components/Card/Card.js";
+import CardBody from "components/Card/CardBody.js";
+import CardFooter from "components/Card/CardFooter.js";
 
 import {
   cardTitle,
@@ -68,45 +65,32 @@ const styles = {
   cardTestimonialDescription: {
     fontStyle: "italic",
     color: "#999999"
-  },
-  topHeader: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 15
-  },
-  topHeaderTitle: {
-    textAlign: "left",
-  },
+  }
 };
 
 const useStyles = makeStyles(styles);
 
-export default function FuelEnergy() {
+export default function FuelCards() {
   const classes = useStyles();
-
-  const [value, setValue] = React.useState(0);
-
-  const handleChangeTab = (newValue) => {
-    setValue(newValue);
-  };
-
   return (
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
-              <GridContainer className={classes.topHeader}>
-                <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                  <RoundedTabs tabs={["Driver Efficiency", "Fuel Cost", "Fuel Cards", "Vehicle Fuel Types"]} tabValue={handleChangeTab}/>
-                </GridItem>
-                
-              </GridContainer>
-              { value === 0 && <DriverEfficiency />}
-              { value === 1 && <FuelCost />}
-              { value === 2 && <FuelCards />}
-              { value === 3 && <VehicleFuelTypes />}
+              <Card testimonial>
+                <div className={classes.testimonialIcon}>
+                  <FormatQuote />
+                </div>
+                <CardBody>
+                  <h5 className={classes.cardTestimonialDescription}>
+                    FC
+                  </h5>
+                </CardBody>
+                <CardFooter testimonial>
+                  <h6 className={classes.cardCategory}>@nauvus</h6>
+                </CardFooter>
+              </Card>
             </GridItem>
           </GridContainer>
         </GridItem>
