@@ -131,8 +131,6 @@ const useStyles = makeStyles(styles);
 export default function FuelCost() {
   const classes = useStyles();
 
-  const [value, setValue] = React.useState(0);
-
   const formatDate = (cell, row) => {
     return <>
       <div className={classes.textDate}>{cell}</div>
