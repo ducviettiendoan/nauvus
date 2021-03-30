@@ -18,7 +18,8 @@ const styles = {
     color: '#25345C',
     '&::placeholder': {
       textOverflow: 'ellipsis !important',
-      color: '#25345C'
+      color: '#25345C',
+      opacity: 1
     },
   },
 };

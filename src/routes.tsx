@@ -124,15 +124,6 @@ const dashRoutes = [
         component: TimelinePage,
         layout: "/admin"
       },
-      // {
-      //   path: "/sign-in",
-      //   name: "Login Page",
-      //   rtlName: "هعذاتسجيل الدخول",
-      //   mini: "L",
-      //   rtlMini: "هعذا",
-      //   component: LoginPage,
-      //   layout: "/auth"
-      // },
       {
         path: "/register-page",
         name: "Register Page",

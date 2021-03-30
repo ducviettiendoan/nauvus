@@ -21,8 +21,6 @@ import AdminNavbarLinks from "components/Navbars/AdminNavbarLinks.js";
 
 import sidebarStyle from "assets/jss/material-dashboard-pro-react/components/sidebarStyle.js";
 
-import avatar from "assets/img/faces/avatar.jpg";
-
 var ps;
 
 // We've created this component so we can have a ref to the wrapper of the links that appears in our sidebar.
@@ -45,13 +43,18 @@ class SidebarWrapper extends React.Component {
     }
   }
   render() {
-    const { className, user, headerLinks, links } = this.props;
+    const { className, user, headerLinks, links, fixedLinks } = this.props;
     return (
-      <div className={className} ref={this.sidebarWrapper}>
-        {user}
-        {headerLinks}
-        {links}
-      </div>
+      <>
+        <div className={className} ref={this.sidebarWrapper}>
+          {user}
+          {headerLinks}
+          {links}
+        </div>
+        <div className={ `fixed-menu` }>
+          {fixedLinks}
+        </div>
+      </>
     );
   }
 }
@@ -104,11 +107,106 @@ class Sidebar extends React.Component {
     st[collapse] = !this.state[collapse];
     this.setState(st);
   }
+  // Create fixed links
+  createFixedLinks = routes => {
+    const { classes, color, rtlActive } = this.props;
+    return routes.map((prop, key) => {
+      if (!prop.isFixed) {
+        return null;
+      }
+      const innerNavLinkClasses =
+        classes.collapseItemLink +
+        " " +
+        cx({
+          [" " + classes[color]]: this.activeRoute(prop.path)
+        });
+      const collapseItemMini =
+        classes.collapseItemMini +
+        " " +
+        cx({
+          [classes.collapseItemMiniRTL]: rtlActive
+        });
+      const navLinkClasses =
+        classes.itemLink +
+        " " +
+        cx({
+          [" " + classes[color]]: this.activeRoute(prop.path)
+        });
+      const itemText =
+        classes.itemText +
+        " " +
+        cx({
+          [classes.itemTextMini]:
+            this.props.miniActive && this.state.miniActive,
+          [classes.itemTextMiniRTL]:
+            rtlActive && this.props.miniActive && this.state.miniActive,
+          [classes.itemTextRTL]: rtlActive
+        });
+      const collapseItemText =
+        classes.collapseItemText +
+        " " +
+        cx({
+          [classes.collapseItemTextMini]:
+            this.props.miniActive && this.state.miniActive,
+          [classes.collapseItemTextMiniRTL]:
+            rtlActive && this.props.miniActive && this.state.miniActive,
+          [classes.collapseItemTextRTL]: rtlActive
+        });
+      const itemIcon =
+        classes.itemIcon +
+        " " +
+        cx({
+          [classes.itemIconRTL]: rtlActive
+        });
+      return (
+        <ListItem
+          key={key}
+          className={cx(
+            { [classes.item]: prop.icon !== undefined },
+            { [classes.collapseItem]: prop.icon === undefined }
+          )}
+        >
+          <NavLink
+            to={prop.layout + prop.path}
+            className={cx(
+              { [navLinkClasses]: prop.icon !== undefined },
+              { [innerNavLinkClasses]: prop.icon === undefined }
+            )}
+          >
+            {prop.icon !== undefined ? (
+              typeof prop.icon === "string" ? (
+                <Icon className={itemIcon}>{prop.icon}</Icon>
+              ) : (
+                <div style={{ position: 'relative'}}>
+                  <prop.icon className={itemIcon} />
+                  { prop.extraIcon && <prop.extraIcon className={itemIcon} />}
+                </div>
+              )
+            ) : (
+              <span className={collapseItemMini}>
+                {rtlActive ? prop.rtlMini : prop.mini}
+              </span>
+            )}
+            <ListItemText
+              primary={rtlActive ? prop.rtlName : prop.name}
+              disableTypography={true}
+              className={cx(
+                { [itemText]: prop.icon !== undefined },
+                { [collapseItemText]: prop.icon === undefined }
+              )}
+            />
+          </NavLink>
+          <div className={ this.activeRoute(prop.path) ? `nav-div-active` : `` }></div>
+        </ListItem>
+      );
+    });
+  };
+
   // this function creates the links and collapses that appear in the sidebar (left menu)
   createLinks = routes => {
     const { classes, color, rtlActive } = this.props;
     return routes.map((prop, key) => {
-      if (prop.redirect) {
+      if (prop.redirect || prop.isFixed) {
         return null;
       }
       if (prop.collapse) {
@@ -310,6 +408,9 @@ class Sidebar extends React.Component {
     var links = (
       <List className={classes.list}>{this.createLinks(routes)}</List>
     );
+    var fixedLinks = (
+      <List className={classes.list}>{this.createFixedLinks(routes)}</List>
+    );
 
     const logoNormal =
       classes.logoNormal +
@@ -389,6 +490,7 @@ class Sidebar extends React.Component {
               // user={user}
               headerLinks={<AdminNavbarLinks rtlActive={rtlActive} />}
               links={links}
+              fixedLinks={fixedLinks}
             />
             {image !== undefined ? (
               <div
@@ -414,6 +516,7 @@ class Sidebar extends React.Component {
               className={sidebarWrapper}
               // user={user}
               links={links}
+              fixedLinks={fixedLinks}
             />
             {image !== undefined ? (
               <div
@@ -458,7 +561,8 @@ SidebarWrapper.propTypes = {
   className: PropTypes.string,
   user: PropTypes.object,
   headerLinks: PropTypes.object,
-  links: PropTypes.object
+  links: PropTypes.object,
+  fixedLinks: PropTypes.object
 };
 
 export default withStyles(sidebarStyle)(Sidebar);
