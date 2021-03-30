@@ -10,7 +10,6 @@ const styles = {
         borderBottom: "1px solid #ECEEF0"
     },
     select: {
-        width: 360,
         background: 'white',
         color: "#25345C",
         fontWeight: 700,
@@ -22,7 +21,7 @@ const styles = {
         "&:focus": {
             borderRadius: 12,
             background: 'white',
-            borderColor: "#25345C"
+            borderColor: "#B4B4B4"
         },
     },
     icon: {
@@ -57,20 +56,14 @@ const styles = {
             background: "#25345C",
             color: 'white'
         }
-    }
+    },
 }
 
 const useStyles = makeStyles(styles)
 
 const CustomSelect = (props) => {
-    const { values } = props
+    const { name, listValues, placeholder, selectValue, onChange } = props
     const classes = useStyles();
-
-    const [val, setVal] = useState(0);
-
-    const handleChange = (event) => {
-        setVal(event.target.value);
-    };
 
     const iconComponent = (props) => {
         return (
@@ -97,16 +90,21 @@ const CustomSelect = (props) => {
 
 
     return (
-        <FormControl className={classes.selectContainer}>
+        <FormControl className={classes.selectContainer} fullWidth >
             <Select
+                fullWidth
                 disableUnderline
                 classes={{ root: classes.select }}
                 MenuProps={menuProps}
                 IconComponent={iconComponent}
-                value={val}
-                onChange={handleChange}
+                value={selectValue}
+                onChange={onChange}
+                name={name}
             >
-                {values.map((value, i) => <MenuItem key={i} value={i}>{value}</MenuItem>)}
+                {selectValue === "none" && <option value="none" disabled style={{ display: "none" }} >
+                    {placeholder}
+                </option>}
+                {listValues.map((value, i) => <MenuItem key={i} value={i}>{value}</MenuItem>)}
             </Select>
         </FormControl>
     );
