@@ -12,6 +12,7 @@ import {
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import APITraffic from "./developer-metrics/APITraffic";
 import WebhookTraffic from "./developer-metrics/WebhookTraffic";
+import RequestDetails from "./developer-metrics/RequestDetails";
 
 
 const styles = {
@@ -96,11 +97,12 @@ export default function DeveloperMetrics() {
           <GridItem xs={12} sm={12} md={12}>
             <GridContainer className={classes.topHeader}>
               <GridItem xs={12} sm={12} md={12} xl={12} className={classes.topHeaderTitle}>
-                <RoundedTabs tabs={["API Traffic", "Webhook Traffic"]} tabValue={handleChangeTab}/>
+                <RoundedTabs tabs={["API Traffic", "Webhook Traffic", "Request Details"]} tabValue={handleChangeTab}/>
               </GridItem>
             </GridContainer>
             {value === 0 && <APITraffic />}
             {value === 1 && <WebhookTraffic />}
+            {value === 2 && <RequestDetails />}
           </GridItem>
         </GridContainer>
       </GridItem>
