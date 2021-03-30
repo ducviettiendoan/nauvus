@@ -179,7 +179,7 @@ class Sidebar extends React.Component {
               ) : (
                 <div style={{ position: 'relative'}}>
                   <prop.icon className={itemIcon} />
-                  { prop.extraIcon && <prop.extraIcon className={itemIcon} />}
+                  { prop.extraIcon && <prop.extraIcon className={itemIcon} style={{ position: "absolute", left: "6px", top: "2px" }} />}
                 </div>
               )
             ) : (
@@ -409,7 +409,7 @@ class Sidebar extends React.Component {
       <List className={classes.list}>{this.createLinks(routes)}</List>
     );
     var fixedLinks = (
-      <List className={classes.list}>{this.createFixedLinks(routes)}</List>
+      <List className={classes.list} style={{ marginTop: "5px"}}>{this.createFixedLinks(routes)}</List>
     );
 
     const logoNormal =

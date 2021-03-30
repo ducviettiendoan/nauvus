@@ -80,7 +80,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function RequestDetails() {
+export default function RequestDetails(props) {
   const classes = useStyles();
   return (
     <Card className={classes.card} testimonial>
@@ -92,6 +92,7 @@ export default function RequestDetails() {
               className="btn-round-white-3"
               startIcon={<ArrowBackIcon className={classes.buttonIcon}/>}
               style={{boxShadow: "none", paddingLeft: "0px"}}
+              onClick={ props.onBack }
             >
               Back
             </Button>

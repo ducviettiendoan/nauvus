@@ -2,6 +2,7 @@ import React from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "components/CustomButtons/Button";
+import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import CloseIcon from "components/Icons/CloseIcon";
 import SettingSearchBox from "components/SearchBox/SettingSearchBox";
 import FilterIcon from "components/Icons/FilterIcon";
@@ -246,25 +247,7 @@ export default function Users() {
               </Grid>
             </Grid>
             <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
-              <SettingSearchBox placeholder={"Search gateways"} />
-              <Button
-                color="white"
-                aria-label="edit"
-                justIcon
-                round
-                className={`btn-36 ${classes.moreAction} mr-2`}
-              >
-                <FilterIcon style={{ marginTop: 10, marginLeft: 7, color: "#25345C" }} />
-              </Button>
-              <Button
-                color="white"
-                aria-label="edit"
-                justIcon
-                round
-                className={`btn-36 ${classes.moreAction} mr-2`}
-              >
-                <DeleteIcon style={{ marginTop: 7, marginLeft: 6, color: "#25345C" }} />
-              </Button>
+              <ToolboxButton placeholder="Search for tag or email" showFilter showTrash />
             </Grid>
           </Grid>
         }

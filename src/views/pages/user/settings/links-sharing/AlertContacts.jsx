@@ -14,7 +14,7 @@ import {
 } from "assets/jss/material-dashboard-pro-react.js";
 import Button from "components/CustomButtons/Button.js";
 import { MoreHoriz } from "@material-ui/icons";
-import SettingSearchBox from "components/SearchBox/SettingSearchBox";
+import ToolboxButton from "components/CustomButtons/ToolboxButton";
 
 import EditIcon from "components/Icons/EditIcon";
 import DeleteIcon from "components/Icons/DeleteIcon";
@@ -188,7 +188,7 @@ export default function AlertContacts(props) {
                       2 contacts
                     </GridItem>
                     <GridItem xs={9} sm={9} md={9} className={classes.liveSharingButton}>
-                      <SettingSearchBox placeholder={"Search contacts"} />
+                      <ToolboxButton placeholder={"Search contacts"} />
                     </GridItem>
                   </GridContainer>
                 </CardBody>

@@ -85,24 +85,39 @@ const useStyles = makeStyles(styles);
 export default function DeveloperMetrics() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [isShowDetail, setIsShowDetail] = React.useState(false);
 
   const handleChangeTab = (newValue) => {
     setValue(newValue);
   };
+
+  const onShowDetail = () => {
+    setIsShowDetail(true);
+  }
+
+  const onBackApiTraffic = () => {
+    setValue(0);
+    setIsShowDetail(false);
+  }
 
   return (
     <GridContainer className="developer-metric-wrapper">
       <GridItem xs={12} sm={12} md={12}>
         <GridContainer>
           <GridItem xs={12} sm={12} md={12}>
-            <GridContainer className={classes.topHeader}>
-              <GridItem xs={12} sm={12} md={12} xl={12} className={classes.topHeaderTitle}>
-                <RoundedTabs tabs={["API Traffic", "Webhook Traffic", "Request Details"]} tabValue={handleChangeTab}/>
-              </GridItem>
-            </GridContainer>
-            {value === 0 && <APITraffic />}
-            {value === 1 && <WebhookTraffic />}
-            {value === 2 && <RequestDetails />}
+            { isShowDetail ?
+              <RequestDetails onBack={ onBackApiTraffic }  />
+            : 
+            <>
+              <GridContainer className={classes.topHeader}>
+                <GridItem xs={12} sm={12} md={12} xl={12} className={classes.topHeaderTitle}>
+                  <RoundedTabs tabs={["API Traffic", "Webhook Traffic"]} tabValue={handleChangeTab}/>
+                </GridItem>
+              </GridContainer>
+              {value === 0 && <APITraffic onShowDetail={ onShowDetail } />}
+              {value === 1 && <WebhookTraffic />}
+            </>
+            }
           </GridItem>
         </GridContainer>
       </GridItem>

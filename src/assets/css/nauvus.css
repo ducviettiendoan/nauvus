@@ -439,7 +439,7 @@
 
 .fixed-menu {
   position: sticky;
-  bottom: 8px;
+  bottom: 20px;
   width: 100%;
   z-index: 1000;
   background-color: white;
