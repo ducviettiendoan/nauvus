@@ -264,10 +264,10 @@ const styles = {
       backgroundColor: "unset"
     }
   },
-  chip: {
+  chips: {
     background: "#ECEEF0",
     color: "#25345C",
-    fontSize: 12,
+    fontSize: "12px",
     marginRight: 8
   },
   indeterminateIcon: {
@@ -482,7 +482,7 @@ export default function UserRoles() {
                                   deleteIcon={<CloseIcon/>}
                                   label={data.label}
                                   onDelete={handleDelete(data)}
-                                  className={classes.chip}
+                                  className={classes.chips}
                                 />
                               ))
                             }
