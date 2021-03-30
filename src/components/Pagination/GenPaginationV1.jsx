@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Select from "@material-ui/core/Select";
 import Pagination from '@material-ui/lab/Pagination';
 import PaginationItem from '@material-ui/lab/PaginationItem';
@@ -13,7 +13,8 @@ import ArrowDownIcon from "components/Icons/ArrowDownIcon";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    margin: 0
+    marginBottom: 20,
+    padding: "0 10px"
   },
   showText: {
     paddingRight: "36px",
@@ -48,7 +49,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "12px",
     height: '40px',
     width: "40px",
-    borderRadius: "50%"
+    borderRadius: "50%",
+    fontWeight: "bold"
   },
   iconButton: {
     height: '40px',
@@ -59,15 +61,43 @@ const useStyles = makeStyles((theme) => ({
 
 export default function GenPaginationV1(props) {
   const classes = useStyles();
-  // total, page, size
+
+  const [total, setTotal] = useState(props.total || 0);
+  const [current, setCurrent] = useState(props.current || 1);
+  const [pageSize, setPageSize] = useState(props.pageSize || 10);
+  const [showSizeChanger, setShowSizeChanger] = useState(props.showSizeChanger || false);
+  const [pageSizeOptions, setPageSizeOptions] = useState(props.pageSizeOptions || []);
+
+  const onChange = (event, page) => {
+    setCurrent(page);
+    if (props.onChange) {
+      props.onChange(event, page)
+    }
+  }
+
+  const onShowSizeChange = (event) => {
+    let value = event.target.value;
+    if (Math.ceil(total / value) < current) {
+      setCurrent(Math.ceil(total / value))
+    }
+    setPageSize(value)
+    if (props.onShowSizeChange) {
+      props.onShowSizeChange(value)
+    }
+  }
+
+  const startPage = pageSize * current - pageSize;
+  const endPage = pageSize * current > total ? total : pageSize * current;
+  const count = Math.ceil(total / pageSize);
   return (
     <>
       <Grid container className={classes.root} justify="space-between">
         <Grid item>
           <Pagination
             variant="outlined"
-            count={props.total}
-            defaultPage={1}
+            count={count}
+            page={current}
+            onChange={onChange}
             showFirstButton
             showLastButton
             renderItem={(item) => {
@@ -116,19 +146,19 @@ export default function GenPaginationV1(props) {
             }}
           />
         </Grid>
-        <Grid item>
-          <Grid container alignItems="center" >
-            <Grid item className={classes.showText}> Showing 1-6 of 50</Grid>
-            <Grid item>
-              <span className={classes.pageText}> Items per page: </span>
-              <Select className={classes.selectPage} native value="1">
-                <option value={1}>5</option>
-                <option value={2}>10</option>
-                <option value={3}>15</option>
-              </Select>
+        {showSizeChanger && (
+          <Grid item>
+            <Grid container alignItems="center" >
+              <Grid item className={classes.showText}> Showing {startPage}-{endPage} of {total}</Grid>
+              <Grid item>
+                <span className={classes.pageText}> Items per page: </span>
+                <Select className={classes.selectPage} onChange={onShowSizeChange} native value={pageSize}>
+                  {pageSizeOptions.map(page => <option value={page}>{page}</option>)}
+                </Select>
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        )}
       </Grid>
 
     </>
