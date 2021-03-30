@@ -1,6 +1,6 @@
 import React from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
 import FormatQuote from "@material-ui/icons/FormatQuote";
@@ -10,23 +10,24 @@ import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 
-import BootstrapTable from "react-bootstrap-table-next";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import GenPaginationV1 from "components/Pagination/GenPaginationV1";
-
-import Button from "components/CustomButtons/Button.js";
-import EditIcon from "components/Icons/EditIcon";
-import CloseIcon from "components/Icons/CloseIcon";
-import SettingSearchBox from "components/SearchBox/SettingSearchBox";
-import FilterIcon from "components/Icons/FilterIcon";
-
-import Chip from "@material-ui/core/Chip";
-
 import {
-    blackColor,
-    cardTitle, hexToRgb, primaryColor,
-    roseColor
+  blackColor,
+  cardTitle, hexToRgb, primaryColor,
+  roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
+import {Typography} from "@material-ui/core";
+import Button from "../../../../../../components/CustomButtons/Button";
+import AddOutlined from "@material-ui/icons/AddOutlined";
+import {MoreHoriz} from "@material-ui/icons";
+import CloseIcon from "../../../../../../components/Icons/CloseIcon";
+import SettingSearchBox from "../../../../../../components/SearchBox/SettingSearchBox";
+import FilterIcon from "../../../../../../components/Icons/FilterIcon";
+import DeleteIcon from "../../../../../../components/Icons/DeleteIcon";
+import ToolkitProvider from "react-bootstrap-table2-toolkit";
+import BootstrapTable from "react-bootstrap-table-next";
+import GenPaginationV1 from "../../../../../../components/Pagination/GenPaginationV1";
+import Chip from "@material-ui/core/Chip";
+import MoreIcon from "../../../../../../components/Icons/MoreIcon";
 
 const styles = {
   cardTitle,
@@ -78,37 +79,41 @@ const styles = {
     fontStyle: "italic",
     color: "#999999"
   },
-  
-  textVehicle: {
-    fontWeight: 'bold',
-    fontSize: '16px',
-    lineHeight: '24px',
-    marginTop: '14px',
-    color: '#25345C',
-    marginLeft: '24px'
+  moreAction: {
+    background: "#FFFFFF !important",
+    border: "1px solid #ECEEF0 !important"
   },
-  
-  textSub: {
-    fontWeight: '400',
-    fontSize: '16px',
-    lineHeight: '24px',
-    marginTop: '25px',
-    marginLeft: '24px',
-    color: "#25345C",
-  },
-  fuelTypeTitle: {
+  userRolesTitle: {
     fontSize: 16,
     color: "#25345C",
     fontWeight: 700,
     paddingRight: "8px !important"
   },
+  selected: {
+    height: 24,
+    width: "auto",
+    background: "#ECEEF0 !important",
+    borderRadius: 28,
+    color: "#25345C !important",
+    display: "flex",
+    alignItems: "center",
+  },
+  clearAll: {
+    textTransform: 'none',
+    color: "#8097D8",
+    background: "unset !important",
+    boxShadow: "unset !important",
+    fontSize: 14,
+    fontWeight: 700,
+    padding: 0,
+    "&:hover": {
+      color: "#25345C"
+    }
+  },
   chipSelected: {
     display: "flex",
     alignItems: "center",
-    paddingLeft: "0px !important",
-    color: "#25345C !important",
-    fontWeight: "400 !important",
-    fontSize: "12px !important",
+    paddingLeft: "0px !important"
   },
   headContainer: {
     alignItems: "center",
@@ -124,17 +129,48 @@ const styles = {
       marginRight: 8
     }
   },
-  clearAll: {
-    color: "#8097D8",
-    background: "unset !important",
-    boxShadow: "unset !important",
-    fontSize: 14,
+  textName: {
+    fontWeight: 'bold',
+    fontSize: '16px',
+    lineHeight: '24px',
+    marginTop: '14px',
+    color: '#25345C',
+    marginLeft: '24px',
+    paddingTop: '12px !important'
+  },
+  textSub: {
+    fontWeight: 400,
+    fontSize: '16px',
+    lineHeight: '24px',
+    marginTop: '14px',
+    marginLeft: '24px',
+    paddingTop: '12px !important',
+    color: '#25345C',
+  },
+  textTags: {
+    fontSize: '14px',
+    lineHeight: '24px',
+    marginTop: '16px',
+    marginBottom: '15px',
+    marginLeft: '24px',
+    padding: "12px 14px",
+    color: "#27AE60",
+    background: "rgba(39, 174, 96, 0.1)",
+    borderRadius: 23,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
     fontWeight: 700,
-    padding: 0,
-    "&:hover": {
-      color: "#25345C"
-    },
-    textTransform: "none !important",
+    width: 71,
+    height: "41px"
+  },
+  actionButton: {
+    paddingTop: '12px !important',
+  },
+  iconButton: {
+    '&:hover': {
+      color: '#25345C !important',
+    }
   },
   chip: {
     background: "#ECEEF0",
@@ -142,11 +178,6 @@ const styles = {
     fontSize: 12,
     marginRight: 8
   },
-  moreAction: {
-    background: "#FFFFFF !important",
-    border: "1px solid #ECEEF0 !important"
-  },
-  
   indeterminateIcon: {
     width: 20,
     height: 20
@@ -156,62 +187,86 @@ const styles = {
     height: 20,
     marginTop: 30,
     marginLeft: 12
-  },
-  selected: {
-    height: 24,
-    width: "auto",
-    background: "#ECEEF0 !important",
-    borderRadius: 28,
-    color: "#25345C !important",
-    display: "flex",
-    alignItems: "center",
-  },
-
-  checkedIcon: {
-    width: "20px",
-    height: "20px",
-    border: "1px solid rgba(" + hexToRgb(blackColor) + ", .54)",
-    borderRadius: "3px"
-  },
-  uncheckedIcon: {
-    width: "0px",
-    height: "0px",
-    padding: "9px",
-    border: "1px solid rgba(" + hexToRgb(blackColor) + ", .54)",
-    borderRadius: "3px"
-  },
-  checked: {
-    color: primaryColor[0] + "!important"
-  },
-  checkRoot: {
-    padding: "0px",
-    "&:hover": {
-      backgroundColor: "unset"
-    }
-  },
-
-  
+  }
 };
-
-const dumpData = [
-    { vehicle101: 'vehicle 101', year: "2017", make: 'FORD', model: "Fusion", ifta: "M85" },
-    { vehicle101: 'vehicle 101', year: "2017", make: 'FORD', model: "Fusion", ifta: "M85" },
-    { vehicle101: 'vehicle 101', year: "2017", make: 'FORD', model: "Fusion", ifta: "M85" },
-    { vehicle101: 'vehicle 101', year: "2017", make: 'FORD', model: "Fusion", ifta: "M85" },
-    { vehicle101: 'vehicle 101', year: "2017", make: 'FORD', model: "Fusion", ifta: "M85" },
-    { vehicle101: 'vehicle 101', year: "2017", make: 'FORD', model: "Fusion", ifta: "M85" },
-  
-  ];
 
 const useStyles = makeStyles(styles);
 
-export default function VehicleFuelTypes() {
+const dumpData = [
+  {
+    id: 1,
+    name: 'Brooklyn Simmons',
+    username: 'greenkoala518',
+    tags: 'Status',
+    peerGroup: "Group 12",
+    phone: "(208) 555-0112",
+    dlState: "Maine",
+    dlNumber: "558612",
+  },
+  {
+    id: 2,
+    name: 'Brooklyn Simmons',
+    username: 'greenkoala518',
+    tags: 'Status',
+    peerGroup: "Group 12",
+    phone: "(208) 555-0112",
+    dlState: "Maine",
+    dlNumber: "558612",
+  },
+  {
+    id: 3,
+    name: 'Brooklyn Simmons',
+    username: 'greenkoala518',
+    tags: 'Status',
+    peerGroup: "Group 12",
+    phone: "(208) 555-0112",
+    dlState: "Maine",
+    dlNumber: "558612",
+  },
+  {
+    id: 4,
+    name: 'Brooklyn Simmons',
+    username: 'greenkoala518',
+    tags: 'Status',
+    peerGroup: "Group 12",
+    phone: "(208) 555-0112",
+    dlState: "Maine",
+    dlNumber: "558612",
+  },
+  {
+    id: 5,
+    name: 'Brooklyn Simmons',
+    username: 'greenkoala518',
+    tags: 'Status',
+    peerGroup: "Group 12",
+    phone: "(208) 555-0112",
+    dlState: "Maine",
+    dlNumber: "558612",
+  },
+  {
+    id: 6,
+    name: 'Brooklyn Simmons',
+    username: 'greenkoala518',
+    tags: 'Status',
+    peerGroup: "Group 12",
+    phone: "(208) 555-0112",
+    dlState: "Maine",
+    dlNumber: "558612",
+  },
+];
+
+export default function ActiveDrivers() {
   const classes = useStyles();
+
   const [value, setValue] = React.useState(0);
 
+  const handleChangeTab = (newValue) => {
+    setValue(newValue);
+  };
+
   const [chipData, setChipData] = React.useState([
-    {key: 0, label: 'Fusion'},
-    {key: 1, label: 'FORD'},
+    {key: 0, label: 'Standard Admin'},
+    {key: 1, label: 'Full admin'},
   ]);
 
   const handleDelete = (chipToDelete) => () => {
@@ -222,31 +277,43 @@ export default function VehicleFuelTypes() {
     setChipData([])
   }
 
-  const formatVehicle101 = (cell, row) => {
+  const formatName = (cell, row) => {
     return <>
-      <div className={classes.textVehicle}>{cell}</div>
+      <div className={classes.textName}>{cell}</div>
     </>
   }
 
-  const formatYear = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatMake = (cell, row) => {
+  const formatUserName = (cell, row) => {
     return <>
       <div className={classes.textSub}>{cell}</div>
     </>
   }
 
-  const formatModel = (cell, row) => {
+  const formatTags = (cell, row) => {
+    return <>
+      <div className={classes.textTags}>{cell}</div>
+    </>
+  }
+
+  const formatPeerGroup = (cell, row) => {
     return <>
       <div className={classes.textSub}>{cell}</div>
     </>
   }
 
-  const formatIFTA = (cell, row) => {
+  const formatPhone = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+  const formatDLState = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+  const formatDLNumber = (cell, row) => {
     return <>
       <div className={classes.textSub}>{cell}</div>
     </>
@@ -255,8 +322,11 @@ export default function VehicleFuelTypes() {
   const addActionButton = () => {
     return (
       <div className={classes.actionButton}>
-        <Button justIcon color="twitter" simple>
-          <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+        <Button justIcon color="google" simple>
+          <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
+        </Button>
+        <Button justIcon color="google" simple>
+          <MoreIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
         </Button>
       </div>
     )
@@ -282,19 +352,19 @@ export default function VehicleFuelTypes() {
     )
 
   };
+
   return (
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
-              <Card testimonial>
-                <CardBody>
-                    
-                <GridContainer>
+                <Card testimonial>
+                  <CardBody>
+                    <GridContainer>
                       <GridItem xs={12} sm={12} md={6}>
                         <GridContainer className={classes.headContainer}>
-                          <GridItem xl={2} className={classes.fuelTypeTitle}>
+                          <GridItem xl={2} className={classes.userRolesTitle}>
                             {chipData.length} selected for
                           </GridItem>
                           <GridItem xl={10} className={classes.chipSelected}>
@@ -332,45 +402,62 @@ export default function VehicleFuelTypes() {
                         >
                           <FilterIcon style={{marginTop: 10, marginLeft: 7, color: "#25345C"}}/>
                         </Button>
+                        <Button
+                          color="white"
+                          aria-label="edit"
+                          justIcon
+                          round
+                          className={`btn-36 ${classes.moreAction} mr-2`}
+                        >
+                          <DeleteIcon style={{marginTop: 7, marginLeft: 6, color: "#25345C"}}/>
+                        </Button>
                       </GridItem>
                     </GridContainer>
-                </CardBody>
-
-                <ToolkitProvider
+                  </CardBody>
+                  <ToolkitProvider
                     data={dumpData}
-                    keyField="_id"
+                    // keyField="_id"
                     columns={[
                       {
-                        dataField: "vehicle101",
-                        text: "Vehicle 101",
-                        formatter: formatVehicle101
+                        dataField: "name",
+                        text: "Name",
+                        formatter: formatName
                       },
                       {
-                        dataField: "year",
-                        text: "Year",
-                        formatter: formatYear
+                        dataField: "username",
+                        text: "Username",
+                        formatter: formatUserName
                       },
                       {
-                        dataField: "make",
-                        text: "Make",
-                        formatter: formatMake
+                        dataField: "tags",
+                        text: "Tags",
+                        formatter: formatTags
                       },
                       {
-                        dataField: "model",
-                        text: "Model",
-                        formatter: formatModel
+                        dataField: "peerGroup",
+                        text: "Peer Group",
+                        formatter: formatPeerGroup
                       },
                       {
-                        dataField: "ifta",
-                        text: "IFTA Fuel Type",
-                        formatter: formatIFTA
+                        dataField: "phone",
+                        text: "Phone",
+                        formatter: formatPhone
                       },
                       {
-                        dataField: "actions",
-                        text: "Actions",
+                        dataField: "dlState",
+                        text: "DL State",
+                        formatter: formatDLState
+                      },
+                      {
+                        dataField: "dlNumber",
+                        text: "DL Number",
+                        formatter: formatDLNumber
+                      },
+                      {
+                        dataField: "action",
+                        text: "Action",
                         formatter: addActionButton
-                      },
-
+                      }
                     ]}
                   >
                     {props => (
@@ -386,11 +473,10 @@ export default function VehicleFuelTypes() {
                       </div>
                     )}
                   </ToolkitProvider>
-              </Card>
-              
-        <GenPaginationV1 total={29} page={1} size={10}/>
+                </Card>
             </GridItem>
           </GridContainer>
+          <GenPaginationV1 total={29} page={1} size={10}/>
         </GridItem>
       </GridContainer>
     </div>

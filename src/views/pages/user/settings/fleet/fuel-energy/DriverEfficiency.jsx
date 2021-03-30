@@ -1,6 +1,6 @@
 import React from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
 import FormatQuote from "@material-ui/icons/FormatQuote";
@@ -72,7 +72,6 @@ const styles = {
     fontStyle: "italic",
     color: "#999999"
   },
-  
   textSub: {
     fontWeight: '400',
     fontSize: '16px',
@@ -81,21 +80,24 @@ const styles = {
     marginLeft: '24px',
     color: "#25345C",
   },
-  
   topHeaderButton: {
     textAlign: "right",
-    marginTop: -50
+    marginTop: -50,
+    paddingRight: "0px !important"
+  },
+  actionButton: {
+    paddingTop: '12px !important',
   },
 };
 
 const dumpData = [
-    { nameProfiles: 'Default organization profile', vehicles: "1 Vehicle" },
-    { nameProfiles: 'Default organization profile', vehicles: "1 Vehicle" },
-    { nameProfiles: 'Default organization profile', vehicles: "1 Vehicle" },
-    { nameProfiles: 'Default organization profile', vehicles: "1 Vehicle" },
-    { nameProfiles: 'Default organization profile', vehicles: "1 Vehicle" },
-  
-  ];
+  {nameProfiles: 'Default organization profile', vehicles: "1 Vehicle"},
+  {nameProfiles: 'Default organization profile', vehicles: "1 Vehicle"},
+  {nameProfiles: 'Default organization profile', vehicles: "1 Vehicle"},
+  {nameProfiles: 'Default organization profile', vehicles: "1 Vehicle"},
+  {nameProfiles: 'Default organization profile', vehicles: "1 Vehicle"},
+
+];
 
 const useStyles = makeStyles(styles);
 
@@ -118,9 +120,9 @@ export default function DriverEfficiency() {
 
   const addActionButton = () => {
     return (
-      <div className={classes.actionIcon}>
+      <div className={classes.actionButton}>
         <Button justIcon color="twitter" simple>
-          <EditIcon className={classes.iconButton} style={{ color: "#ffffff", width: '22px', height: '22px' }} />
+          <EditIcon style={{color: "#ffffff", width: '22px', height: '22px'}}/>
         </Button>
       </div>
     )
@@ -131,59 +133,57 @@ export default function DriverEfficiency() {
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
-            <GridItem xs={12} sm={12} md={12} xl={12} className={classes.topHeaderButton}>
-                  <Button
-                    round
-                    className="btn-round-active mr-2"
-                    startIcon={<AddOutlined/>}
-                  >
-                    Create profile
-                  </Button>
-                  <Button
-                    round
-                    className="btn-round-gray mr-4"
-                    startIcon={<AddOutlined/>}
-                  >
-                    Essign vehicle
-                  </Button>
-                </GridItem>
+              <GridItem xs={12} sm={12} md={12} xl={12} className={classes.topHeaderButton}>
+                <Button
+                  round
+                  className="btn-round-active mr-2"
+                  startIcon={<AddOutlined/>}
+                >
+                  Create profile
+                </Button>
+                <Button
+                  round
+                  className="btn-round-gray"
+                  startIcon={<AddOutlined/>}
+                >
+                  Essign vehicle
+                </Button>
+              </GridItem>
               <Card testimonial>
-              
-
                 <ToolkitProvider
-                    data={dumpData}
-                    keyField="_id"
-                    columns={[
-                      {
-                        dataField: "nameProfiles",
-                        text: "Name Profiles",
-                        formatter: formatNameProfiles
-                      },
-                      {
-                        dataField: "vehicles",
-                        text: "Vehicles",
-                        formatter: formatVehicles
-                      },
-                      {
-                        dataField: "actions",
-                        text: "Actions",
-                        formatter: addActionButton
-                      },
+                  data={dumpData}
+                  keyField="_id"
+                  columns={[
+                    {
+                      dataField: "nameProfiles",
+                      text: "Name Profiles",
+                      formatter: formatNameProfiles
+                    },
+                    {
+                      dataField: "vehicles",
+                      text: "Vehicles",
+                      formatter: formatVehicles
+                    },
+                    {
+                      dataField: "actions",
+                      text: "Actions",
+                      formatter: addActionButton
+                    },
 
-                    ]}
-                  >
-                    {props => (
-                      <div className="table table-settings">
-                        <BootstrapTable
-                          {...props.baseProps}
-                          bootstrap4={true}
-                          bordered={false}
-                        />
+                  ]}
+                >
+                  {props => (
+                    <div className="table table-settings">
+                      <BootstrapTable
+                        {...props.baseProps}
+                        bootstrap4={true}
+                        bordered={false}
+                      />
 
-                      </div>
-                    )}
-                  </ToolkitProvider>
-                
+                    </div>
+                  )}
+                </ToolkitProvider>
+
               </Card>
             </GridItem>
           </GridContainer>

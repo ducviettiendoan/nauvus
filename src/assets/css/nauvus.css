@@ -7,6 +7,9 @@
 .w-98 {
   width: 98px !important;
 }
+.w-88 {
+  width: 88px !important;
+}
 .w-56 {
   width: 56px !important;
 }
@@ -80,6 +83,8 @@
   font-style: normal!important;
   font-weight: bold!important;
   color: #25345C!important;
+  box-shadow: none !important;
+  border: 1px solid #ECEEF0 !important;
 }
 
 .btn-round-white-2 {

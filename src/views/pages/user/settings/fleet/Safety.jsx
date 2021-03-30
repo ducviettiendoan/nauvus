@@ -16,9 +16,9 @@ import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import EditIcon from "components/Icons/EditIcon";
 import {Typography} from "@material-ui/core";
 import PropTypes from "prop-types";
-import SafetyScore from "./components/SafetyScore"
-import SafetyHarshEvents from "./components/SafetyHarshEvents"
-import SafetyEventDetection from "./components/SafetyEventDetection"
+import SafetyScore from "./safety/SafetyScore"
+import SafetyHarshEvents from "./safety/SafetyHarshEvents"
+import SafetyEventDetection from "./safety/SafetyEventDetection"
 import FormatQuote from "@material-ui/icons/FormatQuote";
 import CardBody from "components/Card/CardBody";
 import CardFooter from "components/Card/CardFooter";
