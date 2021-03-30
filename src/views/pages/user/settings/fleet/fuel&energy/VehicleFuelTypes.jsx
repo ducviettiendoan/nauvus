@@ -105,7 +105,10 @@ const styles = {
   chipSelected: {
     display: "flex",
     alignItems: "center",
-    paddingLeft: "0px !important"
+    paddingLeft: "0px !important",
+    color: "#25345C !important",
+    fontWeight: "400 !important",
+    fontSize: "12px !important",
   },
   headContainer: {
     alignItems: "center",
@@ -130,7 +133,8 @@ const styles = {
     padding: 0,
     "&:hover": {
       color: "#25345C"
-    }
+    },
+    textTransform: "none !important",
   },
   chip: {
     background: "#ECEEF0",
@@ -185,6 +189,7 @@ const styles = {
       backgroundColor: "unset"
     }
   },
+
   
 };
 
