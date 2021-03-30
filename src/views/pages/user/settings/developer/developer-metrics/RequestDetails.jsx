@@ -9,7 +9,6 @@ import GridItem from "../../../../../../components/Grid/GridItem";
 import {TextField} from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import Grid from "@material-ui/core/Grid";
 const styles = {
     card: {
       minHeight: "70vh"
@@ -76,27 +75,28 @@ const styles = {
         marginTop: "16px",
         marginBottom: "26px",
     },
-
+    grid: {
+        padding: "0!important"
+    }
 };
 
 const useStyles = makeStyles(styles);
 
 export default function RequestDetails() {
     const classes = useStyles();
-
     return (
         <Card className={classes.card} testimonial>
             <CardBody>
                 <CardBody>
                     <h4 className={classes.cardItemHeaderLeft}>Request Details</h4>
-                    <Grid item className={classes.backButtonWrapper}>
+                    <div className={classes.backButtonWrapper}>
                         <Button className={classes.backButton}>
                             <ArrowBackIosIcon className={classes.buttonIcon}/>
                             Back
                         </Button>
-                    </Grid>
+                    </div>
                     <GridContainer>
-                <GridItem xs={6}>
+                <GridItem xs={12} sm={6} md={4}>
                     <TextField
                         id="standard-full-width1"
                         label="Request URL"
@@ -112,7 +112,7 @@ export default function RequestDetails() {
                         }}
                     />
                 </GridItem>
-                <GridItem xs={6}>
+                <GridItem xs={12} sm={6} md={4}>
                     <TextField
                         id="standard-full-width2"
                         label="Request Time"
@@ -128,7 +128,8 @@ export default function RequestDetails() {
                         }}
                     />
                 </GridItem>
-                <GridItem xs={6}>
+                <GridItem className={classes.grid} xs={0} md={4}></GridItem>
+                <GridItem xs={12} sm={6} md={4}>
                     <TextField
                         id="standard-full-width3"
                         label="Api Token Name"
@@ -144,7 +145,7 @@ export default function RequestDetails() {
                         }}
                     />
                 </GridItem>
-                <GridItem xs={6}>
+                <GridItem xs={12} sm={6} md={4}>
                     <TextField
                         id="standard-full-width4"
                         label="Api Token Version"
@@ -160,7 +161,8 @@ export default function RequestDetails() {
                         }}
                     />
                 </GridItem>
-                <GridItem xs={6}>
+                <GridItem className={classes.grid} xs={0} md={4}></GridItem>
+                <GridItem xs={12} sm={6} md={4}>
                     <TextField
                         id="standard-full-width5"
                         label="Request Duration"
@@ -176,7 +178,7 @@ export default function RequestDetails() {
                         }}
                     />
                 </GridItem>
-                <GridItem xs={6}>
+                <GridItem xs={12} sm={6} md={4}>
                     <TextField
                         id="standard-full-width6"
                         label="Status Code"
@@ -192,7 +194,8 @@ export default function RequestDetails() {
                         }}
                     />
                 </GridItem>
-                <GridItem xs={6}>
+                <GridItem className={classes.grid} xs={0} md={4}></GridItem>
+                <GridItem xs={12} sm={6} md={4}>
                     <TextField
                         id="standard-full-width7"
                         label="Request Body"
@@ -208,17 +211,13 @@ export default function RequestDetails() {
                         }}
                     />
                 </GridItem>
-
-
                 <GridItem xs={12}>
                     <h4 className={classes.cardItemHeaderLeftSecond}>Response Body</h4>
-                    <p className={classes.requestBody}>Here will be the code</p>
+                    <div className={classes.requestBody}>Here will be the code</div>
                 </GridItem>
             </GridContainer>
-
                 </CardBody>
             </CardBody>
-
         </Card>
     );
 }
