@@ -8,7 +8,6 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
 
 import { Divider,Typography  } from "@material-ui/core";
 
@@ -63,7 +62,11 @@ const styles = {
     display: 'flex', 
     justifyContent: "flex-end", 
     alignItems: "center",
-    
+  },
+  departureContent: {
+    display: 'flex',
+    justifyContent: "center",
+    alignItems: "center",
   },
 
 
@@ -174,7 +177,7 @@ export default function Dispatch() {
                 </GridItem>                           
                 <GridItem className={classes.cardMultipleContent} xs={12} sm={12} md={12} >
                     <GridItem xs={12} sm={12} md={12} className={classes.gridContent}>
-                      <GridItem className={classes.cardItem} xs={8} sm={8} md={8}>
+                      <GridItem className={classes.cardItem} xs={7} sm={7} md={7}>
                         <GridItem className={classes.headerItem}>
                         Default Route Stop Time
                         </GridItem>
@@ -182,40 +185,45 @@ export default function Dispatch() {
                         Set the default amount of time at a stop, which will automatically determine the stop's scheduled departure time.
                         </GridItem>
                       </GridItem>
-                      <GridItem xs={4} sm={4} md={4} >
-                        <GridContainer className={classes.rightSideContent}>                      
-                          <Typography> 
-                            Default stop time
-                          </Typography>
-                          <GridItem xs={2}></GridItem>
-                        </GridContainer>
+                      <GridItem xs={5} sm={5} md={5} >
                         <GridContainer>
-                          <GridItem xs={8} className={classes.rightSideContent}>
-                              {/* <TextField id="outlined-basic" variant="outlined" style={{width: '55px', marginRight:"10px"}}/> */}
-                              <CustomInput
+                          <GridItem xs={6}>
 
-                                formControlProps={{
-                                  className: classes.searchButton
-                                }}
-                                inputProps={{
-                                  disableUnderline: true,
-                                  className: classes.inputField
-                                }}
-                              />
-                              <div className={classes.boxGap}>h</div>
                           </GridItem>
-                          <GridItem xs={4} className={classes.rightSideContent}>
-                            <CustomInput
+                          <GridItem xs={6}>
+                            <GridContainer className={classes.departureContent}>
+                              <Typography>
+                                Default stop time
+                              </Typography>
+                            </GridContainer>
+                            <GridContainer>
+                              <GridItem xs={6} className={classes.rightSideContent}>
+                                {/* <TextField id="outlined-basic" variant="outlined" style={{width: '55px', marginRight:"10px"}}/> */}
+                                <CustomInput
+                                  formControlProps={{
+                                    className: classes.searchButton
+                                  }}
+                                  inputProps={{
+                                    disableUnderline: true,
+                                    className: classes.inputField
+                                  }}
+                                />
+                                <div className={classes.boxGap}>h</div>
+                              </GridItem>
+                              <GridItem xs={6} className={classes.rightSideContent}>
+                                <CustomInput
 
-                                formControlProps={{
-                                  className: classes.searchButton
-                                }}
-                                inputProps={{
-                                  disableUnderline: true,
-                                  className: classes.inputField
-                                }}
-                              />
-                            <div className={classes.boxGap}>min</div>
+                                  formControlProps={{
+                                    className: classes.searchButton
+                                  }}
+                                  inputProps={{
+                                    disableUnderline: true,
+                                    className: classes.inputField
+                                  }}
+                                />
+                                <div className={classes.boxGap}>min</div>
+                              </GridItem>
+                            </GridContainer>
                           </GridItem>
                         </GridContainer>
                       </GridItem>
@@ -270,11 +278,10 @@ export default function Dispatch() {
                         </GridContainer>
                         </GridItem>
                         <GridItem xs={6}>
-                        <GridContainer className={classes.rightSideContent}>
+                        <GridContainer className={classes.departureContent}>
                           <Typography> 
                           Departure threshold
                           </Typography>
-                          <GridItem xs={4}></GridItem>
                         </GridContainer>
                         <GridContainer>
                           <GridItem xs={6} className={classes.rightSideContent}>
