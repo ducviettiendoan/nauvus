@@ -85,7 +85,6 @@ export default function SafetyEventDetection() {
                 <GridItem className={classes.headerItem}>
                   AI Event Detection (No compatible hardware connected)
                 </GridItem>
-                <CustomSwitch checked={checkedState.checkedA} onChange={handleChange} name="checkedA" />
               </GridItem>
               <GridItem className={classes.contentItem}>
                 Only available in vehicles installed with dash cam models CM31 and CM32. To learn more about Samsara's internet-connected dash cams, 
@@ -94,6 +93,7 @@ export default function SafetyEventDetection() {
               <GridItem className={classes.footerItem}>Navus website</GridItem>
               <Divider variant="fullWidth" light />
             </CardBody>
+            <CustomSwitch checked={checkedState.checkedA} onChange={handleChange} name="checkedA" />
           </GridItem>
 
           <GridItem xs={12} sm={8} md={8} className={classes.gridContent}>
@@ -102,7 +102,6 @@ export default function SafetyEventDetection() {
                 <GridItem className={classes.headerItem}>
                   Rolling Stop Detection (No compatible hardware connected)
                 </GridItem>
-                <CustomSwitch checked={checkedState.checkedB} onChange={handleChange} name="checkedB" />
               </GridItem>
               <GridItem className={classes.contentItem}>
                 Only available in vehicles installed with dash cam models CM31 and CM32. To learn more about Samsara's internet-connected dash cams, 
@@ -111,6 +110,7 @@ export default function SafetyEventDetection() {
               <GridItem className={classes.footerItem}>Navus website</GridItem>
               <Divider variant="fullWidth" light />
             </CardBody>
+            <CustomSwitch checked={checkedState.checkedB} onChange={handleChange} name="checkedB" />
           </GridItem>
         </GridItem>
 

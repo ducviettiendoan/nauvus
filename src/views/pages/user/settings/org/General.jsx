@@ -40,7 +40,8 @@ const styles = {
     margin: "16px 7px 16px 16px",
   },
   areaGrow: {
-    flexGrow: "1"
+    flexGrow: "1",
+    marginRight: "59px"
   },
   areaMenu: {
     width: "237px"

@@ -108,7 +108,7 @@ export default function GeneralOrganization() {
     <>
       <OrganizationUpload />
       <div>
-        <Row style={{marginTop: '20px', paddingRight: '16px'}}>
+        <Row style={{marginTop: '20px'}}>
           <Col>
             <TextField
               id="standard-full-width"
