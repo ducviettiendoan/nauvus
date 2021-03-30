@@ -4,21 +4,12 @@ import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
 // core components
-import PropTypes from 'prop-types';
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import TableComponent from "components/Table/CustomTable"
 import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
-import {Tab, Tabs, Typography} from "@material-ui/core";
-import Button from "components/CustomButtons/Button.js";
-import SettingSearchBox from "components/SearchBox/SettingSearchBox";
-import BootstrapTable from "react-bootstrap-table-next";
-import {Row} from "reactstrap";
 import FormatQuote from "@material-ui/icons/FormatQuote";
 import CardFooter from "../../../../../../components/Card/CardFooter";
 
@@ -114,12 +105,6 @@ const useStyles = makeStyles(styles);
 
 export default function DriverAppRoutes() {
   const classes = useStyles();
-
-  const [value, setValue] = React.useState(0);
-
-  const handleChangeTab = (newValue) => {
-    setValue(newValue);
-  };
 
   return (
     <Card testimonial>

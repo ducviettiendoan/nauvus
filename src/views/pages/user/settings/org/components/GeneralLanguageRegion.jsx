@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 // core components
-import TextField from '@material-ui/core/TextField';
-
+import GridItem from "components/Grid/GridItem.js";
 import { Row, Col } from "reactstrap";
-import OrganizationUpload from "components/CustomUpload/OrganizationUpload";
+import CustomSelect from "components/CustomSelect/CustomSelect"
 
 const styles = {
   cardContainer: {
@@ -15,88 +14,21 @@ const styles = {
   },
   contentContainer: {
     display: "flex",
-    margin: "16px 7px 16px 16px",
-  },
-  areaGrow: {
-    flexGrow: "1"
+    margin: "16px 7px 16px 16px !important",
   },
   areaMenu: {
     width: "237px"
   },
-  testimonialIcon: {
-    color: "red",
-    marginTop: "30px",
-    "& svg": {
-      width: "20px",
-      height: "20px"
-    }
-  },
-  footer: {
-    position: 'absolute',
-    bottom: '16px',
-    width: '100%'
-  },
-
-  icons: {
-    width: "22px",
-    height: "22px",
+  vehicleHeader: {
+    width: "78px",
+    height: "21px",
+    fontFamily: "Lato",
+    fontStyle: "normal",
+    fontWeight: "normal",
+    fontSize: "14px",
+    lineHeight: "21px",
     color: "#C4C4C4",
-    "&:hover": {
-        color: "#25345C"
-    }
-  },
-  root: {
-      width: '100%',
-      alignItems: "center",
-      width: "237px",
-      background: "#FFFFFF",
-      border: "1px solid #ECEEF0",
-      boxSizing: "border-box",
-      borderRadius: "12px",
-      paddingTop: '0px',
-      paddingBottom: '0px'
-  },
-  itemTextRoot: {
-      marginTop: '-6px'
-  },
-  primaryText: {
-      fontFamily: "Lato",
-      fontWeight: "bold",
-      fontSize: "14px",
-      lineHeight: "17px",
-      color: "#25345C",
-  },
-  secondaryText: {
-      fontFamily: "Lato",
-      fontWeight: "normal",
-      fontSize: "12px",
-      lineHeight: "18px",
-      color: "#C4C4C4",
-  },
-  iconRoot: {
-      marginTop: "-8px",
-      marginLeft: "-5px",
-      minWidth: "29px",
-  },
-  listItemButton: {
-      "&:hover": {
-          background: 'none !important'
-      }
-  },
-  listItemRoot: {
-    paddingTop: '20px'
-  },
-  textFieldRoot: {
-    fontWeight: 'normal',
-    fontSize: '14px',
-    lineHeight: '21px',
-    color: '#C4C4C4'
-  },
-  textInputRoot: {
-    fontWeight: 'bold',
-    fontSize: '14px',
-    lineHeight: '21px',
-    color: '#25345C'
+    padding: "0px 0px 0px 0px !important",
   }
 };
 
@@ -104,42 +36,35 @@ const useStyles = makeStyles(styles);
 
 export default function GeneralLanguageRegion() {
   const classes = useStyles();
+
+  const [selectValue, setSelectValue] = useState({
+    selectA: "none",
+    selectB: "none",
+    selectC: "none",
+  });
+
+  const handleChange = (event) => {
+    setSelectValue({ ...selectValue, [event.target.name]: event.target.value })
+  }
+
   return (
     <>
       <div>
-        <Row style={{marginTop: '20px', paddingRight: '16px'}}>
-          <Col>
-            <TextField
-              id="standard-full-width"
-              label="Organisation name"
-              placeholder="Global Company"
-              fullWidth
-              margin="normal"
-              InputLabelProps={{
-                shrink: true,
-                classes: { root: classes.textFieldRoot }
-              }}
-              InputProps={{
-                classes: { input: classes.textInputRoot }
-              }}
-            />
-          </Col>
-          <Col>
-            <TextField
-                id="standard-full-width1"
-                label="Driver Fleet ID"
-                placeholder="Driver Fleet ID"
-                fullWidth
-                margin="normal"
-                InputLabelProps={{
-                  shrink: true,
-                  classes: { root: classes.textFieldRoot }
-                }}
-                InputProps={{
-                  classes: { input: classes.textInputRoot }
-                }}
-              />
-          </Col>
+        <Row style={{ marginTop: '20px', display: "flex", justifyContent: "space-between" }} xs={12} sm={12} md={12} >
+          <GridItem xs={12} sm={12} md={6}>
+            <GridItem className={classes.vehicleHeader}>Locate</GridItem>
+            <CustomSelect name="selectA" listValues={["New York", "Ohio", "Texas"]} placeholder={"Select Locate"} selectValue={selectValue.selectA} onChange={handleChange} />
+          </GridItem>
+          <GridItem xs={12} sm={12} md={6}>
+            <GridItem className={classes.vehicleHeader}>Timezone</GridItem>
+            <CustomSelect name="selectB" listValues={["UTC -4", "UTC -5", "UTC -6"]} placeholder={"Select Timezone"} selectValue={selectValue.selectB} onChange={handleChange} />
+          </GridItem>
+        </Row>
+        <Row style={{ marginTop: '20px', display: "flex", justifyContent: "space-between" }} xs={12} sm={12} md={12} >
+          <GridItem xs={12} sm={12} md={6}>
+            <GridItem className={classes.vehicleHeader}>Language</GridItem>
+            <CustomSelect name="selectC" listValues={["English", "Chinese", "Japanese"]} placeholder={"Select Language"} selectValue={selectValue.selectC} onChange={handleChange} />
+          </GridItem>
         </Row>
       </div>
     </>

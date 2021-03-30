@@ -5,28 +5,21 @@ import FormatQuote from "@material-ui/icons/FormatQuote";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
 import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
-import RoundedTabs from "../../../../../components/CustomTabs/RoundedTabs";
+import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import {Typography} from "@material-ui/core";
 import PropTypes from "prop-types";
-import SettingSearchBox from "../../../../../components/SearchBox/SettingSearchBox";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import BootstrapTable from "react-bootstrap-table-next";
-import GenPaginationV1 from "../../../../../components/Pagination/GenPaginationV1";
-import Button from "../../../../../components/CustomButtons/Button";
-import EditIcon from "../../../../../components/Icons/EditIcon";
-import DeleteIcon from "../../../../../components/Icons/DeleteIcon";
+import Button from "components/CustomButtons/Button";
+import EditIcon from "components/Icons/EditIcon";
+import DeleteIcon from "components/Icons/DeleteIcon";
 import AddOutlined from "@material-ui/icons/AddOutlined";
 import {MoreHoriz} from "@material-ui/icons";
-import CardFooter from "../../../../../components/Card/CardFooter";
-import Chip from "@material-ui/core/Chip";
-import CloseIcon from "../../../../../components/Icons/CloseIcon";
-import FilterIcon from "../../../../../components/Icons/FilterIcon";
+import InvalidAddresses from "./addresses-geofences/InvalidAddresses";
+import WorkingHours from "./driver-activity/WorkingHours";
+import MaxDistance from "./driver-activity/MaxDistance";
 
 const styles = {
   cardTitle,
@@ -178,103 +171,14 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-function TabPanel(props) {
-  const {children, value, index, ...other} = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Typography>{children}</Typography>}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
-
-const dumpData = [
-  {hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday", "Thursday"], tags: ['Tags']},
-  {hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday", "Thursday"], tags: ['Tags']},
-  {hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday", "Thursday"], tags: ['Tags']},
-  {hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday", "Thursday"], tags: ['Tags']},
-  {hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday", "Thursday"], tags: ['Tags']},
-  {hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday", "Thursday"], tags: ['Tags']},
-];
-
 export default function DriverActivity() {
   const classes = useStyles();
-
-  const [checkedState, setCheckedState] = React.useState({
-    checkedB: false,
-  });
   const [value, setValue] = React.useState(0);
-
-  const formatHours = (cell, row) => {
-    return <div className={classes.textSub}>
-      {
-        cell.map((ele) => {
-          return (<div>{ele}</div>)
-        })
-      }
-    </div>
-  }
-
-  const formatWorkingDays = (cell, row) => {
-    return <div className={classes.textSub}>
-      {
-        cell.map((ele) => {
-          return (<div>{ele}</div>)
-        })
-      }
-    </div>
-  }
-
-  const formatTags = (cell, row) => {
-    return <div className={classes.textSub} style={{ marginTop: "28px" }}>
-      {
-        cell.map((ele) => {
-          return (<span className={classes.tagButton}>{ele}</span>)
-        })
-      }
-    </div>
-  }
-
-  const addActionButton = () => {
-    return (
-      <div style={{ marginTop: "15px" }}>
-        <Button justIcon color="twitter" simple>
-          <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
-        </Button>
-        <Button justIcon color="google" simple>
-          <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
-        </Button>
-      </div>
-    )
-  }
 
   const handleChangeTab = (newValue) => {
     setValue(newValue);
   };
 
-  const [chipData, setChipData] = React.useState([
-    {key: 0, label: 'Standard Admin'},
-    {key: 1, label: 'Full admin'},
-  ]);
-
-  const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
-  };
-  const handleClearAll = () => {
-    setChipData([])
-  }
   return (
     <div>
       <GridContainer className={classes.topHeader}>
@@ -287,7 +191,7 @@ export default function DriverActivity() {
             className="btn-round-active w-150 mr-2"
             startIcon={<AddOutlined/>}
           >
-            Add Contact
+            Add Address
           </Button>
           <Button
             color="white"
@@ -300,117 +204,8 @@ export default function DriverActivity() {
           </Button>
         </GridItem>
       </GridContainer>
-      <TabPanel value={value} index={0}>
-        <Card>
-          <CardBody style={{height: '74px'}}>
-            <GridContainer>
-              <GridItem xs={12} sm={12} md={6}>
-                <GridContainer className={classes.headContainer}>
-                  <GridItem xl={3} className={classes.userRolesTitle}>
-                    {chipData.length} selected for
-                  </GridItem>
-                  <GridItem xl={8} className={classes.chipSelected}>
-                    {
-                      chipData.map(data => (
-                        <Chip
-                          deleteIcon={<CloseIcon/>}
-                          label={data.label}
-                          onDelete={handleDelete(data)}
-                          className={classes.chip}
-                        />
-                      ))
-                    }
-                    {
-                      chipData.length > 0
-                        ?
-                        (
-                          <Button onClick={handleClearAll} className={classes.clearAll}>
-                            Clear All
-                          </Button>
-                        )
-                        : ""
-                    }
-                  </GridItem>
-                </GridContainer>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={6} className={classes.headLeft}>
-                <SettingSearchBox placeholder={"Search addresses"}/>
-                <Button
-                  color="white"
-                  aria-label="edit"
-                  justIcon
-                  round
-                  className={`btn-36 ${classes.moreAction} mr-2`}
-                >
-                  <FilterIcon style={{marginTop: 10, marginLeft: 7, color: "#25345C"}}/>
-                </Button>
-              </GridItem>
-            </GridContainer>
-          </CardBody>
-          <div>
-            <ToolkitProvider
-              data={dumpData}
-              keyField="_id"
-              columns={[
-                {
-                  dataField: "hours",
-                  text: "Hours",
-                  formatter: formatHours
-                },
-                {
-                  dataField: "workingDays",
-                  text: "Working Days",
-                  formatter: formatWorkingDays
-                },
-                {
-                  dataField: "tags",
-                  text: "Tags",
-                  formatter: formatTags
-                },
-                {
-                  dataField: "action",
-                  text: "Actions",
-                  formatter: addActionButton
-                }
-              ]}
-            >
-              {props => (
-                <div className="table table-settings">
-                  <BootstrapTable
-                    {...props.baseProps}
-                    bootstrap4={true}
-                    bordered={false}
-                  />
-
-                </div>
-              )}
-            </ToolkitProvider>
-            <Button
-              className="btn-round-white-3 h-41 mb-4"
-              startIcon={<AddOutlined/>}
-              style={{boxShadow: "none", marginBottom: "10px"}}
-            >
-              Add working hours
-            </Button>
-          </div>
-        </Card>
-        <GenPaginationV1 total={29} page={1} size={10}/>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Card testimonial>
-          <div className={classes.testimonialIcon}>
-            <FormatQuote/>
-          </div>
-          <CardBody>
-            <h5 className={classes.cardTestimonialDescription}>
-              No Data
-            </h5>
-          </CardBody>
-          <CardFooter testimonial>
-            <h6 className={classes.cardCategory}>@nauvus</h6>
-          </CardFooter>
-        </Card>
-      </TabPanel>
+      {value === 0 && <WorkingHours />}
+      {value === 1 && <MaxDistance />}
     </div>
   );
 }
