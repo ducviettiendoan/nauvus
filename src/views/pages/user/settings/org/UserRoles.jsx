@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
@@ -17,7 +17,7 @@ import Users from "./user-roles/Users";
 import Roles from "./user-roles/Roles";
 import PendingInvitations from "./user-roles/PendingInvitations";
 
-const styles = {
+const useStyles = makeStyles((theme) => ({
   cardTitle,
   cardTitleWhite: {
     ...cardTitle,
@@ -83,9 +83,7 @@ const styles = {
     background: "#FFFFFF !important",
     border: "1px solid #ECEEF0 !important"
   },
-};
-
-const useStyles = makeStyles(styles);
+}));
 
 export default function UserRoles() {
   const classes = useStyles();
