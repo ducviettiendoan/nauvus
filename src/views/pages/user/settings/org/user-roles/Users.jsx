@@ -1,133 +1,18 @@
 import React from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
-// @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
-// core components
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
-
-import {
-  blackColor,
-  cardTitle, hexToRgb, primaryColor,
-  roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
-import {Typography} from "@material-ui/core";
-import Button from "../../../../../../components/CustomButtons/Button";
-import CloseIcon from "../../../../../../components/Icons/CloseIcon";
-import SettingSearchBox from "../../../../../../components/SearchBox/SettingSearchBox";
-import FilterIcon from "../../../../../../components/Icons/FilterIcon";
-import DeleteIcon from "../../../../../../components/Icons/DeleteIcon";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import BootstrapTable from "react-bootstrap-table-next";
-import {Row} from "reactstrap";
-import GenPaginationV1 from "../../../../../../components/Pagination/GenPaginationV1";
-import EditIcon from "../../../../../../components/Icons/EditIcon";
-import avatar from "assets/img/faces/avatar.jpg";
-import DotIcon from "../../../../../../components/Icons/DotIcon";
+import Button from "components/CustomButtons/Button";
+import ToolboxButton from "components/CustomButtons/ToolboxButton";
+import CloseIcon from "components/Icons/CloseIcon";
+import DeleteIcon from "components/Icons/DeleteIcon";
 import Chip from "@material-ui/core/Chip";
+import Grid from '@material-ui/core/Grid';
+import Table from "components/Table/TableV1";
+import DotIcon from "components/Icons/DotIcon";
+import EditIcon from "components/Icons/EditIcon";
+import avatar from "assets/img/faces/avatar.jpg";
 
-const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0"
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem"
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px"
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px"
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px"
-    }
-  },
-  iconRose: {
-    color: roseColor
-  },
-  marginTop30: {
-    marginTop: "30px"
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px"
-    }
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  },
-  topHeader: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 15
-  },
-  topHeaderTitle: {
-    textAlign: "left",
-  },
-  tabStyles: {
-    centered: {
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  },
-  tabItemStyles: {
-    backgroundColor: "#FFFFFF",
-    position: 'relative',
-    display: 'block',
-    border: '1px inner',
-    borderRadius: '30px',
-    textAlign: 'center',
-    transition: 'all .5s',
-    padding: '12px 22px 12px 22px',
-    color: '#555555',
-    height: 'auto',
-    marginRight: '8px',
-    float: 'none',
-    textTransform: 'none !important',
-    minWidth: 'auto !important',
-    minHeight: '41px !important',
-    fontWeight: 700,
-    fontSize: 14,
-    '&$selected': {
-      '&, &:hover': {
-        color: '#FFFFFF',
-        backgroundColor: '#00acc1',
-        boxShadow: '0 7px 10px -5px rgba(76, 175, 80, 0.4)',
-      },
-    },
-  },
-  topHeaderButton: {
-    textAlign: "right",
-  },
-  moreAction: {
-    background: "#FFFFFF !important",
-    border: "1px solid #ECEEF0 !important"
-  },
+const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
     fontSize: 16,
     color: "#25345C",
@@ -179,86 +64,12 @@ const styles = {
     fontSize: '16px',
     lineHeight: '24px',
     color: '#25345C',
-    marginLeft: '8px'
+    marginLeft: '16px'
   },
   textEmail: {
     fontSize: '16px',
-    lineHeight: '24px',
-    marginTop: '25px',
-    marginLeft: '24px',
+    lineHeight: '21px',
     color: "#C4C4C4"
-  },
-  textRoles: {
-    fontSize: '16px',
-    lineHeight: '24px',
-  },
-  textSub: {
-    fontSize: '16px',
-    lineHeight: '24px',
-    marginTop: '21px',
-    marginLeft: '24px'
-  },
-  textAccess: {
-    fontSize: '16px',
-    lineHeight: '24px',
-    marginTop: '16px',
-    marginBottom: '15px',
-    marginLeft: '24px',
-    padding: "12px 14px",
-    color: "#27AE60",
-    background: "rgba(39, 174, 96, 0.1)",
-    borderRadius: 23,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontWeight: 700,
-    width: 165,
-    height: "41px"
-  },
-  actionButton: {
-    marginTop: 14
-  },
-  iconButton: {
-    '&:hover': {
-      color: '#25345C !important',
-    }
-  },
-  alignItemsCenter: {
-    display: "flex",
-    alignItems: "center",
-    paddingTop: 20,
-    marginLeft: '24px'
-  },
-  avatarImage: {
-    width: 40,
-    height: 40,
-    borderRadius: "50%"
-  },
-  selectStyle: {
-    marginTop: 27,
-    marginLeft: 12
-  },
-  checkedIcon: {
-    width: "20px",
-    height: "20px",
-    border: "1px solid rgba(" + hexToRgb(blackColor) + ", .54)",
-    borderRadius: "3px"
-  },
-  uncheckedIcon: {
-    width: "0px",
-    height: "0px",
-    padding: "9px",
-    border: "1px solid rgba(" + hexToRgb(blackColor) + ", .54)",
-    borderRadius: "3px"
-  },
-  checked: {
-    color: primaryColor[0] + "!important"
-  },
-  checkRoot: {
-    padding: "0px",
-    "&:hover": {
-      backgroundColor: "unset"
-    }
   },
   chips: {
     background: "#ECEEF0",
@@ -266,64 +77,70 @@ const styles = {
     fontSize: "12px",
     marginRight: 8
   },
-  indeterminateIcon: {
-    width: 20,
-    height: 20
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
+    },
   },
-  checkBoxIcon: {
-    width: 20,
-    height: 20,
-    marginTop: 30,
-    marginLeft: 12
+  onHeaderRow: {
+    background: "#ECEEF0",
+  },
+  gridTitle: {
+    padding: "20px"
+  },
+  onHeaderCell: {
+    fontWeight: "bold"
+  },
+  alignItemsCenter: {
+    display: "flex",
+    alignItems: "center",
+  },
+  dotIcon: {
+    color: "#7CE7AC",
+    marginTop: 10
+  },
+  textRoles: {
+    fontSize: '16px',
+    lineHeight: '24px',
+  },
+  textAccess: {
+    display: "inline-block",
+    fontSize: '14px',
+    lineHeight: '17px',
+    padding: "12px 16px",
+    color: "#27AE60",
+    background: "rgba(39, 174, 96, 0.1)",
+    borderRadius: 23,
+    fontWeight: "bold",
+  },
+  iconButton: {
+    '&:hover': {
+      color: '#25345C !important',
+    }
+  },
+  avatarImage: {
+    width: 40,
+    height: 40,
+    borderRadius: "50%"
+  },
+}));
+
+const data = () => {
+  let data = [];
+  for (let i = 0; i < 64; i++) {
+    let item = {
+      id: i + 2,
+      key: i + 2,
+      user: `Cameron Williamson ${i + 1}`,
+      email: `jessica.hanson@example.com${i + 1}`,
+      roles: "Standart Admin",
+      access: `Entire Organisation${i}`
+    };
+    data.push(item);
   }
-};
+  return data;
+}
 
-const useStyles = makeStyles(styles);
-
-const dumpData = [
-  {
-    id: 1,
-    user: 'Cameron Williamson',
-    email: 'jessica.hanson@example.com',
-    roles: "Admin",
-    access: "Entire Organisation"
-  },
-  {
-    id: 2,
-    user: 'Cameron Williamson',
-    email: 'jessica.hanson@example.com',
-    roles: "Admin",
-    access: "Entire Organisation"
-  },
-  {
-    id: 3,
-    user: 'Cameron Williamson',
-    email: 'jessica.hanson@example.com',
-    roles: "Admin",
-    access: "Entire Organisation"
-  },
-  {
-    id: 4,
-    user: 'Cameron Williamson',
-    email: 'jessica.hanson@example.com',
-    roles: "Admin",
-    access: "Entire Organisation"
-  },
-  {
-    id: 5,
-    user: 'Cameron Williamson',
-    email: 'jessica.hanson@example.com',
-    roles: "Admin",
-    access: "Entire Organisation"
-  },
-  {
-    id: 6,
-    user: 'Cameron Williamson',
-    email: 'jessica.hanson@example.com',
-    roles: "Admin",
-    access: "Entire Organisation"
-  },
-];
 
 export default function Users() {
   const classes = useStyles();
@@ -341,181 +158,100 @@ export default function Users() {
     setChipData([])
   }
 
-  const formatName = (cell, row) => {
-    return <>
-      <div className={classes.alignItemsCenter}>
-        <div><img src={avatar} alt="user-avatar" className={classes.avatarImage}/></div>
-        <div className={classes.textName}>{cell}</div>
-      </div>
-    </>
-  }
+  const columns = [
+    {
+      title: 'User',
+      key: 'user',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: user => (
+        <div className={classes.alignItemsCenter}>
+          <div><img src={avatar} alt="user-avatar" className={classes.avatarImage}/></div>
+          <div className={classes.textName}>{user}</div>
+        </div>
+      ),
+    },
+    {
+      title: 'E-Mail',
+      key: 'email',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: email => <div className={classes.textEmail}>{email}</div>
+    },
+    {
+      title: 'Roles',
+      key: 'roles',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: roles => (
+        <div className={classes.alignItemsCenter}>
+          <div><DotIcon className={classes.dotIcon}/></div>
+          <div className={classes.textRoles}>{roles}</div>
+        </div>
+      )
+    },
+    {
+      title: 'Access',
+      key: 'access',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: access => <div className={classes.textAccess}>{access}</div>
+    },
+    {
+      title: 'Actions',
+      key: 'action',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: () => (
+        <div className={classes.actionButton}>
+          <Button justIcon color="twitter" simple>
+            <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+          </Button>
+          <Button justIcon color="google" simple>
+            <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
+          </Button>
+        </div>
+      )
+    }
+  ]
 
-  const formatEmail = (cell, row) => {
-    return <>
-      <div className={classes.textEmail}>{cell}</div>
-    </>
-  }
-
-  const formatRoles = (cell, row) => {
-    return <>
-      <div className={classes.alignItemsCenter}>
-        <div><DotIcon style={{color: "#7CE7AC", marginTop: 10}}/></div>
-        <div className={classes.textRoles}>{cell}</div>
-      </div>
-    </>
-  }
-
-  const formatAccess = (cell, row) => {
-    return <>
-      <div className={classes.textAccess}>{cell}</div>
-    </>
-  }
-
-  const addActionButton = () => {
-    return (
-      <div className={classes.actionButton}>
-        <Button justIcon color="twitter" simple>
-          <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
-        </Button>
-        <Button justIcon color="google" simple>
-          <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
-        </Button>
-      </div>
-    )
-  }
-
-  const selectRow = {
-    mode: 'checkbox',
-    clickToSelect: true,
-    style: {background: "linear-gradient(0deg,#ECEEF0,#ECEEF0)"},
-    classes: 'customSelectRow',
-    selectionHeaderRenderer: ({indeterminate, ...rest}) => (
-      <input
-        type="checkbox"
-        className={classes.indeterminateIcon}
-        ref={(input) => {
-          if (input) input.indeterminate = indeterminate;
-        }}
-        {...rest}
-      />
-    ),
-    selectionRenderer: ({mode, ...rest}) => (
-      <input className={classes.checkBoxIcon} type={mode} {...rest} />
-    )
-
-  };
 
   return (
     <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
-                <Card testimonial>
-                  <CardBody>
-                    <GridContainer>
-                      <GridItem xs={12} sm={12} md={6}>
-                        <GridContainer className={classes.headContainer}>
-                          <GridItem xl={2} className={classes.userRolesTitle}>
-                            {chipData.length} selected for
-                          </GridItem>
-                          <GridItem xl={10} className={classes.chipSelected}>
-                            {
-                              chipData.map(data => (
-                                <Chip
-                                  deleteIcon={<CloseIcon/>}
-                                  label={data.label}
-                                  onDelete={handleDelete(data)}
-                                  className={classes.chips}
-                                />
-                              ))
-                            }
-                            {
-                              chipData.length > 0
-                                ?
-                                (
-                                  <Button onClick={handleClearAll} className={classes.clearAll}>
-                                    Clear All
-                                  </Button>
-                                )
-                                : ""
-                            }
-                          </GridItem>
-                        </GridContainer>
-                      </GridItem>
-                      <GridItem xs={12} sm={12} md={6} className={classes.headLeft}>
-                        <SettingSearchBox placeholder={"Search gateways"}/>
-                        <Button
-                          color="white"
-                          aria-label="edit"
-                          justIcon
-                          round
-                          className={`btn-36 ${classes.moreAction} mr-2`}
-                        >
-                          <FilterIcon style={{marginTop: 10, marginLeft: 7, color: "#25345C"}}/>
-                        </Button>
-                        <Button
-                          color="white"
-                          aria-label="edit"
-                          justIcon
-                          round
-                          className={`btn-36 ${classes.moreAction} mr-2`}
-                        >
-                          <DeleteIcon style={{marginTop: 7, marginLeft: 6, color: "#25345C"}}/>
-                        </Button>
-                      </GridItem>
-                    </GridContainer>
-                  </CardBody>
-                  <ToolkitProvider
-                    data={dumpData}
-                    // keyField="_id"
-                    columns={[
-                      {
-                        dataField: "user",
-                        text: "User",
-                        formatter: formatName
-                      },
-                      {
-                        dataField: "email",
-                        text: "E-mail",
-                        formatter: formatEmail
-                      },
-                      {
-                        dataField: "roles",
-                        text: "Roles",
-                        formatter: formatRoles
-                      },
-                      {
-                        dataField: "access",
-                        text: "Access",
-                        formatter: formatAccess
-                      },
-                      {
-                        dataField: "action",
-                        text: "Action",
-                        formatter: addActionButton
-                      }
-                    ]}
-                  >
-                    {props => (
-                      <div className="table table-settings">
-                        <BootstrapTable
-                          {...props.baseProps}
-                          bootstrap4={true}
-                          bordered={false}
-                          keyField='id'
-                          selectRow={selectRow}
-
-                        />
-                      </div>
-                    )}
-                  </ToolkitProvider>
-                </Card>
-            </GridItem>
-          </GridContainer>
-          <GenPaginationV1 total={29} page={1} size={10}/>
-        </GridItem>
-      </GridContainer>
+      <Table
+        renderTitle={
+          <Grid container className={classes.gridTitle}>
+            <Grid item xs={12} sm={12} md={6}>
+              <Grid container className={classes.headContainer}>
+                <Grid item xl={2} className={classes.userRolesTitle}> {chipData.length} selected for </Grid>
+                <Grid item xl={10} className={classes.chipSelected}>
+                  {chipData.map(data => (
+                    <Chip
+                      deleteIcon={<CloseIcon/>}
+                      label={data.label}
+                      onDelete={handleDelete(data)}
+                      className={classes.chips}
+                    />
+                  ))}
+                  {chipData.length > 0 ?
+                    (
+                      <Button onClick={handleClearAll} className={classes.clearAll}>
+                        Clear All
+                      </Button>
+                    ) : ""}
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
+              <ToolboxButton placeholder="Search for tag or email" showFilter showTrash/>
+            </Grid>
+          </Grid>
+        }
+        rowSelection={{}}
+        columns={columns}
+        dataSource={data}
+        onHeaderRow={{
+          className: classes.onHeaderRow
+        }}
+        onBodyRow={{
+          className: classes.tableRow
+        }}
+      />
     </div>
   );
 }

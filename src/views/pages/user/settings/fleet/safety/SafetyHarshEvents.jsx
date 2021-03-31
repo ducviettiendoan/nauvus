@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 
 // core components
-import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
@@ -12,7 +11,6 @@ import CustomSelect from "components/CustomSelect/CustomSelect";
 import CustomSwitch from "components/CustomSwitch/Switch"
 import CustomSlider from "components/CustomSlider/CustomSlider"
 import Button from "components/CustomButtons/Button.js";
-import { Grid } from "@material-ui/core";
 
 const styles = {
   cardContainer: {
@@ -115,6 +113,8 @@ const useStyles = makeStyles(styles)
 export default function SafetyHarshEvents() {
   const classes = useStyles(styles)
 
+  const [selectValue, setSelectValue] = useState("none");
+
   const [checkedState, setCheckedState] = useState({
     checkedA: false,
   });
@@ -163,7 +163,7 @@ export default function SafetyHarshEvents() {
           <GridItem xs={12} sm={12} md={12} className={classes.vehicleHeaderContainer}>
             <GridItem className={classes.vehicleHeader}>Vehicle Type</GridItem>
             <GridItem className={classes.vehicleSelect}>
-              <CustomSelect values={["Automatic", "2", "3"]} />
+              <CustomSelect listValues={["Automatic", "2", "3"]} selectValue={selectValue} setSelectValue={setSelectValue}  />
             </GridItem>
             <GridItem className={classes.sensitivityHeader}>Harsh Event Sensitivity</GridItem>
             <GridItem className={classes.sensitivityContainer}>

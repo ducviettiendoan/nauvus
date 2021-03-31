@@ -2,87 +2,23 @@ import React from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-
-import {
-  blackColor,
-  cardTitle, hexToRgb, primaryColor,
-  roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
-import {Typography} from "@material-ui/core";
-import Button from "../../../../../../components/CustomButtons/Button";
-import AddOutlined from "@material-ui/icons/AddOutlined";
-import {MoreHoriz} from "@material-ui/icons";
-import CloseIcon from "../../../../../../components/Icons/CloseIcon";
-import SettingSearchBox from "../../../../../../components/SearchBox/SettingSearchBox";
-import FilterIcon from "../../../../../../components/Icons/FilterIcon";
-import DeleteIcon from "../../../../../../components/Icons/DeleteIcon";
+import Button from "components/CustomButtons/Button";
+import CloseIcon from "components/Icons/CloseIcon";
+import DeleteIcon from "components/Icons/DeleteIcon";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
-import GenPaginationV1 from "../../../../../../components/Pagination/GenPaginationV1";
+import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 import Chip from "@material-ui/core/Chip";
-import MoreIcon from "../../../../../../components/Icons/MoreIcon";
+import MoreIcon from "components/Icons/MoreIcon";
+
+import ToolboxButton from "components/CustomButtons/ToolboxButton";
 
 const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0"
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem"
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px"
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px"
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px"
-    }
-  },
-  iconRose: {
-    color: roseColor
-  },
-  marginTop30: {
-    marginTop: "30px"
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px"
-    }
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  },
-  moreAction: {
-    background: "#FFFFFF !important",
-    border: "1px solid #ECEEF0 !important"
-  },
   userRolesTitle: {
     fontSize: 16,
     color: "#25345C",
@@ -119,15 +55,6 @@ const styles = {
     alignItems: "center",
     textAlign: "left",
     marginTop: "8px"
-  },
-  headLeft: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    "& > div": {
-      marginBottom: "0 !important",
-      marginRight: 8
-    }
   },
   textName: {
     fontWeight: 'bold',
@@ -258,12 +185,6 @@ const dumpData = [
 export default function ActiveDrivers() {
   const classes = useStyles();
 
-  const [value, setValue] = React.useState(0);
-
-  const handleChangeTab = (newValue) => {
-    setValue(newValue);
-  };
-
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Standard Admin'},
     {key: 1, label: 'Full admin'},
@@ -359,121 +280,102 @@ export default function ActiveDrivers() {
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
-                <Card testimonial>
-                  <CardBody>
-                    <GridContainer>
-                      <GridItem xs={12} sm={12} md={6}>
-                        <GridContainer className={classes.headContainer}>
-                          <GridItem xl={2} className={classes.userRolesTitle}>
-                            {chipData.length} selected for
-                          </GridItem>
-                          <GridItem xl={10} className={classes.chipSelected}>
-                            {
-                              chipData.map(data => (
-                                <Chip
-                                  deleteIcon={<CloseIcon/>}
-                                  label={data.label}
-                                  onDelete={handleDelete(data)}
-                                  className={classes.chip}
-                                />
-                              ))
-                            }
-                            {
-                              chipData.length > 0
-                                ?
-                                (
-                                  <Button onClick={handleClearAll} className={classes.clearAll}>
-                                    Clear All
-                                  </Button>
-                                )
-                                : ""
-                            }
-                          </GridItem>
-                        </GridContainer>
-                      </GridItem>
-                      <GridItem xs={12} sm={12} md={6} className={classes.headLeft}>
-                        <SettingSearchBox placeholder={"Search gateways"}/>
-                        <Button
-                          color="white"
-                          aria-label="edit"
-                          justIcon
-                          round
-                          className={`btn-36 ${classes.moreAction} mr-2`}
-                        >
-                          <FilterIcon style={{marginTop: 10, marginLeft: 7, color: "#25345C"}}/>
-                        </Button>
-                        <Button
-                          color="white"
-                          aria-label="edit"
-                          justIcon
-                          round
-                          className={`btn-36 ${classes.moreAction} mr-2`}
-                        >
-                          <DeleteIcon style={{marginTop: 7, marginLeft: 6, color: "#25345C"}}/>
-                        </Button>
-                      </GridItem>
-                    </GridContainer>
-                  </CardBody>
-                  <ToolkitProvider
-                    data={dumpData}
-                    // keyField="_id"
-                    columns={[
-                      {
-                        dataField: "name",
-                        text: "Name",
-                        formatter: formatName
-                      },
-                      {
-                        dataField: "username",
-                        text: "Username",
-                        formatter: formatUserName
-                      },
-                      {
-                        dataField: "tags",
-                        text: "Tags",
-                        formatter: formatTags
-                      },
-                      {
-                        dataField: "peerGroup",
-                        text: "Peer Group",
-                        formatter: formatPeerGroup
-                      },
-                      {
-                        dataField: "phone",
-                        text: "Phone",
-                        formatter: formatPhone
-                      },
-                      {
-                        dataField: "dlState",
-                        text: "DL State",
-                        formatter: formatDLState
-                      },
-                      {
-                        dataField: "dlNumber",
-                        text: "DL Number",
-                        formatter: formatDLNumber
-                      },
-                      {
-                        dataField: "action",
-                        text: "Action",
-                        formatter: addActionButton
-                      }
-                    ]}
-                  >
-                    {props => (
-                      <div className="table table-settings">
-                        <BootstrapTable
-                          {...props.baseProps}
-                          bootstrap4={true}
-                          bordered={false}
-                          keyField='id'
-                          selectRow={selectRow}
+              <Card testimonial>
+                <CardBody>
+                  <GridContainer>
+                    <GridItem xs={12} sm={12} md={6}>
+                      <GridContainer className={classes.headContainer}>
+                        <GridItem xl={2} className={classes.userRolesTitle}>
+                          {chipData.length} selected for
+                        </GridItem>
+                        <GridItem xl={10} className={classes.chipSelected}>
+                          {
+                            chipData.map(data => (
+                              <Chip
+                                deleteIcon={<CloseIcon/>}
+                                label={data.label}
+                                onDelete={handleDelete(data)}
+                                className={classes.chip}
+                              />
+                            ))
+                          }
+                          {
+                            chipData.length > 0
+                              ?
+                              (
+                                <Button onClick={handleClearAll} className={classes.clearAll}>
+                                  Clear All
+                                </Button>
+                              )
+                              : ""
+                          }
+                        </GridItem>
+                      </GridContainer>
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={6}>
+                      <ToolboxButton placeholder="Search gateways" showFilter showTrash/>
+                    </GridItem>
+                  </GridContainer>
+                </CardBody>
+                <ToolkitProvider
+                  data={dumpData}
+                  columns={[
+                    {
+                      dataField: "name",
+                      text: "Name",
+                      formatter: formatName
+                    },
+                    {
+                      dataField: "username",
+                      text: "Username",
+                      formatter: formatUserName
+                    },
+                    {
+                      dataField: "tags",
+                      text: "Tags",
+                      formatter: formatTags
+                    },
+                    {
+                      dataField: "peerGroup",
+                      text: "Peer Group",
+                      formatter: formatPeerGroup
+                    },
+                    {
+                      dataField: "phone",
+                      text: "Phone",
+                      formatter: formatPhone
+                    },
+                    {
+                      dataField: "dlState",
+                      text: "DL State",
+                      formatter: formatDLState
+                    },
+                    {
+                      dataField: "dlNumber",
+                      text: "DL Number",
+                      formatter: formatDLNumber
+                    },
+                    {
+                      dataField: "action",
+                      text: "Action",
+                      formatter: addActionButton
+                    }
+                  ]}
+                >
+                  {props => (
+                    <div className="table table-settings">
+                      <BootstrapTable
+                        {...props.baseProps}
+                        bootstrap4={true}
+                        bordered={false}
+                        keyField='id'
+                        selectRow={selectRow}
 
-                        />
-                      </div>
-                    )}
-                  </ToolkitProvider>
-                </Card>
+                      />
+                    </div>
+                  )}
+                </ToolkitProvider>
+              </Card>
             </GridItem>
           </GridContainer>
           <GenPaginationV1 total={29} page={1} size={10}/>

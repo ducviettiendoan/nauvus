@@ -16,6 +16,7 @@ import {
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
 import Button from "../../../../../components/CustomButtons/Button";
+import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import AddOutlined from "@material-ui/icons/AddOutlined";
 import {MoreHoriz} from "@material-ui/icons";
 import SettingSearchBox from "../../../../../components/SearchBox/SettingSearchBox";
@@ -166,8 +167,8 @@ export default function ActivityLog() {
                       120 events
                     </GridItem>
                     <GridItem xs={9} sm={9} md={9} className={classes.activityButton}>
-                      <GridItem xs={12} sm={12} md={12} className={classes.searchBox}>
-                        <SettingSearchBox placeholder={"Search events"} />
+                      <GridItem xs={12} sm={12} md={12}>
+                        <ToolboxButton placeholder={"Search events"} />
                       </GridItem>
                     </GridItem>
                   </GridContainer>

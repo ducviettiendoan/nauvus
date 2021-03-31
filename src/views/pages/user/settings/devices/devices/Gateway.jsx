@@ -20,7 +20,7 @@ import Button from "../../../../../../components/CustomButtons/Button";
 import AddOutlined from "@material-ui/icons/AddOutlined";
 import {MoreHoriz} from "@material-ui/icons";
 import CloseIcon from "../../../../../../components/Icons/CloseIcon";
-import SettingSearchBox from "../../../../../../components/SearchBox/SettingSearchBox";
+import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import FilterIcon from "../../../../../../components/Icons/FilterIcon";
 import DeleteIcon from "../../../../../../components/Icons/DeleteIcon";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
@@ -385,43 +385,7 @@ export default function Gateway() {
                       </GridContainer>
                     </GridItem>
                     <GridItem xs={12} sm={12} md={6} className={classes.headLeft}>
-                      <SettingSearchBox placeholder={"Search gateways"}/>
-                      <Button
-                        color="white"
-                        aria-label="edit"
-                        justIcon
-                        round
-                        className={`btn-36 ${classes.moreAction} mr-2`}
-                      >
-                        <FilterIcon style={{marginTop: 10, marginLeft: 7, color: "#25345C"}}/>
-                      </Button>
-                      <Button
-                        color="white"
-                        aria-label="edit"
-                        justIcon
-                        round
-                        className={`btn-36 ${classes.moreAction} mr-2`}
-                      >
-                        <RenameIcon style={{marginTop: 7, marginLeft: 7, color: "#25345C"}}/>
-                      </Button>
-                      <Button
-                        color="white"
-                        aria-label="edit"
-                        justIcon
-                        round
-                        className={`btn-36 ${classes.moreAction} mr-2`}
-                      >
-                        <PairIcon style={{marginTop: 13, marginLeft: 4, color: "#25345C"}}/>
-                      </Button>
-                      <Button
-                        color="white"
-                        aria-label="edit"
-                        justIcon
-                        round
-                        className={`btn-36 ${classes.moreAction} mr-2`}
-                      >
-                        <DeleteIcon style={{marginTop: 7, marginLeft: 7, color: "#25345C"}}/>
-                      </Button>
+                      <ToolboxButton placeholder={"Search gateways"} showFilter showEdit showLink showTrash/>
                     </GridItem>
                   </GridContainer>
                 </CardBody>

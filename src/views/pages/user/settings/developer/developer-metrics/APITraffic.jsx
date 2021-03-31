@@ -21,7 +21,7 @@ import Button from "../../../../../../components/CustomButtons/Button";
 import PropTypes from "prop-types";
 import Chip from "@material-ui/core/Chip";
 import CloseIcon from "../../../../../../components/Icons/CloseIcon";
-import SettingSearchBox from "../../../../../../components/SearchBox/SettingSearchBox";
+import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import FilterIcon from "../../../../../../components/Icons/FilterIcon";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
@@ -237,7 +237,7 @@ const mockData = {
   ],
 }
 
-export default function APITraffic() {
+export default function APITraffic(props) {
   const classes = useStyles();
 
   const [chipData, setChipData] = React.useState([
@@ -303,6 +303,12 @@ export default function APITraffic() {
     { requestTime: "49:30:00", apiEndpoint: 'Fleet/Vehicles', statusCode: '200', method: "GBT", duration: "0.153S", apiToken: "FleetMan", reguestID: "5ac4ed4d"},
     { requestTime: "49:30:00", apiEndpoint: 'Fleet/Vehicles', statusCode: '200', method: "GBT", duration: "0.153S", apiToken: "FleetMan", reguestID: "5ac4ed4d"},
   ];
+
+  const rowEvents = {
+    onClick: (e, row, rowIndex) => {
+      props.onShowDetail();
+    }
+  };
 
   return (
     <GridContainer className="developer-metric-wrapper">
@@ -379,17 +385,8 @@ export default function APITraffic() {
                         </GridItem>
                       </GridContainer>
                     </GridItem>
-                    <GridItem xs={12} sm={12} md={6} className={classes.headLeft}>
-                      <SettingSearchBox placeholder={"Search vehicle"}/>
-                      <Button
-                        color="white"
-                        aria-label="edit"
-                        justIcon
-                        round
-                        className={`btn-36 ${classes.moreAction} mr-2`}
-                      >
-                        <FilterIcon style={{marginTop: 10, marginLeft: 7, color: "#25345C"}}/>
-                      </Button>
+                    <GridItem xs={12} sm={12} md={6}>
+                      <ToolboxButton placeholder={"Search vehicle"} showFilter />
                     </GridItem>
                   </GridContainer>
                 </CardBody>
@@ -440,7 +437,7 @@ export default function APITraffic() {
                         {...props.baseProps}
                         bootstrap4={true}
                         bordered={false}
-
+                        rowEvents={ rowEvents }
                       />
                     </div>
                   )}

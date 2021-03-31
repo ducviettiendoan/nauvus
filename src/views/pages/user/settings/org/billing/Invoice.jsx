@@ -5,10 +5,11 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import SettingSearchBox from "components/SearchBox/SettingSearchBox";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import GenPaginationV1 from "components/Pagination/GenPaginationV1";
+import ToolboxButton from "components/CustomButtons/ToolboxButton";
+
 import {
   cardTitle,
   roseColor
@@ -235,8 +236,8 @@ export default function Invoice() {
                   21 Invoices
                 </GridItem>
                 <GridItem xs={9} sm={9} md={9} className={classes.invoiceButton}>
-                  <GridItem xs={12} sm={12} md={12} className={classes.searchBox}>
-                    <SettingSearchBox placeholder={"Search contacts"}/>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <ToolboxButton placeholder={"Search invoice"}/>
                   </GridItem>
                 </GridItem>
               </GridContainer>

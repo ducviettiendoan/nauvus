@@ -16,7 +16,7 @@ import {
 } from "assets/jss/material-dashboard-pro-react.js";
 import {Tab, Tabs, Typography} from "@material-ui/core";
 import Button from "components/CustomButtons/Button.js";
-import SettingSearchBox from "components/SearchBox/SettingSearchBox";
+import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import BootstrapTable from "react-bootstrap-table-next";
 import {Row} from "reactstrap";
 import GenPaginationV1 from "../../../../../../components/Pagination/GenPaginationV1";
@@ -176,7 +176,7 @@ export default function ByAccet() {
                       22 assets
                     </GridItem>
                     <GridItem xs={12} sm={9} md={9} className={classes.liveSharingButton}>
-                      <SettingSearchBox placeholder={"Search assets"}/>
+                      <ToolboxButton placeholder={"Search assets"}/>
                     </GridItem>
                   </GridContainer>
                 </CardBody>

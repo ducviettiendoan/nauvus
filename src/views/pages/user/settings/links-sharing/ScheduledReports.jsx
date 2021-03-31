@@ -14,7 +14,7 @@ import {
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
 import Button from "components/CustomButtons/Button.js";
-import SettingSearchBox from "components/SearchBox/SettingSearchBox";
+import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import BootstrapTable from "react-bootstrap-table-next";
 import {Row} from "reactstrap";
 import GenPaginationV1 from "../../../../../components/Pagination/GenPaginationV1";
@@ -227,7 +227,7 @@ export default function ScheduledReports() {
                       2 reports
                     </GridItem>
                     <GridItem xs={9} sm={9} md={9} className={classes.liveSharingButton}>
-                      <SettingSearchBox placeholder={"Search scheduled reports"} />
+                      <ToolboxButton placeholder={"Search scheduled reports"} />
                     </GridItem>
                   </GridContainer>
 

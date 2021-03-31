@@ -14,7 +14,7 @@ import {
 } from "assets/jss/material-dashboard-pro-react.js";
 import Button from "components/CustomButtons/Button.js";
 import Switch from "components/CustomSwitch/Switch.jsx"
-import { Divider } from "@material-ui/core";
+import { Divider} from "@material-ui/core";
 
 const styles = {
   cardTitle,
