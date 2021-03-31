@@ -34,6 +34,9 @@ import MessagesIcon from "components/Icons/MessagesIcon";
 import AlertsIcon from "components/Icons/AlertsIcon";
 import SettingsIcon from "components/Icons/SettingsIcon";
 
+import StatusGreenIcon from "components/Icons/StatusGreenIcon";
+import StatusRedIcon from "components/Icons/StatusRedIcon";
+
 import VehicleRegisterPage from "views/pages/auth/VehicleRegisterPage";
 
 const dashRoutes = [
@@ -176,14 +179,18 @@ const dashRoutes = [
     path: "/messages",
     name: "Messages",
     icon: MessagesIcon,
+    extraIcon: StatusGreenIcon,
     component: Messages,
-    layout: "/user"
+    isFixed: true,
+    layout: "/user",
   },
   {
     path: "/alerts",
     name: "Alerts",
     icon: AlertsIcon,
+    extraIcon: StatusRedIcon,
     component: Alerts,
+    isFixed: true,
     layout: "/user"
   },
   {
@@ -191,6 +198,7 @@ const dashRoutes = [
     name: "Settings",
     icon: SettingsIcon,
     component: Settings,
+    isFixed: true,
     layout: "/setting"
   },
 ];

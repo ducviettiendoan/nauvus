@@ -9,10 +9,10 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
-import DriverEfficiency from "./fuel&energy/DriverEfficiency";
-import FuelCards from "./fuel&energy/FuelCards";
-import FuelCost from "./fuel&energy/FuelCost";
-import VehicleFuelTypes from "./fuel&energy/VehicleFuelTypes";
+import DriverEfficiency from "./fuel-energy/DriverEfficiency";
+import FuelCards from "./fuel-energy/FuelCards";
+import FuelCost from "./fuel-energy/FuelCost";
+import VehicleFuelTypes from "./fuel-energy/VehicleFuelTypes";
 
 import {
   cardTitle,

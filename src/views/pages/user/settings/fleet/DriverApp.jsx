@@ -37,9 +37,9 @@ import { Divider } from "@material-ui/core";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
 import TextField from "@material-ui/core/TextField";
-import DriverAppDvirs from "./components/DriverAppDvirs";
-import DriverAppGeneral from "./components/DriverAppGeneral";
-import DriverAppRoutes from "./components/DriverAppRoutes";
+import DriverAppDvirs from "./driver-app/DriverAppDvirs";
+import DriverAppGeneral from "./driver-app/DriverAppGeneral";
+import DriverAppRoutes from "./driver-app/DriverAppRoutes";
 
 const styles = {
   cardTitle,

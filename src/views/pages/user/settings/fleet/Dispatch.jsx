@@ -53,7 +53,11 @@ const styles = {
     display: 'flex', 
     justifyContent: "flex-end", 
     alignItems: "center",
-    
+  },
+  departureContent: {
+    display: 'flex',
+    justifyContent: "center",
+    alignItems: "center",
   },
 
   searchButton: {

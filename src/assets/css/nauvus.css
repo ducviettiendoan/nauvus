@@ -7,8 +7,14 @@
 .w-98 {
   width: 98px !important;
 }
+.w-88 {
+  width: 88px !important;
+}
 .w-56 {
   width: 56px !important;
+}
+.w-58 {
+  width: 58px !important;
 }
 .h-24 {
   height: 24px !important;
@@ -33,6 +39,12 @@
 }
 .w-138 {
   width: 138px !important;
+}
+.w-142 {
+  width: 142px !important;
+}
+.w-29 {
+  width: 29px !important;
 }
 .btn-round-active {
   background: #25345C !important;
@@ -80,6 +92,8 @@
   font-style: normal!important;
   font-weight: bold!important;
   color: #25345C!important;
+  box-shadow: none !important;
+  border: 1px solid #ECEEF0 !important;
 }
 
 .btn-round-white-2 {
@@ -148,6 +162,19 @@
   line-height: 17px !important;
   font-style: normal!important;
   font-weight: bold!important;
+}
+
+.btn-transparent {
+  background: none !important;
+  text-transform: initial !important;
+  color: #25345C !important;
+  font-size: 14px !important;
+  line-height: 17px !important;
+  font-style: normal!important;
+  font-weight: bold!important;
+  height: 17px !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 .margin-0 {
@@ -409,6 +436,15 @@
   right: 10px;
 }
 
+
+.fixed-menu {
+  position: sticky;
+  bottom: 20px;
+  width: 100%;
+  z-index: 1000;
+  background-color: white;
+  border-top: 1px solid #F0F0F3;
+}
 /* 
 .table-nauvus td {
   border-bottom: 1px solid #ECEEF0;
