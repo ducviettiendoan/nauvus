@@ -1,20 +1,12 @@
 import React from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-
-import {
-  cardTitle,
-  roseColor,
-} from "assets/jss/material-dashboard-pro-react.js";
-
 import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -22,78 +14,17 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Collapse from "@material-ui/core/Collapse";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import { Link } from "react-router-dom";
-
+import {Link} from "react-router-dom";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import Button from "components/CustomButtons/Button";
 import BootstrapTable from "react-bootstrap-table-next";
-import { Row } from "reactstrap";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import EditIcon from "components/Icons/EditIcon";
 import DeleteIcon from "components/Icons/DeleteIcon";
 import DotIcon from "components/Icons/DotIcon";
-
 import AddOutlined from "@material-ui/icons/AddOutlined";
 
 const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0",
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem",
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px",
-  },
-  headLeft: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    "& > div": {
-      marginBottom: "0 !important",
-      marginRight: 8
-    }
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px",
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px",
-    },
-  },
-  iconRose: {
-    color: roseColor,
-  },
-  marginTop30: {
-    marginTop: "30px",
-  },
-  testimonialIcon: {
-    margin: "30px 0 0 20px",
-    "& svg": {
-      width: "40px",
-      height: "40px",
-    },
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999",
-  },
   cardContainer: {
     padding: "0 20px",
   },
@@ -116,12 +47,6 @@ const styles = {
       color: "#25345C !important",
     },
     marginTop: "24px",
-  },
-  iconButtonHeader: {
-    color: "#25345C",
-    width: "24px !important",
-    height: "24px !important",
-    margin: "10px 10px 5px 18px !important",
   },
   txtListItemPrimary: {
     fontWeight: "bold",
@@ -158,18 +83,11 @@ const styles = {
     textAlign: "left",
     color: "#25345C",
   },
-  liveSharingButton: {
-    textAlign: "right",
-  },
   liveSharingHeader: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     padding: "16px 16px 0px",
-  },
-  moreAction: {
-    background: "#FFFFFF !important",
-    border: "1px solid #ECEEF0 !important",
   },
   addAction: {
     background: "#25345C !important",
@@ -183,46 +101,32 @@ const styles = {
     height: "24px",
     margin: "10px 10px 5px 18px",
   },
-
   flexIcon: {
     display: "flex",
     justifyContent: "flex-end",
   },
-
   centerSection: {
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
+    fontSize: "16px"
   },
-
   centerTag: {
     display: "flex",
     alignItems: "center",
     fontSize: "16px",
     fontWeight: "400",
   },
-
   pushLeft: {
     color: "#C4C4C4",
     fontWeight: "400",
   },
-
-  deleteButtonContainer: {
-    height: "42px",
-    width: "0px ",
-    padding: "20px",
-    marginTop: "0px",
-    marginRight: "16px",
-    marginLeft: "8px",
-  },
-
   editIcon: {
     color: "#ffffff",
     width: "22px !important",
     height: "22px !important",
     marginTop: "0px",
   },
-
   deleteIcon2: {
     color: "#C4C4C4",
     width: "24px !important",
@@ -230,14 +134,13 @@ const styles = {
     margin: "0px",
     marginTop: "2px"
   },
-
   buttonContainer: {
     paddingTop: "15px !important",
     marginTop: "4px !important",
   },
 };
 
-const dumpData = [{ email: "alma.lawson@example.com", role: "Super Admin" }];
+const dumpData = [{email: "alma.lawson@example.com", role: "Super Admin"}];
 
 const useStyles = makeStyles(styles);
 export default function Tags() {
@@ -273,7 +176,7 @@ export default function Tags() {
       <>
         <div className={classes.alignItemsCenter}>
           <div>
-            <DotIcon style={{ color: "#7CE7AC" }} />
+            <DotIcon style={{color: "#7CE7AC"}}/>
           </div>
           <div className={classes.textSub}>{cell}</div>
         </div>
@@ -287,13 +190,13 @@ export default function Tags() {
         <Button justIcon color="twitter" simple>
           <EditIcon
             className={classes.iconButton}
-            style={{ color: "#ffffff", width: "22px", height: "22px" }}
+            style={{color: "#ffffff", width: "22px", height: "22px"}}
           />
         </Button>
         <Button justIcon color="google" simple>
           <DeleteIcon
             className={classes.iconButton}
-            style={{ color: "#C4C4C4", width: "24px", height: "24px" }}
+            style={{color: "#C4C4C4", width: "24px", height: "24px"}}
           />
         </Button>
       </>
@@ -314,9 +217,8 @@ export default function Tags() {
               >
                 Tag Lists (10)
               </GridItem>
-
-              <GridItem xs={8} sm={8} md={8} >
-                  <ToolboxButton placeholder={"Search for tag or email"} showFilter showTrash />
+              <GridItem xs={8} sm={8} md={8}>
+                <ToolboxButton placeholder={"Search for tag or email"} showFilter showTrash/>
               </GridItem>
             </GridContainer>
             <GridContainer>
@@ -346,12 +248,12 @@ export default function Tags() {
                           >
                             <ListItemText
                               primary="Name Tags A"
-                              classes={{ primary: classes.txtListItemPrimary }}
+                              classes={{primary: classes.txtListItemPrimary}}
                             />
                             {isOpenList(`Name Tags A`) ? (
-                              <ExpandLess />
+                              <ExpandLess/>
                             ) : (
-                              <ExpandMore />
+                              <ExpandMore/>
                             )}
                           </ListItem>
                           <Collapse
@@ -392,7 +294,6 @@ export default function Tags() {
                               </Link>
                             </List>
                           </Collapse>
-
                           {/* Name Tags B */}
                           <ListItem
                             button
@@ -400,12 +301,12 @@ export default function Tags() {
                           >
                             <ListItemText
                               primary="Name Tags B"
-                              classes={{ primary: classes.txtListItemPrimary }}
+                              classes={{primary: classes.txtListItemPrimary}}
                             />
                             {isOpenList(`Name Tags B`) ? (
-                              <ExpandLess />
+                              <ExpandLess/>
                             ) : (
-                              <ExpandMore />
+                              <ExpandMore/>
                             )}
                           </ListItem>
                           <Collapse
@@ -446,7 +347,6 @@ export default function Tags() {
                               </Link>
                             </List>
                           </Collapse>
-
                           {/* Name Tags C */}
                           <ListItem
                             button
@@ -454,12 +354,12 @@ export default function Tags() {
                           >
                             <ListItemText
                               primary="Name Tags C"
-                              classes={{ primary: classes.txtListItemPrimary }}
+                              classes={{primary: classes.txtListItemPrimary}}
                             />
                             {isOpenList(`Name Tags C`) ? (
-                              <ExpandLess />
+                              <ExpandLess/>
                             ) : (
-                              <ExpandMore />
+                              <ExpandMore/>
                             )}
                           </ListItem>
                           <Collapse
@@ -500,7 +400,6 @@ export default function Tags() {
                               </Link>
                             </List>
                           </Collapse>
-
                           {/* Name Tags D */}
                           <ListItem
                             button
@@ -508,12 +407,12 @@ export default function Tags() {
                           >
                             <ListItemText
                               primary="Name Tags D"
-                              classes={{ primary: classes.txtListItemPrimary }}
+                              classes={{primary: classes.txtListItemPrimary}}
                             />
                             {isOpenList(`Name Tags D`) ? (
-                              <ExpandLess />
+                              <ExpandLess/>
                             ) : (
-                              <ExpandMore />
+                              <ExpandMore/>
                             )}
                           </ListItem>
                           <Collapse
@@ -554,7 +453,6 @@ export default function Tags() {
                               </ListItem>
                             </List>
                           </Collapse>
-
                           {/* Name Tags E */}
                           <ListItem
                             button
@@ -562,12 +460,12 @@ export default function Tags() {
                           >
                             <ListItemText
                               primary="Name Tags E"
-                              classes={{ primary: classes.txtListItemPrimary }}
+                              classes={{primary: classes.txtListItemPrimary}}
                             />
                             {isOpenList(`Name Tags E`) ? (
-                              <ExpandLess />
+                              <ExpandLess/>
                             ) : (
-                              <ExpandMore />
+                              <ExpandMore/>
                             )}
                           </ListItem>
                           <Collapse
@@ -612,31 +510,14 @@ export default function Tags() {
                       </CardBody>
                     </Card>
                   </GridItem>
-
                   <GridItem xs={12} sm={9} md={9}>
-                    <Card testmonial className={classes.cardInside}>
+                    <Card>
                       <CardBody>
                         <GridContainer>
-                          <GridItem
-                            xs={2}
-                            sm={2}
-                            md={4}
-                            lg={1}
-                            xl={3}
-                            className={classes.centerTag}
-                          >
+                          <GridItem xs={2} sm={2} md={4} lg={1} xl={3} className={classes.centerTag}>
                             Tags
                           </GridItem>
-
-                          <GridItem
-                            xs={9}
-                            sm={9}
-                            md={5}
-                            lg={9}
-                            xl={8}
-                            className={classes.centerSection}
-                            style={{ fontSize: "16px" }}
-                          >
+                          <GridItem xs={9} sm={9} md={5} lg={9} xl={7} className={classes.centerSection}>
                             <GridItem className={classes.pushLeft}>
                               1 vehicle
                             </GridItem>
@@ -646,29 +527,18 @@ export default function Tags() {
                             <GridItem className={classes.pushLeft}>
                               1 address
                             </GridItem>
-                            <GridItem
-                              className={classes.pushLeft}
-                              style={{ marginRight: "28px" }}
-                            >
+                            <GridItem className={classes.pushLeft}>
                               1 driver
                             </GridItem>
                           </GridItem>
-
-                          <GridItem
-                            xs={1}
-                            sm={1}
-                            md={3}
-                            lg={2}
-                            xl={1}
-                            className={classes.flexIcon}
-                          >
+                          <GridItem xs={1} sm={1} md={3} lg={2} xl={2} className={classes.flexIcon}>
                             <Button
                               justIcon
                               color="twitter"
                               simple
                               className={classes.buttonContainer}
                             >
-                              <EditIcon className={classes.editIcon} />
+                              <EditIcon className={classes.editIcon}/>
                             </Button>
                             <Button
                               justIcon
@@ -686,12 +556,11 @@ export default function Tags() {
                               justIcon
                               className={`btn-36 ${classes.addAction} mr-2`}
                             >
-                              <AddOutlined style={{ color: "#C4C4C4" }} />
+                              <AddOutlined style={{color: "#C4C4C4"}}/>
                             </Button>
                           </GridItem>
                         </GridContainer>
                       </CardBody>
-
                       <ToolkitProvider
                         data={dumpData}
                         keyField="_id"
@@ -720,34 +589,18 @@ export default function Tags() {
                               bootstrap4={true}
                               bordered={false}
                             />
-                            <Row className="justify-content-center"></Row>
                           </div>
                         )}
                       </ToolkitProvider>
                     </Card>
-                    <Card testmonial className={classes.cardInside}>
+                    <Card>
                       <CardBody>
                         <GridContainer>
-                          <GridItem
-                            xs={2}
-                            sm={2}
-                            md={2}
-                            lg={1}
-                            xl={3}
-                            className={classes.centerTag}
-                          >
+                          <GridItem xs={2} sm={2} md={2} lg={1} xl={3} className={classes.centerTag}>
                             Tags
                           </GridItem>
 
-                          <GridItem
-                            xs={9}
-                            sm={9}
-                            md={9}
-                            lg={9}
-                            xl={8}
-                            className={classes.centerSection}
-                            style={{ fontSize: "16px" }}
-                          >
+                          <GridItem xs={9} sm={9} md={9} lg={9} xl={7} className={classes.centerSection}>
                             <GridItem className={classes.pushLeft}>
                               1 vehicle
                             </GridItem>
@@ -757,21 +610,13 @@ export default function Tags() {
                             <GridItem className={classes.pushLeft}>
                               1 address
                             </GridItem>
-                            <GridItem
-                              className={classes.pushLeft}
-                              style={{ marginRight: "28px" }}
+                            <GridItem className={classes.pushLeft}
                             >
                               1 driver
                             </GridItem>
                           </GridItem>
-
-                          <GridItem
-                            xs={1}
-                            sm={1}
-                            md={1}
-                            lg={2}
-                            xl={1}
-                            className={classes.flexIcon}
+                          <GridItem xs={1} sm={1} md={1} lg={2} xl={2}
+                                    className={classes.flexIcon}
                           >
                             <Button
                               justIcon
@@ -779,7 +624,7 @@ export default function Tags() {
                               simple
                               className={classes.buttonContainer}
                             >
-                              <EditIcon className={classes.editIcon} />
+                              <EditIcon className={classes.editIcon}/>
                             </Button>
                             <Button
                               justIcon
@@ -791,13 +636,12 @@ export default function Tags() {
                                 className={`${classes.iconButton} ${classes.deleteIcon2}`}
                               />
                             </Button>
-
                             <Button
                               round
                               justIcon
                               className={`btn-36 ${classes.addAction} mr-2`}
                             >
-                              <AddOutlined style={{ color: "#C4C4C4" }} />
+                              <AddOutlined style={{color: "#C4C4C4"}}/>
                             </Button>
                           </GridItem>
                         </GridContainer>
@@ -830,34 +674,18 @@ export default function Tags() {
                               bootstrap4={true}
                               bordered={false}
                             />
-                            <Row className="justify-content-center"></Row>
                           </div>
                         )}
                       </ToolkitProvider>
                     </Card>
-                    <Card testmonial className={classes.cardInside}>
+                    <Card>
                       <CardBody>
                         <GridContainer>
-                          <GridItem
-                            xs={2}
-                            sm={2}
-                            md={2}
-                            lg={1}
-                            xl={3}
-                            className={classes.centerTag}
-                          >
+                          <GridItem xs={2} sm={2} md={2} lg={1} xl={3} className={classes.centerTag}>
                             Tags
                           </GridItem>
 
-                          <GridItem
-                            xs={9}
-                            sm={9}
-                            md={9}
-                            lg={9}
-                            xl={8}
-                            className={classes.centerSection}
-                            style={{ fontSize: "16px" }}
-                          >
+                          <GridItem xs={9} sm={9} md={9} lg={9} xl={7} className={classes.centerSection}>
                             <GridItem className={classes.pushLeft}>
                               1 vehicle
                             </GridItem>
@@ -867,29 +695,18 @@ export default function Tags() {
                             <GridItem className={classes.pushLeft}>
                               1 address
                             </GridItem>
-                            <GridItem
-                              className={classes.pushLeft}
-                              style={{ marginRight: "28px" }}
-                            >
+                            <GridItem className={classes.pushLeft}>
                               1 driver
                             </GridItem>
                           </GridItem>
-
-                          <GridItem
-                            xs={1}
-                            sm={1}
-                            md={1}
-                            lg={2}
-                            xl={1}
-                            className={classes.flexIcon}
-                          >
+                          <GridItem xs={1} sm={1} md={1} lg={2} xl={2} className={classes.flexIcon}>
                             <Button
                               justIcon
                               color="twitter"
                               simple
                               className={classes.buttonContainer}
                             >
-                              <EditIcon className={classes.editIcon} />
+                              <EditIcon className={classes.editIcon}/>
                             </Button>
                             <Button
                               justIcon
@@ -901,13 +718,12 @@ export default function Tags() {
                                 className={`${classes.iconButton} ${classes.deleteIcon2}`}
                               />
                             </Button>
-
                             <Button
                               round
                               justIcon
                               className={`btn-36 ${classes.addAction} mr-2`}
                             >
-                              <AddOutlined style={{ color: "#C4C4C4" }} />
+                              <AddOutlined style={{color: "#C4C4C4"}}/>
                             </Button>
                           </GridItem>
                         </GridContainer>
@@ -940,7 +756,6 @@ export default function Tags() {
                               bootstrap4={true}
                               bordered={false}
                             />
-                            <Row className="justify-content-center"></Row>
                           </div>
                         )}
                       </ToolkitProvider>
