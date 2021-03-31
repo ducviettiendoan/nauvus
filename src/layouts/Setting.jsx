@@ -218,11 +218,11 @@ export function Dashboard(props) {
     history.push("/auth/sign-in");
   }
 
-  useEffect(() => {
-    setInterval(()=> {
-      console.log(mobileOpen)
-    }, 1000)
-  },[])
+  // useEffect(() => {
+  //   setInterval(()=> {
+  //     console.log(mobileOpen)
+  //   }, 1000)
+  // },[])
   return (
     <>
       <div className={classes.wrapper}>
