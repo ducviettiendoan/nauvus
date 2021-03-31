@@ -213,16 +213,17 @@
 }
 
 .extraSidebar {
-  width: 260px;
+  min-width: 260px;
   background-color: white;
-  float: left;
   height: 100vh;
   border-right: 1px solid #25345c1f;
 }
+
 .extraContainer {
-  position: relative;
-  width: calc(100% - 260px);
-  float: left;
+  width: 100%;
+}
+#main {
+  display: flex;
 }
 
 .extraSidebar, .extraContainer {
