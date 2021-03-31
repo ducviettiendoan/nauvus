@@ -89,19 +89,6 @@ const styles = {
   listItemRoot: {
     paddingTop: '20px'
   },
-  textFieldRoot: {
-    fontWeight: 'normal',
-    fontSize: '15px',
-    fontFamily: "Lato",
-    lineHeight: '20px',
-    color: '#C4C4C4'
-  },
-  textInputRoot: {
-    fontWeight: 'bold',
-    fontSize: '14px',
-    lineHeight: '21px',
-    color: '#25345C'
-  },
   vehicleHeader: {
     width: "78px",
     height: "21px",

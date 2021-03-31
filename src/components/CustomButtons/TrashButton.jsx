@@ -18,7 +18,7 @@ const styles = {
         color: "#25345C",
         width: "24px !important",
         height: "24px !important",
-        margin: "5px 17px 5px 18px !important",
+        margin: "5px 17px 0px 18px !important",
     },
 };
 
