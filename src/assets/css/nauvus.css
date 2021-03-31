@@ -235,6 +235,7 @@
 }
 
 .extraSidebar {
+  float: left;
   min-width: 260px;
   background-color: white;
   height: 100vh;
@@ -244,10 +245,14 @@
 }
 
 .extraContainer {
-  width: 100%;
+  width: calc(100% - 260px);
+  float: left
 }
-#main {
-  display: flex;
+
+@media screen and (max-width: 960px) {
+  .extraContainer {
+    width: 100%;
+  }
 }
 
 .extraSidebar, .extraContainer {
