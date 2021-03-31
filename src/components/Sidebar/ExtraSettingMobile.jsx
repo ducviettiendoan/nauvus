@@ -1,21 +1,17 @@
 import React from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory, useLocation  } from "react-router-dom";
+
 // @material-ui/icons
-import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-
 import CustomSearchInput from "components/CustomInput/CustomSearchInput";
-
 import "perfect-scrollbar/css/perfect-scrollbar.css";
-
-// import PerfectScrollbar from "react-perfect-scrollbar";
-
 import { Col, Row } from 'reactstrap';
 import {
     cardTitle,
@@ -49,6 +45,19 @@ const styles = {
         lineHeight: '21px',
         fontFamily: '"Lato", sans-serif',
         color: '#25345C'
+    },
+    active: {
+        color: "#000",
+        borderRadius: "28px",
+        backgroundColor: "rgba(37, 52, 92, 0.1)"
+    },
+    activePoint: {
+        position: "absolute",
+        top: "17px",
+        left: "-18px",
+        borderRight: "2px solid #121212",
+        height: "10px",
+        borderRadius: "1px",
     }
 };
 
@@ -60,11 +69,18 @@ import { Link } from "react-router-dom";
 const useStyles = makeStyles(styles);
 var ps;
 export function ExtraSideBarMobile(props) {
+    const location = useLocation();
+    const history = useHistory();
     const classes = useStyles();
     const mainPanelVehicleSideBar = React.createRef();
 
     const [open, setOpen] = React.useState(true);
     const [currentTab, setCurrentTab] = React.useState("ORGANIZATION");
+    const [currentLink, setCurrentLink] = React.useState("");
+
+    React.useEffect(() => {
+        initActive();
+    }, []);
 
     const handleClick = (tabName) => {
         console.log(`on click tab: ${tabName}`)
@@ -77,7 +93,43 @@ export function ExtraSideBarMobile(props) {
     };
 
     const isOpenList = (tabName) => {
-        return open && currentTab === tabName;
+        return (open && currentTab === tabName);
+    }
+
+    const initActive = () => {
+        setCurrentLink(location.pathname);
+        if (window.location.href.indexOf("/setting/org") > -1) {
+            setCurrentTab("ORGANIZATION");
+        } else if (window.location.href.indexOf("/setting/device") > -1) {
+            setCurrentTab("DEVICES");
+        } else if (window.location.href.indexOf("/setting/fleet") > -1) {
+            setCurrentTab("FLEET");
+        } else if (window.location.href.indexOf("/setting/link-sharing") > -1) {
+            setCurrentTab("LinksSharing");
+        } else if (window.location.href.indexOf("/setting/developer") > -1) {
+            setCurrentTab("DEVELOPER");
+        }
+    }
+
+    const checkActive = (link) => {
+        console.log(`checkActive`)
+        return (link === currentLink ? true : false)
+    }
+
+    const onClickListItem = (link) => {
+        setCurrentLink(link);
+        history.push(link);
+    }
+
+    const renderListItem = (text, link) => {
+        return (
+            <div style={{ position: "relative" }}>
+                <ListItem button onClick={ () => onClickListItem(link) } className={classes.nested} classes={{ selected: classes.active }} selected={ link === currentLink }>
+                    <ListItemText primary={ text } classes={ {primary: classes.txtListItemPrimarySub} }/>
+                </ListItem>
+                { link === currentLink && <div className={ classes.activePoint}></div> }
+            </div>
+        )
     }
 
     return (
@@ -92,12 +144,6 @@ export function ExtraSideBarMobile(props) {
                 <List
                     component="nav"
                     aria-labelledby="nested-list-subheader"
-                    subheader={
-                        <ListSubheader component="div" id="nested-list-subheader">
-                            Settings
-                        </ListSubheader>
-
-                    }
                     className={classes.root}
                 >
                     {/* General */}
@@ -107,46 +153,14 @@ export function ExtraSideBarMobile(props) {
                     </ListItem>
                     <Collapse in={isOpenList(`ORGANIZATION`)} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
-                            <Link to="/setting/org/general">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="General" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/setting/org/user-roles">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="User & Role" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/setting/org/drivers">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Drivers" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/setting/org/tags">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Tags" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/setting/org/feature-management">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Feature Management" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/setting/org/activity-log">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Activity Log" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/setting/org/apps">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Apps" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/setting/org/billing">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Billing" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
+                            { renderListItem("General", "/setting/org/general") }
+                            { renderListItem("User & Role", "/setting/org/user-roles") }
+                            { renderListItem("Drivers", "/setting/org/drivers") }
+                            { renderListItem("Tags", "/setting/org/tags") }
+                            { renderListItem("Feature Management", "/setting/org/feature-management") }
+                            { renderListItem("Activity Log", "/setting/org/activity-log") }
+                            { renderListItem("Apps", "/setting/org/apps") }
+                            { renderListItem("Billing", "/setting/org/billing") }
                         </List>
                     </Collapse>
 
@@ -157,16 +171,8 @@ export function ExtraSideBarMobile(props) {
                     </ListItem>
                     <Collapse in={isOpenList(`DEVICES`)} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
-                            <Link to="/setting/device/devices">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Devices" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/setting/device/configuration">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Configuration" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
+                            { renderListItem("Devices", "/setting/device/devices") }
+                            { renderListItem("Configuration", "/setting/device/configuration") }
                         </List>
                     </Collapse>
 
@@ -177,46 +183,14 @@ export function ExtraSideBarMobile(props) {
                     </ListItem>
                     <Collapse in={isOpenList(`FLEET`)} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
-                            <Link to="/setting/fleet/driver-app">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Driver App" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/setting/fleet/safety">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Safety" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/setting/fleet/compliance">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Compliance" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/setting/fleet/dispatch">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Dispatch" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/setting/fleet/fuel-energy">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Fuel & Energy" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/setting/fleet/driver-activity">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Driver Activity" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/setting/fleet/add-geo">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Addresses/Geofences" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/setting/fleet/maps">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Maps" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
+                            { renderListItem("Driver App", "/setting/fleet/driver-app") }
+                            { renderListItem("Safety", "/setting/fleet/safety") }
+                            { renderListItem("Compliance", "/setting/fleet/compliance") }
+                            { renderListItem("Dispatch", "/setting/fleet/dispatch") }
+                            { renderListItem("Fuel & Energy", "/setting/fleet/fuel-energy") }
+                            { renderListItem("Driver Activity", "/setting/fleet/driver-activity") }
+                            { renderListItem("Addresses/Geofences", "/setting/fleet/add-geo") }
+                            { renderListItem("Maps", "/setting/fleet/maps") }
                         </List>
                     </Collapse>
 
@@ -227,21 +201,9 @@ export function ExtraSideBarMobile(props) {
                     </ListItem>
                     <Collapse in={isOpenList(`LinksSharing`)} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
-                            <Link to="/setting/link-sharing/alert-contacts">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Alert Contacts" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/setting/link-sharing/scheduled-reports">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Scheduled Reports" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/setting/link-sharing/live-sharing">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Live Sharing" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
+                            { renderListItem("Alert Contacts", "/setting/link-sharing/alert-contacts") }
+                            { renderListItem("Scheduled Reports", "/setting/link-sharing/scheduled-reports") }
+                            { renderListItem("Live Sharing", "/setting/link-sharing/live-sharing") }
                         </List>
                     </Collapse>
 
@@ -252,21 +214,9 @@ export function ExtraSideBarMobile(props) {
                     </ListItem>
                     <Collapse in={isOpenList(`DEVELOPER`)} timeout="auto" unmountOnExit>
                         <List component="div" disablePadding>
-                            <Link to="/setting/developer/metrics">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Developer Metrics" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/setting/developer/api-tokens">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="API Tokens" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
-                            <Link to="/setting/developer/webhooks">
-                                <ListItem button className={classes.nested}>
-                                    <ListItemText primary="Webhooks" classes={ {primary: classes.txtListItemPrimarySub} }/>
-                                </ListItem>
-                            </Link>
+                            { renderListItem("Developer Metrics", "/setting/developer/metrics") }
+                            { renderListItem("API Tokens", "/setting/developer/api-tokens") }
+                            { renderListItem("Webhooks", "/setting/developer/webhooks") }
                         </List>
                     </Collapse>
                 </List>

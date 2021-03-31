@@ -161,11 +161,6 @@ export function ExtraSideBar(props) {
         <List
           component="nav"
           aria-labelledby="nested-list-subheader"
-          subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
-              Settings
-            </ListSubheader>
-          }
           className={classes.root}
         >
           {/* General */}

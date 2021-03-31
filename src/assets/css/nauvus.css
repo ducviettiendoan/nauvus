@@ -239,6 +239,8 @@
   background-color: white;
   height: 100vh;
   border-right: 1px solid #25345c1f;
+  position: sticky;
+  top: 0
 }
 
 .extraContainer {
