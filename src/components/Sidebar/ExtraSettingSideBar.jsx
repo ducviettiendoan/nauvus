@@ -171,7 +171,7 @@ export function ExtraSideBar(props) {
           <Collapse in={isOpenList(`ORGANIZATION`)} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               { renderListItem("General", "/setting/org/general") }
-              { renderListItem("User & Role", "/setting/org/user-roles") }
+              { renderListItem("User & Roles", "/setting/org/user-roles") }
               { renderListItem("Drivers", "/setting/org/drivers") }
               { renderListItem("Tags", "/setting/org/tags") }
               { renderListItem("Feature Management", "/setting/org/feature-management") }

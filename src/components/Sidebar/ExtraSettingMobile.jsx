@@ -20,7 +20,8 @@ import {
 
 const styles = {
     extraSidebarContainer: {
-        padding: '0 18px'
+        padding: '0 18px',
+        maxHeight: "80vh"
     },
     extraSidebarSearchContainer: {
         height: '68px',
@@ -58,6 +59,28 @@ const styles = {
         borderRight: "2px solid #121212",
         height: "10px",
         borderRadius: "1px",
+    },
+    dropDown: {
+        width: "100%",
+        background: "white",
+        border: "1px solid #c4c4c4",
+        borderRadius: "4px",
+        fontWeight: 700,
+        color: "#25345C",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "8px",
+        fontSize: "14px"
+    },
+    dropDownWrapper: {
+        width: "100vw",
+        padding: "16px",
+        position: "sticky",
+        top: "68px",
+        zIndex: 1000,
+        background: "white",
+        borderTop: "1px solid #c4c4c4",
     }
 };
 
@@ -65,6 +88,8 @@ import { connect } from 'react-redux';
 import { loadVehicles } from 'reducers/vehicle';
 import { IRootState } from 'reducers';
 import { Link } from "react-router-dom";
+import {Divider, Drawer} from "@material-ui/core";
+import ArrowUpDownIcon from "../Icons/ArrowUpDownIcon";
 
 const useStyles = makeStyles(styles);
 var ps;
@@ -72,53 +97,93 @@ export function ExtraSideBarMobile(props) {
     const location = useLocation();
     const history = useHistory();
     const classes = useStyles();
-    const mainPanelVehicleSideBar = React.createRef();
-
-    const [open, setOpen] = React.useState(true);
-    const [currentTab, setCurrentTab] = React.useState("ORGANIZATION");
+    const [open, setOpen] = React.useState(false);
     const [currentLink, setCurrentLink] = React.useState("");
+    const [currentPage, setCurrentPage] = React.useState("");
 
     React.useEffect(() => {
         initActive();
     }, []);
 
-    const handleClick = (tabName) => {
-        console.log(`on click tab: ${tabName}`)
-        if (tabName === currentTab) {
-            setOpen(!open);
-        } else {
-            setOpen(true);
-            setCurrentTab(tabName);
+    React.useEffect(() => {
+        switch (currentLink) {
+            case "/setting/org/general":
+                setCurrentPage("General")
+                break;
+            case "/setting/org/user-roles":
+                setCurrentPage("User & Roles")
+                break;
+            case "/setting/org/drivers":
+                setCurrentPage("Drivers")
+                break;
+            case "/setting/org/tags":
+                setCurrentPage("Tags")
+                break;
+            case "/setting/org/feature-management":
+                setCurrentPage("Feature Management")
+                break;
+            case "/setting/org/activity-log":
+                setCurrentPage("Activity Log")
+                break;
+            case "/setting/org/apps":
+                setCurrentPage("Apps")
+                break;
+            case "/setting/org/billing":
+                setCurrentPage("Billing")
+                break;
+            case "/setting/device/devices":
+                setCurrentPage("Devices")
+                break;
+            case "/setting/device/configuration":
+                setCurrentPage("Configuration")
+                break;
+            case "/setting/fleet/driver-app":
+                setCurrentPage("Driver App")
+                break;
+            case "/setting/fleet/safety":
+                setCurrentPage("Safety")
+                break;
+            case "/setting/fleet/compliance":
+                setCurrentPage("Compliance")
+                break;
+            case "/setting/fleet/dispatch":
+                setCurrentPage("Dispatch")
+                break;
+            case "/setting/fleet/fuel-energy":
+                setCurrentPage("Fuel & Energy")
+                break;
+            case "/setting/fleet/driver-activity":
+                setCurrentPage("Driver Activity")
+                break;
+            case "/setting/fleet/add-geo":
+                setCurrentPage("Addresses/Geofences")
+                break;
+            case "/setting/fleet/maps":
+                setCurrentPage("Maps")
+                break;
+            case "/setting/link-sharing/alert-contacts":
+                setCurrentPage("Alert Contacts")
+                break;
+            case "/setting/link-sharing/scheduled-reports":
+                setCurrentPage("Scheduled Reports")
+                break;
+            case "/setting/link-sharing/live-sharing":
+                setCurrentPage("Live Sharing")
+                break;
+            case "/setting/developer/metrics":
+                setCurrentPage("Developer Metrics")
+                break;
+            case "/setting/developer/api-tokens":
+                setCurrentPage("API Tokens")
+                break;
+            case "/setting/developer/webhooks":
+                setCurrentPage("Webhooks")
+                break;
+
         }
-    };
-
-    const isOpenList = (tabName) => {
-        return (open && currentTab === tabName);
-    }
-
+    }, [currentLink])
     const initActive = () => {
         setCurrentLink(location.pathname);
-        if (window.location.href.indexOf("/setting/org") > -1) {
-            setCurrentTab("ORGANIZATION");
-        } else if (window.location.href.indexOf("/setting/device") > -1) {
-            setCurrentTab("DEVICES");
-        } else if (window.location.href.indexOf("/setting/fleet") > -1) {
-            setCurrentTab("FLEET");
-        } else if (window.location.href.indexOf("/setting/link-sharing") > -1) {
-            setCurrentTab("LinksSharing");
-        } else if (window.location.href.indexOf("/setting/developer") > -1) {
-            setCurrentTab("DEVELOPER");
-        }
-    }
-
-    const checkActive = (link) => {
-        console.log(`checkActive`)
-        return (link === currentLink ? true : false)
-    }
-
-    const onClickListItem = (link) => {
-        setCurrentLink(link);
-        history.push(link);
     }
 
     const renderListItem = (text, link) => {
@@ -132,101 +197,106 @@ export function ExtraSideBarMobile(props) {
         )
     }
 
+    const toggleDrawer = (bool) => (event) => {
+        if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+            return;
+        }
+
+        setOpen(bool);
+    };
+
+    const onClickListItem = (link) => {
+        setOpen(false)
+        setCurrentLink(link);
+        history.push(link);
+    }
+
     return (
         <>
-            <div className={ classes.extraSidebarContainer }>
-                <Row className={ classes.extraSidebarSearchContainer }>
-                    <Col>
-                        <CustomSearchInput />
-                    </Col>
-                </Row>
+            <React.Fragment>
+                <div className={classes.dropDownWrapper}>
+                    <div className={classes.dropDown} onClick={toggleDrawer( true)}>
+                        <div>{currentPage}</div>
+                        <ArrowUpDownIcon />
 
-                <List
-                    component="nav"
-                    aria-labelledby="nested-list-subheader"
-                    className={classes.root}
-                >
-                    {/* General */}
-                    <ListItem button onClick={() => handleClick(`ORGANIZATION`)}>
-                        <ListItemText primary="ORGANIZATION" classes={ {primary: classes.txtListItemPrimary} } />
-                        {isOpenList(`ORGANIZATION`) ? <ExpandLess /> : <ExpandMore />}
-                    </ListItem>
-                    <Collapse in={isOpenList(`ORGANIZATION`)} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                            { renderListItem("General", "/setting/org/general") }
-                            { renderListItem("User & Role", "/setting/org/user-roles") }
-                            { renderListItem("Drivers", "/setting/org/drivers") }
-                            { renderListItem("Tags", "/setting/org/tags") }
-                            { renderListItem("Feature Management", "/setting/org/feature-management") }
-                            { renderListItem("Activity Log", "/setting/org/activity-log") }
-                            { renderListItem("Apps", "/setting/org/apps") }
-                            { renderListItem("Billing", "/setting/org/billing") }
-                        </List>
-                    </Collapse>
+                    </div>
+                </div>
+                <Drawer anchor={"bottom"} open={open} onClose={toggleDrawer(false)}>
+                    <div className={ classes.extraSidebarContainer }>
+                        <List
+                            component="nav"
+                            aria-labelledby="nested-list-subheader"
+                            className={classes.root}
+                        >
+                            {/* General */}
+                            <ListItem >
+                                <ListItemText primary="ORGANIZATION" classes={ {primary: classes.txtListItemPrimary} } />
+                            </ListItem>
+                            <List component="div" disablePadding>
+                                { renderListItem("General", "/setting/org/general") }
+                                { renderListItem("User & Role", "/setting/org/user-roles") }
+                                { renderListItem("Drivers", "/setting/org/drivers") }
+                                { renderListItem("Tags", "/setting/org/tags") }
+                                { renderListItem("Feature Management", "/setting/org/feature-management") }
+                                { renderListItem("Activity Log", "/setting/org/activity-log") }
+                                { renderListItem("Apps", "/setting/org/apps") }
+                                { renderListItem("Billing", "/setting/org/billing") }
+                            </List>
+                            <Divider/>
+                            {/* Devices */}
+                            <ListItem >
+                                <ListItemText primary="DEVICES" classes={ {primary: classes.txtListItemPrimary} } />
+                            </ListItem>
+                            <List component="div" disablePadding>
+                                { renderListItem("Devices", "/setting/device/devices") }
+                                { renderListItem("Configuration", "/setting/device/configuration") }
+                            </List>
+                            <Divider/>
+                            {/* Fleet */}
+                            <ListItem>
+                                <ListItemText primary="FLEET" classes={ {primary: classes.txtListItemPrimary} }  />
+                            </ListItem>
+                            <List component="div" disablePadding>
+                                { renderListItem("Driver App", "/setting/fleet/driver-app") }
+                                { renderListItem("Safety", "/setting/fleet/safety") }
+                                { renderListItem("Compliance", "/setting/fleet/compliance") }
+                                { renderListItem("Dispatch", "/setting/fleet/dispatch") }
+                                { renderListItem("Fuel & Energy", "/setting/fleet/fuel-energy") }
+                                { renderListItem("Driver Activity", "/setting/fleet/driver-activity") }
+                                { renderListItem("Addresses/Geofences", "/setting/fleet/add-geo") }
+                                { renderListItem("Maps", "/setting/fleet/maps") }
+                            </List>
+                            <Divider/>
+                            {/* Links & Sharing */}
+                            <ListItem>
+                                <ListItemText primary="LINKS & SHARING" classes={ {primary: classes.txtListItemPrimary} }  />
+                            </ListItem>
+                            <List component="div" disablePadding>
+                                { renderListItem("Alert Contacts", "/setting/link-sharing/alert-contacts") }
+                                { renderListItem("Scheduled Reports", "/setting/link-sharing/scheduled-reports") }
+                                { renderListItem("Live Sharing", "/setting/link-sharing/live-sharing") }
+                            </List>
+                            <Divider/>
 
-                    {/* Devices */}
-                    <ListItem button onClick={() => handleClick(`DEVICES`)}>
-                        <ListItemText primary="DEVICES" classes={ {primary: classes.txtListItemPrimary} } />
-                        {isOpenList(`DEVICES`) ? <ExpandLess /> : <ExpandMore />}
-                    </ListItem>
-                    <Collapse in={isOpenList(`DEVICES`)} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                            { renderListItem("Devices", "/setting/device/devices") }
-                            { renderListItem("Configuration", "/setting/device/configuration") }
+                            {/* Developer */}
+                            <ListItem>
+                                <ListItemText primary="DEVELOPER" classes={ {primary: classes.txtListItemPrimary} } />
+                            </ListItem>
+                            <List component="div" disablePadding>
+                                { renderListItem("Developer Metrics", "/setting/developer/metrics") }
+                                { renderListItem("API Tokens", "/setting/developer/api-tokens") }
+                                { renderListItem("Webhooks", "/setting/developer/webhooks") }
+                            </List>
                         </List>
-                    </Collapse>
-
-                    {/* Fleet */}
-                    <ListItem button onClick={() => handleClick(`FLEET`)}>
-                        <ListItemText primary="FLEET" classes={ {primary: classes.txtListItemPrimary} }  />
-                        {isOpenList(`FLEET`) ? <ExpandLess /> : <ExpandMore />}
-                    </ListItem>
-                    <Collapse in={isOpenList(`FLEET`)} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                            { renderListItem("Driver App", "/setting/fleet/driver-app") }
-                            { renderListItem("Safety", "/setting/fleet/safety") }
-                            { renderListItem("Compliance", "/setting/fleet/compliance") }
-                            { renderListItem("Dispatch", "/setting/fleet/dispatch") }
-                            { renderListItem("Fuel & Energy", "/setting/fleet/fuel-energy") }
-                            { renderListItem("Driver Activity", "/setting/fleet/driver-activity") }
-                            { renderListItem("Addresses/Geofences", "/setting/fleet/add-geo") }
-                            { renderListItem("Maps", "/setting/fleet/maps") }
-                        </List>
-                    </Collapse>
-
-                    {/* Links & Sharing */}
-                    <ListItem button onClick={() => handleClick(`LinksSharing`)}>
-                        <ListItemText primary="LINKS & SHARING" classes={ {primary: classes.txtListItemPrimary} }  />
-                        {isOpenList(`LinksSharing`) ? <ExpandLess /> : <ExpandMore />}
-                    </ListItem>
-                    <Collapse in={isOpenList(`LinksSharing`)} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                            { renderListItem("Alert Contacts", "/setting/link-sharing/alert-contacts") }
-                            { renderListItem("Scheduled Reports", "/setting/link-sharing/scheduled-reports") }
-                            { renderListItem("Live Sharing", "/setting/link-sharing/live-sharing") }
-                        </List>
-                    </Collapse>
-
-                    {/* Developer */}
-                    <ListItem button onClick={() => handleClick(`DEVELOPER`)}>
-                        <ListItemText primary="DEVELOPER" classes={ {primary: classes.txtListItemPrimary} } />
-                        {isOpenList(`DEVELOPER`) ? <ExpandLess /> : <ExpandMore />}
-                    </ListItem>
-                    <Collapse in={isOpenList(`DEVELOPER`)} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                            { renderListItem("Developer Metrics", "/setting/developer/metrics") }
-                            { renderListItem("API Tokens", "/setting/developer/api-tokens") }
-                            { renderListItem("Webhooks", "/setting/developer/webhooks") }
-                        </List>
-                    </Collapse>
-                </List>
-            </div>
+                    </div>
+                </Drawer>
+            </React.Fragment>
         </>
     );
 }
 
 export default connect(
-    ({ vehicle }: IRootState) => ({
+    ({ vehicle }) => ({
         vehicles: vehicle.vehicles
     }),
     {
