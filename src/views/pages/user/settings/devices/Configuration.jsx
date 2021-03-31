@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
@@ -8,65 +8,11 @@ import CardBody from "components/Card/CardBody.js";
 import Switch from "components/CustomSwitch/Switch.jsx"
 import CustomSlider from "components/CustomSlider/CustomSlider"
 import Button from "components/CustomButtons/Button.js";
-
-import {
-  cardTitle,
-  roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
-import { Divider, Grid } from "@material-ui/core";
+import {Divider, Grid} from "@material-ui/core";
 import RadioButton from "../../../../Components/RadioButton";
-import SearchBox from "../../../../../components/SearchBox/SearchBox";
+import SearchBox from "components/SearchBox/SearchBox";
 
 const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0"
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem"
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px"
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px"
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px"
-    }
-  },
-  iconRose: {
-    color: roseColor
-  },
-  marginTop30: {
-    marginTop: "30px"
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px"
-    }
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  },
   cardContainer: {
     padding: "0px 0px 0px 16px !important"
   },
@@ -190,7 +136,7 @@ export default function Configuration() {
   });
 
   const handleChange = (event) => {
-    setCheckedState({ ...checkedState, [event.target.name]: event.target.checked });
+    setCheckedState({...checkedState, [event.target.name]: event.target.checked});
   };
 
   const [sliderValue, setSliderValue] = useState({
@@ -212,7 +158,6 @@ export default function Configuration() {
                   </GridItem>
                   {mock.map((device, i) => {
                     return (
-
                       <GridItem key={i} className={classes.cardMultipleContent}>
                         <GridItem xs={12} sm={12} md={12} className={classes.gridContent}>
                           <CardBody className={classes.cardItem}>
@@ -220,81 +165,80 @@ export default function Configuration() {
                               Enable Vehicle Battery Conservation Mode
                             </GridItem>
                             <GridItem className={classes.contentItem}>
-                              By default, the Samsara Vehicle Gateway uses a small amount of vehicle battery when idle. This
+                              By default, the Samsara Vehicle Gateway uses a small amount of vehicle battery when idle.
+                              This
                               is the recommended setting for most vehicles.
-                              Vehicle Battery Conservation Mode further reduces consumption of the vehicle battery by the
+                              Vehicle Battery Conservation Mode further reduces consumption of the vehicle battery by
+                              the
                               Gateway when the vehicle is not in use, and is intended
                               for vehicles that are subject to battery drain under default settings.
                             </GridItem>
                             <GridItem className={classes.contentItem}>
                               When in Vehicle Battery Conservation Mode, Gateway functionality including WiFi hotspot
                               connectivity and camera video retrieval will not be available.
-                              The Gateway will wake when vehicle motion resumes, resulting in reduced GPS tracking accuracy
+                              The Gateway will wake when vehicle motion resumes, resulting in reduced GPS tracking
+                              accuracy
                               at the beginning of a trip.
                             </GridItem>
                           </CardBody>
-                          <Switch checked={checkedState[device]} onChange={handleChange} name={device} />
+                          <Switch checked={checkedState[device]} onChange={handleChange} name={device}/>
                         </GridItem>
                         {checkedState[device] === true
-                          && (
-                            <GridItem className={classes.advancedSettings}>
-                              <GridItem className={classes.advancedTitle}>Advanced Settings</GridItem>
-                              <GridItem className={classes.advancedTagContainer}>
-                                <GridItem className={classes.advancedChoice}>Vehicles this applies to:</GridItem>
-                                <GridItem className={classes.tagChoice}>
-                                  <GridItem className={classes.radioButtonGroup}>
-                                    <Grid item>
-                                      <RadioButton checked={true} />
-                                  All Vehicles
-                                </Grid>
-                                    <Grid item>
-                                      <RadioButton checked={false} />
-                                  Specific Tags
-                                </Grid>
-                                  </GridItem>
-                                  <GridItem className={classes.inputWrapper}>
-                                    <SearchBox placeholder={"Search contacts"} />
-                                  </GridItem>
+                        && (
+                          <GridItem className={classes.advancedSettings}>
+                            <GridItem className={classes.advancedTitle}>Advanced Settings</GridItem>
+                            <GridItem className={classes.advancedTagContainer}>
+                              <GridItem className={classes.advancedChoice}>Vehicles this applies to:</GridItem>
+                              <GridItem className={classes.tagChoice}>
+                                <GridItem className={classes.radioButtonGroup}>
+                                  <Grid item>
+                                    <RadioButton checked={true}/>
+                                    All Vehicles
+                                  </Grid>
+                                  <Grid item>
+                                    <RadioButton checked={false}/>
+                                    Specific Tags
+                                  </Grid>
+                                </GridItem>
+                                <GridItem className={classes.inputWrapper}>
+                                  <SearchBox placeholder={"Search contacts"}/>
                                 </GridItem>
                               </GridItem>
-                              <GridItem className={classes.engineTitle}>Engine shut-off time</GridItem>
-                              <GridItem className={classes.engineDescription}>Minimum time the engine must be off for Battery
-                            Conservation Mode to be enabled.</GridItem>
-                              <GridItem className={classes.sliderContainer}>
-                                <CustomSlider
-                                  allSlider={sliderValue}
-                                  step={1} min={0} max={252} sliderDefaultValue={84}
-                                  setSliderValue={setSliderValue}
-                                  name={device}
-                                  type={"hours"} />
-                              </GridItem>
-                              <GridItem className={classes.buttonContainer}>
-                                <Button
-                                  round
-                                  className="btn-round-active w-62 mr-2"
-                                >
-                                  Save
-                              </Button>
-                                <Button
-                                  round
-                                  className="btn-round-white w-74 mr-2"
-                                >
-                                  Cancel
-                              </Button>
-                              </GridItem>
                             </GridItem>
-                          )
+                            <GridItem className={classes.engineTitle}>Engine shut-off time</GridItem>
+                            <GridItem className={classes.engineDescription}>Minimum time the engine must be off for
+                              Battery
+                              Conservation Mode to be enabled.</GridItem>
+                            <GridItem className={classes.sliderContainer}>
+                              <CustomSlider
+                                allSlider={sliderValue}
+                                step={1} min={0} max={252} sliderDefaultValue={84}
+                                setSliderValue={setSliderValue}
+                                name={device}
+                                type={"hours"}/>
+                            </GridItem>
+                            <GridItem className={classes.buttonContainer}>
+                              <Button
+                                round
+                                className="btn-round-active w-62 mr-2"
+                              >
+                                Save
+                              </Button>
+                              <Button
+                                round
+                                className="btn-round-white w-74 mr-2"
+                              >
+                                Cancel
+                              </Button>
+                            </GridItem>
+                          </GridItem>
+                        )
                         }
-                        <Divider variant="fullWidth" light />
+                        <Divider variant="fullWidth" light/>
                       </GridItem>
-
-                      
-
                     )
                   })}
                 </CardBody>
-
-
               </Card>
             </GridItem>
           </GridContainer>

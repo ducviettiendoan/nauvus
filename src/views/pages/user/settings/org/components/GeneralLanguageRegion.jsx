@@ -4,21 +4,10 @@ import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 // core components
 import GridItem from "components/Grid/GridItem.js";
-import { Row, Col } from "reactstrap";
+import { Row } from "reactstrap";
 import CustomSelect from "components/CustomSelect/CustomSelect"
 
 const styles = {
-  cardContainer: {
-    marginTop: "15px !important",
-    height: "calc(100vh - 100px)"
-  },
-  contentContainer: {
-    display: "flex",
-    margin: "16px 7px 16px 16px !important",
-  },
-  areaMenu: {
-    width: "237px"
-  },
   vehicleHeader: {
     width: "78px",
     height: "21px",

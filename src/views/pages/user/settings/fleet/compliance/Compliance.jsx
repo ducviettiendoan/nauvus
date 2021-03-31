@@ -6,8 +6,6 @@ import Card from "components/Card/Card.js";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-
-
 import {Row, Col} from "reactstrap";
 import ComplianceCarrierInfo from "./ComplianceCarrierInfo";
 import ComplianceNotifications from "./ComplianceNotifications";
@@ -28,14 +26,6 @@ const styles = {
   areaMenu: {
     width: "237px"
   },
-  testimonialIcon: {
-    color: "red",
-    marginTop: "30px",
-    "& svg": {
-      width: "20px",
-      height: "20px"
-    }
-  },
   footer: {
     position: 'absolute',
     bottom: '16px',
@@ -51,12 +41,7 @@ const styles = {
     }
   },
   root: {
-    width: '100%',
-    // display: flex;
-    alignItems: "center",
-    //padding: "14px 16px",
     width: "237px",
-    //height: "65px",
     background: "#FFFFFF",
     border: "1px solid #ECEEF0",
     boxSizing: "border-box",
@@ -81,11 +66,6 @@ const styles = {
     lineHeight: "18px",
     color: "#C4C4C4",
   },
-  iconRoot: {
-    marginTop: "-8px",
-    marginLeft: "-5px",
-    minWidth: "29px",
-  },
   listItemButton: {
     "&:hover": {
       background: 'none !important'
@@ -94,18 +74,6 @@ const styles = {
   listItemRoot: {
     paddingTop: '20px'
   },
-  textFieldRoot: {
-    fontWeight: 'normal',
-    fontSize: '14px',
-    lineHeight: '21px',
-    color: '#C4C4C4'
-  },
-  textInputRoot: {
-    fontWeight: 'bold',
-    fontSize: '14px',
-    lineHeight: '21px',
-    color: '#25345C'
-  }
 };
 
 const useStyles = makeStyles(styles);

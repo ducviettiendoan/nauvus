@@ -5,73 +5,16 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import GenPaginationV1 from "components/Pagination/GenPaginationV1";
-
 import Button from "components/CustomButtons/Button.js";
 import {Row, Col} from "reactstrap";
-
-import {
-  cardTitle,
-  roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
 import avatar from "assets/img/faces/avatar.jpg";
 import VerifiedIcon from "components/Icons/VerifiedIcon"
 import CardIcon from "components/Icons/CardIcon"
 import HelpIcon from "components/Icons/HelpIcon"
 
 const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0"
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem"
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px"
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px"
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px"
-    }
-  },
-  iconRose: {
-    color: roseColor
-  },
-  marginTop30: {
-    marginTop: "30px"
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px"
-    }
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  },
   textSub: {
     fontWeight: '400',
     fontSize: '16px',
@@ -159,7 +102,6 @@ const styles = {
     padding: "0 !important",
     marginTop: "20px"
   },
-
   card: {
     paddingRight: "0 !important",
     marginTop: "25px",
@@ -177,7 +119,6 @@ const styles = {
     margin: "15px",
   },
   helpBtn: {
-    // marginLeft: "10px"
     textAlign: "right"
   }
 };
@@ -229,9 +170,7 @@ export default function Summary() {
 
   const formatInvoice = (cell, row) => {
     return <>
-
       <div className={classes.textSub}>{cell}</div>
-
     </>
   }
 
@@ -292,7 +231,6 @@ export default function Summary() {
                     Your Account
                     <GridContainer>
                       <GridItem xs={10} sm={10} md={10} lg={5} className={classes.paymentSection}>
-
                         <GridContainer>
                           <GridItem xs={1} sm={1} md={1} className={classes.card}>
                             <CardIcon style={{color: "#FFFFFF", width: '18px', height: '21px'}}/>
@@ -304,15 +242,12 @@ export default function Summary() {
                             <GridItem xs={12} sm={12} md={12} className={classes.paymentAmount}>
                               $30,659,45
                             </GridItem>
-
                           </GridItem>
                           <GridItem xs={12} sm={12} md={12} className={classes.paymentView}>
                             View All
                           </GridItem>
-
                         </GridContainer>
                       </GridItem>
-
                       <GridItem xs={3} sm={3} md={5} className={classes.paymentSection}>
                         <GridContainer>
                           <GridItem xs={1} sm={1} md={1} className={classes.card}>
@@ -325,7 +260,6 @@ export default function Summary() {
                             <GridItem xs={12} sm={12} md={12} className={classes.paymentAmount}>
                               $28,750,00
                             </GridItem>
-
                           </GridItem>
                           <GridItem xs={12} sm={12} md={12} className={classes.paymentView}>
                             View All
@@ -334,13 +268,10 @@ export default function Summary() {
                       </GridItem>
                     </GridContainer>
                   </GridItem>
-
-
                   <GridItem xs={6} sm={6} md={6} className={classes.paymentTitle}>
                     Payment Method
                     <GridContainer>
                       <GridItem xs={7} sm={7} md={7} className={classes.paymentSection}>
-
                         <GridContainer>
                           <GridItem xs={1} sm={1} md={1} className={classes.cardInfo}>
                             <CardIcon style={{color: "#FFFFFF", width: '18px', height: '21px'}}/>
@@ -352,24 +283,17 @@ export default function Summary() {
                             <GridItem xs={12} sm={12} md={12} className={classes.paymentAmount}>
                               MASTERCARD ••••1887
                             </GridItem>
-
                           </GridItem>
                           <GridItem xs={12} sm={12} md={12} className={classes.paymentView}>
                             Change payment method
                           </GridItem>
-
                         </GridContainer>
                       </GridItem>
-
-
                     </GridContainer>
                   </GridItem>
                 </GridContainer>
-
-
               </GridItem>
             </CardBody>
-
             <ToolkitProvider
               data={dumpDataSummary}
               keyField="_id"
@@ -404,7 +328,6 @@ export default function Summary() {
                   text: "Status",
                   formatter: formatStatus
                 }
-
               ]}
             >
               {props => (
@@ -418,7 +341,6 @@ export default function Summary() {
                 </div>
               )}
             </ToolkitProvider>
-
           </Card>
         </GridItem>
       </GridContainer>

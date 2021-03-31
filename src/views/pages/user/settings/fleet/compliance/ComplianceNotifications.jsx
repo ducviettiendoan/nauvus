@@ -5,63 +5,9 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import CardBody from "components/Card/CardBody.js";
 import Switch from "components/CustomSwitch/Switch.jsx"
-
-import {
-  cardTitle,
-  roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
 import {Divider} from "@material-ui/core";
 
 const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0"
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem"
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px"
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px"
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px"
-    }
-  },
-  iconRose: {
-    color: roseColor
-  },
-  marginTop30: {
-    marginTop: "30px"
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px"
-    }
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  },
   cardContainer: {
     padding: "0px 0px 0px 16px !important"
   },
@@ -106,65 +52,6 @@ const styles = {
     lineHeight: "21px",
     overflow: "hidden"
   },
-  advancedSettings: {
-    padding: "2px 0px 0px 0px !important",
-    marginLeft: "-6px !important",
-  },
-  advancedTitle: {
-    padding: "0px 0px 16px 0px !important",
-    fontFamily: "Lato",
-    fontStyle: "normal",
-    fontWeight: "bold",
-    fontSize: "14px",
-    lineHeight: "21px",
-    color: "#25345C"
-  },
-  advancedTagContainer: {
-    padding: "0px 0px 0px 0px !important",
-  },
-  advancedChoice: {
-    fontFamily: "Lato",
-    fontStyle: "normal",
-    fontWeight: 400,
-    fontSize: "14px",
-    lineHeight: "21px",
-    color: "#25345C",
-    padding: "0px 0px 16px 0px !important",
-  },
-  tagChoice: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: "0px 0px 0px 0px !important"
-  },
-  radioButtonGroup: {
-    display: "flex",
-    flexDirection: "row",
-    padding: "0px 0px 0px 0px !important"
-  },
-  inputWrapper: {
-    textAlign: "right",
-    padding: "0px 0px 0px 0px !important"
-  },
-  engineTitle: {
-    padding: "0px 0px 16px 0px !important",
-    fontSize: "16px",
-    lineHeight: "21px",
-    fontFamily: "Lato",
-    fontStyle: "normal",
-    fontWeight: 400,
-    color: "#25345C",
-  },
-  engineDescription: {
-    padding: "0px 0px 24px 0px !important",
-    fontSize: "16px",
-    lineHeight: "21px",
-    fontFamily: "Lato",
-    fontStyle: "normal",
-    fontWeight: "normal",
-    color: "#B4B4B4",
-  },
-
 };
 
 const useStyles = makeStyles(styles);

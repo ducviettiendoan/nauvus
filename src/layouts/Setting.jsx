@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import cx from "classnames";
 import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 // creates a beautiful scrollbar
@@ -26,6 +26,7 @@ import Loading from "components/Loading/Loading";
 import { connect } from 'react-redux';
 import { getUserInfo } from '../reducers/authentication';
 import { IRootState } from '../reducers';
+import ExtraSettingMobile from "../components/Sidebar/ExtraSettingMobile";
 
 var ps;
 
@@ -37,6 +38,7 @@ export function Dashboard(props) {
   // states and functions
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [miniActive, setMiniActive] = React.useState(true);
+  const [displaySetting, setDisplaySetting] = React.useState(true)
   const [image, setImage] = React.useState("");
   const [color, setColor] = React.useState("blue");
   const [bgColor, setBgColor] = React.useState("white");
@@ -62,6 +64,15 @@ export function Dashboard(props) {
   // React.useEffect(() => {
     
   // });
+
+  // To render correct layout for mobile on open
+  React.useEffect(() => {
+    if (window.innerWidth >= 960) {
+      setDisplaySetting(true)
+    } else {
+      setDisplaySetting(false)
+    }
+  }, [])
 
   React.useEffect(() => {
     // console.log(`fetchSession: ${fetchSession}`);
@@ -167,8 +178,12 @@ export function Dashboard(props) {
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
       setMobileOpen(false);
+      setDisplaySetting(true)
+    } else {
+      setDisplaySetting(false)
     }
   };
+
 
   const renderDataContent = () => {
     return (
@@ -178,10 +193,12 @@ export function Dashboard(props) {
           miniActive={miniActive}
           brandText={getActiveRoute(settingRoutes)}
           handleDrawerToggle={handleDrawerToggle}
+          displaySetting={displaySetting}
           {...rest}
         />
         <div className="layout-container">
           <div className={classes.content}>
+            {displaySetting || <ExtraSettingMobile/>}
             <div className={classes.container}>
               <Switch>
                 {getRoutes(settingRoutes)}
@@ -201,6 +218,11 @@ export function Dashboard(props) {
     history.push("/auth/sign-in");
   }
 
+  // useEffect(() => {
+  //   setInterval(()=> {
+  //     console.log(mobileOpen)
+  //   }, 1000)
+  // },[])
   return (
     <>
       <div className={classes.wrapper}>
@@ -224,10 +246,14 @@ export function Dashboard(props) {
               { props.isAuthenticated ?
                 <>
                   <div id="main">
-                    <div className="extraSidebar">
-                      <ExtraSettingSideBar />
+                    {displaySetting &&
+                      <div className="extraSidebar">
+                        <ExtraSettingSideBar/>
+                      </div>
+                    }
+                    <div className="extraContainer">
+                      {renderDataContent()}
                     </div>
-                    <div className="extraContainer">{ renderDataContent() }</div>
                   </div>
                 </> :
                 <>

@@ -2,18 +2,11 @@ import React from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-
-import {
-  cardTitle,
-  roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
 import Button from "components/CustomButtons/Button"
 import {Divider} from "@material-ui/core";
 import AddOutlined from "@material-ui/icons/AddOutlined";
@@ -42,7 +35,8 @@ const styles = {
   },
   descriptionCard: {
     padding: "0px 0px 16px 4px !important",
-    color: "#25345C !important"
+    color: "#25345C !important",
+    fontWeight: 400
   },
   readMoreButton: {
     padding: "0px 0px 10px 4px !important"

@@ -16,32 +16,6 @@ import {
 } from "assets/jss/material-dashboard-pro-react.js";
 
 const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0",
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem",
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px",
-  },
-  marginTop30: {
-    marginTop: "30px",
-  },
-  button: {
-    textTransform: "none",
-    borderRadius: "22px",
-    width: "100%",
-    height: "100%",
-    fontSize: "14px",
-    padding: "12px 22px",
-  },
   cardContainer: {
     padding: "0px 0px 0px `16px `!important",
     marginRight: "20px",
