@@ -45,19 +45,19 @@ const dashRoutes = [
     name: "Overview",
     icon: OverviewIcon,
     state: "overviewCollapse",
-    layout: "/user",
+    layout: "/o",
     views: [
       {
         path: "/overview",
         name: "Overview",
         component: Overview,
-        layout: "/user"
+        layout: "/o"
       },
       {
         path: "/assets",
         name: "Assets",
         component: Assets,
-        layout: "/user"
+        layout: "/o"
       },
     ]
   },
