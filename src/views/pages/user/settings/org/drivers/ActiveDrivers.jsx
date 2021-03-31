@@ -29,6 +29,8 @@ import GenPaginationV1 from "../../../../../../components/Pagination/GenPaginati
 import Chip from "@material-ui/core/Chip";
 import MoreIcon from "../../../../../../components/Icons/MoreIcon";
 
+import ToolboxButton from "components/CustomButtons/ToolboxButton";
+
 const styles = {
   cardTitle,
   cardTitleWhite: {
@@ -119,15 +121,6 @@ const styles = {
     alignItems: "center",
     textAlign: "left",
     marginTop: "8px"
-  },
-  headLeft: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    "& > div": {
-      marginBottom: "0 !important",
-      marginRight: 8
-    }
   },
   textName: {
     fontWeight: 'bold',
@@ -391,26 +384,8 @@ export default function ActiveDrivers() {
                           </GridItem>
                         </GridContainer>
                       </GridItem>
-                      <GridItem xs={12} sm={12} md={6} className={classes.headLeft}>
-                        <SettingSearchBox placeholder={"Search gateways"}/>
-                        <Button
-                          color="white"
-                          aria-label="edit"
-                          justIcon
-                          round
-                          className={`btn-36 ${classes.moreAction} mr-2`}
-                        >
-                          <FilterIcon style={{marginTop: 10, marginLeft: 7, color: "#25345C"}}/>
-                        </Button>
-                        <Button
-                          color="white"
-                          aria-label="edit"
-                          justIcon
-                          round
-                          className={`btn-36 ${classes.moreAction} mr-2`}
-                        >
-                          <DeleteIcon style={{marginTop: 7, marginLeft: 6, color: "#25345C"}}/>
-                        </Button>
+                      <GridItem xs={12} sm={12} md={6}>
+                        <ToolboxButton placeholder="Search gateways" showFilter showTrash />
                       </GridItem>
                     </GridContainer>
                   </CardBody>

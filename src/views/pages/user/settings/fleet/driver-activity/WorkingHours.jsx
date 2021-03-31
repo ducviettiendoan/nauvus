@@ -11,7 +11,7 @@ import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
-import SettingSearchBox from "../../../../../../components/SearchBox/SettingSearchBox";
+import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import GenPaginationV1 from "../../../../../../components/Pagination/GenPaginationV1";
@@ -242,16 +242,7 @@ export default function WorkingHours() {
                 </GridContainer>
               </GridItem>
               <GridItem xs={12} sm={12} md={6} className={classes.headLeft}>
-                <SettingSearchBox placeholder={"Search addresses"}/>
-                <Button
-                  color="white"
-                  aria-label="edit"
-                  justIcon
-                  round
-                  className={`btn-36 ${classes.moreAction} mr-2`}
-                >
-                  <FilterIcon style={{marginTop: 10, marginLeft: 7, color: "#25345C"}}/>
-                </Button>
+                <ToolboxButton placeholder={"Search addresses"} showTrash />
               </GridItem>
             </GridContainer>
           </CardBody>

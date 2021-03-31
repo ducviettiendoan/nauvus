@@ -436,6 +436,15 @@
   right: 10px;
 }
 
+
+.fixed-menu {
+  position: sticky;
+  bottom: 20px;
+  width: 100%;
+  z-index: 1000;
+  background-color: white;
+  border-top: 1px solid #F0F0F3;
+}
 /* 
 .table-nauvus td {
   border-bottom: 1px solid #ECEEF0;

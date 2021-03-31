@@ -24,14 +24,14 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import { Link } from "react-router-dom";
 
-import Button from "components/CustomButtons/Button.js";
+import ToolboxButton from "components/CustomButtons/ToolboxButton";
+import Button from "components/CustomButtons/Button";
 import BootstrapTable from "react-bootstrap-table-next";
 import { Row } from "reactstrap";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import EditIcon from "components/Icons/EditIcon";
 import DeleteIcon from "components/Icons/DeleteIcon";
 import DotIcon from "components/Icons/DotIcon";
-import SettingSearchBox from "components/SearchBox/SettingSearchBox";
 
 import AddOutlined from "@material-ui/icons/AddOutlined";
 
@@ -50,6 +50,15 @@ const styles = {
   cardCategory: {
     color: "#999999",
     marginTop: "10px",
+  },
+  headLeft: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    "& > div": {
+      marginBottom: "0 !important",
+      marginRight: 8
+    }
   },
   icon: {
     color: "#333333",
@@ -306,20 +315,8 @@ export default function Tags() {
                 Tag Lists (10)
               </GridItem>
 
-              <GridItem xs={8} sm={8} md={8}>
-                <GridContainer
-                  style={{ display: "flex", justifyContent: "flex-end" }}
-                >
-                  {/* <GridItem className={classes.liveSharingButton}> */}
-                  <SettingSearchBox placeholder={"Search for tag or email"} />
-                  <Button
-                    color="white"
-                    round
-                    className={`${classes.moreAction} ${classes.deleteButtonContainer}`}
-                  >
-                    <DeleteIcon className={classes.iconButtonHeader} />
-                  </Button>
-                </GridContainer>
+              <GridItem xs={8} sm={8} md={8} >
+                  <ToolboxButton placeholder={"Search for tag or email"} showFilter showTrash />
               </GridItem>
             </GridContainer>
             <GridContainer>
