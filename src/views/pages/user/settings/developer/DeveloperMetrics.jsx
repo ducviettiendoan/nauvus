@@ -16,55 +16,6 @@ import RequestDetails from "./developer-metrics/RequestDetails";
 
 
 const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0"
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem"
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px"
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px"
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px"
-    }
-  },
-  iconRose: {
-    color: roseColor
-  },
-  marginTop30: {
-    marginTop: "30px"
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px"
-    }
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  },
   topHeader: {
     display: "flex",
     justifyContent: "space-between",
@@ -73,10 +24,6 @@ const styles = {
   },
   topHeaderTitle: {
     textAlign: "left",
-  },
-  moreAction: {
-    background: "#FFFFFF !important",
-    border: "1px solid #ECEEF0 !important"
   },
 };
 
@@ -105,18 +52,18 @@ export default function DeveloperMetrics() {
       <GridItem xs={12} sm={12} md={12}>
         <GridContainer>
           <GridItem xs={12} sm={12} md={12}>
-            { isShowDetail ?
-              <RequestDetails onBack={ onBackApiTraffic }  />
-            : 
-            <>
-              <GridContainer className={classes.topHeader}>
-                <GridItem xs={12} sm={12} md={12} xl={12} className={classes.topHeaderTitle}>
-                  <RoundedTabs tabs={["API Traffic", "Webhook Traffic"]} tabValue={handleChangeTab}/>
-                </GridItem>
-              </GridContainer>
-              {value === 0 && <APITraffic onShowDetail={ onShowDetail } />}
-              {value === 1 && <WebhookTraffic />}
-            </>
+            {isShowDetail ?
+              <RequestDetails onBack={onBackApiTraffic}/>
+              :
+              <>
+                <GridContainer className={classes.topHeader}>
+                  <GridItem xs={12} sm={12} md={12} xl={12} className={classes.topHeaderTitle}>
+                    <RoundedTabs tabs={["API Traffic", "Webhook Traffic"]} tabValue={handleChangeTab}/>
+                  </GridItem>
+                </GridContainer>
+                {value === 0 && <APITraffic onShowDetail={onShowDetail}/>}
+                {value === 1 && <WebhookTraffic/>}
+              </>
             }
           </GridItem>
         </GridContainer>

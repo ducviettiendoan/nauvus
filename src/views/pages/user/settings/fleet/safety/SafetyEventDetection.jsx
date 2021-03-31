@@ -1,13 +1,13 @@
-import React, { useState } from "react"
+import React, {useState} from "react"
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import { Divider } from "@material-ui/core";
+import {Divider} from "@material-ui/core";
 import CustomSwitch from "components/CustomSwitch/Switch";
 
 const styles = {
@@ -73,7 +73,7 @@ export default function SafetyEventDetection() {
   });
 
   const handleChange = (event) => {
-    setCheckedState({ ...checkedState, [event.target.name]: event.target.checked });
+    setCheckedState({...checkedState, [event.target.name]: event.target.checked});
   };
   return (
     <Card>
@@ -87,15 +87,15 @@ export default function SafetyEventDetection() {
                 </GridItem>
               </GridItem>
               <GridItem className={classes.contentItem}>
-                Only available in vehicles installed with dash cam models CM31 and CM32. To learn more about Samsara's internet-connected dash cams, 
+                Only available in vehicles installed with dash cam models CM31 and CM32. To learn more about Samsara's
+                internet-connected dash cams,
                 please contact your sales representative or visit
               </GridItem>
               <GridItem className={classes.footerItem}>Navus website</GridItem>
-              <Divider variant="fullWidth" light />
+              <Divider variant="fullWidth" light/>
             </CardBody>
-            <CustomSwitch checked={checkedState.checkedA} onChange={handleChange} name="checkedA" />
+            <CustomSwitch checked={checkedState.checkedA} onChange={handleChange} name="checkedA"/>
           </GridItem>
-
           <GridItem xs={12} sm={8} md={8} className={classes.gridContent}>
             <CardBody className={classes.cardItem}>
               <GridItem className={classes.headerWithButton}>
@@ -104,19 +104,17 @@ export default function SafetyEventDetection() {
                 </GridItem>
               </GridItem>
               <GridItem className={classes.contentItem}>
-                Only available in vehicles installed with dash cam models CM31 and CM32. To learn more about Samsara's internet-connected dash cams, 
+                Only available in vehicles installed with dash cam models CM31 and CM32. To learn more about Samsara's
+                internet-connected dash cams,
                 please contact your sales representative or visit
               </GridItem>
               <GridItem className={classes.footerItem}>Navus website</GridItem>
-              <Divider variant="fullWidth" light />
+              <Divider variant="fullWidth" light/>
             </CardBody>
-            <CustomSwitch checked={checkedState.checkedB} onChange={handleChange} name="checkedB" />
+            <CustomSwitch checked={checkedState.checkedB} onChange={handleChange} name="checkedB"/>
           </GridItem>
         </GridItem>
-
-
       </CardBody>
-      
     </Card>
   )
 }

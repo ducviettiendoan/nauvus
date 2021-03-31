@@ -1,6 +1,6 @@
-import React, { useState } from "react"
+import React, {useState} from "react"
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 
 // core components
@@ -8,7 +8,7 @@ import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import Button from "components/CustomButtons/Button.js";
-import { Divider } from "@material-ui/core";
+import {Divider} from "@material-ui/core";
 import CustomSwitch from "components/CustomSwitch/Switch";
 
 const styles = {
@@ -64,7 +64,7 @@ export default function SafetyScore() {
   });
 
   const handleChange = (event) => {
-    setCheckedState({ ...checkedState, [event.target.name]: event.target.checked });
+    setCheckedState({...checkedState, [event.target.name]: event.target.checked});
   };
   return (
     <Card>
@@ -75,21 +75,21 @@ export default function SafetyScore() {
               <GridItem className={classes.headerWithButton}>
                 <GridItem className={classes.headerItem}>
                   Safety Score Configuration
-              </GridItem>
-                <CustomSwitch checked={checkedState.checkedA} onChange={handleChange} name="checkedA" />
+                </GridItem>
+                <CustomSwitch checked={checkedState.checkedA} onChange={handleChange} name="checkedA"/>
               </GridItem>
               <GridItem className={classes.contentItem}>
                 Set relative importance of safety scores and weights of safety infractions
-            </GridItem>
+              </GridItem>
               <Button
                 round
                 className="btn-round-gray w-138"
               >
                 Configure Scores
-            </Button>
+              </Button>
             </CardBody>
           </GridItem>
-          <Divider variant="fullWidth" light />
+          <Divider variant="fullWidth" light/>
         </GridItem>
       </CardBody>
     </Card>
