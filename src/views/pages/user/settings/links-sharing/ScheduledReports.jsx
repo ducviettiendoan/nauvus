@@ -2,77 +2,21 @@ import React from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import TableComponent from "components/Table/CustomTable"
-import {
-  cardTitle,
-  roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
 import Button from "components/CustomButtons/Button.js";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import BootstrapTable from "react-bootstrap-table-next";
 import {Row} from "reactstrap";
-import GenPaginationV1 from "../../../../../components/Pagination/GenPaginationV1";
+import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import EditIcon from "../../../../../components/Icons/EditIcon";
-import DeleteIcon from "../../../../../components/Icons/DeleteIcon";
-import CopyIcon from "../../../../../components/Icons/CopyIcon";
+import EditIcon from "components/Icons/EditIcon";
+import DeleteIcon from "components/Icons/DeleteIcon";
 import AddOutlined from "@material-ui/icons/AddOutlined";
 const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0"
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem"
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px"
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px"
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px"
-    }
-  },
-  iconRose: {
-    color: roseColor
-  },
-  marginTop30: {
-    marginTop: "30px"
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px"
-    }
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  },
   liveSharingHeader: {
     display: "flex",
     justifyContent: "space-between",

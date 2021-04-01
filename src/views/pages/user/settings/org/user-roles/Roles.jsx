@@ -1,46 +1,231 @@
 import React from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-// @material-ui/icons
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
-import {
-  cardTitle,
-  roseColor,
-} from "assets/jss/material-dashboard-pro-react.js";
-import FormatQuote from "@material-ui/icons/FormatQuote";
-import CardFooter from "../../../../../../components/Card/CardFooter";
+import {makeStyles} from "@material-ui/core/styles";
+import Button from "components/CustomButtons/Button";
+import ToolboxButton from "components/CustomButtons/ToolboxButton";
+import CloseIcon from "components/Icons/CloseIcon";
+import DeleteIcon from "components/Icons/DeleteIcon";
+import Chip from "@material-ui/core/Chip";
+import Grid from '@material-ui/core/Grid';
+import Table from "components/Table/TableV1";
+import EditIcon from "components/Icons/EditIcon";
 
-const styles = {
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px",
+const useStyles = makeStyles((theme) => ({
+  userRolesTitle: {
+    fontSize: 16,
+    color: "#25345C",
+    fontWeight: 700,
+    paddingRight: "8px !important"
   },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px",
+  selected: {
+    height: 24,
+    width: "auto",
+    background: "#ECEEF0 !important",
+    borderRadius: 28,
+    color: "#25345C !important",
+    display: "flex",
+    alignItems: "center",
+  },
+  clearAll: {
+    textTransform: "none",
+    color: "#8097D8",
+    background: "unset !important",
+    boxShadow: "unset !important",
+    fontSize: 14,
+    fontWeight: 700,
+    padding: 0,
+    "&:hover": {
+      color: "#25345C"
+    }
+  },
+  chipSelected: {
+    display: "flex",
+    alignItems: "center",
+    paddingLeft: "0px !important"
+  },
+  headContainer: {
+    alignItems: "center",
+    textAlign: "left",
+    marginTop: "8px"
+  },
+  headLeft: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    "& > div": {
+      marginBottom: "0 !important",
+      marginRight: 8
+    }
+  },
+  textName: {
+    fontWeight: 'bold',
+    fontSize: '16px',
+    lineHeight: '24px',
+    color: '#25345C',
+    // marginLeft: '16px'
+  },
+  textEmail: {
+    fontSize: '16px',
+    lineHeight: '21px',
+    color: "#25345C"
+  },
+  chips: {
+    background: "#ECEEF0",
+    color: "#25345C",
+    fontSize: "12px",
+    marginRight: 8
+  },
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
     },
   },
-};
+  onHeaderRow: {
+    background: "#ECEEF0",
+  },
+  gridTitle: {
+    padding: "20px"
+  },
+  onHeaderCell: {
+    fontWeight: "bold"
+  },
+  alignItemsCenter: {
+    display: "flex",
+    alignItems: "center",
+  },
+  dotIcon: {
+    color: "#7CE7AC",
+    marginTop: 10
+  },
+  textRoles: {
+    fontSize: '16px',
+    lineHeight: '24px',
+  },
+  textAccess: {
+    display: "inline-block",
+    fontSize: '14px',
+    lineHeight: '17px',
+    padding: "12px 16px",
+    color: "#27AE60",
+    background: "rgba(39, 174, 96, 0.1)",
+    borderRadius: 23,
+    fontWeight: "bold",
+  },
+  iconButton: {
+    '&:hover': {
+      color: '#25345C !important',
+    }
+  },
+}));
 
-const useStyles = makeStyles(styles);
+const data = () => {
+  let data = [];
+  for (let i = 0; i < 64; i++) {
+    let item = {
+      id: i + 2,
+      key: i + 2,
+      roles: `Standard Admin ${i + 1}`,
+      permissions: `View and Edit`,
+      access: `Entire Organisation${i}`
+    };
+    data.push(item);
+  }
+  return data;
+}
+
 
 export default function Roles() {
   const classes = useStyles();
 
+  const [chipData, setChipData] = React.useState([
+    {key: 0, label: 'Standard Admin'},
+    {key: 1, label: 'Full admin'},
+  ]);
+
+  const handleDelete = (chipToDelete) => () => {
+    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+  };
+
+  const handleClearAll = () => {
+    setChipData([])
+  }
+
+  const columns = [
+    {
+      title: 'Roles',
+      key: 'roles',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: role => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textName}>{role}</div>
+        </div>
+      ),
+    },
+    {
+      title: 'Permission',
+      key: 'permissions',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: permission => <div className={classes.textEmail}>{permission}</div>
+    },
+    {
+      title: 'Actions',
+      key: 'action',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: () => (
+        <div className={classes.actionButton}>
+          <Button justIcon color="twitter" simple>
+            <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+          </Button>
+          <Button justIcon color="google" simple>
+            <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
+          </Button>
+        </div>
+      )
+    }
+  ]
+
+
   return (
-    <Card testimonial>
-      <div className={classes.testimonialIcon}>
-        <FormatQuote />
-      </div>
-      <CardBody>
-        <h5 className={classes.cardTestimonialDescription}>No Data</h5>
-      </CardBody>
-      <CardFooter testimonial>
-        <h6 className={classes.cardCategory}>@nauvus</h6>
-      </CardFooter>
-    </Card>
+    <div>
+      <Table
+        renderTitle={
+          <Grid container className={classes.gridTitle}>
+            <Grid item xs={12} sm={12} md={6}>
+              <Grid container className={classes.headContainer}>
+                <Grid item xl={2} className={classes.userRolesTitle}> {chipData.length} selected for </Grid>
+                <Grid item xl={10} className={classes.chipSelected}>
+                  {chipData.map(data => (
+                    <Chip
+                      deleteIcon={<CloseIcon/>}
+                      label={data.label}
+                      onDelete={handleDelete(data)}
+                      className={classes.chips}
+                    />
+                  ))}
+                  {chipData.length > 0 ?
+                    (
+                      <Button onClick={handleClearAll} className={classes.clearAll}>
+                        Clear All
+                      </Button>
+                    ) : ""}
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
+              <ToolboxButton placeholder="Search for role" showFilter showTrash/>
+            </Grid>
+          </Grid>
+        }
+        // rowSelection={{}}
+        columns={columns}
+        dataSource={data}
+        onHeaderRow={{
+          className: classes.onHeaderRow
+        }}
+        onBodyRow={{
+          className: classes.tableRow
+        }}
+      />
+    </div>
   );
 }

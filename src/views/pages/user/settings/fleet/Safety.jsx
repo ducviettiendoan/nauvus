@@ -14,66 +14,15 @@ import {
 } from "assets/jss/material-dashboard-pro-react.js";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import EditIcon from "components/Icons/EditIcon";
-import {Typography} from "@material-ui/core";
-import PropTypes from "prop-types";
 import SafetyScore from "./safety/SafetyScore"
 import SafetyHarshEvents from "./safety/SafetyHarshEvents"
 import SafetyEventDetection from "./safety/SafetyEventDetection"
 import FormatQuote from "@material-ui/icons/FormatQuote";
 import CardBody from "components/Card/CardBody";
-import CardFooter from "components/Card/CardFooter";
 import Card from "components/Card/Card";
+import SafetyCoaching from "./safety/SafetyCoaching";
 
 const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0"
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem"
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px"
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px"
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px"
-    }
-  },
-  iconRose: {
-    color: roseColor
-  },
-  marginTop30: {
-    marginTop: "30px"
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px"
-    }
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  },
   topHeader: {
     display: "flex",
     justifyContent: "space-between",
@@ -87,66 +36,6 @@ const styles = {
   },
   topHeaderButton: {
     textAlign: "right",
-  },
-  cardContainer: {
-    padding: "0px 0px 0px 16px !important"
-  },
-  cardMultipleContent: {
-    paddingLeft: "6px !important",
-    paddingBottom: "20px !important"
-  },
-  gridContent: {
-    display: "flex",
-    padding: "0px 0px 0px 0px !important",
-    alignItems: "center",
-  },
-  cardItem: {
-    display: "flex",
-    flexDirection: "column",
-    padding: "28px 0px 20px 0px !important"
-  },
-  headerWithButton: {
-    padding: "0px 0px 0px 0px !important",
-    display: "flex",
-    justifyContent: "space-between"
-  },
-  headerItem: {
-    fontWeight: 700,
-    fontSize: 14,
-    color: "#25345C",
-    fontFamily: "Lato",
-    padding: "9px 0px 15px 0px !important",
-    lineHeight: "21px",
-    overflow: "hidden"
-  },
-  contentItem: {
-    color: "#B4B4B4",
-    fontWeight: 700,
-    fontSize: 14,
-    fontFamily: "Lato",
-    padding: "0px 0px 20px 0px !important",
-    lineHeight: "21px",
-    overflow: "hidden"
-  },
-  vehicleHeaderContainer: {
-    display: "flex",
-    flexDirection: "column",
-    padding: "0px 0px 0px 0px !important",
-  },
-  vehicleHeader: {
-    width: "78px",
-    height: "21px",
-    fontFamily: "Lato",
-    fontStyle: "normal",
-    fontWeight: "normal",
-    fontSize: "14px",
-    lineHeight: "21px",
-    color: "#C4C4C4",
-    marginTop: "30px !important",
-    padding: "0px 0px 0px 0px !important",
-  },
-  vehicleSelect: {
-    padding: "0px 0px 0px 0px !important",
   },
 };
 
@@ -185,16 +74,7 @@ export default function Safety() {
               {value === 0 && <SafetyScore/>}
               {value === 1 && <SafetyHarshEvents/>}
               {value === 2 && <SafetyEventDetection/>}
-              {value === 3 && <Card testimonial>
-                <div className={classes.testimonialIcon}>
-                  <FormatQuote/>
-                </div>
-                <CardBody>
-                  <h5 className={classes.cardTestimonialDescription}>
-                    No Data
-                  </h5>
-                </CardBody>
-              </Card>}
+              {value === 3 && <SafetyCoaching />}
             </GridItem>
           </GridContainer>
         </GridItem>

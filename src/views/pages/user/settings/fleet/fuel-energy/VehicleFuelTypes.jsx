@@ -11,79 +11,19 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 
 import {
-  blackColor,
-  cardTitle, hexToRgb, primaryColor,
+  cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
-import {Typography} from "@material-ui/core";
 import Button from "../../../../../../components/CustomButtons/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
-import AddOutlined from "@material-ui/icons/AddOutlined";
-import {MoreHoriz} from "@material-ui/icons";
 import CloseIcon from "../../../../../../components/Icons/CloseIcon";
-import FilterIcon from "../../../../../../components/Icons/FilterIcon";
-import DeleteIcon from "../../../../../../components/Icons/DeleteIcon";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import GenPaginationV1 from "../../../../../../components/Pagination/GenPaginationV1";
 import Chip from "@material-ui/core/Chip";
-import MoreIcon from "../../../../../../components/Icons/MoreIcon";
 import EditIcon from "../../../../../../components/Icons/EditIcon";
 
 const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0"
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem"
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px"
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px"
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px"
-    }
-  },
-  iconRose: {
-    color: roseColor
-  },
-  marginTop30: {
-    marginTop: "30px"
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px"
-    }
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  },
-  moreAction: {
-    background: "#FFFFFF !important",
-    border: "1px solid #ECEEF0 !important"
-  },
   userRolesTitle: {
     fontSize: 16,
     color: "#25345C",
@@ -120,15 +60,6 @@ const styles = {
     alignItems: "center",
     textAlign: "left",
     marginTop: "8px"
-  },
-  headLeft: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    "& > div": {
-      marginBottom: "0 !important",
-      marginRight: 8
-    }
   },
   textName: {
     fontWeight: 'bold',
@@ -289,7 +220,7 @@ export default function VehicleFuelTypes() {
     return (
       <div className={classes.actionButton}>
         <Button justIcon color="twitter" simple>
-          <EditIcon style={{ color: "#ffffff", width: '22px', height: '22px' }} />
+          <EditIcon style={{color: "#ffffff", width: '22px', height: '22px'}}/>
         </Button>
       </div>
     )
@@ -355,7 +286,7 @@ export default function VehicleFuelTypes() {
                       </GridContainer>
                     </GridItem>
                     <GridItem xs={12} sm={12} md={6}>
-                      <ToolboxButton placeholder={"Search gateways"} showFilter showTrash />
+                      <ToolboxButton placeholder={"Search gateways"} showFilter showTrash/>
                     </GridItem>
                   </GridContainer>
                 </CardBody>

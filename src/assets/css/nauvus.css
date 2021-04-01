@@ -235,16 +235,24 @@
 }
 
 .extraSidebar {
-  width: 260px;
-  background-color: white;
   float: left;
+  min-width: 260px;
+  background-color: white;
   height: 100vh;
   border-right: 1px solid #25345c1f;
+  position: sticky;
+  top: 0
 }
+
 .extraContainer {
-  position: relative;
   width: calc(100% - 260px);
-  float: left;
+  float: left
+}
+
+@media screen and (max-width: 960px) {
+  .extraContainer {
+    width: 100%;
+  }
 }
 
 .extraSidebar, .extraContainer {

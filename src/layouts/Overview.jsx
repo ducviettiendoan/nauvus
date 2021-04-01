@@ -1,5 +1,6 @@
-import React, {useEffect} from "react";
+import React from "react";
 import cx from "classnames";
+import clsx from 'clsx';
 import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
@@ -12,33 +13,31 @@ import { makeStyles } from "@material-ui/core/styles";
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
-// import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
-import ExtraSettingSideBar from "components/Sidebar/ExtraSettingSideBar";
+import Drawer from '@material-ui/core/Drawer';
 
 import routes from "user-routes";
-import settingRoutes from "setting-routes";
 
-import styles from "assets/jss/material-dashboard-pro-react/layouts/adminStyle.js";
-
-import { COGNOTO_SERVER_URL, COGNOTO_CLIENT_ID, COGNOTO_RESPONSE_TYPE, PUBLIC_URL } from "config/constants";
+import styles from "assets/jss/material-dashboard-pro-react/layouts/overviewStyle.js";
 
 import Loading from "components/Loading/Loading";
 import { connect } from 'react-redux';
 import { getUserInfo } from '../reducers/authentication';
+import { setOpenDrawer } from '../reducers/overview';
 import { IRootState } from '../reducers';
-import ExtraSettingMobile from "../components/Sidebar/ExtraSettingMobile";
+import Button from '@material-ui/core/Button';
+import VehicleSideBar from "views/pages/user/overview/components/VehicleSideBar";
 
 var ps;
 
 const useStyles = makeStyles(styles);
 
-export function Dashboard(props) {
+export function Overview(props) {
   const history = useHistory();
   const { ...rest } = props;
   // states and functions
+  const [openDrawer, setOpenDrawer] = React.useState(false);
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [miniActive, setMiniActive] = React.useState(true);
-  const [displaySetting, setDisplaySetting] = React.useState(true)
+  const [miniActive, setMiniActive] = React.useState(false);
   const [image, setImage] = React.useState("");
   const [color, setColor] = React.useState("blue");
   const [bgColor, setBgColor] = React.useState("white");
@@ -65,28 +64,19 @@ export function Dashboard(props) {
     
   // });
 
-  // To render correct layout for mobile on open
   React.useEffect(() => {
-    if (window.innerWidth >= 960) {
-      setDisplaySetting(true)
-    } else {
-      setDisplaySetting(false)
+    console.log(`fetchSession: ${fetchSession}`);
+    async function fetchUserInfo() {
+      try {
+        await props.getUserInfo();
+      } catch (e) {
+      } finally {
+        setFetchSession(true);
+        console.log(`fetchSession: ${fetchSession}`);
+        console.log(props.isAuthenticated);
+      }
     }
-  }, [])
-
-  React.useEffect(() => {
-    // console.log(`fetchSession: ${fetchSession}`);
-    // async function fetchUserInfo() {
-    //   try {
-    //     await props.getUserInfo();
-    //   } catch (e) {
-    //   } finally {
-    //     setFetchSession(true);
-    //     console.log(`fetchSession: ${fetchSession}`);
-    //     console.log(props.isAuthenticated);
-    //   }
-    // }
-    // fetchUserInfo();
+    fetchUserInfo();
 
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(mainPanel.current, {
@@ -134,7 +124,7 @@ export function Dashboard(props) {
     setMobileOpen(!mobileOpen);
   };
   const getRoute = () => {
-    return window.location.pathname !== "/user/overview";
+    return window.location.pathname !== "/o/overview";
   };
   const getActiveRoute = routes => {
     let activeRoute = "Default Brand Text";
@@ -159,7 +149,7 @@ export function Dashboard(props) {
       if (prop.collapse) {
         return getRoutes(prop.views);
       }
-      if (prop.layout === "/setting") {
+      if (prop.layout === "/o") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -178,33 +168,51 @@ export function Dashboard(props) {
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
       setMobileOpen(false);
-      setDisplaySetting(true)
-    } else {
-      setDisplaySetting(false)
     }
   };
-
 
   const renderDataContent = () => {
     return (
       <>
-        <AdminNavbar
+        {/* <AdminNavbar
           sidebarMinimize={sidebarMinimize.bind(this)}
           miniActive={miniActive}
-          brandText={getActiveRoute(settingRoutes)}
+          brandText={getActiveRoute(routes)}
           handleDrawerToggle={handleDrawerToggle}
-          displaySetting={displaySetting}
           {...rest}
-        />
+        /> */}
         <div className="layout-container">
-          <div className={classes.content}>
-            {displaySetting || <ExtraSettingMobile/>}
-            <div className={classes.container}>
-              <Switch>
-                {getRoutes(settingRoutes)}
-                <Redirect from="/user" to="/user/overview" />
-              </Switch>
-            </div>
+          <div className={classes.root}>
+            <Drawer
+                className={classes.drawer}
+                variant="persistent"
+                anchor="left"
+                open={props.openDrawer}
+                classes={{
+                  paper: classes.drawerPaper,
+                }}
+              >
+                <VehicleSideBar />
+            </Drawer>
+              <main
+                className={clsx(classes.content, {
+                  [classes.contentShift]: props.openDrawer,
+                })}
+              >
+                <AdminNavbar
+                  sidebarMinimize={sidebarMinimize.bind(this)}
+                  miniActive={miniActive}
+                  brandText={getActiveRoute(routes)}
+                  handleDrawerToggle={handleDrawerToggle}
+                  {...rest}
+                />
+                <div style={{ position: 'relative'}}>
+                  <Switch>
+                    {getRoutes(routes)}
+                    <Redirect from="/o" to="/o/overview" />
+                  </Switch>
+                </div>
+              </main>
           </div>
         </div>
       </>
@@ -212,17 +220,9 @@ export function Dashboard(props) {
   }
 
   const redirectLogin = () => {
-    // let redirectUri = `${window.location.origin}/auth/login`;
-    // let link = `${COGNOTO_SERVER_URL}/login?client_id=${COGNOTO_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=${COGNOTO_RESPONSE_TYPE}`;
-    // window.location.replace(link);
     history.push("/auth/sign-in");
   }
 
-  // useEffect(() => {
-  //   setInterval(()=> {
-  //     console.log(mobileOpen)
-  //   }, 1000)
-  // },[])
   return (
     <>
       <div className={classes.wrapper}>
@@ -241,31 +241,26 @@ export function Dashboard(props) {
           /> 
         }
         <div className={mainPanelClasses} ref={mainPanel}>
-          {/* { fetchSession ? */}
             <>
               { props.isAuthenticated ?
                 <>
-                  <div id="main">
-                    {displaySetting &&
-                      <div className="extraSidebar">
-                        <ExtraSettingSideBar/>
+                  { props.extraSidebar ? 
+                    <>
+                      <div id="main">
+                        <div className="extraSidebar">div1</div>
+                        <div className="extraContainer">{ renderDataContent() }</div>
                       </div>
-                    }
-                    <div className="extraContainer">
-                      {renderDataContent()}
-                    </div>
-                  </div>
+                    </> :
+                    <>
+                      { renderDataContent() }
+                    </>
+                  }
                 </> :
                 <>
                   { redirectLogin() }
                 </>
               }
             </>
-            {/* </> :
-            <>
-              <Loading />
-            </>
-          } */}
         </div>
       </div>
     </>
@@ -273,11 +268,13 @@ export function Dashboard(props) {
 }
 
 export default connect(
-  ({ authentication }: IRootState) => ({
+  ({ authentication, overview }: IRootState) => ({
     isAuthenticated: authentication.isAuthenticated,
     user: authentication.user,
+    openDrawer : overview.openDrawer
   }),
   {
-    getUserInfo
+    getUserInfo,
+    setOpenDrawer
   }
-)(Dashboard);
+)(Overview);

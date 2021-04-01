@@ -1,7 +1,6 @@
 import React from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
-import FormatQuote from "@material-ui/icons/FormatQuote";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
@@ -14,65 +13,15 @@ import {
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
-import GenPaginationV1 from "../../../../../../components/Pagination/GenPaginationV1";
-import Button from "../../../../../../components/CustomButtons/Button";
-import EditIcon from "../../../../../../components/Icons/EditIcon";
-import DeleteIcon from "../../../../../../components/Icons/DeleteIcon";
+import GenPaginationV1 from "components/Pagination/GenPaginationV1";
+import Button from "components/CustomButtons/Button";
+import EditIcon from "components/Icons/EditIcon";
+import DeleteIcon from "components/Icons/DeleteIcon";
 import AddOutlined from "@material-ui/icons/AddOutlined";
 import Chip from "@material-ui/core/Chip";
-import CloseIcon from "../../../../../../components/Icons/CloseIcon";
-import FilterIcon from "../../../../../../components/Icons/FilterIcon";
+import CloseIcon from "components/Icons/CloseIcon";
 
 const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0"
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem"
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px"
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px"
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px"
-    }
-  },
-  iconRose: {
-    color: roseColor
-  },
-  marginTop30: {
-    marginTop: "30px"
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px"
-    }
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  },
   userRolesTitle: {
     fontSize: 16,
     color: "#25345C",
@@ -133,10 +82,6 @@ const styles = {
     textAlign: "center",
     height: "41px"
   },
-  moreAction: {
-    background: "#FFFFFF !important",
-    border: "1px solid #ECEEF0 !important"
-  },
 };
 
 const useStyles = makeStyles(styles);
@@ -174,7 +119,7 @@ export default function WorkingHours() {
   }
 
   const formatTags = (cell, row) => {
-    return <div className={classes.textSub} style={{ marginTop: "28px" }}>
+    return <div className={classes.textSub} style={{marginTop: "28px"}}>
       {
         cell.map((ele) => {
           return (<span className={classes.tagButton}>{ele}</span>)
@@ -185,7 +130,7 @@ export default function WorkingHours() {
 
   const addActionButton = () => {
     return (
-      <div style={{ marginTop: "15px" }}>
+      <div style={{marginTop: "15px"}}>
         <Button justIcon color="twitter" simple>
           <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
         </Button>
@@ -209,91 +154,91 @@ export default function WorkingHours() {
   }
   return (
     <div>
-        <Card>
-          <CardBody style={{height: '74px'}}>
-            <GridContainer>
-              <GridItem xs={12} sm={12} md={6}>
-                <GridContainer className={classes.headContainer}>
-                  <GridItem xl={2} className={classes.userRolesTitle}>
-                    {chipData.length} selected for
-                  </GridItem>
-                  <GridItem xl={10} className={classes.chipSelected}>
-                    {
-                      chipData.map(data => (
-                        <Chip
-                          deleteIcon={<CloseIcon/>}
-                          label={data.label}
-                          onDelete={handleDelete(data)}
-                          className={classes.chip}
-                        />
-                      ))
-                    }
-                    {
-                      chipData.length > 0
-                        ?
-                        (
-                          <Button onClick={handleClearAll} className={classes.clearAll}>
-                            Clear All
-                          </Button>
-                        )
-                        : ""
-                    }
-                  </GridItem>
-                </GridContainer>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={6} className={classes.headLeft}>
-                <ToolboxButton placeholder={"Search addresses"} showTrash />
-              </GridItem>
-            </GridContainer>
-          </CardBody>
-          <div>
-            <ToolkitProvider
-              data={dumpData}
-              keyField="_id"
-              columns={[
-                {
-                  dataField: "hours",
-                  text: "Hours",
-                  formatter: formatHours
-                },
-                {
-                  dataField: "workingDays",
-                  text: "Working Days",
-                  formatter: formatWorkingDays
-                },
-                {
-                  dataField: "tags",
-                  text: "Tags",
-                  formatter: formatTags
-                },
-                {
-                  dataField: "action",
-                  text: "Actions",
-                  formatter: addActionButton
-                }
-              ]}
-            >
-              {props => (
-                <div className="table table-settings">
-                  <BootstrapTable
-                    {...props.baseProps}
-                    bootstrap4={true}
-                    bordered={false}
-                  />
+      <Card>
+        <CardBody style={{height: '74px'}}>
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={6}>
+              <GridContainer className={classes.headContainer}>
+                <GridItem xl={2} className={classes.userRolesTitle}>
+                  {chipData.length} selected for
+                </GridItem>
+                <GridItem xl={10} className={classes.chipSelected}>
+                  {
+                    chipData.map(data => (
+                      <Chip
+                        deleteIcon={<CloseIcon/>}
+                        label={data.label}
+                        onDelete={handleDelete(data)}
+                        className={classes.chip}
+                      />
+                    ))
+                  }
+                  {
+                    chipData.length > 0
+                      ?
+                      (
+                        <Button onClick={handleClearAll} className={classes.clearAll}>
+                          Clear All
+                        </Button>
+                      )
+                      : ""
+                  }
+                </GridItem>
+              </GridContainer>
+            </GridItem>
+            <GridItem xs={12} sm={12} md={6} className={classes.headLeft}>
+              <ToolboxButton placeholder={"Search tags"} showTrash/>
+            </GridItem>
+          </GridContainer>
+        </CardBody>
+        <div>
+          <ToolkitProvider
+            data={dumpData}
+            keyField="_id"
+            columns={[
+              {
+                dataField: "hours",
+                text: "Hours",
+                formatter: formatHours
+              },
+              {
+                dataField: "workingDays",
+                text: "Working Days",
+                formatter: formatWorkingDays
+              },
+              {
+                dataField: "tags",
+                text: "Tags",
+                formatter: formatTags
+              },
+              {
+                dataField: "action",
+                text: "Actions",
+                formatter: addActionButton
+              }
+            ]}
+          >
+            {props => (
+              <div className="table table-settings">
+                <BootstrapTable
+                  {...props.baseProps}
+                  bootstrap4={true}
+                  bordered={false}
+                />
 
-                </div>
-              )}
-            </ToolkitProvider>
-            <Button
-              className="btn-round-white-3 h-41 mb-4"
-              startIcon={<AddOutlined/>}
-              style={{boxShadow: "none", marginBottom: "10px"}}
-            >
-              Add working hours
-            </Button>
-          </div>
-        </Card>
-        <GenPaginationV1 total={29} page={1} size={10}/>
+              </div>
+            )}
+          </ToolkitProvider>
+          <Button
+            className="btn-round-white-3 h-41 mb-4"
+            startIcon={<AddOutlined/>}
+            style={{boxShadow: "none", marginBottom: "10px"}}
+          >
+            Add working hours
+          </Button>
+        </div>
+      </Card>
+      <GenPaginationV1 total={29} page={1} size={10}/>
     </div>
   );
 }

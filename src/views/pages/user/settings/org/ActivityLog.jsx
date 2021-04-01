@@ -2,81 +2,18 @@ import React from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
-
-import {
-  cardTitle,
-  roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
-import Button from "../../../../../components/CustomButtons/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
-import AddOutlined from "@material-ui/icons/AddOutlined";
-import {MoreHoriz} from "@material-ui/icons";
-import SettingSearchBox from "../../../../../components/SearchBox/SettingSearchBox";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import {Row} from "reactstrap";
-import GenPaginationV1 from "../../../../../components/Pagination/GenPaginationV1";
-import EditIcon from "../../../../../components/Icons/EditIcon";
-import DeleteIcon from "../../../../../components/Icons/DeleteIcon";
+import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 
 const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0"
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem"
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px"
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px"
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px"
-    }
-  },
-  iconRose: {
-    color: roseColor
-  },
-  marginTop30: {
-    marginTop: "30px"
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px"
-    }
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  },
   activityHeader: {
     display: "flex",
     justifyContent: "space-between",
@@ -90,10 +27,6 @@ const styles = {
   },
   activityButton: {
     textAlign: "right",
-  },
-  searchBox: {
-    marginTop: "16px !important",
-    textAlign: "right"
   },
   textName: {
     fontSize: '16px',
@@ -111,11 +44,6 @@ const styles = {
     color: "#25345C",
     fontWeight: 400
   },
-  iconButton: {
-    '&:hover': {
-      color: '#25345C !important',
-    },
-  },
 };
 
 const dumpData = [
@@ -129,8 +57,6 @@ const dumpData = [
 ];
 
 const useStyles = makeStyles(styles);
-
-
 
 export default function ActivityLog() {
   const classes = useStyles();
@@ -202,21 +128,6 @@ export default function ActivityLog() {
                           bootstrap4={true}
                           bordered={false}
                         />
-                        <Row className="justify-content-center">
-                          {/* <PaginationV2
-                                        pages={[
-                                          { text: <ArrowDownIcon/>, arrow : true,disabled : true },
-                                          { text: <ArrowLeftIcon/>, arrow : true,disabled : true },
-                                          { active: true, text: 1 },
-                                          { text: 2 },
-                                          { text: 3 },
-                                          { text: 4 },
-                                          { text: 5 },
-                                          { text: <ArrowRightIcon/>, arrow : true },
-                                          { text: <ArrowUpIcon/>, arrow : true },
-                                        ]}
-                                      /> */}
-                        </Row>
                       </div>
                     )}
                   </ToolkitProvider>

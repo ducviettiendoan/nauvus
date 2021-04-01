@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // @material-ui/core components
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
+// @material-ui/icons
+// import Weekend from "@material-ui/icons/Weekend";
+// core components
 import Button from "components/CustomButtons/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import CloseIcon from "components/Icons/CloseIcon";
@@ -8,15 +11,16 @@ import DeleteIcon from "components/Icons/DeleteIcon";
 import Chip from "@material-ui/core/Chip";
 import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
-import DotIcon from "components/Icons/DotIcon";
-import EditIcon from "components/Icons/EditIcon";
-import avatar from "assets/img/faces/avatar.jpg";
+import MoreIcon from "components/Icons/MoreIcon";
+import { IRootState } from 'reducers';
+import { connect } from 'react-redux';
+import { getTrailersData } from "reducers/overview"
 
-import {getUserRoles} from "reducers/setting-org";
-import {IRootState} from 'reducers';
-import {connect} from 'react-redux';
-
-const useStyles = makeStyles((theme) => ({
+const styles = {
+  moreAction: {
+    background: "#FFFFFF !important",
+    border: "1px solid #ECEEF0 !important"
+  },
   userRolesTitle: {
     fontSize: 16,
     color: "#25345C",
@@ -63,18 +67,6 @@ const useStyles = makeStyles((theme) => ({
       marginRight: 8
     }
   },
-  textName: {
-    fontWeight: 'bold',
-    fontSize: '16px',
-    lineHeight: '24px',
-    color: '#25345C',
-    marginLeft: '16px'
-  },
-  textEmail: {
-    fontSize: '16px',
-    lineHeight: '21px',
-    color: "#C4C4C4"
-  },
   chips: {
     background: "#ECEEF0",
     color: "#25345C",
@@ -97,17 +89,23 @@ const useStyles = makeStyles((theme) => ({
   },
   alignItemsCenter: {
     display: "flex",
-    alignItems: "center",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "center"
   },
   dotIcon: {
     color: "#7CE7AC",
     marginTop: 10
   },
-  textRoles: {
+  textTable: {
     fontSize: '16px',
-    lineHeight: '24px',
+    lineHeight: '21px',
+    color: "#25345C",
+    fontFamily: "Lato",
+    fontStyle: "normal",
+    fontWeight: "normal",
   },
-  textAccess: {
+  textStatus: {
     display: "inline-block",
     fontSize: '14px',
     lineHeight: '17px',
@@ -122,24 +120,20 @@ const useStyles = makeStyles((theme) => ({
       color: '#25345C !important',
     }
   },
-  avatarImage: {
-    width: 40,
-    height: 40,
-    borderRadius: "50%"
-  },
-}));
+};
 
-export function Users(props) {
-  const classes = useStyles();
+const useStyles = makeStyles(styles);
 
-  React.useEffect(() => {
-    // Get list data
-    props.getUserRoles();
-  }, []);
+function VehicleTrailers(props) {
+  const classes = useStyles(styles)
 
-  const [chipData, setChipData] = React.useState([
-    {key: 0, label: 'Standard Admin'},
-    {key: 1, label: 'Full admin'},
+  useEffect(() => {
+    props.getTrailersData()
+  }, [])
+
+  const [chipData, setChipData] = useState([
+    { key: 0, label: 'Standard Admin' },
+    { key: 1, label: 'Full admin' },
   ]);
 
   const handleDelete = (chipToDelete) => () => {
@@ -152,56 +146,76 @@ export function Users(props) {
 
   const columns = [
     {
-      title: 'User',
-      key: 'user',
-      onHeaderCell: {className: classes.onHeaderCell},
+      title: 'Name',
+      key: 'name',
+      onHeaderCell: { className: classes.onHeaderCell },
       render: user => (
         <div className={classes.alignItemsCenter}>
-          <div><img src={avatar} alt="user-avatar" className={classes.avatarImage}/></div>
-          <div className={classes.textName}>{user}</div>
+          <div className={classes.textTable}>{user}</div>
         </div>
       ),
     },
     {
-      title: 'E-Mail',
-      key: 'email',
-      onHeaderCell: {className: classes.onHeaderCell},
-      render: email => <div className={classes.textEmail}>{email}</div>
+      title: 'Location',
+      key: 'location',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: location => <div className={classes.alignItemsCenter}>
+        <div className={classes.textTable}>{location.location}</div>
+        <div className={classes.textTable}>{location.time}</div>
+      </div>
     },
     {
-      title: 'Roles',
-      key: 'roles',
-      onHeaderCell: {className: classes.onHeaderCell},
-      render: roles => (
+      title: 'Last Trip',
+      key: 'lastTrip',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: trip => (
         <div className={classes.alignItemsCenter}>
-          <div><DotIcon className={classes.dotIcon}/></div>
-          <div className={classes.textRoles}>{roles}</div>
+          <div className={classes.textTable}>{trip}</div>
         </div>
       )
     },
     {
-      title: 'Access',
-      key: 'access',
-      onHeaderCell: {className: classes.onHeaderCell},
-      render: access => <div className={classes.textAccess}>{access}</div>
+      title: 'Status',
+      key: 'status',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: status => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textTable}>{status}</div>
+        </div>
+      )
+    },
+    {
+      title: 'Battery',
+      key: 'battery',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: battery => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textTable}>{battery}</div>
+        </div>
+      )
+    },
+    {
+      title: 'Tags',
+      key: 'tag',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: tag => <div className={classes.textStatus}>{tag}</div>
     },
     {
       title: 'Actions',
       key: 'action',
-      onHeaderCell: {className: classes.onHeaderCell},
+      onHeaderCell: { className: classes.onHeaderCell },
       render: () => (
         <div className={classes.actionButton}>
-          <Button justIcon color="twitter" simple>
-            <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+          <Button justIcon color="google" simple>
+            <DeleteIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
           </Button>
           <Button justIcon color="google" simple>
-            <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
+            <MoreIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
           </Button>
         </div>
       )
     }
   ]
-
 
   return (
     <div>
@@ -214,7 +228,7 @@ export function Users(props) {
                 <Grid item xl={10} className={classes.chipSelected}>
                   {chipData.map(data => (
                     <Chip
-                      deleteIcon={<CloseIcon/>}
+                      deleteIcon={<CloseIcon />}
                       label={data.label}
                       onDelete={handleDelete(data)}
                       className={classes.chips}
@@ -230,11 +244,10 @@ export function Users(props) {
               </Grid>
             </Grid>
             <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
-              <ToolboxButton placeholder="Search for tag or email" showFilter showTrash/>
+              <ToolboxButton placeholder="Search in trailer" showFilter showTrash />
             </Grid>
           </Grid>
         }
-        rowSelection={{}}
         columns={columns}
         dataSource={props.data}
         onHeaderRow={{
@@ -243,17 +256,16 @@ export function Users(props) {
         onBodyRow={{
           className: classes.tableRow
         }}
-      />
-      }
+      />}
     </div>
   );
 }
 
 export default connect(
-  ({settingOrg}: IRootState) => ({
-    data: settingOrg.userRoles
+  ({ overview }) => ({
+    data: overview.trailersData
   }),
   {
-    getUserRoles
+    getTrailersData
   }
-)(Users);
+)(VehicleTrailers);
