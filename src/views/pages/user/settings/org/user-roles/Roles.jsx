@@ -8,9 +8,7 @@ import DeleteIcon from "components/Icons/DeleteIcon";
 import Chip from "@material-ui/core/Chip";
 import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
-import DotIcon from "components/Icons/DotIcon";
 import EditIcon from "components/Icons/EditIcon";
-import avatar from "assets/img/faces/avatar.jpg";
 
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
