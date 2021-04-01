@@ -4,19 +4,22 @@ import { loadingBarReducer as loadingBar } from 'react-redux-loading-bar';
 import authentication, { AuthenticationState } from './authentication';
 import account, { AccountState } from './account';
 import vehicle, { VehicleState } from './vehicle';
+import overview, { OverviewState } from './overview';
 
 export interface IRootState {
   readonly authentication: AuthenticationState;
   readonly loadingBar: any;
   readonly account: AccountState;
   readonly vehicle: VehicleState;
+  readonly overview: OverviewState;
 }
 
 const rootReducer = combineReducers<IRootState>({
   authentication,
   loadingBar,
   account,
-  vehicle
+  vehicle,
+  overview
 });
 
 export default rootReducer;

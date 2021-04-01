@@ -38,7 +38,7 @@ import styles from "assets/jss/material-dashboard-pro-react/views/overviewPageSt
 import pinMaker from 'assets/icons/pinMaker.svg';
 import { Link } from "react-router-dom";
 
-import VehicleSideBar from "./VehicleSideBar";
+import VehicleSideBar from "./components/VehicleSideBar";
 
 const useStyles = makeStyles(styles);
 
@@ -131,15 +131,6 @@ export function Overview(props) {
             center={ {lat: 40.748817, lng: -73.985428} }
           />
           <div className={ classes.searchMapContainer}>
-            <Button
-                aria-label="edit"
-                justIcon
-                round
-                className={classes.toogleDrawer}
-                onClick={ e => {setOpenDrawer(!openDrawer)} }
-              >
-                <List />
-            </Button>
             <CustomInput
               formControlProps={{
                 className: classes.btnSearchOnMap
