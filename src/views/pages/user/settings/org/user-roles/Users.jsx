@@ -12,9 +12,9 @@ import DotIcon from "components/Icons/DotIcon";
 import EditIcon from "components/Icons/EditIcon";
 import avatar from "assets/img/faces/avatar.jpg";
 
-import { getUserRoles } from "reducers/setting-org";
-import { IRootState } from 'reducers';
-import { connect } from 'react-redux';
+import {getUserRoles} from "reducers/setting-org";
+import {IRootState} from 'reducers';
+import {connect} from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
@@ -205,7 +205,7 @@ export function Users(props) {
 
   return (
     <div>
-      { props.data.length > 0 && <Table
+      {props.data.length > 0 && <Table
         renderTitle={
           <Grid container className={classes.gridTitle}>
             <Grid item xs={12} sm={12} md={6}>
@@ -250,7 +250,7 @@ export function Users(props) {
 }
 
 export default connect(
-  ({ settingOrg }: IRootState) => ({
+  ({settingOrg}: IRootState) => ({
     data: settingOrg.userRoles
   }),
   {

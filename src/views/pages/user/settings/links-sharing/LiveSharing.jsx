@@ -8,7 +8,7 @@ import GridItem from "components/Grid/GridItem.js";
 import Button from "components/CustomButtons/Button.js";
 import AddOutlined from "@material-ui/icons/AddOutlined";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
-import ByAccet from "./live-sharing/ByAccet";
+import ByAsset from "./live-sharing/ByAsset";
 import ByLocation from "./live-sharing/ByLocation";
 import ByRecurringRoute from "./live-sharing/ByRecurringRoute";
 
@@ -70,7 +70,7 @@ export default function LiveSharing() {
 
               <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                  <RoundedTabs tabs={["By Accet", "By Location", "By Recurring Route"]} tabValue={handleChangeTab}/>
+                  <RoundedTabs tabs={["By Asset", "By Location", "By Recurring Route"]} tabValue={handleChangeTab}/>
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <Button
@@ -82,7 +82,7 @@ export default function LiveSharing() {
                   </Button>
                 </GridItem>
               </GridContainer>
-              {value === 0 && <ByAccet />}
+              {value === 0 && <ByAsset />}
               {value === 1 && <ByLocation />}
               {value === 2 && <ByRecurringRoute />}
             </GridItem>

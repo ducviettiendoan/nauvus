@@ -108,10 +108,12 @@ const styles = {
     marginLeft: '24px'
   },
   textSub: {
+    fontWeight: 400,
     fontSize: '16px',
     lineHeight: '24px',
     marginTop: '14px',
-    marginLeft: '24px'
+    marginLeft: '24px',
+    color: '#25345C'
   },
   iconButton: {
     '&:hover': {
@@ -132,7 +134,7 @@ const dumpData = [
 
 const useStyles = makeStyles(styles);
 
-export default function ByAccet() {
+export default function ByAsset() {
   const classes = useStyles();
 
   const formatName = (cell, row) => {
@@ -213,22 +215,7 @@ export default function ByAccet() {
                     )}
                   </ToolkitProvider>
               </Card>
-              <GenPaginationV1
-                total={100}
-                page={1}
-                size={10}
-                pages={[
-                  {text: <ArrowRightIcon />, arrow: true, disabled: true},
-                  {text: <ArrowLeftIcon />, arrow: true, disabled: true},
-                  {active: true, text: 1},
-                  {text: 2},
-                  {text: 3},
-                  {text: 4},
-                  {text: 5},
-                  {text: <ArrowRightIcon />, arrow: true},
-                  {text: <ArrowUpIcon />, arrow: true},
-                ]}
-              />
+              <GenPaginationV1 total={29} page={1} size={10}/>
             </GridItem>
           </GridContainer>
         </GridItem>
