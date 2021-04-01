@@ -48,13 +48,13 @@ export default function DriverActivity() {
         <GridItem xs={12} sm={11} md={8} xl={6} className={classes.tabsContainer}>
           <RoundedTabs tabs={["Working Hours", "Max Distance"]} tabValue={handleChangeTab}/>
         </GridItem>
-        <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
+        {value === 0 && <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
           <Button
             round
-            className="btn-round-active w-150 mr-2"
+            className="btn-round-active mr-2"
             startIcon={<AddOutlined/>}
           >
-            Add Address
+            Add Working Hours
           </Button>
           <Button
             color="white"
@@ -65,7 +65,26 @@ export default function DriverActivity() {
           >
             <MoreHoriz/>
           </Button>
-        </GridItem>
+        </GridItem>}
+        {value === 1 && <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
+          <Button
+            round
+            className="btn-round-active mr-2"
+            startIcon={<AddOutlined/>}
+          >
+            Add Max Distance
+          </Button>
+          <Button
+            color="white"
+            aria-label="edit"
+            justIcon
+            round
+            className={`btn-36 ${classes.moreAction} mr-2`}
+          >
+            <MoreHoriz/>
+          </Button>
+        </GridItem>}}
+
       </GridContainer>
       {value === 0 && <WorkingHours/>}
       {value === 1 && <MaxDistance/>}

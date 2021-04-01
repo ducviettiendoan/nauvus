@@ -20,6 +20,7 @@ import SafetyEventDetection from "./safety/SafetyEventDetection"
 import FormatQuote from "@material-ui/icons/FormatQuote";
 import CardBody from "components/Card/CardBody";
 import Card from "components/Card/Card";
+import SafetyCoaching from "./safety/SafetyCoaching";
 
 const styles = {
   topHeader: {
@@ -73,16 +74,7 @@ export default function Safety() {
               {value === 0 && <SafetyScore/>}
               {value === 1 && <SafetyHarshEvents/>}
               {value === 2 && <SafetyEventDetection/>}
-              {value === 3 && <Card testimonial>
-                <div className={classes.testimonialIcon}>
-                  <FormatQuote/>
-                </div>
-                <CardBody>
-                  <h5 className={classes.cardTestimonialDescription}>
-                    No Data
-                  </h5>
-                </CardBody>
-              </Card>}
+              {value === 3 && <SafetyCoaching />}
             </GridItem>
           </GridContainer>
         </GridItem>

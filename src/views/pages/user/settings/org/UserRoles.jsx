@@ -50,7 +50,7 @@ export default function UserRoles() {
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
                   <RoundedTabs tabs={["Users", "Roles", "Pending Invitations"]} tabValue={handleChangeTab}/>
                 </GridItem>
-                <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
+                { value === 0 && <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <Button
                     round
                     className="btn-round-active mr-2"
@@ -67,7 +67,43 @@ export default function UserRoles() {
                   >
                     <MoreHoriz/>
                   </Button>
-                </GridItem>
+                </GridItem>}
+                { value === 1 && <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
+                  <Button
+                    round
+                    className="btn-round-active mr-2"
+                    startIcon={<AddOutlined/>}
+                  >
+                    Add Role
+                  </Button>
+                  <Button
+                    color="white"
+                    aria-label="edit"
+                    justIcon
+                    round
+                    className={`btn-36 ${classes.moreAction} mr-2`}
+                  >
+                    <MoreHoriz/>
+                  </Button>
+                </GridItem>}
+                { value === 2 && <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
+                  <Button
+                    round
+                    className="btn-round-active mr-2"
+                    startIcon={<AddOutlined/>}
+                  >
+                    Invite User
+                  </Button>
+                  <Button
+                    color="white"
+                    aria-label="edit"
+                    justIcon
+                    round
+                    className={`btn-36 ${classes.moreAction} mr-2`}
+                  >
+                    <MoreHoriz/>
+                  </Button>
+                </GridItem>}
               </GridContainer>
             </GridItem>
           </GridContainer>
