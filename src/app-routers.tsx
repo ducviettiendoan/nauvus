@@ -10,9 +10,7 @@ import AuthLayout from 'layouts/Auth.js';
 import AdminLayout from 'layouts/Admin.js';
 import UserLayout from 'layouts/User';
 import SettingLayout from 'layouts/Setting';
-
-import Overview from "views/pages/user/overview/Overview";
-import Settings from "views/pages/user/settings/Settings";
+import OverviewLayout from 'layouts/Overview';
 
 // const ExamModule = Loadable({
 //   loader: () => import(/* webpackChunkName: "exam" */ 'src/shared/modules/exam'),
@@ -38,7 +36,8 @@ const Routes = () => (
       <Route path="/admin" component={AdminLayout} />
       <Route path="/user" component={UserLayout} />
       <Route path="/setting" component={SettingLayout} />
-      <Redirect from="/" to="/user/overview" />
+      <Route path="/o" component={OverviewLayout} />
+      <Redirect from="/" to="/o/overview" />
     </Switch>
   </div>
 );
