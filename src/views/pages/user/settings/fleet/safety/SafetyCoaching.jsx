@@ -2,15 +2,13 @@ import React, {useState} from "react"
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
-
 // core components
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import {Divider} from "@material-ui/core";
 import CustomSwitch from "components/CustomSwitch/Switch";
-import AddOutlined from "@material-ui/icons/AddOutlined";
-import Button from "../../../../../../components/CustomButtons/Button";
+import Button from "components/CustomButtons/Button";
 
 const styles = {
   cardContainer: {
@@ -72,6 +70,8 @@ export default function SafetyCoaching() {
   const [checkedState, setCheckedState] = useState({
     checkedA: false,
     checkedB: false,
+    checkedC: false,
+    checkedD: false,
   });
 
   const handleChange = (event) => {
@@ -85,15 +85,13 @@ export default function SafetyCoaching() {
             <CardBody className={classes.cardItem}>
               <GridItem className={classes.headerWithButton}>
                 <GridItem className={classes.headerItem}>
-                  AI Event Detection (No compatible hardware connected)
+                  Automatically Add to Coaching
                 </GridItem>
               </GridItem>
               <GridItem className={classes.contentItem}>
-                Only available in vehicles installed with dash cam models CM31 and CM32. To learn more about Samsara's
-                internet-connected dash cams,
-                please contact your sales representative or visit
+                When an event is triggered, it will be automatically placed in a Needs Coaching status and added to a
+                driver's coaching queue.
               </GridItem>
-              <GridItem className={classes.footerItem}>Navus website</GridItem>
               <Divider variant="fullWidth" light/>
             </CardBody>
             <CustomSwitch checked={checkedState.checkedA} onChange={handleChange} name="checkedA"/>
@@ -125,35 +123,32 @@ export default function SafetyCoaching() {
             <CardBody className={classes.cardItem}>
               <GridItem className={classes.headerWithButton}>
                 <GridItem className={classes.headerItem}>
-                  AI Event Detection (No compatible hardware connected)
+                  Assigned Coach Email Notifications
                 </GridItem>
               </GridItem>
               <GridItem className={classes.contentItem}>
-                Only available in vehicles installed with dash cam models CM31 and CM32. To learn more about Samsara's
-                internet-connected dash cams,
-                please contact your sales representative or visit
+                When a coach is assigned to a harsh event, an email notification will be sent alerting them to review
+                the event.
               </GridItem>
-              <GridItem className={classes.footerItem}>Navus website</GridItem>
               <Divider variant="fullWidth" light/>
             </CardBody>
-            <CustomSwitch checked={checkedState.checkedA} onChange={handleChange} name="checkedA"/>
+            <CustomSwitch checked={checkedState.checkedC} onChange={handleChange} name="checkedC"/>
           </GridItem>
           <GridItem xs={12} sm={8} md={8} className={classes.gridContent}>
             <CardBody className={classes.cardItem}>
               <GridItem className={classes.headerWithButton}>
                 <GridItem className={classes.headerItem}>
-                  AI Event Detection (No compatible hardware connected)
+                  Voice Coaching
+                  (No compatible hardware connected)
                 </GridItem>
               </GridItem>
               <GridItem className={classes.contentItem}>
-                Only available in vehicles installed with dash cam models CM31 and CM32. To learn more about Samsara's
-                internet-connected dash cams,
-                please contact your sales representative or visit
+                Only available in vehicles installed with compatible dash cams. To learn more about Samsara's
+                internet-connected dash cams, please contact your sales representative or visit Nauvus's website.
               </GridItem>
-              <GridItem className={classes.footerItem}>Navus website</GridItem>
               <Divider variant="fullWidth" light/>
             </CardBody>
-            <CustomSwitch checked={checkedState.checkedA} onChange={handleChange} name="checkedA"/>
+            <CustomSwitch checked={checkedState.checkedD} onChange={handleChange} name="checkedD"/>
           </GridItem>
         </GridItem>
       </CardBody>

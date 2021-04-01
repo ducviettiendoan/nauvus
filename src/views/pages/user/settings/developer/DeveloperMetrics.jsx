@@ -13,6 +13,7 @@ import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import APITraffic from "./developer-metrics/APITraffic";
 import WebhookTraffic from "./developer-metrics/WebhookTraffic";
 import RequestDetails from "./developer-metrics/RequestDetails";
+import RequestWebhookDetails from "./developer-metrics/RequestWebhookDetails";
 
 
 const styles = {
@@ -47,13 +48,18 @@ export default function DeveloperMetrics() {
     setIsShowDetail(false);
   }
 
+  const onBackWebhookTraffic = () => {
+    setValue(1)
+    setIsShowDetail(false)
+  }
+
   return (
     <GridContainer className="developer-metric-wrapper">
       <GridItem xs={12} sm={12} md={12}>
         <GridContainer>
           <GridItem xs={12} sm={12} md={12}>
             {isShowDetail ?
-              <RequestDetails onBack={onBackApiTraffic}/>
+              <RequestDetails onBack={onBackApiTraffic}/> && <RequestWebhookDetails onBack={onBackWebhookTraffic} />
               :
               <>
                 <GridContainer className={classes.topHeader}>
@@ -62,7 +68,7 @@ export default function DeveloperMetrics() {
                   </GridItem>
                 </GridContainer>
                 {value === 0 && <APITraffic onShowDetail={onShowDetail}/>}
-                {value === 1 && <WebhookTraffic/>}
+                {value === 1 && <WebhookTraffic onShowDetail={onShowDetail}/>}
               </>
             }
           </GridItem>
