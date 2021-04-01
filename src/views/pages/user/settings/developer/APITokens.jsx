@@ -19,7 +19,6 @@ import DotIcon from "components/Icons/DotIcon.jsx";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import { Row } from "reactstrap";
-//import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 
 import {
   cardTitle,

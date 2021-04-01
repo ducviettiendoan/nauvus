@@ -36,7 +36,7 @@ const styles = {
     marginTop: "10px"
   },
   icon: {
-    color: "#333333",
+    color: "#fff",
     margin: "10px auto 0",
     width: "130px",
     height: "130px",
