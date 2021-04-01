@@ -12,15 +12,15 @@ import Chip from "@material-ui/core/Chip";
 import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
 import MoreIcon from "components/Icons/MoreIcon";
+import { IRootState } from 'reducers';
 import { connect } from 'react-redux';
-import { getVehiclesData } from "reducers/overview"
+import { getTrailersData } from "reducers/overview"
 
 const styles = {
   moreAction: {
     background: "#FFFFFF !important",
     border: "1px solid #ECEEF0 !important"
   },
-
   userRolesTitle: {
     fontSize: 16,
     color: "#25345C",
@@ -124,11 +124,11 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-function VehicleAssets(props) {
+function VehicleTrailers(props) {
   const classes = useStyles(styles)
 
   useEffect(() => {
-    props.getVehiclesData()
+    props.getTrailersData()
   }, [])
 
   const [chipData, setChipData] = useState([
@@ -185,32 +185,12 @@ function VehicleAssets(props) {
       )
     },
     {
-      title: 'Current Fuel Level',
-      key: 'fuel',
+      title: 'Battery',
+      key: 'battery',
       onHeaderCell: { className: classes.onHeaderCell },
-      render: fuel => (
+      render: battery => (
         <div className={classes.alignItemsCenter}>
-          <div className={classes.textTable}>{fuel}</div>
-        </div>
-      )
-    },
-    {
-      title: 'Current Driver',
-      key: 'driver',
-      onHeaderCell: { className: classes.onHeaderCell },
-      render: driver => (
-        <div className={classes.alignItemsCenter}>
-          <div className={classes.textTable}>{driver}</div>
-        </div>
-      )
-    },
-    {
-      title: 'License Plate',
-      key: 'license',
-      onHeaderCell: { className: classes.onHeaderCell },
-      render: license => (
-        <div className={classes.alignItemsCenter}>
-          <div className={classes.textTable}>{license}</div>
+          <div className={classes.textTable}>{battery}</div>
         </div>
       )
     },
@@ -264,7 +244,7 @@ function VehicleAssets(props) {
               </Grid>
             </Grid>
             <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
-              <ToolboxButton placeholder="Search in vehicle" showFilter showTrash />
+              <ToolboxButton placeholder="Search in trailer" showFilter showTrash />
             </Grid>
           </Grid>
         }
@@ -283,9 +263,9 @@ function VehicleAssets(props) {
 
 export default connect(
   ({ overview }) => ({
-    data: overview.vehiclesData
+    data: overview.trailersData
   }),
   {
-    getVehiclesData
+    getTrailersData
   }
-)(VehicleAssets);
+)(VehicleTrailers);
