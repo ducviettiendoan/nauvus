@@ -12,6 +12,10 @@ import DotIcon from "components/Icons/DotIcon";
 import EditIcon from "components/Icons/EditIcon";
 import avatar from "assets/img/faces/avatar.jpg";
 
+import { getUserRoles } from "reducers/setting-org";
+import { IRootState } from 'reducers';
+import { connect } from 'react-redux';
+
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
     fontSize: 16,
@@ -125,25 +129,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const data = () => {
-  let data = [];
-  for (let i = 0; i < 64; i++) {
-    let item = {
-      id: i + 2,
-      key: i + 2,
-      user: `Cameron Williamson ${i + 1}`,
-      email: `jessica.hanson@example.com${i + 1}`,
-      roles: "Standart Admin",
-      access: `Entire Organisation${i}`
-    };
-    data.push(item);
-  }
-  return data;
-}
-
-
-export default function Users() {
+export function Users(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getUserRoles();
+  }, []);
 
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Standard Admin'},
@@ -213,7 +205,7 @@ export default function Users() {
 
   return (
     <div>
-      <Table
+      { props.data.length > 0 && <Table
         renderTitle={
           <Grid container className={classes.gridTitle}>
             <Grid item xs={12} sm={12} md={6}>
@@ -244,7 +236,7 @@ export default function Users() {
         }
         rowSelection={{}}
         columns={columns}
-        dataSource={data}
+        dataSource={props.data}
         onHeaderRow={{
           className: classes.onHeaderRow
         }}
@@ -252,6 +244,16 @@ export default function Users() {
           className: classes.tableRow
         }}
       />
+      }
     </div>
   );
 }
+
+export default connect(
+  ({ settingOrg }: IRootState) => ({
+    data: settingOrg.userRoles
+  }),
+  {
+    getUserRoles
+  }
+)(Users);
