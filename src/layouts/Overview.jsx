@@ -19,13 +19,13 @@ import routes from "user-routes";
 
 import styles from "assets/jss/material-dashboard-pro-react/layouts/overviewStyle.js";
 
-import { COGNOTO_SERVER_URL, COGNOTO_CLIENT_ID, COGNOTO_RESPONSE_TYPE, PUBLIC_URL } from "config/constants";
-
 import Loading from "components/Loading/Loading";
 import { connect } from 'react-redux';
 import { getUserInfo } from '../reducers/authentication';
+import { setOpenDrawer } from '../reducers/overview';
 import { IRootState } from '../reducers';
 import Button from '@material-ui/core/Button';
+import VehicleSideBar from "views/pages/user/overview/components/VehicleSideBar";
 
 var ps;
 
@@ -187,16 +187,16 @@ export function Overview(props) {
                 className={classes.drawer}
                 variant="persistent"
                 anchor="left"
-                open={openDrawer}
+                open={props.openDrawer}
                 classes={{
                   paper: classes.drawerPaper,
                 }}
               >
-                vvvvvvvvvvvv
+                <VehicleSideBar />
             </Drawer>
               <main
                 className={clsx(classes.content, {
-                  [classes.contentShift]: openDrawer,
+                  [classes.contentShift]: props.openDrawer,
                 })}
               >
                 <AdminNavbar
@@ -207,7 +207,6 @@ export function Overview(props) {
                   {...rest}
                 />
                 <div style={{ position: 'relative'}}>
-                  <Button onClick={() => setOpenDrawer(!openDrawer)}>Change</Button>
                   <Switch>
                     {getRoutes(routes)}
                     <Redirect from="/o" to="/o/overview" />
@@ -269,11 +268,13 @@ export function Overview(props) {
 }
 
 export default connect(
-  ({ authentication }: IRootState) => ({
+  ({ authentication, overview }: IRootState) => ({
     isAuthenticated: authentication.isAuthenticated,
     user: authentication.user,
+    openDrawer : overview.openDrawer
   }),
   {
-    getUserInfo
+    getUserInfo,
+    setOpenDrawer
   }
 )(Overview);
