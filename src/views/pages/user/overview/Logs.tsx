@@ -117,7 +117,7 @@ interface StyleProps {
 const useStyles = makeStyles<Theme, StyleProps>(() => styles as any);
 
 
-export function Assets(props) {
+export function Logs(props) {
   const classes = useStyles({} as StyleProps);
 
   React.useEffect(() => {
@@ -198,4 +198,4 @@ export default connect(
   {
     loadVehicles
   }
-)(Assets);
+)(Logs);
