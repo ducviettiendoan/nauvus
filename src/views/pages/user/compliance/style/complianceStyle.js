@@ -68,6 +68,12 @@ const complianceStyle = {
     borderRadius: "32px",
     maxWidth: "300px"
   },
+  searchBox: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    paddingLeft: "0!important"
+  },
   filterButton: {
     height: "45px",
     border: "1px solid #C4C4C4",
@@ -103,6 +109,52 @@ const complianceStyle = {
     color: "#8181A5",
     fontSize: "18px",
     marginLeft: "0 !important;"
+  },
+  cardHeaderTitle: {
+    textAlign: "left",
+    height: "45px",
+    display: "flex",
+    alignItems: "center",
+    fontSize: "17px",
+  },
+  cardHeaderSubTitle: {
+    textAlign: "right",
+    fontSize: "14px",
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end"
+  },
+  cardHeader: {
+    backgroundColor: "#ECEEF0",
+    padding: "20px 35px 20px 35px",
+  },
+  cardBodyTitle1: {
+    textAlign: "left",
+    paddingLeft: 9
+  },
+  cardBodyTitle2: {
+    textAlign: "right",
+    paddingRight: 22
+  },
+  onHeaderRow: {
+    background: "#ECEEF0",
+  },
+  textName: {
+    fontWeight: 'bold',
+    fontSize: '16px',
+    lineHeight: '24px',
+    color: '#25345C',
+    marginLeft: '16px'
+  },
+  textHour: {
+    fontSize: '16px',
+    lineHeight: '21px',
+    color: '#25345C',
+  },
+  onHeaderCell: {
+    fontWeight: "bold",
+    color: '#25345C',
   },
 }
 

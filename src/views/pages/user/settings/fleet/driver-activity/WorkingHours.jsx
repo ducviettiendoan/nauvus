@@ -187,7 +187,7 @@ export default function WorkingHours() {
               </GridContainer>
             </GridItem>
             <GridItem xs={12} sm={12} md={6} className={classes.headLeft}>
-              <ToolboxButton placeholder={"Search addresses"} showTrash/>
+              <ToolboxButton placeholder={"Search tags"} showTrash/>
             </GridItem>
           </GridContainer>
         </CardBody>

@@ -20,6 +20,10 @@ import Safety from "views/pages/user/safety/Safety";
 import Settings from "views/pages/user/settings/Settings";
 import Assets from "views/pages/user/overview/Assets";
 
+import Proximity from "views/pages/user/overview/Proximity";
+import Drivers from "views/pages/user/overview/Drivers";
+import Logs from "views/pages/user/overview/Logs";
+
 // @material-ui/icons
 import OverviewIcon from "components/Icons/OverviewIcon";
 import ComplianceIcon from "components/Icons/ComplianceIcon";
@@ -57,6 +61,24 @@ const dashRoutes = [
         path: "/assets",
         name: "Assets",
         component: Assets,
+        layout: "/o"
+      },
+      {
+        path: "/drivers",
+        name: "Drivers",
+        component: Drivers,
+        layout: "/o"
+      },
+      {
+        path: "/proximity",
+        name: "Proximity",
+        component: Proximity,
+        layout: "/o"
+      },
+      {
+        path: "/logs",
+        name: "Logs",
+        component: Logs,
         layout: "/o"
       },
     ]

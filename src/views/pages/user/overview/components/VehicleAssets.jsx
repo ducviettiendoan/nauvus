@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // @material-ui/core components
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
+// @material-ui/icons
+// import Weekend from "@material-ui/icons/Weekend";
+// core components
 import Button from "components/CustomButtons/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import CloseIcon from "components/Icons/CloseIcon";
@@ -8,9 +11,16 @@ import DeleteIcon from "components/Icons/DeleteIcon";
 import Chip from "@material-ui/core/Chip";
 import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
-import EditIcon from "components/Icons/EditIcon";
+import MoreIcon from "components/Icons/MoreIcon";
+import { connect } from 'react-redux';
+import { getVehiclesData } from "reducers/overview"
 
-const useStyles = makeStyles((theme) => ({
+const styles = {
+  moreAction: {
+    background: "#FFFFFF !important",
+    border: "1px solid #ECEEF0 !important"
+  },
+
   userRolesTitle: {
     fontSize: 16,
     color: "#25345C",
@@ -57,18 +67,6 @@ const useStyles = makeStyles((theme) => ({
       marginRight: 8
     }
   },
-  textName: {
-    fontWeight: 'bold',
-    fontSize: '16px',
-    lineHeight: '24px',
-    color: '#25345C',
-    // marginLeft: '16px'
-  },
-  textEmail: {
-    fontSize: '16px',
-    lineHeight: '21px',
-    color: "#25345C"
-  },
   chips: {
     background: "#ECEEF0",
     color: "#25345C",
@@ -91,17 +89,23 @@ const useStyles = makeStyles((theme) => ({
   },
   alignItemsCenter: {
     display: "flex",
-    alignItems: "center",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "center"
   },
   dotIcon: {
     color: "#7CE7AC",
     marginTop: 10
   },
-  textRoles: {
+  textTable: {
     fontSize: '16px',
-    lineHeight: '24px',
+    lineHeight: '21px',
+    color: "#25345C",
+    fontFamily: "Lato",
+    fontStyle: "normal",
+    fontWeight: "normal",
   },
-  textAccess: {
+  textStatus: {
     display: "inline-block",
     fontSize: '14px',
     lineHeight: '17px',
@@ -116,30 +120,20 @@ const useStyles = makeStyles((theme) => ({
       color: '#25345C !important',
     }
   },
-}));
+};
 
-const data = () => {
-  let data = [];
-  for (let i = 0; i < 64; i++) {
-    let item = {
-      id: i + 2,
-      key: i + 2,
-      roles: `Standard Admin ${i + 1}`,
-      permissions: `View and Edit`,
-      access: `Entire Organisation${i}`
-    };
-    data.push(item);
-  }
-  return data;
-}
+const useStyles = makeStyles(styles);
 
+function VehicleAssets(props) {
+  const classes = useStyles(styles)
 
-export default function Roles() {
-  const classes = useStyles();
+  useEffect(() => {
+    props.getVehiclesData()
+  }, [])
 
-  const [chipData, setChipData] = React.useState([
-    {key: 0, label: 'Standard Admin'},
-    {key: 1, label: 'Full admin'},
+  const [chipData, setChipData] = useState([
+    { key: 0, label: 'Standard Admin' },
+    { key: 1, label: 'Full admin' },
   ]);
 
   const handleDelete = (chipToDelete) => () => {
@@ -152,42 +146,100 @@ export default function Roles() {
 
   const columns = [
     {
-      title: 'Roles',
-      key: 'roles',
-      onHeaderCell: {className: classes.onHeaderCell},
-      render: role => (
+      title: 'Name',
+      key: 'name',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: user => (
         <div className={classes.alignItemsCenter}>
-          <div className={classes.textName}>{role}</div>
+          <div className={classes.textTable}>{user}</div>
         </div>
       ),
     },
     {
-      title: 'Permission',
-      key: 'permissions',
-      onHeaderCell: {className: classes.onHeaderCell},
-      render: permission => <div className={classes.textEmail}>{permission}</div>
+      title: 'Location',
+      key: 'location',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: location => <div className={classes.alignItemsCenter}>
+        <div className={classes.textTable}>{location.location}</div>
+        <div className={classes.textTable}>{location.time}</div>
+      </div>
+    },
+    {
+      title: 'Last Trip',
+      key: 'lastTrip',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: trip => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textTable}>{trip}</div>
+        </div>
+      )
+    },
+    {
+      title: 'Status',
+      key: 'status',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: status => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textTable}>{status}</div>
+        </div>
+      )
+    },
+    {
+      title: 'Current Fuel Level',
+      key: 'fuel',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: fuel => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textTable}>{fuel}</div>
+        </div>
+      )
+    },
+    {
+      title: 'Current Driver',
+      key: 'driver',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: driver => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textTable}>{driver}</div>
+        </div>
+      )
+    },
+    {
+      title: 'License Plate',
+      key: 'license',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: license => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textTable}>{license}</div>
+        </div>
+      )
+    },
+    {
+      title: 'Tags',
+      key: 'tag',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: tag => <div className={classes.textStatus}>{tag}</div>
     },
     {
       title: 'Actions',
       key: 'action',
-      onHeaderCell: {className: classes.onHeaderCell},
+      onHeaderCell: { className: classes.onHeaderCell },
       render: () => (
         <div className={classes.actionButton}>
-          <Button justIcon color="twitter" simple>
-            <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+          <Button justIcon color="google" simple>
+            <DeleteIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
           </Button>
           <Button justIcon color="google" simple>
-            <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
+            <MoreIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
           </Button>
         </div>
       )
     }
   ]
 
-
   return (
     <div>
-      <Table
+      {props.data.length > 0 && <Table
         renderTitle={
           <Grid container className={classes.gridTitle}>
             <Grid item xs={12} sm={12} md={6}>
@@ -196,7 +248,7 @@ export default function Roles() {
                 <Grid item xl={10} className={classes.chipSelected}>
                   {chipData.map(data => (
                     <Chip
-                      deleteIcon={<CloseIcon/>}
+                      deleteIcon={<CloseIcon />}
                       label={data.label}
                       onDelete={handleDelete(data)}
                       className={classes.chips}
@@ -212,20 +264,28 @@ export default function Roles() {
               </Grid>
             </Grid>
             <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
-              <ToolboxButton placeholder="Search for role" showFilter showTrash/>
+              <ToolboxButton placeholder="Search in vehicle" showFilter showTrash />
             </Grid>
           </Grid>
         }
-        // rowSelection={{}}
         columns={columns}
-        dataSource={data}
+        dataSource={props.data}
         onHeaderRow={{
           className: classes.onHeaderRow
         }}
         onBodyRow={{
           className: classes.tableRow
         }}
-      />
+      />}
     </div>
   );
 }
+
+export default connect(
+  ({ overview }) => ({
+    data: overview.vehiclesData
+  }),
+  {
+    getVehiclesData
+  }
+)(VehicleAssets);

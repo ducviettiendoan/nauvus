@@ -2,109 +2,30 @@ import React from "react";
 import PropTypes from "prop-types";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
 //material-ui/lab components
-import { Alert, AlertTitle } from "@material-ui/lab";
 // @material-ui/icons
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
+import FilterIcon from "../../../../components/Icons/FilterIcon";
+import ColumnIcon from "../../../../components/Icons/ColumnIcon";
+import IconButton from '@material-ui/core/IconButton';
 
-import { withStyles } from "@material-ui/core/styles";
+import BootstrapTable from "react-bootstrap-table-next";
+import GenPaginationV1 from "components/Pagination/GenPaginationV1";
+import ToolkitProvider from "react-bootstrap-table2-toolkit";
+import ToolboxButton from "components/CustomButtons/ToolboxButton";
+import RoundedTabs from "components/CustomTabs/RoundedTabs";
 
-import {
-  cardTitle,
-  roseColor,
-} from "assets/jss/material-dashboard-pro-react.js";
-import AppBar from "@material-ui/core/AppBar";
-import TableComponent from "../../../../components/Table/CustomTable";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import { Grid } from "@material-ui/core";
-import CustomInput from "components/CustomInput/CustomInput.js";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Search from "@material-ui/icons/Search";
+import Calendar from "../../../../components/Calendar/Calendar";
 import { InfoOutlined, MoreHoriz } from "@material-ui/icons";
 import Button from "components/CustomButtons/Button.js";
 
 const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0",
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem",
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px",
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px",
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px",
-    },
-  },
-  iconRose: {
-    color: roseColor,
-  },
-  marginTop30: {
-    marginTop: "30px",
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px",
-    },
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999",
-  },
-  searchMapContainer: {
-    position: "absolute",
-    top: "10px",
-    left: "10px",
-  },
-  btnSearchOnMap: {
-    background: "white",
-    padding: "0px 20px 0px 20px",
-    borderRadius: "36px",
-    height: "40px",
-    border: "1px solid #C4C4C4",
-  },
-  inputAdornmentIcon: {
-    color: "#8181A5",
-    fontSize: "18px",
-    marginLeft: "0 !important;",
-  },
-  toogleDrawer: {
-    color: "#25345C !important",
-    background: "white",
-    width: "40px !important",
-    height: "40px !important",
-    minWidth: "40px !important",
-    marginTop: "-10px",
-    marginRight: "10px",
+  alert: {
+    padding: "0 18px 0 18px"
   },
   txtInfoMain: {
     fontWeight: "bold",
@@ -116,260 +37,160 @@ const styles = {
     fontSize: "14px",
     lineHeight: "21px",
     color: "#25345C",
+    fontWeight: "400",
   },
   moreAction: {
     background: "#FFFFFF !important",
     border: "1px solid #ECEEF0 !important",
   },
+  textName: {
+    fontWeight: 'bold',
+    fontSize: '16px',
+    lineHeight: '24px',
+    color: '#25345C',
+    marginLeft: '24px',
+    marginTop: '25px'
+  },
+  textSub: {
+    fontWeight: '400',
+    fontSize: '16px',
+    lineHeight: '24px',
+    marginTop: '25px',
+    marginLeft: '24px',
+    color: "#25345C",
+  },
+  filterButtonText: {
+    textTransform: "none",
+    fontSize: "14px",
+    color: "#25345C",
+    border: "1px solid #C4C4C4 !important",
+    borderRadius: "32px !important",
+    width: "100px !important",
+    minWidth: '100px !important',
+    height: "40px",
+    position: "absolute",
+    right: "106px",
+    marginRight: "106px",
+    alignItems: "center !important"
+  },
+  filterButtonText2: {
+    textTransform: "none",
+    fontSize: "14px",
+    color: "#25345C",
+    border: "1px solid #C4C4C4 !important",
+    borderRadius: "32px !important",
+    maxWidth: "180px !important",
+    minWidth: '180px !important',
+    height: "40px",
+    position: "absolute",
+    right: "10px",
+    marginRight: "10px",
+    alignItems: "center !important",
+  },
+  filterIcon: {
+    marginTop: 13,
+  },
+  searchButton: {
+    display: "flex",
+    justifyContent: "flex-start",
+    "& > div": {
+      marginRight: 8
+    }
+  },
+  filterArea: {
+    alignItems: "center",
+    display: "flex",
+  },
+  filterComp: {
+    display: "flex",
+    justifyContent: "flex-end"
+  }
 };
 
-const HeadCells = [
-  { id: "vehicle", numeric: false, disablePadding: true, label: "Vehicle" },
-  {
-    id: "efficiency",
-    numeric: true,
-    disablePadding: false,
-    label: "Efficiency",
-  },
-  { id: "fuelUsed", numeric: true, disablePadding: false, label: "Fuel Used" },
-  {
-    id: "energyUsed",
-    numeric: true,
-    disablePadding: false,
-    label: "Energy Used",
-  },
-  { id: "distance", numeric: true, disablePadding: false, label: "Distance" },
-  {
-    id: "drivingElectric",
-    numeric: true,
-    disablePadding: false,
-    label: "Driving Electric",
-  },
-  {
-    id: "carbonEmissions",
-    numeric: true,
-    disablePadding: false,
-    label: "Carbon Emissions",
-  },
-  { id: "cost", numeric: true, disablePadding: false, label: "Cost" },
-  {
-    id: "totalEngineRunTime",
-    numeric: true,
-    disablePadding: false,
-    label: "Total Engine Run Time",
-  },
-  { id: "idleTime", numeric: true, disablePadding: false, label: "Distance" },
-];
 
-function createData(
-  vehicle,
-  efficiency,
-  fuelUsed,
-  energyUsed,
-  distance,
-  drivingElectric,
-  carbonEmissions,
-  cost,
-  totalEngineRunTime,
-  idleTime
-) {
-  return {
-    vehicle,
-    efficiency,
-    fuelUsed,
-    energyUsed,
-    distance,
-    drivingElectric,
-    carbonEmissions,
-    cost,
-    totalEngineRunTime,
-    idleTime,
-  };
-}
-
-const rows = [
-  createData(
-    "Vehicle 101",
-    "39.1 MPG",
-    "2.0 gal",
-    "0.0 kWh",
-    "78.1 mi",
-    "0.0",
-    "39.2 lb",
-    "C$10.76",
-    "3h 20m",
-    "10s (0.1%)"
-  ),
-  createData(
-    "Vehicle 101",
-    "39.1 MPG",
-    "2.0 gal",
-    "0.0 kWh",
-    "78.1 mi",
-    "0.0",
-    "39.2 lb",
-    "C$10.76",
-    "3h 20m",
-    "10s (0.1%)"
-  ),
-  createData(
-    "Vehicle 101",
-    "39.1 MPG",
-    "2.0 gal",
-    "0.0 kWh",
-    "78.1 mi",
-    "0.0",
-    "39.2 lb",
-    "C$10.76",
-    "3h 20m",
-    "10s (0.1%)"
-  ),
-  createData(
-    "Vehicle 101",
-    "39.1 MPG",
-    "2.0 gal",
-    "0.0 kWh",
-    "78.1 mi",
-    "0.0",
-    "39.2 lb",
-    "C$10.76",
-    "3h 20m",
-    "10s (0.1%)"
-  ),
-  createData(
-    "Vehicle 101",
-    "39.1 MPG",
-    "2.0 gal",
-    "0.0 kWh",
-    "78.1 mi",
-    "0.0",
-    "39.2 lb",
-    "C$10.76",
-    "3h 20m",
-    "10s (0.1%)"
-  ),
-  createData(
-    "Vehicle 101",
-    "39.1 MPG",
-    "2.0 gal",
-    "0.0 kWh",
-    "78.1 mi",
-    "0.0",
-    "39.2 lb",
-    "C$10.76",
-    "3h 20m",
-    "10s (0.1%)"
-  ),
-  createData(
-    "Vehicle 101",
-    "39.1 MPG",
-    "2.0 gal",
-    "0.0 kWh",
-    "78.1 mi",
-    "0.0",
-    "39.2 lb",
-    "C$10.76",
-    "3h 20m",
-    "10s (0.1%)"
-  ),
-  createData(
-    "Vehicle 101",
-    "39.1 MPG",
-    "2.0 gal",
-    "0.0 kWh",
-    "78.1 mi",
-    "0.0",
-    "39.2 lb",
-    "C$10.76",
-    "3h 20m",
-    "10s (0.1%)"
-  ),
-  createData(
-    "Vehicle 101",
-    "39.1 MPG",
-    "2.0 gal",
-    "0.0 kWh",
-    "78.1 mi",
-    "0.0",
-    "39.2 lb",
-    "C$10.76",
-    "3h 20m",
-    "10s (0.1%)"
-  ),
-  createData(
-    "Vehicle 102",
-    "39.1 MPG",
-    "2.0 gal",
-    "0.0 kWh",
-    "78.1 mi",
-    "0.0",
-    "39.2 lb",
-    "C$10.76",
-    "3h 20m",
-    "10s (0.1%)"
-  ),
+const dumpData = [
+  { vehicle: "Vehicle 101", efficiency: "39.1 MPG", fuelUsed: "2.0 gal", energyUsed: "0.0 kWh", distance: "78.1 mi", drivingElectric: "0.0", estCarbonEmissions: "39.2 lb", estCost: "C$10.76", totalEngineRunTime: "3h 20m", idleTime: "10s (0.1%)" },
+  { vehicle: "Vehicle 101", efficiency: "39.1 MPG", fuelUsed: "2.0 gal", energyUsed: "0.0 kWh", distance: "78.1 mi", drivingElectric: "0.0", estCarbonEmissions: "39.2 lb", estCost: "C$10.76", totalEngineRunTime: "3h 20m", idleTime: "10s (0.1%)" },
+  { vehicle: "Vehicle 101", efficiency: "39.1 MPG", fuelUsed: "2.0 gal", energyUsed: "0.0 kWh", distance: "78.1 mi", drivingElectric: "0.0", estCarbonEmissions: "39.2 lb", estCost: "C$10.76", totalEngineRunTime: "3h 20m", idleTime: "10s (0.1%)" },
+  { vehicle: "Vehicle 101", efficiency: "39.1 MPG", fuelUsed: "2.0 gal", energyUsed: "0.0 kWh", distance: "78.1 mi", drivingElectric: "0.0", estCarbonEmissions: "39.2 lb", estCost: "C$10.76", totalEngineRunTime: "3h 20m", idleTime: "10s (0.1%)" },
+  { vehicle: "Vehicle 101", efficiency: "39.1 MPG", fuelUsed: "2.0 gal", energyUsed: "0.0 kWh", distance: "78.1 mi", drivingElectric: "0.0", estCarbonEmissions: "39.2 lb", estCost: "C$10.76", totalEngineRunTime: "3h 20m", idleTime: "10s (0.1%)" },
+  { vehicle: "Vehicle 101", efficiency: "39.1 MPG", fuelUsed: "2.0 gal", energyUsed: "0.0 kWh", distance: "78.1 mi", drivingElectric: "0.0", estCarbonEmissions: "39.2 lb", estCost: "C$10.76", totalEngineRunTime: "3h 20m", idleTime: "10s (0.1%)" },
+  { vehicle: "Vehicle 101", efficiency: "39.1 MPG", fuelUsed: "2.0 gal", energyUsed: "0.0 kWh", distance: "78.1 mi", drivingElectric: "0.0", estCarbonEmissions: "39.2 lb", estCost: "C$10.76", totalEngineRunTime: "3h 20m", idleTime: "10s (0.1%)" },
 ];
 
 const useStyles = makeStyles(styles);
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
-const AntTab = withStyles((theme) => ({
-  root: {
-    textTransform: "none",
-    minWidth: 72,
-    "&:hover": {
-      color: "#40a9ff",
-      opacity: 1,
-    },
-    "&$selected": {
-      color: "#1890ff",
-    },
-    "&:focus": {
-      color: "#40a9ff",
-    },
-  },
-  selected: {},
-}))((props) => <Tab disableRipple {...props} />);
-
 export default function FuelEnergy() {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
+  const handleChangeTab = (event, newValue) => {
     setValue(newValue);
   };
+
+  const formatVehicle = (cell, row) => {
+    return <>
+      <div className={classes.textName}>{cell}</div>
+    </>
+  }
+
+  const formatEfficiency = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+  const formatFuelUsed = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+  const formatEnergyUsed = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+  const formatDistance = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+  const formatDrivingElectric = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+
+  const formatEstCarbonEmissions = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+
+  const formatEstCost = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+
+  const formatTotalEngineRunTime = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+
+  const formatIdleTime = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
 
   return (
     <div>
@@ -378,8 +199,8 @@ export default function FuelEnergy() {
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
               <Card testimonial>
-                <CardBody>
-                  <Card>
+                <div className={classes.alert}>
+                  <Card >
                     <CardBody>
                       <div className="ml-5" style={{ textAlign: "left" }}>
                         <div className={classes.txtInfoMain}>
@@ -396,71 +217,123 @@ export default function FuelEnergy() {
                       </div>
                     </CardBody>
                   </Card>
-                  <Grid container spacing={3} justifyContent="space-between">
-                    <Grid item xs={6} style={{ textAlign: "left" }}>
-                      <CustomInput
-                        formControlProps={{
-                          className: classes.btnSearchOnMap,
-                        }}
-                        inputProps={{
-                          id: "btn-search-on-map",
-                          placeholder: "Search",
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <Search className={classes.inputAdornmentIcon} />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </Grid>
-                    <Grid item xs={6} style={{ textAlign: "right" }}>
-                      <>
-                        <Button
-                          color="white"
-                          aria-label="edit"
-                          justIcon
-                          round
-                          className={`btn-36 ${classes.moreAction} mr-2`}
-                        >
-                          <MoreHoriz />
-                        </Button>
-                      </>
-                    </Grid>
-                  </Grid>
+                </div>
+                <CardBody>
+                  <GridContainer>
+                    <GridItem xs={12} sm={8} md={9} xl={10} className={classes.searchButton}>
+                      <ToolboxButton placeholder={"Search Drivers"} />
+                    </GridItem>
+                    <GridItem xs={12} sm={4} md={3} xl={2} className={classes.filterArea}>
+                      <Calendar className={classes.calendar} />
+                      <Button
+                        color="white"
+                        aria-label="edit"
+                        justIcon
+                        round
+                        className={`btn-36 ${classes.moreAction} mr-2`}
+                      >
+                        <MoreHoriz />
+                      </Button>
+                    </GridItem>
+
+                  </GridContainer>
+
                 </CardBody>
 
-                <GridContainer style={{ padding: 16 }}>
+                <GridContainer >
                   <GridItem xs={12} sm={12} md={12}>
                     <GridContainer>
                       <GridItem xs={6} sm={6} md={6}>
-                        <AppBar position="static" className="appBar">
-                          <Tabs
-                            value={value}
-                            onChange={handleChange}
-                            aria-label="simple tabs example"
-                          >
-                            <Tab label="Vehicle" {...a11yProps(0)} />
-                            <Tab label="Driver" {...a11yProps(1)} />
-                          </Tabs>
-                        </AppBar>
+                        <RoundedTabs tabs={["Vehicle", "Driver"]} tabValue={handleChangeTab} />
+                      </GridItem>
+                      <GridItem>
+                        <GridItem xs={6}>
+                          <IconButton className={classes.filterButtonText2}>
+                            <ColumnIcon className={classes.filterIcon} />
+                        Manage Column
+                        </IconButton>
+                        </GridItem>
+                        <GridItem xs={6}>
+                          <IconButton className={classes.filterButtonText}>
+                            <FilterIcon className={classes.filterIcon} />
+                        Filter
+                        </IconButton>
+                        </GridItem>
                       </GridItem>
                     </GridContainer>
                   </GridItem>
                 </GridContainer>
 
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <TabPanel value={value} index={0} className="tabPanel">
-                      <TableComponent rows={rows} headCells={HeadCells} />
-                    </TabPanel>
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <TabPanel value={value} index={1} className="tabPanel">
-                      <TableComponent rows={rows} headCells={HeadCells} />
-                    </TabPanel>
-                  </GridItem>
-                </GridContainer>
+                <ToolkitProvider
+                  data={dumpData}
+                  keyField="_id"
+                  columns={[
+                    {
+                      dataField: "vehicle",
+                      text: "Vehicle",
+                      formatter: formatVehicle
+                    },
+                    {
+                      dataField: "efficiency",
+                      text: "Efficiency",
+                      formatter: formatEfficiency
+                    },
+                    {
+                      dataField: "fuelUsed",
+                      text: "Fuel Used",
+                      formatter: formatFuelUsed
+                    },
+                    {
+                      dataField: "energyUsed",
+                      text: "Energy Used",
+                      formatter: formatEnergyUsed
+                    },
+                    {
+                      dataField: "distance",
+                      text: "Distance",
+                      formatter: formatDistance
+                    },
+                    {
+                      dataField: "drivingElectric",
+                      text: "% Driving Electric",
+                      formatter: formatDrivingElectric
+                    },
+                    {
+                      dataField: "estCarbonEmissions",
+                      text: "Est. Carbon Emissions",
+                      formatter: formatEstCarbonEmissions
+                    },
+                    {
+                      dataField: "estCost",
+                      text: "Est. Cost",
+                      formatter: formatEstCost
+                    },
+                    {
+                      dataField: "totalEngineRunTime",
+                      text: "Total Engine Run Time",
+                      formatter: formatTotalEngineRunTime
+                    },
+                    {
+                      dataField: "idleTime",
+                      text: "Idle Time(%)",
+                      formatter: formatIdleTime
+                    },
+                  ]}
+                >
+                  {props => (
+                    <div className="table table-settings">
+                      <BootstrapTable
+                        {...props.baseProps}
+                        bootstrap4={true}
+                        bordered={false}
+                      />
+
+                    </div>
+                  )}
+                </ToolkitProvider>
               </Card>
+              <GenPaginationV1 pageSizeOptions={[10, 20, 30, 40]} showSizeChanger total={29} page={1} size={10} />
+
             </GridItem>
           </GridContainer>
         </GridItem>
