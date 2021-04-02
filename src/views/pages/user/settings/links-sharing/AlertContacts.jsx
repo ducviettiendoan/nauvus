@@ -9,9 +9,6 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import {
-  cardTitle,
-} from "assets/jss/material-dashboard-pro-react.js";
 import Button from "components/CustomButtons/Button.js";
 import { MoreHoriz } from "@material-ui/icons";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
@@ -19,8 +16,10 @@ import EditIcon from "components/Icons/EditIcon";
 import DeleteIcon from "components/Icons/DeleteIcon";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import { Row } from "reactstrap";
 import GenPaginationV1 from "components/Pagination/GenPaginationV1";
+import {connect} from "react-redux";
+import {IRootState} from "reducers";
+import {getAlertContact} from "reducers/setting-link-sharing";
 
 const styles = {
   liveSharingHeader: {
@@ -82,21 +81,15 @@ const styles = {
   },
 };
 
-
-const dumpData = [
-  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
-  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
-  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
-  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
-  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
-  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
-  { name: 'Esther Howard', phone: "(347) 555-0133", email: 'debra.holt@example.com' },
-];
-
 const useStyles = makeStyles(styles);
 
-export default function AlertContacts(props) {
+export function AlertContacts(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getAlertContact();
+  }, []);
 
   const formatName = (cell, row) => {
     return <>
@@ -135,7 +128,6 @@ export default function AlertContacts(props) {
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
-
               <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
                   Alert Contacts  List
@@ -174,8 +166,7 @@ export default function AlertContacts(props) {
                 </CardBody>
                 <div>
                   <ToolkitProvider
-                    data={dumpData}
-                    keyField="_id"
+                    data={props.data}
                     columns={[
                       {
                         dataField: "name",
@@ -203,24 +194,10 @@ export default function AlertContacts(props) {
                       <div className="table table-settings">
                         <BootstrapTable
                           {...props.baseProps}
+                          keyField="id"
                           bootstrap4={true}
                           bordered={false}
                         />
-                        <Row className="justify-content-center">
-                          {/* <PaginationV2
-                                        pages={[
-                                          { text: <ArrowDownIcon/>, arrow : true,disabled : true },
-                                          { text: <ArrowLeftIcon/>, arrow : true,disabled : true },
-                                          { active: true, text: 1 },
-                                          { text: 2 },
-                                          { text: 3 },
-                                          { text: 4 },
-                                          { text: 5 },
-                                          { text: <ArrowRightIcon/>, arrow : true },
-                                          { text: <ArrowUpIcon/>, arrow : true },
-                                        ]}
-                                      /> */}
-                        </Row>
                       </div>
                     )}
                   </ToolkitProvider>
@@ -234,3 +211,12 @@ export default function AlertContacts(props) {
     </div>
   );
 }
+
+export default connect(
+  ({settingLinkSharing}: IRootState) => ({
+    data: settingLinkSharing.alertContacts
+  }),
+  {
+    getAlertContact
+  }
+)(AlertContacts);

@@ -13,6 +13,9 @@ import DeleteIcon from "components/Icons/DeleteIcon";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import GenPaginationV1 from "components/Pagination/GenPaginationV1";
+import {connect} from "react-redux";
+import {IRootState} from "reducers";
+import {getMap} from "reducers/setting-fleet";
 
 const styles = {
   textName: {
@@ -49,22 +52,15 @@ const styles = {
   }
 };
 
-
-const dumpData = [
-  {name: 'GR9X-6AN-3N5'},
-  {name: 'GR9X-6AN-3N5'},
-  {name: 'GR9X-6AN-3N5'},
-  {name: 'GR9X-6AN-3N5'},
-  {name: 'GR9X-6AN-3N5'},
-  {name: 'GR9X-6AN-3N5'},
-  {name: 'GR9X-6AN-3N5'},
-  {name: 'GR9X-6AN-3N5'}
-];
-
 const useStyles = makeStyles(styles);
 
-export default function Maps(props) {
+export function Maps(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getMap();
+  }, []);
 
   const formatName = (cell, row) => {
     return <>
@@ -109,8 +105,7 @@ export default function Maps(props) {
               <Card testimonial>
                 <div>
                   <ToolkitProvider
-                    data={dumpData}
-                    keyField="_id"
+                    data={props.data}
                     columns={[
                       {
                         dataField: "name",
@@ -130,6 +125,7 @@ export default function Maps(props) {
                           {...props.baseProps}
                           bootstrap4={true}
                           bordered={false}
+                          keyField="id"
                         />
                       </div>
                     )}
@@ -144,3 +140,12 @@ export default function Maps(props) {
     </div>
   );
 }
+
+export default connect(
+  ({settingFleet}: IRootState) => ({
+    data: settingFleet.maps
+  }),
+  {
+    getMap
+  }
+)(Maps);

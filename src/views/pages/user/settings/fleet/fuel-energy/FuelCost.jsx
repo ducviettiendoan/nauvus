@@ -15,6 +15,10 @@ import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 import CostIcon from "components/Icons/CostIcon";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import {connect} from "react-redux";
+import {IRootState} from "../../../../../../reducers";
+import {getDriverEfficiency, getFuelCost} from "../../../../../../reducers/setting-fleet";
+import {DriverEfficiency} from "./DriverEfficiency";
 
 const styles = {
   textDate: {
@@ -58,21 +62,15 @@ const styles = {
     marginTop: 20
   }
 };
-
-const dumpData = [
-  {date: '03/18/2021', cost: "1 Vehicle"},
-  {date: '03/18/2021', cost: "1 Vehicle"},
-  {date: '03/18/2021', cost: "1 Vehicle"},
-  {date: '03/18/2021', cost: "1 Vehicle"},
-  {date: '03/18/2021', cost: "1 Vehicle"},
-  {date: '03/18/2021', cost: "1 Vehicle"},
-
-];
-
 const useStyles = makeStyles(styles);
 
-export default function FuelCost() {
+export function FuelCost(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getFuelCost();
+  }, []);
 
   const formatDate = (cell, row) => {
     return <>
@@ -117,8 +115,7 @@ export default function FuelCost() {
                   </GridItem>
                 </CardBody>
                 <ToolkitProvider
-                  data={dumpData}
-                  keyField="_id"
+                  data={props.data}
                   columns={[
                     {
                       dataField: "date",
@@ -139,6 +136,7 @@ export default function FuelCost() {
                         {...props.baseProps}
                         bootstrap4={true}
                         bordered={false}
+                        keyField="id"
                       />
 
                     </div>
@@ -153,3 +151,12 @@ export default function FuelCost() {
     </div>
   );
 }
+
+export default connect(
+  ({settingFleet}: IRootState) => ({
+    data: settingFleet.fuelCost
+  }),
+  {
+    getFuelCost
+  }
+)(FuelCost);

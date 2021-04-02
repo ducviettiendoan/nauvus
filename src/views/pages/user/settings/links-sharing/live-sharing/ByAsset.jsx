@@ -9,7 +9,6 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import TableComponent from "components/Table/CustomTable"
 import {
   cardTitle,
   roseColor
@@ -18,20 +17,15 @@ import {Tab, Tabs, Typography} from "@material-ui/core";
 import Button from "components/CustomButtons/Button.js";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import BootstrapTable from "react-bootstrap-table-next";
-import {Row} from "reactstrap";
-import GenPaginationV1 from "../../../../../../components/Pagination/GenPaginationV1";
+import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import EditIcon from "../../../../../../components/Icons/EditIcon";
-import DeleteIcon from "../../../../../../components/Icons/DeleteIcon";
-import CopyIcon from "../../../../../../components/Icons/CopyIcon";
-import ArrowRightIcon from "../../../../../../components/Icons/ArrowRightIcon";
-import ArrowLeftIcon from "../../../../../../components/Icons/ArrowLeftIcon";
-import ArrowUpIcon from "../../../../../../components/Icons/ArrowUpIcon";
-
-import AddOutlined from "@material-ui/icons/AddOutlined";
-// import RoundedTabs from "../../../../../components/CustomTabs/RoundedTabs";
-import FormatQuote from "@material-ui/icons/FormatQuote";
-// import CardFooter from "../../../../../components/Card/CardFooter";
+import EditIcon from "components/Icons/EditIcon";
+import DeleteIcon from "components/Icons/DeleteIcon";
+import CopyIcon from "components/Icons/CopyIcon";
+import {connect} from "react-redux";
+import {IRootState} from "../../../../../../reducers";
+import {getByAsset, getScheduleReport} from "../../../../../../reducers/setting-link-sharing";
+import {ScheduledReports} from "../ScheduledReports";
 
 const styles = {
   cardTitle,
@@ -122,20 +116,15 @@ const styles = {
   },
 };
 
-const dumpData = [
-  {name: 'GR9X-6AN-3N5', linkExpires: 'Never'},
-  {name: 'GR9X-6AN-3N5', linkExpires: 'Never'},
-  {name: 'GR9X-6AN-3N5', linkExpires: 'Never'},
-  {name: 'GR9X-6AN-3N5', linkExpires: 'Never'},
-  {name: 'GR9X-6AN-3N5', linkExpires: 'Never'},
-  {name: 'GR9X-6AN-3N5', linkExpires: 'Never'},
-  {name: 'GR9X-6AN-3N5', linkExpires: 'Never'},
-];
-
 const useStyles = makeStyles(styles);
 
-export default function ByAsset() {
+export function ByAsset(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getByAsset();
+  }, []);
 
   const formatName = (cell, row) => {
     return <>
@@ -183,8 +172,7 @@ export default function ByAsset() {
                   </GridContainer>
                 </CardBody>
                   <ToolkitProvider
-                    data={dumpData}
-                    keyField="_id"
+                    data={props.data}
                     columns={[
                       {
                         dataField: "name",
@@ -209,6 +197,7 @@ export default function ByAsset() {
                           {...props.baseProps}
                           bootstrap4={true}
                           bordered={false}
+                          keyField="id"
                         />
 
                       </div>
@@ -223,3 +212,12 @@ export default function ByAsset() {
     </div>
   );
 }
+
+export default connect(
+  ({settingLinkSharing}: IRootState) => ({
+    data: settingLinkSharing.byAssets
+  }),
+  {
+    getByAsset
+  }
+)(ByAsset);

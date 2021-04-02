@@ -1,9 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
@@ -19,6 +17,9 @@ import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 import EditIcon from "components/Icons/EditIcon";
 import maps from "assets/img/maps.jpg";
 import Chip from "@material-ui/core/Chip";
+import {connect} from "react-redux";
+import {IRootState} from "reducers";
+import {getInvalidAddress} from "reducers/setting-fleet";
 
 const styles = {
   userRolesTitle: {
@@ -123,65 +124,13 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const dumpData = [
-  {
-    id: 1,
-    address: '314  Jenna Lane',
-    name: 'Des Moines',
-    number: '50313',
-    tags: 'Invalid',
-    notes: "Vehicles near Park plaza warehouse",
-    address_type: "Yard"
-  },
-  {
-    id: 2,
-    address: '314  Jenna Lane',
-    name: 'Des Moines',
-    number: '50313',
-    tags: 'Invalid',
-    notes: "Vehicles near Park plaza warehouse",
-    address_type: "Yard"
-  },
-  {
-    id: 3,
-    address: '314  Jenna Lane',
-    name: 'Des Moines',
-    number: '50313',
-    tags: 'Invalid',
-    notes: "Vehicles near Park plaza warehouse",
-    address_type: "Yard"
-  },
-  {
-    id: 4,
-    address: '314  Jenna Lane',
-    name: 'Des Moines',
-    number: '50313',
-    tags: 'Invalid',
-    notes: "Vehicles near Park plaza warehouse",
-    address_type: "Yard"
-  },
-  {
-    id: 5,
-    address: '314  Jenna Lane',
-    name: 'Des Moines',
-    number: '50313',
-    tags: 'Invalid',
-    notes: "Vehicles near Park plaza warehouse",
-    address_type: "Yard"
-  },
-  {
-    id: 6,
-    address: '314  Jenna Lane',
-    name: 'Des Moines',
-    number: '50313',
-    tags: 'Invalid',
-    notes: "Vehicles near Park plaza warehouse",
-    address_type: "Yard"
-  },
-];
-
-export default function InValidAddresses() {
+export function InValidAddresses(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getInvalidAddress();
+  }, []);
 
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Standard Admin'},
@@ -285,8 +234,7 @@ export default function InValidAddresses() {
                   </GridContainer>
                 </CardBody>
                 <ToolkitProvider
-                  data={dumpData}
-                  // keyField="_id"
+                  data={props.data}
                   columns={[
                     {
                       dataField: "address",
@@ -340,3 +288,12 @@ export default function InValidAddresses() {
     </div>
   );
 }
+
+export default connect(
+  ({settingFleet}: IRootState) => ({
+    data: settingFleet.invalidAddresses
+  }),
+  {
+    getInvalidAddress
+  }
+)(InValidAddresses);

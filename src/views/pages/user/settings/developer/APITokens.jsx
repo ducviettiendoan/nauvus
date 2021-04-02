@@ -16,7 +16,9 @@ import DotIcon from "components/Icons/DotIcon.jsx";
 
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import {Row} from "reactstrap";
+import {connect} from "react-redux";
+import {IRootState} from "reducers";
+import {getApiToken} from "reducers/setting-developer";
 
 const styles = {
   apiTokensHeader: {
@@ -108,57 +110,16 @@ const styles = {
   }
 };
 
-const dumpData = [
-  {
-    name: 'Truckmate',
-    accessTokens: "nauvus_api_IsXNeRyK8fPRSs9z0IcSeQ9sJhrchX",
-    scope: 'Full Admin',
-    version: "2021-02-16",
-    status: "Latest"
-  },
-  {
-    name: 'Truckmate',
-    accessTokens: "nauvus_api_IsXNeRyK8fPRSs9z0IcSeQ9sJhrchX",
-    scope: 'Full Admin',
-    version: "2021-02-16",
-    status: "Latest"
-  },
-  {
-    name: 'Truckmate',
-    accessTokens: "nauvus_api_IsXNeRyK8fPRSs9z0IcSeQ9sJhrchX",
-    scope: 'Full Admin',
-    version: "2021-02-16",
-    status: "Latest"
-  },
-  {
-    name: 'Truckmate',
-    accessTokens: "nauvus_api_IsXNeRyK8fPRSs9z0IcSeQ9sJhrchX",
-    scope: 'Full Admin',
-    version: "2021-02-16",
-    status: "Latest"
-  },
-  {
-    name: 'Truckmate',
-    accessTokens: "nauvus_api_IsXNeRyK8fPRSs9z0IcSeQ9sJhrchX",
-    scope: 'Full Admin',
-    version: "2021-02-16",
-    status: "Latest"
-  },
-  {
-    name: 'Truckmate',
-    accessTokens: "nauvus_api_IsXNeRyK8fPRSs9z0IcSeQ9sJhrchX",
-    scope: 'Full Admin',
-    version: "2021-02-16",
-    status: "Latest"
-  },
-
-];
-
 
 const useStyles = makeStyles(styles);
 
-export default function APITokens() {
+export function APITokens(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getApiToken();
+  }, []);
 
   const formatName = (cell, row) => {
     return <>
@@ -232,8 +193,7 @@ export default function APITokens() {
                   
                 </CardBody> */}
                 <ToolkitProvider
-                  data={dumpData}
-                  keyField="_id"
+                  data={props.data}
                   columns={[
                     {
                       dataField: "name",
@@ -272,12 +232,9 @@ export default function APITokens() {
                       <BootstrapTable
                         {...props.baseProps}
                         bootstrap4={true}
+                        keyField="id"
                         bordered={false}
                       />
-                      <Row className="justify-content-center">
-
-                        {/* <GenPaginationV1 total={29} page={1} size={10} /> */}
-                      </Row>
                     </div>
                   )}
                 </ToolkitProvider>
@@ -322,3 +279,12 @@ export default function APITokens() {
     </div>
   );
 }
+
+export default connect(
+  ({settingDeveloper}: IRootState) => ({
+    data: settingDeveloper.apiTokens
+  }),
+  {
+    getApiToken
+  }
+)(APITokens);

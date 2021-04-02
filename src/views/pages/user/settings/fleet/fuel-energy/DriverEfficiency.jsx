@@ -21,6 +21,11 @@ import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
+import {connect} from "react-redux";
+import {IRootState} from "../../../../../../reducers";
+import {getSensor} from "../../../../../../reducers/setting-device";
+import {Sensors} from "../../devices/devices/Sensors";
+import {getDriverEfficiency} from "../../../../../../reducers/setting-fleet";
 
 const styles = {
   textSub: {
@@ -41,21 +46,15 @@ const styles = {
   },
 };
 
-const dumpData = [
-  {nameProfiles: 'Default organization profile', vehicles: "1 Vehicle"},
-  {nameProfiles: 'Default organization profile', vehicles: "1 Vehicle"},
-  {nameProfiles: 'Default organization profile', vehicles: "1 Vehicle"},
-  {nameProfiles: 'Default organization profile', vehicles: "1 Vehicle"},
-  {nameProfiles: 'Default organization profile', vehicles: "1 Vehicle"},
-
-];
-
 const useStyles = makeStyles(styles);
 
-export default function DriverEfficiency() {
+export function DriverEfficiency(props) {
   const classes = useStyles();
 
-  const [value, setValue] = React.useState(0);
+  React.useEffect(() => {
+    // Get list data
+    props.getDriverEfficiency();
+  }, []);
 
   const formatNameProfiles = (cell, row) => {
     return <>
@@ -102,7 +101,7 @@ export default function DriverEfficiency() {
               </GridItem>
               <Card testimonial>
                 <ToolkitProvider
-                  data={dumpData}
+                  data={props.data}
                   keyField="_id"
                   columns={[
                     {
@@ -134,7 +133,6 @@ export default function DriverEfficiency() {
                     </div>
                   )}
                 </ToolkitProvider>
-
               </Card>
             </GridItem>
           </GridContainer>
@@ -143,3 +141,12 @@ export default function DriverEfficiency() {
     </div>
   );
 }
+
+export default connect(
+  ({settingFleet}: IRootState) => ({
+    data: settingFleet.driverEfficiencies
+  }),
+  {
+    getDriverEfficiency
+  }
+)(DriverEfficiency);

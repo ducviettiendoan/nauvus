@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import ReactECharts from 'echarts-for-react';
 import './Echart.scss'
 import GridItem from "../Grid/GridItem";
@@ -62,49 +62,17 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 const EChart = (props) => {
-    const classes = useStyles()
-    //Mock Data for References
-    // const mockData = {
-    //     title: {
-    //         text: "API Volume"
-    //     },
-    //     series: [
-    //         {
-    //             color: '#27AE60',
-    //             name: 'Successes',
-    //             data: [
-    //                 ["2021-3-17 11:59:00", 288],
-    //                 ["2021-3-18 11:59:00", 291],
-    //                 ["2021-3-18 14:59:00", 301],
-    //                 ["2021-3-19 11:59:00", 291],
-    //                 ["2021-3-20 11:59:00", 292],
-    //                 ["2021-3-21 11:59:00", 282],
-    //                 ["2021-3-22 11:59:00", 278],
-    //                 ["2021-3-23 11:59:00", 286],
-    //                 ["2021-3-24 11:59:00", 288],
-    //                 ["2021-3-25 11:59:00", 288]
-    //             ]
-    //         },
-    //         {
-    //             color: '#E53935',
-    //             name: 'Errors',
-    //             data: [
-    //                 ["2021-3-17 11:59:00", 1],
-    //                 ["2021-3-18 11:59:00", 1],
-    //                 ["2021-3-19 11:59:00", 1],
-    //                 ["2021-3-20 11:59:00", 1],
-    //                 ["2021-3-21 11:59:00", 1],
-    //                 ["2021-3-22 11:59:00", 1],
-    //                 ["2021-3-23 11:59:00", 1],
-    //                 ["2021-3-24 11:59:00", 1],
-    //                 ["2021-3-25 11:59:00", 1]
-    //             ]
-    //         }
-    //     ],
-    // }
+    const classes = useStyles();
+    const [series, setSeries] = useState(props.data.series || []);
+    useEffect(() => {
+        console.log(props.data.series)
+        if(props.data.series){
+            setSeries(props.data.series)
+        }
+    },[props.data])
 
     const {data} = props
-    const {title, series} = data
+    const {title} = data
     const option = {
         tooltip: {
             trigger: 'axis',
@@ -143,7 +111,7 @@ const EChart = (props) => {
             <GridContainer >
                 <GridItem xs={6}>
                     <h4 className={classes.boldBlueLeft + " my-4" }>
-                        {title.text}
+                        {title && title.text}
                     </h4>
                 </GridItem>
                 <GridItem xs={6} className={classes.textEnd}>
