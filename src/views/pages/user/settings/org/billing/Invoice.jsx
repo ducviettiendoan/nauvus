@@ -9,6 +9,10 @@ import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
+import {connect} from "react-redux";
+import {IRootState} from "../../../../../../reducers";
+import {getActivityLogs, getInvoice} from "../../../../../../reducers/setting-org";
+import {ActivityLog} from "../ActivityLog";
 
 const styles = {
   textSub: {
@@ -57,78 +61,15 @@ const styles = {
   },
 };
 
-const dumpDataInvoice = [
-  {
-    dueDate: '02/03/2021',
-    po: "Signed Agreement",
-    invoice: '30510326',
-    amount: "$627.12",
-    remainingBalance: "$14.05",
-    status: "Overdue"
-  },
-  {
-    dueDate: '02/03/2021',
-    po: "Signed Agreement",
-    invoice: '30510326',
-    amount: "$627.12",
-    remainingBalance: "$14.05",
-    status: "Overdue"
-  },
-  {
-    dueDate: '02/03/2021',
-    po: "Signed Agreement",
-    invoice: '30510326',
-    amount: "$627.12",
-    remainingBalance: "$14.05",
-    status: "Overdue"
-  },
-  {
-    dueDate: '02/03/2021',
-    po: "Signed Agreement",
-    invoice: '30510326',
-    amount: "$627.12",
-    remainingBalance: "$14.05",
-    status: "Overdue"
-  },
-  {
-    dueDate: '02/03/2021',
-    po: "Signed Agreement",
-    invoice: '30510326',
-    amount: "$627.12",
-    remainingBalance: "$14.05",
-    status: "Overdue"
-  },
-  {
-    dueDate: '02/03/2021',
-    po: "Signed Agreement",
-    invoice: '30510326',
-    amount: "$627.12",
-    remainingBalance: "$14.05",
-    status: "Overdue"
-  },
-  {
-    dueDate: '02/03/2021',
-    po: "Signed Agreement",
-    invoice: '30510326',
-    amount: "$627.12",
-    remainingBalance: "$14.05",
-    status: "Overdue"
-  },
-  {
-    dueDate: '02/03/2021',
-    po: "Signed Agreement",
-    invoice: '30510326',
-    amount: "$627.12",
-    remainingBalance: "$14.05",
-    status: "Overdue"
-  },
-
-];
-
 const useStyles = makeStyles(styles);
 
-export default function Invoice() {
+export function Invoice(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getInvoice();
+  }, []);
 
   const formatDueDate = (cell, row) => {
     return <>
@@ -185,8 +126,7 @@ export default function Invoice() {
               </GridContainer>
             </CardBody>
             <ToolkitProvider
-              data={dumpDataInvoice}
-              keyField="_id"
+              data={props.data}
               columns={[
                 {
                   dataField: "dueDate",
@@ -227,6 +167,7 @@ export default function Invoice() {
                     {...props.baseProps}
                     bootstrap4={true}
                     bordered={false}
+                    keyField='id'
                   />
 
                 </div>
@@ -239,3 +180,12 @@ export default function Invoice() {
     </div>
   );
 }
+
+export default connect(
+  ({settingOrg}: IRootState) => ({
+    data: settingOrg.invoices
+  }),
+  {
+    getInvoice
+  }
+)(Invoice);

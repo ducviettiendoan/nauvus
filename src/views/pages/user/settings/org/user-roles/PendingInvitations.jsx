@@ -11,6 +11,9 @@ import Table from "components/Table/TableV1";
 import DotIcon from "components/Icons/DotIcon";
 import EditIcon from "components/Icons/EditIcon";
 import avatar from "assets/img/faces/avatar.jpg";
+import {connect} from "react-redux";
+import {IRootState} from "reducers";
+import {getPendingInvitations} from "reducers/setting-org";
 
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
@@ -125,25 +128,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const data = () => {
-  let data = [];
-  for (let i = 0; i < 64; i++) {
-    let item = {
-      id: i + 2,
-      key: i + 2,
-      user: `Pending User ${i + 1}`,
-      email: `jessica.hanson@example.com${i + 1}`,
-      roles: "Read-Only",
-      access: `Room ${i}`
-    };
-    data.push(item);
-  }
-  return data;
-}
 
-
-export default function PendingInvitations() {
+export function PendingInvitations(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getPendingInvitations();
+  }, []);
 
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Read-only'},
@@ -243,7 +235,7 @@ export default function PendingInvitations() {
         }
         rowSelection={{}}
         columns={columns}
-        dataSource={data}
+        dataSource={props.data}
         onHeaderRow={{
           className: classes.onHeaderRow
         }}
@@ -254,3 +246,12 @@ export default function PendingInvitations() {
     </div>
   );
 }
+
+export default connect(
+  ({settingOrg}: IRootState) => ({
+    data: settingOrg.pendingInvitations
+  }),
+  {
+    getPendingInvitations
+  }
+)(PendingInvitations);

@@ -10,8 +10,10 @@ import CardBody from "components/Card/CardBody.js";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
-import {Row} from "reactstrap";
 import GenPaginationV1 from "components/Pagination/GenPaginationV1";
+import {connect} from "react-redux";
+import {IRootState} from "reducers";
+import {getActivityLogs} from "reducers/setting-org";
 
 const styles = {
   activityHeader: {
@@ -46,20 +48,15 @@ const styles = {
   },
 };
 
-const dumpData = [
-  { logEvent: 'dolores.chambers@example.com', operation: "updated org id '74287':", date: 'March 17th, 12:16 am' },
-  { logEvent: 'dolores.chambers@example.com', operation: "updated org id '74287':", date: 'March 17th, 12:16 am' },
-  { logEvent: 'dolores.chambers@example.com', operation: "updated org id '74287':", date: 'March 17th, 12:16 am' },
-  { logEvent: 'dolores.chambers@example.com', operation: "updated org id '74287':", date: 'March 17th, 12:16 am' },
-  { logEvent: 'dolores.chambers@example.com', operation: "updated org id '74287':", date: 'March 17th, 12:16 am' },
-  { logEvent: 'dolores.chambers@example.com', operation: "updated org id '74287':", date: 'March 17th, 12:16 am' },
-
-];
-
 const useStyles = makeStyles(styles);
 
-export default function ActivityLog() {
+export function ActivityLog(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getActivityLogs();
+  }, []);
 
   const formatLogEvent = (cell, row) => {
     return <>
@@ -101,8 +98,7 @@ export default function ActivityLog() {
                 </CardBody>
                 <div>
                   <ToolkitProvider
-                    data={ dumpData }
-                    keyField="_id"
+                    data={props.data}
                     columns={[
                       {
                         dataField: "logEvent",
@@ -127,6 +123,7 @@ export default function ActivityLog() {
                           {...props.baseProps}
                           bootstrap4={true}
                           bordered={false}
+                          keyField='id'
                         />
                       </div>
                     )}
@@ -141,3 +138,12 @@ export default function ActivityLog() {
     </div>
   );
 }
+
+export default connect(
+  ({settingOrg}: IRootState) => ({
+    data: settingOrg.activityLogs
+  }),
+  {
+    getActivityLogs
+  }
+)(ActivityLog);

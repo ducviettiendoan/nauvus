@@ -55,12 +55,16 @@ const CustomTable = (props) => {
   const [selectedKeyRows, setSelectedKeyRows] = React.useState([]);
 
   useEffect(() => {
+    setDataSource(props.dataSource)
+  }, [props.dataSource]);
+
+  useEffect(() => {
     filterData();
   }, []);
 
   useEffect(() => {
     filterData();
-  }, [current, pageSize]);
+  }, [current, pageSize, dataSource]);
 
 
   const filterData = () => {
