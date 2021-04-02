@@ -60,6 +60,22 @@ const complianceStyle = {
     alignItems: "center",
     paddingTop: "10px"
   },
+  filterButtonText1: {
+    fontWeight: "700",
+    textTransform: "none",
+    fontSize: "14px",
+    color: "#25345C",
+    border: "1px solid #C4C4C4 !important",
+    borderRadius: "32px !important",
+    width: "97px !important",
+    minWidth: '100px !important',
+    height: "42px",
+    alignItems: "center !important",
+    boxSizing: "border-box",
+    display: "flex",
+    justifyContent: "center",
+
+  },
   searchBar: {
     textAlign: "left",
     height: "45px",
@@ -75,13 +91,9 @@ const complianceStyle = {
     paddingLeft: "0!important"
   },
   filterButton: {
-    height: "45px",
-    border: "1px solid #C4C4C4",
+    alignItems: "center !important",
     boxSizing: "border-box",
-    borderRadius: "32px",
-    maxWidth: "100px",
     display: "flex",
-    alignItems: "center",
     justifyContent: "center",
   },
   filterButtonText: {

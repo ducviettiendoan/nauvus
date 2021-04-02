@@ -1,3 +1,6 @@
+.MuiSelect-select:focus{
+    background-color: white,
+}
 .safety-card {
     padding: 20px;
     border: 1px solid #ECECF2;
@@ -5,28 +8,52 @@
     margin: 8px;
 }
 
-.content {
- font-size: 16px;
- color: #C4C4C4; 
+.card-title {
+ font-weight: 700;
+ font-size: 18px;
+ color: #25345C; 
  padding-top: 15px;
  margin-bottom: 30px;
  text-align: left;
 }
+
+.card-sub-title {
+ font-weight: 700;
+ font-size: 18px;
+ color: #B4B4B4; 
+ padding-top: 15px;
+ margin-bottom: 30px;
+ text-align: left;
+}
+
+.content {
+ font-weight: 400;
+ font-size: 16px;
+ color: #B4B4B4; 
+ padding-top: 15px;
+ margin-bottom: 30px;
+ text-align: left;
+}
+
 .safety-button {
     border-radius: 28px !important;
 
 }
 
 .safety-button .MuiButton-label {
-    text-transform: none!important;
-    
+ text-transform: none!important;
+ font-weight: 700;
+ font-size: 16px;
+ color: #25345C; 
+ text-align: left;
 } 
 
 .driverButton {
-    background-color: #25345C !important;
-    color: #ffffff !important;
+    background: rgba(37, 52, 92, 0.1) !important;
+    color: #25345C !important;
     height: 48px;
     width: 147px;
+    box-shadow: none !important;
     
 }
 
@@ -67,6 +94,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    padding: 0px !important
 }
 
 .sideButtonChild{

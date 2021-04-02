@@ -6,10 +6,6 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import {
-  cardTitle,
-  roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
@@ -20,6 +16,9 @@ import DeleteIcon from "components/Icons/DeleteIcon";
 import AddOutlined from "@material-ui/icons/AddOutlined";
 import Chip from "@material-ui/core/Chip";
 import CloseIcon from "components/Icons/CloseIcon";
+import {connect} from "react-redux";
+import {IRootState} from "reducers";
+import {getWorkingHour} from "reducers/setting-fleet";
 
 const styles = {
   userRolesTitle: {
@@ -86,17 +85,13 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const dumpData = [
-  {hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday", "Thursday"], tags: ['Tags']},
-  {hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday", "Thursday"], tags: ['Tags']},
-  {hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday", "Thursday"], tags: ['Tags']},
-  {hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday", "Thursday"], tags: ['Tags']},
-  {hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday", "Thursday"], tags: ['Tags']},
-  {hours: ['12:00 AM-6:00 PM', '12:00 AM-6:00 PM'], workingDays: ["Wednesday", "Thursday"], tags: ['Tags']},
-];
-
-export default function WorkingHours() {
+export function WorkingHours(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getWorkingHour();
+  }, []);
 
   const formatHours = (cell, row) => {
     return <div className={classes.textSub}>
@@ -193,8 +188,7 @@ export default function WorkingHours() {
         </CardBody>
         <div>
           <ToolkitProvider
-            data={dumpData}
-            keyField="_id"
+            data={props.data}
             columns={[
               {
                 dataField: "hours",
@@ -224,8 +218,8 @@ export default function WorkingHours() {
                   {...props.baseProps}
                   bootstrap4={true}
                   bordered={false}
+                  keyField="id"
                 />
-
               </div>
             )}
           </ToolkitProvider>
@@ -242,3 +236,12 @@ export default function WorkingHours() {
     </div>
   );
 }
+
+export default connect(
+  ({settingFleet}: IRootState) => ({
+    data: settingFleet.workingHours
+  }),
+  {
+    getWorkingHour
+  }
+)(WorkingHours);

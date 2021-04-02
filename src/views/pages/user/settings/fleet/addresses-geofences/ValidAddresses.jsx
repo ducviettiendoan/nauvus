@@ -1,20 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-
-import {
-  blackColor,
-  cardTitle, hexToRgb, primaryColor,
-  roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
 import Button from "components/CustomButtons/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import CloseIcon from "components/Icons/CloseIcon";
@@ -25,6 +17,9 @@ import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 import EditIcon from "components/Icons/EditIcon";
 import maps from "assets/img/maps.jpg";
 import Chip from "@material-ui/core/Chip";
+import {connect} from "react-redux";
+import {IRootState} from "reducers";
+import {getValidAddress} from "reducers/setting-fleet";
 
 const styles = {
   userRolesTitle: {
@@ -130,65 +125,13 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const dumpData = [
-  {
-    id: 1,
-    address: '4517 Washington Ave. Manchester, Kentucky 39495',
-    name: 'Park Plaza WAAREHOUSE',
-    number: '21634452',
-    tags: 'Tags',
-    notes: "Vehicles near Park plaza warehouse",
-    address_type: "Yard"
-  },
-  {
-    id: 2,
-    address: '4517 Washington Ave. Manchester, Kentucky 39495',
-    name: 'Park Plaza WAAREHOUSE',
-    number: '21634452',
-    tags: 'Tags',
-    notes: "Vehicles near Park plaza warehouse",
-    address_type: "Yard"
-  },
-  {
-    id: 3,
-    address: '4517 Washington Ave. Manchester, Kentucky 39495',
-    name: 'Park Plaza WAAREHOUSE',
-    number: '21634452',
-    tags: 'Tags',
-    notes: "Vehicles near Park plaza warehouse",
-    address_type: "Yard"
-  },
-  {
-    id: 4,
-    address: '4517 Washington Ave. Manchester, Kentucky 39495',
-    name: 'Park Plaza WAAREHOUSE',
-    number: '21634452',
-    tags: 'Tags',
-    notes: "Vehicles near Park plaza warehouse",
-    address_type: "Yard"
-  },
-  {
-    id: 5,
-    address: '4517 Washington Ave. Manchester, Kentucky 39495',
-    name: 'Park Plaza WAAREHOUSE',
-    number: '21634452',
-    tags: 'Tags',
-    notes: "Vehicles near Park plaza warehouse",
-    address_type: "Yard"
-  },
-  {
-    id: 6,
-    address: '4517 Washington Ave. Manchester, Kentucky 39495',
-    name: 'Park Plaza WAAREHOUSE',
-    number: '21634452',
-    tags: 'Tags',
-    notes: "Vehicles near Park plaza warehouse",
-    address_type: "Yard"
-  },
-];
-
-export default function ValidAddresses() {
+export function ValidAddresses(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getValidAddress();
+  }, []);
 
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Standard Admin'},
@@ -292,8 +235,7 @@ export default function ValidAddresses() {
                   </GridContainer>
                 </CardBody>
                 <ToolkitProvider
-                  data={dumpData}
-                  // keyField="_id"
+                  data={props.data}
                   columns={[
                     {
                       dataField: "address",
@@ -347,3 +289,12 @@ export default function ValidAddresses() {
     </div>
   );
 }
+
+export default connect(
+  ({settingFleet}: IRootState) => ({
+    data: settingFleet.validAddresses
+  }),
+  {
+    getValidAddress
+  }
+)(ValidAddresses);

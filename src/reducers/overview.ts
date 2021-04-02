@@ -10,13 +10,16 @@ export const ACTION_TYPES = {
   GET_VEHICLE_DATA: 'overview/GET_VEHICLE_DATA',
   GET_TRAILERS_DATA: 'overview/GET_TRAILERS_DATA',
   GET_DRIVERS_DATA: 'overview/GET_DRIVERS_DATA',
+  // activity logs data
+  GET_ACTIVITY_LOGS_DATA: 'overview/GET_ACTIVITY_LOGS_DATA'
 };
 
 const initialState = {
   openDrawer: false,
   vehiclesData: [],
   trailersData: [],
-  driversData: []
+  driversData: [],
+  activityLogsData: [],
 };
 
 export type OverviewState = Readonly<typeof initialState>;
@@ -46,6 +49,12 @@ export default (state: OverviewState = initialState, action): OverviewState => {
       return {
         ...state,
         driversData: action.payload
+      };
+    }
+    case ACTION_TYPES.GET_ACTIVITY_LOGS_DATA: {
+      return {
+        ...state,
+        activityLogsData: action.payload
       };
     }
     default:
@@ -104,6 +113,25 @@ const dumpTrailersData = () => {
   return data;
 }
 
+const dumpActivityData = () => {
+  let data = [];
+  for (let i = 0; i < 15; i++) {
+    let item = {
+      id: i + 2,
+      key: i + 2,
+      shift: '0:00:00',
+      driving: '0:00:00',
+      inViolation: '0:00:00',
+      from: '-',
+      to: '-',
+      details: 'Missing Driver Certification',
+      date: 'Mon, Mar 29'
+    };
+    data.push(item);
+  }
+  return data;
+}
+
 const dumpDriversData = () => {
   let data = [];
   for (let i = 0; i < 20; i++) {
@@ -148,6 +176,13 @@ export const getDriversData = () => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_DRIVERS_DATA,
     payload: dumpDriversData
+  })
+}
+
+export const getActivityLogsData = () => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_ACTIVITY_LOGS_DATA,
+    payload: dumpActivityData
   })
 }
 

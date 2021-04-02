@@ -16,6 +16,11 @@ import CloseIcon from "components/Icons/CloseIcon";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
+import {connect} from "react-redux";
+import {IRootState} from "../../../../../../reducers";
+import {getByLocation} from "../../../../../../reducers/setting-link-sharing";
+import {ByLocation} from "../../links-sharing/live-sharing/ByLocation";
+import {getApiTraffic, getChartData} from "../../../../../../reducers/setting-developer";
 
 const styles = {
   colorBlue: {
@@ -106,47 +111,53 @@ const BorderLinearProgress = withStyles((theme) => ({
 }))(LinearProgress);
 
 const useStyles = makeStyles(styles);
-const mockData = {
-  title: {
-    text: "API Volume"
-  },
-  series: [
-    {
-      color: '#27AE60',
-      name: 'Successes',
-      data: [
-        ["2021-3-17 11:59:00", 288],
-        ["2021-3-18 11:59:00", 291],
-        ["2021-3-18 14:59:00", 301],
-        ["2021-3-19 11:59:00", 291],
-        ["2021-3-20 11:59:00", 292],
-        ["2021-3-21 11:59:00", 282],
-        ["2021-3-22 11:59:00", 278],
-        ["2021-3-23 11:59:00", 286],
-        ["2021-3-24 11:59:00", 288],
-        ["2021-3-25 11:59:00", 288]
-      ]
-    },
-    {
-      color: '#E53935',
-      name: 'Errors',
-      data: [
-        ["2021-3-17 11:59:00", 1],
-        ["2021-3-18 11:59:00", 1],
-        ["2021-3-19 11:59:00", 1],
-        ["2021-3-20 11:59:00", 1],
-        ["2021-3-21 11:59:00", 1],
-        ["2021-3-22 11:59:00", 1],
-        ["2021-3-23 11:59:00", 1],
-        ["2021-3-24 11:59:00", 1],
-        ["2021-3-25 11:59:00", 1]
-      ]
-    }
-  ],
-}
+// const mockData = {
+//   title: {
+//     text: "API Volume"
+//   },
+//   series: [
+//     {
+//       color: '#27AE60',
+//       name: 'Successes',
+//       data: [
+//         ["2021-3-17 11:59:00", 288],
+//         ["2021-3-18 11:59:00", 291],
+//         ["2021-3-18 14:59:00", 301],
+//         ["2021-3-19 11:59:00", 291],
+//         ["2021-3-20 11:59:00", 292],
+//         ["2021-3-21 11:59:00", 282],
+//         ["2021-3-22 11:59:00", 278],
+//         ["2021-3-23 11:59:00", 286],
+//         ["2021-3-24 11:59:00", 288],
+//         ["2021-3-25 11:59:00", 288]
+//       ]
+//     },
+//     {
+//       color: '#E53935',
+//       name: 'Errors',
+//       data: [
+//         ["2021-3-17 11:59:00", 1],
+//         ["2021-3-18 11:59:00", 1],
+//         ["2021-3-19 11:59:00", 1],
+//         ["2021-3-20 11:59:00", 1],
+//         ["2021-3-21 11:59:00", 1],
+//         ["2021-3-22 11:59:00", 1],
+//         ["2021-3-23 11:59:00", 1],
+//         ["2021-3-24 11:59:00", 1],
+//         ["2021-3-25 11:59:00", 1]
+//       ]
+//     }
+//   ],
+// }
 
-export default function APITraffic(props) {
+export function APITraffic(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getApiTraffic();
+    props.getChartData();
+  }, []);
 
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'GBT'},
@@ -203,68 +214,12 @@ export default function APITraffic(props) {
     </>
   }
 
-  const dumpData = [
-    {
-      requestTime: "49:30:00",
-      apiEndpoint: 'Fleet/Vehicles',
-      statusCode: '200',
-      method: "GBT",
-      duration: "0.153S",
-      apiToken: "FleetMan",
-      reguestID: "5ac4ed4d"
-    },
-    {
-      requestTime: "49:30:00",
-      apiEndpoint: 'Fleet/Vehicles',
-      statusCode: '200',
-      method: "GBT",
-      duration: "0.153S",
-      apiToken: "FleetMan",
-      reguestID: "5ac4ed4d"
-    },
-    {
-      requestTime: "49:30:00",
-      apiEndpoint: 'Fleet/Vehicles',
-      statusCode: '200',
-      method: "GBT",
-      duration: "0.153S",
-      apiToken: "FleetMan",
-      reguestID: "5ac4ed4d"
-    },
-    {
-      requestTime: "49:30:00",
-      apiEndpoint: 'Fleet/Vehicles',
-      statusCode: '200',
-      method: "GBT",
-      duration: "0.153S",
-      apiToken: "FleetMan",
-      reguestID: "5ac4ed4d"
-    },
-    {
-      requestTime: "49:30:00",
-      apiEndpoint: 'Fleet/Vehicles',
-      statusCode: '200',
-      method: "GBT",
-      duration: "0.153S",
-      apiToken: "FleetMan",
-      reguestID: "5ac4ed4d"
-    },
-    {
-      requestTime: "49:30:00",
-      apiEndpoint: 'Fleet/Vehicles',
-      statusCode: '200',
-      method: "GBT",
-      duration: "0.153S",
-      apiToken: "FleetMan",
-      reguestID: "5ac4ed4d"
-    },
-  ];
-
   const rowEvents = {
     onClick: (e, row, rowIndex) => {
       props.onShowDetail();
     }
   };
+  console.log(props.chartData)
 
   return (
     <GridContainer className="developer-metric-wrapper">
@@ -304,7 +259,7 @@ export default function APITraffic(props) {
                   <GridItem className={classes.bigCardGridItem} xs={9}>
                     <Card className={classes.bigCard}>
                       <CardBody>
-                        <EChart data={mockData}/>
+                        <EChart data={props.chartData}/>
                       </CardBody>
                     </Card>
                   </GridItem>
@@ -347,8 +302,7 @@ export default function APITraffic(props) {
                 </GridContainer>
               </CardBody>
               <ToolkitProvider
-                data={dumpData}
-                keyField="_id"
+                data={props.data}
                 columns={[
                   {
                     dataField: "requestTime",
@@ -393,6 +347,7 @@ export default function APITraffic(props) {
                       {...props.baseProps}
                       bootstrap4={true}
                       bordered={false}
+                      keyField="id"
                       rowEvents={rowEvents}
                     />
                   </div>
@@ -407,3 +362,14 @@ export default function APITraffic(props) {
     </GridContainer>
   );
 }
+
+export default connect(
+  ({settingDeveloper}: IRootState) => ({
+    data: settingDeveloper.apiTraffics,
+    chartData: settingDeveloper.chartData
+  }),
+  {
+    getApiTraffic,
+    getChartData
+  }
+)(APITraffic);

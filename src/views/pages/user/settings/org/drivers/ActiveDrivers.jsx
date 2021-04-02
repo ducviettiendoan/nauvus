@@ -17,6 +17,9 @@ import Chip from "@material-ui/core/Chip";
 import MoreIcon from "components/Icons/MoreIcon";
 
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
+import {connect} from "react-redux";
+import {IRootState} from "../../../../../../reducers";
+import {getActiveDrivers} from "../../../../../../reducers/setting-org";
 
 const styles = {
   userRolesTitle: {
@@ -119,71 +122,14 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const dumpData = [
-  {
-    id: 1,
-    name: 'Brooklyn Simmons',
-    username: 'greenkoala518',
-    tags: 'Status',
-    peerGroup: "Group 12",
-    phone: "(208) 555-0112",
-    dlState: "Maine",
-    dlNumber: "558612",
-  },
-  {
-    id: 2,
-    name: 'Brooklyn Simmons',
-    username: 'greenkoala518',
-    tags: 'Status',
-    peerGroup: "Group 12",
-    phone: "(208) 555-0112",
-    dlState: "Maine",
-    dlNumber: "558612",
-  },
-  {
-    id: 3,
-    name: 'Brooklyn Simmons',
-    username: 'greenkoala518',
-    tags: 'Status',
-    peerGroup: "Group 12",
-    phone: "(208) 555-0112",
-    dlState: "Maine",
-    dlNumber: "558612",
-  },
-  {
-    id: 4,
-    name: 'Brooklyn Simmons',
-    username: 'greenkoala518',
-    tags: 'Status',
-    peerGroup: "Group 12",
-    phone: "(208) 555-0112",
-    dlState: "Maine",
-    dlNumber: "558612",
-  },
-  {
-    id: 5,
-    name: 'Brooklyn Simmons',
-    username: 'greenkoala518',
-    tags: 'Status',
-    peerGroup: "Group 12",
-    phone: "(208) 555-0112",
-    dlState: "Maine",
-    dlNumber: "558612",
-  },
-  {
-    id: 6,
-    name: 'Brooklyn Simmons',
-    username: 'greenkoala518',
-    tags: 'Status',
-    peerGroup: "Group 12",
-    phone: "(208) 555-0112",
-    dlState: "Maine",
-    dlNumber: "558612",
-  },
-];
 
-export default function ActiveDrivers() {
+export function ActiveDrivers(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getActiveDrivers();
+  }, []);
 
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Standard Admin'},
@@ -318,7 +264,7 @@ export default function ActiveDrivers() {
                   </GridContainer>
                 </CardBody>
                 <ToolkitProvider
-                  data={dumpData}
+                  data={props.data}
                   columns={[
                     {
                       dataField: "name",
@@ -384,3 +330,12 @@ export default function ActiveDrivers() {
     </div>
   );
 }
+
+export default connect(
+  ({settingOrg}: IRootState) => ({
+    data: settingOrg.activeDrivers
+  }),
+  {
+    getActiveDrivers
+  }
+)(ActiveDrivers);

@@ -83,8 +83,7 @@ export default function DriverActivity() {
           >
             <MoreHoriz/>
           </Button>
-        </GridItem>}}
-
+        </GridItem>}
       </GridContainer>
       {value === 0 && <WorkingHours/>}
       {value === 1 && <MaxDistance/>}

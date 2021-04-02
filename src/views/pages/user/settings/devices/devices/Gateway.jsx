@@ -17,6 +17,9 @@ import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 import DotIcon from "components/Icons/DotIcon";
 import Chip from "@material-ui/core/Chip";
 import MoreIcon from "components/Icons/MoreIcon";
+import {connect} from "react-redux";
+import {IRootState} from "reducers";
+import {getGateway} from "reducers/setting-device";
 
 const styles = {
   userRolesTitle: {
@@ -121,71 +124,13 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const dumpData = [
-  {
-    id: 1,
-    gatewaySerial: 'GR9X-6AN-3N5',
-    gateway: 'VG34',
-    name: 'Vehicle  101',
-    dataUsed: 'Data Used (This Month)',
-    connectivity: "Active",
-    battery: 'Battery',
-    powerState: 'Power State',
-  },
-  {
-    id: 2,
-    gatewaySerial: 'GR9X-6AN-3N5',
-    gateway: 'VG34',
-    name: 'Vehicle  101',
-    dataUsed: 'Data Used (This Month)',
-    connectivity: "Active",
-    battery: 'Battery',
-    powerState: 'Power State',
-  },
-  {
-    id: 3,
-    gatewaySerial: 'GR9X-6AN-3N5',
-    gateway: 'VG34',
-    name: 'Vehicle  101',
-    dataUsed: 'Data Used (This Month)',
-    connectivity: "Active",
-    battery: 'Battery',
-    powerState: 'Power State',
-  },
-  {
-    id: 4,
-    gatewaySerial: 'GR9X-6AN-3N5',
-    gateway: 'VG34',
-    name: 'Vehicle  101',
-    dataUsed: 'Data Used (This Month)',
-    connectivity: "Active",
-    battery: 'Battery',
-    powerState: 'Power State',
-  },
-  {
-    id: 5,
-    gatewaySerial: 'GR9X-6AN-3N5',
-    gateway: 'VG34',
-    name: 'Vehicle  101',
-    dataUsed: 'Data Used (This Month)',
-    connectivity: "Active",
-    battery: 'Battery',
-    powerState: 'Power State',
-  },
-  {
-    id: 6,
-    gatewaySerial: 'GR9X-6AN-3N5',
-    gateway: 'VG34',
-    name: 'Vehicle  101',
-    dataUsed: 'Data Used (This Month)',
-    connectivity: "Active",
-    battery: 'Battery',
-    powerState: 'Power State',
-  },
-];
-
-export default function Gateway() {
+export function Gateway(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getGateway();
+  }, []);
 
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Standard Admin'},
@@ -276,7 +221,6 @@ export default function Gateway() {
     selectionRenderer: ({mode, ...rest}) => (
       <input className={classes.checkBoxIcon} type={mode} {...rest} />
     )
-
   };
 
   return (
@@ -323,7 +267,7 @@ export default function Gateway() {
                   </GridContainer>
                 </CardBody>
                 <ToolkitProvider
-                  data={dumpData}
+                  data={props.data}
                   columns={[
                     {
                       dataField: "gatewaySerial",
@@ -388,3 +332,12 @@ export default function Gateway() {
     </div>
   );
 }
+
+export default connect(
+  ({settingDevice}: IRootState) => ({
+    data: settingDevice.gateways
+  }),
+  {
+    getGateway
+  }
+)(Gateway);

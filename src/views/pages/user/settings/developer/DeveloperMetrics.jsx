@@ -5,10 +5,6 @@ import {makeStyles} from "@material-ui/core/styles";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import {
-  cardTitle,
-  roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import APITraffic from "./developer-metrics/APITraffic";
 import WebhookTraffic from "./developer-metrics/WebhookTraffic";

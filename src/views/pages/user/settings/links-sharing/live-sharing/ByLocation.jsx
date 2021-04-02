@@ -31,6 +31,10 @@ import ArrowUpIcon from "../../../../../../components/Icons/ArrowUpIcon";
 import AddOutlined from "@material-ui/icons/AddOutlined";
 // import RoundedTabs from "../../../../../components/CustomTabs/RoundedTabs";
 import FormatQuote from "@material-ui/icons/FormatQuote";
+import {connect} from "react-redux";
+import {IRootState} from "../../../../../../reducers";
+import {getByAsset, getByLocation} from "../../../../../../reducers/setting-link-sharing";
+import {ByAsset} from "./ByAsset";
 // import CardFooter from "../../../../../components/Card/CardFooter";
 
 const styles = {
@@ -122,19 +126,16 @@ const styles = {
   },
 };
 
-const dumpData = [
-  {location: 'Park Plaza Warehouse', name: 'GR9X-6AN-3N5', description: 'By Location' ,linkExpires: 'Never'},
-  {location: 'Park Plaza Warehouse', name: 'GR9X-6AN-3N5', description: 'By Location' ,linkExpires: 'Never'},
-  {location: 'Park Plaza Warehouse', name: 'GR9X-6AN-3N5', description: 'By Location' ,linkExpires: 'Never'},
-  {location: 'Park Plaza Warehouse', name: 'GR9X-6AN-3N5', description: 'By Location' ,linkExpires: 'Never'},
-  {location: 'Park Plaza Warehouse', name: 'GR9X-6AN-3N5', description: 'By Location' ,linkExpires: 'Never'},
-  {location: 'Park Plaza Warehouse', name: 'GR9X-6AN-3N5', description: 'By Location' ,linkExpires: 'Never'},
-];
-
 const useStyles = makeStyles(styles);
 
-export default function ByLocation() {
+export function ByLocation(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getByLocation();
+  }, []);
+
 
   const formatLocation = (cell, row) => {
     return <>
@@ -194,8 +195,7 @@ export default function ByLocation() {
                   </GridContainer>
                 </CardBody>
                 <ToolkitProvider
-                  data={dumpData}
-                  keyField="_id"
+                  data={props.data}
                   columns={[
                     {
                       dataField: "location",
@@ -230,6 +230,7 @@ export default function ByLocation() {
                         {...props.baseProps}
                         bootstrap4={true}
                         bordered={false}
+                        keyField="id"
                       />
 
                     </div>
@@ -244,3 +245,12 @@ export default function ByLocation() {
     </div>
   );
 }
+
+export default connect(
+  ({settingLinkSharing}: IRootState) => ({
+    data: settingLinkSharing.byLocations
+  }),
+  {
+    getByLocation
+  }
+)(ByLocation);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -60,20 +60,22 @@ const styles = {
     color: "#25345C",
   },
   filterButtonText: {
+    fontWeight: "700",
     textTransform: "none",
     fontSize: "14px",
     color: "#25345C",
     border: "1px solid #C4C4C4 !important",
     borderRadius: "32px !important",
-    width: "100px !important",
+    width: "97px !important",
     minWidth: '100px !important',
-    height: "40px",
+    height: "42px",
     position: "absolute",
     right: "106px",
     marginRight: "106px",
     alignItems: "center !important"
   },
-  filterButtonText2: {
+  manageColumnButton: {
+    fontWeight: "700",
     textTransform: "none",
     fontSize: "14px",
     color: "#25345C",
@@ -81,7 +83,7 @@ const styles = {
     borderRadius: "32px !important",
     maxWidth: "180px !important",
     minWidth: '180px !important',
-    height: "40px",
+    height: "42px",
     position: "absolute",
     right: "10px",
     marginRight: "10px",
@@ -122,6 +124,7 @@ const useStyles = makeStyles(styles);
 
 export default function FuelEnergy() {
   const classes = useStyles();
+  const [value, setValue] = useState();
 
   const handleChangeTab = (event, newValue) => {
     setValue(newValue);
@@ -248,7 +251,7 @@ export default function FuelEnergy() {
                       </GridItem>
                       <GridItem>
                         <GridItem xs={6}>
-                          <IconButton className={classes.filterButtonText2}>
+                          <IconButton className={classes.manageColumnButton}>
                             <ColumnIcon className={classes.filterIcon} />
                         Manage Column
                         </IconButton>

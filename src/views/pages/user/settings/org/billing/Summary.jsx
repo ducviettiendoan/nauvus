@@ -13,6 +13,9 @@ import avatar from "assets/img/faces/avatar.jpg";
 import VerifiedIcon from "components/Icons/VerifiedIcon"
 import CardIcon from "components/Icons/CardIcon"
 import HelpIcon from "components/Icons/HelpIcon"
+import {connect} from "react-redux";
+import {IRootState} from "../../../../../../reducers";
+import {getInvoiceSummary} from "../../../../../../reducers/setting-org";
 
 const styles = {
   textSub: {
@@ -123,38 +126,15 @@ const styles = {
   }
 };
 
-const dumpDataSummary = [
-  {
-    dueDate: '02/03/2021',
-    po: "Signed Agreement",
-    invoice: '30510326',
-    amount: "$627.12",
-    remainingBalance: "$14.05",
-    status: "Overdue"
-  },
-  {
-    dueDate: '02/03/2021',
-    po: "Signed Agreement",
-    invoice: '30510326',
-    amount: "$627.12",
-    remainingBalance: "$14.05",
-    status: "Overdue"
-  },
-  {
-    dueDate: '02/03/2021',
-    po: "Signed Agreement",
-    invoice: '30510326',
-    amount: "$627.12",
-    remainingBalance: "$14.05",
-    status: "Overdue"
-  },
-
-];
-
 const useStyles = makeStyles(styles);
 
-export default function Summary() {
+export function Summary(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getInvoiceSummary();
+  }, []);
 
   const formatDueDate = (cell, row) => {
     return <>
@@ -295,8 +275,7 @@ export default function Summary() {
               </GridItem>
             </CardBody>
             <ToolkitProvider
-              data={dumpDataSummary}
-              keyField="_id"
+              data={props.data}
               columns={[
                 {
                   dataField: "dueDate",
@@ -336,6 +315,7 @@ export default function Summary() {
                     {...props.baseProps}
                     bootstrap4={true}
                     bordered={false}
+                    keyField="id"
                   />
 
                 </div>
@@ -347,3 +327,12 @@ export default function Summary() {
     </div>
   );
 }
+
+export default connect(
+  ({settingOrg}: IRootState) => ({
+    data: settingOrg.invoicesSummary
+  }),
+  {
+    getInvoiceSummary
+  }
+)(Summary);

@@ -1,201 +1,259 @@
 import React from "react";
 // @material-ui/core components
-// import { makeStyles } from "@material-ui/core/styles";
 import { Theme, makeStyles } from '@material-ui/core';
 import { BaseCSSProperties } from '@material-ui/core/styles/withStyles';
-
-// @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
-import Search from "@material-ui/icons/Search";
-import InfoOutlined from "@material-ui/icons/InfoOutlined";
 // core components
-// import GridContainer from "components/Grid/GridContainer.js";
-// import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
-import CardHeader from "components/Card/CardHeader.js";
 import Button from "components/CustomButtons/Button.js";
-
-import KeyboardArrowDown from "@material-ui/icons/KeyboardArrowDown";
-
-import {
-  cardTitle,
-  roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
-
-import CustomDropdown from "components/CustomDropdown/CustomDropdown.js";
-import Loading from "components/Loading/Loading";
 import { connect } from 'react-redux';
 import { loadVehicles } from 'reducers/vehicle';
 import { IRootState } from 'reducers';
-import imageTabs from "assets/img/Tabs.png";
+import GridContainer from "components/Grid/GridContainer";
+import GridItem from "components/Grid/GridItem";
+import { MoreHoriz } from "@material-ui/icons";
+import { Row } from "reactstrap";
+import BootstrapTable from "react-bootstrap-table-next";
+import ToolkitProvider from "react-bootstrap-table2-toolkit";
+import LogsTableDetails from "views/pages/user/overview/components/LogsTableDetails";
 
-import VehicleAssets from "./components/VehicleAssets";
-
-import { Col, Row } from 'reactstrap';
 const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0"
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem"
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px"
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px"
+    topHeader: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginTop: 15
     },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px"
-    }
-  },
-  iconRose: {
-    color: roseColor
-  },
-  marginTop30: {
-    marginTop: "30px"
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px"
-    }
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  },
-  txtInfoMain: {
-    fontWeight: "bold",
-    fontSize: "18px",
-    lineHeight: "27px",
-    color: "#25345C",
-  },
-  txtInfoSub: {
-    fontSize: "14px",
-    lineHeight: "21px",
-    color: "#25345C",
-  },
-  txtNumberVehicle: {
-    fontSize: "14px",
-    lineHeight: "21px",
-    color: "#25345C",
-  },
-  txtSearchLabel: {
-    fontSize: "12px",
-    lineHeight: "14px",
-    color: "#25345C",
-    textTransform: "uppercase",
-    fontWeight: "900"
-  }
+    topHeaderTitle: {
+        textAlign: "left",
+        fontWeight: 700,
+        fontSize: 18,
+        color: "#25345C",
+        padding: "0px 16px !important"
+    },
+    topHeaderButton: {
+        textAlign: "right",
+    },
+    moreAction: {
+        background: "#FFFFFF !important",
+        border: "1px solid #ECEEF0 !important"
+    },
+    logContainer: {
+        padding: "0px 30px !important"
+    },
+    iconButton: {
+        '&:hover': {
+            color: '#25345C !important',
+        },
+    },
+    textTags: {
+        fontSize: '14px',
+        lineHeight: '24px',
+        marginTop: '16px',
+        marginBottom: '15px',
+        marginLeft: '24px',
+        padding: "12px 14px",
+        color: "#27AE60",
+        background: "rgba(39, 174, 96, 0.1)",
+        borderRadius: 23,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontWeight: 700,
+        width: 71,
+        height: "41px"
+    },
+    textSub: {
+        fontWeight: 400,
+        fontSize: '16px',
+        lineHeight: '24px',
+        marginTop: '14px',
+        marginLeft: '24px',
+        paddingTop: '12px !important',
+        color: '#25345C',
+    },
+    tableCustom: {
+        marginBottom: "0px !important",
+        "& div > table": {
+            marginBottom: "0px !important"
+        }
+    },
 };
 
 interface StyleProps {
-  root: BaseCSSProperties,
+    root: BaseCSSProperties,
 }
+
+const dumpData = [
+    {
+        dutyStatus: 'Status',
+        timeInCurrentStatus: '67:21',
+        vehicleName: 'vehicle 101',
+        timeUntilBreak: '-',
+        driveRemaining: '12:00',
+        shiftRemaining: '16:00',
+        cycleRemaining: '80:00',
+        cycleTomorrow: '80:00'
+    },
+];
 
 const useStyles = makeStyles<Theme, StyleProps>(() => styles as any);
 
 
 export function Logs(props) {
-  const classes = useStyles({} as StyleProps);
+    const classes = useStyles({} as StyleProps);
 
-  React.useEffect(() => {
-    async function fetchVehicles() {
-      await props.loadVehicles();
+    const formatDutyStatus = (cell, row) => {
+        return <>
+            <div className={classes.textTags}>{cell}</div>
+        </>
     }
-    fetchVehicles();
-  }, [1]);
-  
-  return (
-    <div>
-      <Row>
-          <Card>
-            <CardHeader>
-              <Row className="float-right mb-3">
-                <Button className="btn-more-actions">
-                  MORE ACTIONS <KeyboardArrowDown /> 
-                </Button>
-              </Row>
-              <Card>
-                <CardBody>
-                  <div className="ml-5">
-                    <div className={ classes.txtInfoMain}>We’ve moved your trailers</div>
-                    <div className={ `mb-4 ${classes.txtInfoSub}`}>
-                      241 trailers from your Trailers & Assets list in Settings have been moved to this list. 5 trailers witch matching names were automatically merged. The remaining 236 trailers were added.
-                    </div>
-                    <Button round className="btn-round-active w-150 mr-4">
-                      Keep all trailers
-                    </Button>
-                    <Button round className="btn-round-active w-150 mr-4">
-                      Delete
-                    </Button>
-                   </div>
-                   <div style={{ position: "absolute",top: "16px"}}>
-                     <InfoOutlined />
-                   </div>
-                </CardBody>
-              </Card>
 
-              <Row className="mb-3">
-                <Col><img src={imageTabs} alt="..." /></Col>
-              </Row>
+    const formatTimeInCurrentStatus = (cell, row) => {
+        return <>
+            <div className={classes.textSub}>{cell}</div>
+        </>
+    }
 
-              <Row>
-                <Col>
-                  <Button round className="btn-tags mr-2">
-                     Tags <KeyboardArrowDown /> 
-                   </Button>
-                   <Button round className="btn-tags">
-                     Gateway <KeyboardArrowDown /> 
-                   </Button>
-                </Col>
-                <Col>
-                  <div style={{ textAlign: 'right'}}>
-                    <span className={ classes.txtNumberVehicle }>{ props.vehicles.length } vehicles   </span> 
-                    <span className={ classes.txtSearchLabel }>{'  '}<Search /> search in vehicle</span>
-                  </div>
-                </Col>
-              </Row>
-            </CardHeader>
-            <CardBody>
-              <VehicleAssets data={ props.vehicles } /> 
-            </CardBody>
-            <CardFooter>
-            </CardFooter>
-          </Card>
-      </Row>
-    </div>
-  );
+    const formatVehicleName = (cell, row) => {
+        return <>
+            <div className={classes.textSub}>{cell}</div>
+        </>
+    }
+
+    const formatAddTimeUntilBreak = (cell, row) => {
+        return <>
+            <div className={classes.textSub}>{cell}</div>
+        </>
+    }
+
+    const formatDriveRemaining = (cell, row) => {
+        return <>
+            <div className={classes.textSub}>{cell}</div>
+        </>
+    }
+
+    const formatShiftRemaining = (cell, row) => {
+        return <>
+            <div className={classes.textSub}>{cell}</div>
+        </>
+    }
+
+    const formatCycleRemaining = (cell, row) => {
+        return <>
+            <div className={classes.textSub}>{cell}</div>
+        </>
+    }
+
+    const addCycleTomorrow = (cell, row) => {
+        return <>
+            <div className={classes.textSub}>{cell}</div>
+        </>
+    }
+
+    return (
+        <div>
+            <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+                    <GridContainer>
+                        <GridItem xs={12} sm={12} md={12} className={classes.logContainer}>
+
+                            <GridContainer className={classes.topHeader}>
+                                <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
+                                    55 Activity
+                                </GridItem>
+                                <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
+                                    <Button
+                                        color="white"
+                                        aria-label="edit"
+                                        justIcon
+                                        round
+                                        className={`btn-36 ${classes.moreAction} mr-2`}
+                                    >
+                                        <MoreHoriz />
+                                    </Button>
+                                </GridItem>
+                            </GridContainer>
+
+
+                            <Card>
+                                <div>
+                                    <ToolkitProvider
+                                        data={dumpData}
+                                        keyField="_id"
+                                        columns={[
+                                            {
+                                                dataField: "dutyStatus",
+                                                text: "Duty Status",
+                                                formatter: formatDutyStatus
+                                            },
+                                            {
+                                                dataField: "timeInCurrentStatus",
+                                                text: "Time in current status",
+                                                formatter: formatTimeInCurrentStatus
+                                            },
+                                            {
+                                                dataField: "vehicleName",
+                                                text: "Vehicle name",
+                                                formatter: formatVehicleName
+                                            },
+                                            {
+                                                dataField: "timeUntilBreak",
+                                                text: "Time until break",
+                                                formatter: formatAddTimeUntilBreak
+                                            },
+                                            {
+                                                dataField: "driveRemaining",
+                                                text: "Drive remaining",
+                                                formatter: formatDriveRemaining
+                                            },
+                                            {
+                                                dataField: "shiftRemaining",
+                                                text: "Shift remaining",
+                                                formatter: formatShiftRemaining
+                                            },
+                                            {
+                                                dataField: "cycleRemaining",
+                                                text: "Cycle remaining",
+                                                formatter: formatCycleRemaining
+                                            },
+                                            {
+                                                dataField: "cycleTomorrow",
+                                                text: "Cycle tomorrow",
+                                                formatter: addCycleTomorrow
+                                            }
+                                        ]}
+                                    >
+                                        {props => (
+                                            <div className={`table table-settings ${classes.tableCustom} `}>
+                                                <BootstrapTable
+                                                    {...props.baseProps}
+                                                    bootstrap4={true}
+                                                    bordered={false}
+                                                />
+                                            </div>
+                                        )}
+                                    </ToolkitProvider>
+                                </div>
+                            </Card>
+                            <Card testimonial>
+                                <LogsTableDetails />
+                            </Card>
+
+                        </GridItem>
+                    </GridContainer>
+                </GridItem>
+            </GridContainer>
+        </div>
+    );
 }
 
 export default connect(
-  ({ authentication, vehicle }: IRootState) => ({
-    isAuthenticated: authentication.isAuthenticated,
-    user: authentication.user,
-    vehicles: vehicle.vehicles
-  }),
-  {
-    loadVehicles
-  }
+    ({ authentication, vehicle }: IRootState) => ({
+        isAuthenticated: authentication.isAuthenticated,
+        user: authentication.user,
+        vehicles: vehicle.vehicles
+    }),
+    {
+        loadVehicles
+    }
 )(Logs);

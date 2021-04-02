@@ -22,6 +22,10 @@ import BootstrapTable from "react-bootstrap-table-next";
 import GenPaginationV1 from "../../../../../../components/Pagination/GenPaginationV1";
 import Chip from "@material-ui/core/Chip";
 import EditIcon from "../../../../../../components/Icons/EditIcon";
+import {connect} from "react-redux";
+import {IRootState} from "../../../../../../reducers";
+import {getFuelCard, getVehicleFuelType} from "../../../../../../reducers/setting-fleet";
+import {FuelCards} from "./FuelCards";
 
 const styles = {
   userRolesTitle: {
@@ -119,64 +123,18 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const dumpData = [
-  {
-    id: 1,
-    vehicle: 'vehicle 101',
-    year: '2017',
-    make: 'FORD',
-    model: "Fusion",
-    fuelType: "M85",
-  },
-  {
-    id: 2,
-    vehicle: 'vehicle 101',
-    year: '2017',
-    make: 'FORD',
-    model: "Fusion",
-    fuelType: "M85",
-  },
-  {
-    id: 3,
-    vehicle: 'vehicle 101',
-    year: '2017',
-    make: 'FORD',
-    model: "Fusion",
-    fuelType: "M85",
-  },
-  {
-    id: 4,
-    vehicle: 'vehicle 101',
-    year: '2017',
-    make: 'FORD',
-    model: "Fusion",
-    fuelType: "M85",
-  },
-  {
-    id: 5,
-    vehicle: 'vehicle 101',
-    year: '2017',
-    make: 'FORD',
-    model: "Fusion",
-    fuelType: "M85",
-  },
-  {
-    id: 6,
-    vehicle: 'vehicle 101',
-    year: '2017',
-    make: 'FORD',
-    model: "Fusion",
-    fuelType: "M85",
-  },
-];
-
-export default function VehicleFuelTypes() {
+export function VehicleFuelTypes(props) {
   const classes = useStyles();
 
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Standard Admin'},
     {key: 1, label: 'Full admin'},
   ]);
+
+  React.useEffect(() => {
+    // Get list data
+    props.getVehicleFuelType();
+  }, []);
 
   const handleDelete = (chipToDelete) => () => {
     setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
@@ -291,8 +249,7 @@ export default function VehicleFuelTypes() {
                   </GridContainer>
                 </CardBody>
                 <ToolkitProvider
-                  data={dumpData}
-                  // keyField="_id"
+                  data={props.data}
                   columns={[
                     {
                       dataField: "vehicle",
@@ -334,7 +291,6 @@ export default function VehicleFuelTypes() {
                         bordered={false}
                         keyField='id'
                         selectRow={selectRow}
-
                       />
                     </div>
                   )}
@@ -348,3 +304,12 @@ export default function VehicleFuelTypes() {
     </div>
   );
 }
+
+export default connect(
+  ({settingFleet}: IRootState) => ({
+    data: settingFleet.vehicleFuelTypes
+  }),
+  {
+    getVehicleFuelType
+  }
+)(VehicleFuelTypes);
