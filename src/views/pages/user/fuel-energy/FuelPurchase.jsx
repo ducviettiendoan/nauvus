@@ -1,248 +1,449 @@
 import React from "react";
 // @material-ui/core components
-import { makeStyles, withStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
+import MenuItem from "@material-ui/core/MenuItem";
 // @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
+
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
+import { FormControl, Grid, IconButton, Select } from "@material-ui/core";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
-import IconButton from "@material-ui/core/IconButton";
-import SearchIcon from "@material-ui/icons/Search";
-import { AppBar, Box, InputBase, Tabs, Typography,Tab } from "@material-ui/core";
-import TableComponent from "../../../../components/Table/CustomTable";
+import DropDownIcon from "components/Icons/DropDownIcon";
+import ToolkitProvider from "react-bootstrap-table2-toolkit";
+import ToolboxButton from "components/CustomButtons/ToolboxButton";
+import FilterIcon from "components/Icons/FilterIcon";
+import ColumnIcon from "components/Icons/ColumnIcon";
+import Calendar from "components/Calendar/Calendar";
+import BootstrapTable from "react-bootstrap-table-next";
+import GenPaginationV1 from "components/Pagination/GenPaginationV1";
+import RoundedTabs from "components/CustomTabs/RoundedTabs";
 
+import Button from "components/CustomButtons/Button.js";
+import { MoreHoriz } from "@material-ui/icons";
 
-import {
-  cardTitle,
-  roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
+import {getPurchaseReport} from "reducers/fuel-energy";
+import {IRootState} from 'reducers';
+import {connect} from 'react-redux';
 
 const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0"
+  headerLeft:{
+    textAlign: "left",
+    display: "flex",
+    alignItems: "center",
+    paddingBottom: "20px !important",
+    paddingRight: "0px !important",
   },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem"
+  headerRight: {
+    textAlign: "right",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    paddingBottom: "20px !important",
+    paddingRight: "0px !important",
   },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px"
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px"
+  selectForm: {
+    width: "100%",
+    height: "44px",
+    background: "#FFFFFF",
+    boxSizing: "border-box",
+    borderRadius: "20px",
+    padding: "0x !important",
+    border: "1px solid #ECEEF0 !important",
+    "&::before": {
+      borderBottom: "0px",
     },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px"
-    }
+    "& > select:focus": {
+      backgroundColor: "#FFFFFF !important",
+    },
+    "&:hover": {
+      borderBottom: "0px",
+    },
+    marginRight: 15,
   },
-  iconRose: {
-    color: roseColor
+  select: {
+    color: "#25345C",
+    fontWeight: 700,
+    borderStyle: "none",
+    borderWidth: 2,
+    marginRight: 15,
+    paddingTop: 14,
+    paddingBottom: 15,
+    "&:focus": {
+      borderRadius: 12,
+      backgroundColor: "white",
+      borderColor: "#B4B4B4",
+    },
   },
-  marginTop30: {
-    marginTop: "30px"
+  dropDownIcon: {
+    color: "#C4C4C4",
+    cursor: "pointer",
+    position: "absolute",
+    right: 5,
   },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px"
-    }
+  textName: {
+    fontWeight: "bold",
+    fontSize: "16px",
+    lineHeight: "24px",
+    marginTop: "14px",
+    color: "#25345C",
+    marginLeft: "24px",
+    paddingTop: "12px !important",
   },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  }
+  textSub: {
+    fontWeight: 400,
+    fontSize: "16px",
+    lineHeight: "24px",
+    marginTop: "14px",
+    marginLeft: "24px",
+    paddingTop: "12px !important",
+    color: "#25345C",
+  },
+  calendar: {
+    marginLeft: "8px !important",
+    marginRight: "9px !important",
+  },
+  
+  filterButtonText: {
+    fontWeight: 700,
+    textTransform: "none",
+    fontSize: "14px",
+    color: "#25345C",
+    border: "1px solid #25345C !important",
+    borderRadius: "32px !important",
+    width: "100px !important",
+    minWidth: '100px !important',
+    height: "40px",
+    position: "absolute",
+    right: "106px",
+    marginRight: "106px",
+    alignItems: "center !important"
+  },
+  columnButtonText: {
+    fontWeight: 700,
+    textTransform: "none",
+    fontSize: "14px",
+    color: "#25345C",
+    border: "1px solid #25345C !important",
+    borderRadius: "32px !important",
+    maxWidth: "180px !important",
+    minWidth: '180px !important',
+    height: "40px",
+    position: "absolute",
+    right: "10px",
+    marginRight: "10px",
+    alignItems: "center !important",
+  },
+  filterIcon: {
+    marginTop: 13,
+  },
+  moreAction: {
+    background: "#FFFFFF !important",
+    border: "1px solid #ECEEF0 !important"
+  },
+
 };
 
 const useStyles = makeStyles(styles);
 
-const AntTabs = withStyles({
-  root: {
-    color: "#25345C",
-    background: "white",
-  },
-  indicator: {
-    backgroundColor: '#1890ff',
-  },
-})(Tabs);
-
-const AntTab = withStyles((theme) => ({
-  root: {
-    textTransform: 'none',
-    minWidth: 72,
-    '&:hover': {
-      color: '#40a9ff',
-      opacity: 1,
-    },
-    '&$selected': {
-      color: '#1890ff',
-    },
-    '&:focus': {
-      color: '#40a9ff',
-    },
-  },
-  selected: {},
-}))((props) => <Tab disableRipple {...props} />);
-
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-
-function defectCreateData(asset, currentLocation, lastDvirStatus, count, unresolvedDefects) {
-  return { asset, currentLocation, lastDvirStatus, count, unresolvedDefects };
-}
-
-function dvirsCreateData(asset, currentDriver, makeModel, batteryVoltage, engineHours, odometer, checkEngineLight) {
-  return { asset, currentDriver, makeModel, batteryVoltage, engineHours, odometer, checkEngineLight};
-}
-
-// const defectRows = [
-//   defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-//   defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-//   defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-//   defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-//   defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-//   defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-//   defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-//   defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-//   defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-// ];
-
-const divrsRows = [
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-];
-
-const dvirsHeadCells = [
-  { id: 'asset', numeric: false, disablePadding: true, label: 'Asset' },
-  { id: 'currentDriver', numeric: true, disablePadding: false, label: 'Current Driver' },
-  { id: 'makeModel', numeric: true, disablePadding: false, label: 'Make/Model' },
-  { id: 'batteryVoltage', numeric: true, disablePadding: false, label: 'Battery Voltage' },
-  { id: 'engineHours', numeric: true, disablePadding: false, label: 'Engine Hours' },
-  { id: 'odometer', numeric: true, disablePadding: false, label: 'Odometer (Mi)' },
-  { id: 'checkEngineLight', numeric: true, disablePadding: false, label: 'Check Engine Light' },
-];
-
-
-export default function FuelPurchase() {
-  const [value, setValue] = React.useState(0);
+export function FuelPurchase(props) {
   const classes = useStyles();
+  React.useEffect(() => {
+    // Get list data
+    props.getPurchaseReport();
+  }, []);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
+  const handleChangeTab = (event, newTab) => {
+    setTab(newTab);
   };
 
-  // const defectHeadCells = [
-  //   { id: 'asset', numeric: false, disablePadding: true, label: 'Asset' },
-  //   { id: 'currentLocation', numeric: true, disablePadding: false, label: 'Current Location' },
-  //   { id: 'lastDvirStatus', numeric: true, disablePadding: false, label: 'Last Dvir Status' },
-  //   { id: 'count', numeric: true, disablePadding: false, label: 'Count' },
-  //   { id: 'unresolvedDefects', numeric: true, disablePadding: false, label: 'Unresolved Defects' },
-  // ];
+  const handleChange = (event) => {
+    setSelectValue({ ...selectValue, [event.target.name]: event.target.value });
+  };
+
+  const [selectValue, setSelectValue] = React.useState({
+    selectA: "none",
+  });
+
+  const menuProps = {
+    classes: {
+      paper: classes.paper,
+      list: classes.list,
+    },
+    anchorOrigin: {
+      vertical: "bottom",
+      horizontal: "left",
+    },
+    transformOrigin: {
+      vertical: "top",
+      horizontal: "left",
+    },
+    getContentAnchorEl: null,
+  };
+
+  const formatVehicle = (cell, row) => {
+    return <>
+      <div className={classes.textName}>{cell}</div>
+    </>
+  }
+
+  const formatEfficiency = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+  const formatFuelUsed = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+  const formatEnergyUsed = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+  const formatDistance = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+  const formatDrivingElectric = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
 
 
-  
+  const formatEstCarbonEmissions = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+
+  const formatEstCost = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+
+  const formatTotalEngineRunTime = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+
+  const formatIdleTime = (cell, row) => {
+    return <>
+      <div className={classes.textSub}>{cell}</div>
+    </>
+  }
+
+  const listValues = [
+    "Needs Coaching",
+    "Needs Review",
+    "Needs Recognition",
+    "Coached",
+    "Reviewed",
+    "Regconized",
+    "Dismissed",
+  ];
+  const placeholder = "1.1 Weeks";
+  const selectValue1 = selectValue.selectA;
+
   return (
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
-
-              {/* <Card testimonial>
-                <div className={classes.testimonialIcon}>
-                  <FormatQuote />
-                </div>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card testimonial>
                 <CardBody>
-                  <h5 className={classes.cardTestimonialDescription}>
-                    No Data APITokens
-                  </h5>
+                  <GridContainer
+                  >
+                    <GridItem
+                      xs={3}
+                      sm={3}
+                      md={3}
+                      className={classes.headerLeft}
+                    >
+                      <ToolboxButton placeholder={"Search Drivers"} />
+                    </GridItem>
+                    <GridItem
+                      xs={9}
+                      sm={9}
+                      md={9}
+                      className={classes.headerRight}
+                    >
+                      <FormControl variant="outlined">
+                        <Select
+                          className={classes.selectForm}
+                          fullWidth
+                          disableUnderline
+                          classes={{ root: classes.select }}
+                          MenuProps={menuProps}
+                          IconComponent={() => (
+                            <DropDownIcon className={classes.dropDownIcon} />
+                          )}
+                          value={selectValue1}
+                          onChange={handleChange}
+                          name={name}
+                        >
+                          {selectValue1 === "none" && (
+                            <option
+                              value="none"
+                              disabled
+                              style={{ display: "none" }}
+                            >
+                              {placeholder}
+                            </option>
+                          )}
+                          {listValues.map((value, i) => (
+                            <MenuItem key={i} value={i}>
+                              {value}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+
+                      <FormControl
+                        variant="outlined"
+                        className={classes.calendar}
+                      >
+                        <Calendar />
+                      </FormControl>
+
+                      {/* <FormControl variant="outlined" className="moreIcon"> */}
+                      <Button
+                    color="white"
+                    aria-label="edit"
+                    justIcon
+                    round
+                    className={`btn-36 ${classes.moreAction} mr-2`}
+                  >
+                    <MoreHoriz />
+                  </Button>
+                      {/* </FormControl> */}
+                    
+                    </GridItem>
+                  </GridContainer>
+
+                  <Grid container spacing={3} justifyContent="space-between">
+                    <Grid
+                      item
+                      xs={6}
+                      style={{ display: "flex", justifyContent: "flex-start" }}
+                    >
+                 
+                 <RoundedTabs tabs={["All(15)", "Verified(12)", "Unverified(5)", "Processing(1)", "Invalid(10)"]} tabValue={handleChangeTab} />
+                    </Grid>
+                    <Grid item xs={6} style={{ textAlign: "right" }}>
+                      
+                    <GridItem xs={6}>
+                          <IconButton className={classes.columnButtonText}>
+                            <ColumnIcon className={classes.filterIcon} />
+                        Manage Column
+                        </IconButton>
+                        </GridItem>
+                        <GridItem xs={6}>
+                          <IconButton className={classes.filterButtonText}>
+                            <FilterIcon className={classes.filterIcon} />
+                        Filter
+                        </IconButton>
+                        </GridItem>
+                    </Grid>
+                  </Grid>
                 </CardBody>
-                <CardFooter testimonial>
-                  <h6 className={classes.cardCategory}>@nauvus</h6>
-                </CardFooter>
-              </Card> */}
-            <GridItem xs={6}>
-            <IconButton type="submit" aria-label="search">
-              <SearchIcon/>
-              </IconButton>
-              <InputBase
-                placeholder="Search Drivers"
-              />
+
+                <ToolkitProvider
+                  data={props.data}
+                  columns={[
+                    
+                      {
+                        dataField: "vehicle",
+                        text: "Vehicle",
+                        formatter: formatVehicle
+                      },
+                      {
+                        dataField: "efficiency",
+                        text: "Efficiency",
+                        formatter: formatEfficiency
+                      },
+                      {
+                        dataField: "fuelUsed",
+                        text: "Fuel Used",
+                        formatter: formatFuelUsed
+                      },
+                      {
+                        dataField: "energyUsed",
+                        text: "Energy Used",
+                        formatter: formatEnergyUsed
+                      },
+                      {
+                        dataField: "distance",
+                        text: "Distance",
+                        formatter: formatDistance
+                      },
+                      {
+                        dataField: "drivingElectric",
+                        text: "% Driving Electric",
+                        formatter: formatDrivingElectric
+                      },
+                      {
+                        dataField: "estCarbonEmissions",
+                        text: "Est. Carbon Emissions",
+                        formatter: formatEstCarbonEmissions
+                      },
+                      {
+                        dataField: "estCost",
+                        text: "Est. Cost",
+                        formatter: formatEstCost
+                      },
+                      {
+                        dataField: "totalEngineRunTime",
+                        text: "Total Engine Run Time",
+                        formatter: formatTotalEngineRunTime
+                      },
+                      {
+                        dataField: "idleTime",
+                        text: "Idle Time(%)",
+                        formatter: formatIdleTime
+                      },
+                  ]}
+                >
+                  {(props) => (
+                    <div className="table table-settings">
+                      <BootstrapTable
+                        {...props.baseProps}
+                        bootstrap4={true}
+                        bordered={false}
+                        keyField="id"
+                      />
+                    </div>
+                  )}
+                </ToolkitProvider>
+              </Card>
             </GridItem>
-
-            <GridItem xs={6}>
-              Months
-              Days
-            </GridItem>
-
-
           </GridContainer>
+          <GenPaginationV1 total={29} page={1} size={10}/>
         </GridItem>
-
-        <GridItem xs={12} sm={12} md={12}>
-          <AppBar className="safety-tab" position="static">
-            <AntTabs  value={value} onChange={handleChange}>
-              <AntTab label="All(15)" />
-              <AntTab label="Verify(12)" />
-              <AntTab label="Unverify(5)"  />
-              <AntTab label="Processing(1)"/>
-              <AntTab label="Invalid(10)"/>
-            </AntTabs>
-          </AppBar>
-        </GridItem>
-
-        <GridItem xs={12} sm={12} md={12}>
-          <TabPanel value={value} index={0} className="tabPanel">
-            <TableComponent rows={divrsRows} headCells={dvirsHeadCells} />
-          </TabPanel>
-        </GridItem>
-
       </GridContainer>
     </div>
   );
 }
+
+export default connect(
+  ({fuelEnergy}: IRootState) => ({
+    data: fuelEnergy.purchaseReports
+  }),
+  {
+    getPurchaseReport
+  }
+)(FuelPurchase);

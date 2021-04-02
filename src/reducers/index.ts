@@ -7,6 +7,7 @@ import vehicle, { VehicleState } from './vehicle';
 import overview, { OverviewState } from './overview';
 import settingOrg, { SettingOrgState } from './setting-org';
 import settingDevice, { SettingDeviceState } from './setting-device';
+import fuelEnergy, {FuelEnergyState} from './fuel-energy';
 
 export interface IRootState {
   readonly authentication: AuthenticationState;
@@ -16,6 +17,7 @@ export interface IRootState {
   readonly overview: OverviewState;
   readonly settingOrg: SettingOrgState;
   readonly settingDevice: SettingDeviceState;
+  readonly fuelEnergy: FuelEnergyState;
 }
 
 const rootReducer = combineReducers<IRootState>({
@@ -25,7 +27,8 @@ const rootReducer = combineReducers<IRootState>({
   vehicle,
   overview,
   settingOrg,
-  settingDevice
+  settingDevice,
+  fuelEnergy
 });
 
 export default rootReducer;
