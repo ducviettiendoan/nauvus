@@ -5,6 +5,7 @@ import TrashButton from "components/CustomButtons/TrashButton";
 import FilterButton from "components/CustomButtons/FilterButton";
 import EditButton from "components/CustomButtons/EditButton";
 import LinkButton from "components/CustomButtons/LinkButton";
+import ColumnButton from "components/CustomButtons/ColumnButton";
 
 const styles = {
     headLeft: {
@@ -30,6 +31,8 @@ export default function ToolboxButton(props) {
             { props.showEdit && <EditButton /> }
             { props.showLink && <LinkButton /> }
             { props.showTrash && <TrashButton /> }
+            { props.showColumn && <ColumnButton /> }
+
         </div>
     );
 };
