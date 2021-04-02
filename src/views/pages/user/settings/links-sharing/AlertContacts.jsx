@@ -9,9 +9,6 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import {
-  cardTitle,
-} from "assets/jss/material-dashboard-pro-react.js";
 import Button from "components/CustomButtons/Button.js";
 import { MoreHoriz } from "@material-ui/icons";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";

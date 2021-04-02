@@ -97,12 +97,14 @@ export default function ComplianceDashboard(props) {
                   <GridItem className={classes.searchBox} xs={4}>
                     <SettingSearchBox placeholder="Search Drivers"/>
                   </GridItem>
-                  <GridItem xs={3} className={classes.filterButton}>
-                    <IconButton className={classes.filterButtonText}>
-                      <FilterIcon className={classes.filterIcon}/>
+                  
+                  <GridItem className={classes.filterButton}>
+                    <IconButton className={classes.filterButtonText1}>
+                      <FilterIcon className={classes.filterIcon} />
                       Filter
                     </IconButton>
                   </GridItem>
+                  
                 </Grid>
               </CardBody>
             }
