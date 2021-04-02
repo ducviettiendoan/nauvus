@@ -10,6 +10,7 @@ import settingDevice, { SettingDeviceState } from './setting-device';
 import settingFleet, { SettingFleetState } from './setting-fleet';
 import settingLinkSharing, { SettingLinkSharingState } from "./setting-link-sharing";
 import settingDeveloper, { SettingDeveloperState } from "./setting-developer";
+import fuelEnergy, {FuelEnergyState} from './fuel-energy';
 
 export interface IRootState {
   readonly authentication: AuthenticationState;
@@ -20,8 +21,9 @@ export interface IRootState {
   readonly settingOrg: SettingOrgState;
   readonly settingDevice: SettingDeviceState;
   readonly settingFleet: SettingFleetState;
-  readonly settingLinkSharing: SettingLinkSharingState
-  readonly settingDeveloper: SettingDeveloperState
+  readonly settingLinkSharing: SettingLinkSharingState;
+  readonly settingDeveloper: SettingDeveloperState;
+  readonly fuelEnergy: FuelEnergyState;
 }
 
 const rootReducer = combineReducers<IRootState>({
@@ -34,7 +36,8 @@ const rootReducer = combineReducers<IRootState>({
   settingDevice,
   settingFleet,
   settingLinkSharing,
-  settingDeveloper
+  settingDeveloper,
+  fuelEnergy
 });
 
 export default rootReducer;
