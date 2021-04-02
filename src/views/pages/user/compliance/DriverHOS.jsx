@@ -14,12 +14,13 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import { MoreHoriz } from "@material-ui/icons";
 import Button from "components/CustomButtons/Button.js";
 import DropDownIcon from "components/Icons/DropDownIcon";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import FilterIcon from "components/Icons/FilterIcon";
 import ColumnIcon from "components/Icons/ColumnIcon";
+
 import CircleIcon from "components/Icons/CircleIcon";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import Calendar from "components/Calendar/Calendar";
@@ -27,19 +28,11 @@ import BootstrapTable from "react-bootstrap-table-next";
 import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 
 const styles = {
-  filterButtonText: {
-    textTransform: "none",
-    fontSize: "14px",
-    color: "#25345C",
-    border: "1px solid #C4C4C4 !important",
-    borderRadius: "32px !important",
-    width: "100px !important",
-    minWidth: "100px !important",
-    height: "40px",
-    position: "absolute",
-    right: "106px",
-    marginRight: "106px",
-    alignItems: "center !important",
+  moreAction: {
+    background: "#FFFFFF !important",
+    border: "1px solid #ECEEF0 !important",
+    marginLeft: "-10px",
+    marginRight: "5px"
   },
   manageColumnButton: {
     textTransform: "none",
@@ -163,7 +156,6 @@ const styles = {
     textTransform: "initial !important",
     fontSize: "13px !important",
     lineHeight: "17px !important",
-    /* font-family: Lato!important; */
     fontStyle: "normal!important",
     fontWeight: "bold!important",
     color: "#25345C!important",
@@ -171,7 +163,37 @@ const styles = {
     border: "1px solid #ECEEF0 !important",
     width: "100px !important",
   },
+  manageColumnButton: {
+    fontWeight: "700",
+    textTransform: "none",
+    fontSize: "14px",
+    color: "#25345C",
+    border: "1px solid #C4C4C4 !important",
+    borderRadius: "32px !important",
+    maxWidth: "180px !important",
+    minWidth: '180px !important',
+    height: "42px",
+    position: "absolute",
+    right: "10px",
+    marginRight: "10px",
+    alignItems: "center !important",
+  },
 
+  filterButtonText1: {
+    fontWeight: "700",
+    textTransform: "none",
+    fontSize: "14px",
+    color: "#25345C",
+    border: "1px solid #C4C4C4 !important",
+    borderRadius: "32px !important",
+    width: "97px !important",
+    minWidth: '100px !important',
+    height: "42px",
+    position: "absolute",
+    right: "106px",
+    marginRight: "106px",
+    alignItems: "center !important"
+  },
 };
 
 
@@ -293,6 +315,7 @@ const dumpData = [
     cycleTomorrow: "69:07",
     drivingInViolation: "1",
   },
+
 ];
 
 const useStyles = makeStyles(styles);
@@ -542,16 +565,18 @@ export default function DriverHOS() {
                         <Calendar />
                       </FormControl>
 
-                      <FormControl variant="outlined" className="moreIcon">
-                        <IconButton style={{ width: "42px", height: "42px" }}>
-                          <MoreHorizIcon
-                            fontSize="small"
-                            style={{ color: "#25345C" }}
-                          />
-                        </IconButton>
-                      </FormControl>
-                      <FormControl variant="outlined">
+                      <Button
+                        color="white"
+                        aria-label="edit"
+                        justIcon
+                        round
+                        className={`btn-36 ${classes.moreAction}`}
+                    
+                      >
+                        <MoreHoriz />
+                      </Button>
                         
+                      <FormControl variant="outlined">  
                         <Button round className="btn-round-green">
                           Live
                         </Button>
@@ -569,33 +594,22 @@ export default function DriverHOS() {
                  
                       <ToolboxButton placeholder={"Search Drivers"} />
                     </Grid>
-                    <Grid item xs={6} style={{ textAlign: "right" }}>
-                      
-                      <Grid item xs={6}>
-                        
-                        <Button
-                          round
-                          className= {`${classes.button} ${classes.manageColumnButton}`}
-                          startIcon={<ColumnIcon
-                            fontSize='large'
-                            className={classes.filterIcon}/>}
-                        >
-                          Manage Column
-                        </Button>
+
+                      <Grid item xs={6} style={{ textAlign: "right" }}>
+                        <GridItem xs={6}>
+                          <IconButton className={classes.manageColumnButton}>
+                            <ColumnIcon className={classes.filterIcon} />
+                            Manage Column
+                          </IconButton>
+                        </GridItem>
+
+                        <GridItem xs={6}>
+                          <IconButton className={classes.filterButtonText1}>
+                            <FilterIcon className={classes.filterIcon} />
+                            Filter
+                          </IconButton>
+                        </GridItem>
                       </Grid>
-                      <Grid item xs={6}>
-                        
-                        <Button
-                          round
-                          className= {`${classes.button} ${classes.filterButtonText}`}
-                          startIcon={<FilterIcon
-                            fontSize='large'
-                            className={classes.filterIcon}/>}
-                        >
-                          Filter
-                        </Button>
-                      </Grid>
-                    </Grid>
                   </Grid>
                 </CardBody>
 
