@@ -18,94 +18,15 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import Button from "components/CustomButtons/Button.js";
 import DropDownIcon from "components/Icons/DropDownIcon";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import {
-  cardTitle,
-  roseColor,
-} from "assets/jss/material-dashboard-pro-react.js";
-import FilterIcon from "../../../../components/Icons/FilterIcon";
-import ColumnIcon from "../../../../components/Icons/ColumnIcon";
-import CircleIcon from "../../../../components/Icons/CircleIcon";
+import FilterIcon from "components/Icons/FilterIcon";
+import ColumnIcon from "components/Icons/ColumnIcon";
+import CircleIcon from "components/Icons/CircleIcon";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
-import Calendar from "../../../../components/Calendar/Calendar";
+import Calendar from "components/Calendar/Calendar";
 import BootstrapTable from "react-bootstrap-table-next";
 import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 
 const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0",
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem",
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px",
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px",
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px",
-    },
-  },
-  iconRose: {
-    color: roseColor,
-  },
-  marginTop30: {
-    marginTop: "30px",
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px",
-    },
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999",
-  },
-  searchMapContainer: {
-    position: "absolute",
-    top: "10px",
-    left: "10px",
-  },
-  btnSearchOnMap: {
-    background: "white",
-    padding: "0px 20px 0px 20px",
-    borderRadius: "36px",
-    height: "40px",
-    border: "1px solid #C4C4C4",
-  },
-  inputAdornmentIcon: {
-    color: "#8181A5",
-    fontSize: "18px",
-    marginLeft: "0 !important;",
-  },
-  toogleDrawer: {
-    color: "#25345C !important",
-    background: "white",
-    width: "60px !important",
-    height: "40px !important",
-    minWidth: "60px !important",
-    marginTop: "-10px",
-    marginRight: "10px",
-  },
   filterButtonText: {
     textTransform: "none",
     fontSize: "14px",
@@ -136,8 +57,7 @@ const styles = {
   },
   filterIcon: {
     marginTop: '10px !important',
-    width: 12,
-    height: 12,
+    marginRight: '0 !important'
   },
   headerRight: {
     textAlign: "right",
@@ -147,27 +67,13 @@ const styles = {
     paddingBottom: "20px !important",
     paddingRight: "0px !important",
   },
-  selectForm: {
-    width: "138px",
-    height: "41px",
-    background: "#FFFFFF",
-    boxSizing: "border-box",
-    borderRadius: "20px",
-    "&::before": {
-      borderBottom: "0px",
-    },
-    "& > select:focus": {
-      backgroundColor: "#FFFFFF",
-    },
-    "&:hover": {
-      borderBottom: "0px",
-    },
-    marginRight: 8,
-  },
   hosData: {
     display: "flex",
     alignItems: "center",
     textAlign: "left",
+    fontSize: 14,
+    fontWeight: 400,
+    color: "#25345C"
   },
   buttonSearch: {
     border: "1px solid #C4C4C4 !important",
@@ -212,7 +118,6 @@ const styles = {
     position: "absolute",
     right: 5,
   },
-
   textName: {
     fontWeight: "bold",
     fontSize: "16px",

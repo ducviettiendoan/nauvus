@@ -9,103 +9,21 @@ import MenuItem from "@material-ui/core/MenuItem";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import { FormControl, Grid, Icon, IconButton, Select } from "@material-ui/core";
+import { FormControl, Grid, IconButton, Select } from "@material-ui/core";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import Button from "components/CustomButtons/Button.js";
 import DropDownIcon from "components/Icons/DropDownIcon";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import {
-  cardTitle,
-  roseColor,
-} from "assets/jss/material-dashboard-pro-react.js";
-import FilterIcon from "../../../../components/Icons/FilterIcon";
-import ColumnIcon from "../../../../components/Icons/ColumnIcon";
-import CircleIcon from "../../../../components/Icons/CircleIcon";
+import FilterIcon from "components/Icons/FilterIcon";
+import ColumnIcon from "components/Icons/ColumnIcon";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
-import Calendar from "../../../../components/Calendar/Calendar";
+import Calendar from "components/Calendar/Calendar";
 import BootstrapTable from "react-bootstrap-table-next";
 import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 
 const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0",
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem",
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px",
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px",
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px",
-    },
-  },
-  iconRose: {
-    color: roseColor,
-  },
-  marginTop30: {
-    marginTop: "30px",
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px",
-    },
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999",
-  },
-  searchMapContainer: {
-    position: "absolute",
-    top: "10px",
-    left: "10px",
-  },
-  btnSearchOnMap: {
-    background: "white",
-    padding: "0px 20px 0px 20px",
-    borderRadius: "36px",
-    height: "40px",
-    border: "1px solid #C4C4C4",
-  },
-  inputAdornmentIcon: {
-    color: "#8181A5",
-    fontSize: "18px",
-    marginLeft: "0 !important;",
-  },
-  toogleDrawer: {
-    color: "#25345C !important",
-    background: "white",
-    width: "60px !important",
-    height: "40px !important",
-    minWidth: "60px !important",
-    marginTop: "-10px",
-    marginRight: "10px",
-  },
   filterButtonText: {
     textTransform: "none",
     fontSize: "14px",
@@ -136,8 +54,7 @@ const styles = {
   },
   filterIcon: {
     marginTop: '10px !important',
-    width: 12,
-    height: 12,
+    marginRight: '0 !important'
   },
   headerRight: {
     textAlign: "right",
@@ -146,23 +63,6 @@ const styles = {
     justifyContent: "flex-end",
     paddingBottom: "20px !important",
     paddingRight: "0px !important",
-  },
-  selectForm: {
-    width: "138px",
-    height: "41px",
-    background: "#FFFFFF",
-    boxSizing: "border-box",
-    borderRadius: "20px",
-    "&::before": {
-      borderBottom: "0px",
-    },
-    "& > select:focus": {
-      backgroundColor: "#FFFFFF",
-    },
-    "&:hover": {
-      borderBottom: "0px",
-    },
-    marginRight: 8,
   },
   hosData: {
     display: "flex",
@@ -208,14 +108,12 @@ const styles = {
       borderColor: "#B4B4B4",
     },
   },
-
   dropDownIcon: {
     color: "#C4C4C4",
     cursor: "pointer",
     position: "absolute",
     right: 5,
   },
-
   textName: {
     fontWeight: "bold",
     fontSize: "16px",
@@ -261,7 +159,6 @@ const styles = {
     textTransform: "initial !important",
     fontSize: "13px !important",
     lineHeight: "17px !important",
-    /* font-family: Lato!important; */
     fontStyle: "normal!important",
     fontWeight: "bold!important",
     color: "#25345C!important",
@@ -359,42 +256,8 @@ const dumpData = [
 
 const useStyles = makeStyles(styles);
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
 export default function DriverHOS() {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
 
   const handleChange = (event) => {
     setSelectValue({ ...selectValue, [event.target.name]: event.target.value });
@@ -533,13 +396,6 @@ export default function DriverHOS() {
                           md={6}
                           className={classes.hosData}
                         >
-                          {/* <CircleIcon
-                            style={{
-                              color: "FF808B",
-                              fontSize: 30,
-                              marginTop: 18,
-                            }}
-                          /> */}
                           <div>In Violation</div>
                         </GridItem>
                         <GridItem
@@ -548,13 +404,6 @@ export default function DriverHOS() {
                           md={6}
                           className={classes.hosData}
                         >
-                          {/* <CircleIcon
-                            style={{
-                              color: "E5B435",
-                              fontSize: 30,
-                              marginTop: 18,
-                            }}
-                          /> */}
                           <div>Nearing violation</div>
                         </GridItem>
                       </GridContainer>
@@ -595,14 +444,12 @@ export default function DriverHOS() {
                           ))}
                         </Select>
                       </FormControl>
-
                       <FormControl
                         variant="outlined"
                         className={classes.calendar}
                       >
                         <Calendar />
                       </FormControl>
-
                       <FormControl variant="outlined" className="moreIcon">
                         <IconButton style={{ width: "42px", height: "42px" }}>
                           <MoreHorizIcon
@@ -612,28 +459,22 @@ export default function DriverHOS() {
                         </IconButton>
                       </FormControl>
                       <FormControl variant="outlined">
-                        
                         <Button round className="btn-round-green">
                           Live
                         </Button>
                       </FormControl>
-                    
                     </GridItem>
                   </GridContainer>
-
                   <Grid container spacing={3} justifyContent="space-between">
                     <Grid
                       item
                       xs={6}
                       style={{ display: "flex", justifyContent: "flex-start" }}
                     >
-                 
                       <ToolboxButton placeholder={"Search Drivers"} />
                     </Grid>
                     <Grid item xs={6} style={{ textAlign: "right" }}>
-                      
                       <Grid item xs={6}>
-                        
                         <Button
                           round
                           className= {`${classes.button} ${classes.filterButtonText2}`}
@@ -645,7 +486,6 @@ export default function DriverHOS() {
                         </Button>
                       </Grid>
                       <Grid item xs={6}>
-                        
                         <Button
                           round
                           className= {`${classes.button} ${classes.filterButtonText}`}
