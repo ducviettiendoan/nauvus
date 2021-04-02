@@ -1,17 +1,17 @@
 import React from "react";
 // @material-ui/core components
-import {Theme, makeStyles} from '@material-ui/core';
-import {BaseCSSProperties} from '@material-ui/core/styles/withStyles';
+import { Theme, makeStyles } from '@material-ui/core';
+import { BaseCSSProperties } from '@material-ui/core/styles/withStyles';
 // core components
 import Card from "components/Card/Card.js";
 import Button from "components/CustomButtons/Button.js";
-import {connect} from 'react-redux';
-import {loadVehicles} from 'reducers/vehicle';
-import {IRootState} from 'reducers';
+import { connect } from 'react-redux';
+import { loadVehicles } from 'reducers/vehicle';
+import { IRootState } from 'reducers';
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
-import {MoreHoriz} from "@material-ui/icons";
-import {Row} from "reactstrap";
+import { MoreHoriz } from "@material-ui/icons";
+import { Row } from "reactstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import LogsTableDetails from "views/pages/user/overview/components/LogsTableDetails";
@@ -28,7 +28,7 @@ const styles = {
         fontWeight: 700,
         fontSize: 18,
         color: "#25345C",
-        padding: "0 16px !important"
+        padding: "0px 16px !important"
     },
     topHeaderButton: {
         textAlign: "right",
@@ -38,7 +38,7 @@ const styles = {
         border: "1px solid #ECEEF0 !important"
     },
     logContainer: {
-        padding: "0 30px !important"
+        padding: "0px 30px !important"
     },
     iconButton: {
         '&:hover': {
@@ -169,7 +169,7 @@ export function Logs(props) {
                                         round
                                         className={`btn-36 ${classes.moreAction} mr-2`}
                                     >
-                                        <MoreHoriz/>
+                                        <MoreHoriz />
                                     </Button>
                                 </GridItem>
                             </GridContainer>
@@ -230,28 +230,13 @@ export function Logs(props) {
                                                     bootstrap4={true}
                                                     bordered={false}
                                                 />
-                                                <Row className="justify-content-center">
-                                                    {/* <PaginationV2
-                                        pages={[
-                                          { text: <ArrowDownIcon/>, arrow : true,disabled : true },
-                                          { text: <ArrowLeftIcon/>, arrow : true,disabled : true },
-                                          { active: true, text: 1 },
-                                          { text: 2 },
-                                          { text: 3 },
-                                          { text: 4 },
-                                          { text: 5 },
-                                          { text: <ArrowRightIcon/>, arrow : true },
-                                          { text: <ArrowUpIcon/>, arrow : true },
-                                        ]}
-                                      /> */}
-                                                </Row>
                                             </div>
                                         )}
                                     </ToolkitProvider>
                                 </div>
                             </Card>
                             <Card testimonial>
-                                <LogsTableDetails/>
+                                <LogsTableDetails />
                             </Card>
 
                         </GridItem>
@@ -263,7 +248,7 @@ export function Logs(props) {
 }
 
 export default connect(
-    ({authentication, vehicle}: IRootState) => ({
+    ({ authentication, vehicle }: IRootState) => ({
         isAuthenticated: authentication.isAuthenticated,
         user: authentication.user,
         vehicles: vehicle.vehicles

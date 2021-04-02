@@ -46,6 +46,9 @@
 .w-29 {
   width: 29px !important;
 }
+.fs-13 {
+  font-size: 13px !important;
+}
 .btn-round-active {
   background: #25345C !important;
   border-radius: 28px !important;

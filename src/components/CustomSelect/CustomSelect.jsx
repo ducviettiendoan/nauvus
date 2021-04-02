@@ -7,17 +7,19 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const styles = {
     selectContainer: {
-        borderBottom: "1px solid #ECEEF0"
+        width: "100%",
+        borderBottom: "1px solid #ECEEF0",
+        display: "flex",
+        alignItems: "center",
+        justifyContents: "center",
     },
     select: {
-        background: 'white',
         color: "#25345C",
         fontWeight: 700,
         borderStyle: 'none',
         borderWidth: 2,
-        // borderRadius: 12,
-        paddingTop: 14,
-        paddingBottom: 15,
+        paddingRight: "40px !important",
+        paddingLeft: "15px",
         "&:focus": {
             borderRadius: 12,
             background: 'white',
@@ -39,30 +41,65 @@ const styles = {
         paddingTop: 0,
         paddingBottom: 0,
         background: 'white',
-        "& li": {
-            fontWeight: 200,
-            paddingTop: 12,
-            paddingBottom: 12,
+        defaultStyle: {
+            "& li": {
+                fontWeight: 200,
+                paddingTop: 12,
+                paddingBottom: 12,
+            },
+            "& li:hover": {
+                background: "#25345C",
+                color: 'white'
+            },
+            "& li.Mui-selected": {
+                color: 'white',
+                background: "#25345C"
+            },
+            "& li.Mui-selected:hover": {
+                background: "#25345C",
+                color: 'white'
+            }
         },
-        "& li:hover": {
-            background: "#25345C",
-            color: 'white'
-        },
-        "& li.Mui-selected": {
-            color: 'white',
-            background: "#25345C"
-        },
-        "& li.Mui-selected:hover": {
-            background: "#25345C",
-            color: 'white'
+        logsSelect: {
+            "& li": {
+                fontWeight: 200,
+                paddingTop: 12,
+                paddingBottom: 12,
+            },
+            "& li.Mui-selected:hover": {
+                background: "#ECEEF0 !important",
+                color: 'black'
+            },
+            "& li.Mui-selected": {
+                color: 'black',
+                background: "#ECEEF0 !important"
+            },
+            "& li:hover": {
+                background: "#ECEEF0 !important",
+                color: 'black'
+            },
         }
+
+    },
+    // custom select css
+    logsSelect: {
+        border: "1px solid #ECEEF0",
+        borderRadius: "22px",
+        color: "#25345C !important",
+        fontSize: "13px !important",
+        lineHeight: "17px",
+        minWidth: "150px",
+        height: "42px",
+        paddingRight: "0px !important",
+        display: "flex",
+        justifyContent: "center",
     },
 }
 
 const useStyles = makeStyles(styles)
 
 const CustomSelect = (props) => {
-    const { name, listValues, placeholder, selectValue, onChange } = props
+    const { name, listValues, placeholder, selectValue, onChange, customStyle } = props
     const classes = useStyles();
 
     const iconComponent = (props) => {
@@ -75,7 +112,7 @@ const CustomSelect = (props) => {
     const menuProps = {
         classes: {
             paper: classes.paper,
-            list: classes.list
+            list: classes.list[customStyle] || classes.list.defaultStyle
         },
         anchorOrigin: {
             vertical: "bottom",
@@ -90,9 +127,8 @@ const CustomSelect = (props) => {
 
 
     return (
-        <FormControl className={classes.selectContainer} fullWidth >
+        <FormControl className={classes.selectContainer} className={classes[customStyle]} fullWidth>
             <Select
-                fullWidth
                 disableUnderline
                 classes={{ root: classes.select }}
                 MenuProps={menuProps}
@@ -100,6 +136,8 @@ const CustomSelect = (props) => {
                 value={selectValue}
                 onChange={onChange}
                 name={name}
+                className="fs-13"
+                inputProps={{ style: { width: 100 } }}
             >
                 {selectValue === "none" && <option value="none" disabled style={{ display: "none" }} >
                     {placeholder}
