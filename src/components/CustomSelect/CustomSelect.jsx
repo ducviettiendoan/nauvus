@@ -20,7 +20,7 @@ const styles = {
         paddingBottom: 15,
         "&:focus": {
             borderRadius: 12,
-            background: 'white',
+            backgroundColor: 'white',
             borderColor: "#B4B4B4"
         },
     },

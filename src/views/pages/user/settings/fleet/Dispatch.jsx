@@ -92,6 +92,12 @@ const styles = {
     padding: "0px !important ",
 
   },
+  dropDownIcon: {
+    color: "#C4C4C4",
+    cursor: "pointer",
+    position:"absolute",
+    right: 8,
+  }
 };
 
 const useStyles = makeStyles(styles);
