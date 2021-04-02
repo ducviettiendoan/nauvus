@@ -38,7 +38,8 @@ const styles = {
   },
   select: {
     color: "#25345C",
-    fontWeight: 700,
+    fontWeight: 400,
+    fontSize: 14,
     borderStyle: "none",
     borderWidth: 2,
     marginRight: 15,
