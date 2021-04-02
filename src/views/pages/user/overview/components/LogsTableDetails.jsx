@@ -1,6 +1,6 @@
-import React, {useEffect} from "react";
+import React, { useEffect, useState } from "react";
 // @material-ui/core components
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "components/CustomButtons/Button";
@@ -11,9 +11,12 @@ import GridItem from "components/Grid/GridItem";
 import DropDownIcon from "components/Icons/DropDownIcon";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import {Row} from "reactstrap";
+import { Row } from "reactstrap";
 import LegendIcon from "../../../../../components/Icons/LegendIcon";
 import DialogComponent from "../../../../../components/Dialog/DialogComponent";
+import CustomSelect from "../../../../../components/CustomSelect/CustomSelect"
+import { getActivityLogsData } from "../../../../../reducers/overview"
+import { connect } from 'react-redux';
 // @material-ui/icons
 // core components
 const styles = {
@@ -32,26 +35,11 @@ const styles = {
     }
   },
   selectForm: {
-    width: "auto",
-    height: "41px",
+    minWidth: "150px",
     background: "#FFFFFF",
     boxSizing: "border-box",
     borderRadius: "20px",
-    "& >select": {
-      paddingRight: "0 !important",
-      width: "100%",
-      zIndex: "1000",
-    },
-    "&::before": {
-      borderBottom: "0px"
-    },
-    "& > select:focus": {
-      backgroundColor: "unset"
-    },
-    "&:hover": {
-      borderBottom: "0px"
-    },
-    marginRight: 8
+    padding: "0px 0px 0px 0px !important",
   },
   dropDownIcon: {
     color: "#C4C4C4",
@@ -95,24 +83,23 @@ const styles = {
   }
 };
 
-const dumpData = [
-  {
-    shift: '0:00:00',
-    driving: '0:00:00',
-    inViolation: '0:00:00',
-    from: '-',
-    to: '-',
-    details: 'Missing Driver Certification',
-    date: 'Mon, Mar 29'
-  },
-];
-
 const useStyles = makeStyles(styles);
 
-export default function LogsTableDetails() {
+function LogsTableDetails(props) {
   const classes = useStyles();
-  const [selectTransfer, setSelectTransfer] = React.useState("null");
+
+  useEffect(() => {
+    props.getActivityLogsData()
+  }, [])
+
   const [dialog, setDialog] = React.useState(false);
+
+  const listSelectValue = ["Email to custom recipient", "FMCSA Audit Transfer", "Email to FMCSA"]
+  const [selectValue, setSelectValue] = useState("none");
+
+  const handleSelectChange = (event) => {
+    setSelectValue(event.target.value)
+  }
 
   const formatShift = (cell, row) => {
     return <>
@@ -141,54 +128,56 @@ export default function LogsTableDetails() {
   }
   const formatDetails = (cell, row) => {
     return <div className={classes.details}>
-      <LegendIcon className={classes.legendIcon}/>
+      <LegendIcon className={classes.legendIcon} />
       <div className={classes.textDetails}>{cell}</div>
     </div>
   }
   const formatDate = (cell, row) => {
     return <div className={classes.details}>
       <div className={classes.textSub}>{cell}</div>
-      <DropDownIcon className={classes.dropDownIconDate}/>
+      <DropDownIcon className={classes.dropDownIconDate} />
     </div>
   }
 
   useEffect(() => {
-    if (selectTransfer == 'email_to_custom_recipient') {
+    if (selectValue == 1) {
       setDialog(true)
     }
-  },[selectTransfer])
+  }, [selectValue])
+
+  const [inputValue, setInputValue] = useState({
+    email: "",
+    comment: ""
+  })
 
   return (
     <>
       <CardBody>
         {
-          dialog ? <DialogComponent open={true} /> : ""
+          dialog && <DialogComponent
+            open={true}
+            setDialog={setDialog}
+            inputValue={inputValue}
+            setInputValue={setInputValue}
+          />
         }
         <GridContainer>
           <GridItem xs={12} sm={12} md={6}>
             <GridContainer className={classes.headContainer}>
               <GridItem>
-                <Calendar/>
+                <Calendar />
               </GridItem>
             </GridContainer>
           </GridItem>
           <GridItem xs={12} sm={12} md={6} className={classes.headLeft}>
-            <FormControl variant="outlined">
-              <Select
-                native
-                value={selectTransfer}
-                onChange={event => setSelectTransfer(event.target.value)}
-                // label="Age"
-                className={classes.selectForm}
-                IconComponent={() => (
-                  <DropDownIcon className={classes.dropDownIcon}/>
-                )}
-              >
-                <option value={"null"} disabled>Transfer Logs</option>
-                <option value={"email_to_custom_recipient"}>Email to custom recipient</option>
-                <option value={"FMCSA_audit_transfer"}>FMCSA Audit Transfer</option>
-                <option value={"email_to_FMCSA"}>Email to FMCSA</option>
-              </Select>
+            <FormControl variant="outlined" className={classes.selectForm}>
+              <CustomSelect
+                listValues={listSelectValue}
+                selectValue={selectValue}
+                onChange={handleSelectChange}
+                placeholder={"Transfer Logs"}
+                customStyle={"logsSelect"}
+              />
             </FormControl>
             <Button
               round
@@ -206,7 +195,7 @@ export default function LogsTableDetails() {
         </GridContainer>
       </CardBody>
       <ToolkitProvider
-        data={dumpData}
+        data={props.data}
         keyField="_id"
         columns={[
           {
@@ -253,24 +242,16 @@ export default function LogsTableDetails() {
               bootstrap4={true}
               bordered={false}
             />
-            <Row className="justify-content-center">
-              {/* <PaginationV2
-                                        pages={[
-                                          { text: <ArrowDownIcon/>, arrow : true,disabled : true },
-                                          { text: <ArrowLeftIcon/>, arrow : true,disabled : true },
-                                          { active: true, text: 1 },
-                                          { text: 2 },
-                                          { text: 3 },
-                                          { text: 4 },
-                                          { text: 5 },
-                                          { text: <ArrowRightIcon/>, arrow : true },
-                                          { text: <ArrowUpIcon/>, arrow : true },
-                                        ]}
-                                      /> */}
-            </Row>
           </div>
         )}
       </ToolkitProvider>
     </>
   );
 }
+
+export default connect(
+  ({ overview }) => ({
+    data: overview.activityLogsData
+  }), {
+  getActivityLogsData
+})(LogsTableDetails)
