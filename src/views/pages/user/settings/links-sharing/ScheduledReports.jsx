@@ -16,6 +16,10 @@ import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import EditIcon from "components/Icons/EditIcon";
 import DeleteIcon from "components/Icons/DeleteIcon";
 import AddOutlined from "@material-ui/icons/AddOutlined";
+import {connect} from "react-redux";
+import {IRootState} from "../../../../../reducers";
+import {getAlertContact, getScheduleReport} from "../../../../../reducers/setting-link-sharing";
+import {AlertContacts} from "./AlertContacts";
 const styles = {
   liveSharingHeader: {
     display: "flex",
@@ -80,19 +84,15 @@ const styles = {
   }
 };
 
-const dumpData = [
-  { name: 'Driver Report', repeat: "Weekly", sendAt: 'Friday 12:00 PM EET', recipients: 2, target : 'Entire Group', createdBy : 'Tatle'},
-  { name: 'IFTA', repeat: "Monthly", sendAt: '12:00 PM EET', recipients: 2, target : 'Entire Group', createdBy : 'Tatle'},
-  { name: 'Driver Report', repeat: "Weekly", sendAt: 'Friday 12:00 PM EET', recipients: 2, target : 'Entire Group', createdBy : 'Tatle'},
-  { name: 'IFTA', repeat: "Monthly", sendAt: '12:00 PM EET', recipients: 2, target : 'Entire Group', createdBy : 'Tatle'},
-  { name: 'Driver Report', repeat: "Weekly", sendAt: 'Friday 12:00 PM EET', recipients: 2, target : 'Entire Group', createdBy : 'Tatle'},
-  { name: 'IFTA', repeat: "Monthly", sendAt: '12:00 PM EET', recipients: 2, target : 'Entire Group', createdBy : 'Tatle'},
-];
-
 const useStyles = makeStyles(styles);
 
-export default function ScheduledReports() {
+export function ScheduledReports(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getScheduleReport();
+  }, []);
 
   const formatName = (cell, row) => {
     return <>
@@ -177,8 +177,7 @@ export default function ScheduledReports() {
 
                 </CardBody>
                 <ToolkitProvider
-                  data={ dumpData }
-                  keyField="_id"
+                  data={ props.data }
                   columns={[
                     {
                       dataField: "name",
@@ -223,23 +222,8 @@ export default function ScheduledReports() {
                         {...props.baseProps}
                         bootstrap4={true}
                         bordered={false}
+                        keyField="id"
                       />
-                      <Row className="justify-content-center">
-                        {/* <PaginationV2
-                                        pages={[
-                                          { text: <ArrowDownIcon/>, arrow : true,disabled : true },
-                                          { text: <ArrowLeftIcon/>, arrow : true,disabled : true },
-                                          { active: true, text: 1 },
-                                          { text: 2 },
-                                          { text: 3 },
-                                          { text: 4 },
-                                          { text: 5 },
-                                          { text: <ArrowRightIcon/>, arrow : true },
-                                          { text: <ArrowUpIcon/>, arrow : true },
-                                        ]}
-                                      /> */}
-                        {/*<GenPaginationV1 total={ 200 } page={ 1 } size={ 10 } />*/}
-                      </Row>
                     </div>
                   )}
                 </ToolkitProvider>
@@ -252,3 +236,12 @@ export default function ScheduledReports() {
     </div>
   );
 }
+
+export default connect(
+  ({settingLinkSharing}: IRootState) => ({
+    data: settingLinkSharing.scheduleReports
+  }),
+  {
+    getScheduleReport
+  }
+)(ScheduledReports);

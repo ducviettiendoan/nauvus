@@ -22,6 +22,10 @@ import BootstrapTable from "react-bootstrap-table-next";
 import GenPaginationV1 from "../../../../../../components/Pagination/GenPaginationV1";
 import Chip from "@material-ui/core/Chip";
 import EditIcon from "../../../../../../components/Icons/EditIcon";
+import {connect} from "react-redux";
+import {IRootState} from "../../../../../../reducers";
+import {getFuelCard, getFuelCost} from "../../../../../../reducers/setting-fleet";
+import {FuelCost} from "./FuelCost";
 
 const styles = {
   userRolesTitle: {
@@ -119,54 +123,13 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const dumpData = [
-  {
-    id: 1,
-    cardVendor: 'Comdata | FleetCor',
-    code: 'N12345',
-    billGroup: 'BRX6T',
-    email: "example@gmail.com",
-  },{
-
-    id: 2,
-    cardVendor: 'Comdata | FleetCor',
-    code: 'N12345',
-    billGroup: 'BRX6T',
-    email: "example@gmail.com",
-  },
-  {
-    id: 3,
-    cardVendor: 'Comdata | FleetCor',
-    code: 'N12345',
-    billGroup: 'BRX6T',
-    email: "example@gmail.com",
-  },
-  {
-    id: 4,
-    cardVendor: 'Comdata | FleetCor',
-    code: 'N12345',
-    billGroup: 'BRX6T',
-    email: "example@gmail.com",
-  },
-  {
-    id: 5,
-    cardVendor: 'Comdata | FleetCor',
-    code: 'N12345',
-    billGroup: 'BRX6T',
-    email: "example@gmail.com",
-  },
-  {
-    id: 6,
-    cardVendor: 'Comdata | FleetCor',
-    code: 'N12345',
-    billGroup: 'BRX6T',
-    email: "example@gmail.com",
-  },
-
-];
-
-export default function FuelCards() {
+export function FuelCards(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getFuelCard();
+  }, []);
 
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Comdata'},
@@ -280,8 +243,7 @@ export default function FuelCards() {
                   </GridContainer>
                 </CardBody>
                 <ToolkitProvider
-                  data={dumpData}
-                  // keyField="_id"
+                  data={props.data}
                   columns={[
                     {
                       dataField: "cardVendor",
@@ -318,7 +280,6 @@ export default function FuelCards() {
                         bordered={false}
                         keyField='id'
                         selectRow={selectRow}
-
                       />
                     </div>
                   )}
@@ -332,3 +293,12 @@ export default function FuelCards() {
     </div>
   );
 }
+
+export default connect(
+  ({settingFleet}: IRootState) => ({
+    data: settingFleet.fuelCards
+  }),
+  {
+    getFuelCard
+  }
+)(FuelCards);

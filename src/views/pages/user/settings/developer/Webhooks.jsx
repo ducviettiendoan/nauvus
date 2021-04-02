@@ -18,6 +18,9 @@ import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import CopyIcon from "components/Icons/CopyIcon";
 import Link from "@material-ui/core/Link";
+import {connect} from "react-redux";
+import {IRootState} from "reducers";
+import {getWebhook} from "reducers/setting-developer";
 
 const styles = {
   webhookHeader: {
@@ -120,44 +123,15 @@ const styles = {
   }
 };
 
-const dumpData = [
-  {
-    name: 'Webhook',
-    url: 'https://example-webhook.com/',
-    secretKey: 'dLDC8X8Bd3OFrSPt6vg2TGMXOXnISGqv',
-    configAlert: "Stable",
-  },
-  {
-    name: 'Webhook',
-    url: 'https://example-webhook.com/',
-    secretKey: 'dLDC8X8Bd3OFrSPt6vg2TGMXOXnISGqv',
-    configAlert: "Stable",
-  },
-  {
-    name: 'Webhook',
-    url: 'https://example-webhook.com/',
-    secretKey: 'dLDC8X8Bd3OFrSPt6vg2TGMXOXnISGqv',
-    configAlert: "Stable",
-  },
-  {
-    name: 'Webhook',
-    url: 'https://example-webhook.com/',
-    secretKey: 'dLDC8X8Bd3OFrSPt6vg2TGMXOXnISGqv',
-    configAlert: "Stable",
-  },
-  {
-    name: 'Webhook',
-    url: 'https://example-webhook.com/',
-    secretKey: 'dLDC8X8Bd3OFrSPt6vg2TGMXOXnISGqv',
-    configAlert: "Stable",
-  },
-];
-
-
 const useStyles = makeStyles(styles);
 
-export default function Webhooks() {
+export function Webhooks(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getWebhook();
+  }, []);
 
   const formatName = (cell, row) => {
     return <>
@@ -220,8 +194,7 @@ export default function Webhooks() {
               </GridContainer>
               <Card testimonial>
                 <ToolkitProvider
-                  data={dumpData}
-                  keyField="_id"
+                  data={props.data}
                   columns={[
                     {
                       dataField: "name",
@@ -256,6 +229,7 @@ export default function Webhooks() {
                         {...props.baseProps}
                         bootstrap4={true}
                         bordered={false}
+                        keyField="id"
                       />
                     </div>
                   )}
@@ -315,3 +289,12 @@ export default function Webhooks() {
     </div>
   );
 }
+
+export default connect(
+  ({settingDeveloper}: IRootState) => ({
+    data: settingDeveloper.webhooks
+  }),
+  {
+    getWebhook
+  }
+)(Webhooks);

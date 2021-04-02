@@ -16,6 +16,10 @@ import CloseIcon from "components/Icons/CloseIcon";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
+import {connect} from "react-redux";
+import {IRootState} from "../../../../../../reducers";
+import {getApiTraffic, getChartData, getWebhookTraffic} from "../../../../../../reducers/setting-developer";
+import {APITraffic} from "./APITraffic";
 
 const styles = {
   colorBlue: {
@@ -106,47 +110,14 @@ const BorderLinearProgress = withStyles((theme) => ({
 }))(LinearProgress);
 
 const useStyles = makeStyles(styles);
-const mockData = {
-  title: {
-    text: "Webhook Volume"
-  },
-  series: [
-    {
-      color: '#27AE60',
-      name: 'Successes',
-      data: [
-        ["2021-3-17 11:59:00", 288],
-        ["2021-3-18 11:59:00", 291],
-        ["2021-3-18 14:59:00", 301],
-        ["2021-3-19 11:59:00", 291],
-        ["2021-3-20 11:59:00", 292],
-        ["2021-3-21 11:59:00", 282],
-        ["2021-3-22 11:59:00", 278],
-        ["2021-3-23 11:59:00", 286],
-        ["2021-3-24 11:59:00", 288],
-        ["2021-3-25 11:59:00", 288]
-      ]
-    },
-    {
-      color: '#E53935',
-      name: 'Errors',
-      data: [
-        ["2021-3-17 11:59:00", 1],
-        ["2021-3-18 11:59:00", 1],
-        ["2021-3-19 11:59:00", 1],
-        ["2021-3-20 11:59:00", 1],
-        ["2021-3-21 11:59:00", 1],
-        ["2021-3-22 11:59:00", 1],
-        ["2021-3-23 11:59:00", 1],
-        ["2021-3-24 11:59:00", 1],
-        ["2021-3-25 11:59:00", 1]
-      ]
-    }
-  ],
-}
 
-export default function WebhookTraffic(props) {
+export function WebhookTraffic(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getWebhookTraffic();
+  }, []);
 
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'GBT'},
@@ -197,57 +168,6 @@ export default function WebhookTraffic(props) {
     </>
   }
 
-  const dumpData = [
-    {
-      requestTime: "49:30:00",
-      payloadType: 'Ping',
-      statusCode: '405',
-      duration: "0.153S",
-      webhookName: "WebhookABC",
-      requestID: "5eb74760-e071-4a13-922a-fd417d3284ea"
-    },
-    {
-      requestTime: "49:30:00",
-      payloadType: 'Ping',
-      statusCode: '405',
-      duration: "0.153S",
-      webhookName: "WebhookABC",
-      requestID: "5eb74760-e071-4a13-922a-fd417d3284ea"
-    },
-    {
-      requestTime: "49:30:00",
-      payloadType: 'Ping',
-      statusCode: '405',
-      duration: "0.153S",
-      webhookName: "WebhookABC",
-      requestID: "5eb74760-e071-4a13-922a-fd417d3284ea"
-    },
-    {
-      requestTime: "49:30:00",
-      payloadType: 'Ping',
-      statusCode: '405',
-      duration: "0.153S",
-      webhookName: "WebhookABC",
-      requestID: "5eb74760-e071-4a13-922a-fd417d3284ea"
-    },
-    {
-      requestTime: "49:30:00",
-      payloadType: 'Ping',
-      statusCode: '405',
-      duration: "0.153S",
-      webhookName: "WebhookABC",
-      requestID: "5eb74760-e071-4a13-922a-fd417d3284ea"
-    },
-    {
-      requestTime: "49:30:00",
-      payloadType: 'Ping',
-      statusCode: '405',
-      duration: "0.153S",
-      webhookName: "WebhookABC",
-      requestID: "5eb74760-e071-4a13-922a-fd417d3284ea"
-    },
-  ];
-
   const rowEvents = {
     onClick: (e, row, rowIndex) => {
       props.onShowDetail();
@@ -292,7 +212,7 @@ export default function WebhookTraffic(props) {
                   <GridItem className={classes.bigCardGridItem} xs={9}>
                     <Card className={classes.bigCard}>
                       <CardBody>
-                        <EChart data={mockData}/>
+                        <EChart data={props.chartData}/>
                       </CardBody>
                     </Card>
                   </GridItem>
@@ -335,8 +255,7 @@ export default function WebhookTraffic(props) {
                 </GridContainer>
               </CardBody>
               <ToolkitProvider
-                data={dumpData}
-                keyField="_id"
+                data={props.data}
                 columns={[
                   {
                     dataField: "requestTime",
@@ -376,6 +295,7 @@ export default function WebhookTraffic(props) {
                       {...props.baseProps}
                       bootstrap4={true}
                       bordered={false}
+                      keyField="id"
                       rowEvents={rowEvents}
                     />
                   </div>
@@ -390,3 +310,14 @@ export default function WebhookTraffic(props) {
     </GridContainer>
   );
 }
+
+export default connect(
+  ({settingDeveloper}: IRootState) => ({
+    data: settingDeveloper.webhookTraffics,
+    chartData: settingDeveloper.chartData
+  }),
+  {
+    getWebhookTraffic,
+    getChartData,
+  }
+)(WebhookTraffic);

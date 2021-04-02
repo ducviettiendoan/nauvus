@@ -14,11 +14,14 @@ import {
 import Button from "components/CustomButtons/Button.js";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import BootstrapTable from "react-bootstrap-table-next";
-import GenPaginationV1 from "../../../../../../components/Pagination/GenPaginationV1";
+import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import EditIcon from "../../../../../../components/Icons/EditIcon";
-import DeleteIcon from "../../../../../../components/Icons/DeleteIcon";
-import CopyIcon from "../../../../../../components/Icons/CopyIcon";
+import EditIcon from "components/Icons/EditIcon";
+import DeleteIcon from "components/Icons/DeleteIcon";
+import CopyIcon from "components/Icons/CopyIcon";
+import {connect} from "react-redux";
+import {IRootState} from "reducers";
+import {getByRoute} from "reducers/setting-link-sharing";
 
 const styles = {
   cardTitle,
@@ -109,19 +112,15 @@ const styles = {
   },
 };
 
-const dumpData = [
-  {route: 'Route 1', name: 'GR9X-6AN-3N5', description: 'By Recurring Route' ,linkExpires: 'Never'},
-  {route: 'Route 1', name: 'GR9X-6AN-3N5', description: 'By Recurring Route' ,linkExpires: 'Never'},
-  {route: 'Route 1', name: 'GR9X-6AN-3N5', description: 'By Recurring Route' ,linkExpires: 'Never'},
-  {route: 'Route 1', name: 'GR9X-6AN-3N5', description: 'By Recurring Route' ,linkExpires: 'Never'},
-  {route: 'Route 1', name: 'GR9X-6AN-3N5', description: 'By Recurring Route' ,linkExpires: 'Never'},
-  {route: 'Route 1', name: 'GR9X-6AN-3N5', description: 'By Recurring Route' ,linkExpires: 'Never'},
-];
-
 const useStyles = makeStyles(styles);
 
-export default function ByRecurringRoute() {
+export function ByRecurringRoute(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getByRoute();
+  }, []);
 
   const formatLocation = (cell, row) => {
     return <>
@@ -181,8 +180,7 @@ export default function ByRecurringRoute() {
                   </GridContainer>
                 </CardBody>
                 <ToolkitProvider
-                  data={dumpData}
-                  keyField="_id"
+                  data={props.data}
                   columns={[
                     {
                       dataField: "route",
@@ -217,8 +215,8 @@ export default function ByRecurringRoute() {
                         {...props.baseProps}
                         bootstrap4={true}
                         bordered={false}
+                        keyField="id"
                       />
-
                     </div>
                   )}
                 </ToolkitProvider>
@@ -231,3 +229,12 @@ export default function ByRecurringRoute() {
     </div>
   );
 }
+
+export default connect(
+  ({settingLinkSharing}: IRootState) => ({
+    data: settingLinkSharing.byRoutes
+  }),
+  {
+    getByRoute
+  }
+)(ByRecurringRoute);
