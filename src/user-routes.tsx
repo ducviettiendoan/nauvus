@@ -53,7 +53,7 @@ const dashRoutes = [
     views: [
       {
         path: "/overview",
-        name: "Overview",
+        name: "Vehicle",
         component: Overview,
         layout: "/o"
       },
