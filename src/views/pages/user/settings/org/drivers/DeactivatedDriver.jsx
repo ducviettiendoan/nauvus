@@ -14,10 +14,11 @@ import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import BootstrapTable from "react-bootstrap-table-next";
 import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 import Chip from "@material-ui/core/Chip";
-import MoreIcon from "components/Icons/MoreIcon";
 
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
-import AddOutlined from "@material-ui/icons/AddOutlined";
+import {connect} from "react-redux";
+import {IRootState} from "reducers";
+import {getDeactivatedDrivers} from "reducers/setting-org";
 
 const styles = {
   userRolesTitle: {
@@ -122,42 +123,13 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const dumpData = [
-  {
-    id: 1,
-    name: 'Chal Vee',
-    username: 'Chal',
-  },
-  {
-    id: 2,
-    name: 'Chal Vee',
-    username: 'Chal',
-  },
-  {
-    id: 3,
-    name: 'Chal Vee',
-    username: 'Chal',
-  },
-  {
-    id: 4,
-    name: 'Chal Vee',
-    username: 'Chal',
-  },
-  {
-    id: 5,
-    name: 'Chal Vee',
-    username: 'Chal',
-  },
-  {
-    id: 6,
-    name: 'Chal Vee',
-    username: 'Chal',
-  },
-
-];
-
-export default function DeactivatedDriver() {
+export function DeactivatedDriver(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getDeactivatedDrivers();
+  }, []);
 
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Standard Admin'},
@@ -184,36 +156,6 @@ export default function DeactivatedDriver() {
     </>
   }
 
-  // const formatTags = (cell, row) => {
-  //   return <>
-  //     <div className={classes.textTags}>{cell}</div>
-  //   </>
-  // }
-  //
-  // const formatPeerGroup = (cell, row) => {
-  //   return <>
-  //     <div className={classes.textSub}>{cell}</div>
-  //   </>
-  // }
-  //
-  // const formatPhone = (cell, row) => {
-  //   return <>
-  //     <div className={classes.textSub}>{cell}</div>
-  //   </>
-  // }
-  //
-  // const formatDLState = (cell, row) => {
-  //   return <>
-  //     <div className={classes.textSub}>{cell}</div>
-  //   </>
-  // }
-  //
-  // const formatDLNumber = (cell, row) => {
-  //   return <>
-  //     <div className={classes.textSub}>{cell}</div>
-  //   </>
-  // }
-
   const addActionButton = () => {
     return (
       <div className={classes.actionButton}>
@@ -224,7 +166,6 @@ export default function DeactivatedDriver() {
           Reactivate
         </Button>
       </div>
-
     )
   }
 
@@ -293,7 +234,7 @@ export default function DeactivatedDriver() {
                   </GridContainer>
                 </CardBody>
                 <ToolkitProvider
-                  data={dumpData}
+                  data={props.data}
                   columns={[
                     {
                       dataField: "name",
@@ -359,3 +300,12 @@ export default function DeactivatedDriver() {
     </div>
   );
 }
+
+export default connect(
+  ({settingOrg}: IRootState) => ({
+    data: settingOrg.deactivatedDrivers
+  }),
+  {
+    getDeactivatedDrivers
+  }
+)(DeactivatedDriver);

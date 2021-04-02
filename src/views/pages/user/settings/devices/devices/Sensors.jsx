@@ -17,6 +17,9 @@ import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 import DotIcon from "components/Icons/DotIcon";
 import Chip from "@material-ui/core/Chip";
 import MoreIcon from "components/Icons/MoreIcon";
+import {connect} from "react-redux";
+import {IRootState} from "reducers";
+import {getSensor} from "reducers/setting-device";
 
 const styles = {
   userRolesTitle: {
@@ -121,65 +124,13 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const dumpData = [
-  {
-    id: 1,
-    name: 'Trailer 109 - Right Door',
-    product: 'EM22',
-    sensorID: 'WN5WN-KPE-M28',
-    signal: 'Connected',
-    pairedAsset: "CargoMM23",
-    position: 'Middle',
-  },
-  {
-    id: 2,
-    name: 'Trailer 109 - Right Door',
-    product: 'EM22',
-    sensorID: 'WN5WN-KPE-M28',
-    signal: 'Connected',
-    pairedAsset: "CargoMM23",
-    position: 'Middle',
-  },
-  {
-    id: 3,
-    name: 'Trailer 109 - Right Door',
-    product: 'EM22',
-    sensorID: 'WN5WN-KPE-M28',
-    signal: 'Connected',
-    pairedAsset: "CargoMM23",
-    position: 'Middle',
-  },
-  {
-    id: 4,
-    name: 'Trailer 109 - Right Door',
-    product: 'EM22',
-    sensorID: 'WN5WN-KPE-M28',
-    signal: 'Connected',
-    pairedAsset: "CargoMM23",
-    position: 'Middle',
-  },
-  {
-    id: 5,
-    name: 'Trailer 109 - Right Door',
-    product: 'EM22',
-    sensorID: 'WN5WN-KPE-M28',
-    signal: 'Connected',
-    pairedAsset: "CargoMM23",
-    position: 'Middle',
-  },
-  {
-    id: 6,
-    name: 'Trailer 109 - Right Door',
-    product: 'EM22',
-    sensorID: 'WN5WN-KPE-M28',
-    signal: 'Connected',
-    pairedAsset: "CargoMM23",
-    position: 'Middle',
-  },
-];
-
-export default function Sensors() {
+export function Sensors(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getSensor();
+  }, []);
 
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Standard Admin'},
@@ -317,7 +268,7 @@ export default function Sensors() {
                   </GridContainer>
                 </CardBody>
                 <ToolkitProvider
-                  data={dumpData}
+                  data={props.data}
                   columns={[
                     {
                       dataField: "name",
@@ -377,3 +328,12 @@ export default function Sensors() {
     </div>
   );
 }
+
+export default connect(
+  ({settingDevice}: IRootState) => ({
+    data: settingDevice.sensors
+  }),
+  {
+    getSensor
+  }
+)(Sensors);

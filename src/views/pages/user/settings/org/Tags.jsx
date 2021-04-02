@@ -23,6 +23,9 @@ import EditIcon from "components/Icons/EditIcon";
 import DeleteIcon from "components/Icons/DeleteIcon";
 import DotIcon from "components/Icons/DotIcon";
 import AddOutlined from "@material-ui/icons/AddOutlined";
+import {connect} from "react-redux";
+import {IRootState} from "reducers";
+import {getTags} from "reducers/setting-org";
 
 const styles = {
   cardContainer: {
@@ -140,11 +143,16 @@ const styles = {
   },
 };
 
-const dumpData = [{email: "alma.lawson@example.com", role: "Super Admin"}];
 
 const useStyles = makeStyles(styles);
-export default function Tags() {
+
+export function Tags(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getTags();
+  }, []);
 
   const [open, setOpen] = React.useState(true);
   const [currentTab, setCurrentTab] = React.useState("Name Tags A");
@@ -562,7 +570,7 @@ export default function Tags() {
                         </GridContainer>
                       </CardBody>
                       <ToolkitProvider
-                        data={dumpData}
+                        data={props.data}
                         keyField="_id"
                         columns={[
                           {
@@ -647,7 +655,7 @@ export default function Tags() {
                         </GridContainer>
                       </CardBody>
                       <ToolkitProvider
-                        data={dumpData}
+                        data={props.data}
                         keyField="_id"
                         columns={[
                           {
@@ -729,7 +737,7 @@ export default function Tags() {
                         </GridContainer>
                       </CardBody>
                       <ToolkitProvider
-                        data={dumpData}
+                        data={props.data}
                         keyField="_id"
                         columns={[
                           {
@@ -770,3 +778,12 @@ export default function Tags() {
     </div>
   );
 }
+
+export default connect(
+  ({settingOrg}: IRootState) => ({
+    data: settingOrg.tags
+  }),
+  {
+    getTags
+  }
+)(Tags);

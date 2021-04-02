@@ -10,6 +10,10 @@ import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
 import EditIcon from "components/Icons/EditIcon";
 
+import {getRoles} from "reducers/setting-org";
+import { connect } from 'react-redux';
+import {IRootState} from "reducers";
+
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
     fontSize: 16,
@@ -118,24 +122,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const data = () => {
-  let data = [];
-  for (let i = 0; i < 64; i++) {
-    let item = {
-      id: i + 2,
-      key: i + 2,
-      roles: `Standard Admin ${i + 1}`,
-      permissions: `View and Edit`,
-      access: `Entire Organisation${i}`
-    };
-    data.push(item);
-  }
-  return data;
-}
 
-
-export default function Roles() {
+export function Roles(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getRoles();
+  }, []);
 
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Standard Admin'},
@@ -183,8 +177,7 @@ export default function Roles() {
       )
     }
   ]
-
-
+  console.log(props.data)
   return (
     <div>
       <Table
@@ -218,7 +211,7 @@ export default function Roles() {
         }
         // rowSelection={{}}
         columns={columns}
-        dataSource={data}
+        dataSource={props.data}
         onHeaderRow={{
           className: classes.onHeaderRow
         }}
@@ -229,3 +222,12 @@ export default function Roles() {
     </div>
   );
 }
+
+export default connect(
+  ({settingOrg}: IRootState) => ({
+    data: settingOrg.roles
+  }),
+  {
+    getRoles
+  }
+)(Roles);
