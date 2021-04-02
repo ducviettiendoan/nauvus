@@ -16,13 +16,12 @@ import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from "@material-ui/icons/Search";
 import InputBase from "@material-ui/core/InputBase";
 import FormControl from "@material-ui/core/FormControl";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Select from "@material-ui/core/Select";
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Button from "@material-ui/core/Button";
 import TableMaintenance from "./components/tableMaintenance";
-import Calendar from "../../../../components/Calendar/Calendar";
-import DropDownIcon from "../../../../components/Icons/DropDownIcon";
+import Calendar from "components/Calendar/Calendar";
+import DropDownIcon from "components/Icons/DropDownIcon";
 
 
 const styles = {
@@ -100,8 +99,8 @@ const styles = {
     background: "#FFFFFF",
     boxSizing: "border-box",
     borderRadius: "20px",
-    "& >select" : {
-      paddingRight:"0 !important",
+    "& >select": {
+      paddingRight: "0 !important",
       width: "100%",
       zIndex: "1000",
     },
@@ -119,7 +118,7 @@ const styles = {
   dropDownIcon: {
     color: "#C4C4C4",
     cursor: "pointer",
-    position:"absolute",
+    position: "absolute",
     right: 8,
   }
 };
@@ -127,11 +126,11 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 function defectCreateData(asset, currentLocation, lastDvirStatus, count, unresolvedDefects) {
-  return { asset, currentLocation, lastDvirStatus, count, unresolvedDefects };
+  return {asset, currentLocation, lastDvirStatus, count, unresolvedDefects};
 }
 
 function dvirsCreateData(asset, currentDriver, makeModel, batteryVoltage, engineHours, odometer, checkEngineLight) {
-  return { asset, currentDriver, makeModel, batteryVoltage, engineHours, odometer, checkEngineLight};
+  return {asset, currentDriver, makeModel, batteryVoltage, engineHours, odometer, checkEngineLight};
 }
 
 const defectRows = [
@@ -147,18 +146,17 @@ const defectRows = [
 ];
 
 const divrsRows = [
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567","69,469", "Off"),
+  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567", "69,469", "Off"),
+  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567", "69,469", "Off"),
+  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567", "69,469", "Off"),
+  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567", "69,469", "Off"),
+  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567", "69,469", "Off"),
+  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567", "69,469", "Off"),
+  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567", "69,469", "Off"),
+  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567", "69,469", "Off"),
+  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567", "69,469", "Off"),
+  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567", "69,469", "Off"),
 ];
-
 
 
 export default function Maintenance() {
@@ -174,7 +172,7 @@ export default function Maintenance() {
                 <GridContainer style={{padding: 16}}>
                   <GridItem xs={12} sm={12} md={12}>
 
-                    <GridContainer style={{padding: "0 16px",alignItems: "center"}}>
+                    <GridContainer style={{padding: "0 16px", alignItems: "center"}}>
                       <GridItem xs={3} sm={3} md={3} className={classes.searchBar}>
                         <IconButton type="submit" aria-label="search">
                           <SearchIcon/>
@@ -192,18 +190,18 @@ export default function Maintenance() {
                             // label="Age"
                             className={classes.selectForm}
                             IconComponent={() => (
-                              <DropDownIcon className={classes.dropDownIcon} />
+                              <DropDownIcon className={classes.dropDownIcon}/>
                             )}
                           >
                             <option value={1}>1.1 Weeks</option>
                           </Select>
                         </FormControl>
                         <FormControl variant="outlined">
-                          <Calendar />
+                          <Calendar/>
                         </FormControl>
                         <FormControl variant="outlined" className="moreIcon">
                           <IconButton>
-                            <MoreHorizIcon fontSize="large" />
+                            <MoreHorizIcon fontSize="large"/>
                           </IconButton>
                         </FormControl>
                         <FormControl variant="outlined">
@@ -211,23 +209,12 @@ export default function Maintenance() {
                             Live
                           </Button>
                         </FormControl>
-                        {/*<form noValidate>*/}
-                        {/*  <TextField*/}
-                        {/*    id="date"*/}
-                        {/*    type="date"*/}
-                        {/*    defaultValue="2017-05-24"*/}
-                        {/*    className={classes.textFieldDay}*/}
-                        {/*    InputLabelProps={{*/}
-                        {/*      shrink: true,*/}
-                        {/*    }}*/}
-                        {/*  />*/}
-                        {/*</form>*/}
                       </GridItem>
                     </GridContainer>
-                  
+
                   </GridItem>
                 </GridContainer>
-                <TableMaintenance />
+                <TableMaintenance/>
               </Card>
             </GridItem>
           </GridContainer>
