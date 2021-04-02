@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -124,6 +124,7 @@ const useStyles = makeStyles(styles);
 
 export default function FuelEnergy() {
   const classes = useStyles();
+  const [value, setValue] = useState();
 
   const handleChangeTab = (event, newValue) => {
     setValue(newValue);
