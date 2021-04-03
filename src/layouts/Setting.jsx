@@ -75,6 +75,7 @@ export function Dashboard(props) {
   }, [])
 
   React.useEffect(() => {
+    resizeFunction();
     // console.log(`fetchSession: ${fetchSession}`);
     // async function fetchUserInfo() {
     //   try {
@@ -180,8 +181,11 @@ export function Dashboard(props) {
       setMobileOpen(false);
       setDisplaySetting(true)
     } else {
+      setMiniActive(false);
       setDisplaySetting(false)
     }
+
+
   };
 
 
@@ -241,7 +245,6 @@ export function Dashboard(props) {
           /> 
         }
         <div className={mainPanelClasses} ref={mainPanel}>
-          {/* { fetchSession ? */}
             <>
               { props.isAuthenticated ?
                 <>
@@ -261,11 +264,6 @@ export function Dashboard(props) {
                 </>
               }
             </>
-            {/* </> :
-            <>
-              <Loading />
-            </>
-          } */}
         </div>
       </div>
     </>

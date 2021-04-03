@@ -21,7 +21,9 @@ import {
 const styles = {
     extraSidebarContainer: {
         padding: '0 18px',
-        maxHeight: "80vh"
+        maxHeight: "80vh",
+        overflow: "auto",
+        marginTop: "20px"
     },
     extraSidebarSearchContainer: {
         height: '68px',
@@ -81,6 +83,16 @@ const styles = {
         zIndex: 1000,
         background: "white",
         borderTop: "1px solid #c4c4c4",
+    },
+    mobileDrawerPaper: {
+        borderTopRightRadius: "15px",
+        borderTopLeftRadius: "15px",
+    },
+    anchorDrawer: {
+        width: "25px",
+        margin: "8px auto -20px auto",
+        border: "3px solid #25345C !important",
+        borderRadius: "5px",
     }
 };
 
@@ -221,7 +233,8 @@ export function ExtraSideBarMobile(props) {
 
                     </div>
                 </div>
-                <Drawer anchor={"bottom"} open={open} onClose={toggleDrawer(false)}>
+                <Drawer classes={{ paper: classes.mobileDrawerPaper }} anchor={"bottom"} open={open} onClose={toggleDrawer(false)}>
+                    <div className={ classes.anchorDrawer }></div>
                     <div className={ classes.extraSidebarContainer }>
                         <List
                             component="nav"

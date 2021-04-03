@@ -105,19 +105,13 @@ export function HeaderLinks(props) {
         <SearchIcon className={classes.headerLinksSvg + " " + classes.searchIcon} />
       </Button>
       <Button
-        color="transparent"
-        round
-        aria-label="Dashboard"
+        color="white"
+        aria-label="edit"
         justIcon
-        className={ `btn-36 ${searchButton}`}
+        round
+        className={ `btn-36 ${searchButton} mr-2`}
       >
-        <QuestionIcon
-          className={
-            classes.headerLinksSvg +
-            " " +
-            (rtlActive ? classes.links + " " + classes.linksRTL : classes.links)
-          }
-        />
+        <QuestionIcon className={classes.headerLinksSvg + " " + classes.searchIcon} />
       </Button>
       
       <div className={managerClasses}>
