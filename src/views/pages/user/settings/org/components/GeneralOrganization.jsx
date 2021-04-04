@@ -31,7 +31,7 @@ export default function GeneralOrganization() {
       <OrganizationUpload />
       <div>
         <Row style={{marginTop: '20px'}}>
-          <Col>
+          <Col xs={12} sm={12} md={6}>
             <TextField
               id="standard-full-width"
               label="Organisation name"
@@ -47,7 +47,7 @@ export default function GeneralOrganization() {
               }}
             />
           </Col>
-          <Col>
+          <Col xs={12} sm={12} md={6}>
             <TextField
                 id="standard-full-width1"
                 label="Driver Fleet ID"

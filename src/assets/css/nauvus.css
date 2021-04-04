@@ -465,11 +465,12 @@
 
 .fixed-menu {
   position: sticky;
-  bottom: 20px;
+  bottom: 0px;
   width: 100%;
   z-index: 1000;
   background-color: white;
   border-top: 1px solid #F0F0F3;
+  padding-bottom: 15px;
 }
 /* 
 .table-nauvus td {
