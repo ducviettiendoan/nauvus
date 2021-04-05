@@ -5,7 +5,7 @@ import FilterIcon from "components/Icons/FilterIcon";
 
 const styles = {
     moreAction: {
-        background: "#FFFFFF !important",
+        background: "#FFFFFF",
         border: "1px solid #ECEEF0 !important",
     },
     buttonContainer: {
