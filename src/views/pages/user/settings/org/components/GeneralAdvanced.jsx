@@ -18,7 +18,7 @@ const styles = {
     width: '100%'
   },
   vehicleHeader: {
-    width: "78px",
+    // width: "78px",
     height: "21px",
     fontFamily: "Lato",
     fontStyle: "normal",

@@ -44,8 +44,6 @@ import RecoverNewPassword from "./components/RecoverNewPassword";
 import RecoverRequest from "./components/RecoverRequest";
 import RecoverConfirmmationSent from "./components/RecoverConfirmmationSent";
 
-import { loginByCognito } from "reducers/authentication";
-
 export default function RecoveryPasswordPage() {
   const [step, setStep] = React.useState(STEP_RECOVER_PASSWORD.REQUEST); // CONFIRMATION_SENT REQUEST CHANGE_PASSWORD
 

@@ -12,7 +12,9 @@ import Hidden from "@material-ui/core/Hidden";
 // material-ui icons
 import Menu from "@material-ui/icons/Menu";
 import MoreVert from "@material-ui/icons/MoreVert";
-import ViewList from "@material-ui/icons/ViewList";
+// import ViewList from "@material-ui/icons/ViewList";
+import ViewList from '@material-ui/icons/Dehaze';
+import MenuIcon from "components/Icons/MenuIcon";
 
 // core components
 import AdminNavbarLinks from "./AdminNavbarLinks";

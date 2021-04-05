@@ -226,7 +226,7 @@ export function Overview(props) {
   return (
     <>
       <div className={classes.wrapper}>
-        { props.isAuthenticated && 
+        { fetchSession && props.isAuthenticated && 
           <Sidebar
             routes={routes}
             logoText={"Nauvus"}
@@ -241,6 +241,7 @@ export function Overview(props) {
           /> 
         }
         <div className={mainPanelClasses} ref={mainPanel}>
+          { fetchSession ?
             <>
               { props.isAuthenticated ?
                 <>
@@ -260,7 +261,11 @@ export function Overview(props) {
                   { redirectLogin() }
                 </>
               }
+            </> :
+            <>
+              <Loading />
             </>
+          }
         </div>
       </div>
     </>

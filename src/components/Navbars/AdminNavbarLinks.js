@@ -19,6 +19,8 @@ import Divider from "@material-ui/core/Divider";
 import Person from "@material-ui/icons/Person";
 import Dashboard from "@material-ui/icons/Dashboard";
 import Search from "@material-ui/icons/Search";
+import SearchIcon from "components/Icons/SearchIcon18";
+import QuestionIcon from "components/Icons/QuestionIcon";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 
@@ -100,22 +102,16 @@ export function HeaderLinks(props) {
         round
         className={ `btn-36 ${searchButton} mr-2`}
       >
-        <Search className={classes.headerLinksSvg + " " + classes.searchIcon} />
+        <SearchIcon className={classes.headerLinksSvg + " " + classes.searchIcon} />
       </Button>
       <Button
-        color="transparent"
-        round
-        aria-label="Dashboard"
+        color="white"
+        aria-label="edit"
         justIcon
-        className={ `btn-36 ${searchButton}`}
+        round
+        className={ `btn-36 ${searchButton} mr-2`}
       >
-        <HelpOutline
-          className={
-            classes.headerLinksSvg +
-            " " +
-            (rtlActive ? classes.links + " " + classes.linksRTL : classes.links)
-          }
-        />
+        <QuestionIcon className={classes.headerLinksSvg + " " + classes.searchIcon} />
       </Button>
       
       <div className={managerClasses}>

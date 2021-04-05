@@ -42,7 +42,7 @@ export function Dashboard(props) {
   const [fixedClasses, setFixedClasses] = React.useState("dropdown");
   const [logo, setLogo] = React.useState(require("assets/img/logo_nauvus.svg"));
 
-  const [fetchSession, setFetchSession] = React.useState(false);
+  const [fetchSession, setFetchSession] = React.useState(true);
 
   // styles
   const classes = useStyles();
@@ -62,18 +62,18 @@ export function Dashboard(props) {
   // });
 
   React.useEffect(() => {
-    console.log(`fetchSession: ${fetchSession}`);
-    async function fetchUserInfo() {
-      try {
-        await props.getUserInfo();
-      } catch (e) {
-      } finally {
-        setFetchSession(true);
-        console.log(`fetchSession: ${fetchSession}`);
-        console.log(props.isAuthenticated);
-      }
-    }
-    fetchUserInfo();
+    // console.log(`fetchSession: ${fetchSession}`);
+    // async function fetchUserInfo() {
+    //   try {
+    //     await props.getUserInfo();
+    //   } catch (e) {
+    //   } finally {
+    //     setFetchSession(true);
+    //     console.log(`fetchSession: ${fetchSession}`);
+    //     console.log(props.isAuthenticated);
+    //   }
+    // }
+    // fetchUserInfo();
 
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(mainPanel.current, {
@@ -200,38 +200,6 @@ export function Dashboard(props) {
       </>
     )
   }
-
-  // const renderContent = () => {
-  //   return (
-  //   <div className={classes.wrapper}>
-  //     <Sidebar
-  //       routes={routes}
-  //       logoText={"Nauvus"}
-  //       logo={logo}
-  //       image={image}
-  //       handleDrawerToggle={handleDrawerToggle}
-  //       open={mobileOpen}
-  //       color={color}
-  //       bgColor={bgColor}
-  //       miniActive={miniActive}
-  //       {...rest}
-  //     />
-  //     <div className={mainPanelClasses} ref={mainPanel}>
-  //       { props.extraSidebar ? 
-  //         <>
-  //           <div id="main">
-  //             <div className="extraSidebar">div1</div>
-  //             <div className="extraContainer">{ renderDataContent() }</div>
-  //           </div>
-  //         </> :
-  //         <>
-  //           { renderDataContent() }
-  //         </>
-  //       }
-  //     </div>
-  //   </div>
-  //   );
-  // }
 
   const redirectLogin = () => {
     // let redirectUri = `${window.location.origin}/auth/login`;

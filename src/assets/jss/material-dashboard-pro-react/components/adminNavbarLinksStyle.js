@@ -148,8 +148,10 @@ const adminNavbarLinksStyle = theme => ({
     }
   },
   headerLinksSvg: {
-    width: "20px !important",
-    height: "20px !important"
+    width: "25px !important",
+    height: "25px !important",
+    top: "3px !important",
+    left: "3px !important"
   }
 });
 

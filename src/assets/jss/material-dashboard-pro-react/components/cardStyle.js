@@ -34,7 +34,9 @@ const cardStyle = {
   },
   cardProfile: {
     marginTop: "17px",
-    textAlign: "center"
+    textAlign: "center",
+    overflow: "auto",
+    overflowY: "hidden"
   },
   cardBlog: {
     marginTop: "60px"

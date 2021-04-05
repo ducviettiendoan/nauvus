@@ -35,7 +35,9 @@ const useStyles2 = makeStyles((theme) => ({
     }
   },
   cardTable: {
-    paddingBottom: "40px"
+    paddingBottom: "40px",
+    overflow: "auto",
+    overflowY: "hidden"
   },
   checkbox: {
     textAlign: 'center'

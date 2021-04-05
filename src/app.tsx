@@ -35,9 +35,9 @@ export class App extends React.Component<any, any> {
       <>
         { this.state.fetchSession ? 
           <>
-          <BrowserRouter>
-            <AppRoutes />
-          </BrowserRouter>
+            <BrowserRouter>
+              <AppRoutes />
+            </BrowserRouter>
           </> :
           <>
             <Loading />

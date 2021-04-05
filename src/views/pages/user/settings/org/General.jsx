@@ -6,6 +6,7 @@ import {makeStyles} from "@material-ui/core/styles";
 // core components
 import Card from "components/Card/Card.js";
 import Button from "components/CustomButtons/Button.js";
+import Hidden from "@material-ui/core/Hidden";
 
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -24,10 +25,10 @@ import GeneralLanguageRegion from "./components/GeneralLanguageRegion";
 import GeneralConnection from "./components/GeneralConnection";
 import GeneralAdvanced from "./components/GeneralAdvanced";
 
-const styles = {
+const styles = theme => ({
   cardContainer: {
     marginTop: "15px !important",
-    height: "calc(100vh - 100px)"
+    // height: "calc(100vh - 100px)"
   },
   contentContainer: {
     display: "flex",
@@ -38,11 +39,15 @@ const styles = {
     marginRight: "59px"
   },
   areaMenu: {
-    width: "237px"
+    [theme.breakpoints.up('md')]: {
+      width: "237px"
+    },
   },
   footer: {
-    position: 'absolute',
-    bottom: '16px',
+    // position: 'absolute',
+    // bottom: '16px',
+    marginTop: '16px',
+    marginBottom: '16px',
     width: '100%'
   },
   icons: {
@@ -93,7 +98,7 @@ const styles = {
   listItemRoot: {
     paddingTop: '20px'
   },
-};
+});
 
 const useStyles = makeStyles(styles);
 
@@ -123,11 +128,13 @@ export default function General() {
                         <ListItemIcon classes={{root: classes.iconRoot}}>
                           <OrganizationIcon className={classes.icons}/>
                         </ListItemIcon>
-                        <ListItemText classes={{
-                          root: classes.itemTextRoot,
-                          primary: classes.primaryText,
-                          secondary: classes.secondaryText
-                        }} primary="Organization Information" secondary="Profile foto, name & language"/>
+                        <Hidden smDown implementation="css">
+                          <ListItemText classes={{
+                            root: classes.itemTextRoot,
+                            primary: classes.primaryText,
+                            secondary: classes.secondaryText
+                          }} primary="Organization Information" secondary="Profile foto, name & language"/>
+                        </Hidden>
                       </ListItem>
                       <ListItem button
                                 onClick={() => setTab(2)}
@@ -136,11 +143,13 @@ export default function General() {
                         <ListItemIcon classes={{root: classes.iconRoot}}>
                           <LanguageIcon className={classes.icons}/>
                         </ListItemIcon>
-                        <ListItemText classes={{
-                          root: classes.itemTextRoot,
-                          primary: classes.primaryText,
-                          secondary: classes.secondaryText
-                        }} primary="Language and Region" secondary="Description"/>
+                        <Hidden smDown implementation="css">
+                          <ListItemText classes={{
+                            root: classes.itemTextRoot,
+                            primary: classes.primaryText,
+                            secondary: classes.secondaryText
+                          }} primary="Language and Region" secondary="Description"/>
+                        </Hidden>
                       </ListItem>
                       <ListItem button
                                 onClick={() => setTab(3)}
@@ -149,11 +158,13 @@ export default function General() {
                         <ListItemIcon classes={{root: classes.iconRoot}}>
                           <ConnectionIcon className={classes.icons}/>
                         </ListItemIcon>
-                        <ListItemText classes={{
-                          root: classes.itemTextRoot,
-                          primary: classes.primaryText,
-                          secondary: classes.secondaryText
-                        }} primary="Connection" secondary="Description"/>
+                        <Hidden smDown implementation="css">
+                          <ListItemText classes={{
+                            root: classes.itemTextRoot,
+                            primary: classes.primaryText,
+                            secondary: classes.secondaryText
+                          }} primary="Connection" secondary="Description"/>
+                        </Hidden>
                       </ListItem>
                       <ListItem button
                                 onClick={() => setTab(4)}
@@ -161,11 +172,13 @@ export default function General() {
                         <ListItemIcon classes={{root: classes.iconRoot}}>
                           <AdvancedIcon className={classes.icons}/>
                         </ListItemIcon>
-                        <ListItemText classes={{
-                          root: classes.itemTextRoot,
-                          primary: classes.primaryText,
-                          secondary: classes.secondaryText
-                        }} primary="Advanced" secondary="Description"/>
+                        <Hidden smDown implementation="css">
+                          <ListItemText classes={{
+                            root: classes.itemTextRoot,
+                            primary: classes.primaryText,
+                            secondary: classes.secondaryText
+                          }} primary="Advanced" secondary="Description"/>
+                        </Hidden>
                       </ListItem>
                     </List>
                   </div>
