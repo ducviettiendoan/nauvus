@@ -14,10 +14,15 @@ export const ACTION_TYPES = {
   //HOS Violations action type
   GET_VIOLATIONS: 'compliance/GET_VIOLATIONS',
   GET_MISSING_CERTIFICATIONS: 'compliance/GET_MISSING_CERTIFICATIONS',
+
   //Driver HOS action type
   GET_DRIVER_HOS: 'compliance/GET_DRIVER_HOS',
+
   //Compliance dashboard action type
   GET_DRIVER_EFFICIENCY: 'compliance/GET_DRIVER_EFFICIENCY',
+
+  //Unassigned HOS action type
+  GET_UNASSIGNED_HOS: 'compliance/GET_UNASSIGNED_HOS',
 }
 
 {/* INITIAL STATE */}
@@ -34,10 +39,15 @@ const initialState = {
   //HOS Violations
   violations: [],
   missingCertifications: [],
+
   //Driver HOS state
   driverHOS: [],
+
   //Compliance dashboard state
-  driverEfficiencies: []
+  driverEfficiencies: [],
+
+  //Unassigned HOS state
+  unassignedHOS: []
 }
 
 {/* REDUCER */}
@@ -80,6 +90,7 @@ export default (state: ComplianceState = initialState, action): ComplianceState 
         missingCertifications: action.payload
       }
     }
+
     //Driver HOS reducer
     case ACTION_TYPES.GET_DRIVER_HOS: {
       return {
@@ -87,11 +98,20 @@ export default (state: ComplianceState = initialState, action): ComplianceState 
         driverHOS: action.payload
       }
     }
+
     //Compliance dashboard reducer
     case ACTION_TYPES.GET_DRIVER_EFFICIENCY: {
       return {
         ...state,
         driverEfficiencies: action.payload
+      };
+    }
+
+    //Unassigned HOS reducer
+    case ACTION_TYPES.GET_UNASSIGNED_HOS: {
+      return {
+        ...state,
+        unassignedHOS: action.payload
       };
     }
     default:
@@ -239,6 +259,25 @@ const driverHOSData = () => {
   return data;
 }
 
+//Unassigned HOS data
+const unassignedHOSData = () => {
+  let data = [];
+  for (let i = 0; i < 20; i++) {
+    let item = {
+      id: i + 2,
+      key: i + 2,
+      vehicle: "539",
+      unassignedTime: "48m 10s",
+      unassignedDistance: "46km",
+      segments: "2",
+      pending: "0",
+      annotated: "0",
+    };
+    data.push(item);
+  }
+  return data;
+}
+
 {/* ACTION */}
 //HOS Audit action
 export const getHOSAudit = () => async dispatch => {
@@ -293,6 +332,14 @@ export const getDriverEfficiency = () => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_DRIVER_EFFICIENCY,
     payload: driverEfficiencyData
+  });
+};
+
+//Unassigned HOS action
+export const getUnassignedHOS = () => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_UNASSIGNED_HOS,
+    payload: unassignedHOSData
   });
 };
 
