@@ -1,28 +1,20 @@
 import React from "react";
 // @material-ui/core components
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
+import Grid from '@material-ui/core/Grid';
+
 import Button from "components/CustomButtons/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
-import CloseIcon from "components/Icons/CloseIcon";
 import DeleteIcon from "components/Icons/DeleteIcon";
-import Chip from "@material-ui/core/Chip";
-import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
 import DotIcon from "components/Icons/DotIcon";
 import EditIcon from "components/Icons/EditIcon";
 import avatar from "assets/img/faces/avatar.jpg";
-
-import {getUserRoles} from "reducers/setting-org";
-import {IRootState} from 'reducers';
-import {connect} from 'react-redux';
+import ChipSelect from 'components/Chip/ChipSelect';
+import { getUserRoles } from "reducers/setting-org";
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
-  userRolesTitle: {
-    fontSize: 16,
-    color: "#25345C",
-    fontWeight: 700,
-    paddingRight: "8px !important"
-  },
   selected: {
     height: 24,
     width: "auto",
@@ -31,23 +23,6 @@ const useStyles = makeStyles((theme) => ({
     color: "#25345C !important",
     display: "flex",
     alignItems: "center",
-  },
-  clearAll: {
-    textTransform: "none",
-    color: "#8097D8",
-    background: "unset !important",
-    boxShadow: "unset !important",
-    fontSize: 14,
-    fontWeight: 700,
-    padding: 0,
-    "&:hover": {
-      color: "#25345C"
-    }
-  },
-  chipSelected: {
-    display: "flex",
-    alignItems: "center",
-    paddingLeft: "0px !important"
   },
   headContainer: {
     alignItems: "center",
@@ -131,6 +106,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function Users(props) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => {
     // Get list data
@@ -138,8 +114,8 @@ export function Users(props) {
   }, []);
 
   const [chipData, setChipData] = React.useState([
-    {key: 0, label: 'Standard Admin'},
-    {key: 1, label: 'Full admin'},
+    { key: 0, label: 'Standard Admin' },
+    { key: 1, label: 'Full admin' },
   ]);
 
   const handleDelete = (chipToDelete) => () => {
@@ -154,10 +130,10 @@ export function Users(props) {
     {
       title: 'User',
       key: 'user',
-      onHeaderCell: {className: classes.onHeaderCell},
+      onHeaderCell: { className: classes.onHeaderCell },
       render: user => (
         <div className={classes.alignItemsCenter}>
-          <div><img src={avatar} alt="user-avatar" className={classes.avatarImage}/></div>
+          <div><img src={avatar} alt="user-avatar" className={classes.avatarImage} /></div>
           <div className={classes.textName}>{user}</div>
         </div>
       ),
@@ -165,16 +141,16 @@ export function Users(props) {
     {
       title: 'E-Mail',
       key: 'email',
-      onHeaderCell: {className: classes.onHeaderCell},
+      onHeaderCell: { className: classes.onHeaderCell },
       render: email => <div className={classes.textEmail}>{email}</div>
     },
     {
       title: 'Roles',
       key: 'roles',
-      onHeaderCell: {className: classes.onHeaderCell},
+      onHeaderCell: { className: classes.onHeaderCell },
       render: roles => (
         <div className={classes.alignItemsCenter}>
-          <div><DotIcon className={classes.dotIcon}/></div>
+          <div><DotIcon className={classes.dotIcon} /></div>
           <div className={classes.textRoles}>{roles}</div>
         </div>
       )
@@ -182,20 +158,20 @@ export function Users(props) {
     {
       title: 'Access',
       key: 'access',
-      onHeaderCell: {className: classes.onHeaderCell},
+      onHeaderCell: { className: classes.onHeaderCell },
       render: access => <div className={classes.textAccess}>{access}</div>
     },
     {
       title: 'Actions',
       key: 'action',
-      onHeaderCell: {className: classes.onHeaderCell},
+      onHeaderCell: { className: classes.onHeaderCell },
       render: () => (
         <div className={classes.actionButton}>
           <Button justIcon color="twitter" simple>
-            <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+            <EditIcon className={classes.iconButton} style={{ color: "#ffffff", width: '22px', height: '22px' }} />
           </Button>
           <Button justIcon color="google" simple>
-            <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
+            <DeleteIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
           </Button>
         </div>
       )
@@ -205,32 +181,18 @@ export function Users(props) {
 
   return (
     <div>
-      {props.data.length > 0 && <Table
+      <Table
         renderTitle={
-          <Grid container className={classes.gridTitle}>
-            <Grid item xs={12} sm={12} md={6}>
-              <Grid container className={classes.headContainer}>
-                <Grid item xl={2} className={classes.userRolesTitle}> {chipData.length} selected for </Grid>
-                <Grid item xl={10} className={classes.chipSelected}>
-                  {chipData.map(data => (
-                    <Chip
-                      deleteIcon={<CloseIcon/>}
-                      label={data.label}
-                      onDelete={handleDelete(data)}
-                      className={classes.chips}
-                    />
-                  ))}
-                  {chipData.length > 0 ?
-                    (
-                      <Button onClick={handleClearAll} className={classes.clearAll}>
-                        Clear All
-                      </Button>
-                    ) : ""}
-                </Grid>
-              </Grid>
+          <Grid container justify="space-between" className={classes.gridTitle}>
+            <Grid>
+              <ChipSelect
+                data={chipData}
+                handleDelete={handleDelete}
+                handleClearAll={handleClearAll}
+              />
             </Grid>
-            <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
-              <ToolboxButton placeholder="Search for tag or email" showFilter showTrash/>
+            <Grid className={classes.headLeft}>
+              <ToolboxButton placeholder="Search for tag or email" showFilter showTrash />
             </Grid>
           </Grid>
         }
@@ -244,16 +206,18 @@ export function Users(props) {
           className: classes.tableRow
         }}
       />
-      }
     </div>
   );
 }
 
-export default connect(
-  ({settingOrg}: IRootState) => ({
+const mapStateToProps = ({ settingOrg }) => {
+  return {
     data: settingOrg.userRoles
-  }),
-  {
-    getUserRoles
-  }
-)(Users);
+  };
+};
+
+const mapDispatchToProps = {
+  getUserRoles
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Users);
