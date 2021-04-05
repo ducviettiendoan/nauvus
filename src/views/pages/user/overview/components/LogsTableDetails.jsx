@@ -54,8 +54,6 @@ const styles = {
     fontWeight: 400,
     fontSize: '16px',
     lineHeight: '24px',
-    marginTop: '14px',
-    paddingTop: '12px !important',
     color: '#25345C',
   },
   details: {
@@ -64,16 +62,13 @@ const styles = {
     textAlign: "left"
   },
   legendIcon: {
-    margin: " 15px 0 0 0px",
     color: "#E53935"
   },
   textDetails: {
     fontWeight: 400,
     fontSize: '16px',
     lineHeight: '24px',
-    marginTop: '14px',
     marginLeft: '8px',
-    paddingTop: '12px !important',
     color: '#25345C',
   },
   dropDownIconDate: {
@@ -100,6 +95,9 @@ const styles = {
   },
   onHeaderRow: {
     background: "#ECEEF0",
+  },
+  gridTitle: {
+    padding: "10px"
   },
 };
 
@@ -175,11 +173,11 @@ function LogsTableDetails(props) {
     {
       title: 'Date (EDT)',
       key: 'date',
+      showExpandable: true,
       onHeaderCell: { className: classes.onHeaderCell },
       render: date => (
         <div className={classes.details}>
           <div className={classes.textSub}>{date}</div>
-          <DropDownIcon className={classes.dropDownIconDate} />
         </div>
       )
     }
@@ -214,72 +212,77 @@ function LogsTableDetails(props) {
   }
 
   return (
-    <>
-      <CardBody>
-        {
-          dialog && <DialogComponent
-            open={true}
-            setDialog={setDialog}
-            handleSend={handleSendForm}
-            setSelectValue={setSelectValue}
-            childComponent={<LogsDialogContent inputValue={inputValue} setInputValue={setInputValue} />}
-            // open, setDialog, setSelectValue, childComponent, handleSend 
-          />
-        }
-        {
-          formError && <DialogError
-            open={true}
-            errorValue={inputValue}
-            setFormError={setFormError}
-          />
-        }
-        <GridContainer>
-          <GridItem xs={12} sm={12} md={6}>
-            <GridContainer className={classes.headContainer}>
-              <GridItem>
-                <Calendar />
-              </GridItem>
-            </GridContainer>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={6} className={classes.headLeft}>
-            <FormControl variant="outlined" className={classes.selectForm}>
-              <CustomSelect
-                listValues={listSelectValue}
-                selectValue={selectValue}
-                onChange={handleSelectChange}
-                placeholder={"Transfer Logs"}
-                customStyle={"logsSelect"}
-              />
-            </FormControl>
-            <Button
-              round
-              className={`btn-round-white w-101 h-41 ${classes.expandButton}`}
-            >
-              Expand All
-            </Button>
-            <Button
-              round
-              className="btn-round-white w-101 h-41"
-            >
-              Collapse All
-            </Button>
-          </GridItem>
-        </GridContainer>
-      </CardBody>
-
-      <div>
-        {props.data.length > 0 && <Table
-          columns={columns}
-          dataSource={props.data}
-          onHeaderRow={{
-            className: classes.onHeaderRow
-          }}
-          onBodyRow={{
-            className: classes.tableRow
-          }}
-        />}
-      </div>
-    </>
+    <Table
+      renderTitle={
+        <div className={classes.gridTitle}>
+          {dialog && (
+            <DialogComponent
+              open={true}
+              setDialog={setDialog}
+              handleSend={handleSendForm}
+              setSelectValue={setSelectValue}
+              childComponent={<LogsDialogContent inputValue={inputValue} setInputValue={setInputValue} />}
+            />
+          )}
+          {formError && (
+            <DialogError
+              open={true}
+              errorValue={inputValue}
+              setFormError={setFormError}
+            />
+          )}
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={6}>
+              <GridContainer className={classes.headContainer}>
+                <GridItem>
+                  <Calendar />
+                </GridItem>
+              </GridContainer>
+            </GridItem>
+            <GridItem xs={12} sm={12} md={6} className={classes.headLeft}>
+              <FormControl variant="outlined" className={classes.selectForm}>
+                <CustomSelect
+                  listValues={listSelectValue}
+                  selectValue={selectValue}
+                  onChange={handleSelectChange}
+                  placeholder={"Transfer Logs"}
+                  customStyle={"logsSelect"}
+                />
+              </FormControl>
+              <Button
+                round
+                className={`btn-round-white w-101 h-41 ${classes.expandButton}`}
+              >
+                Expand All </Button>
+              <Button
+                round
+                className="btn-round-white w-101 h-41"
+              > Collapse All </Button>
+            </GridItem>
+          </GridContainer>
+        </div>
+      }
+      columns={columns}
+      dataSource={props.data}
+      // rowSelection
+      expandedRowRender={(record) => {
+        return (
+          <div>
+            <p>{record.date}</p>
+            <p>{record.details}</p>
+            <p>{record.details}</p>
+            <p>{record.details}</p>
+            <p>{record.details}</p>
+          </div>
+        )
+      }}
+      onHeaderRow={{
+        className: classes.onHeaderRow
+      }}
+      onBodyRow={{
+        className: classes.tableRow
+      }}
+    />
   );
 }
 
