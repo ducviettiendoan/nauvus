@@ -10,6 +10,9 @@ export const ACTION_TYPES = {
 
   //HOS Audit transfer action type
   GET_HOS_AUDIT_TRANSFER: 'compliance/GET_HOS_AUDIT_TRANSFER',
+
+  //Compliance dashboard action type
+  GET_DRIVER_EFFICIENCY: 'compliance/GET_DRIVER_EFFICIENCY',
 }
 
 {/* INITIAL STATE */}
@@ -21,7 +24,10 @@ const initialState = {
   statusSummary: [],
 
   //HOS Audit transfer state
-  HOSAuditTransfer: []
+  HOSAuditTransfer: [],
+
+  //Compliance dashboard state
+  driverEfficiencies: []
 }
 
 {/* REDUCER */}
@@ -48,6 +54,14 @@ export default (state: ComplianceState = initialState, action): ComplianceState 
       return {
         ...state,
         HOSAuditTransfer: action.payload
+      };
+    }
+
+    //Compliance dashboard reducer
+    case ACTION_TYPES.GET_DRIVER_EFFICIENCY: {
+      return {
+        ...state,
+        driverEfficiencies: action.payload
       };
     }
     default:
@@ -120,6 +134,21 @@ const HOSAuditTransferData = () => {
   return data;
 }
 
+//Compliance dashboard
+const driverEfficiencyData = () => {
+  let data = [];
+  for (let i = 0; i < 2; i++) {
+    let item = {
+      id: i + 2,
+      key: i + 2,
+      driver: "Ali Singh",
+      hour: "2h 8min"
+    };
+    data.push(item);
+  }
+  return data;
+}
+
 {/* ACTION */}
 //HOS Audit action
 export const getHOSAudit = () => async dispatch => {
@@ -142,6 +171,14 @@ export const getHOSAuditTransfer = () => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_HOS_AUDIT_TRANSFER,
     payload: HOSAuditTransferData
+  });
+};
+
+//Compliance dashboard action
+export const getDriverEfficiency = () => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_DRIVER_EFFICIENCY,
+    payload: driverEfficiencyData
   });
 };
 
