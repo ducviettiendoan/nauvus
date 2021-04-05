@@ -117,8 +117,8 @@ const dumpActivityData = () => {
   let data = [];
   for (let i = 0; i < 15; i++) {
     let item = {
-      id: i + 2,
-      key: i + 2,
+      id: i,
+      key: i,
       shift: '0:00:00',
       driving: '0:00:00',
       inViolation: '0:00:00',
