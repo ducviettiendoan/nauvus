@@ -11,6 +11,8 @@ export const ACTION_TYPES = {
   //HOS Audit transfer action type
   GET_HOS_AUDIT_TRANSFER: 'compliance/GET_HOS_AUDIT_TRANSFER',
 
+  //Driver HOS action type
+  GET_DRIVER_HOS: 'compliance/GET_DRIVER_HOS',
   //Compliance dashboard action type
   GET_DRIVER_EFFICIENCY: 'compliance/GET_DRIVER_EFFICIENCY',
 }
@@ -26,6 +28,8 @@ const initialState = {
   //HOS Audit transfer state
   HOSAuditTransfer: [],
 
+  //Driver HOS state
+  driverHOS: [],
   //Compliance dashboard state
   driverEfficiencies: []
 }
@@ -57,6 +61,13 @@ export default (state: ComplianceState = initialState, action): ComplianceState 
       };
     }
 
+    //Driver HOS reducer
+    case ACTION_TYPES.GET_DRIVER_HOS: {
+      return {
+        ...state,
+        driverHOS: action.payload
+      }
+    }
     //Compliance dashboard reducer
     case ACTION_TYPES.GET_DRIVER_EFFICIENCY: {
       return {
@@ -134,6 +145,28 @@ const HOSAuditTransferData = () => {
   return data;
 }
 
+//Driver HOS data
+const driverHOSData = () => {
+  let data = [];
+  for (let i = 0; i < 20; i++) {
+    let item = {
+      id: i + 2,
+      key: i + 2,
+      driver: "Ali Singh",
+      dutyStatus: "Off",
+      timeCurrentStatus: "3:04",
+      vehicle: "1",
+      timeUntilBreak: "8:00",
+      driveRemaining: "7:41",
+      shiftRemaining: "7:41",
+      cycleRemaining: "69:07",
+      cycleTomorrow: "69:07",
+      drivingInVio: "1"
+    };
+    data.push(item);
+  }
+  return data;
+}
 //Compliance dashboard
 const driverEfficiencyData = () => {
   let data = [];
@@ -148,6 +181,7 @@ const driverEfficiencyData = () => {
   }
   return data;
 }
+
 
 {/* ACTION */}
 //HOS Audit action
@@ -174,6 +208,13 @@ export const getHOSAuditTransfer = () => async dispatch => {
   });
 };
 
+//DriverHOS action
+export const getDriverHOS = () => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_DRIVER_HOS,
+    payload: driverHOSData
+  })
+}
 //Compliance dashboard action
 export const getDriverEfficiency = () => async dispatch => {
   dispatch({

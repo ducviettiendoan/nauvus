@@ -1,64 +1,148 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { useState } from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import MenuItem from "@material-ui/core/MenuItem";
-// @material-ui/icons
-
-// core components
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import { FormControl, Grid, Icon, IconButton, Select } from "@material-ui/core";
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
-import { MoreHoriz } from "@material-ui/icons";
-import Button from "components/CustomButtons/Button.js";
-import DropDownIcon from "components/Icons/DropDownIcon";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import FilterIcon from "components/Icons/FilterIcon";
-import ColumnIcon from "components/Icons/ColumnIcon";
-
-import CircleIcon from "components/Icons/CircleIcon";
+import {makeStyles} from "@material-ui/core/styles";
+import Button from "components/CustomButtons/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
+import CloseIcon from "components/Icons/CloseIcon";
+import Chip from "@material-ui/core/Chip";
+import Grid from '@material-ui/core/Grid';
+import Table from "components/Table/TableV1";
+import {IRootState} from 'reducers';
+import {connect} from 'react-redux';
+import {getDriverHOS} from "reducers/compliance";
+import GridContainer from "components/Grid/GridContainer";
+import GridItem from "components/Grid/GridItem";
 import Calendar from "components/Calendar/Calendar";
-import BootstrapTable from "react-bootstrap-table-next";
-import GenPaginationV1 from "components/Pagination/GenPaginationV1";
+import LiveIconWhite from "components/Icons/LiveIconWhite";
+import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
+import CircleIcon from "components/Icons/CircleIcon";
 
-const styles = {
-  moreAction: {
-    background: "#FFFFFF !important",
-    border: "1px solid #ECEEF0 !important",
-    marginLeft: "-10px",
-    marginRight: "5px"
-  },
-  manageColumnButton: {
-    textTransform: "none",
-    fontSize: "14px",
+const useStyles = makeStyles((theme) => ({
+  userRolesTitle: {
+    fontSize: 16,
     color: "#25345C",
-    border: "1px solid #C4C4C4 !important",
-    borderRadius: "32px !important",
-    maxWidth: "180px !important",
-    minWidth: "180px !important",
-    height: "40px",
-    position: "absolute",
-    right: "10px",
-    marginRight: "10px",
-    alignItems: "center !important",
+    fontWeight: 700,
+    paddingRight: "8px !important"
   },
-  filterIcon: {
-    marginTop: '10px !important',
-    marginRight: '0 !important'
+  selected: {
+    height: 24,
+    width: "auto",
+    background: "#ECEEF0 !important",
+    borderRadius: 28,
+    color: "#25345C !important",
+    display: "flex",
+    alignItems: "center",
   },
-  headerRight: {
-    textAlign: "right",
+  clearAll: {
+    textTransform: "none",
+    color: "#8097D8",
+    background: "unset !important",
+    boxShadow: "unset !important",
+    fontSize: 14,
+    fontWeight: 700,
+    padding: 0,
+    "&:hover": {
+      color: "#25345C"
+    }
+  },
+  chipSelected: {
+    display: "flex",
+    alignItems: "center",
+    paddingLeft: "0px !important"
+  },
+  headContainer: {
+    alignItems: "center",
+    textAlign: "left",
+    marginTop: "8px"
+  },
+  headLeft: {
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
-    paddingBottom: "20px !important",
-    paddingRight: "0px !important",
+    "& > div": {
+      marginBottom: "0 !important",
+      marginRight: 8
+    }
+  },
+  textName: {
+    fontWeight: 'bold',
+    fontSize: '16px',
+    lineHeight: '24px',
+    color: '#25345C',
+    paddingLeft: "12px"
+  },
+  textEmail: {
+    fontSize: '16px',
+    lineHeight: '21px',
+    color: "#25345C",
+    fontWeight: 400
+  },
+  chips: {
+    fontWeight: 400,
+    background: "#ECEEF0",
+    color: "#25345C",
+    fontSize: "12px",
+    marginRight: 8
+  },
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
+    },
+  },
+  onHeaderRow: {
+    background: "#ECEEF0",
+  },
+  gridTitle: {
+    padding: "20px"
+  },
+  onHeaderCellFirst: {
+    fontWeight: 700,
+    color: "#25345C",
+    paddingLeft: "28px"
+  },
+  onHeaderCellNext: {
+    fontWeight: 700,
+    color: "#25345C",
+  },
+  alignItemsCenter: {
+    display: "flex",
+    alignItems: "center",
+  },
+  topHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 15
+  },
+  topHeaderTitle: {
+    textAlign: "left",
+    fontWeight: 700,
+    fontSize: 18,
+    color: "#25345C",
+    padding: "0 16px !important"
+  },
+  topHeaderButton: {
+    textAlign: "right !important",
+    display: "flex",
+    alignItems: "center"
+  },
+  textStatus: {
+    fontSize: '14px',
+    lineHeight: '24px',
+    paddingLeft: "0px !important",
+    color: "#27AE60",
+    background: "rgba(39, 174, 96, 0.1)",
+    borderRadius: 23,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontWeight: 700,
+    width: "53px",
+    height: "41px"
+  },
+  moreAction: {
+    background: "#FFFFFF !important",
+    border: "1px solid #ECEEF0 !important"
   },
   hosData: {
     display: "flex",
@@ -66,410 +150,97 @@ const styles = {
     textAlign: "left",
     fontSize: 14,
     fontWeight: 400,
-    color: "#25345C"
-  },
-  buttonSearch: {
-    border: "1px solid #C4C4C4 !important",
-  },
-  selectForm: {
-    width: "100%",
-    height: "44px",
-    background: "#FFFFFF",
-    boxSizing: "border-box",
-    borderRadius: "20px",
-    padding: "0x !important",
-    border: "1px solid #ECEEF0 !important",
-    "&::before": {
-      borderBottom: "0px",
-    },
-    "& > select:focus": {
-      backgroundColor: "#FFFFFF !important",
-    },
-    "&:hover": {
-      borderBottom: "0px",
-    },
-    marginRight: 15,
-  },
-  select: {
-    color: "#25345C",
-    fontWeight: 700,
-    borderStyle: "none",
-    borderWidth: 2,
-    marginRight: 15,
-    paddingTop: 14,
-    paddingBottom: 15,
-    "&:focus": {
-      borderRadius: 12,
-      backgroundColor: "white",
-      borderColor: "#B4B4B4",
-    },
-  },
-
-  dropDownIcon: {
-    color: "#C4C4C4",
-    cursor: "pointer",
-    position: "absolute",
-    right: 5,
-  },
-  textName: {
-    fontWeight: "bold",
-    fontSize: "16px",
-    lineHeight: "24px",
-    marginTop: "14px",
-    color: "#25345C",
-    marginLeft: "24px",
-    paddingTop: "12px !important",
-  },
-  textSub: {
-    fontWeight: 400,
-    fontSize: "16px",
-    lineHeight: "24px",
-    marginTop: "14px",
-    marginLeft: "24px",
-    paddingTop: "12px !important",
     color: "#25345C",
   },
-  textTags: {
-    lineHeight: "24px",
-    marginTop: "16px",
-    marginBottom: "15px",
-    marginLeft: "24px",
-    padding: "12px 14px",
-    color: "white",
-    background: "#25345C",
-    borderRadius: 27,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontWeight: 700,
-    width: 40,
-    height: "41px",
-    fontSize: "16px",
-  },
-  calendar: {
-    marginLeft: "8px !important",
-    marginRight: "9px !important",
-  },
-  button:{
-    background:" #fff !important",
-    borderRadius: "28px !important",
-    textTransform: "initial !important",
-    fontSize: "13px !important",
-    lineHeight: "17px !important",
-    fontStyle: "normal!important",
-    fontWeight: "bold!important",
-    color: "#25345C!important",
-    boxShadow: "none !important",
-    border: "1px solid #ECEEF0 !important",
-    width: "100px !important",
-  },
-  manageColumnButton: {
-    fontWeight: "700",
-    textTransform: "none",
-    fontSize: "14px",
-    color: "#25345C",
-    border: "1px solid #C4C4C4 !important",
-    borderRadius: "32px !important",
-    maxWidth: "180px !important",
-    minWidth: '180px !important',
-    height: "42px",
-    position: "absolute",
-    right: "10px",
-    marginRight: "10px",
-    alignItems: "center !important",
-  },
+}));
 
-  filterButtonText1: {
-    fontWeight: "700",
-    textTransform: "none",
-    fontSize: "14px",
-    color: "#25345C",
-    border: "1px solid #C4C4C4 !important",
-    borderRadius: "32px !important",
-    width: "97px !important",
-    minWidth: '100px !important',
-    height: "42px",
-    position: "absolute",
-    right: "106px",
-    marginRight: "106px",
-    alignItems: "center !important"
-  },
-};
-
-
-const dumpData = [
-  {
-    id: 1,
-    driver: "Ali Singh",
-    dutyStatus: "OFF",
-    timeInCurrentStatus: "3:04",
-    vihicle: "1",
-    timeUntilBreak: "8:00",
-    driveRemaining: "7:41",
-    shiftRemaining: "7:41",
-    cycleRemaining: "69:07",
-    cycleTomorrow: "69:07",
-    drivingInViolation: "1",
-  },
-  {
-    id: 2,
-    driver: "Ali Singh",
-    dutyStatus: "OFF",
-    timeInCurrentStatus: "3:04",
-    vihicle: "1",
-    timeUntilBreak: "8:00",
-    driveRemaining: "7:41",
-    shiftRemaining: "7:41",
-    cycleRemaining: "69:07",
-    cycleTomorrow: "69:07",
-    drivingInViolation: "1",
-  },
-  {
-    id: 3,
-    driver: "Ali Singh",
-    dutyStatus: "OFF",
-    timeInCurrentStatus: "3:04",
-    vihicle: "1",
-    timeUntilBreak: "8:00",
-    driveRemaining: "7:41",
-    shiftRemaining: "7:41",
-    cycleRemaining: "69:07",
-    cycleTomorrow: "69:07",
-    drivingInViolation: "1",
-  },
-  {
-    id: 4,
-    driver: "Ali Singh",
-    dutyStatus: "OFF",
-    timeInCurrentStatus: "3:04",
-    vihicle: "1",
-    timeUntilBreak: "8:00",
-    driveRemaining: "7:41",
-    shiftRemaining: "7:41",
-    cycleRemaining: "69:07",
-    cycleTomorrow: "69:07",
-    drivingInViolation: "1",
-  },
-  {
-    id: 5,
-    driver: "Ali Singh",
-    dutyStatus: "OFF",
-    timeInCurrentStatus: "3:04",
-    vihicle: "1",
-    timeUntilBreak: "8:00",
-    driveRemaining: "7:41",
-    shiftRemaining: "7:41",
-    cycleRemaining: "69:07",
-    cycleTomorrow: "69:07",
-    drivingInViolation: "1",
-  },
-  {
-    id: 6,
-    driver: "Ali Singh",
-    dutyStatus: "OFF",
-    timeInCurrentStatus: "3:04",
-    vihicle: "1",
-    timeUntilBreak: "8:00",
-    driveRemaining: "7:41",
-    shiftRemaining: "7:41",
-    cycleRemaining: "69:07",
-    cycleTomorrow: "69:07",
-    drivingInViolation: "1",
-  },
-  {
-    id: 7,
-    driver: "Ali Singh",
-    dutyStatus: "OFF",
-    timeInCurrentStatus: "3:04",
-    vihicle: "1",
-    timeUntilBreak: "8:00",
-    driveRemaining: "7:41",
-    shiftRemaining: "7:41",
-    cycleRemaining: "69:07",
-    cycleTomorrow: "69:07",
-    drivingInViolation: "1",
-  },
-  {
-    id: 8,
-    driver: "Ali Singh",
-    dutyStatus: "OFF",
-    timeInCurrentStatus: "3:04",
-    vihicle: "1",
-    timeUntilBreak: "8:00",
-    driveRemaining: "7:41",
-    shiftRemaining: "7:41",
-    cycleRemaining: "69:07",
-    cycleTomorrow: "69:07",
-    drivingInViolation: "1",
-  },
-  {
-    id: 9,
-    driver: "Ali Singh",
-    dutyStatus: "OFF",
-    timeInCurrentStatus: "3:04",
-    vihicle: "1",
-    timeUntilBreak: "8:00",
-    driveRemaining: "7:41",
-    shiftRemaining: "7:41",
-    cycleRemaining: "69:07",
-    cycleTomorrow: "69:07",
-    drivingInViolation: "1",
-  },
-
-];
-
-const useStyles = makeStyles(styles);
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box p={3}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.any.isRequired,
-  value: PropTypes.any.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
-
-export default function DriverHOS() {
+export function DriverHOS(props) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
 
-  const handleChange = (event) => {
-    setSelectValue({ ...selectValue, [event.target.name]: event.target.value });
+  React.useEffect(() => {
+    // Get list data
+    props.getDriverHOS();
+  }, []);
+
+  const [chipData, setChipData] = React.useState([
+    {key: 0, label: 'Cycle Tomorrow'},
+    {key: 1, label: 'Cycle Remaining'},
+  ]);
+
+  const handleDelete = (chipToDelete) => () => {
+    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
   };
 
-  const [selectValue, setSelectValue] = React.useState({
-    selectA: "none",
-  });
+  const handleClearAll = () => {
+    setChipData([])
+  }
 
-  const menuProps = {
-    classes: {
-      paper: classes.paper,
-      list: classes.list,
+  const columns = [
+    {
+      title: 'Driver',
+      key: 'driver',
+      onHeaderCell: {className: classes.onHeaderCellFirst},
+      render: driver => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textName}>{driver}</div>
+        </div>
+      ),
     },
-    anchorOrigin: {
-      vertical: "bottom",
-      horizontal: "left",
+    {
+      title: 'Duty Status',
+      key: 'dutyStatus',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: dutyStatus => <div className={classes.textStatus}>{dutyStatus}</div>
     },
-    transformOrigin: {
-      vertical: "top",
-      horizontal: "left",
+    {
+      title: 'Time In Current Status',
+      key: 'timeCurrentStatus',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: timeCurrentStatus => <div className={classes.textEmail}>{timeCurrentStatus}</div>
     },
-    getContentAnchorEl: null,
-  };
-
-
-  const formatName = (cell, row) => {
-    return (
-      <>
-        <div className={classes.textName}>{cell}</div>
-      </>
-    );
-  };
-
-  const formatUserName = (cell, row) => {
-    return (
-      <>
-        <div className={classes.textTags}>{cell}</div>
-      </>
-    );
-  };
-
-  const formatTags = (cell, row) => {
-    return (
-      <>
-        <div className={classes.textSub}>{cell}</div>
-      </>
-    );
-  };
-
-  const formatPeerGroup = (cell, row) => {
-    return (
-      <>
-        <div className={classes.textSub}>{cell}</div>
-      </>
-    );
-  };
-
-  const formatPhone = (cell, row) => {
-    return (
-      <>
-        <div className={classes.textSub}>{cell}</div>
-      </>
-    );
-  };
-
-  const formatDLState = (cell, row) => {
-    return (
-      <>
-        <div className={classes.textSub}>{cell}</div>
-      </>
-    );
-  };
-
-  const formatDLNumber = (cell, row) => {
-    return (
-      <>
-        <div className={classes.textSub}>{cell}</div>
-      </>
-    );
-  };
-
-  const selectRow = {
-    mode: "checkbox",
-    clickToSelect: true,
-    style: { background: "linear-gradient(0deg,#ECEEF0,#ECEEF0)" },
-    classes: "customSelectRow",
-    selectionHeaderRenderer: ({ indeterminate, ...rest }) => (
-      <input
-        type="checkbox"
-        className={classes.indeterminateIcon}
-        ref={(input) => {
-          if (input) input.indeterminate = indeterminate;
-        }}
-        {...rest}
-      />
-    ),
-    selectionRenderer: ({ mode, ...rest }) => (
-      <input className={classes.checkBoxIcon} type={mode} {...rest} />
-    ),
-  };
-
-  const name = "selectA";
-  const listValues = [
-    "Needs Coaching",
-    "Needs Review",
-    "Needs Recognition",
-    "Coached",
-    "Reviewed",
-    "Regconized",
-    "Dismissed",
-  ];
-  const placeholder = "1.1 Weeks";
-  const selectValue1 = selectValue.selectA;
+    {
+      title: 'Vehicle',
+      key: 'vehicle',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: vehicle => <div className={classes.textEmail}>{vehicle}</div>
+    },
+    {
+      title: 'Time Until Break',
+      key: 'timeUntilBreak',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: timeUntilBreak => <div className={classes.textEmail}>{timeUntilBreak}</div>
+    },
+    {
+      title: 'Drive Remaining',
+      key: 'driveRemaining',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: driveRemaining => <div className={classes.textEmail}>{driveRemaining}</div>
+    },
+    {
+      title: 'Shift Remaining',
+      key: 'shiftRemaining',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: shiftRemaining => <div className={classes.textEmail}>{shiftRemaining}</div>
+    },
+    {
+      title: 'Cycle Remaining',
+      key: 'cycleRemaining',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: cycleRemaining => <div className={classes.textEmail}>{cycleRemaining}</div>
+    },
+    {
+      title: 'Cycle Tomorrow',
+      key: 'cycleTomorrow',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: cycleTomorrow => <div className={classes.textEmail}>{cycleTomorrow}</div>
+    },
+    {
+      title: 'Driving In Violation (Today)',
+      key: 'drivingInVio',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: drivingInVio => <div className={classes.textEmail}>{drivingInVio}</div>
+    }
+  ]
 
   return (
     <div>
@@ -477,214 +248,90 @@ export default function DriverHOS() {
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
-              <Card testimonial>
-                <CardBody>
-                  <GridContainer
-                    style={{ padding: "0 16px", alignItems: "center" }}
-                  >
-                    <GridItem
-                      xs={3}
-                      sm={3}
-                      md={3}
-                      className={classes.searchBar}
-                    >
-                      <GridContainer justifyContent={"start"}>
-                        <GridItem
-                          xs={6}
-                          sm={6}
-                          md={6}
-                          className={classes.hosData}
-                        >
-                          <CircleIcon
-                            style={{
-                              color: "FF808B",
-                              fontSize: 30,
-                              marginTop: 18,
-                            }}
-                          />
-                          <div>In Violation</div>
-                        </GridItem>
-                        <GridItem
-                          xs={6}
-                          sm={6}
-                          md={6}
-                          className={classes.hosData}
-                        >
-                          <CircleIcon
-                            style={{
-                              color: "E5B435",
-                              fontSize: 30,
-                              marginTop: 18,
-                            }}
-                          />
-                          <div>Nearing violation</div>
-                        </GridItem>
-                      </GridContainer>
+              <GridContainer className={classes.topHeader}>
+                <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
+                  <GridContainer justifyContent={"start"}>
+                    <GridItem className={classes.hosData}>
+                      <CircleIcon fill={"#FF808B"}/>
+                      <div>In Violation</div>
                     </GridItem>
-                    <GridItem
-                      xs={9}
-                      sm={9}
-                      md={9}
-                      className={classes.headerRight}
-                    >
-                      <FormControl variant="outlined">
-                        <Select
-                          className={classes.selectForm}
-                          fullWidth
-                          disableUnderline
-                          classes={{ root: classes.select }}
-                          MenuProps={menuProps}
-                          IconComponent={() => (
-                            <DropDownIcon className={classes.dropDownIcon} />
-                          )}
-                          value={selectValue1}
-                          onChange={handleChange}
-                          name={name}
-                        >
-                          {selectValue1 === "none" && (
-                            <option
-                              value="none"
-                              disabled
-                              style={{ display: "none" }}
-                            >
-                              {placeholder}
-                            </option>
-                          )}
-                          {listValues.map((value, i) => (
-                            <MenuItem key={i} value={i}>
-                              {value}
-                            </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-
-                      <FormControl
-                        variant="outlined"
-                        className={classes.calendar}
-                      >
-                        <Calendar />
-                      </FormControl>
-
-                      <Button
-                        color="white"
-                        aria-label="edit"
-                        justIcon
-                        round
-                        className={`btn-36 ${classes.moreAction}`}
-                    
-                      >
-                        <MoreHoriz />
-                      </Button>
-                        
-                      <FormControl variant="outlined">  
-                        <Button round className="btn-round-green">
-                          Live
-                        </Button>
-                      </FormControl>
-                    
+                    <GridItem className={classes.hosData}>
+                      <CircleIcon fill={"#E5B435"}/>
+                      <div>Nearing violation</div>
                     </GridItem>
                   </GridContainer>
-
-                  <Grid container spacing={3} justifyContent="space-between">
-                    <Grid
-                      item
-                      xs={6}
-                      style={{ display: "flex", justifyContent: "flex-start" }}
-                    >
-                 
-                      <ToolboxButton placeholder={"Search Drivers"} />
-                    </Grid>
-
-                      <Grid item xs={6} style={{ textAlign: "right" }}>
-                        <GridItem xs={6}>
-                          <IconButton className={classes.manageColumnButton}>
-                            <ColumnIcon className={classes.filterIcon} />
-                            Manage Column
-                          </IconButton>
-                        </GridItem>
-
-                        <GridItem xs={6}>
-                          <IconButton className={classes.filterButtonText1}>
-                            <FilterIcon className={classes.filterIcon} />
-                            Filter
-                          </IconButton>
-                        </GridItem>
-                      </Grid>
-                  </Grid>
-                </CardBody>
-
-                <ToolkitProvider
-                  data={dumpData}
-                  columns={[
-                    {
-                      dataField: "driver",
-                      text: "Driver",
-                      formatter: formatName,
-                    },
-                    {
-                      dataField: "dutyStatus",
-                      text: "Duty Status",
-                      formatter: formatUserName,
-                    },
-                    {
-                      dataField: "timeInCurrentStatus",
-                      text: "Time In Current Status",
-                      formatter: formatTags,
-                    },
-                    {
-                      dataField: "vihicle",
-                      text: "Vihicle",
-                      formatter: formatPeerGroup,
-                    },
-                    {
-                      dataField: "timeUntilBreak",
-                      text: "Time Until Break",
-                      formatter: formatPhone,
-                    },
-                    {
-                      dataField: "driveRemaining",
-                      text: "Drive Remaining",
-                      formatter: formatDLState,
-                    },
-                    {
-                      dataField: "shiftRemaining",
-                      text: "Shift Remaining",
-                      formatter: formatDLNumber,
-                    },
-                    {
-                      dataField: "cycleRemaining",
-                      text: "Cycle Remaining",
-                      formatter: formatDLNumber,
-                    },
-                    {
-                      dataField: "cycleTomorrow",
-                      text: "Cycle Tomorrow",
-                      formatter: formatDLNumber,
-                    },
-                    {
-                      dataField: "drivingInViolation",
-                      text: "Driving In Violation",
-                      formatter: formatDLNumber,
-                    },
-                  ]}
-                >
-                  {(props) => (
-                    <div className="table table-settings">
-                      <BootstrapTable
-                        {...props.baseProps}
-                        bootstrap4={true}
-                        bordered={false}
-                        keyField="id"
-                      />
-                    </div>
-                  )}
-                </ToolkitProvider>
-              </Card>
+                </GridItem>
+                <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
+                  <Calendar placeholder="Day"/>
+                  <Button
+                    color="white"
+                    aria-label="edit"
+                    justIcon
+                    round
+                    className={`btn-36 ${classes.moreAction} mr-2`}
+                  >
+                    <MoreHorizontalIcon/>
+                  </Button>
+                  <Button round className="btn-round-green w-84">
+                    <LiveIconWhite/>
+                    Live
+                  </Button>
+                </GridItem>
+              </GridContainer>
             </GridItem>
           </GridContainer>
-          <GenPaginationV1 total={29} page={1} size={10}/>
+          <div>
+            {props.data.length > 0 && <Table
+              renderTitle={
+                <Grid container className={classes.gridTitle}>
+                  <Grid item xs={12} sm={12} md={6}>
+                    <Grid container className={classes.headContainer}>
+                      <Grid item xl={2} className={classes.userRolesTitle}> {chipData.length} selected for </Grid>
+                      <Grid item xl={10} className={classes.chipSelected}>
+                        {chipData.map(data => (
+                          <Chip
+                            deleteIcon={<CloseIcon/>}
+                            label={data.label}
+                            onDelete={handleDelete(data)}
+                            className={classes.chips}
+                          />
+                        ))}
+                        {chipData.length > 0 ?
+                          (
+                            <Button onClick={handleClearAll} className={classes.clearAll}>
+                              Clear All
+                            </Button>
+                          ) : ""}
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
+                    <ToolboxButton placeholder="Search driver" showFilter showColumn/>
+                  </Grid>
+                </Grid>
+              }
+              columns={columns}
+              dataSource={props.data}
+              onHeaderRow={{
+                className: classes.onHeaderRow
+              }}
+              onBodyRow={{
+                className: classes.tableRow
+              }}
+            />
+            }
+          </div>
         </GridItem>
       </GridContainer>
     </div>
   );
 }
+
+export default connect(
+  ({compliance}: IRootState) => ({
+    data: compliance.driverHOS
+  }),
+  {
+    getDriverHOS
+  }
+)(DriverHOS);
