@@ -11,6 +11,7 @@ import settingFleet, { SettingFleetState } from './setting-fleet';
 import settingLinkSharing, { SettingLinkSharingState } from "./setting-link-sharing";
 import settingDeveloper, { SettingDeveloperState } from "./setting-developer";
 import fuelEnergy, {FuelEnergyState} from './fuel-energy';
+import compliance, {ComplianceState} from "./compliance";
 
 export interface IRootState {
   readonly authentication: AuthenticationState;
@@ -24,6 +25,7 @@ export interface IRootState {
   readonly settingLinkSharing: SettingLinkSharingState;
   readonly settingDeveloper: SettingDeveloperState;
   readonly fuelEnergy: FuelEnergyState;
+  readonly compliance: ComplianceState
 }
 
 const rootReducer = combineReducers<IRootState>({
@@ -37,7 +39,8 @@ const rootReducer = combineReducers<IRootState>({
   settingFleet,
   settingLinkSharing,
   settingDeveloper,
-  fuelEnergy
+  fuelEnergy,
+  compliance
 });
 
 export default rootReducer;
