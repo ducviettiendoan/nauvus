@@ -22,10 +22,11 @@ import styles from "assets/jss/material-dashboard-pro-react/layouts/overviewStyl
 import Loading from "components/Loading/Loading";
 import { connect } from 'react-redux';
 import { getUserInfo } from '../reducers/authentication';
-import { setOpenDrawer } from '../reducers/overview';
+import {setOpenDrawer, setOpenDriverDetails} from '../reducers/overview';
 import { IRootState } from '../reducers';
 import Button from '@material-ui/core/Button';
 import VehicleSideBar from "views/pages/user/overview/components/VehicleSideBar";
+import {ExtraDriverDetailsSideBar} from "../views/pages/user/overview/components/ExtraDriverDetailsSideBar";
 
 var ps;
 
@@ -219,6 +220,47 @@ export function Overview(props) {
     )
   }
 
+  const renderDriverDetailsContent = () => {
+    return (
+      <>
+        <div className="layout-container">
+          <div className={classes.root}>
+            <Drawer
+              className={classes.drawer}
+              variant="persistent"
+              anchor="left"
+              open={props.openDriverDetails}
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+            >
+              <ExtraDriverDetailsSideBar />
+            </Drawer>
+            <main
+              className={clsx(classes.content, {
+                [classes.contentShift]: props.openDriverDetails,
+              })}
+            >
+              <AdminNavbar
+                sidebarMinimize={sidebarMinimize.bind(this)}
+                miniActive={miniActive}
+                brandText={getActiveRoute(routes)}
+                handleDrawerToggle={handleDrawerToggle}
+                {...rest}
+              />
+              <div style={{ position: 'relative'}}>
+                <Switch>
+                  {getRoutes(routes)}
+                  <Redirect from="/o" to="/o/drivers" />
+                </Switch>
+              </div>
+            </main>
+          </div>
+        </div>
+      </>
+    )
+  }
+
   const redirectLogin = () => {
     history.push("/auth/sign-in");
   }
@@ -250,10 +292,12 @@ export function Overview(props) {
                       <div id="main">
                         <div className="extraSidebar">div1</div>
                         <div className="extraContainer">{ renderDataContent() }</div>
+                        <div className="extraContainer">{ renderDriverDetailsContent() }</div>
                       </div>
                     </> :
                     <>
                       { renderDataContent() }
+                      { renderDriverDetailsContent() }
                     </>
                   }
                 </> :
@@ -276,10 +320,12 @@ export default connect(
   ({ authentication, overview }: IRootState) => ({
     isAuthenticated: authentication.isAuthenticated,
     user: authentication.user,
-    openDrawer : overview.openDrawer
+    openDrawer : overview.openDrawer,
+    openDriverDetails : overview.openDriverDetails
   }),
   {
     getUserInfo,
-    setOpenDrawer
+    setOpenDrawer,
+    setOpenDriverDetails
   }
 )(Overview);
