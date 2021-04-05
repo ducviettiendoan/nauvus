@@ -9,15 +9,12 @@ import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
 import {IRootState} from 'reducers';
 import {connect} from 'react-redux';
-import {getHOSAuditTransfer} from "reducers/compliance";
+import {getMissingCertifications, getViolations} from "reducers/compliance";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
-import Calendar from "components/Calendar/Calendar";
-import LiveIconWhite from "components/Icons/LiveIconWhite";
-import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
 
 const useStyles = makeStyles((theme) => ({
-  chipOption: {
+  userRolesTitle: {
     fontSize: 16,
     color: "#25345C",
     fontWeight: 700,
@@ -70,6 +67,12 @@ const useStyles = makeStyles((theme) => ({
     color: '#25345C',
     paddingLeft: "12px"
   },
+  textBold: {
+    fontSize: '16px',
+    lineHeight: '21px',
+    color: "#25345C",
+    fontWeight: 700,
+  },
   chips: {
     fontWeight: 400,
     background: "#ECEEF0",
@@ -99,9 +102,7 @@ const useStyles = makeStyles((theme) => ({
   },
   alignItemsCenter: {
     display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-start",
-    justifyContent: "center"
+    alignItems: "center",
   },
   topHeader: {
     display: "flex",
@@ -125,46 +126,14 @@ const useStyles = makeStyles((theme) => ({
     background: "#FFFFFF !important",
     border: "1px solid #ECEEF0 !important"
   },
-  textRequestDate: {
-    fontSize: '16px',
-    lineHeight: '21px',
-    color: "#25345C",
-    fontWeight: 700,
-  },
-  textNormal: {
-    fontSize: '16px',
-    lineHeight: '21px',
-    color: "#25345C",
-    fontWeight: 400,
-  },
-  textBold: {
-    fontSize: '16px',
-    lineHeight: '21px',
-    color: "#25345C",
-    fontWeight: 700,
-  },
-  textStatus: {
-    fontSize: '14px',
-    lineHeight: '24px',
-    paddingLeft: "0px !important",
-    color: "#27AE60",
-    background: "rgba(39, 174, 96, 0.1)",
-    borderRadius: 23,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontWeight: 700,
-    width: "90px",
-    height: "41px"
-  },
 }));
 
-export function HOSAuditTransfer(props) {
+export function MissingCertifications(props) {
   const classes = useStyles();
 
   React.useEffect(() => {
     // Get list data
-    props.getHOSAuditTransfer();
+    props.getMissingCertifications();
   }, []);
 
   const [chipData, setChipData] = React.useState([
@@ -182,95 +151,58 @@ export function HOSAuditTransfer(props) {
 
   const columns = [
     {
-      title: 'Requested At',
-      key: 'requestedAt',
-      onHeaderCell: {className: classes.onHeaderCell},
-      render: requestedAt => (
-        <div className={classes.alignItemsCenter}>
-          <div className={classes.textRequestDate}>{requestedAt.date}</div>
-          <div className={classes.textNormal}>{requestedAt.time}</div>
-          <div className={classes.textNormal}>{requestedAt.service}</div>
-        </div>
-      ),
-    },
-    {
-      title: 'Status',
-      key: 'status',
-      onHeaderCell: {className: classes.onHeaderCellNext},
-      render: status => <div className={classes.textStatus}>{status}</div>
-    },
-    {
       title: 'Driver',
       key: 'driver',
-      onHeaderCell: {className: classes.onHeaderCellNext},
+      onHeaderCell: {className: classes.onHeaderCellFirst},
       render: driver => (
         <div className={classes.alignItemsCenter}>
-          <div className={classes.textNormal}>{driver.name}</div>
-          <div className={classes.textNormal}>{driver.driverID}</div>
+          <div className={classes.textName}>{driver}</div>
         </div>
       ),
     },
     {
-      title: 'Date Requested',
-      key: 'dateRequested',
+      title: 'Violations Type',
+      key: 'violationsType',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: dateRequested => (
-        <div className={classes.alignItemsCenter}>
-          <div className={classes.textBold}>{dateRequested.date_1}</div>
-          <div className={classes.textBold}>{dateRequested.date_2}</div>
-        </div>
-      ),
+      render: violationsType => <div className={classes.textEmail}>{violationsType}</div>
     },
     {
-      title: 'Comment',
-      key: 'comment',
+      title: 'Date',
+      key: 'date',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: comment => <div className={classes.textNormal}>{comment}</div>
+      render: date => <div className={classes.textEmail}>{date}</div>
     },
     {
-      title: 'Internal Tools',
-      key: 'internalTools',
+      title: 'Start',
+      key: 'start',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: tool => <div className={classes.textNormal}>{tool}</div>
-    }
+      render: start => <div className={classes.textBold}>{start}</div>
+    },
+    {
+      title: 'End',
+      key: 'end',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: end => <div className={classes.textBold}>{end}</div>
+    },
+    {
+      title: 'Duration',
+      key: 'duration',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: duration => <div className={classes.textBold}>{duration}</div>
+    },
   ]
 
   return (
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
-              <GridContainer className={classes.topHeader}>
-                <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                  135 Requests
-                </GridItem>
-                <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
-                  <Calendar placeholder="Day"/>
-                  <Button
-                    color="white"
-                    aria-label="edit"
-                    justIcon
-                    round
-                    className={`btn-36 ${classes.moreAction} mr-2`}
-                  >
-                    <MoreHorizontalIcon/>
-                  </Button>
-                  <Button round className="btn-round-green w-84">
-                    <LiveIconWhite/>
-                    Live
-                  </Button>
-                </GridItem>
-              </GridContainer>
-            </GridItem>
-          </GridContainer>
           <div>
             {props.data.length > 0 && <Table
               renderTitle={
                 <Grid container className={classes.gridTitle}>
                   <Grid item xs={12} sm={12} md={6}>
                     <Grid container className={classes.headContainer}>
-                      <Grid item xl={2} className={classes.chipOption}> {chipData.length} selected for </Grid>
+                      <Grid item xl={2} className={classes.userRolesTitle}> {chipData.length} selected for </Grid>
                       <Grid item xl={10} className={classes.chipSelected}>
                         {chipData.map(data => (
                           <Chip
@@ -290,7 +222,7 @@ export function HOSAuditTransfer(props) {
                     </Grid>
                   </Grid>
                   <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
-                    <ToolboxButton placeholder="Search request" showFilter showColumn/>
+                    <ToolboxButton placeholder="Search driver" showFilter showColumn/>
                   </Grid>
                 </Grid>
               }
@@ -313,9 +245,9 @@ export function HOSAuditTransfer(props) {
 
 export default connect(
   ({compliance}: IRootState) => ({
-    data: compliance.HOSAuditTransfer
+    data: compliance.missingCertifications
   }),
   {
-    getHOSAuditTransfer
+    getMissingCertifications
   }
-)(HOSAuditTransfer);
+)(MissingCertifications);

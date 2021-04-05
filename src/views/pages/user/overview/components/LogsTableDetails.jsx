@@ -2,21 +2,21 @@ import React, { useEffect, useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
 import Button from "components/CustomButtons/Button";
 import Calendar from "components/Calendar/Calendar";
 import CardBody from "components/Card/CardBody.js";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
 import DropDownIcon from "components/Icons/DropDownIcon";
-import BootstrapTable from "react-bootstrap-table-next";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import { Row } from "reactstrap";
-import LegendIcon from "../../../../../components/Icons/LegendIcon";
-import DialogComponent from "../../../../../components/Dialog/DialogComponent";
-import CustomSelect from "../../../../../components/CustomSelect/CustomSelect"
-import { getActivityLogsData } from "../../../../../reducers/overview"
+import LegendIcon from "components/Icons/LegendIcon";
+import DialogComponent from "components/Dialog/DialogComponent";
+import CustomSelect from "components/CustomSelect/CustomSelect"
+import { getActivityLogsData } from "reducers/overview"
 import { connect } from 'react-redux';
+import DialogError from "components/Dialog/DialogError";
+import Table from "components/Table/TableV1";
+import LogsDialogContent from "./LogsDialogContent";
+
 // @material-ui/icons
 // core components
 const styles = {
@@ -55,16 +55,16 @@ const styles = {
     fontSize: '16px',
     lineHeight: '24px',
     marginTop: '14px',
-    marginLeft: '24px',
     paddingTop: '12px !important',
     color: '#25345C',
   },
   details: {
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    textAlign: "left"
   },
   legendIcon: {
-    margin: " 15px 0 0 24px",
+    margin: " 15px 0 0 0px",
     color: "#E53935"
   },
   textDetails: {
@@ -80,7 +80,27 @@ const styles = {
     margin: "24px 0 0 8px",
     color: "#C4C4C4",
     cursor: "pointer"
-  }
+  },
+  gridTitle: {
+    padding: "20px"
+  },
+  onHeaderCell: {
+    fontWeight: "bold"
+  },
+  alignItemsCenter: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    justifyContent: "center",
+  },
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
+    },
+  },
+  onHeaderRow: {
+    background: "#ECEEF0",
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -88,55 +108,92 @@ const useStyles = makeStyles(styles);
 function LogsTableDetails(props) {
   const classes = useStyles();
 
+  // table data
   useEffect(() => {
     props.getActivityLogsData()
   }, [])
 
+  const columns = [
+    {
+      title: 'Shift',
+      key: 'shift',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: shift => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textSub}>{shift}</div>
+        </div>
+      ),
+    },
+    {
+      title: 'Driving',
+      key: 'driving',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: driving => <div className={classes.alignItemsCenter}>
+        <div className={classes.textSub}>{driving}</div>
+      </div>
+    },
+    {
+      title: 'In Violatiom',
+      key: 'inViolation',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: inViolation => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textSub}>{inViolation}</div>
+        </div>
+      )
+    },
+    {
+      title: 'From',
+      key: 'from',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: from => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textSub}>{from}</div>
+        </div>
+      )
+    },
+    {
+      title: 'To',
+      key: 'to',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: to => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textSub}>{to}</div>
+        </div>
+      )
+    },
+    {
+      title: 'Details',
+      key: 'details',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: details => <div className={classes.details}>
+        <LegendIcon className={classes.legendIcon} />
+        <div className={classes.textDetails}>{details}</div>
+      </div>
+
+    },
+    {
+      title: 'Date (EDT)',
+      key: 'date',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: date => (
+        <div className={classes.details}>
+          <div className={classes.textSub}>{date}</div>
+          <DropDownIcon className={classes.dropDownIconDate} />
+        </div>
+      )
+    }
+  ]
+
+  // dialog states
   const [dialog, setDialog] = React.useState(false);
+  const [formError, setFormError] = React.useState(false)
 
   const listSelectValue = ["Email to custom recipient", "FMCSA Audit Transfer", "Email to FMCSA"]
   const [selectValue, setSelectValue] = useState("none");
 
   const handleSelectChange = (event) => {
     setSelectValue(event.target.value)
-  }
-
-  const formatShift = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-  const formatDriving = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-  const formatInViolation = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-  const formatFrom = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-  const formatTo = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-  const formatDetails = (cell, row) => {
-    return <div className={classes.details}>
-      <LegendIcon className={classes.legendIcon} />
-      <div className={classes.textDetails}>{cell}</div>
-    </div>
-  }
-  const formatDate = (cell, row) => {
-    return <div className={classes.details}>
-      <div className={classes.textSub}>{cell}</div>
-      <DropDownIcon className={classes.dropDownIconDate} />
-    </div>
   }
 
   useEffect(() => {
@@ -150,6 +207,12 @@ function LogsTableDetails(props) {
     comment: ""
   })
 
+  const handleSendForm = () => {
+    if (!inputValue.email || !inputValue.comment) {
+      setFormError(true)
+    }
+  }
+
   return (
     <>
       <CardBody>
@@ -157,8 +220,17 @@ function LogsTableDetails(props) {
           dialog && <DialogComponent
             open={true}
             setDialog={setDialog}
-            inputValue={inputValue}
-            setInputValue={setInputValue}
+            handleSend={handleSendForm}
+            setSelectValue={setSelectValue}
+            childComponent={<LogsDialogContent inputValue={inputValue} setInputValue={setInputValue} />}
+            // open, setDialog, setSelectValue, childComponent, handleSend 
+          />
+        }
+        {
+          formError && <DialogError
+            open={true}
+            errorValue={inputValue}
+            setFormError={setFormError}
           />
         }
         <GridContainer>
@@ -194,57 +266,19 @@ function LogsTableDetails(props) {
           </GridItem>
         </GridContainer>
       </CardBody>
-      <ToolkitProvider
-        data={props.data}
-        keyField="_id"
-        columns={[
-          {
-            dataField: "shift",
-            text: "Shift",
-            formatter: formatShift
-          },
-          {
-            dataField: "driving",
-            text: "Driving",
-            formatter: formatDriving
-          },
-          {
-            dataField: "inViolation",
-            text: "In Violation",
-            formatter: formatInViolation
-          },
-          {
-            dataField: "from",
-            text: "From",
-            formatter: formatFrom
-          },
-          {
-            dataField: "to",
-            text: "To",
-            formatter: formatTo
-          },
-          {
-            dataField: "details",
-            text: "Details",
-            formatter: formatDetails
-          },
-          {
-            dataField: "date",
-            text: "Date ( EDT)",
-            formatter: formatDate
-          }
-        ]}
-      >
-        {props => (
-          <div className={`table table-settings ${classes.tableCustom} `}>
-            <BootstrapTable
-              {...props.baseProps}
-              bootstrap4={true}
-              bordered={false}
-            />
-          </div>
-        )}
-      </ToolkitProvider>
+
+      <div>
+        {props.data.length > 0 && <Table
+          columns={columns}
+          dataSource={props.data}
+          onHeaderRow={{
+            className: classes.onHeaderRow
+          }}
+          onBodyRow={{
+            className: classes.tableRow
+          }}
+        />}
+      </div>
     </>
   );
 }
