@@ -292,12 +292,10 @@ export function Overview(props) {
                       <div id="main">
                         <div className="extraSidebar">div1</div>
                         <div className="extraContainer">{ renderDataContent() }</div>
-                        <div className="extraContainer">{ renderDriverDetailsContent() }</div>
                       </div>
                     </> :
                     <>
                       { renderDataContent() }
-                      { renderDriverDetailsContent() }
                     </>
                   }
                 </> :
