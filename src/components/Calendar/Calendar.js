@@ -22,12 +22,16 @@ const styles = {
       height: 40,
       width: 40,
       border: "1px solid rgba(18, 18, 18, 0.1)",
+      background: "#FFFFFF"
     },
     marginTop: 8,
     padding: "5px 0px 0px 10px",
     height: 40,
     border: "1px solid rgba(18, 18, 18, 0.1)",
-    borderRadius: "20px"
+    borderRadius: "20px",
+    background: "#FFFFFF",
+    color: "#25345C !important"
+
   },
   calendarIcon: {
     color: "#25345C"
@@ -49,7 +53,7 @@ export default function Calendar(props) {
   return (
     <>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <Grid container justify="space-around" className="keyBoardDatePickerContainer">
+        <Grid container justify="flex-end" className="keyBoardDatePickerContainer">
           <KeyboardDatePicker
             className={classes.datePickerStyle}
             disableToolbar
@@ -60,10 +64,9 @@ export default function Calendar(props) {
             value={selectedDate}
             onChange={handleDateChange}
             keyboardIcon={<CalendarIcon className={classes.calendarIcon} />}
-            InputProps={{ disabled: true }}
-            // KeyboardButtonProps={{
-            //   'aria-label': 'change date',
-            // }}
+            InputProps={{
+              disableUnderline: true,
+            }}
           />
         </Grid>
       </MuiPickersUtilsProvider>
