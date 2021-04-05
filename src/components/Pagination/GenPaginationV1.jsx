@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Select from "@material-ui/core/Select";
 import Pagination from '@material-ui/lab/Pagination';
 import PaginationItem from '@material-ui/lab/PaginationItem';
@@ -65,8 +65,12 @@ export default function GenPaginationV1(props) {
   const [total, setTotal] = useState(props.total || 0);
   const [current, setCurrent] = useState(props.current || 1);
   const [pageSize, setPageSize] = useState(props.pageSize || 10);
-  const [showSizeChanger, setShowSizeChanger] = useState(props.showSizeChanger || false);
+  const [showSizeChanger] = useState(props.showSizeChanger || false);
   const [pageSizeOptions, setPageSizeOptions] = useState(props.pageSizeOptions || []);
+
+  useEffect(() => setCurrent(props.current),[props.current])
+  useEffect(() => setTotal(props.total),[props.total])
+  useEffect(() => setPageSize(props.pageSize),[props.pageSize])
 
   const onChange = (event, page) => {
     setCurrent(page);

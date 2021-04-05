@@ -1,58 +1,4 @@
-import {
-  cardTitle,
-  roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
-
 const complianceStyle = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0"
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem"
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px"
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px"
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px"
-    }
-  },
-  iconRose: {
-    color: roseColor
-  },
-  marginTop30: {
-    marginTop: "30px"
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px"
-    }
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  },
   gridCardContainer: {
     display: "flex",
     flexDirection: "row",
@@ -164,9 +110,75 @@ const complianceStyle = {
     lineHeight: '21px',
     color: '#25345C',
   },
-  onHeaderCell: {
-    fontWeight: "bold",
-    color: '#25345C',
+  onHeaderCellFirst: {
+    fontWeight: 700,
+    color: "#25345C",
+    paddingLeft: "28px"
+  },
+  onHeaderCellNext: {
+    fontWeight: 700,
+    color: "#25345C",
+  },
+  chips: {
+    fontWeight: 400,
+    background: "#ECEEF0",
+    color: "#25345C",
+    fontSize: "12px",
+    marginRight: 8
+  },
+  chipSelected: {
+    display: "flex",
+    alignItems: "center",
+    paddingLeft: "0px !important"
+  },
+  clearAll: {
+    textTransform: "none",
+    color: "#8097D8",
+    background: "unset !important",
+    boxShadow: "unset !important",
+    fontSize: 14,
+    fontWeight: 700,
+    padding: 0,
+    "&:hover": {
+      color: "#25345C"
+    }
+  },
+  selected: {
+    height: 24,
+    width: "auto",
+    background: "#ECEEF0 !important",
+    borderRadius: 28,
+    color: "#25345C !important",
+    display: "flex",
+    alignItems: "center",
+  },
+  userRolesTitle: {
+    fontSize: 16,
+    color: "#25345C",
+    fontWeight: 700,
+    paddingRight: "8px !important"
+  },
+  gridTitle: {
+    padding: "20px"
+  },
+  headContainer: {
+    alignItems: "center",
+    textAlign: "left",
+    marginTop: "8px"
+  },
+  headLeft: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    "& > div": {
+      marginBottom: "0 !important",
+      marginRight: 8
+    }
+  },
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
+    },
   },
 }
 
