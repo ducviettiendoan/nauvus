@@ -10,6 +10,10 @@ export const ACTION_TYPES = {
 
   //HOS Audit transfer action type
   GET_HOS_AUDIT_TRANSFER: 'compliance/GET_HOS_AUDIT_TRANSFER',
+
+  //HOS Violations action type
+  GET_VIOLATIONS: 'compliance/GET_VIOLATIONS',
+  GET_MISSING_CERTIFICATIONS: 'compliance/GET_MISSING_CERTIFICATIONS',
 }
 
 {/* INITIAL STATE */}
@@ -21,7 +25,11 @@ const initialState = {
   statusSummary: [],
 
   //HOS Audit transfer state
-  HOSAuditTransfer: []
+  HOSAuditTransfer: [],
+
+  //HOS Violations
+  violations: [],
+  missingCertifications: []
 }
 
 {/* REDUCER */}
@@ -48,6 +56,20 @@ export default (state: ComplianceState = initialState, action): ComplianceState 
       return {
         ...state,
         HOSAuditTransfer: action.payload
+      };
+    }
+
+    //HOS Violations reducer
+    case ACTION_TYPES.GET_VIOLATIONS: {
+      return {
+        ...state,
+        violations: action.payload
+      };
+    }
+    case ACTION_TYPES.GET_MISSING_CERTIFICATIONS: {
+      return {
+        ...state,
+        missingCertifications: action.payload
       };
     }
     default:
@@ -120,6 +142,43 @@ const HOSAuditTransferData = () => {
   return data;
 }
 
+//HOS Violations data
+const violationsData = () => {
+  let data = [];
+  for (let i = 0; i < 20; i++) {
+    let item = {
+      id: i + 2,
+      key: i + 2,
+      driver: "John Smith",
+      violationsType: "Missing Driver Certification",
+      date: "Aug 21, 2010",
+      start: "9:06AM",
+      end: "9:23AM",
+      duration: "17m 28s"
+    };
+    data.push(item);
+  }
+  return data;
+}
+
+const missingCertificationsData = () => {
+  let data = [];
+  for (let i = 0; i < 20; i++) {
+    let item = {
+      id: i + 2,
+      key: i + 2,
+      driver: "John Smith",
+      violationsType: "Missing Driver Certification",
+      date: "Aug 21, 2010",
+      start: "9:06AM",
+      end: "9:23AM",
+      duration: "17m 28s"
+    };
+    data.push(item);
+  }
+  return data;
+}
+
 {/* ACTION */}
 //HOS Audit action
 export const getHOSAudit = () => async dispatch => {
@@ -145,4 +204,17 @@ export const getHOSAuditTransfer = () => async dispatch => {
   });
 };
 
-
+//HOS Violations action
+//Violations
+export const getViolations = () => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_VIOLATIONS,
+    payload: violationsData
+  });
+};
+export const getMissingCertifications = () => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_MISSING_CERTIFICATIONS,
+    payload: missingCertificationsData
+  });
+};

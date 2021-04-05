@@ -2,7 +2,7 @@ import Overview from "views/pages/user/overview/Overview";
 import Alerts from "views/pages/user/alerts/Alerts";
 import ComplianceDashboard from "views/pages/user/compliance/ComplianceDashboard";
 import DriverHOS from "views/pages/user/compliance/DriverHOS";
-import HOSVialations from "views/pages/user/compliance/HOSVialations";
+import HOSVialations from "views/pages/user/compliance/HOSViolations";
 import UnassignedHOS from "views/pages/user/compliance/UnassignedHOS";
 import DriverHOSAudit from "views/pages/user/compliance/DriverHOSAudit";
 import DutyStatusSummary from "views/pages/user/compliance/DutyStatusSummary";
