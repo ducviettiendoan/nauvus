@@ -54,8 +54,8 @@ const ChipSelect = (props) => {
     <React.Fragment>
       {data.length > 0 && (
         <Grid container className={classes.headContainer}>
-          <Grid item xl={2} className={classes.userRolesTitle}> {data.length} selected for </Grid>
-          <Grid item xl={10} className={classes.chipSelected}>
+          <Grid item className={classes.userRolesTitle}> {data.length} selected for </Grid>
+          <Grid item className={classes.chipSelected}>
             {data.map(item => (
               <Chip
                 key={item.key}
