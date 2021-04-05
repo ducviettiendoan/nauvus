@@ -5,6 +5,7 @@ import Card from "components/Card/Card.js";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
 import TextField from "@material-ui/core/TextField";
+import Button from "components/CustomButtons/Button"
 
 
 const styles = {
@@ -34,7 +35,7 @@ const styles = {
     color: "#B4B4B4"
   },
   dialogBody: {
-    padding: "24px 16px"
+    padding: "0px 16px 24px 16px"
   },
   textFieldRoot: {
     fontWeight: 'normal',
@@ -43,6 +44,7 @@ const styles = {
     color: '#C4C4C4'
   },
   dialogButton: {
+    width: "100% !important",
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end"
@@ -50,14 +52,24 @@ const styles = {
   cancelButton: {
     background: "rgba(37, 52, 92, 0.1) !important",
     color: "#25345C !important",
-    marginRight: "8px !important"
+    marginRight: "8px !important",
+    textTransform: "none",
+    fontSize: "14px",
+    fontWeight: 700
   },
   sendButton: {
-    marginRight: "0px !important"
-  },
-  closeButton: {
-    position: 'absolute',
-    color: "#25345C",
+    marginRight: "0px !important",
+    background: "#25345C",
+    color: "#FFF",
+    textTransform: "none",
+    fontSize: "14px",
+    fontWeight: 700,
+    '&:hover': {
+      background: "#25345C !important",
+    },
+    '&:focus': {
+      backgroundColor: "#25345C !important"
+    }
   },
 };
 
@@ -66,7 +78,7 @@ const useStyles = makeStyles(styles);
 
 export default function LogsDialogContent(props) {
   const classes = useStyles();
-  const { inputValue, setInputValue } = props
+  const { inputValue, setInputValue, handleSendForm, setDialog, setSelectValue } = props
 
 
   const handleInputChange = (event) => {
@@ -76,17 +88,15 @@ export default function LogsDialogContent(props) {
     })
   }
 
+  const handleCloseDialog = () => {
+    setDialog(false)
+    if (setSelectValue) {
+      setSelectValue("none")
+    }
+  }
+
   return (
     <GridItem className={classes.dialogBg}>
-      <GridContainer className={classes.dialogHeader}>
-        <GridItem xs={12} className={classes.dialogTitle}>
-          Transfer ELD Records
-        </GridItem>
-        <GridItem xs={12} className={classes.dialogDate}>
-          Export HOS log report / Mar 29, 2021
-        </GridItem>
-      </GridContainer>
-
       <Card className={classes.dialogContent}>
         <GridContainer className={classes.dialogBody}>
           <GridItem xs={12}>
@@ -108,6 +118,17 @@ export default function LogsDialogContent(props) {
                 />
               </GridItem>
             ))}
+          </GridItem>
+          <GridItem className={classes.dialogButton}>
+            <Button round className="btn-round-active-2 mr-2" className={classes.cancelButton} onClick={handleCloseDialog} >
+              Cancel
+          </Button>
+            <Button
+              round
+              onClick={handleSendForm}
+              className="btn-round-active mr-2"
+              className={classes.sendButton}
+            > Send</Button>
           </GridItem>
         </GridContainer>
       </Card>
