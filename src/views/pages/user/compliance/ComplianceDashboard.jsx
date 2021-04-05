@@ -5,30 +5,41 @@ import {makeStyles} from "@material-ui/core/styles";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import CardBody from "components/Card/CardBody.js";
 import {Grid} from "@material-ui/core";
-import IconButton from '@material-ui/core/IconButton';
 import complianceStyle from './style/complianceStyle';
-import FilterIcon from "components/Icons/FilterIcon";
 import PieChartCard from "./compliance-card/PieChartCard";
-import SettingSearchBox from "components/SearchBox/SettingSearchBox";
-import Table from "../../../../components/Table/TableV1";
+import Table from "components/Table/TableV1";
+import {connect} from "react-redux";
+import {IRootState} from "reducers";
+import {getDriverEfficiency} from "reducers/compliance";
+import Chip from "@material-ui/core/Chip";
+import CloseIcon from "components/Icons/CloseIcon";
+import Button from "components/CustomButtons/Button";
+import ToolboxButton from "components/CustomButtons/ToolboxButton";
 
 const useStyles = makeStyles(complianceStyle);
 
-export default function ComplianceDashboard(props) {
+export function ComplianceDashboard(props) {
   const classes = useStyles();
 
-  const data = [
-    {id: 2, key: 2, driver: "Ali Singh", hour: "2h 8min"},
-    {id: 3, key: 3, driver: "Ali Singh", hour: "2h 8min"},
-  ]
+  const [chipData, setChipData] = React.useState([
+    {key: 0, label: 'Cycle Tomorrow'},
+    {key: 1, label: 'Cycle Remaining'},
+  ]);
+
+  const handleDelete = (chipToDelete) => () => {
+    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+  };
+
+  const handleClearAll = () => {
+    setChipData([])
+  }
 
   const columns = [
     {
       title: 'Driver',
       key: 'driver',
-      onHeaderCell: {className: classes.onHeaderCell},
+      onHeaderCell: {className: classes.onHeaderCellFirst},
       render: driver => (
         <div className={classes.alignItemsCenter}>
           <div className={classes.textName}>{driver}</div>
@@ -36,13 +47,18 @@ export default function ComplianceDashboard(props) {
       ),
     },
     {
-      title: 'Hours In Violation',
+      title: 'Hours in violation',
+
       key: 'hour',
-      onHeaderCell: {className: classes.onHeaderCell},
-      render: hour => <div className={classes.textHour}>{hour}</div>
-    },
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: hour => <div className={classes.textEmail}>{hour}</div>
+    }
   ]
 
+  React.useEffect(() => {
+    // Get list data
+    props.getDriverEfficiency();
+  }, []);
 
   return (
     <>
@@ -80,45 +96,65 @@ export default function ComplianceDashboard(props) {
               <PieChartCard
                 title={"Unassigned Segments"}
                 data={[
-                  {name: "Unassigned", value: 5},
-                  {name: "Managed", value: 95}
+                  {name: "Unassigned", value: 50},
+                  {name: "Managed", value: 50}
                 ]}
                 radio={["Hours", "Segments"]}
               />
             </Grid>
           </Grid>
-          <Table
-            renderTitle={
-              <CardBody>
-                <Grid
-                  container
-                  justify="space-between"
-                >
-                  <GridItem className={classes.searchBox} xs={4}>
-                    <SettingSearchBox placeholder="Search Drivers"/>
-                  </GridItem>
-                  
-                  <GridItem className={classes.filterButton}>
-                    <IconButton className={classes.filterButtonText1}>
-                      <FilterIcon className={classes.filterIcon} />
-                      Filter
-                    </IconButton>
-                  </GridItem>
-                  
+          <div>
+            {props.data.length > 0 && <Table
+              renderTitle={
+                <Grid container className={classes.gridTitle}>
+                  <Grid item xs={12} sm={12} md={6}>
+                    <Grid container className={classes.headContainer}>
+                      <Grid item xl={2} className={classes.userRolesTitle}> {chipData.length} selected for </Grid>
+                      <Grid item xl={10} className={classes.chipSelected}>
+                        {chipData.map(data => (
+                          <Chip
+                            deleteIcon={<CloseIcon/>}
+                            label={data.label}
+                            onDelete={handleDelete(data)}
+                            className={classes.chips}
+                          />
+                        ))}
+                        {chipData.length > 0 ?
+                          (
+                            <Button onClick={handleClearAll} className={classes.clearAll}>
+                              Clear All
+                            </Button>
+                          ) : ""}
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
+                    <ToolboxButton placeholder="Search driver" showFilter showColumn/>
+                  </Grid>
                 </Grid>
-              </CardBody>
+              }
+              columns={columns}
+              dataSource={props.data}
+              onHeaderRow={{
+                className: classes.onHeaderRow
+              }}
+              onBodyRow={{
+                className: classes.tableRow
+              }}
+            />
             }
-            columns={columns}
-            dataSource={data}
-            onHeaderRow={{
-              className: classes.onHeaderRow
-            }}
-            onBodyRow={{
-              className: classes.tableRow
-            }}
-          />
+          </div>
         </GridItem>
       </GridContainer>
     </>
   );
 }
+
+export default connect(
+  ({compliance}: IRootState) => ({
+    data: compliance.driverEfficiencies
+  }),
+  {
+    getDriverEfficiency
+  }
+)(ComplianceDashboard);
