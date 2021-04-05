@@ -9,14 +9,13 @@ import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
 import DropDownIcon from "components/Icons/DropDownIcon";
 import LegendIcon from "components/Icons/LegendIcon";
-import DialogComponent from "components/Dialog/DialogComponent";
+import CustomDialog from "components/CustomDialog/CustomDialog";
 import CustomSelect from "components/CustomSelect/CustomSelect"
 import { getActivityLogsData } from "reducers/overview"
 import { connect } from 'react-redux';
-import DialogError from "components/Dialog/DialogError";
 import Table from "components/Table/TableV1";
 import LogsDialogContent from "./LogsDialogContent";
-
+import LogsErrorContent from "./LogsErrorContent"
 // @material-ui/icons
 // core components
 const styles = {
@@ -98,6 +97,21 @@ const styles = {
   },
   gridTitle: {
     padding: "10px"
+  },
+  dialogHeader: {
+    textAlign: "center",
+    marginTop: "10px",
+    padding: "0px 0px 0px 0px !important"
+  },
+  dialogTitle: {
+    color: "#25345C",
+    fontWeight: "bold",
+    fontSize: 22,
+  },
+  dialogDate: {
+    fontWeight: "bold",
+    fontSize: 14,
+    color: "#B4B4B4"
   },
 };
 
@@ -286,9 +300,14 @@ function LogsTableDetails(props) {
   );
 }
 
-export default connect(
-  ({ overview }) => ({
+const mapStateToProps = ({ overview }) => {
+  return {
     data: overview.activityLogsData
-  }), {
+  };
+};
+
+const mapDispatchToProps = {
   getActivityLogsData
-})(LogsTableDetails)
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LogsTableDetails);
