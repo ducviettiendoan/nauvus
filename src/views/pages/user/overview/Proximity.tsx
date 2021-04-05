@@ -1,8 +1,8 @@
 import React from "react";
 // @material-ui/core components
 // import { makeStyles } from "@material-ui/core/styles";
-import { Theme, makeStyles } from '@material-ui/core';
-import { BaseCSSProperties } from '@material-ui/core/styles/withStyles';
+import {Theme, makeStyles} from '@material-ui/core';
+import {BaseCSSProperties} from '@material-ui/core/styles/withStyles';
 
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
@@ -27,14 +27,15 @@ import {
 
 import CustomDropdown from "components/CustomDropdown/CustomDropdown.js";
 import Loading from "components/Loading/Loading";
-import { connect } from 'react-redux';
-import { loadVehicles } from 'reducers/vehicle';
-import { IRootState } from 'reducers';
+import {connect} from 'react-redux';
+import {loadVehicles} from 'reducers/vehicle';
+import {IRootState} from 'reducers';
 import imageTabs from "assets/img/Tabs.png";
 
 import VehicleAssets from "./components/VehicleAssets";
 
-import { Col, Row } from 'reactstrap';
+import {Col, Row} from 'reactstrap';
+
 const styles = {
   cardTitle,
   cardTitleWhite: {
@@ -124,73 +125,75 @@ export function Proximity(props) {
     async function fetchVehicles() {
       await props.loadVehicles();
     }
+
     fetchVehicles();
   }, [1]);
-  
+
   return (
     <div>
       <Row>
-          <Card>
-            <CardHeader>
-              <Row className="float-right mb-3">
-                <Button className="btn-more-actions">
-                  MORE ACTIONS <KeyboardArrowDown /> 
-                </Button>
-              </Row>
-              <Card>
-                <CardBody>
-                  <div className="ml-5">
-                    <div className={ classes.txtInfoMain}>We’ve moved your trailers</div>
-                    <div className={ `mb-4 ${classes.txtInfoSub}`}>
-                      241 trailers from your Trailers & Assets list in Settings have been moved to this list. 5 trailers witch matching names were automatically merged. The remaining 236 trailers were added.
-                    </div>
-                    <Button round className="btn-round-active w-150 mr-4">
-                      Keep all trailers
-                    </Button>
-                    <Button round className="btn-round-active w-150 mr-4">
-                      Delete
-                    </Button>
-                   </div>
-                   <div style={{ position: "absolute",top: "16px"}}>
-                     <InfoOutlined />
-                   </div>
-                </CardBody>
-              </Card>
-
-              <Row className="mb-3">
-                <Col><img src={imageTabs} alt="..." /></Col>
-              </Row>
-
-              <Row>
-                <Col>
-                  <Button round className="btn-tags mr-2">
-                     Tags <KeyboardArrowDown /> 
-                   </Button>
-                   <Button round className="btn-tags">
-                     Gateway <KeyboardArrowDown /> 
-                   </Button>
-                </Col>
-                <Col>
-                  <div style={{ textAlign: 'right'}}>
-                    <span className={ classes.txtNumberVehicle }>{ props.vehicles.length } vehicles   </span> 
-                    <span className={ classes.txtSearchLabel }>{'  '}<Search /> search in vehicle</span>
+        <Card>
+          <CardHeader>
+            <Row className="float-right mb-3">
+              <Button className="btn-more-actions">
+                MORE ACTIONS <KeyboardArrowDown/>
+              </Button>
+            </Row>
+            <Card>
+              <CardBody>
+                <div className="ml-5">
+                  <div className={classes.txtInfoMain}>We’ve moved your trailers</div>
+                  <div className={`mb-4 ${classes.txtInfoSub}`}>
+                    241 trailers from your Trailers & Assets list in Settings have been moved to this list. 5 trailers
+                    witch matching names were automatically merged. The remaining 236 trailers were added.
                   </div>
-                </Col>
-              </Row>
-            </CardHeader>
-            <CardBody>
-              <VehicleAssets data={ props.vehicles } /> 
-            </CardBody>
-            <CardFooter>
-            </CardFooter>
-          </Card>
+                  <Button round className="btn-round-active w-150 mr-4">
+                    Keep all trailers
+                  </Button>
+                  <Button round className="btn-round-active w-150 mr-4">
+                    Delete
+                  </Button>
+                </div>
+                <div style={{position: "absolute", top: "16px"}}>
+                  <InfoOutlined/>
+                </div>
+              </CardBody>
+            </Card>
+
+            <Row className="mb-3">
+              <Col><img src={imageTabs} alt="..."/></Col>
+            </Row>
+
+            <Row>
+              <Col>
+                <Button round className="btn-tags mr-2">
+                  Tags <KeyboardArrowDown/>
+                </Button>
+                <Button round className="btn-tags">
+                  Gateway <KeyboardArrowDown/>
+                </Button>
+              </Col>
+              <Col>
+                <div style={{textAlign: 'right'}}>
+                  <span className={classes.txtNumberVehicle}>{props.vehicles.length} vehicles   </span>
+                  <span className={classes.txtSearchLabel}>{'  '}<Search/> search in vehicle</span>
+                </div>
+              </Col>
+            </Row>
+          </CardHeader>
+          <CardBody>
+            <VehicleAssets data={props.vehicles}/>
+          </CardBody>
+          <CardFooter>
+          </CardFooter>
+        </Card>
       </Row>
     </div>
   );
 }
 
 export default connect(
-  ({ authentication, vehicle }: IRootState) => ({
+  ({authentication, vehicle}: IRootState) => ({
     isAuthenticated: authentication.isAuthenticated,
     user: authentication.user,
     vehicles: vehicle.vehicles
