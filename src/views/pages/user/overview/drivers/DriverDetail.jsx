@@ -25,7 +25,7 @@ import styles from "assets/jss/material-dashboard-pro-react/views/overviewPageSt
 import pinMaker from 'assets/icons/pinMaker.svg';
 import { Link } from "react-router-dom";
 
-import {setOpenDrawer, setOpenDriver} from 'reducers/overview';
+import {setOpenDrawer} from 'reducers/overview';
 
 const useStyles = makeStyles(styles);
 
@@ -104,7 +104,7 @@ export function DriverDetail(props) {
           justIcon
           round
           className={classes.toogleDrawer}
-          onClick={ e => {props.setOpenDriver(!props.openDriver)} }
+          onClick={ e => {props.setOpenDrawer(!props.openDrawer)} }
         >
           <List />
         </Button>
@@ -135,10 +135,10 @@ export default connect(
     isAuthenticated: authentication.isAuthenticated,
     user: authentication.user,
     vehicles: vehicle.vehicles,
-    openDriver : overview.openDriver
+    openDrawer : overview.openDrawer
   }),
   {
     loadVehicles,
-    setOpenDriver
+    setOpenDrawer
   }
 )(DriverDetail);

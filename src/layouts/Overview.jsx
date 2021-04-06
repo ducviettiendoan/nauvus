@@ -22,10 +22,11 @@ import styles from "assets/jss/material-dashboard-pro-react/layouts/overviewStyl
 import Loading from "components/Loading/Loading";
 import { connect } from 'react-redux';
 import { getUserInfo } from '../reducers/authentication';
-import {setOpenDrawer, setOpenDriver, setOpenDriverDetails} from '../reducers/overview';
+import {setOpenDrawer} from '../reducers/overview';
 import { IRootState } from '../reducers';
 import Button from '@material-ui/core/Button';
 import VehicleSideBar from "views/pages/user/overview/components/VehicleSideBar";
+import ProximitySideBar from "views/pages/user/overview/components/ProximitySideBar";
 import {ExtraDriverDetailsSideBar} from "../views/pages/user/overview/components/ExtraDriverDetailsSideBar";
 import DriverSideBar from "../views/pages/user/overview/drivers/DriverSideBar";
 
@@ -174,12 +175,6 @@ export function Overview(props) {
   };
 
   const renderDataContent = () => {
-    let state = false
-    if (props.openDrawer || props.openDriver){
-      state = true
-    }else {
-      state = false
-    }
     return (
       <>
         <div className="layout-container">
@@ -188,13 +183,14 @@ export function Overview(props) {
                 className={classes.drawer}
                 variant="persistent"
                 anchor="left"
-                open={state}
+                open={ props.openDrawer }
                 classes={{
                   paper: classes.drawerPaper,
                 }}
               >
-              {props.openDrawer ? <VehicleSideBar /> : ""}
-              {props.openDriver ? <DriverSideBar /> : ""}
+              { window.location.pathname === "/o/overview" && <VehicleSideBar /> }
+              { window.location.pathname.indexOf("/o/drivers") !== -1 && <DriverSideBar /> }
+              { window.location.pathname.indexOf("/o/proximity") !== -1 && <ProximitySideBar /> }
             </Drawer>
               <main
                 className={clsx(classes.content, {
@@ -215,47 +211,6 @@ export function Overview(props) {
                   </Switch>
                 </div>
               </main>
-          </div>
-        </div>
-      </>
-    )
-  }
-
-  const renderDriverDetailsContent = () => {
-    return (
-      <>
-        <div className="layout-container">
-          <div className={classes.root}>
-            <Drawer
-              className={classes.drawer}
-              variant="persistent"
-              anchor="left"
-              open={props.openDriverDetails}
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-            >
-              <ExtraDriverDetailsSideBar />
-            </Drawer>
-            <main
-              className={clsx(classes.content, {
-                [classes.contentShift]: props.openDriverDetails,
-              })}
-            >
-              <AdminNavbar
-                sidebarMinimize={sidebarMinimize.bind(this)}
-                miniActive={miniActive}
-                brandText={getActiveRoute(routes)}
-                handleDrawerToggle={handleDrawerToggle}
-                {...rest}
-              />
-              <div style={{ position: 'relative'}}>
-                <Switch>
-                  {getRoutes(routes)}
-                  <Redirect from="/o" to="/o/drivers" />
-                </Switch>
-              </div>
-            </main>
           </div>
         </div>
       </>
@@ -326,7 +281,5 @@ export default connect(
   {
     getUserInfo,
     setOpenDrawer,
-    setOpenDriverDetails,
-    setOpenDriver
   }
 )(Overview);

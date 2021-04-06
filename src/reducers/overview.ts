@@ -94,20 +94,6 @@ export const setOpenDrawer = (value) => async dispatch => {
   });
 };
 
-export const setOpenDriver = (value) => async dispatch => {
-  dispatch({
-    type: ACTION_TYPES.SET_OPEN_DRIVER,
-    payload: value
-  });
-};
-
-export const setOpenDriverDetails = (value) => async dispatch => {
-  dispatch({
-    type: ACTION_TYPES.SET_OPEN_DRIVER_DETAILS,
-    payload: value
-  });
-};
-
 const dumpVehiclesData = () => {
   let data = [];
   for (let i = 0; i < 25; i++) {

@@ -66,7 +66,7 @@ import {connect} from 'react-redux';
 import {IRootState} from 'reducers';
 import Button from "components/CustomButtons/Button";
 import ArrowBackIcon from "components/Icons/ArrowBackIcon";
-import { setOpenDriverDetails} from "reducers/overview";
+import { setOpenDrawer } from "reducers/overview";
 
 const useStyles = makeStyles(styles);
 var ps;
@@ -85,7 +85,7 @@ export function ExtraDriverDetailsSideBar(props) {
                 startIcon={<ArrowBackIcon className={classes.buttonIcon}/>}
                 style={{boxShadow: "none", paddingLeft: "0px"}}
                 onClick={e => {
-                  props.setOpenDriverDetails(!props.openDriverDetails)
+                  props.setOpenDrawer(!props.openDrawer)
                 }}
               >
                 Back
@@ -102,9 +102,9 @@ export function ExtraDriverDetailsSideBar(props) {
 export default connect(
   ({overview}: IRootState) => ({
     data: overview.driversData,
-    openDriverDetails : overview.openDriverDetails
+    openDrawer : overview.openDrawer
   }),
   {
-    setOpenDriverDetails
+    setOpenDrawer
   }
 )(ExtraDriverDetailsSideBar);
