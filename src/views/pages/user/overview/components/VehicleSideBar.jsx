@@ -71,6 +71,7 @@ const styles = {
 import { connect } from 'react-redux';
 import { loadVehicles } from 'reducers/vehicle';
 import { IRootState } from 'reducers';
+import VehicleDetails from "./VehicleDetails";
 
 const useStyles = makeStyles(styles);
 var ps;
@@ -121,7 +122,7 @@ export function VehicleSideBar(props) {
                 <div className={ classes.txtSubDevice}><VehicleMapIcon /> <span style={{ top: "-2px", position: "absolute",     whiteSpace: 'nowrap', overflow: 'hidden',    textOverflow: 'ellipsis',    width: '100%',   right: '-21px' }}>{vehicle.formatted_address}</span></div>
                 <Row className={ classes.txtSubDevice}>
                   <Col>
-                  <VehicleUserIcon /> <span style={{ top: "-2px", position: "absolute" }}>---</span>  
+                  <VehicleUserIcon /> <span style={{ top: "-2px", position: "absolute" }}>---</span>
                   </Col>
                   <Col style={{ marginTop: "4px"}}>
                     <VehicleLinkIcon/> <span style={{ top: "-5px", position: "absolute" }}>---</span>

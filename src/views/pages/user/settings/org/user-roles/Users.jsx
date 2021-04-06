@@ -2,6 +2,10 @@ import React from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import { Form, Field } from 'react-final-form';
+import { TextField, Checkbox, Radio, Select } from 'final-form-material-ui';
 
 import Button from "components/CustomButtons/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
@@ -12,6 +16,10 @@ import EditIcon from "components/Icons/EditIcon";
 import avatar from "assets/img/faces/avatar.jpg";
 import ChipSelect from 'components/Chip/ChipSelect';
 import { getUserRoles } from "reducers/setting-org";
+import DiaLog from "components/CustomDialog/Dialog";
+import GridContainer from "components/Grid/GridContainer";
+import GridItem from "components/Grid/GridItem";
+
 import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
@@ -102,6 +110,33 @@ const useStyles = makeStyles((theme) => ({
     height: 40,
     borderRadius: "50%"
   },
+  rootSelect: {
+    width: "100%"
+  },
+  formRow: {
+    marginBottom: 16
+  },
+  selectButton: {
+    display: "flex",
+    justifyContent: "flex-end"
+  },
+  formText: {
+    fontSize: "14px",
+    fontFamily: 'Lato',
+    fontWeight: "400",
+  },
+  formTextSpan: {
+    paddingLeft: "30px",
+    color: "#a5a5a5",
+  },
+  diaglogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    margin: "24px",
+    textAlign: "center"
+  },
 }));
 
 export function Users(props) {
@@ -176,25 +211,52 @@ export function Users(props) {
         </div>
       )
     }
+  ];
+
+  const roles = [
+    { id: 'full_admin', label: 'Full Admin' },
+    { id: 'standard_admin', label: 'Standard Admin' },
+    { id: 'read_only_admin', label: 'Read-only Admin' },
+    { id: 'dispatch', label: 'Dispatch' },
+    { id: 'maintenance', label: 'Maintenance' },
+    { id: 'standard_admin_no_dash', label: "Standard Admin (No Dash Cam Access)" }
   ]
+
+  const access = [
+    { id: "Entire", label: "Entire Organization" },
+    { id: "room", label: "Room" },
+    { id: "new", label: "New" }
+  ]
+
+  const onSubmit = async (values) => {
+    console.log(values);
+  }
+  const validate = (values) => {
+    const errors = {};
+    if (!values.email) {
+      errors.email = 'Email must not be empty!';
+    }
+    console.log(errors);
+    return errors;
+  };
 
 
   return (
     <div>
       <Table
         renderTitle={
-          <Grid container justify="space-between" className={classes.gridTitle}>
-            <Grid>
+          <GridContainer justify="space-between" className={classes.gridTitle}>
+            <GridItem>
               <ChipSelect
                 data={chipData}
                 handleDelete={handleDelete}
                 handleClearAll={handleClearAll}
               />
-            </Grid>
-            <Grid className={classes.headLeft}>
+            </GridItem>
+            <GridItem className={classes.headLeft}>
               <ToolboxButton placeholder="Search for tag or email" showFilter showTrash />
-            </Grid>
-          </Grid>
+            </GridItem>
+          </GridContainer>
         }
         rowSelection={{}}
         columns={columns}
@@ -206,6 +268,83 @@ export function Users(props) {
           className: classes.tableRow
         }}
       />
+      <DiaLog
+        renderTitle={<h3 className={classes.diaglogTitle}>Invite User</h3>}
+        handleClose={props.handleClose}
+        open={props.open}
+      >
+        <Form
+          onSubmit={onSubmit}
+          // initialValues={{ email: "test@gmail.com", stooge: 'larry' }}
+          validate={validate}
+          render={({ handleSubmit, reset, submitting, pristine, values }) => (
+            <form onSubmit={handleSubmit} noValidate>
+              <GridContainer justify="space-between" className={classes.formRow}>
+                <GridItem md>
+                  <InputLabel required>Email</InputLabel>
+                  <Field
+                    fullWidth
+                    required
+                    name="email"
+                    type="text"
+                    component={TextField}
+                  />
+                </GridItem>
+              </GridContainer>
+              <GridContainer justify="space-between" className={classes.formRow}>
+                <GridItem md={6}>
+                  <InputLabel >Role</InputLabel>
+                  <Field
+                    fullWidth
+                    name="role"
+                    component={Select}
+                    formControlProps={{ fullWidth: true }}
+                    style={{ margin: 0 }}
+                  >
+                    {roles.map(role => <MenuItem key={role.id} value={role.id}>{role.label}</MenuItem>)}
+                  </Field>
+                </GridItem>
+                <GridItem md={6}>
+                  <InputLabel>Access</InputLabel>
+                  <Field
+                    fullWidth
+                    name="access"
+                    component={Select}
+                    formControlProps={{ fullWidth: true }}
+                    style={{ margin: 0 }}
+                  >
+                    {access.map(role => <MenuItem key={role.id} value={role.id}>{role.label}</MenuItem>)}
+                  </Field>
+                </GridItem>
+              </GridContainer>
+              <GridContainer justify="space-between" className={classes.formRow}>
+                <GridItem md>
+                  <InputLabel >Permissions</InputLabel>
+                  <p className={classes.formText}>
+                    Read-only Admin
+                    <span className={classes.formTextSpan}>View access except billing and finance pages.</span>
+                  </p>
+                </GridItem>
+              </GridContainer>
+              <div className={classes.selectButton}>
+                <Button
+                  type="button"
+                  round
+                  className="btn-round-active-2 mr-2"
+                  onClick={props.handleClose}
+                > Cancel</Button>
+                <Button
+                  round
+                  className="btn-round-active mr-2"
+                  type="submit"
+                  disabled={submitting}
+                > Save</Button>
+              </div>
+
+            </form>
+          )}
+        />
+      </DiaLog>
     </div>
   );
 }

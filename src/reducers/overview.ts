@@ -13,7 +13,9 @@ export const ACTION_TYPES = {
   GET_TRAILERS_DATA: 'overview/GET_TRAILERS_DATA',
   GET_DRIVERS_DATA: 'overview/GET_DRIVERS_DATA',
   // activity logs data
-  GET_ACTIVITY_LOGS_DATA: 'overview/GET_ACTIVITY_LOGS_DATA'
+  GET_ACTIVITY_LOGS_DATA: 'overview/GET_ACTIVITY_LOGS_DATA',
+  // chart data activity logs
+  GET_CHART_DATA: "overview/GET_CHART_DATA",
 };
 
 const initialState = {
@@ -24,6 +26,7 @@ const initialState = {
   trailersData: [],
   driversData: [],
   activityLogsData: [],
+  chartData: [],
 };
 
 export type OverviewState = Readonly<typeof initialState>;
@@ -71,6 +74,12 @@ export default (state: OverviewState = initialState, action): OverviewState => {
       return {
         ...state,
         activityLogsData: action.payload
+      };
+    }
+    case ACTION_TYPES.GET_CHART_DATA: {
+      return {
+        ...state,
+        chartData: action.payload
       };
     }
     default:
@@ -154,8 +163,23 @@ const dumpActivityData = () => {
       inViolation: '0:00:00',
       from: '-',
       to: '-',
-      details: 'Missing Driver Certification',
-      date: 'Mon, Mar 29'
+      details: "Missing Driver Certification",
+      date: 'Mon, Mar 29',
+
+      carrierName: "Ali Plus Transport",
+      carrierAddress: "201 Sangamore Rd",
+      carrierId: "Nauvus (82K7)",
+      carrierDotNumber: "1542846",
+
+      driverName: "Ali Singh (alisingh)",
+      driverLicense: "xxx",
+      ruleSet: "NE 80 hour / 8 day",
+      vehicle: "Vehicle 101",
+      homeName: "Ali Plus Transport",
+      homeAddress: "201 Sangamore Rd",
+      shippingId: "-",
+      trailer: "-",
+      distance: "-"
     };
     data.push(item);
   }
@@ -187,6 +211,21 @@ const dumpDriversData = () => {
   return data;
 }
 
+const dumpChartData = () => {
+  let data = [];
+  for (let i = 0; i < 1; i++) {
+    let item = {
+      time: "12:00:00 AM EDT - Present",
+      duration: "9h 6m",
+      status: "Disconnected",
+      remark: "-",
+      vehicle: "Vehicle 101",
+      location: "-",
+    };
+    data.push(item);
+  }
+  return data;
+}
 
 export const getVehiclesData = () => async dispatch => {
   dispatch({
@@ -213,6 +252,13 @@ export const getActivityLogsData = () => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_ACTIVITY_LOGS_DATA,
     payload: dumpActivityData
+  })
+}
+
+export const getChartData = () => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_CHART_DATA,
+    payload: dumpChartData
   })
 }
 
