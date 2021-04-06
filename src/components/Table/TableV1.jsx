@@ -38,8 +38,8 @@ const styles = {
   },
   cardTable: {
     paddingBottom: "40px",
-    overflow: "auto",
-    overflowY: "hidden"
+    overflow: "unset",
+    overflowY: "unset"
   },
   checkbox: {
     textAlign: 'center'
