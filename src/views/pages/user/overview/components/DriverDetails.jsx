@@ -8,10 +8,12 @@ import {GoogleMap, InfoWindow, Marker, withGoogleMap, withScriptjs} from "react-
 import pinMaker from "../../../../../assets/icons/pinMaker.svg";
 import {Link} from "react-router-dom";
 import {IRootState} from "../../../../../reducers";
+import FuelLevelIcon from "../../../../../components/Icons/FuelLevelIcon";
+import ZoomIcon from "../../../../../components/Icons/ZoomIcon";
+import OpenInNewTabIcon from "../../../../../components/Icons/OpenInNewTabIcon";
 
-const styles = {
-
-};
+import styles from "assets/jss/material-dashboard-pro-react/views/overviewPageStyle.js"
+import InfoWindowPopup from "./InfoWindowPopup";
 
 const useStyles = makeStyles(styles);
 
@@ -39,13 +41,9 @@ const RegularMap = withScriptjs(
                       console.log(`click on Marker ${marker.latLng.lat()} - ${marker.latLng.lng()}`, marker)
                     }}
             >
-              <InfoWindow>
-                <div className="infowindow">
-                  <div className="path">{ maker.formatted_address }</div>
-                  <div className="device-name mb-2">{ maker.serialnumber }</div>
-                  <div><Link to={'/user/overview/assets'} className="assets">Assets</Link></div>
-                </div>
-              </InfoWindow>
+                <InfoWindow>
+                    <InfoWindowPopup maker={maker}/>
+                </InfoWindow>
             </Marker>
           )
         }}

@@ -27,51 +27,54 @@ import { Link } from "react-router-dom";
 
 import { setOpenDrawer } from 'reducers/overview';
 
-const useStyles = makeStyles(styles);
-
 import { connect } from 'react-redux';
 import { loadVehicles } from 'reducers/vehicle';
 import { IRootState } from 'reducers';
+import InfoWindowPopup from "./components/InfoWindowPopup";
 
 // defaultCenter={{ lat: 40.748817, lng: -73.985428 }}
-const RegularMap = withScriptjs(
-  withGoogleMap((props) => (
-    <GoogleMap
-      defaultZoom={12}
-      defaultCenter={ props.center }
-      defaultOptions={{
-        scrollwheel: false,
-        mapTypeControl: false,
-        streetViewControl: false
-      }}
 
-    >
-      {props.data.map((maker, index) => {
-        if (maker.status === 'connected') {
-          return (
-            <Marker position={{ lat: maker.latitude, lng: maker.longitude }} 
-              icon={{
-                url: pinMaker,
-                anchor: new google.maps.Point(5, 58), 
+
+const useStyles = makeStyles(styles);
+
+const RegularMap = withScriptjs(
+  withGoogleMap((props) => {
+      return (
+
+          <GoogleMap
+              defaultZoom={12}
+              defaultCenter={ props.center }
+              defaultOptions={{
+                  scrollwheel: false,
+                  mapTypeControl: false,
+                  streetViewControl: false
               }}
-              onClick={(marker) => { 
-                console.log(`click on Marker ${marker.latLng.lat()} - ${marker.latLng.lng()}`, marker) 
-              }}
-            >
-              <InfoWindow>
-                <div className="infowindow">
-                  <div className="path">{ maker.formatted_address }</div>
-                  <div className="device-name mb-2">{ maker.serialnumber }</div>
-                  <div><Link to={'/user/overview/assets'} className="assets">Assets</Link></div>  
-                </div>
-              </InfoWindow>
-            </Marker>
-          )
-        }}
-        )
-      }
-    </GoogleMap>
-  ))
+
+          >
+              {props.data.map((maker, index) => {
+                  console.log(`maker ${index}`, maker)
+                  if (maker.status === 'connected') {
+                      return (
+                          <Marker position={{ lat: maker.latitude, lng: maker.longitude }}
+                                  icon={{
+                                      url: pinMaker,
+                                      anchor: new google.maps.Point(5, 58),
+                                  }}
+                                  onClick={(marker) => {
+                                      console.log(`click on Marker ${marker.latLng.lat()} - ${marker.latLng.lng()}`, marker)
+                                  }}
+                          >
+                              <InfoWindow>
+                                  <InfoWindowPopup maker={maker}/>
+                              </InfoWindow>
+                          </Marker>
+                      )
+                  }}
+              )
+              }
+          </GoogleMap>
+      )
+  })
 );
 
 export function Overview(props) {
