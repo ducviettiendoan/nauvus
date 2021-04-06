@@ -25,7 +25,7 @@ import styles from "assets/jss/material-dashboard-pro-react/views/overviewPageSt
 import pinMaker from 'assets/icons/pinMaker.svg';
 import { Link } from "react-router-dom";
 
-import {setOpenDriver, setOpenDriverDetails} from 'reducers/overview';
+import {setOpenDrawer, setOpenDriver} from 'reducers/overview';
 
 const useStyles = makeStyles(styles);
 
@@ -74,7 +74,7 @@ const RegularMap = withScriptjs(
   ))
 );
 
-export function DriverDetails(props) {
+export function DriverDetail(props) {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -125,12 +125,6 @@ export function DriverDetails(props) {
             },
           }}
         />
-        <Button
-          className="btn-round-active w-84 h-41"
-          onClick={props.onBack}
-        >
-          Back
-        </Button>
       </div>
     </div>
   );
@@ -141,12 +135,10 @@ export default connect(
     isAuthenticated: authentication.isAuthenticated,
     user: authentication.user,
     vehicles: vehicle.vehicles,
-    openDriverDetails: overview.openDriverDetails,
-    openDriver: overview.openDriver
+    openDriver : overview.openDriver
   }),
   {
     loadVehicles,
-    setOpenDriverDetails,
     setOpenDriver
   }
-)(DriverDetails);
+)(DriverDetail);

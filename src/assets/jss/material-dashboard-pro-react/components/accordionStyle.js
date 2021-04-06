@@ -51,7 +51,7 @@ const accordionStyle = theme => ({
     transform: "rotate(0deg)",
     color: "inherit",
     position: "absolute",
-    right: "20px",
+    right: "-3px",
     [theme.breakpoints.down("sm")]: {
       top: "10px !important"
     }
@@ -65,7 +65,8 @@ const accordionStyle = theme => ({
     color: "inherit"
   },
   expansionPanelDetails: {
-    padding: "15px 0px 5px"
+    padding: "15px 0px 5px",
+    display: "unset !important"
   }
 });
 

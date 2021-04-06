@@ -22,11 +22,12 @@ import styles from "assets/jss/material-dashboard-pro-react/layouts/overviewStyl
 import Loading from "components/Loading/Loading";
 import { connect } from 'react-redux';
 import { getUserInfo } from '../reducers/authentication';
-import {setOpenDrawer, setOpenDriverDetails} from '../reducers/overview';
+import {setOpenDrawer, setOpenDriver, setOpenDriverDetails} from '../reducers/overview';
 import { IRootState } from '../reducers';
 import Button from '@material-ui/core/Button';
 import VehicleSideBar from "views/pages/user/overview/components/VehicleSideBar";
 import {ExtraDriverDetailsSideBar} from "../views/pages/user/overview/components/ExtraDriverDetailsSideBar";
+import DriverSideBar from "../views/pages/user/overview/drivers/DriverSideBar";
 
 var ps;
 
@@ -173,27 +174,27 @@ export function Overview(props) {
   };
 
   const renderDataContent = () => {
+    let state = false
+    if (props.openDrawer || props.openDriver){
+      state = true
+    }else {
+      state = false
+    }
     return (
       <>
-        {/* <AdminNavbar
-          sidebarMinimize={sidebarMinimize.bind(this)}
-          miniActive={miniActive}
-          brandText={getActiveRoute(routes)}
-          handleDrawerToggle={handleDrawerToggle}
-          {...rest}
-        /> */}
         <div className="layout-container">
           <div className={classes.root}>
             <Drawer
                 className={classes.drawer}
                 variant="persistent"
                 anchor="left"
-                open={props.openDrawer}
+                open={state}
                 classes={{
                   paper: classes.drawerPaper,
                 }}
               >
-                <VehicleSideBar />
+              {props.openDrawer ? <VehicleSideBar /> : ""}
+              {props.openDriver ? <DriverSideBar /> : ""}
             </Drawer>
               <main
                 className={clsx(classes.content, {
@@ -319,11 +320,13 @@ export default connect(
     isAuthenticated: authentication.isAuthenticated,
     user: authentication.user,
     openDrawer : overview.openDrawer,
-    openDriverDetails : overview.openDriverDetails
+    openDriverDetails : overview.openDriverDetails,
+    openDriver: overview.openDriver
   }),
   {
     getUserInfo,
     setOpenDrawer,
-    setOpenDriverDetails
+    setOpenDriverDetails,
+    setOpenDriver
   }
 )(Overview);
