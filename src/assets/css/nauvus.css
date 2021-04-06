@@ -297,24 +297,13 @@
   display: none !important;
 }
 
-.infowindow .path  {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 21px;
-  color: #8181A5;
+.gm-style .gm-style-iw-c {
+  padding: 0!important;
+  width: 276px!important;
 }
 
-.infowindow .device-name  {
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 21px;
-  color: #1C1D21;
-}
-
-.infowindow .assets  {
-  font-size: 12px;
-  line-height: 18px;
-  color: #5E81F4;
+.gm-style-iw-d {
+  overflow: auto!important;
 }
 
 .btn-feedback {
