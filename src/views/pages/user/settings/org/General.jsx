@@ -54,9 +54,11 @@ const styles = theme => ({
     width: "22px",
     height: "22px",
     color: "#C4C4C4",
-    "&:hover": {
-      color: "#25345C"
-    }
+  },
+  iconsActive: {
+    width: "22px",
+    height: "22px",
+    color: "#25345C"
   },
   root: {
     width: '100%',
@@ -87,8 +89,13 @@ const styles = theme => ({
   },
   iconRoot: {
     marginTop: "-8px",
-    marginLeft: "-5px",
-    minWidth: "29px",
+    // marginLeft: "-5px",
+    [theme.breakpoints.up('md')]: {
+      minWidth: "32px",
+    },
+    [theme.breakpoints.down('md')]: {
+      minWidth: "19px"
+    },
   },
   listItemButton: {
     "&:hover": {
@@ -126,7 +133,7 @@ export default function General() {
                                 classes={{root: classes.listItemRoot, button: classes.listItemButton}}
                                 style={{borderBottom: '1px solid #ECEEF0'}}>
                         <ListItemIcon classes={{root: classes.iconRoot}}>
-                          <OrganizationIcon className={classes.icons}/>
+                          <OrganizationIcon className={tab === 1 ? classes.iconsActive : classes.icons}/>
                         </ListItemIcon>
                         <Hidden smDown implementation="css">
                           <ListItemText classes={{
@@ -141,7 +148,7 @@ export default function General() {
                                 classes={{root: classes.listItemRoot, button: classes.listItemButton}}
                                 style={{borderBottom: '1px solid #ECEEF0'}}>
                         <ListItemIcon classes={{root: classes.iconRoot}}>
-                          <LanguageIcon className={classes.icons}/>
+                          <LanguageIcon className={tab === 2 ? classes.iconsActive : classes.icons}/>
                         </ListItemIcon>
                         <Hidden smDown implementation="css">
                           <ListItemText classes={{
@@ -156,7 +163,7 @@ export default function General() {
                                 classes={{root: classes.listItemRoot, button: classes.listItemButton}}
                                 style={{borderBottom: '1px solid #ECEEF0'}}>
                         <ListItemIcon classes={{root: classes.iconRoot}}>
-                          <ConnectionIcon className={classes.icons}/>
+                          <ConnectionIcon className={tab === 3 ? classes.iconsActive : classes.icons}/>
                         </ListItemIcon>
                         <Hidden smDown implementation="css">
                           <ListItemText classes={{
@@ -170,7 +177,7 @@ export default function General() {
                                 onClick={() => setTab(4)}
                                 classes={{root: classes.listItemRoot, button: classes.listItemButton}}>
                         <ListItemIcon classes={{root: classes.iconRoot}}>
-                          <AdvancedIcon className={classes.icons}/>
+                          <AdvancedIcon className={tab === 4 ? classes.iconsActive : classes.icons}/>
                         </ListItemIcon>
                         <Hidden smDown implementation="css">
                           <ListItemText classes={{

@@ -112,7 +112,7 @@ export default function Pages(props) {
               >
                 <div className={classes.container} style={{ width: '100%', zIndex: '9', padding: '20px'}}>
                   <Row className="justify-content-center">
-                    <Card className={classes[cardAnimaton]} style={{ boxShadow: 'none', maxWidth: '465px'}}>
+                    <Card className={classes[cardAnimaton]} style={{ boxShadow: 'none', maxWidth: '465px', padding: "0 25px 0 25px"}}>
                     <CardBody>
                       <Switch>
                         {getRoutes(routes)}
