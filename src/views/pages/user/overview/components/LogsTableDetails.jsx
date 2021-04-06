@@ -4,10 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import Button from "components/CustomButtons/Button";
 import Calendar from "components/Calendar/Calendar";
-import CardBody from "components/Card/CardBody.js";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
-import DropDownIcon from "components/Icons/DropDownIcon";
 import LegendIcon from "components/Icons/LegendIcon";
 import CustomDialog from "components/CustomDialog/CustomDialog";
 import CustomSelect from "components/CustomSelect/CustomSelect"
@@ -16,6 +14,7 @@ import { connect } from 'react-redux';
 import Table from "components/Table/TableV1";
 import LogsDialogContent from "./LogsDialogContent";
 import LogsErrorContent from "./LogsErrorContent"
+import ExpandedRow from "./ExpandedRow"
 // @material-ui/icons
 // core components
 const styles = {
@@ -229,22 +228,49 @@ function LogsTableDetails(props) {
     <Table
       renderTitle={
         <div className={classes.gridTitle}>
-          {dialog && (
-            <DialogComponent
+          {
+            dialog && <CustomDialog
               open={true}
               setDialog={setDialog}
-              handleSend={handleSendForm}
               setSelectValue={setSelectValue}
-              childComponent={<LogsDialogContent inputValue={inputValue} setInputValue={setInputValue} />}
+              childComponent={
+                <LogsDialogContent
+                  inputValue={inputValue}
+                  setInputValue={setInputValue}
+                  setDialog={setDialog}
+                  handleSendForm={handleSendForm}
+                  setSelectValue={setSelectValue}
+                />}
+              header={
+                <GridContainer className={classes.dialogHeader}>
+                  <GridItem xs={12} className={classes.dialogTitle}>
+                    Transfer ELD Records
+                </GridItem>
+                  <GridItem xs={12} className={classes.dialogDate}>
+                    Export HOS log report / Mar 29, 2021
+                </GridItem>
+                </GridContainer>
+              }
             />
-          )}
-          {formError && (
-            <DialogError
+          }
+          {
+            formError && <CustomDialog
               open={true}
               errorValue={inputValue}
-              setFormError={setFormError}
+              setDialog={setFormError}
+              childComponent={<LogsErrorContent errorValue={inputValue} />}
+              header={
+                <GridContainer className={classes.dialogHeader}>
+                  <GridItem xs={12} className={classes.dialogTitle}>
+                    HOS Logs cannot be transferred
+            </GridItem>
+                  <GridItem xs={12} className={classes.dialogDate}>
+                    Ali Singh
+            </GridItem>
+                </GridContainer>
+              }
             />
-          )}
+          }
           <GridContainer>
             <GridItem xs={12} sm={12} md={6}>
               <GridContainer className={classes.headContainer}>
@@ -282,11 +308,7 @@ function LogsTableDetails(props) {
       expandedRowRender={(record) => {
         return (
           <div>
-            <p>{record.date}</p>
-            <p>{record.details}</p>
-            <p>{record.details}</p>
-            <p>{record.details}</p>
-            <p>{record.details}</p>
+            <ExpandedRow details={record} />
           </div>
         )
       }}
