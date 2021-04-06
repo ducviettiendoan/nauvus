@@ -7,6 +7,7 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar'
 // console.log(awsconfig);
 export const ACTION_TYPES = {
   SET_OPEN_DRAWER: 'overview/SET_OPEN_DRAWER',
+  SET_OPEN_PROXIMITY: 'overview/SET_OPEN_PROXIMITY',
   GET_VEHICLE_DATA: 'overview/GET_VEHICLE_DATA',
   GET_TRAILERS_DATA: 'overview/GET_TRAILERS_DATA',
   GET_DRIVERS_DATA: 'overview/GET_DRIVERS_DATA',
@@ -16,6 +17,7 @@ export const ACTION_TYPES = {
 
 const initialState = {
   openDrawer: false,
+  openProximity: false,
   vehiclesData: [],
   trailersData: [],
   driversData: [],
@@ -31,6 +33,12 @@ export default (state: OverviewState = initialState, action): OverviewState => {
       return {
         ...state,
         openDrawer: action.payload
+      };
+    }
+    case ACTION_TYPES.SET_OPEN_PROXIMITY: {
+      return {
+        ...state,
+        openProximity: action.payload
       };
     }
     case ACTION_TYPES.GET_VEHICLE_DATA: {
@@ -65,6 +73,13 @@ export default (state: OverviewState = initialState, action): OverviewState => {
 export const setOpenDrawer = (value) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.SET_OPEN_DRAWER,
+    payload: value
+  });
+};
+
+export const setOpenProximity = (value) => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.SET_OPEN_PROXIMITY,
     payload: value
   });
 };
