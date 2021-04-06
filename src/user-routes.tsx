@@ -22,6 +22,7 @@ import Assets from "views/pages/user/overview/Assets";
 
 import Proximity from "views/pages/user/overview/Proximity";
 import Drivers from "views/pages/user/overview/Drivers";
+import DriverDetail from "views/pages/user/overview/drivers/DriverDetail";
 import Logs from "views/pages/user/overview/Logs";
 
 // @material-ui/icons
@@ -62,6 +63,13 @@ const dashRoutes = [
         name: "Assets",
         component: Assets,
         layout: "/o"
+      },
+      {
+        path: "/drivers/:id",
+        name: "Drivers Detail",
+        component: DriverDetail,
+        layout: "/o",
+        hidden: true
       },
       {
         path: "/drivers",

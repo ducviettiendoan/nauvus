@@ -9,7 +9,7 @@ import {BaseCSSProperties} from '@material-ui/core/styles/withStyles';
 // core components
 import Button from "components/CustomButtons/Button.js";
 import {connect} from 'react-redux';
-import {loadVehicles} from 'reducers/vehicle';
+// import {loadVehicles} from 'reducers/vehicle';
 import {IRootState} from 'reducers';
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
@@ -156,13 +156,13 @@ export function Drivers(props) {
     props.getDriversData()
   }, [])
 
-  useEffect(() => {
-    async function fetchVehicles() {
-      await props.loadVehicles();
-    }
-
-    fetchVehicles();
-  }, [1]);
+  // useEffect(() => {
+  //   async function fetchVehicles() {
+  //     await props.loadVehicles();
+  //   }
+  //
+  //   fetchVehicles();
+  // }, [1]);
 
   const [chipData, setChipData] = useState([
     {key: 0, label: 'Standard Admin'},
@@ -242,6 +242,13 @@ export function Drivers(props) {
     },
   ]
 
+  const onBackDriver = () => {
+    props.setOpenDriverDetails(false)
+  }
+  const viewDetail = () => {
+    props.history.push("/o/drivers/aaaaaa")
+  }
+
   return (
     <div>
       <GridItem xs={12} sm={12} md={12}>
@@ -250,7 +257,7 @@ export function Drivers(props) {
             {
               props.openDriverDetails
                 ?
-                <DriverDetails/>
+                <DriverDetails onBack={onBackDriver}/>
                 :
                 (
                   props.data.length > 0 && <Table
@@ -291,7 +298,7 @@ export function Drivers(props) {
                       className: classes.onHeaderRow
                     }}
                     onBodyRow={{
-                      onClick: e => props.setOpenDriverDetails(!props.openDriverDetails),
+                      onClick: viewDetail,
                       className: classes.tableRow
                     }}
                   />
@@ -309,12 +316,12 @@ export default connect(
   ({authentication, vehicle, overview}: IRootState) => ({
     isAuthenticated: authentication.isAuthenticated,
     user: authentication.user,
-    vehicles: vehicle.vehicles,
+    // vehicles: vehicle.vehicles,
     data: overview.driversData,
     openDriverDetails : overview.openDriverDetails
   }),
   {
-    loadVehicles,
+    // loadVehicles,
     getDriversData,
     setOpenDriverDetails
   }

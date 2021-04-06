@@ -8,6 +8,7 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar'
 export const ACTION_TYPES = {
   SET_OPEN_DRAWER: 'overview/SET_OPEN_DRAWER',
   SET_OPEN_DRIVER_DETAILS: 'overview/SET_OPEN_DRIVER_DETAILS',
+  SET_OPEN_DRIVER: 'overview/SET_OPEN_DRIVER',
   GET_VEHICLE_DATA: 'overview/GET_VEHICLE_DATA',
   GET_TRAILERS_DATA: 'overview/GET_TRAILERS_DATA',
   GET_DRIVERS_DATA: 'overview/GET_DRIVERS_DATA',
@@ -19,6 +20,7 @@ export const ACTION_TYPES = {
 
 const initialState = {
   openDrawer: false,
+  openDriver: false,
   openDriverDetails: false,
   vehiclesData: [],
   trailersData: [],
@@ -36,6 +38,12 @@ export default (state: OverviewState = initialState, action): OverviewState => {
       return {
         ...state,
         openDrawer: action.payload
+      };
+    }
+    case ACTION_TYPES.SET_OPEN_DRIVER: {
+      return {
+        ...state,
+        openDriver: action.payload
       };
     }
     case ACTION_TYPES.SET_OPEN_DRIVER_DETAILS: {
@@ -82,6 +90,13 @@ export default (state: OverviewState = initialState, action): OverviewState => {
 export const setOpenDrawer = (value) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.SET_OPEN_DRAWER,
+    payload: value
+  });
+};
+
+export const setOpenDriver = (value) => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.SET_OPEN_DRIVER,
     payload: value
   });
 };
