@@ -55,7 +55,7 @@ const DiaLog = (props) => {
   const classes = useStyles(styles)
   const { open, setDialog, setSelectValue, childComponent, header } = props
 
-  const [openState, setOpenState] = useState(open);
+  const [openState, setOpenState] = useState(open || false);
 
   const handleCloseDialog = () => {
     setOpenState(false)
@@ -66,7 +66,7 @@ const DiaLog = (props) => {
   }
 
   return (
-    <Dialog  open={openState} aria-labelledby="customized-dialog-title" onClose={handleCloseDialog}>
+    <Dialog open={openState} aria-labelledby="customized-dialog-title" onClose={handleCloseDialog}>
       <div className={classes.dialogBg}>
         <DialogTitle onClose={handleCloseDialog} children={header}></DialogTitle>
         <DialogContent className={classes.dialogContent} >
