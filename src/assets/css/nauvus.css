@@ -52,6 +52,12 @@
 .fs-13 {
   font-size: 13px !important;
 }
+.mb-4 {
+  margin-bottom: 4px !important;
+}
+.mb-16 {
+  margin-bottom: 16px !important;
+}
 .btn-round-active {
   background: #25345C !important;
   border-radius: 28px !important;
