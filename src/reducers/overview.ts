@@ -19,7 +19,7 @@ export const ACTION_TYPES = {
 };
 
 const initialState = {
-  openDrawer: false,
+  openDrawer: true,
   openDriver: false,
   openDriverDetails: false,
   vehiclesData: [],
