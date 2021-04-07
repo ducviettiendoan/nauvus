@@ -436,7 +436,7 @@ export default function DriverSideBar(props) {
       <DiaLog
         renderTitle={<h3 className={classes.dialogTitle}>Edit Driver</h3>}
         handleClose={closeEditDriver}
-        open={true}
+        open={openInvite}
       >
         <Form
           onSubmit={onSubmit}
