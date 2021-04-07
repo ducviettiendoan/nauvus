@@ -12,6 +12,7 @@ import FuelPurchase from "views/pages/user/fuel-energy/FuelPurchase";
 import Dispatch from "views/pages/user/dispatch/Dispatch";
 import Documents from "views/pages/user/documents/Documents";
 import FuelEnergy from "views/pages/user/fuel-energy/FuelEnergy";
+import DriverEfficiency from "views/pages/user/fuel-energy/DriverEfficiency"
 import InternalTools from "views/pages/user/internal-tools/InternalTools";
 import Maintenance from "views/pages/user/maintenance/Maintenance";
 import Messages from "views/pages/user/messages/Messages";
@@ -180,6 +181,12 @@ const dashRoutes = [
         path: "/fuel-energy/fuel-purchase",
         name: "Fuel Purchase",
         component: FuelPurchase,
+        layout: "/user"
+      },
+      {
+        path: "/fuel-energy/driver-efficiency",
+        name: "Driver Efficiency Report",
+        component: DriverEfficiency,
         layout: "/user"
       },
     ]

@@ -10,8 +10,9 @@ import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import Calendar from "../../../../components/Calendar/Calendar";
 import Button from "components/CustomButtons/Button.js";
 import MoreHorizontalIcon from "../../../../components/Icons/MoreHorizontalIcon";
-import Vehicle from "./fuel-energy-parts/Vehicle.jsx";
-import Drivers from "./fuel-energy-parts/Drivers.jsx";
+import Vehicle from "./driver-efficiency-parts/Vehicle.jsx";
+import Drivers from "./driver-efficiency-parts/Drivers.jsx";
+import LiveIconWhite from "../../../../components/Icons/LiveIconWhite";
 
 const styles = {
   moreAction: {
@@ -45,7 +46,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function FuelEnergy() {
+export default function DriverEfficiency() {
   const classes = useStyles();
   const [value, setValue] = useState(0);
 
@@ -73,6 +74,10 @@ export default function FuelEnergy() {
                     className={`btn-36 ${classes.moreAction} mr-2`}
                   >
                     <MoreHorizontalIcon/>
+                  </Button>
+                  <Button round className="btn-round-green w-84">
+                    <LiveIconWhite/>
+                    Live
                   </Button>
                 </GridItem> 
               </GridContainer>
