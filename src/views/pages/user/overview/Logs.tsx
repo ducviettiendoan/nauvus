@@ -15,6 +15,7 @@ import { Row } from "reactstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import LogsTableDetails from "views/pages/user/overview/components/LogsTableDetails";
+import { setOpenDrawer } from 'reducers/overview';
 
 const styles = {
   topHeader: {
@@ -100,6 +101,10 @@ const useStyles = makeStyles<Theme, StyleProps>(() => styles as any);
 
 export function Logs(props) {
   const classes = useStyles({} as StyleProps);
+
+  React.useEffect(() => {
+    props.setOpenDrawer(false);
+  }, []);
 
   const formatDutyStatus = (cell, row) => {
     return (
@@ -279,5 +284,6 @@ export default connect(
   }),
   {
     loadVehicles,
+    setOpenDrawer
   }
 )(Logs);

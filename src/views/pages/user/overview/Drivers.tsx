@@ -13,7 +13,7 @@ import {connect} from 'react-redux';
 import {IRootState} from 'reducers';
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import {getDriversData, setOpenDriverDetails,setOpenDrawer} from "reducers/overview"
+import {getDriversData, setOpenDrawer} from "reducers/overview"
 import DotIcon from "components/Icons/DotIcon";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import CloseIcon from "components/Icons/CloseIcon";
@@ -243,7 +243,7 @@ export function Drivers(props) {
   ]
 
   const onBackDriver = () => {
-    props.setOpenDriverDetails(false)
+    props.setOpenDrawer(false)
   }
   const viewDetail = () => {
     props.history.push("/o/drivers/aaaaaa")
@@ -323,6 +323,6 @@ export default connect(
   {
     // loadVehicles,
     getDriversData,
-    setOpenDriverDetails
+    setOpenDrawer
   }
 )(Drivers);

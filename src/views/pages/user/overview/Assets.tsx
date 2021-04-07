@@ -21,7 +21,7 @@ import AddOutlined from "@material-ui/icons/AddOutlined";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import { MoreHoriz } from "@material-ui/icons";
 
-
+import { setOpenDrawer } from 'reducers/overview';
 const styles = {
   topHeader: {
     display: "flex",
@@ -59,6 +59,8 @@ export function Assets(props) {
 
 
   React.useEffect(() => {
+    props.setOpenDrawer(false);
+    
     async function fetchVehicles() {
       await props.loadVehicles();
     }
@@ -121,6 +123,7 @@ export default connect(
     vehicles: vehicle.vehicles
   }),
   {
-    loadVehicles
+    loadVehicles,
+    setOpenDrawer
   }
 )(Assets);

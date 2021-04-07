@@ -25,56 +25,59 @@ import styles from "assets/jss/material-dashboard-pro-react/views/overviewPageSt
 import pinMaker from 'assets/icons/pinMaker.svg';
 import { Link } from "react-router-dom";
 
-import {setOpenDrawer} from 'reducers/overview';
-
-const useStyles = makeStyles(styles);
+import { setOpenDrawer } from 'reducers/overview';
 
 import { connect } from 'react-redux';
 import { loadVehicles } from 'reducers/vehicle';
 import { IRootState } from 'reducers';
+import InfoWindowPopup from "./components/InfoWindowPopup";
 
 // defaultCenter={{ lat: 40.748817, lng: -73.985428 }}
-const RegularMap = withScriptjs(
-  withGoogleMap((props) => (
-    <GoogleMap
-      defaultZoom={12}
-      defaultCenter={ props.center }
-      defaultOptions={{
-        scrollwheel: false,
-        mapTypeControl: false,
-        streetViewControl: false
-      }}
 
-    >
-      {props.data.map((maker, index) => {
-        if (maker.status === 'connected') {
-          return (
-            <Marker position={{ lat: maker.latitude, lng: maker.longitude }}
-                    icon={{
-                      url: pinMaker,
-                      anchor: new google.maps.Point(5, 58),
-                    }}
-                    onClick={(marker) => {
-                      console.log(`click on Marker ${marker.latLng.lat()} - ${marker.latLng.lng()}`, marker)
-                    }}
-            >
-              <InfoWindow>
-                <div className="infowindow">
-                  <div className="path">{ maker.formatted_address }</div>
-                  <div className="device-name mb-2">{ maker.serialnumber }</div>
-                  <div><Link to={'/user/overview/assets'} className="assets">Assets</Link></div>
-                </div>
-              </InfoWindow>
-            </Marker>
-          )
-        }}
+
+const useStyles = makeStyles(styles);
+
+const RegularMap = withScriptjs(
+  withGoogleMap((props) => {
+      return (
+
+          <GoogleMap
+              defaultZoom={12}
+              defaultCenter={ props.center }
+              defaultOptions={{
+                  scrollwheel: false,
+                  mapTypeControl: false,
+                  streetViewControl: false
+              }}
+
+          >
+              {props.data.map((maker, index) => {
+                  console.log(`maker ${index}`, maker)
+                  if (maker.status === 'connected') {
+                      return (
+                          <Marker position={{ lat: maker.latitude, lng: maker.longitude }}
+                                  icon={{
+                                      url: pinMaker,
+                                      anchor: new google.maps.Point(5, 58),
+                                  }}
+                                  onClick={(marker) => {
+                                      console.log(`click on Marker ${marker.latLng.lat()} - ${marker.latLng.lng()}`, marker)
+                                  }}
+                          >
+                              <InfoWindow>
+                                  <InfoWindowPopup maker={maker}/>
+                              </InfoWindow>
+                          </Marker>
+                      )
+                  }}
+              )
+              }
+          </GoogleMap>
       )
-      }
-    </GoogleMap>
-  ))
+  })
 );
 
-export function DriverDetails(props) {
+export function Proximity(props) {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -100,13 +103,13 @@ export function DriverDetails(props) {
       />
       <div className={ classes.searchMapContainer}>
         <Button
-          aria-label="edit"
-          justIcon
-          round
-          className={classes.toogleDrawer}
-          onClick={ e => {props.setOpenDriver(!props.openDriver)} }
-        >
-          <List />
+            aria-label="edit"
+            justIcon
+            round
+            className={classes.toogleDrawer}
+            onClick={ e => {props.setOpenDrawer(!props.openDrawer)} }
+          >
+            <List />
         </Button>
         <CustomInput
           formControlProps={{
@@ -125,12 +128,6 @@ export function DriverDetails(props) {
             },
           }}
         />
-        <Button
-          className="btn-round-active w-84 h-41"
-          onClick={props.onBack}
-        >
-          Back
-        </Button>
       </div>
     </div>
   );
@@ -141,11 +138,10 @@ export default connect(
     isAuthenticated: authentication.isAuthenticated,
     user: authentication.user,
     vehicles: vehicle.vehicles,
-    openDriverDetails: overview.openDriverDetails,
-    openDriver: overview.openDriver
+    openDrawer : overview.openDrawer
   }),
   {
     loadVehicles,
     setOpenDrawer
   }
-)(DriverDetails);
+)(Proximity);
