@@ -121,7 +121,7 @@ class TableV1 extends React.Component {
     rowSelection: false,
     showPagination: true,
     selectedRows: [],
-    selectedKeyRows: []
+    selectedRowKeys: []
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -140,7 +140,9 @@ class TableV1 extends React.Component {
     }
 
     if (props.rowSelection) {
-      newState = { ...newState, rowSelection: props.rowSelection || false }
+      if (props.rowSelection.selectedRowKeys) {
+        newState = { ...newState, selectedRowKeys: props.rowSelection.selectedRowKeys || [] }
+      }
     }
 
     if (props.showPagination) {
@@ -158,56 +160,54 @@ class TableV1 extends React.Component {
   }
 
   onSelectAll = () => {
-    let { selectedKeyRows, selectedRows, dataSource } = this.state;
-    if (selectedKeyRows.length == dataSource.length) {
-      this.setState({
-        selectedRows: [],
-        selectedKeyRows: []
-      })
-    } else {
-      selectedKeyRows = [];
+    let { selectedRowKeys, selectedRows, dataSource } = this.state;
+    if (selectedRowKeys.length == dataSource.length) {
       selectedRows = [];
+      selectedRowKeys = [];
+    } else {
+      selectedRows = [];
+      selectedRowKeys = [];
       dataSource.forEach((record, index) => {
         if (record.key) {
           selectedRows.push(record);
-          selectedKeyRows.push(record.key);
+          selectedRowKeys.push(record.key);
         } else {
           selectedRows.push(record);
-          selectedKeyRows.push(index);
+          selectedRowKeys.push(index);
         }
       })
-      this.setState({
-        selectedRows,
-        selectedKeyRows
-      })
+    }
+    this.setState({ selectedRows, selectedRowKeys })
+    if (this.props.rowSelection && this.props.rowSelection.onChange) {
+      this.props.rowSelection.onChange(selectedRowKeys, selectedRows)
     }
   }
 
   onSelectChange = (record, index) => {
-    let { selectedKeyRows, selectedRows } = this.state;
+    let { selectedRowKeys, selectedRows } = this.state;
     if (record.key) {
-      if (selectedKeyRows.includes(record.key)) {
-        let selectIndex = selectedKeyRows.findIndex(ele => ele == record.key);
+      if (selectedRowKeys.includes(record.key)) {
+        let selectIndex = selectedRowKeys.findIndex(ele => ele == record.key);
         selectedRows.splice(selectIndex, 1)
-        selectedKeyRows.splice(selectIndex, 1)
+        selectedRowKeys.splice(selectIndex, 1)
       } else {
         selectedRows.push(record);
-        selectedKeyRows.push(record.key);
+        selectedRowKeys.push(record.key);
       }
     } else {
-      if (selectedKeyRows.includes(record.key)) {
-        let selectIndex = selectedKeyRows.findIndex(ele => ele == index);
+      if (selectedRowKeys.includes(record.key)) {
+        let selectIndex = selectedRowKeys.findIndex(ele => ele == index);
         selectedRows.splice(selectIndex, 1)
-        selectedKeyRows.splice(selectIndex, 1)
+        selectedRowKeys.splice(selectIndex, 1)
       } else {
         selectedRows.push(record);
-        selectedKeyRows.push(index);
+        selectedRowKeys.push(index);
       }
     }
-    this.setState({
-      selectedRows,
-      selectedKeyRows
-    })
+    this.setState({ selectedRows, selectedRowKeys })
+    if (this.props.rowSelection && this.props.rowSelection.onChange) {
+      this.props.rowSelection.onChange(selectedRowKeys, selectedRows)
+    }
   }
 
   onSelect = () => {
@@ -228,8 +228,8 @@ class TableV1 extends React.Component {
   render() {
 
     const { classes } = this.props;
-    const { renderTitle, onHeaderRow, onBodyRow, columns, expandedRowRender } = this.props;
-    const { selectedKeyRows, dataSource, current, pageSize, rowSelection } = this.state;
+    const { renderTitle, onHeaderRow, onBodyRow, columns, expandedRowRender, rowSelection } = this.props;
+    const { selectedRowKeys, dataSource, current, pageSize } = this.state;
     const showPagination = this.props.showPagination == false ? false : true;
     const total = this.props.total || dataSource.length;
     const data = this.filterData();
@@ -245,8 +245,8 @@ class TableV1 extends React.Component {
                   <TableCell className={classes.checkbox}>
                     <Checkbox
                       tabIndex={-1}
-                      checked={selectedKeyRows.length > 0 ? true : false}
-                      checkedIcon={dataSource.length == selectedKeyRows.length ? <CheckSquareOutlined /> : <MinusSquareOutlined />}
+                      checked={selectedRowKeys.length > 0 ? true : false}
+                      checkedIcon={dataSource.length == selectedRowKeys.length ? <CheckSquareOutlined /> : <MinusSquareOutlined />}
                       onChange={this.onSelectAll}
                       classes={{
                         checked: classes.checked,
@@ -272,8 +272,8 @@ class TableV1 extends React.Component {
               ) : data.map((record, index) => {
                 let checked = false;
                 if (rowSelection) {
-                  if (record.key) checked = selectedKeyRows.includes(record.key);
-                  else checked = selectedKeyRows.includes(index);
+                  if (record.key) checked = selectedRowKeys.includes(record.key);
+                  else checked = selectedRowKeys.includes(index);
                 }
                 return (
 
