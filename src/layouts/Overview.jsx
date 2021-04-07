@@ -26,7 +26,7 @@ import {setOpenDrawer} from '../reducers/overview';
 import {IRootState} from '../reducers';
 import Button from '@material-ui/core/Button';
 import VehicleSideBar from "views/pages/user/overview/components/VehicleSideBar";
-import ProximitySideBar from "views/pages/user/overview/components/ProximitySideBar";
+import ProximitySideBar from "views/pages/user/overview/proximity/ProximitySideBar";
 import {ExtraDriverDetailsSideBar} from "../views/pages/user/overview/components/ExtraDriverDetailsSideBar";
 import DriverSideBar from "../views/pages/user/overview/drivers/DriverSideBar";
 
