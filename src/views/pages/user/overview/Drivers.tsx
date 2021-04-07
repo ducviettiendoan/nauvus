@@ -9,18 +9,18 @@ import {BaseCSSProperties} from '@material-ui/core/styles/withStyles';
 // core components
 import Button from "components/CustomButtons/Button.js";
 import {connect} from 'react-redux';
-import {loadVehicles} from 'reducers/vehicle';
+// import {loadVehicles} from 'reducers/vehicle';
 import {IRootState} from 'reducers';
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import {getDriversData} from "reducers/overview"
+import {getDriversData, setOpenDrawer} from "reducers/overview"
 import DotIcon from "components/Icons/DotIcon";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import CloseIcon from "components/Icons/CloseIcon";
 import Chip from "@material-ui/core/Chip";
 import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
-
+import DriverDetail from "views/pages/user/overview/drivers/DriverDetail";
 
 const styles = {
   userRolesTitle: {
@@ -137,6 +137,9 @@ const styles = {
       color: '#25345C !important',
     }
   },
+  GridDriverDetails: {
+    padding: "0 !important"
+  }
 };
 
 interface StyleProps {
@@ -153,13 +156,13 @@ export function Drivers(props) {
     props.getDriversData()
   }, [])
 
-  useEffect(() => {
-    async function fetchVehicles() {
-      await props.loadVehicles();
-    }
-
-    fetchVehicles();
-  }, [1]);
+  // useEffect(() => {
+  //   async function fetchVehicles() {
+  //     await props.loadVehicles();
+  //   }
+  //
+  //   fetchVehicles();
+  // }, [1]);
 
   const [chipData, setChipData] = useState([
     {key: 0, label: 'Standard Admin'},
@@ -239,49 +242,68 @@ export function Drivers(props) {
     },
   ]
 
+  const onBackDriver = () => {
+    props.setOpenDrawer(false)
+  }
+  const viewDetail = () => {
+    props.setOpenDrawer(!props.openDrawer)
+    props.history.push("/o/drivers/123456789")
+  }
+
   return (
     <div>
       <GridItem xs={12} sm={12} md={12}>
         <GridContainer>
-          <GridItem xs={12} sm={12} md={12}>
-            {props.data.length > 0 && <Table
-              renderTitle={
-                <Grid container className={classes.gridTitle}>
-                  <Grid item xs={12} sm={12} md={6}>
-                    <Grid container className={classes.headContainer}>
-                      <Grid item xl={2} className={classes.userRolesTitle}> {chipData.length} selected for </Grid>
-                      <Grid item xl={10} className={classes.chipSelected}>
-                        {chipData.map(data => (
-                          <Chip
-                            deleteIcon={<CloseIcon/>}
-                            label={data.label}
-                            onDelete={handleDelete(data)}
-                            className={classes.chips}
-                          />
-                        ))}
-                        {chipData.length > 0 ?
-                          (
-                            <Button onClick={handleClearAll} className={classes.clearAll}>
-                              Clear All
-                            </Button>
-                          ) : ""}
+          <GridItem xs={12} sm={12} md={12} className={props.openDriverDetails ? classes.GridDriverDetails : ""}>
+            {
+              props.openDriverDetails
+                ?
+                <DriverDetail/>
+                :
+                (
+                  props.data.length > 0 && <Table
+                    renderTitle={
+                      <Grid container className={classes.gridTitle}>
+                        <Grid item xs={12} sm={12} md={6}>
+                          <Grid container className={classes.headContainer}>
+                            <Grid item xl={2}
+                                  className={classes.userRolesTitle}> {chipData.length} selected
+                              for </Grid>
+                            <Grid item xl={10} className={classes.chipSelected}>
+                              {chipData.map(data => (
+                                <Chip
+                                  deleteIcon={<CloseIcon/>}
+                                  label={data.label}
+                                  onDelete={handleDelete(data)}
+                                  className={classes.chips}
+                                />
+                              ))}
+                              {chipData.length > 0 ?
+                                (
+                                  <Button onClick={handleClearAll}
+                                          className={classes.clearAll}>
+                                    Clear All
+                                  </Button>
+                                ) : ""}
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                        <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
+                          <ToolboxButton placeholder="Search for driver" showFilter showColumn/>
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  </Grid>
-                  <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
-                    <ToolboxButton placeholder="Search for driver" showFilter showColumn/>
-                  </Grid>
-                </Grid>
-              }
-              columns={columns}
-              dataSource={props.data}
-              onHeaderRow={{
-                className: classes.onHeaderRow
-              }}
-              onBodyRow={{
-                className: classes.tableRow
-              }}
-            />
+                    }
+                    columns={columns}
+                    dataSource={props.data}
+                    onHeaderRow={{
+                      className: classes.onHeaderRow
+                    }}
+                    onBodyRow={{
+                      onClick: viewDetail,
+                      className: classes.tableRow
+                    }}
+                  />
+                )
             }
           </GridItem>
         </GridContainer>
@@ -295,11 +317,13 @@ export default connect(
   ({authentication, vehicle, overview}: IRootState) => ({
     isAuthenticated: authentication.isAuthenticated,
     user: authentication.user,
-    vehicles: vehicle.vehicles,
-    data: overview.driversData
+    // vehicles: vehicle.vehicles,
+    data: overview.driversData,
+    openDriverDetails : overview.openDriverDetails
   }),
   {
-    loadVehicles,
-    getDriversData
+    // loadVehicles,
+    getDriversData,
+    setOpenDrawer
   }
 )(Drivers);

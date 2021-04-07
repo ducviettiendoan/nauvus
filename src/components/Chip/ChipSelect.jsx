@@ -33,10 +33,10 @@ const useStyles2 = makeStyles((theme) => ({
   },
   clearAll: {
     textTransform: "none",
-    color: "#8097D8",
+    color: "#0d6ede",
     background: "unset !important",
     boxShadow: "unset !important",
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 700,
     padding: 0,
     "&:hover": {
@@ -49,14 +49,13 @@ const ChipSelect = (props) => {
 
   const classes = useStyles2();
   const data = props.data || [];
-  console.log(data);
   return (
     <React.Fragment>
       {data.length > 0 && (
         <Grid container className={classes.headContainer}>
-          <Grid item xl={2} className={classes.userRolesTitle}> {data.length} selected for </Grid>
-          <Grid item xl={10} className={classes.chipSelected}>
-            {data.map(item => (
+          <Grid item className={classes.userRolesTitle}> {data.length} selected </Grid>
+          <Grid item className={classes.chipSelected}>
+            {/* {data.map(item => (
               <Chip
                 key={item.key}
                 label={item.label}
@@ -64,8 +63,8 @@ const ChipSelect = (props) => {
                 deleteIcon={<CloseIcon />}
                 onDelete={props.handleDelete(item)}
               />
-            ))}
-            <Button onClick={props.handleClearAll} className={classes.clearAll}> Clear All </Button>
+            ))} */}
+            <Button onClick={props.handleClearAll} className={classes.clearAll}> Clear</Button>
           </Grid>
         </Grid>
       )}

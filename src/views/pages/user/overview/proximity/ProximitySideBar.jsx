@@ -2,75 +2,69 @@ import React from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
 // core components
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-
-import CameraIcon from "components/Icons/CameraIcon";
-import VehicleMapIcon from "components/Icons/VehicleMapIcon";
-import VehicleUserIcon from "components/Icons/VehicleUserIcon";
-import VehicleLinkIcon from "components/Icons/VehicleLinkIcon";
-
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
-
-// import PerfectScrollbar from "react-perfect-scrollbar";
-
 import { Col, Row } from 'reactstrap';
+import { connect } from 'react-redux';
+import CustomInput from "components/CustomInput/CustomInput"
+import { Grid } from "@material-ui/core";
+
 const styles = {
-  liContainer: {
-    width: "330px",
-    height: "103px",
-    border: "1px solid #ECECF2",
-    boxSizing: "border-box",
-    borderRadius: "12px",
-    background: "rgba(245, 245, 250, 0.4)",
-    marginLeft: "29px",
-    marginBottom: "8px"
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  },
   txtMainDevice: {
-    color: "#25345C",
+    color: "#1C1D21",
     fontWeight: "bold",
     fontSize: "14px",
-    lineHeight: "21px",
-    marginBottom: "7px"
+    lineHeight: "18px",
+    paddingBottom: "0px !important",
+    paddingLeft: "28px !important"
   },
-  txtSubDevice: {
-    color: "#C4C4C4",
+  txtMainDescription: {
+    color: "#8181A5",
+    fontWeight: "normal",
     fontSize: "12px",
     lineHeight: "21px",
-    position: "relative"
+    paddingTop: "0px !important",
+    paddingBottom: "12px !important",
+    paddingLeft: "28px !important"
   },
-  cameraIcon: {
-    position: "absolute",
-    top: "20px",
-    left: "25px"
+  contentContainer: {
+    padding: "50px 28px 50px 28px !important"
+  },
+  sidebarInput: {
+    width: "100%"
+  },
+  textFieldRoot: {
+    fontWeight: 'normal',
+    fontSize: '18px',
+    lineHeight: '21px',
+    color: '#C4C4C4',
+    marginBottom: "0px !important"
+  },
+  textInputRoot: {
+    fontWeight: 'bold',
+    fontSize: '14px',
+    lineHeight: '21px',
+    color: '#25345C',
+    padding: "6px 0 17px"
+  },
+  footerText: {
+    paddingTop: "30px !important",
+    fontWeight: 400,
+    fontFamily: "Lato",
+    fontSize: "14px",
+    lineHeight: "21px",
+    color: "#25345C",
   }
 };
-
-import { connect } from 'react-redux';
-import { loadVehicles } from 'reducers/vehicle';
-import { IRootState } from 'reducers';
 
 const useStyles = makeStyles(styles);
 var ps;
 export function ProximitySideBar(props) {
   const classes = useStyles();
-  const mainPanelProximitySideBar = React.createRef();
+  const mainPanelVehicleSideBar = React.createRef();
 
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
@@ -80,7 +74,7 @@ export function ProximitySideBar(props) {
 
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
-      ps = new PerfectScrollbar(mainPanelProximitySideBar.current, {
+      ps = new PerfectScrollbar(mainPanelVehicleSideBar.current, {
         suppressScrollX: true,
         suppressScrollY: false
       });
@@ -97,44 +91,114 @@ export function ProximitySideBar(props) {
     };
   }, [1]);
 
+  const [inputValue, setInputValue] = React.useState({
+    asset: "",
+    distance: "",
+    start: "",
+    end: "",
+  })
+
+  const handleInputChange = (event) => {
+    setInputValue({
+      ...inputValue,
+      [event.target.name]: event.target.value
+    })
+  }
+
   return (
-    <div ref={mainPanelProximitySideBar}>
-      <Divider />
+    <div ref={mainPanelVehicleSideBar}>
       <Row>
-        <Col><div className={classes.txtMainDevice} style={{ padding: '23px' }}>Proximity Search</div></Col>
-        <Col style={{ textAlign: 'right', padding: '23px', marginRight: '23px' }} className={classes.txtMainDevice}><div>Clear All</div></Col>
+        <Col>
+          <div className={classes.txtMainDevice} style={{ padding: '15px' }}>Proximity Search</div>
+          <div className={classes.txtMainDescription} style={{ padding: '15px' }}>Search for an address to see which assets were previously nearby.</div>
+          <Divider variant="fullWidth" light />
+        </Col>
       </Row>
 
-      <List>
-        {props.vehicles.map((vehicle, index) => (
-          <ListItem button key={index} className={classes.liContainer}>
-            <ListItemIcon className={classes.cameraIcon}><CameraIcon /></ListItemIcon>
-            <ListItemText style={{ marginLeft: "50px" }} primary={
-              <>
-                <div className={classes.txtMainDevice}><span>{vehicle.serialnumber}</span><span style={{ float: "right" }}>- km/h</span></div>
-                <div className={classes.txtSubDevice}><VehicleMapIcon /> <span style={{ top: "-2px", position: "absolute", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%', right: '-21px' }}>{vehicle.formatted_address}</span></div>
-                <Row className={classes.txtSubDevice}>
-                  <Col>
-                    <VehicleUserIcon /> <span style={{ top: "-2px", position: "absolute" }}>---</span>
-                  </Col>
-                  <Col style={{ marginTop: "4px" }}>
-                    <VehicleLinkIcon /> <span style={{ top: "-5px", position: "absolute" }}>---</span>
-                  </Col>
-                </Row>
-              </>
-            } />
-          </ListItem>
-        ))}
-        {!props.vehicles.length && <div style={{ textAlign: 'center' }}><h5>No data</h5></div>}
+      <List className={classes.contentContainer}>
+        <CustomInput
+          labelText="Search for assets near"
+          name="asset"
+          formControlProps={{
+            className: classes.sidebarInput
+          }}
+          inputProps={{
+            placeholder: "Enter assets",
+            onChange: handleInputChange,
+            defaultValue: "Title",
+            classes: { input: classes.textInputRoot },
+          }}
+          labelProps={{
+            shrink: true,
+            classes: { root: classes.textFieldRoot }
+          }}
+        />
+        <CustomInput
+          labelText="Distance (meters)"
+          name="distance"
+          formControlProps={{
+            className: classes.sidebarInput
+          }}
+          inputProps={{
+            placeholder: "Enter distance",
+            onChange: handleInputChange,
+            defaultValue: "100",
+            classes: { input: classes.textInputRoot },
+          }}
+          labelProps={{
+            shrink: true,
+            classes: { root: classes.textFieldRoot }
+          }}
+        />
+        <CustomInput
+          labelText="Start Time"
+          name="start"
+          formControlProps={{
+            className: classes.sidebarInput
+          }}
+          inputProps={{
+            placeholder: "Enter start time",
+            onChange: handleInputChange,
+            defaultValue: "Title",
+            classes: { input: classes.textInputRoot },
+          }}
+          labelProps={{
+            shrink: true,
+            classes: { root: classes.textFieldRoot }
+          }}
+        />
+        <CustomInput
+          labelText="Start Time"
+          name="end"
+          formControlProps={{
+            className: classes.sidebarInput
+          }}
+          inputProps={{
+            placeholder: "Enter end time",
+            onChange: handleInputChange,
+            defaultValue: "Title",
+            classes: { input: classes.textInputRoot },
+          }}
+          labelProps={{
+            shrink: true,
+            classes: { root: classes.textFieldRoot }
+          }}
+        />
+        <Grid className={classes.footerText}>No assets were nearby during the specified time.</Grid>
       </List>
     </div>
   );
 }
 
-export default connect(
-  ({ vehicle }: IRootState) => ({
+const mapStateToProps = ({ vehicle }) => {
+  return {
     vehicles: vehicle.vehicles
-  }),
-  {
   }
-)(ProximitySideBar);
+}
+
+const mapDispatchToProps = {
+
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProximitySideBar);

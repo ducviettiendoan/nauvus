@@ -23,59 +23,58 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 
 import styles from "assets/jss/material-dashboard-pro-react/views/overviewPageStyle.js";
 import pinMaker from 'assets/icons/pinMaker.svg';
-import { setOpenDrawer } from 'reducers/overview';
+import { Link } from "react-router-dom";
 
-import { connect } from 'react-redux';
-import { loadVehicles } from 'reducers/vehicle';
-import InfoWindowPopup from "./components/InfoWindowPopup";
-
-// defaultCenter={{ lat: 40.748817, lng: -73.985428 }}
-
+import {setOpenDrawer} from 'reducers/overview';
 
 const useStyles = makeStyles(styles);
 
+import { connect } from 'react-redux';
+import { loadVehicles } from 'reducers/vehicle';
+import { IRootState } from 'reducers';
+
+// defaultCenter={{ lat: 40.748817, lng: -73.985428 }}
 const RegularMap = withScriptjs(
-  withGoogleMap((props) => {
-    return (
+  withGoogleMap((props) => (
+    <GoogleMap
+      defaultZoom={12}
+      defaultCenter={ props.center }
+      defaultOptions={{
+        scrollwheel: false,
+        mapTypeControl: false,
+        streetViewControl: false
+      }}
 
-      <GoogleMap
-        defaultZoom={12}
-        defaultCenter={props.center}
-        defaultOptions={{
-          scrollwheel: false,
-          mapTypeControl: false,
-          streetViewControl: false
+    >
+      {props.data.map((maker, index) => {
+        if (maker.status === 'connected') {
+          return (
+            <Marker position={{ lat: maker.latitude, lng: maker.longitude }}
+                    icon={{
+                      url: pinMaker,
+                      anchor: new google.maps.Point(5, 58),
+                    }}
+                    onClick={(marker) => {
+                      console.log(`click on Marker ${marker.latLng.lat()} - ${marker.latLng.lng()}`, marker)
+                    }}
+            >
+              <InfoWindow>
+                <div className="infowindow">
+                  <div className="path">{ maker.formatted_address }</div>
+                  <div className="device-name mb-2">{ maker.serialnumber }</div>
+                  <div><Link to={'/user/overview/assets'} className="assets">Assets</Link></div>
+                </div>
+              </InfoWindow>
+            </Marker>
+          )
         }}
-
-      >
-        {props.data.map((maker, index) => {
-          console.log(`maker ${index}`, maker)
-          if (maker.status === 'connected') {
-            return (
-              <Marker position={{ lat: maker.latitude, lng: maker.longitude }}
-                icon={{
-                  url: pinMaker,
-                  anchor: new google.maps.Point(5, 58),
-                }}
-                onClick={(marker) => {
-                  console.log(`click on Marker ${marker.latLng.lat()} - ${marker.latLng.lng()}`, marker)
-                }}
-              >
-                <InfoWindow>
-                  <InfoWindowPopup maker={maker} />
-                </InfoWindow>
-              </Marker>
-            )
-          }
-        }
-        )
-        }
-      </GoogleMap>
-    )
-  })
+      )
+      }
+    </GoogleMap>
+  ))
 );
 
-export function Proximity(props) {
+export function DriverDetail(props) {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -89,23 +88,23 @@ export function Proximity(props) {
 
 
   return (
-    <div style={{ position: 'relative' }}>
+    <div style={{ position: 'relative'}}>
       <RegularMap
-        googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAP_API_KEY}`}
+        googleMapURL={ `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAP_API_KEY}` }
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div className="containerElementMap" />}
         mapElement={<div style={{ height: `100%` }} />}
         isMarkerShown
-        data={props.vehicles}
-        center={{ lat: 40.748817, lng: -73.985428 }}
+        data={ props.vehicles }
+        center={ {lat: 40.748817, lng: -73.985428} }
       />
-      <div className={classes.searchMapContainer}>
+      <div className={ classes.searchMapContainer}>
         <Button
           aria-label="edit"
           justIcon
           round
           className={classes.toogleDrawer}
-          onClick={e => { props.setOpenDrawer(!props.openDrawer) }}
+          onClick={ e => {props.setOpenDrawer(!props.openDrawer)} }
         >
           <List />
         </Button>
@@ -114,7 +113,7 @@ export function Proximity(props) {
             className: classes.btnSearchOnMap
           }}
           inputProps={{
-            id: "btn-search-on-map",
+            id : "btn-search-on-map",
             placeholder: "Search",
             startAdornment: (
               <InputAdornment position="start">
@@ -131,18 +130,15 @@ export function Proximity(props) {
   );
 }
 
-const mapStateToProps = ({ authentication, vehicle, overview }) => {
-  return {
+export default connect(
+  ({ authentication, vehicle, overview }: IRootState) => ({
     isAuthenticated: authentication.isAuthenticated,
     user: authentication.user,
     vehicles: vehicle.vehicles,
-    openDrawer: overview.openDrawer
+    openDrawer : overview.openDrawer
+  }),
+  {
+    loadVehicles,
+    setOpenDrawer
   }
-}
-
-const mapDispatchToProps = {
-  loadVehicles,
-  setOpenDrawer
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Proximity);
+)(DriverDetail);

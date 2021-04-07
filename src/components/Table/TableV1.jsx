@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from "@material-ui/core/styles/withStyles";
+import { makeStyles } from "@material-ui/core/styles";
 import { hexToRgb, blackColor, primaryColor } from "assets/jss/material-dashboard-pro-react.js";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import Checkbox from '@material-ui/core/Checkbox';
+import Collapse from '@material-ui/core/Collapse';
 import Card from "components/Card/Card.js";
 import TableRow from '@material-ui/core/TableRow';
 import CheckSquareOutlined from 'components/Icons/CheckSquareOutlined';
 import MinusSquareOutlined from 'components/Icons/MinusSquareOutlined';
+import DropDownIcon from "components/Icons/DropDownIcon";
 import GenPaginationV1 from 'components/Pagination/GenPaginationV1';
 
 const styles = {
@@ -35,8 +38,8 @@ const styles = {
   },
   cardTable: {
     paddingBottom: "40px",
-    overflow: "auto",
-    overflowY: "hidden"
+    overflow: "unset",
+    overflowY: "unset"
   },
   checkbox: {
     textAlign: 'center'
@@ -45,7 +48,66 @@ const styles = {
     border: "none",
     color: "rgba(0, 0, 0, 0.25)",
     textAlign: "center"
-  }
+  },
+  dropDownIconDate: {
+    color: "#C4C4C4",
+    cursor: "pointer",
+    marginLeft: "10px"
+  },
+}
+
+const useStyles = makeStyles(styles);
+
+const TableRowExpandable = (props) => {
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const { record, columns, rowSelection, checked, index } = props;
+  return (
+    <React.Fragment>
+      <TableRow key={index} {...props.onBodyRow}>
+        {rowSelection && (
+          <TableCell className={classes.checkbox}>
+            <Checkbox
+              tabIndex={-1}
+              checked={checked}
+              onChange={() => props.onSelectChange(record, index)}
+              checkedIcon={<CheckSquareOutlined />}
+              classes={{
+                checked: classes.checked,
+                root: classes.checkRoot
+              }}
+            />
+          </TableCell>
+        )}
+        {columns.map(column => {
+          if (column.render) {
+            if (column.showExpandable) {
+              return (
+                <TableCell
+                  key={column.key}
+                  {...column.onCell}
+                >
+                  <div style={{ display: "flex" }}>
+                    {column.render(record[column.key], record, index)}
+                    <DropDownIcon className={classes.dropDownIconDate} onClick={() => setOpen(!open)} />
+                  </div>
+                </TableCell>
+              )
+            }
+            return <TableCell key={column.key} {...column.onCell} >{column.render(record[column.key], record, index)}</TableCell>
+          }
+          return <TableCell key={column.key} {...column.onCell}>{record[column.key]} </TableCell>
+        })}
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={columns.length + 1}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            {props.expandedRowRender(record)}
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
+  )
 }
 
 class TableV1 extends React.Component {
@@ -59,7 +121,7 @@ class TableV1 extends React.Component {
     rowSelection: false,
     showPagination: true,
     selectedRows: [],
-    selectedKeyRows: []
+    selectedRowKeys: []
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -78,11 +140,13 @@ class TableV1 extends React.Component {
     }
 
     if (props.rowSelection) {
-      newState = { ...newState, rowSelection: props.rowSelection || false }
+      if (props.rowSelection.selectedRowKeys) {
+        newState = { ...newState, selectedRowKeys: props.rowSelection.selectedRowKeys || [] }
+      }
     }
 
     if (props.showPagination) {
-      newState = { ...newState, showSizeChanger: props.showPagination || false }
+      newState = { ...newState, showPagination: props.showPagination }
     }
     return newState
   }
@@ -96,56 +160,54 @@ class TableV1 extends React.Component {
   }
 
   onSelectAll = () => {
-    let { selectedKeyRows, selectedRows, dataSource } = this.state;
-    if (selectedKeyRows.length == dataSource.length) {
-      this.setState({
-        selectedRows: [],
-        selectedKeyRows: []
-      })
-    } else {
-      selectedKeyRows = [];
+    let { selectedRowKeys, selectedRows, dataSource } = this.state;
+    if (selectedRowKeys.length == dataSource.length) {
       selectedRows = [];
+      selectedRowKeys = [];
+    } else {
+      selectedRows = [];
+      selectedRowKeys = [];
       dataSource.forEach((record, index) => {
         if (record.key) {
           selectedRows.push(record);
-          selectedKeyRows.push(record.key);
+          selectedRowKeys.push(record.key);
         } else {
           selectedRows.push(record);
-          selectedKeyRows.push(index);
+          selectedRowKeys.push(index);
         }
       })
-      this.setState({
-        selectedRows,
-        selectedKeyRows
-      })
+    }
+    this.setState({ selectedRows, selectedRowKeys })
+    if (this.props.rowSelection && this.props.rowSelection.onChange) {
+      this.props.rowSelection.onChange(selectedRowKeys, selectedRows)
     }
   }
 
   onSelectChange = (record, index) => {
-    let { selectedKeyRows, selectedRows } = this.state;
+    let { selectedRowKeys, selectedRows } = this.state;
     if (record.key) {
-      if (selectedKeyRows.includes(record.key)) {
-        let selectIndex = selectedKeyRows.findIndex(ele => ele == record.key);
+      if (selectedRowKeys.includes(record.key)) {
+        let selectIndex = selectedRowKeys.findIndex(ele => ele == record.key);
         selectedRows.splice(selectIndex, 1)
-        selectedKeyRows.splice(selectIndex, 1)
+        selectedRowKeys.splice(selectIndex, 1)
       } else {
         selectedRows.push(record);
-        selectedKeyRows.push(record.key);
+        selectedRowKeys.push(record.key);
       }
     } else {
-      if (selectedKeyRows.includes(record.key)) {
-        let selectIndex = selectedKeyRows.findIndex(ele => ele == index);
+      if (selectedRowKeys.includes(record.key)) {
+        let selectIndex = selectedRowKeys.findIndex(ele => ele == index);
         selectedRows.splice(selectIndex, 1)
-        selectedKeyRows.splice(selectIndex, 1)
+        selectedRowKeys.splice(selectIndex, 1)
       } else {
         selectedRows.push(record);
-        selectedKeyRows.push(index);
+        selectedRowKeys.push(index);
       }
     }
-    this.setState({
-      selectedRows,
-      selectedKeyRows
-    })
+    this.setState({ selectedRows, selectedRowKeys })
+    if (this.props.rowSelection && this.props.rowSelection.onChange) {
+      this.props.rowSelection.onChange(selectedRowKeys, selectedRows)
+    }
   }
 
   onSelect = () => {
@@ -166,8 +228,9 @@ class TableV1 extends React.Component {
   render() {
 
     const { classes } = this.props;
-    const { renderTitle, onHeaderRow, onBodyRow, columns } = this.props;
-    const { selectedKeyRows, dataSource, current, pageSize, rowSelection, showPagination } = this.state;
+    const { renderTitle, onHeaderRow, onBodyRow, columns, expandedRowRender, rowSelection } = this.props;
+    const { selectedRowKeys, dataSource, current, pageSize } = this.state;
+    const showPagination = this.props.showPagination == false ? false : true;
     const total = this.props.total || dataSource.length;
     const data = this.filterData();
     return (
@@ -182,8 +245,8 @@ class TableV1 extends React.Component {
                   <TableCell className={classes.checkbox}>
                     <Checkbox
                       tabIndex={-1}
-                      checked={selectedKeyRows.length > 0 ? true : false}
-                      checkedIcon={dataSource.length == selectedKeyRows.length ? <CheckSquareOutlined /> : <MinusSquareOutlined />}
+                      checked={selectedRowKeys.length > 0 ? true : false}
+                      checkedIcon={dataSource.length == selectedRowKeys.length ? <CheckSquareOutlined /> : <MinusSquareOutlined />}
                       onChange={this.onSelectAll}
                       classes={{
                         checked: classes.checked,
@@ -209,32 +272,50 @@ class TableV1 extends React.Component {
               ) : data.map((record, index) => {
                 let checked = false;
                 if (rowSelection) {
-                  if (record.key) checked = selectedKeyRows.includes(record.key);
-                  else checked = selectedKeyRows.includes(index);
+                  if (record.key) checked = selectedRowKeys.includes(record.key);
+                  else checked = selectedRowKeys.includes(index);
                 }
                 return (
-                  <TableRow key={index} {...onBodyRow}>
-                    {rowSelection && (
-                      <TableCell className={classes.checkbox}>
-                        <Checkbox
-                          tabIndex={-1}
-                          checked={checked}
-                          onChange={() => this.onSelectChange(record, index)}
-                          checkedIcon={<CheckSquareOutlined />}
-                          classes={{
-                            checked: classes.checked,
-                            root: classes.checkRoot
-                          }}
-                        />
-                      </TableCell>
+
+                  <React.Fragment>
+                    {expandedRowRender ? (
+                      <TableRowExpandable
+                        index={index}
+                        onBodyRow={onBodyRow}
+                        checked={checked}
+                        record={record}
+                        columns={columns}
+                        rowSelection={rowSelection}
+                        onSelectChange={this.onSelectChange}
+                        expandedRowRender={expandedRowRender}
+                      />
+                    ) : (
+                      <TableRow key={index} {...onBodyRow}>
+                        {rowSelection && (
+                          <TableCell className={classes.checkbox}>
+                            <Checkbox
+                              tabIndex={-1}
+                              checked={checked}
+                              onChange={() => this.onSelectChange(record, index)}
+                              checkedIcon={<CheckSquareOutlined />}
+                              classes={{
+                                checked: classes.checked,
+                                root: classes.checkRoot
+                              }}
+                            />
+                          </TableCell>
+                        )}
+                        { columns.map(column => {
+                          if (column.render) {
+                            return <TableCell key={column.key} {...column.onCell} >{column.render(record[column.key], record, index)}</TableCell>
+                          }
+                          return <TableCell key={column.key} {...column.onCell}>{record[column.key]} </TableCell>
+                        })}
+                      </TableRow>
                     )}
-                    { columns.map(column => {
-                      if (column.render) {
-                        return <TableCell key={column.key} {...column.onCell} >{column.render(record[column.key], record, index)}</TableCell>
-                      }
-                      return <TableCell key={column.key} {...column.onCell}>{record[column.key]}</TableCell>
-                    })}
-                  </TableRow>
+
+                  </React.Fragment>
+
                 )
               })}
             </TableBody>
@@ -259,10 +340,3 @@ class TableV1 extends React.Component {
 }
 
 export default withStyles(styles)(TableV1);
-
-// TablePaginationActions.propTypes = {
-//   count: PropTypes.number.isRequired,
-//   onChangePage: PropTypes.func.isRequired,
-//   page: PropTypes.number.isRequired,
-//   rowsPerPage: PropTypes.number.isRequired,
-// };

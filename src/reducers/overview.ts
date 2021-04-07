@@ -7,21 +7,26 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar'
 // console.log(awsconfig);
 export const ACTION_TYPES = {
   SET_OPEN_DRAWER: 'overview/SET_OPEN_DRAWER',
-  SET_OPEN_PROXIMITY: 'overview/SET_OPEN_PROXIMITY',
+  SET_OPEN_DRIVER_DETAILS: 'overview/SET_OPEN_DRIVER_DETAILS',
+  SET_OPEN_DRIVER: 'overview/SET_OPEN_DRIVER',
   GET_VEHICLE_DATA: 'overview/GET_VEHICLE_DATA',
   GET_TRAILERS_DATA: 'overview/GET_TRAILERS_DATA',
   GET_DRIVERS_DATA: 'overview/GET_DRIVERS_DATA',
   // activity logs data
-  GET_ACTIVITY_LOGS_DATA: 'overview/GET_ACTIVITY_LOGS_DATA'
+  GET_ACTIVITY_LOGS_DATA: 'overview/GET_ACTIVITY_LOGS_DATA',
+  // chart data activity logs
+  GET_CHART_DATA: "overview/GET_CHART_DATA",
 };
 
 const initialState = {
-  openDrawer: false,
-  openProximity: false,
+  openDrawer: true,
+  openDriver: false,
+  openDriverDetails: false,
   vehiclesData: [],
   trailersData: [],
   driversData: [],
   activityLogsData: [],
+  chartData: [],
 };
 
 export type OverviewState = Readonly<typeof initialState>;
@@ -35,10 +40,16 @@ export default (state: OverviewState = initialState, action): OverviewState => {
         openDrawer: action.payload
       };
     }
-    case ACTION_TYPES.SET_OPEN_PROXIMITY: {
+    case ACTION_TYPES.SET_OPEN_DRIVER: {
       return {
         ...state,
-        openProximity: action.payload
+        openDriver: action.payload
+      };
+    }
+    case ACTION_TYPES.SET_OPEN_DRIVER_DETAILS: {
+      return {
+        ...state,
+        openDriverDetails: action.payload
       };
     }
     case ACTION_TYPES.GET_VEHICLE_DATA: {
@@ -65,6 +76,12 @@ export default (state: OverviewState = initialState, action): OverviewState => {
         activityLogsData: action.payload
       };
     }
+    case ACTION_TYPES.GET_CHART_DATA: {
+      return {
+        ...state,
+        chartData: action.payload
+      };
+    }
     default:
       return state;
   }
@@ -73,13 +90,6 @@ export default (state: OverviewState = initialState, action): OverviewState => {
 export const setOpenDrawer = (value) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.SET_OPEN_DRAWER,
-    payload: value
-  });
-};
-
-export const setOpenProximity = (value) => async dispatch => {
-  dispatch({
-    type: ACTION_TYPES.SET_OPEN_PROXIMITY,
     payload: value
   });
 };
@@ -139,8 +149,23 @@ const dumpActivityData = () => {
       inViolation: '0:00:00',
       from: '-',
       to: '-',
-      details: 'Missing Driver Certification',
-      date: 'Mon, Mar 29'
+      details: "Missing Driver Certification",
+      date: 'Mon, Mar 29',
+
+      carrierName: "Ali Plus Transport",
+      carrierAddress: "201 Sangamore Rd",
+      carrierId: "Nauvus (82K7)",
+      carrierDotNumber: "1542846",
+
+      driverName: "Ali Singh (alisingh)",
+      driverLicense: "xxx",
+      ruleSet: "NE 80 hour / 8 day",
+      vehicle: "Vehicle 101",
+      homeName: "Ali Plus Transport",
+      homeAddress: "201 Sangamore Rd",
+      shippingId: "-",
+      trailer: "-",
+      distance: "-"
     };
     data.push(item);
   }
@@ -172,6 +197,21 @@ const dumpDriversData = () => {
   return data;
 }
 
+const dumpChartData = () => {
+  let data = [];
+  for (let i = 0; i < 1; i++) {
+    let item = {
+      time: "12:00:00 AM EDT - Present",
+      duration: "9h 6m",
+      status: "Disconnected",
+      remark: "-",
+      vehicle: "Vehicle 101",
+      location: "-",
+    };
+    data.push(item);
+  }
+  return data;
+}
 
 export const getVehiclesData = () => async dispatch => {
   dispatch({
@@ -198,6 +238,13 @@ export const getActivityLogsData = () => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_ACTIVITY_LOGS_DATA,
     payload: dumpActivityData
+  })
+}
+
+export const getChartData = () => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_CHART_DATA,
+    payload: dumpChartData
   })
 }
 

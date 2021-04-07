@@ -83,6 +83,72 @@ const overviewPageStyle = theme => ({
     minWidth: '40px !important',
     marginTop: "-10px",
     marginRight: "10px"
+  },
+  infowindow: {
+    width: "100%"
+  },
+  vehiclePreview: {
+    width: "100%"
+  },
+  vehicleInfo: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    margin: "8px 0"
+  },
+  driver: {
+    marginBottom: "6px"
+  },
+  driverName: {
+    fontWeight: 400,
+    fontSize: "14px",
+    color: "#25345C",
+  },
+  driverId: {
+    fontWeight: 400,
+    fontSize: "14px",
+    color: "#B4B4B4",
+    paddingLeft: "8px"
+  },
+  path: {
+    fontWeight: 400,
+    fontSize: "14px",
+    lineHeight: "21px",
+    color: "#25345C",
+  },
+  deviceName: {
+    fontWeight: 700,
+    fontSize: "14px",
+    lineHeight: "21px",
+    color: "#25345C"
+  },
+  fuelLevel: {
+    fontWeight: 400,
+    color: "#B4B4B4",
+    marginBottom: "8px"
+  },
+  speed: {
+    background: "#27AE60",
+    color: "white",
+    padding: "5px 10px",
+    borderRadius: "20px"
+  },
+  textField: {
+    margin: "12px"
+  },
+  fuelPercent: {
+    fontSize: "14px"
+  },
+  toolBar: {
+    fontSize: "14px"
+  },
+  zoom: {
+    fontSize: "18px",
+    marginRight: "16px"
+  },
+  newTab: {
+    fontSize: "18px",
+    fill: "none"
   }
 });
 

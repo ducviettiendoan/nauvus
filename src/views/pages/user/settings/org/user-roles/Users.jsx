@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import { Form, Field } from 'react-final-form';
+import { TextField, Checkbox, Radio, Select } from 'final-form-material-ui';
 
 import Button from "components/CustomButtons/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
@@ -12,6 +16,11 @@ import EditIcon from "components/Icons/EditIcon";
 import avatar from "assets/img/faces/avatar.jpg";
 import ChipSelect from 'components/Chip/ChipSelect';
 import { getUserRoles } from "reducers/setting-org";
+import DiaLog from "components/CustomDialog/Dialog";
+import GridContainer from "components/Grid/GridContainer";
+import GridItem from "components/Grid/GridItem";
+import OrganizationUpload from "components/CustomUpload/OrganizationUpload";
+
 import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
@@ -102,29 +111,47 @@ const useStyles = makeStyles((theme) => ({
     height: 40,
     borderRadius: "50%"
   },
+  rootSelect: {
+    width: "100%"
+  },
+  formRow: {
+    marginBottom: 16
+  },
+  selectButton: {
+    display: "flex",
+    justifyContent: "flex-end"
+  },
+  formText: {
+    fontSize: "14px",
+    fontFamily: 'Lato',
+    fontWeight: "400",
+  },
+  formTextSpan: {
+    paddingLeft: "30px",
+    color: "#a5a5a5",
+  },
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    margin: "24px",
+    textAlign: "center"
+  },
 }));
 
 export function Users(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([])
 
   React.useEffect(() => {
     // Get list data
     props.getUserRoles();
   }, []);
 
-  const [chipData, setChipData] = React.useState([
-    { key: 0, label: 'Standard Admin' },
-    { key: 1, label: 'Full admin' },
-  ]);
-
-  const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
-  };
-
-  const handleClearAll = () => {
-    setChipData([])
-  }
+  const handleDelete = (chipToDelete) => () => setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+  const handleClearAll = () => setSelectedRowKeys(() => [])
+  const onSelectChange = selectedRowKeys => setSelectedRowKeys(() => [...selectedRowKeys])
 
   const columns = [
     {
@@ -176,27 +203,54 @@ export function Users(props) {
         </div>
       )
     }
+  ];
+
+  const roles = [
+    { id: 'full_admin', label: 'Full Admin', description: "	Full edit access to all dashboard pages." },
+    { id: 'standard_admin', label: 'Standard Admin', description: "Edit access except billing and finance pages." },
+    { id: 'read_only_admin', label: 'Read-only Admin', description: "	View access except billing and finance pages." },
+    { id: 'dispatch', label: 'Dispatch', description: "Edit access to only dispatch and routing features." },
+    { id: 'maintenance', label: 'Maintenance', description: "	Edit access to only maintenance features." },
+    { id: 'standard_admin_no_dash', label: "Standard Admin (No Dash Cam Access)", description: "Standard Admin but no access to dashcams." }
   ]
 
+  const access = [
+    { id: "Entire", label: "Entire Organization" },
+    { id: "room", label: "Room" },
+    { id: "new", label: "New" }
+  ]
 
+  const onSubmit = async (values) => {
+    console.log(values);
+  }
+  const validate = (values) => {
+    const errors = {};
+    if (!values.email) errors.email = 'Email must not be empty!';
+    return errors;
+  };
+
+  const initData = { access: "Entire", role: "full_admin" }
   return (
     <div>
       <Table
         renderTitle={
-          <Grid container justify="space-between" className={classes.gridTitle}>
-            <Grid>
+          <GridContainer justify="space-between" className={classes.gridTitle}>
+            <GridItem>
               <ChipSelect
-                data={chipData}
+                data={selectedRowKeys}
                 handleDelete={handleDelete}
                 handleClearAll={handleClearAll}
               />
-            </Grid>
-            <Grid className={classes.headLeft}>
+            </GridItem>
+            <GridItem className={classes.headLeft}>
               <ToolboxButton placeholder="Search for tag or email" showFilter showTrash />
-            </Grid>
-          </Grid>
+            </GridItem>
+          </GridContainer>
         }
-        rowSelection={{}}
+        rowSelection={{
+          selectedRowKeys,
+          onChange: onSelectChange,
+        }}
         columns={columns}
         dataSource={props.data}
         onHeaderRow={{
@@ -206,6 +260,115 @@ export function Users(props) {
           className: classes.tableRow
         }}
       />
+      <DiaLog
+        renderTitle={<h3 className={classes.dialogTitle}>Invite User</h3>}
+        handleClose={props.handleClose}
+        open={props.open}
+      >
+        <Form
+          onSubmit={onSubmit}
+          initialValues={initData}
+          validate={validate}
+          render={({ handleSubmit, reset, submitting, pristine, values }) => {
+            let role = null;
+            if (values && values.role) {
+              let index = roles.findIndex(r => r.id == values.role)
+              if (index > -1) role = roles[index];
+            }
+            return (
+              <form onSubmit={handleSubmit} noValidate>
+                <GridContainer justify="space-between" className={classes.formRow}>
+                  <GridItem md>
+                    <InputLabel required>Email</InputLabel>
+                    <Field
+                      fullWidth
+                      required
+                      name="email"
+                      type="text"
+                      component={TextField}
+                    />
+                  </GridItem>
+                </GridContainer>
+                <GridContainer justify="space-between" className={classes.formRow}>
+                  <GridItem md={6}>
+                    <InputLabel >Role</InputLabel>
+                    <Field
+                      fullWidth
+                      name="role"
+                      component={Select}
+                      formControlProps={{ fullWidth: true }}
+                      style={{ margin: 0 }}
+                    >
+                      {roles.map(role => <MenuItem key={role.id} value={role.id}>{role.label}</MenuItem>)}
+                    </Field>
+                  </GridItem>
+                  <GridItem md={6}>
+                    <InputLabel>Access</InputLabel>
+                    <Field
+                      fullWidth
+                      name="access"
+                      component={Select}
+                      formControlProps={{ fullWidth: true }}
+                      style={{ margin: 0 }}
+                    >
+                      {access.map(role => <MenuItem key={role.id} value={role.id}>{role.label}</MenuItem>)}
+                    </Field>
+                  </GridItem>
+                </GridContainer>
+                <GridContainer justify="space-between" className={classes.formRow}>
+                  <GridItem md>
+                    <InputLabel >Permissions</InputLabel>
+                    <p className={classes.formText}>
+                      {role && role.label}
+                      <span className={classes.formTextSpan}>{role && role.description}</span>
+                    </p>
+                  </GridItem>
+                </GridContainer>
+                <div className={classes.selectButton}>
+                  <Button
+                    type="button"
+                    round
+                    className="btn-round-active-2 mr-2"
+                    onClick={props.handleClose}
+                  > Cancel</Button>
+                  <Button
+                    round
+                    className="btn-round-active mr-2"
+                    type="submit"
+                    disabled={submitting}
+                  > Save</Button>
+                </div>
+              </form>
+            )
+          }}
+        />
+      </DiaLog>
+
+      <DiaLog
+        renderTitle={<h3 className={classes.dialogTitle}>Upload CSV File</h3>}
+        handleClose={props.handleClose}
+        open={props.openUpload}
+      >
+        <p>Manage your admins</p>
+        <p>
+          Manage your admins via spreadsheet (.CSV file). You can choose to download your existing Admins List or start from a Sample Template. Please refer to our Knowledge Base to learn more.
+        </p>
+        <OrganizationUpload />
+        <div className={classes.selectButton}>
+          <Button
+            type="button"
+            round
+            className="btn-round-active-2 mr-2"
+            onClick={props.handleClose}
+          > Cancel</Button>
+          <Button
+            round
+            className="btn-round-active mr-2"
+            type="submit"
+          > Preview</Button>
+        </div>
+      </DiaLog>
+
     </div>
   );
 }
