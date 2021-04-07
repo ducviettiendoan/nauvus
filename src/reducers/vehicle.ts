@@ -8,10 +8,15 @@ import { asyncForEach, getAddressByCoordinates } from "utils/common-utils";
 export const ACTION_TYPES = {
   REGISTER: 'vehicle/REGISTER',
   LOAD: 'vehicle/LOAD',
+
+  // mock data overview-vehicle
+  LOAD_MOCK: 'vehicle/LOAD_MOCK'
 };
 
 const initialState = {
   vehicles: [],
+  // mock data overview-vehicle
+  vehiclesMock: [],
   vehicle: null,
   loading: false,
   message: null as string,
@@ -61,6 +66,12 @@ export default (state: VehicleState = initialState, action): VehicleState => {
         ...state,
         vehicles: action.payload
       };
+    // mock data overview-vehicle
+    case ACTION_TYPES.LOAD_MOCK:
+      return {
+        ...state,
+        vehiclesMock: action.payload
+      };
     default:
       return state;
   }
@@ -70,7 +81,7 @@ export const registerVehicle = async (serialNumber) => {
   try {
     let result = await axios.post(`/vehicles/${serialNumber}/register`);
     console.log(`Register device success`, result);
-    return {success : true, message: `Register device success`}
+    return { success: true, message: `Register device success` }
   } catch (error) {
     let errorMessage;
     let status = error.response.status;
@@ -83,7 +94,7 @@ export const registerVehicle = async (serialNumber) => {
       errorMessage = error && error.message ? error.message : JSON.stringify(error);
     }
     console.log(`Register device fail`, error);
-    return {success : false, message: errorMessage};
+    return { success: false, message: errorMessage };
   }
 };
 // ({
@@ -110,3 +121,24 @@ export const loadVehicles = () => async (dispatch) => {
     payload: data
   });
 };
+
+// mock data overview-vehicle reducer
+export const loadVehiclesMock = () => async (dispatch) => {
+  await dispatch({
+    type: ACTION_TYPES.LOAD_MOCK,
+    payload: dumpVehicleMockData
+  });
+}
+
+const dumpVehicleMockData = () => {
+  let data = [];
+  for (let i = 0; i < 5; i++) {
+    let item = {
+      id: "GR9X-6AN-3N5",
+      vehicle: "Vehicle 101",
+      speed: 43
+    };
+    data.push(item);
+  }
+  return data;
+}
