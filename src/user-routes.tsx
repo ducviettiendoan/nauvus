@@ -69,7 +69,7 @@ const dashRoutes = [
         name: "Drivers Detail",
         component: DriverDetail,
         layout: "/o",
-        hidden: true
+        isFixed: true
       },
       {
         path: "/drivers",
