@@ -25,7 +25,8 @@ import styles from "assets/jss/material-dashboard-pro-react/views/overviewPageSt
 import pinMaker from 'assets/icons/pinMaker.svg';
 import { Link } from "react-router-dom";
 
-import {setOpenDrawer} from 'reducers/overview';
+import { setOpenDrawer } from 'reducers/overview';
+import InfoWindowPopup from "./InfoWindowPopup";
 
 const useStyles = makeStyles(styles);
 
@@ -38,7 +39,7 @@ const RegularMap = withScriptjs(
   withGoogleMap((props) => (
     <GoogleMap
       defaultZoom={12}
-      defaultCenter={ props.center }
+      defaultCenter={props.center}
       defaultOptions={{
         scrollwheel: false,
         mapTypeControl: false,
@@ -50,24 +51,21 @@ const RegularMap = withScriptjs(
         if (maker.status === 'connected') {
           return (
             <Marker position={{ lat: maker.latitude, lng: maker.longitude }}
-                    icon={{
-                      url: pinMaker,
-                      anchor: new google.maps.Point(5, 58),
-                    }}
-                    onClick={(marker) => {
-                      console.log(`click on Marker ${marker.latLng.lat()} - ${marker.latLng.lng()}`, marker)
-                    }}
+              icon={{
+                url: pinMaker,
+                anchor: new google.maps.Point(5, 58),
+              }}
+              onClick={(marker) => {
+                console.log(`click on Marker ${marker.latLng.lat()} - ${marker.latLng.lng()}`, marker)
+              }}
             >
               <InfoWindow>
-                <div className="infowindow">
-                  <div className="path">{ maker.formatted_address }</div>
-                  <div className="device-name mb-2">{ maker.serialnumber }</div>
-                  <div><Link to={'/user/overview/assets'} className="assets">Assets</Link></div>
-                </div>
+                <InfoWindowPopup maker={maker} />
               </InfoWindow>
             </Marker>
           )
-        }}
+        }
+      }
       )
       }
     </GoogleMap>
@@ -88,23 +86,23 @@ export function DriverDetails(props) {
 
 
   return (
-    <div style={{ position: 'relative'}}>
+    <div style={{ position: 'relative' }}>
       <RegularMap
-        googleMapURL={ `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAP_API_KEY}` }
+        googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAP_API_KEY}`}
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div className="containerElementMap" />}
         mapElement={<div style={{ height: `100%` }} />}
         isMarkerShown
-        data={ props.vehicles }
-        center={ {lat: 40.748817, lng: -73.985428} }
+        data={props.vehicles}
+        center={{ lat: 40.748817, lng: -73.985428 }}
       />
-      <div className={ classes.searchMapContainer}>
+      <div className={classes.searchMapContainer}>
         <Button
           aria-label="edit"
           justIcon
           round
           className={classes.toogleDrawer}
-          onClick={ e => {props.setOpenDriver(!props.openDriver)} }
+          onClick={e => { props.setOpenDriver(!props.openDriver) }}
         >
           <List />
         </Button>
@@ -113,7 +111,7 @@ export function DriverDetails(props) {
             className: classes.btnSearchOnMap
           }}
           inputProps={{
-            id : "btn-search-on-map",
+            id: "btn-search-on-map",
             placeholder: "Search",
             startAdornment: (
               <InputAdornment position="start">

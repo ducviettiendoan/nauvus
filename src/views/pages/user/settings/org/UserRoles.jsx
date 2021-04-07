@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
+import classNames from "classnames";
+
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import MenuItem from "@material-ui/core/MenuItem";
+import MenuList from "@material-ui/core/MenuList";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Paper from "@material-ui/core/Paper";
+import Grow from "@material-ui/core/Grow";
+import Fade from '@material-ui/core/Fade';
+import Popper from "@material-ui/core/Popper";
 // @material-ui/icons
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
@@ -12,8 +21,10 @@ import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import Users from "./user-roles/Users";
 import Roles from "./user-roles/Roles";
 import PendingInvitations from "./user-roles/PendingInvitations";
+import customDropdownStyle from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle.js";
 
 const useStyles = makeStyles((theme) => ({
+  ...customDropdownStyle(theme),
   topHeader: {
     display: "flex",
     justifyContent: "space-between",
@@ -35,11 +46,27 @@ const useStyles = makeStyles((theme) => ({
 export default function UserRoles() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const [openInvite, setOpenInvite] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [openMore, setOpenMore] = React.useState(false);
+  const [openUpload, setOpenUpload] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleChangeTab = (newValue) => {
     setValue(newValue);
+    setOpen(false)
   };
+
+  const handleCloseMore = () => setOpenMore(false)
+  const handleOpenMore = (event) => {
+    setOpenMore(true)
+    setAnchorEl(event.currentTarget);
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+    setOpenMore(false)
+    setOpenUpload(false)
+  }
 
   return (
     <div>
@@ -51,14 +78,14 @@ export default function UserRoles() {
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
                   <RoundedTabs tabs={["Users", "Roles", "Pending Invitations"]} tabValue={handleChangeTab} />
                 </GridItem>
-                {value === 0 && <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
+                <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <Button
                     round
                     className="btn-round-active mr-2"
                     startIcon={<AddOutlined />}
-                    onClick={() => setOpenInvite(true)}
+                    onClick={() => setOpen(true)}
                   >
-                    Invite User
+                    {value === 1 ? "Add Role" : "Invite User"}
                   </Button>
                   <Button
                     color="white"
@@ -66,54 +93,49 @@ export default function UserRoles() {
                     justIcon
                     round
                     className={`btn-36 ${classes.moreAction} mr-2`}
+                    onClick={handleOpenMore}
                   >
                     <MoreHoriz />
                   </Button>
-                </GridItem>}
-                {value === 1 && <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
-                  <Button
-                    round
-                    className="btn-round-active mr-2"
-                    startIcon={<AddOutlined />}
+                  <Popper
+                    open={openMore}
+                    anchorEl={anchorEl}
+                    transition
+                    disablePortal
+                    placement="bottom-end"
+                    className={classNames({
+                      [classes.popperClose]: !anchorEl,
+                      [classes.popperResponsive]: true,
+                      [classes.popperNav]: true
+                    })}
                   >
-                    Add Role
-                  </Button>
-                  <Button
-                    color="white"
-                    aria-label="edit"
-                    justIcon
-                    round
-                    className={`btn-36 ${classes.moreAction} mr-2`}
-                  >
-                    <MoreHoriz />
-                  </Button>
-                </GridItem>}
-                {value === 2 && <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
-                  <Button
-                    round
-                    className="btn-round-active mr-2"
-                    startIcon={<AddOutlined />}
-                  >
-                    Invite User
-                  </Button>
-                  <Button
-                    color="white"
-                    aria-label="edit"
-                    justIcon
-                    round
-                    className={`btn-36 ${classes.moreAction} mr-2`}
-                  >
-                    <MoreHoriz />
-                  </Button>
-                </GridItem>}
+                    {({ TransitionProps }) => (
+                      <Grow
+                        {...TransitionProps}
+                        id="profile-menu-list"
+                        style={{ transformOrigin: "0 0 0" }}
+                      >
+                        <Paper className={classes.dropdown}>
+                          <ClickAwayListener onClickAway={handleCloseMore}>
+                            <MenuList role="menu">
+                              <MenuItem className={classes.dropdownItem} onClick={() => setOpenUpload(true)} > Upload CSV </MenuItem>
+                              <MenuItem className={classes.dropdownItem} onClick={handleCloseMore} > Download CSV </MenuItem>
+                            </MenuList>
+                          </ClickAwayListener>
+                        </Paper>
+                      </Grow>
+                    )}
+                  </Popper>
+                </GridItem>
+
               </GridContainer>
             </GridItem>
-          </GridContainer>
-          {value === 0 && <Users open={openInvite} handleClose={() => setOpenInvite(false)} />}
-          {value === 1 && <Roles />}
-          {value === 2 && <PendingInvitations />}
-        </GridItem>
-      </GridContainer>
-    </div>
+          </GridContainer >
+          {value === 0 && <Users open={open} openUpload={openUpload} handleClose={handleClose} />}
+          {value === 1 && <Roles open={open} handleClose={() => setOpen(false)} />}
+          {value === 2 && <PendingInvitations open={open} handleClose={() => setOpen(false)} />}
+        </GridItem >
+      </GridContainer >
+    </div >
   );
 }
