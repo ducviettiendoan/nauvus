@@ -10,8 +10,8 @@ import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import Calendar from "../../../../components/Calendar/Calendar";
 import Button from "components/CustomButtons/Button.js";
 import MoreHorizontalIcon from "../../../../components/Icons/MoreHorizontalIcon";
-import Vehicle from "./fuel-energy-parts/Vehicle";
-import Drivers from "./fuel-energy-parts/Drivers";
+import Vehicle from "./fuel-energy-parts/Vehicle.jsx";
+import Drivers from "./fuel-energy-parts/Drivers.jsx";
 
 const styles = {
   moreAction: {

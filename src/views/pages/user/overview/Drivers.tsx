@@ -20,7 +20,7 @@ import CloseIcon from "components/Icons/CloseIcon";
 import Chip from "@material-ui/core/Chip";
 import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
-import DriverDetails from "views/pages/user/overview/components/DriverDetails";
+import DriverDetail from "views/pages/user/overview/drivers/DriverDetail";
 
 const styles = {
   userRolesTitle: {
@@ -246,7 +246,8 @@ export function Drivers(props) {
     props.setOpenDrawer(false)
   }
   const viewDetail = () => {
-    props.history.push("/o/drivers/aaaaaa")
+    props.setOpenDrawer(!props.openDrawer)
+    props.history.push("/o/drivers/123456789")
   }
 
   return (
@@ -257,7 +258,7 @@ export function Drivers(props) {
             {
               props.openDriverDetails
                 ?
-                <DriverDetails onBack={onBackDriver}/>
+                <DriverDetail/>
                 :
                 (
                   props.data.length > 0 && <Table
