@@ -15,7 +15,7 @@ import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 import {connect} from "react-redux";
 import {IRootState} from "reducers";
-import {getMap} from "reducers/setting-fleet";
+import {getSettingMap} from "reducers/setting-fleet";
 
 const styles = {
   textName: {
@@ -59,7 +59,7 @@ export function Maps(props) {
 
   React.useEffect(() => {
     // Get list data
-    props.getMap();
+    props.getSettingMap();
   }, []);
 
   const formatName = (cell, row) => {
@@ -146,6 +146,6 @@ export default connect(
     data: settingFleet.maps
   }),
   {
-    getMap
+    getSettingMap
   }
 )(Maps);
