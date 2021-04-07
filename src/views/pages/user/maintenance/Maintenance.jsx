@@ -1,6 +1,7 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
+import AddOutlined from "@material-ui/icons/AddOutlined";
 // @material-ui/icons
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
@@ -21,7 +22,11 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Button from "@material-ui/core/Button";
 import TableMaintenance from "./components/tableMaintenance";
 import Calendar from "components/Calendar/Calendar";
-import DropDownIcon from "components/Icons/DropDownIcon";
+import Defects from "../maintenance/components/Defects";
+import Dvirs from "../maintenance/components/Dvirs";
+import RoundedTabs from "components/CustomTabs/RoundedTabs";
+import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
+import LiveIconWhite from "components/Icons/LiveIconWhite";
 
 
 const styles = {
@@ -120,104 +125,139 @@ const styles = {
     cursor: "pointer",
     position: "absolute",
     right: 8,
+  },
+  topHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 15,
+  },
+  topHeaderTitle: {
+    textAlign: "left",
+    fontWeight: 700,
+    fontSize: 18,
+    color: "#25345C",
+    padding: "0 16px !important",
+  },
+  topHeaderButton: {
+    textAlign: "right !important",
+    display: "flex",
+    alignItems: "center",
+  },
+  moreAction: {
+    background: "#FFFFFF !important",
+    border: "1px solid #ECEEF0 !important",
+    borderRadius: "30px",
+  },
+  addButton: {
+    background: "#25345C",
+    color: "#FFFFFF",
+    borderRadius: "28px",
+    padding: "14px 10px",
+    textTransform: "initial",
+    fontSize: "14px",
+    lineHeight: "17px",
+    fontStyle: "normal",
+    marginLeft: "10px",
+    width: "170px",
   }
+
 };
 
 const useStyles = makeStyles(styles);
 
-function defectCreateData(asset, currentLocation, lastDvirStatus, count, unresolvedDefects) {
-  return {asset, currentLocation, lastDvirStatus, count, unresolvedDefects};
-}
+// function defectCreateData(asset, currentLocation, lastDvirStatus, count, unresolvedDefects) {
+//   return {asset, currentLocation, lastDvirStatus, count, unresolvedDefects};
+// }
 
-function dvirsCreateData(asset, currentDriver, makeModel, batteryVoltage, engineHours, odometer, checkEngineLight) {
-  return {asset, currentDriver, makeModel, batteryVoltage, engineHours, odometer, checkEngineLight};
-}
-
-const defectRows = [
-  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-  defectCreateData('Vehicle 101', "8.1 mi SSE Rockford, IL", "Safe", 1, "Fuel Sysrem Feb 20, 5:13 AM"),
-];
-
-const divrsRows = [
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567", "69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567", "69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567", "69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567", "69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567", "69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567", "69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567", "69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567", "69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567", "69,469", "Off"),
-  dvirsCreateData('115', "Shahid Mamino", "Freightline R/SCT 120", 14.3, "46,567", "69,469", "Off"),
-];
+// function dvirsCreateData(asset, currentDriver, makeModel, batteryVoltage, engineHours, odometer, checkEngineLight) {
+//   return {asset, currentDriver, makeModel, batteryVoltage, engineHours, odometer, checkEngineLight};
+// }
 
 
 export default function Maintenance() {
   const classes = useStyles();
+
+  const [tab, setTab] = useState(0);
+
+
+  const handleChange = (event) => {
+    setSelectValue({ ...selectValue, [event.target.name]: event.target.value });
+    
+  };
+
+  const handleChangeTab = (newTab) => {
+    setTab(newTab);
+  };
+
+  const BlueButton = tab === 1 ?                         
+  <Button
+    round
+    className= {classes.addButton}
+    startIcon={<AddOutlined/>}
+  >
+    Add a driver
+  </Button>
+  :
+  null
+
+
   return (
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
-              <Card testimonial>
 
-                <GridContainer style={{padding: 16}}>
+                <GridContainer>
                   <GridItem xs={12} sm={12} md={12}>
-
-                    <GridContainer style={{padding: "0 16px", alignItems: "center"}}>
-                      <GridItem xs={3} sm={3} md={3} className={classes.searchBar}>
-                        <IconButton type="submit" aria-label="search">
-                          <SearchIcon/>
-                        </IconButton>
-                        <InputBase
-                          placeholder="Search Drivers"
+                    <GridContainer className={classes.topHeader}>
+                    <GridItem
+                        xs={12}
+                        sm={11}
+                        md={4}
+                        xl={4}
+                        className={classes.topHeaderTitle}
+                    >
+                        <RoundedTabs
+                        tabs={[
+                            "Defects",
+                            "Dvirs"
+                        ]}
+                        tabValue={handleChangeTab}
                         />
-                      </GridItem>
-                      <GridItem xs={9} sm={9} md={9} className={classes.headerRight}>
-                        <FormControl variant="outlined">
-                          <Select
-                            native
-                            value={"1"}
-                            // onChange={handleChange}
-                            // label="Age"
-                            className={classes.selectForm}
-                            IconComponent={() => (
-                              <DropDownIcon className={classes.dropDownIcon}/>
-                            )}
-                          >
-                            <option value={1}>1.1 Weeks</option>
-                          </Select>
-                        </FormControl>
-                        <FormControl variant="outlined">
-                          <Calendar/>
-                        </FormControl>
-                        <FormControl variant="outlined" className="moreIcon">
-                          <IconButton>
-                            <MoreHorizIcon fontSize="large"/>
-                          </IconButton>
-                        </FormControl>
-                        <FormControl variant="outlined">
-                          <Button variant="contained" size="large" className="liveButton">
-                            Live
-                          </Button>
-                        </FormControl>
-                      </GridItem>
+                    </GridItem>
+                    <GridItem
+                        xs={12}
+                        sm={4}
+                        md={8}
+                        xl={8}
+                        className={classes.topHeaderButton}
+                    >
+                        <Calendar placeholder="Day" />
+                        <Button
+                        color="white"
+                        aria-label="edit"
+                        justIcon
+                        round
+                        className={`btn-36 ${classes.moreAction} mr-2`}
+                        >
+                        <MoreHorizontalIcon />
+                        </Button>
+                        <Button round className="btn-round-green w-84">
+                        <LiveIconWhite />
+                        Live
+                        </Button>
+                        {BlueButton}
+ 
+                    </GridItem>
                     </GridContainer>
-
                   </GridItem>
-                </GridContainer>
-                <TableMaintenance/>
-              </Card>
+                </GridContainer>             
             </GridItem>
           </GridContainer>
+          {tab === 0 && <Defects/>}
+          {tab === 1 && <Dvirs/>}
         </GridItem>
       </GridContainer>
     </div>

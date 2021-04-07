@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
@@ -18,6 +18,23 @@ import Accordion from "components/Accordion/Accordion";
 import FakeChartImage from "assets/img/svg-image/FakeChartImage";
 import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
 import {Col, Row} from 'reactstrap';
+import ArrowBackIcon from "../../../../../components/Icons/ArrowBackIcon";
+import {Field, Form} from "react-final-form";
+import {Select, TextField} from "final-form-material-ui";
+import DiaLog from "../../../../../components/CustomDialog/Dialog";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import DriverIcon from "../../../../../components/Icons/DriverIcon";
+import PhoneIconField from "../../../../../components/Icons/PhoneIconField";
+import CustomSelect from "../../../../../components/CustomSelect/CustomSelect";
+import GridItem from "../../../../../components/Grid/GridItem";
+import CheckSquareOutlined from "../../../../../components/Icons/CheckSquareOutlined";
+import Checkbox from "@material-ui/core/Checkbox";
+import List from "@material-ui/core/List";
+import {ListItem, ListItemSecondaryAction, ListItemText} from "@material-ui/core";
+import {primaryColor} from "../../../../../assets/jss/material-dashboard-pro-react";
+import RadioButton from "../../../../Components/RadioButton";
+import EditDriverForm from "./EditDriverForm";
+
 
 const styles = {
   sidebarContainer: {
@@ -153,6 +170,64 @@ const styles = {
     fontSize: 14,
     fontWeight: 400,
     color: "#25345C",
+  },
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    margin: "24px",
+    textAlign: "center",
+  },
+  textFieldRoot: {
+    fontWeight: 'normal',
+    fontSize: '14px',
+    lineHeight: '21px',
+    color: '#C4C4C4'
+  },
+  textInputRoot: {
+    fontWeight: 'bold',
+    fontSize: '14px',
+    lineHeight: '21px',
+    color: '#25345C'
+  },
+  vehicleHeader: {
+    width: "78px",
+    height: "21px",
+    fontFamily: "Lato",
+    fontStyle: "normal",
+    fontWeight: "normal",
+    fontSize: "14px",
+    lineHeight: "21px",
+    color: "#C4C4C4",
+    padding: "0px 0px 0px 0px !important",
+  },
+  selectField: {
+    paddingTop: "18px"
+  },
+  loginTitle: {
+    fontWeight: 700,
+    fontSize: '18px',
+    color: '#25345C',
+    padding: "16px 0px 0px 16px"
+  },
+  checked: {
+    color: primaryColor[0] + "!important"
+  },
+  checkRoot: {
+    padding: "0px",
+    "&:hover": {
+      backgroundColor: "unset"
+    }
+  },
+  listCheck: {
+    width: '100%',
+  },
+  listCheckItems: {
+    paddingLeft: "0px",
+    fontWeight: 400,
+    fontSize: '12px',
+    color: '#25345C',
   }
 };
 
@@ -188,15 +263,34 @@ export default function DriverSideBar(props) {
     };
   }, [1]);
 
+  const [openInvite, setOpenInvite] = React.useState(false);
+  const [selectValue, setSelectValue] = useState({
+    stateProvince: "none",
+  });
+
+  const openEditDriver = () => {
+    console.log("OPEN")
+    setOpenInvite(true)
+  }
+
+  const closeEditDriver = () => {
+    console.log("CLOSE")
+    setOpenInvite(false)
+  }
+
   return (
     <div ref={mainPanelVehicleSideBar} className={classes.sidebarContainer}>
       <Divider/>
       <Row>
         <Col>
-          <div className={classes.txtMainDevice} style={{padding: '23px'}}>Your recent for</div>
-        </Col>
-        <Col style={{textAlign: 'right', padding: '23px', marginRight: '23px'}} className={classes.txtMainDevice}>
-          <div>Clear All</div>
+          <Button
+            startIcon={<ArrowBackIcon/>}
+            className="btn-round-white 2 w-84 h-41"
+            style={{margin: "13px 0px 0px 16px"}}
+            onClick={props.onBack}
+          >
+            Back
+          </Button>
         </Col>
       </Row>
       <div style={{padding: "0px 18px"}}>
@@ -228,6 +322,7 @@ export default function DriverSideBar(props) {
               justIcon
               round
               className={`btn-36 ${classes.moreAction} mr-2`}
+              onClick={openEditDriver}
             >
               <MoreHorizontalIcon/>
             </Button>
@@ -331,14 +426,13 @@ export default function DriverSideBar(props) {
           </CardBody>
         </Card>
       </div>
+      <DiaLog
+        renderTitle={<h3 className={classes.dialogTitle}>Edit Driver</h3>}
+        handleClose={closeEditDriver}
+        open={openInvite}
+      >
+        <EditDriverForm />
+      </DiaLog>
     </div>
   );
 }
-
-// export default connect(
-//   ({ vehicle }: IRootState) => ({
-//     vehicles: vehicle.vehicles
-//   }),
-//   {
-//   }
-// )(DriverSideBar);

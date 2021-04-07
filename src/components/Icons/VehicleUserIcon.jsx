@@ -1,12 +1,21 @@
 import React from 'react';
-import {SvgIcon} from '@material-ui/core';
+import { makeStyles, SvgIcon } from '@material-ui/core';
+
+const styles = {
+  root: {
+    fill: "#ECEEF0"
+  }
+}
+
+const useStyles = makeStyles(styles)
 
 function VehicleUserIcon(props) {
-    return (
-      <SvgIcon {...props}>
-        <path d="M10.2427 7.75734C9.58915 7.10386 8.81131 6.62009 7.96263 6.32723C8.87159 5.7012 9.46875 4.65347 9.46875 3.46875C9.46875 1.55609 7.91266 0 6 0C4.08734 0 2.53125 1.55609 2.53125 3.46875C2.53125 4.65347 3.12841 5.7012 4.03739 6.32723C3.18872 6.62009 2.41088 7.10386 1.75737 7.75734C0.624117 8.89062 0 10.3973 0 12H0.9375C0.9375 9.20852 3.20852 6.9375 6 6.9375C8.79148 6.9375 11.0625 9.20852 11.0625 12H12C12 10.3973 11.3759 8.89062 10.2427 7.75734ZM6 6C4.60427 6 3.46875 4.8645 3.46875 3.46875C3.46875 2.073 4.60427 0.9375 6 0.9375C7.39573 0.9375 8.53125 2.073 8.53125 3.46875C8.53125 4.8645 7.39573 6 6 6Z" fill="#C4C4C4"/>
-      </SvgIcon>
-    );
+  const classes = useStyles(styles)
+  return (
+    <SvgIcon fill="#FFFFFF" {...props} className={classes.root} viewBox="-3 -5 24 24" >
+      <path d="M13 15.5V13.9444C13 13.1193 12.6839 12.328 12.1213 11.7446C11.5587 11.1611 10.7956 10.8333 10 10.8333H4C3.20435 10.8333 2.44129 11.1611 1.87868 11.7446C1.31607 12.328 1 13.1193 1 13.9444V15.5M10 4.61111C10 6.32933 8.65685 7.72222 7 7.72222C5.34315 7.72222 4 6.32933 4 4.61111C4 2.89289 5.34315 1.5 7 1.5C8.65685 1.5 10 2.89289 10 4.61111Z" stroke="#25345C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+    </SvgIcon>
+  );
 }
 
 export default VehicleUserIcon;

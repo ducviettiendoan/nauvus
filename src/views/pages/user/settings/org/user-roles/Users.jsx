@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
@@ -19,6 +19,7 @@ import { getUserRoles } from "reducers/setting-org";
 import DiaLog from "components/CustomDialog/Dialog";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
+import OrganizationUpload from "components/CustomUpload/OrganizationUpload";
 
 import { connect } from 'react-redux';
 
@@ -129,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: "30px",
     color: "#a5a5a5",
   },
-  diaglogTitle: {
+  dialogTitle: {
     fontWeight: "bold",
     fontSize: "22px",
     lineHeight: "26px",
@@ -141,25 +142,16 @@ const useStyles = makeStyles((theme) => ({
 
 export function Users(props) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([])
 
   React.useEffect(() => {
     // Get list data
     props.getUserRoles();
   }, []);
 
-  const [chipData, setChipData] = React.useState([
-    { key: 0, label: 'Standard Admin' },
-    { key: 1, label: 'Full admin' },
-  ]);
-
-  const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
-  };
-
-  const handleClearAll = () => {
-    setChipData([])
-  }
+  const handleDelete = (chipToDelete) => () => setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+  const handleClearAll = () => setSelectedRowKeys(() => [])
+  const onSelectChange = selectedRowKeys => setSelectedRowKeys(() => [...selectedRowKeys])
 
   const columns = [
     {
@@ -214,12 +206,12 @@ export function Users(props) {
   ];
 
   const roles = [
-    { id: 'full_admin', label: 'Full Admin' },
-    { id: 'standard_admin', label: 'Standard Admin' },
-    { id: 'read_only_admin', label: 'Read-only Admin' },
-    { id: 'dispatch', label: 'Dispatch' },
-    { id: 'maintenance', label: 'Maintenance' },
-    { id: 'standard_admin_no_dash', label: "Standard Admin (No Dash Cam Access)" }
+    { id: 'full_admin', label: 'Full Admin', description: "	Full edit access to all dashboard pages." },
+    { id: 'standard_admin', label: 'Standard Admin', description: "Edit access except billing and finance pages." },
+    { id: 'read_only_admin', label: 'Read-only Admin', description: "	View access except billing and finance pages." },
+    { id: 'dispatch', label: 'Dispatch', description: "Edit access to only dispatch and routing features." },
+    { id: 'maintenance', label: 'Maintenance', description: "	Edit access to only maintenance features." },
+    { id: 'standard_admin_no_dash', label: "Standard Admin (No Dash Cam Access)", description: "Standard Admin but no access to dashcams." }
   ]
 
   const access = [
@@ -233,22 +225,20 @@ export function Users(props) {
   }
   const validate = (values) => {
     const errors = {};
-    if (!values.email) {
-      errors.email = 'Email must not be empty!';
-    }
-    console.log(errors);
+    if (!values.email) errors.email = 'Email must not be empty!';
     return errors;
   };
 
-
+  const initData = { access: "Entire", role: "full_admin" }
   return (
     <div>
+      
       <Table
         renderTitle={
           <GridContainer justify="space-between" className={classes.gridTitle}>
             <GridItem>
               <ChipSelect
-                data={chipData}
+                data={selectedRowKeys}
                 handleDelete={handleDelete}
                 handleClearAll={handleClearAll}
               />
@@ -258,7 +248,10 @@ export function Users(props) {
             </GridItem>
           </GridContainer>
         }
-        rowSelection={{}}
+        rowSelection={{
+          selectedRowKeys,
+          onChange: onSelectChange,
+        }}
         columns={columns}
         dataSource={props.data}
         onHeaderRow={{
@@ -269,82 +262,114 @@ export function Users(props) {
         }}
       />
       <DiaLog
-        renderTitle={<h3 className={classes.diaglogTitle}>Invite User</h3>}
+        renderTitle={<h3 className={classes.dialogTitle}>Invite User</h3>}
         handleClose={props.handleClose}
         open={props.open}
       >
         <Form
           onSubmit={onSubmit}
-          // initialValues={{ email: "test@gmail.com", stooge: 'larry' }}
+          initialValues={initData}
           validate={validate}
-          render={({ handleSubmit, reset, submitting, pristine, values }) => (
-            <form onSubmit={handleSubmit} noValidate>
-              <GridContainer justify="space-between" className={classes.formRow}>
-                <GridItem md>
-                  <InputLabel required>Email</InputLabel>
-                  <Field
-                    fullWidth
-                    required
-                    name="email"
-                    type="text"
-                    component={TextField}
-                  />
-                </GridItem>
-              </GridContainer>
-              <GridContainer justify="space-between" className={classes.formRow}>
-                <GridItem md={6}>
-                  <InputLabel >Role</InputLabel>
-                  <Field
-                    fullWidth
-                    name="role"
-                    component={Select}
-                    formControlProps={{ fullWidth: true }}
-                    style={{ margin: 0 }}
-                  >
-                    {roles.map(role => <MenuItem key={role.id} value={role.id}>{role.label}</MenuItem>)}
-                  </Field>
-                </GridItem>
-                <GridItem md={6}>
-                  <InputLabel>Access</InputLabel>
-                  <Field
-                    fullWidth
-                    name="access"
-                    component={Select}
-                    formControlProps={{ fullWidth: true }}
-                    style={{ margin: 0 }}
-                  >
-                    {access.map(role => <MenuItem key={role.id} value={role.id}>{role.label}</MenuItem>)}
-                  </Field>
-                </GridItem>
-              </GridContainer>
-              <GridContainer justify="space-between" className={classes.formRow}>
-                <GridItem md>
-                  <InputLabel >Permissions</InputLabel>
-                  <p className={classes.formText}>
-                    Read-only Admin
-                    <span className={classes.formTextSpan}>View access except billing and finance pages.</span>
-                  </p>
-                </GridItem>
-              </GridContainer>
-              <div className={classes.selectButton}>
-                <Button
-                  type="button"
-                  round
-                  className="btn-round-active-2 mr-2"
-                  onClick={props.handleClose}
-                > Cancel</Button>
-                <Button
-                  round
-                  className="btn-round-active mr-2"
-                  type="submit"
-                  disabled={submitting}
-                > Save</Button>
-              </div>
-
-            </form>
-          )}
+          render={({ handleSubmit, reset, submitting, pristine, values }) => {
+            let role = null;
+            if (values && values.role) {
+              let index = roles.findIndex(r => r.id == values.role)
+              if (index > -1) role = roles[index];
+            }
+            return (
+              <form onSubmit={handleSubmit} noValidate>
+                <GridContainer justify="space-between" className={classes.formRow}>
+                  <GridItem md>
+                    <InputLabel required>Email</InputLabel>
+                    <Field
+                      fullWidth
+                      required
+                      name="email"
+                      type="text"
+                      component={TextField}
+                    />
+                  </GridItem>
+                </GridContainer>
+                <GridContainer justify="space-between" className={classes.formRow}>
+                  <GridItem md={6}>
+                    <InputLabel >Role</InputLabel>
+                    <Field
+                      fullWidth
+                      name="role"
+                      component={Select}
+                      formControlProps={{ fullWidth: true }}
+                      style={{ margin: 0 }}
+                    >
+                      {roles.map(role => <MenuItem key={role.id} value={role.id}>{role.label}</MenuItem>)}
+                    </Field>
+                  </GridItem>
+                  <GridItem md={6}>
+                    <InputLabel>Access</InputLabel>
+                    <Field
+                      fullWidth
+                      name="access"
+                      component={Select}
+                      formControlProps={{ fullWidth: true }}
+                      style={{ margin: 0 }}
+                    >
+                      {access.map(role => <MenuItem key={role.id} value={role.id}>{role.label}</MenuItem>)}
+                    </Field>
+                  </GridItem>
+                </GridContainer>
+                <GridContainer justify="space-between" className={classes.formRow}>
+                  <GridItem md>
+                    <InputLabel >Permissions</InputLabel>
+                    <p className={classes.formText}>
+                      {role && role.label}
+                      <span className={classes.formTextSpan}>{role && role.description}</span>
+                    </p>
+                  </GridItem>
+                </GridContainer>
+                <div className={classes.selectButton}>
+                  <Button
+                    type="button"
+                    round
+                    className="btn-round-active-2 mr-2"
+                    onClick={props.handleClose}
+                  > Cancel</Button>
+                  <Button
+                    round
+                    className="btn-round-active mr-2"
+                    type="submit"
+                    disabled={submitting}
+                  > Save</Button>
+                </div>
+              </form>
+            )
+          }}
         />
       </DiaLog>
+
+      <DiaLog
+        renderTitle={<h3 className={classes.dialogTitle}>Upload CSV File</h3>}
+        handleClose={props.handleClose}
+        open={props.openUpload}
+      >
+        <p>Manage your admins</p>
+        <p>
+          Manage your admins via spreadsheet (.CSV file). You can choose to download your existing Admins List or start from a Sample Template. Please refer to our Knowledge Base to learn more.
+        </p>
+        <OrganizationUpload />
+        <div className={classes.selectButton}>
+          <Button
+            type="button"
+            round
+            className="btn-round-active-2 mr-2"
+            onClick={props.handleClose}
+          > Cancel</Button>
+          <Button
+            round
+            className="btn-round-active mr-2"
+            type="submit"
+          > Preview</Button>
+        </div>
+      </DiaLog>
+
     </div>
   );
 }
