@@ -13,16 +13,11 @@ import Button from "components/CustomButtons/Button.js";
 import EditIcon from "components/Icons/EditIcon";
 import DeleteIcon from "components/Icons/DeleteIcon";
 import DotIcon from "components/Icons/DotIcon.jsx";
-
-import BootstrapTable from "react-bootstrap-table-next";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import CopyIcon from "components/Icons/CopyIcon";
 import Link from "@material-ui/core/Link";
 import {connect} from "react-redux";
-import {IRootState} from "reducers";
 import {getWebhook} from "reducers/setting-developer";
 import Table from "components/Table/TableV1";
-import { name } from "file-loader";
 
 const styles = {
   webhookHeader: {
@@ -51,7 +46,6 @@ const styles = {
     fontWeight: 700,
     fontSize: 18,
     textAlign: "left",
-    marginBottom: "10px",
     color: "#25345C"
   },
   webhookSubGuide: {
@@ -78,16 +72,10 @@ const styles = {
     fontSize: '16px',
     lineHeight: '24px',
     color: '#25345C',
-    marginLeft: '24px',
-    marginTop: '25px'
   },
   textSub: {
-    fontWeight: '400',
     fontSize: '16px',
     lineHeight: '24px',
-    marginTop: '25px',
-    marginLeft: '24px',
-    color: "#25345C",
   },
   textStatus: {
     fontSize: '16px',
@@ -113,22 +101,67 @@ const styles = {
     marginTop: "10px"
   },
   ipText: {
-    paddingBottom: "8px",
+
   },
   guideText: {
-    paddingBottom: "8px",
     cursor: "pointer",
     color: "#0d6ede"
   },
   dotIcon: {
-    fontSize: "15px"
-  }
+    fontSize: "15px",
+    textAlign: "center"
+  },
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
+    },
+  },
+  onHeaderRow: {
+    background: "#ECEEF0",
+  },
+  gridTitle: {
+    padding: "20px"
+  },
+  onHeaderCell: {
+    fontWeight: "bold"
+  },
+  alignItemsCenter: {
+    display: "flex",
+    alignItems: "center",
+  },
+  dotIcon: {
+    color: "#7CE7AC",
+  },
+  textRoles: {
+    fontSize: '16px',
+    lineHeight: '24px',
+  },
+  textAccess: {
+    display: "inline-block",
+    fontSize: '14px',
+    lineHeight: '17px',
+    padding: "12px 16px",
+    color: "#27AE60",
+    background: "rgba(39, 174, 96, 0.1)",
+    borderRadius: 23,
+    fontWeight: "bold",
+  },
 };
 
 const useStyles = makeStyles(styles);
 
 export function Webhooks(props) {
   const classes = useStyles();
+
+  const onShowSizeChange = (page, pageSize) => {
+    props.getWebhook({ page, pageSize }); 
+    console.log(page, pageSize)
+  }
+
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize)
+    props.getUserRoles({ page, pageSize }); 
+  }
 
   React.useEffect(() => {
     // Get list data
@@ -150,19 +183,19 @@ export function Webhooks(props) {
       title: 'URL',
       key: 'url',
       onHeaderCell: {className: classes.onHeaderCell},
-      render: url => <div className={classes.textEmail}>{url}</div>
+      render: url => <div className={classes.textSub}>{url}</div>
     },
     {
       title: 'Secret Keys',
-      key: 'secretKeys',
+      key: 'secretKey',
       onHeaderCell: {className: classes.onHeaderCell},
-      render: secretKeys => <div className={classes.textEmail}>{secretKeys}</div>
+      render: secretKey => <div className={classes.textSub}>{secretKey}</div>
     },
     {
       title: 'Configured Alerts',
-      key: 'alert',
+      key: 'configAlert',
       onHeaderCell: {className: classes.onHeaderCell},
-      render: alert => <div className={classes.textEmail}>{alert}</div>
+      render: configAlert => <div className={classes.textAccess}>{configAlert}</div>
     },
     {
       title: 'Actions',
@@ -187,6 +220,7 @@ export function Webhooks(props) {
     <div>
       <Table
         renderTitle={
+          <CardBody>
           <GridContainer className={classes.webhookHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.webhookTitle}>
                   5 Webhooks
@@ -201,8 +235,16 @@ export function Webhooks(props) {
                   </Button>
                 </GridItem>
               </GridContainer>
+              </CardBody>
+
         }
-        // rowSelection={{}}
+        pagination={{
+          total: props.total,
+          current: props.page,
+          pageSize: props.pageSize,
+          onChange: onPageChange,
+          onShowSizeChange: onShowSizeChange
+        }}
         columns={columns}
         dataSource={props.data}
         onHeaderRow={{
@@ -274,11 +316,17 @@ export function Webhooks(props) {
   );
 }
 
-export default connect(
-  ({settingDeveloper}: IRootState) => ({
-    data: settingDeveloper.webhooks
-  }),
-  {
-    getWebhook
-  }
-)(Webhooks);
+const mapStateToProps = ({ settingDeveloper }) => {
+  return {
+    data: settingDeveloper.webhooks.data,
+    page: settingDeveloper.webhooks.page,
+    total: settingDeveloper.webhooks.total,
+    pageSize: settingDeveloper.webhooks.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getWebhook
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Webhooks);
