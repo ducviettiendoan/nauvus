@@ -20,7 +20,7 @@ export default function Accordion(props) {
     setActive(expanded ? panel : -1);
   };
   const classes = useStyles();
-  const { collapses, expansionPanelClasses, expansionSummaryClasses } = props;
+  const { collapses, expansionPanelClasses, expansionSummaryClasses, expansionPanelRounded } = props;
   return (
     <div className={{ root: classes.root }, { ...expansionPanelClasses }}>
       {collapses.map((prop, key) => {
@@ -31,8 +31,8 @@ export default function Accordion(props) {
             key={key}
             classes={{
               root: classes.expansionPanel,
-              expanded: classes.expansionPanelExpanded
-            }}
+              expanded: classes.expansionPanelExpanded,
+            }, { ...expansionPanelRounded }}
           >
             <ExpansionPanelSummary
               expandIcon={<ExpandMore />}
