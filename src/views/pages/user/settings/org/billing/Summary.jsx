@@ -5,8 +5,6 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import BootstrapTable from "react-bootstrap-table-next";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import Button from "components/CustomButtons/Button.js";
 import {Row, Col} from "reactstrap";
 import avatar from "assets/img/faces/avatar.jpg";
@@ -14,24 +12,20 @@ import VerifiedIcon from "components/Icons/VerifiedIcon"
 import CardIcon from "components/Icons/CardIcon"
 import HelpIcon from "components/Icons/HelpIcon"
 import {connect} from "react-redux";
-import {IRootState} from "../../../../../../reducers";
-import {getInvoiceSummary} from "../../../../../../reducers/setting-org";
+import {IRootState} from "reducers";
+import {getInvoiceSummary} from "reducers/setting-org";
+import Table from "components/Table/TableV1";
 
 const styles = {
   textSub: {
     fontWeight: '400',
     fontSize: '16px',
     lineHeight: '24px',
-    marginTop: '16px',
-    marginLeft: '24px',
     color: "#25345C",
   },
   textStatus: {
     fontSize: '14px',
     lineHeight: '24px',
-    marginTop: '7px',
-    marginBottom: '8px',
-    marginLeft: '24px',
     padding: "12px 14px",
     color: "#FFFFFF",
     background: "rgba(229,57,53,0.85)",
@@ -74,6 +68,7 @@ const styles = {
     fontSize: "14px",
     padding: "0px 0px 0px 0px !important",
   },
+
   paymentData: {
     marginTop: "50px"
   },
@@ -123,7 +118,38 @@ const styles = {
   },
   helpBtn: {
     textAlign: "right"
-  }
+  },
+  onHeaderCell: {
+    fontWeight: "bold",
+    color: "#25345C"
+  },
+  tableTitle: {
+    fontSize: "18px",
+    fontWeight: 700,
+    color: "#25345C",
+    display: "flex",
+    alignItems: "center",
+  },
+  headLeft: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    "& > div": {
+      marginBottom: "0 !important",
+      marginRight: 8
+    }
+  },
+  gridTitle: {
+    padding: "20px",
+  },
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
+    },
+  },
+  onHeaderRow: {
+    background: "#ECEEF0",
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -136,41 +162,56 @@ export function Summary(props) {
     props.getInvoiceSummary();
   }, []);
 
-  const formatDueDate = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatPO = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatInvoice = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatAmount = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatRemainingBalance = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatStatus = (cell, row) => {
-    return <>
-      <div className={classes.textStatus}>{cell}</div>
-    </>
-  }
+  const columns = [
+    {
+      title: 'Due Date',
+      key: 'dueDate',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: dueDate => (
+          <div className={classes.textSub}>{dueDate}</div>
+      ),
+    },
+    {
+      title: 'PO',
+      key: 'po',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: po => (
+          <div className={classes.textSub}>{po}</div>
+      )
+    },
+    {
+      title: 'Invoice',
+      key: 'invoice',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: invoice => (
+          <div className={classes.textSub}>{invoice}</div>
+      )
+    },
+    {
+      title: 'Amount',
+      key: 'amount',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: amount => (
+          <div className={classes.textSub}>{amount}</div>
+      )
+    },
+    {
+      title: 'Remaining Balance',
+      key: 'remainingBalance',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: remainingBalance => (
+          <div className={classes.textSub}>{remainingBalance}</div>
+      )
+    },
+    {
+      title: 'Status',
+      key: 'status',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: status => (
+          <div className={classes.textStatus}>{status}</div>
+      )
+    },
+  ];
   return (
     <div>
       <GridContainer>
@@ -274,53 +315,19 @@ export function Summary(props) {
                 </GridContainer>
               </GridItem>
             </CardBody>
-            <ToolkitProvider
-              data={props.data}
-              columns={[
-                {
-                  dataField: "dueDate",
-                  text: "Due Date",
-                  formatter: formatDueDate
-                },
-                {
-                  dataField: "po",
-                  text: "PO",
-                  formatter: formatPO
-                },
-                {
-                  dataField: "invoice",
-                  text: "Invoice",
-                  formatter: formatInvoice
-                },
-                {
-                  dataField: "amount",
-                  text: "Amount",
-                  formatter: formatAmount
-                },
-                {
-                  dataField: "remainingBalance",
-                  text: "Remaining Balance",
-                  formatter: formatRemainingBalance
-                },
-                {
-                  dataField: "status",
-                  text: "Status",
-                  formatter: formatStatus
+            <Table
+                renderTitle={
+                  <GridContainer justify="space-between" className={classes.gridTitle}>
+                    <GridItem className={classes.tableTitle}>
+                      Open Invoices
+                    </GridItem>
+                  </GridContainer>
                 }
-              ]}
-            >
-              {props => (
-                <div className="table table-settings">
-                  <BootstrapTable
-                    {...props.baseProps}
-                    bootstrap4={true}
-                    bordered={false}
-                    keyField="id"
-                  />
-
-                </div>
-              )}
-            </ToolkitProvider>
+                columns={columns}
+                dataSource={props.data}
+                onHeaderRow={{ className: classes.onHeaderRow }}
+                onBodyRow={{ className: classes.tableRow }}
+            />
           </Card>
         </GridItem>
       </GridContainer>
@@ -330,7 +337,7 @@ export function Summary(props) {
 
 export default connect(
   ({settingOrg}: IRootState) => ({
-    data: settingOrg.invoicesSummary
+    data: settingOrg.invoicesSummary.data,
   }),
   {
     getInvoiceSummary

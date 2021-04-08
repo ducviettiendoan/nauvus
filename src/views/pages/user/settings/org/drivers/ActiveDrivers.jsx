@@ -220,8 +220,8 @@ export function ActiveDrivers(props) {
           <GridContainer justify="space-between" className={classes.gridTitle}>
             <GridItem>
               <GridContainer className={classes.headContainer}>
-                <GridItem xl={2} className={classes.userRolesTitle}> {chipData.length} selected for </GridItem>
-                <GridItem xl={10} className={classes.chipSelected}>
+                <GridItem xl={4} className={classes.userRolesTitle}> {chipData.length} selected for </GridItem>
+                <GridItem xl={8} className={classes.chipSelected}>
                   {chipData.map(data => (
                     <Chip
                       deleteIcon={<CloseIcon />}

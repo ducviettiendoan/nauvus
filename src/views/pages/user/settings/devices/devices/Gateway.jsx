@@ -1,25 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
 import Button from "components/CustomButtons/Button";
-import CloseIcon from "components/Icons/CloseIcon";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import DeleteIcon from "components/Icons/DeleteIcon";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import BootstrapTable from "react-bootstrap-table-next";
-import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 import DotIcon from "components/Icons/DotIcon";
-import Chip from "@material-ui/core/Chip";
 import MoreIcon from "components/Icons/MoreIcon";
 import {connect} from "react-redux";
 import {IRootState} from "reducers";
 import {getGateway} from "reducers/setting-device";
+import ChipSelect from 'components/Chip/ChipSelect';
+import Table from "components/Table/TableV1";
+
 
 const styles = {
   userRolesTitle: {
@@ -119,6 +115,28 @@ const styles = {
     height: 20,
     marginTop: 30,
     marginLeft: 12
+  },
+  gridTitle: {
+    padding: "20px",
+  },
+  onHeaderCell: {
+    fontWeight: "bold",
+    color: "#25345C"
+  },
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
+    },
+  },
+  onHeaderRow: {
+    background: "#ECEEF0",
+  },
+  tableTitle: {
+    fontSize: "18px",
+    fontWeight: 700,
+    color: "#25345C",
+    display: "flex",
+    alignItems: "center",
   }
 };
 
@@ -126,69 +144,84 @@ const useStyles = makeStyles(styles);
 
 export function Gateway(props) {
   const classes = useStyles();
-
+  console.log(props.data)
   React.useEffect(() => {
     // Get list data
     props.getGateway();
   }, []);
 
-  const [chipData, setChipData] = React.useState([
-    {key: 0, label: 'Standard Admin'},
-    {key: 1, label: 'Full admin'},
-  ]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
-  const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
-  };
+  const handleDelete = (chipToDelete) => () => setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+  const handleClearAll = () => setSelectedRowKeys(() => [])
+  const onSelectChange = selectedRowKeys => setSelectedRowKeys(() => [...selectedRowKeys])
 
-  const handleClearAll = () => {
-    setChipData([])
+  const onPageChange = (page, pageSize) => {
+    props.getGateway({ page, pageSize });
   }
 
-  const formatGatewaySerial = (cell, row) => {
-    return <>
-      <div className={classes.textName}>{cell}</div>
-    </>
+  const onShowSizeChange = (page, pageSize) => {
+    props.getGateway({ page, pageSize });
   }
 
-  const formatGateway = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
 
-  const formatName = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
+  const columns = [
+    {
+      title: 'Gateway Serial',
+      key: 'gatewaySerial',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: cell => (
+          <div className={classes.textName}>{cell}</div>
+      ),
+    },
+    {
+      title: 'Gateway',
+      key: 'gateway',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: cell => <div className={classes.textSub}>{cell}</div>
+    },
+    {
+      title: 'Name',
+      key: 'name',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: cell => (
+          <div className={classes.textSub}>{cell}</div>
 
-  const formatDataUsed = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
+      )
+    },
+    {
+      title: 'Data Used (This Month)',
+      key: 'dataUsed',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: cell => <div className={classes.textSub}>{cell}</div>
 
-  const formatConnectivity = (cell, row) => {
-    return <>
-      <div className={classes.alignItemsCenter}>
-        <div><DotIcon style={{color: "#7CE7AC", marginTop: 10}}/></div>
-        <div className={classes.textRoles}>{cell}</div>
-      </div>
-    </>
-  }
-
-  const formatBattery = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatPowerState = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
+    },
+    {
+      title: 'Connectivity',
+      key: 'connectivity',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: cell => (
+          <>
+            <div className={classes.alignItemsCenter}>
+              <div><DotIcon style={{color: "#7CE7AC", marginTop: 10}}/></div>
+              <div className={classes.textRoles}>{cell}</div>
+            </div>
+          </>
+      )
+    },
+    {
+      title: 'Power State',
+      key: 'powerState',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: cell => <div className={classes.textSub}>{cell}</div>
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: cell => <div className={classes.textSub}>{cell}</div>
+    },
+  ];
 
   const addActionButton = () => {
     return (
@@ -203,25 +236,6 @@ export function Gateway(props) {
     )
   }
 
-  const selectRow = {
-    mode: 'checkbox',
-    clickToSelect: true,
-    style: {background: "linear-gradient(0deg,#ECEEF0,#ECEEF0)"},
-    classes: 'customSelectRow',
-    selectionHeaderRenderer: ({indeterminate, ...rest}) => (
-      <input
-        type="checkbox"
-        className={classes.indeterminateIcon}
-        ref={(input) => {
-          if (input) input.indeterminate = indeterminate;
-        }}
-        {...rest}
-      />
-    ),
-    selectionRenderer: ({mode, ...rest}) => (
-      <input className={classes.checkBoxIcon} type={mode} {...rest} />
-    )
-  };
 
   return (
     <div>
@@ -229,104 +243,40 @@ export function Gateway(props) {
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
-              <Card testimonial>
-                <CardBody>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={6}>
-                      <GridContainer className={classes.headContainer}>
-                        <GridItem xl={2} className={classes.userRolesTitle}>
-                          {chipData.length} selected for
-                        </GridItem>
-                        <GridItem xl={10} className={classes.chipSelected}>
-                          {
-                            chipData.map(data => (
-                              <Chip
-                                deleteIcon={<CloseIcon/>}
-                                label={data.label}
-                                onDelete={handleDelete(data)}
-                                className={classes.chip}
-                              />
-                            ))
-                          }
-                          {
-                            chipData.length > 0
-                              ?
-                              (
-                                <Button onClick={handleClearAll} className={classes.clearAll}>
-                                  Clear All
-                                </Button>
-                              )
-                              : ""
-                          }
-                        </GridItem>
-                      </GridContainer>
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={6} className={classes.headLeft}>
-                      <ToolboxButton placeholder={"Search gateways"} showFilter showEdit showLink showTrash/>
-                    </GridItem>
-                  </GridContainer>
-                </CardBody>
-                <ToolkitProvider
-                  data={props.data}
-                  columns={[
-                    {
-                      dataField: "gatewaySerial",
-                      text: "Gateway Serial",
-                      formatter: formatGatewaySerial
-                    },
-                    {
-                      dataField: "gateway",
-                      text: "Gateway",
-                      formatter: formatGateway
-                    },
-                    {
-                      dataField: "name",
-                      text: "Name",
-                      formatter: formatName
-                    },
-                    {
-                      dataField: "dataUsed",
-                      text: "Data Used (This Month)",
-                      formatter: formatDataUsed
-                    },
-                    {
-                      dataField: "connectivity",
-                      text: "Connectivity",
-                      formatter: formatConnectivity
-                    },
-                    {
-                      dataField: "battery",
-                      text: "Battery",
-                      formatter: formatBattery
-                    },
-                    {
-                      dataField: "powerState",
-                      text: "Power State",
-                      formatter: formatPowerState
-                    },
-                    {
-                      dataField: "action",
-                      text: "Action",
-                      formatter: addActionButton
-                    }
-                  ]}
-                >
-                  {props => (
-                    <div className="table table-settings">
-                      <BootstrapTable
-                        {...props.baseProps}
-                        bootstrap4={true}
-                        bordered={false}
-                        keyField='id'
-                        selectRow={selectRow}
-                      />
-                    </div>
-                  )}
-                </ToolkitProvider>
-              </Card>
+              <Table
+                  renderTitle={
+                    <GridContainer justify="space-between" className={classes.gridTitle}>
+                      <GridItem>
+                        <ChipSelect
+                            data={selectedRowKeys}
+                            handleDelete={handleDelete}
+                            handleClearAll={handleClearAll}
+                        />
+                      </GridItem>
+                      <GridItem className={classes.headLeft}>
+                        <ToolboxButton placeholder={"Search gateways"} showFilter showEdit showLink showTrash/>
+                      </GridItem>
+                    </GridContainer>
+                  }
+                  rowSelection={{
+                    selectedRowKeys,
+                    onChange: onSelectChange,
+                  }}
+                  pagination={{
+                    total: props.total,
+                    current: props.page,
+                    pageSize: props.pageSize,
+                    onChange: onPageChange,
+                    onShowSizeChange: onShowSizeChange
+                  }}
+                  columns={columns}
+                  dataSource={props.data}
+                  onHeaderRow={{ className: classes.onHeaderRow }}
+                  onBodyRow={{ className: classes.tableRow }}
+              />
             </GridItem>
           </GridContainer>
-          <GenPaginationV1 total={29} page={1} size={10}/>
+
         </GridItem>
       </GridContainer>
     </div>
@@ -335,7 +285,10 @@ export function Gateway(props) {
 
 export default connect(
   ({settingDevice}: IRootState) => ({
-    data: settingDevice.gateways
+    data: settingDevice.gateways.data,
+    page: settingDevice.gateways.page,
+    total: settingDevice.gateways.total,
+    pageSize: settingDevice.gateways.pageSize
   }),
   {
     getGateway
