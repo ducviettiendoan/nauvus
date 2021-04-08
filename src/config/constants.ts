@@ -9,7 +9,16 @@ export const COGNITO_AUTH_FLOW_TYPE= process.env.COGNITO_AUTH_FLOW_TYPE;
 export const GOOGLE_MAP_API_KEY= process.env.GOOGLE_MAP_API_KEY;
 
 
-export const VERSION = "0.1.build2";
+export const VERSION = "0.1.beta3";
+
+export const ROUTE_PATH = {
+    ADMIN: '/admin',
+    USER: '/user',
+    AUTH: '/auth',
+    SETTING: '/setting',
+    OVERVIEW: '/o',
+    DISPATCH: '/d'
+};
 
 export const AUTHORITIES = {
     ADMIN: 'ROLE_ADMIN',

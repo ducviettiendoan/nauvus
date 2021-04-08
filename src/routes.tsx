@@ -1,3 +1,5 @@
+import { ROUTE_PATH } from "config/constants";
+
 import Buttons from "views/Components/Buttons.js";
 import Calendar from "views/Calendar/Calendar.js";
 import Charts from "views/Charts/Charts.js";
@@ -50,37 +52,37 @@ const dashRoutes = [
     path: "/login",
     name: "Login Page",
     component: ProcessLogin,
-    layout: "/auth"
+    layout: ROUTE_PATH.AUTH
   },
   {
     path: "/sign-in",
     name: "Login Page",
     component: LoginPage,
-    layout: "/auth"
+    layout: ROUTE_PATH.AUTH
   },
   {
     path: "/logout",
     name: "Logout Page",
     component: LogoutPage,
-    layout: "/auth"
+    layout: ROUTE_PATH.AUTH
   },
   {
     path: "/sign-up",
     name: "Register Page",
     component: RegisterPage,
-    layout: "/auth"
+    layout: ROUTE_PATH.AUTH
   },
   {
     path: "/register-vehicle",
     name: "Register Page",
     component: VehicleRegisterPage,
-    layout: "/auth"
+    layout: ROUTE_PATH.AUTH
   },
   {
     path: "/recovery-password",
     name: "Recovery password",
     component: RecoveryPasswordPage,
-    layout: "/auth"
+    layout: ROUTE_PATH.AUTH
   },
   // Template
   {
@@ -104,7 +106,7 @@ const dashRoutes = [
         mini: "PP",
         rtlMini: "ع",
         component: PricingPage,
-        layout: "/auth"
+        layout: ROUTE_PATH.AUTH
       },
       {
         path: "/rtl-support-page",
@@ -131,7 +133,7 @@ const dashRoutes = [
         mini: "R",
         rtlMini: "صع",
         component: RegisterPage,
-        layout: "/auth"
+        layout: ROUTE_PATH.AUTH
       },
       {
         path: "/lock-screen-page",
@@ -140,7 +142,7 @@ const dashRoutes = [
         mini: "LS",
         rtlMini: "هذاع",
         component: LockScreenPage,
-        layout: "/auth"
+        layout: ROUTE_PATH.AUTH
       },
       {
         path: "/user-page",
@@ -158,7 +160,7 @@ const dashRoutes = [
         mini: "E",
         rtlMini: "البريد",
         component: ErrorPage,
-        layout: "/auth"
+        layout: ROUTE_PATH.AUTH
       }
     ]
   },
