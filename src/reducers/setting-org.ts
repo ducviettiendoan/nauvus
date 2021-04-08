@@ -1,88 +1,110 @@
-import axios from 'axios';
+import axios from "axios";
 
-import {REQUEST, SUCCESS, FAILURE} from '../utils/action-type.util';
-import {AUTH_TOKEN_KEY} from '../config/constants';
-import {showLoading, hideLoading} from 'react-redux-loading-bar'
+import { REQUEST, SUCCESS, FAILURE } from "../utils/action-type.util";
+import { AUTH_TOKEN_KEY } from "../config/constants";
+import { showLoading, hideLoading } from "react-redux-loading-bar";
 
 export const ACTION_TYPES = {
   // User & Roles action type
-  GET_USER_ROLES: 'setting/org/GET_USER_ROLES',
-  GET_ROLES: 'setting/org/GET_ROLES',
-  GET_PENDING_INVITATION: 'setting/org/GET_PENDING_INVITATION',
+  GET_USER_ROLES: "setting/org/GET_USER_ROLES",
+  GET_ROLES: "setting/org/GET_ROLES",
+  GET_PENDING_INVITATION: "setting/org/GET_PENDING_INVITATION",
 
   // Drivers action type
-  GET_ACTIVE_DRIVER: 'setting/org/GET_ACTIVE_DRIVER',
-  GET_DEACTIVATED_DRIVER: 'setting/org/GET_DEACTIVATED_DRIVER',
+  GET_ACTIVE_DRIVER: "setting/org/GET_ACTIVE_DRIVER",
+  GET_DEACTIVATED_DRIVER: "setting/org/GET_DEACTIVATED_DRIVER",
 
   // Tags action type
-  GET_TAGS: 'setting/org/GET_TAGS',
+  GET_TAGS: "setting/org/GET_TAGS",
 
   //Activity Logs action type
-  GET_ACTIVITY_LOGS: 'setting/org/GET_ACTIVITY_LOGS',
+  GET_ACTIVITY_LOGS: "setting/org/GET_ACTIVITY_LOGS",
 
   //Invoice action type
-  GET_INVOICE: 'setting/org/GET_INVOICE',
-  GET_INVOICE_SUMMARY: 'setting/org/GET_INVOICE_SUMMARY',
+  GET_INVOICE: "setting/org/GET_INVOICE",
+  GET_INVOICE_SUMMARY: "setting/org/GET_INVOICE_SUMMARY",
 };
 
 const initialState = {
-  // User & Roles
-  userRoles: [],
-  roles: [],
-  pendingInvitations: [],
-
-  // Drivers
-  activeDrivers: [],
-  deactivatedDrivers: [],
-
-  // Tags
+  errorMessage: null,
+  loading: false,
   tags: [],
-
-  //Activity Logs
-  activityLogs: [],
-
-  //Invoice Logs
+  roles: [],
   invoices: [],
-  invoicesSummary: []
+  userRoles: [],
+  activityLogs: [],
+  activeDrivers: [],
+  invoicesSummary: [],
+  pendingInvitations: [],
+  deactivatedDrivers: [],
 };
 
 export type SettingOrgState = Readonly<typeof initialState>;
 
 // Reducer
-export default (state: SettingOrgState = initialState, action): SettingOrgState => {
+export default (
+  state: SettingOrgState = initialState,
+  action
+): SettingOrgState => {
   switch (action.type) {
-
-    // Users & Roles Reducer
-    case ACTION_TYPES.GET_USER_ROLES: {
+    case REQUEST(ACTION_TYPES.GET_USER_ROLES):
+    case REQUEST(ACTION_TYPES.GET_ROLES):
+    case REQUEST(ACTION_TYPES.GET_PENDING_INVITATION):
+    case REQUEST(ACTION_TYPES.GET_ACTIVE_DRIVER):
+    case REQUEST(ACTION_TYPES.GET_DEACTIVATED_DRIVER):
+    case REQUEST(ACTION_TYPES.GET_TAGS):
+    case REQUEST(ACTION_TYPES.GET_ACTIVITY_LOGS):
+    case REQUEST(ACTION_TYPES.GET_INVOICE):
+    case REQUEST(ACTION_TYPES.GET_INVOICE_SUMMARY):
       return {
         ...state,
-        userRoles: action.payload
+        loading: true,
+      };
+    case FAILURE(ACTION_TYPES.GET_USER_ROLES):
+    case FAILURE(ACTION_TYPES.GET_ROLES):
+    case FAILURE(ACTION_TYPES.GET_PENDING_INVITATION):
+    case FAILURE(ACTION_TYPES.GET_ACTIVE_DRIVER):
+    case FAILURE(ACTION_TYPES.GET_DEACTIVATED_DRIVER):
+    case FAILURE(ACTION_TYPES.GET_TAGS):
+    case FAILURE(ACTION_TYPES.GET_ACTIVITY_LOGS):
+    case FAILURE(ACTION_TYPES.GET_INVOICE):
+    case FAILURE(ACTION_TYPES.GET_INVOICE_SUMMARY):
+      return {
+        ...state,
+        loading: false,
+        errorMessage: action.payload,
+      };
+    // Users & Roles Reducer
+    case SUCCESS(ACTION_TYPES.GET_USER_ROLES): {
+      return {
+        ...state,
+        userRoles: action.payload.data,
       };
     }
     case ACTION_TYPES.GET_ROLES: {
       return {
         ...state,
-        roles: action.payload
+        roles: action.payload,
       };
     }
     case ACTION_TYPES.GET_PENDING_INVITATION: {
       return {
         ...state,
-        pendingInvitations: action.payload
+        pendingInvitations: action.payload,
       };
     }
 
     // Driver Reducer
-    case ACTION_TYPES.GET_ACTIVE_DRIVER: {
+    case SUCCESS(ACTION_TYPES.GET_ACTIVE_DRIVER): {
       return {
         ...state,
-        activeDrivers: action.payload
+        activeDrivers: action.payload.data,
       };
     }
     case ACTION_TYPES.GET_DEACTIVATED_DRIVER: {
       return {
         ...state,
-        deactivatedDrivers: action.payload
+        deactivatedDrivers: action.payload,
       };
     }
 
@@ -90,7 +112,7 @@ export default (state: SettingOrgState = initialState, action): SettingOrgState 
     case ACTION_TYPES.GET_TAGS: {
       return {
         ...state,
-        tags: action.payload
+        tags: action.payload,
       };
     }
 
@@ -98,7 +120,7 @@ export default (state: SettingOrgState = initialState, action): SettingOrgState 
     case ACTION_TYPES.GET_ACTIVITY_LOGS: {
       return {
         ...state,
-        activityLogs: action.payload
+        activityLogs: action.payload,
       };
     }
 
@@ -106,13 +128,13 @@ export default (state: SettingOrgState = initialState, action): SettingOrgState 
     case ACTION_TYPES.GET_INVOICE: {
       return {
         ...state,
-        invoices: action.payload
+        invoices: action.payload,
       };
     }
     case ACTION_TYPES.GET_INVOICE_SUMMARY: {
       return {
         ...state,
-        invoicesSummary: action.payload
+        invoicesSummary: action.payload,
       };
     }
     default:
@@ -130,12 +152,12 @@ const dumpDataRoles = () => {
       user: `Cameron Williamson ${i + 1}`,
       email: `jessica.hanson@example.com${i + 1}`,
       roles: "Standart Admin",
-      access: `Entire Organisation${i}`
+      access: `Entire Organisation${i}`,
     };
     data.push(item);
   }
   return data;
-}
+};
 
 const userRolesData = () => {
   let data = [];
@@ -145,12 +167,12 @@ const userRolesData = () => {
       key: i + 2,
       roles: `Standard Admin ${i + 1}`,
       permissions: `View and Edit`,
-      access: `Entire Organisation${i}`
+      access: `Entire Organisation${i}`,
     };
     data.push(item);
   }
   return data;
-}
+};
 
 const pendingInvitationsData = () => {
   let data = [];
@@ -161,12 +183,12 @@ const pendingInvitationsData = () => {
       user: `Pending User ${i + 1}`,
       email: `jessica.hanson@example.com${i + 1}`,
       roles: "Read-Only",
-      access: `Room ${i}`
+      access: `Room ${i}`,
     };
     data.push(item);
   }
   return data;
-}
+};
 
 // Drivers Data
 const activeDriversData = () => {
@@ -174,37 +196,39 @@ const activeDriversData = () => {
   for (let i = 0; i < 6; i++) {
     let item = {
       id: i + 1,
-      name: 'Brooklyn Simmons',
-      username: 'greenkoala518',
-      tags: 'Status',
+      name: "Brooklyn Simmons",
+      username: "greenkoala518",
+      tags: "Status",
       peerGroup: "Group 12",
       phone: "(208) 555-0112",
       dlState: "Maine",
       dlNumber: "558612",
     };
-    data.push(item)
+    data.push(item);
   }
   return data;
-}
+};
 
 const deactivateDriversData = () => {
   let data = [];
   for (let i = 0; i < 6; i++) {
     let item = {
       id: i + 1,
-      name: 'Chal Vee',
-      username: 'Chal',
+      name: "Chal Vee",
+      username: "Chal",
     };
-    data.push(item)
+    data.push(item);
   }
   return data;
-}
+};
 
 // Tags Data
-const tagsData = [{
-  email: "alma.lawson@example.com",
-  role: "Super Admin"
-}];
+const tagsData = [
+  {
+    email: "alma.lawson@example.com",
+    role: "Super Admin",
+  },
+];
 
 //Activity Logs Data
 const activityLogsData = () => {
@@ -212,14 +236,14 @@ const activityLogsData = () => {
   for (let i = 0; i < 6; i++) {
     let item = {
       id: i + 1,
-      logEvent: 'dolores.chambers@example.com',
+      logEvent: "dolores.chambers@example.com",
       operation: "updated org id '74287':",
-      date: 'March 17th, 12:16 am'
-    }
-    data.push(item)
+      date: "March 17th, 12:16 am",
+    };
+    data.push(item);
   }
   return data;
-}
+};
 
 //Invoice Data
 const invoiceData = () => {
@@ -227,100 +251,100 @@ const invoiceData = () => {
   for (let i = 0; i < 6; i++) {
     let item = {
       id: i + 1,
-      dueDate: '02/03/2021',
+      dueDate: "02/03/2021",
       po: "Signed Agreement",
-      invoice: '30510326',
+      invoice: "30510326",
       amount: "$627.12",
       remainingBalance: "$14.05",
-      status: "Overdue"
-    }
-    data.push(item)
+      status: "Overdue",
+    };
+    data.push(item);
   }
   return data;
-}
+};
 
 const invoiceSummaryData = () => {
   let data = [];
   for (let i = 0; i < 3; i++) {
     let item = {
       id: i + 1,
-      dueDate: '02/03/2021',
+      dueDate: "02/03/2021",
       po: "Signed Agreement",
-      invoice: '30510326',
+      invoice: "30510326",
       amount: "$627.12",
       remainingBalance: "$14.05",
-      status: "Overdue"
-    }
-    data.push(item)
+      status: "Overdue",
+    };
+    data.push(item);
   }
   return data;
-}
+};
 
 // Actions
 // Users & Roles Actions
-export const getUserRoles = () => async dispatch => {
+export const getUserRoles = (request) => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_USER_ROLES,
-    payload: dumpDataRoles
+    payload: axios.post(`/api/setting/org/user-roles/search`, request),
   });
 };
 
-export const getRoles = () => async dispatch => {
+export const getRoles = () => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_ROLES,
-    payload: userRolesData
+    payload: userRolesData,
   });
 };
 
-export const getPendingInvitations = () => async dispatch => {
+export const getPendingInvitations = () => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_PENDING_INVITATION,
-    payload: pendingInvitationsData
+    payload: pendingInvitationsData,
   });
 };
 
 // Driver Actions
-export const getActiveDrivers = () => async dispatch => {
+export const getActiveDrivers = (request) => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_ACTIVE_DRIVER,
-    payload: activeDriversData
+    payload: axios.post(`/api/setting/org/drivers/search`, request),
   });
 };
 
-export const getDeactivatedDrivers = () => async dispatch => {
+export const getDeactivatedDrivers = () => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_DEACTIVATED_DRIVER,
-    payload: deactivateDriversData
+    payload: deactivateDriversData,
   });
 };
 
 // Tags Actions
-export const getTags = () => async dispatch => {
+export const getTags = () => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_TAGS,
-    payload: tagsData
+    payload: tagsData,
   });
 };
 
 // Activity Logs Actions
-export const getActivityLogs = () => async dispatch => {
+export const getActivityLogs = () => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_ACTIVITY_LOGS,
-    payload: activityLogsData
+    payload: activityLogsData,
   });
 };
 
 // Invoice Actions
-export const getInvoice = () => async dispatch => {
+export const getInvoice = () => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_INVOICE,
-    payload: invoiceData
+    payload: invoiceData,
   });
 };
 
-export const getInvoiceSummary = () => async dispatch => {
+export const getInvoiceSummary = () => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_INVOICE_SUMMARY,
-    payload: invoiceSummaryData
+    payload: invoiceSummaryData,
   });
 };

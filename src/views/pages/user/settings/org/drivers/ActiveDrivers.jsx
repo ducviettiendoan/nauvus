@@ -1,25 +1,20 @@
 import React from "react";
 // @material-ui/core components
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
+import GridItem from "components/Grid/GridItem.js"; 
 import Button from "components/CustomButtons/Button";
 import CloseIcon from "components/Icons/CloseIcon";
-import DeleteIcon from "components/Icons/DeleteIcon";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import BootstrapTable from "react-bootstrap-table-next";
-import GenPaginationV1 from "components/Pagination/GenPaginationV1";
+import DeleteIcon from "components/Icons/DeleteIcon"; 
 import Chip from "@material-ui/core/Chip";
 import MoreIcon from "components/Icons/MoreIcon";
+import Table from "components/Table/TableV1";
 
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
-import {connect} from "react-redux";
-import {IRootState} from "../../../../../../reducers";
-import {getActiveDrivers} from "../../../../../../reducers/setting-org";
+import { connect } from "react-redux"; 
+import { getActiveDrivers } from "reducers/setting-org";
 
 const styles = {
   userRolesTitle: {
@@ -63,10 +58,7 @@ const styles = {
     fontWeight: 'bold',
     fontSize: '16px',
     lineHeight: '24px',
-    marginTop: '14px',
     color: '#25345C',
-    marginLeft: '24px',
-    paddingTop: '12px !important'
   },
   textSub: {
     fontWeight: 400,
@@ -78,21 +70,14 @@ const styles = {
     color: '#25345C',
   },
   textTags: {
+    display: "inline-block",
     fontSize: '14px',
-    lineHeight: '24px',
-    marginTop: '16px',
-    marginBottom: '15px',
-    marginLeft: '24px',
-    padding: "12px 14px",
+    lineHeight: '17px',
+    padding: "12px 16px",
     color: "#27AE60",
     background: "rgba(39, 174, 96, 0.1)",
     borderRadius: 23,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontWeight: 700,
-    width: 71,
-    height: "41px"
+    fontWeight: "bold",
   },
   actionButton: {
     paddingTop: '12px !important',
@@ -117,7 +102,24 @@ const styles = {
     height: 20,
     marginTop: 30,
     marginLeft: 12
-  }
+  },
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
+    },
+  },
+  onHeaderRow: {
+    background: "#ECEEF0",
+  },
+  gridTitle: {
+    padding: "20px"
+  },
+  onHeaderCell: {
+    fontWeight: "bold"
+  },
+  gridTitle: {
+    padding: "20px"
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -132,8 +134,8 @@ export function ActiveDrivers(props) {
   }, []);
 
   const [chipData, setChipData] = React.useState([
-    {key: 0, label: 'Standard Admin'},
-    {key: 1, label: 'Full admin'},
+    { key: 0, label: 'Standard Admin' },
+    { key: 1, label: 'Full admin' },
   ]);
 
   const handleDelete = (chipToDelete) => () => {
@@ -143,199 +145,137 @@ export function ActiveDrivers(props) {
   const handleClearAll = () => {
     setChipData([])
   }
-
-  const formatName = (cell, row) => {
-    return <>
-      <div className={classes.textName}>{cell}</div>
-    </>
+  const columns = [
+    {
+      title: 'Name',
+      key: 'name',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: name => <div className={classes.textName}>{name}</div>,
+    },
+    {
+      title: 'Username',
+      key: 'username',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: cell => <div className={classes.textEmail}>{cell}</div>
+    },
+    {
+      title: 'Tags',
+      key: 'tags',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: tags => (<div className={classes.textTags}>{tags}</div>)
+    },
+    {
+      title: 'Peer Group',
+      key: 'peerGroup',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: cell => <div>{cell}</div>
+    },
+    {
+      title: 'Phone',
+      key: 'phone',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: cell => <div>{cell}</div>
+    },
+    {
+      title: 'DL State',
+      key: 'dlState',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: cell => <div>{cell}</div>
+    },
+    {
+      title: 'DL Number',
+      key: 'dlNumber',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: cell => <div>{cell}</div>
+    },
+    {
+      title: 'Actions',
+      key: 'action',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: () => (
+        <div className={classes.actionButton}>
+          <Button justIcon color="google" simple>
+            <DeleteIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
+          </Button>
+          <Button justIcon color="google" simple>
+            <MoreIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
+          </Button>
+        </div>
+      )
+    }
+  ];
+  const onPageChange = (page, pageSize) => { 
+    props.getActiveDrivers({ page, pageSize });
   }
 
-  const formatUserName = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
+  const onShowSizeChange = (page, pageSize) => {
+    props.getActiveDrivers({ page, pageSize }); 
   }
 
-  const formatTags = (cell, row) => {
-    return <>
-      <div className={classes.textTags}>{cell}</div>
-    </>
-  }
-
-  const formatPeerGroup = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatPhone = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatDLState = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatDLNumber = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const addActionButton = () => {
-    return (
-      <div className={classes.actionButton}>
-        <Button justIcon color="google" simple>
-          <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
-        </Button>
-        <Button justIcon color="google" simple>
-          <MoreIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
-        </Button>
-      </div>
-    )
-  }
-
-  const selectRow = {
-    mode: 'checkbox',
-    clickToSelect: true,
-    style: {background: "linear-gradient(0deg,#ECEEF0,#ECEEF0)"},
-    classes: 'customSelectRow',
-    selectionHeaderRenderer: ({indeterminate, ...rest}) => (
-      <input
-        type="checkbox"
-        className={classes.indeterminateIcon}
-        ref={(input) => {
-          if (input) input.indeterminate = indeterminate;
-        }}
-        {...rest}
-      />
-    ),
-    selectionRenderer: ({mode, ...rest}) => (
-      <input className={classes.checkBoxIcon} type={mode} {...rest} />
-    )
-
-  };
 
   return (
-    <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card testimonial>
-                <CardBody>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={6}>
-                      <GridContainer className={classes.headContainer}>
-                        <GridItem xl={2} className={classes.userRolesTitle}>
-                          {chipData.length} selected for
-                        </GridItem>
-                        <GridItem xl={10} className={classes.chipSelected}>
-                          {
-                            chipData.map(data => (
-                              <Chip
-                                deleteIcon={<CloseIcon/>}
-                                label={data.label}
-                                onDelete={handleDelete(data)}
-                                className={classes.chip}
-                              />
-                            ))
-                          }
-                          {
-                            chipData.length > 0
-                              ?
-                              (
-                                <Button onClick={handleClearAll} className={classes.clearAll}>
-                                  Clear All
-                                </Button>
-                              )
-                              : ""
-                          }
-                        </GridItem>
-                      </GridContainer>
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={6}>
-                      <ToolboxButton placeholder="Search gateways" showFilter showTrash/>
-                    </GridItem>
-                  </GridContainer>
-                </CardBody>
-                <ToolkitProvider
-                  data={props.data}
-                  columns={[
-                    {
-                      dataField: "name",
-                      text: "Name",
-                      formatter: formatName
-                    },
-                    {
-                      dataField: "username",
-                      text: "Username",
-                      formatter: formatUserName
-                    },
-                    {
-                      dataField: "tags",
-                      text: "Tags",
-                      formatter: formatTags
-                    },
-                    {
-                      dataField: "peerGroup",
-                      text: "Peer Group",
-                      formatter: formatPeerGroup
-                    },
-                    {
-                      dataField: "phone",
-                      text: "Phone",
-                      formatter: formatPhone
-                    },
-                    {
-                      dataField: "dlState",
-                      text: "DL State",
-                      formatter: formatDLState
-                    },
-                    {
-                      dataField: "dlNumber",
-                      text: "DL Number",
-                      formatter: formatDLNumber
-                    },
-                    {
-                      dataField: "action",
-                      text: "Action",
-                      formatter: addActionButton
-                    }
-                  ]}
-                >
-                  {props => (
-                    <div className="table table-settings">
-                      <BootstrapTable
-                        {...props.baseProps}
-                        bootstrap4={true}
-                        bordered={false}
-                        keyField='id'
-                        selectRow={selectRow}
-
-                      />
-                    </div>
-                  )}
-                </ToolkitProvider>
-              </Card>
+    <div> 
+      <Table
+        renderTitle={
+          <GridContainer justify="space-between" className={classes.gridTitle}>
+            <GridItem>
+              <GridContainer className={classes.headContainer}>
+                <GridItem xl={2} className={classes.userRolesTitle}> {chipData.length} selected for </GridItem>
+                <GridItem xl={10} className={classes.chipSelected}>
+                  {chipData.map(data => (
+                    <Chip
+                      deleteIcon={<CloseIcon />}
+                      label={data.label}
+                      onDelete={handleDelete(data)}
+                      className={classes.chip}
+                    />
+                  ))}
+                  {chipData.length > 0 &&
+                    (
+                      <Button onClick={handleClearAll} className={classes.clearAll}>
+                        Clear All
+                      </Button>
+                    )}
+                </GridItem>
+              </GridContainer>
+            </GridItem>
+            <GridItem>
+              <ToolboxButton placeholder="Search gateways" showFilter showTrash />
             </GridItem>
           </GridContainer>
-          <GenPaginationV1 total={29} page={1} size={10}/>
-        </GridItem>
-      </GridContainer>
+
+        }
+        rowSelection={{
+          // selectedRowKeys,
+          // onChange: onSelectChange,
+        }}
+        pagination={{
+          total: props.total,
+          current: props.page,
+          pageSize: props.pageSize,
+          onChange: onPageChange,
+          onShowSizeChange: onShowSizeChange
+        }}
+        columns={columns}
+        dataSource={props.data}
+        onHeaderRow={{ className: classes.onHeaderRow }}
+        onBodyRow={{ className: classes.tableRow }}
+      />
     </div>
   );
 }
 
-export default connect(
-  ({settingOrg}: IRootState) => ({
-    data: settingOrg.activeDrivers
-  }),
-  {
-    getActiveDrivers
-  }
-)(ActiveDrivers);
+const mapStateToProps = ({ settingOrg }) => {
+  return {
+    data: settingOrg.activeDrivers.data,
+    page: settingOrg.activeDrivers.page,
+    total: settingOrg.activeDrivers.total,
+    pageSize: settingOrg.activeDrivers.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getActiveDrivers
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ActiveDrivers);
