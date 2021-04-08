@@ -13,8 +13,6 @@ import Calendar from "components/Calendar/Calendar";
 import LiveIconWhite from "components/Icons/LiveIconWhite";
 import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
 
-
-
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
     fontSize: 16,
@@ -92,13 +90,13 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 8
   },
   tableRow: {
-    '&:nth-of-type(even)': {
+    '&:nth-of-type()': {
       backgroundColor: "#fbfbfb",
     },
     '&:nth-of-type(4)': {
+
         backgroundColor: "#ECEEF0",
     },
-
   },
   onHeaderRow: {
     background: "#ECEEF0",
@@ -159,11 +157,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Defects(props) {
   const classes = useStyles();
-
-
+  
   const [chipData, setChipData] = React.useState([
-    {key: 0, label: 'Cycle Tomorrow'},
-    {key: 1, label: 'Cycle Remaining'},
+    {key: 0, label: 'Standard Admin'},
+    {key: 1, label: 'Full admin'},
   ]);
 
   const handleDelete = (chipToDelete) => () => {
@@ -175,7 +172,7 @@ export default function Defects(props) {
   };
 
   let dumpData = [];
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 7; i++) {
     let item = {
       id: i + 2,
       key: i + 2,
@@ -274,7 +271,7 @@ export default function Defects(props) {
                     </Grid>
                   </Grid>
                   <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
-                    <ToolboxButton placeholder="Search driver" showFilter showColumn/>
+                    <ToolboxButton placeholder="Search asset" showFilter showColumn/>
                   </Grid>
                 </Grid>
               }
