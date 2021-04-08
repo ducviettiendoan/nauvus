@@ -224,6 +224,9 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 400,
     fontSize: '12px',
     color: '#25345C',
+  },
+  expansionPanelClassesRounded: {
+    boxShadow: "none"
   }
 }));
 
@@ -459,7 +462,11 @@ export default function DriverSideBar(props) {
                     </div>
                 },
               ]
-            }/>
+            }
+             expansionPanelRounded={{
+               rounded: classes.expansionPanelClassesRounded,
+             }}
+            />
           </CardBody>
         </Card>
       </div>
