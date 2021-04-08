@@ -12,7 +12,7 @@ import {connect} from 'react-redux';
 import CustomInput from "components/CustomInput/CustomInput"
 import {Grid} from "@material-ui/core";
 import CustomSelect from "../../../../../components/CustomSelect/CustomSelect";
-import {getDistance} from "../../../../../reducers/overview";
+import {selectDistance} from "reducers/overview";
 
 const styles = {
   txtMainDevice: {
@@ -71,9 +71,9 @@ export function ProximitySideBar(props) {
 
   console.log(props.distances)
 
-  useEffect(() => {
-    props.getDistance()
-  }, [])
+  // useEffect(() => {
+  //   props.getDistance()
+  // }, [])
 
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
@@ -114,14 +114,11 @@ export function ProximitySideBar(props) {
     })
   }
 
-  const [selectValue, setSelectValue] = useState({
-    distance: props.distances,
-  });
-
   const handleChange = (event) => {
-    setSelectValue({ ...selectValue, [event.target.name]: event.target.value })
+    props.selectDistance(event.target.value);
   }
 
+  const distanceData = [1000, 2000, 3000, 4000, 5000]
 
   return (
     <div ref={mainPanelVehicleSideBar}>
@@ -156,9 +153,9 @@ export function ProximitySideBar(props) {
         <CustomSelect
           labelText="Select distance"
           name="distance"
-          listValues={props.distances}
-          placeholder={props.distances}
-          selectValue={selectValue.distance}
+          listValues={distanceData}
+          placeholder={"Select distances"}
+          selectValue={props.distance}
           onChange={handleChange}
         />
         <CustomInput
@@ -201,15 +198,16 @@ export function ProximitySideBar(props) {
   );
 }
 
-const mapStateToProps = ({vehicle, overview}) => {
+const mapStateToProps = ({vehicle,overview}) => {
+  console.log(overview)
   return {
     vehicles: vehicle.vehicles,
-    distances: overview.distances
+    distance: overview.distance
   }
 }
 
 const mapDispatchToProps = {
-  getDistance
+  selectDistance
 }
 
 

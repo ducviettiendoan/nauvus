@@ -23,8 +23,8 @@ import Button from "components/CustomButtons/Button.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 
 import styles from "assets/jss/material-dashboard-pro-react/views/overviewPageStyle.js";
-import {getDistance, setOpenDrawer} from 'reducers/overview';
-import locationMarker from 'assets/icons/locationmarker.svg'
+import { setOpenDrawer} from 'reducers/overview';
+import location from 'assets/icons/location.svg'
 
 import {connect} from 'react-redux';
 import {loadVehicles} from 'reducers/vehicle';
@@ -49,22 +49,20 @@ const RegularMap = withScriptjs(
 
       >
         {props.data.map((maker, index) => {
-          console.log("asdasd", props.radius)
-            console.log(`maker ${index}`, maker)
             if (maker.status === 'connected') {
               return (
                 <>
                   <Marker
                     position={{lat: maker.latitude, lng: maker.longitude}}
                     icon={{
-                      url: locationMarker,
+                      url: location,
                     }}
                     onClick={(marker) => {
                       console.log(`click on Marker ${marker.latLng.lat()} - ${marker.latLng.lng()}`, marker)
                     }}
                   />
                   <Circle
-                    radius={3000}
+                    radius={props.radius}
                     options={{
                       strokeColor: "#E5E5E5",
                       strokeWeight: 0,
@@ -88,18 +86,11 @@ const RegularMap = withScriptjs(
 
 export function Proximity(props) {
   const classes = useStyles();
-  const theme = useTheme();
-
-  useEffect(() => {
-    props.getDistance()
-  }, [])
 
   React.useEffect(() => {
-    // setInterval( fetchVehicles , 10000);
     async function fetchVehicles() {
       await props.loadVehicles();
     }
-
     fetchVehicles();
   }, [1]);
 
@@ -113,7 +104,7 @@ export function Proximity(props) {
         mapElement={<div style={{height: `100%`}}/>}
         isMarkerShown
         data={props.vehicles}
-        radius={props.distances}
+        radius={props.distance}
         center={{lat: 40.748817, lng: -73.985428}}
       />
       <div className={classes.searchMapContainer}>
@@ -156,14 +147,13 @@ const mapStateToProps = ({authentication, vehicle, overview}) => {
     user: authentication.user,
     vehicles: vehicle.vehicles,
     openDrawer: overview.openDrawer,
-    distances: overview.distances
+    distance: overview.distance
   }
 }
 
 const mapDispatchToProps = {
   loadVehicles,
-  setOpenDrawer,
-  getDistance
+  setOpenDrawer
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Proximity);
