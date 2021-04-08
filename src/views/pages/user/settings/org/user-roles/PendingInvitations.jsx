@@ -13,7 +13,7 @@ import EditIcon from "components/Icons/EditIcon";
 import avatar from "assets/img/faces/avatar.jpg";
 import {connect} from "react-redux";
 import {IRootState} from "reducers";
-import {getPendingInvitations} from "reducers/setting-org";
+import {getUserRoles} from "reducers/setting-org";
 
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
@@ -134,7 +134,7 @@ export function PendingInvitations(props) {
 
   React.useEffect(() => {
     // Get list data
-    props.getPendingInvitations();
+    props.getUserRoles();
   }, []);
 
   const [chipData, setChipData] = React.useState([
@@ -202,6 +202,14 @@ export function PendingInvitations(props) {
     }
   ]
 
+  const onPageChange = (page, pageSize) => {
+    props.getUserRoles({ page, pageSize });
+  }
+
+  const onShowSizeChange = (page, pageSize) => {
+    props.getUserRoles({ page, pageSize });
+  }
+
   return (
     <div>
       <Table
@@ -234,24 +242,33 @@ export function PendingInvitations(props) {
           </Grid>
         }
         rowSelection={{}}
+        pagination={{
+          total: props.total,
+          current: props.page,
+          pageSize: props.pageSize,
+          onChange: onPageChange,
+          onShowSizeChange: onShowSizeChange
+        }}
         columns={columns}
         dataSource={props.data}
-        onHeaderRow={{
-          className: classes.onHeaderRow
-        }}
-        onBodyRow={{
-          className: classes.tableRow
-        }}
+        onHeaderRow={{ className: classes.onHeaderRow }}
+        onBodyRow={{ className: classes.tableRow }}
       />
     </div>
   );
 }
 
-export default connect(
-  ({settingOrg}: IRootState) => ({
-    data: settingOrg.pendingInvitations
-  }),
-  {
-    getPendingInvitations
-  }
-)(PendingInvitations);
+const mapStateToProps = ({ settingOrg }) => {
+  return {
+    data: settingOrg.userRoles.data,
+    page: settingOrg.userRoles.page,
+    total: settingOrg.userRoles.total,
+    pageSize: settingOrg.userRoles.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getUserRoles
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PendingInvitations);

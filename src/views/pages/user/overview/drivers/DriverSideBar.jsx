@@ -27,6 +27,13 @@ import DriverIcon from "../../../../../components/Icons/DriverIcon";
 import PhoneIconField from "../../../../../components/Icons/PhoneIconField";
 import CustomSelect from "../../../../../components/CustomSelect/CustomSelect";
 import GridItem from "../../../../../components/Grid/GridItem";
+import CheckSquareOutlined from "../../../../../components/Icons/CheckSquareOutlined";
+import Checkbox from "@material-ui/core/Checkbox";
+import List from "@material-ui/core/List";
+import {ListItem, ListItemSecondaryAction, ListItemText} from "@material-ui/core";
+import {primaryColor} from "../../../../../assets/jss/material-dashboard-pro-react";
+import RadioButton from "../../../../Components/RadioButton";
+import EditDriverForm from "./EditDriverForm";
 
 
 const styles = {
@@ -170,7 +177,7 @@ const styles = {
     lineHeight: "26px",
     color: "#25345C",
     margin: "24px",
-    textAlign: "center"
+    textAlign: "center",
   },
   textFieldRoot: {
     fontWeight: 'normal',
@@ -203,6 +210,24 @@ const styles = {
     fontSize: '18px',
     color: '#25345C',
     padding: "16px 0px 0px 16px"
+  },
+  checked: {
+    color: primaryColor[0] + "!important"
+  },
+  checkRoot: {
+    padding: "0px",
+    "&:hover": {
+      backgroundColor: "unset"
+    }
+  },
+  listCheck: {
+    width: '100%',
+  },
+  listCheckItems: {
+    paddingLeft: "0px",
+    fontWeight: 400,
+    fontSize: '12px',
+    color: '#25345C',
   }
 };
 
@@ -253,45 +278,13 @@ export default function DriverSideBar(props) {
     setOpenInvite(false)
   }
 
-  const onSubmit = async (values) => {
-    console.log(values);
-  }
-
-  const validate = (values) => {
-    const errors = {};
-    if (!values.driverName) {
-      errors.driverName = 'Driver name must not be empty!';
-    }
-    console.log(errors);
-    return errors;
-  };
-
-  const handleChange = (event) => {
-    setSelectValue({ ...selectValue, [event.target.name]: event.target.value })
-  }
-
-  const roles = [
-    { id: 'full_admin', label: 'Full Admin' },
-    { id: 'standard_admin', label: 'Standard Admin' },
-    { id: 'read_only_admin', label: 'Read-only Admin' },
-    { id: 'dispatch', label: 'Dispatch' },
-    { id: 'maintenance', label: 'Maintenance' },
-    { id: 'standard_admin_no_dash', label: "Standard Admin (No Dash Cam Access)" }
-  ]
-
-  const access = [
-    { id: "Entire", label: "Entire Organization" },
-    { id: "room", label: "Room" },
-    { id: "new", label: "New" }
-  ]
-
   return (
     <div ref={mainPanelVehicleSideBar} className={classes.sidebarContainer}>
       <Divider/>
       <Row>
         <Col>
           <Button
-            startIcon={<ArrowBackIcon />}
+            startIcon={<ArrowBackIcon/>}
             className="btn-round-white 2 w-84 h-41"
             style={{margin: "13px 0px 0px 16px"}}
             onClick={props.onBack}
@@ -438,225 +431,8 @@ export default function DriverSideBar(props) {
         handleClose={closeEditDriver}
         open={openInvite}
       >
-        <Form
-          onSubmit={onSubmit}
-          // initialValues={{ email: "test@gmail.com", stooge: 'larry' }}
-          validate={validate}
-          render={({ handleSubmit, reset, submitting, pristine, values }) => (
-            <form onSubmit={handleSubmit} noValidate>
-              <Row>
-                <Col>
-                  <Field
-                    id="standard-full-width"
-                    label="Driver Name"
-                    placeholder="Start typing..."
-                    fullWidth
-                    margin="normal"
-                    name="driverName"
-                    InputLabelProps={{
-                      shrink: true,
-                      classes: {root: classes.textFieldRoot}
-                    }}
-                    InputProps={{
-                      classes: {input: classes.textInputRoot},
-                      endAdornment: (
-                        <InputAdornment position="start">
-                          <DriverIcon className={classes.inputAdornmentIcon} />
-                        </InputAdornment>
-                      ),
-                    }}
-                    component={TextField}
-                  />
-                </Col>
-                <Col>
-                  <Field
-                    id="standard-full-width"
-                    label="Driver Phone Number"
-                    placeholder="Start typing..."
-                    fullWidth
-                    margin="normal"
-                    name="phoneNum"
-                    InputLabelProps={{
-                      shrink: true,
-                      classes: {root: classes.textFieldRoot}
-                    }}
-                    InputProps={{
-                      classes: {input: classes.textInputRoot},
-                      endAdornment: (
-                        <InputAdornment position="start">
-                          <PhoneIconField className={classes.inputAdornmentIcon} />
-                        </InputAdornment>
-                      ),
-                    }}
-                    component={TextField}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <Field
-                    id="standard-full-width"
-                    label="Driver License Number"
-                    placeholder="Start typing..."
-                    fullWidth
-                    margin="normal"
-                    name="driverLicense"
-                    InputLabelProps={{
-                      shrink: true,
-                      classes: {root: classes.textFieldRoot}
-                    }}
-                    InputProps={{
-                      classes: {input: classes.textInputRoot},
-                      endAdornment: (
-                        <InputAdornment position="start">
-                          <PhoneIconField className={classes.inputAdornmentIcon} />
-                        </InputAdornment>
-                      ),
-                    }}
-                    component={TextField}
-                  />
-                </Col>
-                <Col>
-                  <div className={classes.selectField}>
-                    <div className={classes.vehicleHeader}>Locate</div>
-                    <Field
-                      name="stateProvince"
-                      listValues={["AL-Alabama"]}
-                      placeholder={"AL-Alabama"}
-                      selectValue={selectValue.stateProvince}
-                      onChange={handleChange}
-                      component={CustomSelect}
-                    />
-                  </div>
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <Field
-                    id="standard-full-width"
-                    label="Tags"
-                    placeholder="Start typing..."
-                    fullWidth
-                    margin="normal"
-                    name="tags"
-                    InputLabelProps={{
-                      shrink: true,
-                      classes: {root: classes.textFieldRoot}
-                    }}
-                    InputProps={{
-                      classes: {input: classes.textInputRoot},
-                      endAdornment: (
-                        <InputAdornment position="start">
-                          <DriverIcon className={classes.inputAdornmentIcon} />
-                        </InputAdornment>
-                      ),
-                    }}
-                    component={TextField}
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <Field
-                    id="standard-full-width"
-                    label="Notes"
-                    placeholder="Start typing..."
-                    fullWidth
-                    margin="normal"
-                    name="notes"
-                    InputLabelProps={{
-                      shrink: true,
-                      classes: {root: classes.textFieldRoot}
-                    }}
-                    InputProps={{
-                      classes: {input: classes.textInputRoot},
-                      endAdornment: (
-                        <InputAdornment position="start">
-                          <DriverIcon className={classes.inputAdornmentIcon} />
-                        </InputAdornment>
-                      ),
-                    }}
-                    component={TextField}
-                  />
-                </Col>
-              </Row>
-              <Row className={classes.loginTitle}>Driver App Login</Row>
-              <Row>
-                <Col>
-                  <Field
-                    id="standard-full-width"
-                    label="Username"
-                    placeholder="Start typing..."
-                    fullWidth
-                    margin="normal"
-                    name="username"
-                    InputLabelProps={{
-                      shrink: true,
-                      classes: {root: classes.textFieldRoot}
-                    }}
-                    InputProps={{
-                      classes: {input: classes.textInputRoot},
-                      endAdornment: (
-                        <InputAdornment position="start">
-                          <DriverIcon className={classes.inputAdornmentIcon} />
-                        </InputAdornment>
-                      ),
-                    }}
-                    component={TextField}
-                  />
-                </Col>
-                <Col>
-                  <Field
-                    id="standard-full-width"
-                    label="New Password"
-                    placeholder="Start typing..."
-                    fullWidth
-                    margin="normal"
-                    name="password"
-                    InputLabelProps={{
-                      shrink: true,
-                      classes: {root: classes.textFieldRoot}
-                    }}
-                    InputProps={{
-                      classes: {input: classes.textInputRoot},
-                      endAdornment: (
-                        <InputAdornment position="start">
-                          <PhoneIconField className={classes.inputAdornmentIcon} />
-                        </InputAdornment>
-                      ),
-                    }}
-                    component={TextField}
-                  />
-                </Col>
-              </Row>
-              <Row className={classes.loginTitle}>Hours of Service</Row>
-              <div className={classes.selectButton}>
-                <Button
-                  type="button"
-                  round
-                  className="btn-round-active-2 mr-2"
-                  onClick={props.handleClose}
-                > Cancel</Button>
-                <Button
-                  round
-                  className="btn-round-active mr-2"
-                  type="submit"
-                  disabled={submitting}
-                > Save</Button>
-              </div>
-
-            </form>
-          )}
-        />
+        <EditDriverForm />
       </DiaLog>
     </div>
   );
 }
-
-// export default connect(
-//   ({ vehicle }: IRootState) => ({
-//     vehicles: vehicle.vehicles
-//   }),
-//   {
-//   }
-// )(DriverSideBar);

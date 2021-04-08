@@ -87,7 +87,7 @@ export default (state: ComplianceState = initialState, action): ComplianceState 
     case ACTION_TYPES.GET_MISSING_CERTIFICATIONS: {
       return {
         ...state,
-        missingCertifications: action.payload
+        missingCertifications: action.payload,
       }
     }
 

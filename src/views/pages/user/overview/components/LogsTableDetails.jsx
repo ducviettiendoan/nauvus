@@ -94,9 +94,6 @@ const styles = {
   onHeaderRow: {
     background: "#ECEEF0",
   },
-  gridTitle: {
-    padding: "10px"
-  },
   dialogHeader: {
     textAlign: "center",
     marginTop: "10px",
@@ -282,6 +279,9 @@ function LogsTableDetails(props) {
             <GridItem xs={12} sm={12} md={6} className={classes.headLeft}>
               <FormControl variant="outlined" className={classes.selectForm}>
                 <CustomSelect
+                  selectProps={{
+                    disableUnderline: true
+                  }}
                   listValues={listSelectValue}
                   selectValue={selectValue}
                   onChange={handleSelectChange}

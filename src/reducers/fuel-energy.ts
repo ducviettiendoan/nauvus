@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import {REQUEST, SUCCESS, FAILURE} from '../utils/action-type.util';
 import {AUTH_TOKEN_KEY} from '../config/constants';
-import {showLoading, hideLoading} from 'react-redux-loading-bar'
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
 
 export const ACTION_TYPES = {
     //Fuel Purchase Report
