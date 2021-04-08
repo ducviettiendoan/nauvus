@@ -21,6 +21,8 @@ import Link from "@material-ui/core/Link";
 import {connect} from "react-redux";
 import {IRootState} from "reducers";
 import {getWebhook} from "reducers/setting-developer";
+import Table from "components/Table/TableV1";
+import { name } from "file-loader";
 
 const styles = {
   webhookHeader: {
@@ -133,52 +135,59 @@ export function Webhooks(props) {
     props.getWebhook();
   }, []);
 
-  const formatName = (cell, row) => {
-    return <>
-      <div className={classes.textName}>{cell}</div>
-    </>
-  }
-
-  const formatUrls = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatKey = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatConfigAlert = (cell, row) => {
-    return <>
-      <div className={classes.textStatus}>{cell}</div>
-    </>
-  }
-
-  const addActionButton = () => {
-    return (
-      <div className={classes.actionIcon}>
-        <Button justIcon color="twitter" simple>
-          <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
-        </Button>
-        <Button justIcon color="google" simple>
-          <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
-        </Button>
-        <Button justIcon color="google" simple>
+  const columns = [
+    {
+      title: 'Name',
+      key: 'name',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: name => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textName}>{name}</div>
+        </div>
+      ),
+    },
+    {
+      title: 'URL',
+      key: 'url',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: url => <div className={classes.textEmail}>{url}</div>
+    },
+    {
+      title: 'Secret Keys',
+      key: 'secretKeys',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: secretKeys => <div className={classes.textEmail}>{secretKeys}</div>
+    },
+    {
+      title: 'Configured Alerts',
+      key: 'alert',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: alert => <div className={classes.textEmail}>{alert}</div>
+    },
+    {
+      title: 'Actions',
+      key: 'action',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: () => (
+        <div className={classes.actionButton}>
+          <Button justIcon color="twitter" simple>
+            <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+          </Button>
+          <Button justIcon color="google" simple>
+            <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
+          </Button>
+          <Button justIcon color="google" simple>
           <CopyIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
         </Button>
-      </div>
-    )
-  }
+        </div>
+      )
+    }
+  ]
   return (
     <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
-              <GridContainer className={classes.webhookHeader}>
+      <Table
+        renderTitle={
+          <GridContainer className={classes.webhookHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.webhookTitle}>
                   5 Webhooks
                 </GridItem>
@@ -192,49 +201,24 @@ export function Webhooks(props) {
                   </Button>
                 </GridItem>
               </GridContainer>
+        }
+        // rowSelection={{}}
+        columns={columns}
+        dataSource={props.data}
+        onHeaderRow={{
+          className: classes.onHeaderRow
+        }}
+        onBodyRow={{
+          className: classes.tableRow
+        }}
+      />
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={12}>
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={12}>
               <Card testimonial>
-                <ToolkitProvider
-                  data={props.data}
-                  columns={[
-                    {
-                      dataField: "name",
-                      text: "Name",
-                      formatter: formatName
-                    },
-                    {
-                      dataField: "url",
-                      text: "URL",
-                      formatter: formatUrls
-                    },
-                    {
-                      dataField: "secretKey",
-                      text: "Secret Key",
-                      formatter: formatKey
-                    },
-                    {
-                      dataField: "configAlert",
-                      text: "Configured Alerts",
-                      formatter: formatConfigAlert
-                    },
-                    {
-                      dataField: "action",
-                      text: "Actions",
-                      formatter: addActionButton
-                    }
-                  ]}
-                >
-                  {props => (
-                    <div className="table table-settings">
-                      <BootstrapTable
-                        {...props.baseProps}
-                        bootstrap4={true}
-                        bordered={false}
-                        keyField="id"
-                      />
-                    </div>
-                  )}
-                </ToolkitProvider>
-                <CardBody style={{marginTop: '-40px'}}>
+                
+                <CardBody >
                   <GridContainer className={classes.webhookHeader}>
                     <GridItem className={classes.webhookGuide}>
                       Static Webhook IP addresses
