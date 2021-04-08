@@ -224,7 +224,7 @@ const CustomSelect = (props) => {
                 {selectValue === "none" && <option value="none" disabled style={{ display: "none" }} >
                     {placeholder}
                 </option>}
-                {listValues.map((value, i) => <MenuItem key={i} value={i}>{value}</MenuItem>)}
+                {listValues.map((value, i) => <MenuItem key={i} value={value}>{value}</MenuItem>)}
             </Select>
         </FormControl>
     );
