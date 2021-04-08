@@ -84,8 +84,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   dotIcon: {
-    color: "#7CE7AC",
-    marginTop: 10
+    color: "#7CE7AC"
   },
   textRoles: {
     fontSize: '16px',
@@ -141,17 +140,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export function Users(props) {
+
   const classes = useStyles();
-  const [selectedRowKeys, setSelectedRowKeys] = useState([])
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
   React.useEffect(() => {
-    // Get list data
     props.getUserRoles();
   }, []);
-
-  const handleDelete = (chipToDelete) => () => setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
-  const handleClearAll = () => setSelectedRowKeys(() => [])
-  const onSelectChange = selectedRowKeys => setSelectedRowKeys(() => [...selectedRowKeys])
 
   const columns = [
     {
@@ -220,6 +215,10 @@ export function Users(props) {
     { id: "new", label: "New" }
   ]
 
+  const handleDelete = (chipToDelete) => () => setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+  const handleClearAll = () => setSelectedRowKeys(() => [])
+  const onSelectChange = selectedRowKeys => setSelectedRowKeys(() => [...selectedRowKeys])
+
   const onSubmit = async (values) => {
     console.log(values);
   }
@@ -229,10 +228,20 @@ export function Users(props) {
     return errors;
   };
 
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize)
+    props.getUserRoles({ page, pageSize }); 
+  }
+
+  const onShowSizeChange = (page, pageSize) => {
+    props.getUserRoles({ page, pageSize }); 
+    console.log(page, pageSize)
+  }
+
   const initData = { access: "Entire", role: "full_admin" }
   return (
     <div>
-      
+
       <Table
         renderTitle={
           <GridContainer justify="space-between" className={classes.gridTitle}>
@@ -252,14 +261,17 @@ export function Users(props) {
           selectedRowKeys,
           onChange: onSelectChange,
         }}
+        pagination={{
+          total: props.total,
+          current: props.page,
+          pageSize: props.pageSize,
+          onChange: onPageChange,
+          onShowSizeChange: onShowSizeChange
+        }}
         columns={columns}
         dataSource={props.data}
-        onHeaderRow={{
-          className: classes.onHeaderRow
-        }}
-        onBodyRow={{
-          className: classes.tableRow
-        }}
+        onHeaderRow={{ className: classes.onHeaderRow }}
+        onBodyRow={{ className: classes.tableRow }}
       />
       <DiaLog
         renderTitle={<h3 className={classes.dialogTitle}>Invite User</h3>}
@@ -376,7 +388,10 @@ export function Users(props) {
 
 const mapStateToProps = ({ settingOrg }) => {
   return {
-    data: settingOrg.userRoles
+    data: settingOrg.userRoles.data,
+    page: settingOrg.userRoles.page,
+    total: settingOrg.userRoles.total,
+    pageSize: settingOrg.userRoles.pageSize
   };
 };
 
