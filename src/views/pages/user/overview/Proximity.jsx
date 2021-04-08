@@ -12,7 +12,7 @@ const {InfoBox} = require("react-google-maps/lib/components/addons/InfoBox");
 import {GOOGLE_MAP_API_KEY} from "config/constants";
 
 // @material-ui/core components
-import {makeStyles, useTheme, Theme, createStyles} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 // @material-ui/icons
 import Search from "@material-ui/icons/Search";
 import List from "@material-ui/icons/List";
@@ -23,7 +23,7 @@ import Button from "components/CustomButtons/Button.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 
 import styles from "assets/jss/material-dashboard-pro-react/views/overviewPageStyle.js";
-import { setOpenDrawer} from 'reducers/overview';
+import {setOpenDrawer} from 'reducers/overview';
 import location from 'assets/icons/location.svg'
 
 import {connect} from 'react-redux';
@@ -34,7 +34,6 @@ const useStyles = makeStyles(styles);
 
 
 const RegularMap = withScriptjs(
-
   withGoogleMap((props) => {
     return (
 
@@ -46,7 +45,6 @@ const RegularMap = withScriptjs(
           mapTypeControl: false,
           streetViewControl: false
         }}
-
       >
         {props.data.map((maker, index) => {
             if (maker.status === 'connected') {
@@ -58,22 +56,23 @@ const RegularMap = withScriptjs(
                       url: location,
                     }}
                     onClick={(marker) => {
-                      console.log(`click on Marker ${marker.latLng.lat()} - ${marker.latLng.lng()}`, marker)
+                      console.log(`click on Marker ${marker.latLng.lat()}, ${marker.latLng.lng()}`, marker)
                     }}
-                  />
-                  <Circle
-                    radius={props.radius}
-                    options={{
-                      strokeColor: "#E5E5E5",
-                      strokeWeight: 0,
-                      fillColor: "#E5E5E5 solid",
-                    }}
-                    defaultCenter={{
-                      lat: maker.latitude,
-                      lng: maker.longitude}}
-                  />
+                  >
+                    <Circle
+                      radius={props.radius}
+                      options={{
+                        strokeColor: "#E5E5E5",
+                        strokeWeight: 0,
+                        fillColor: "#E5E5E5 solid",
+                      }}
+                      defaultCenter={{
+                        lat: maker.latitude,
+                        lng: maker.longitude
+                      }}
+                    />
+                  </Marker>
                 </>
-
               )
             }
           }
@@ -87,13 +86,14 @@ const RegularMap = withScriptjs(
 export function Proximity(props) {
   const classes = useStyles();
 
+
   React.useEffect(() => {
     async function fetchVehicles() {
       await props.loadVehicles();
     }
+
     fetchVehicles();
   }, [1]);
-
 
   return (
     <div style={{position: 'relative'}}>
@@ -104,8 +104,8 @@ export function Proximity(props) {
         mapElement={<div style={{height: `100%`}}/>}
         isMarkerShown
         data={props.vehicles}
-        radius={props.distance}
         center={{lat: 40.748817, lng: -73.985428}}
+        radius={props.distance}
       />
       <div className={classes.searchMapContainer}>
         <Button
