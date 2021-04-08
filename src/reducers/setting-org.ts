@@ -117,24 +117,24 @@ export default (
     }
 
     // Activity Logs Reducer
-    case ACTION_TYPES.GET_ACTIVITY_LOGS: {
+    case SUCCESS(ACTION_TYPES.GET_ACTIVITY_LOGS): {
       return {
         ...state,
-        activityLogs: action.payload,
+        activityLogs: action.payload.data,
       };
     }
 
     //Invoice Reducer
-    case ACTION_TYPES.GET_INVOICE: {
+    case SUCCESS(ACTION_TYPES.GET_INVOICE): {
       return {
         ...state,
-        invoices: action.payload,
+        invoices: action.payload.data,
       };
     }
-    case ACTION_TYPES.GET_INVOICE_SUMMARY: {
+    case SUCCESS(ACTION_TYPES.GET_INVOICE_SUMMARY): {
       return {
         ...state,
-        invoicesSummary: action.payload,
+        invoicesSummary: action.payload.data,
       };
     }
     default:
@@ -143,21 +143,7 @@ export default (
 };
 
 // Users & Roles Data
-const dumpDataRoles = () => {
-  let data = [];
-  for (let i = 0; i < 64; i++) {
-    let item = {
-      id: i + 2,
-      key: `key${i + 2}`,
-      user: `Cameron Williamson ${i + 1}`,
-      email: `jessica.hanson@example.com${i + 1}`,
-      roles: "Standart Admin",
-      access: `Entire Organisation${i}`,
-    };
-    data.push(item);
-  }
-  return data;
-};
+
 
 const userRolesData = () => {
   let data = [];
@@ -230,56 +216,6 @@ const tagsData = [
   },
 ];
 
-//Activity Logs Data
-const activityLogsData = () => {
-  let data = [];
-  for (let i = 0; i < 6; i++) {
-    let item = {
-      id: i + 1,
-      logEvent: "dolores.chambers@example.com",
-      operation: "updated org id '74287':",
-      date: "March 17th, 12:16 am",
-    };
-    data.push(item);
-  }
-  return data;
-};
-
-//Invoice Data
-const invoiceData = () => {
-  let data = [];
-  for (let i = 0; i < 6; i++) {
-    let item = {
-      id: i + 1,
-      dueDate: "02/03/2021",
-      po: "Signed Agreement",
-      invoice: "30510326",
-      amount: "$627.12",
-      remainingBalance: "$14.05",
-      status: "Overdue",
-    };
-    data.push(item);
-  }
-  return data;
-};
-
-const invoiceSummaryData = () => {
-  let data = [];
-  for (let i = 0; i < 3; i++) {
-    let item = {
-      id: i + 1,
-      dueDate: "02/03/2021",
-      po: "Signed Agreement",
-      invoice: "30510326",
-      amount: "$627.12",
-      remainingBalance: "$14.05",
-      status: "Overdue",
-    };
-    data.push(item);
-  }
-  return data;
-};
-
 // Actions
 // Users & Roles Actions
 export const getUserRoles = (request) => async (dispatch) => {
@@ -289,19 +225,6 @@ export const getUserRoles = (request) => async (dispatch) => {
   });
 };
 
-export const getRoles = () => async (dispatch) => {
-  dispatch({
-    type: ACTION_TYPES.GET_ROLES,
-    payload: userRolesData,
-  });
-};
-
-export const getPendingInvitations = () => async (dispatch) => {
-  dispatch({
-    type: ACTION_TYPES.GET_PENDING_INVITATION,
-    payload: pendingInvitationsData,
-  });
-};
 
 // Driver Actions
 export const getActiveDrivers = (request) => async (dispatch) => {
@@ -327,24 +250,24 @@ export const getTags = () => async (dispatch) => {
 };
 
 // Activity Logs Actions
-export const getActivityLogs = () => async (dispatch) => {
+export const getActivityLogs = (request) => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_ACTIVITY_LOGS,
-    payload: activityLogsData,
+    payload: axios.post("/api/setting/org/activity-log/search", request),
   });
 };
 
 // Invoice Actions
-export const getInvoice = () => async (dispatch) => {
+export const getInvoice = (request) => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_INVOICE,
-    payload: invoiceData,
+    payload: axios.post("/api/setting/org/billing/invoice/search", request),
   });
 };
 
-export const getInvoiceSummary = () => async (dispatch) => {
+export const getInvoiceSummary = (request) => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_INVOICE_SUMMARY,
-    payload: invoiceSummaryData,
+    payload: axios.post("/api/setting/org/billing/summary/search", request),
   });
 };

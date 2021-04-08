@@ -3,32 +3,22 @@ import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
-import BootstrapTable from "react-bootstrap-table-next";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import {connect} from "react-redux";
 import {IRootState} from "../../../../../../reducers";
-import {getActivityLogs, getInvoice} from "../../../../../../reducers/setting-org";
-import {ActivityLog} from "../ActivityLog";
+import {getInvoice} from "reducers/setting-org";
+import Table from "components/Table/TableV1";
 
 const styles = {
   textSub: {
     fontWeight: '400',
     fontSize: '16px',
     lineHeight: '24px',
-    marginTop: '16px',
-    marginLeft: '24px',
     color: "#25345C",
   },
   textStatus: {
     fontSize: '14px',
     lineHeight: '24px',
-    marginTop: '7px',
-    marginBottom: '8px',
-    marginLeft: '24px',
     padding: "12px 14px",
     color: "#FFFFFF",
     background: "rgba(229,57,53,0.85)",
@@ -59,6 +49,38 @@ const styles = {
     textAlign: "left",
     display: 'inline-block'
   },
+  onHeaderCell: {
+    fontWeight: "bold",
+    color: "#25345C"
+  },
+  tableTitle: {
+    fontSize: "18px",
+    fontWeight: 700,
+    color: "#25345C",
+    display: "flex",
+    alignItems: "center",
+  },
+  headLeft: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    "& > div": {
+      marginBottom: "0 !important",
+      marginRight: 8
+    }
+  },
+  gridTitle: {
+    padding: "20px",
+  },
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
+    },
+  },
+  onHeaderRow: {
+    background: "#ECEEF0",
+  },
+
 };
 
 const useStyles = makeStyles(styles);
@@ -71,110 +93,90 @@ export function Invoice(props) {
     props.getInvoice();
   }, []);
 
-  const formatDueDate = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
+  const onPageChange = (page, pageSize) => {
+    props.getInvoice({ page, pageSize });
+  }
+  const onShowSizeChange = (page, pageSize) => {
+    props.getInvoice({ page, pageSize });
   }
 
-  const formatPO = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatInvoice = (cell, row) => {
-    return <>
-
-      <div className={classes.textSub}>{cell}</div>
-
-    </>
-  }
-
-  const formatAmount = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatRemainingBalance = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatStatus = (cell, row) => {
-    return <>
-      <div className={classes.textStatus}>{cell}</div>
-    </>
-  }
+  const columns = [
+    {
+      title: 'Due Date',
+      key: 'dueDate',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: dueDate => (
+          <div className={classes.textSub}>{dueDate}</div>
+      ),
+    },
+    {
+      title: 'PO',
+      key: 'po',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: po => (
+          <div className={classes.textSub}>{po}</div>
+      )
+    },
+    {
+      title: 'Invoice',
+      key: 'invoice',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: invoice => (
+          <div className={classes.textSub}>{invoice}</div>
+      )
+    },
+    {
+      title: 'Amount',
+      key: 'amount',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: amount => (
+          <div className={classes.textSub}>{amount}</div>
+      )
+    },
+    {
+      title: 'Remaining Balance',
+      key: 'remainingBalance',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: remainingBalance => (
+          <div className={classes.textSub}>{remainingBalance}</div>
+      )
+    },
+    {
+      title: 'Status',
+      key: 'status',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: status => (
+          <div className={classes.textStatus}>{status}</div>
+      )
+    },
+  ];
   return (
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
-          <Card testimonial>
-            <CardBody>
-              <GridContainer className={classes.invoiceHeader}>
-                <GridItem xs={3} sm={3} md={3} className={classes.invoiceTitle}>
-                  21 Invoices
-                </GridItem>
-                <GridItem xs={9} sm={9} md={9} className={classes.invoiceButton}>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <ToolboxButton placeholder={"Search invoice"}/>
+          <Table
+              renderTitle={
+                <GridContainer justify="space-between" className={classes.gridTitle}>
+                  <GridItem className={classes.tableTitle}>
+                    {props.total} Invoices
                   </GridItem>
-                </GridItem>
-              </GridContainer>
-            </CardBody>
-            <ToolkitProvider
-              data={props.data}
-              columns={[
-                {
-                  dataField: "dueDate",
-                  text: "Due Date",
-                  formatter: formatDueDate
-                },
-                {
-                  dataField: "po",
-                  text: "PO",
-                  formatter: formatPO
-                },
-                {
-                  dataField: "invoice",
-                  text: "Invoice",
-                  formatter: formatInvoice
-                },
-                {
-                  dataField: "amount",
-                  text: "Amount",
-                  formatter: formatAmount
-                },
-                {
-                  dataField: "remainingBalance",
-                  text: "Remaining Balance",
-                  formatter: formatRemainingBalance
-                },
-                {
-                  dataField: "status",
-                  text: "Status",
-                  formatter: formatStatus
-                }
-
-              ]}
-            >
-              {props => (
-                <div className="table table-settings">
-                  <BootstrapTable
-                    {...props.baseProps}
-                    bootstrap4={true}
-                    bordered={false}
-                    keyField='id'
-                  />
-
-                </div>
-              )}
-            </ToolkitProvider>
-          </Card>
-          <GenPaginationV1 total={29} page={1} size={10}/>
+                  <GridItem className={classes.headLeft}>
+                    <ToolboxButton placeholder="Search Invoice"/>
+                  </GridItem>
+                </GridContainer>
+              }
+              pagination={{
+                total: props.total,
+                current: props.page,
+                pageSize: props.pageSize,
+                onChange: onPageChange,
+                onShowSizeChange: onShowSizeChange
+              }}
+              columns={columns}
+              dataSource={props.data}
+              onHeaderRow={{ className: classes.onHeaderRow }}
+              onBodyRow={{ className: classes.tableRow }}
+          />
         </GridItem>
       </GridContainer>
     </div>
@@ -183,7 +185,10 @@ export function Invoice(props) {
 
 export default connect(
   ({settingOrg}: IRootState) => ({
-    data: settingOrg.invoices
+    data: settingOrg.invoices.data,
+    page: settingOrg.invoices.page,
+    total: settingOrg.invoices.total,
+    pageSize: settingOrg.invoices.pageSize
   }),
   {
     getInvoice

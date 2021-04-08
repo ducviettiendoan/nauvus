@@ -102,51 +102,115 @@ const tagsData = [
 ];
 
 //Activity Logs Data
-const activityLogsData = () => {
-  let data = [];
-  for (let i = 0; i < 6; i++) {
-    let item = {
-      id: i + 1,
-      logEvent: "dolores.chambers@example.com",
-      operation: "updated org id '74287':",
-      date: "March 17th, 12:16 am",
-    };
-    data.push(item);
+mock.onPost("/api/setting/org/activity-log/search").reply((config) => {
+  let pageSize = 10;
+  let page = 1;
+  if (config.data) {
+    const request = JSON.parse(config.data);
+    page = request.page;
+    pageSize = request.pageSize;
   }
-  return data;
-};
+
+  const startPage = pageSize * page - pageSize;
+  const endPage = pageSize * page > 64 ? 64 : pageSize * page;
+  // Activity Log Data
+  const activityLogData = () => {
+    let data = [];
+    for (let i = startPage; i < endPage; i++) {
+      let item = {
+        id: i + 2,
+        key: `key${i + 2}`,
+        logEvent: "dolores.chambers@example.com",
+        operation: {
+          id: "74287",
+          operation: "changed MessagePushNotificationsEnabled from false to true."
+        } ,
+        date: "March 17th, 12:16 am",
+      };
+      data.push(item);
+    }
+    return data;
+  };
+
+  const data = {
+    total: 64,
+    page: page,
+    pageSize: pageSize,
+    data: activityLogData(),
+  };
+
+  return [200, data];
+})
 
 //Invoice Data
-const invoiceData = () => {
-  let data = [];
-  for (let i = 0; i < 6; i++) {
-    let item = {
-      id: i + 1,
-      dueDate: "02/03/2021",
-      po: "Signed Agreement",
-      invoice: "30510326",
-      amount: "$627.12",
-      remainingBalance: "$14.05",
-      status: "Overdue",
-    };
-    data.push(item);
+mock.onPost("/api/setting/org/billing/invoice/search").reply((config) => {
+  let pageSize = 10;
+  let page = 1;
+  if (config.data) {
+    const request = JSON.parse(config.data);
+    page = request.page;
+    pageSize = request.pageSize;
   }
-  return data;
-};
 
-const invoiceSummaryData = () => {
-  let data = [];
-  for (let i = 0; i < 3; i++) {
-    let item = {
-      id: i + 1,
-      dueDate: "02/03/2021",
-      po: "Signed Agreement",
-      invoice: "30510326",
-      amount: "$627.12",
-      remainingBalance: "$14.05",
-      status: "Overdue",
-    };
-    data.push(item);
+  const startPage = pageSize * page - pageSize;
+  const endPage = pageSize * page > 64 ? 64 : pageSize * page;
+  // Invoice Data
+  const invoiceData = () => {
+    let data = [];
+    for (let i = startPage; i < endPage; i++) {
+      let item = {
+        id: i + 2,
+        key: `key${i + 2}`,
+        dueDate: "02/03/2021",
+        po: "Signed Agreement",
+        invoice: "30510326",
+        amount: "$627.12",
+        remainingBalance: "$14.05",
+        status: "Overdue",
+      };
+      data.push(item);
+    }
+    return data;
+  };
+
+  const data = {
+    total: 64,
+    page: page,
+    pageSize: pageSize,
+    data: invoiceData(),
+  };
+
+  return [200, data];
+})
+
+
+mock.onPost("/api/setting/org/billing/summary/search").reply((config) => {
+  if (config.data) {
+    const request = JSON.parse(config.data);
   }
-  return data;
-};
+
+  // Invoice Data
+  const invoiceSummaryData = () => {
+    let data = [];
+    for (let i = 0; i < 3; i++) {
+      let item = {
+        id: i + 1,
+        dueDate: "02/03/2021",
+        po: "Signed Agreement",
+        invoice: "30510326",
+        amount: "$627.12",
+        remainingBalance: "$14.05",
+        status: "Overdue",
+      };
+      data.push(item);
+    }
+    return data;
+  };
+
+  const data = {
+    data: invoiceSummaryData(),
+  };
+
+  return [200, data];
+})
+
