@@ -95,10 +95,10 @@ export default (
     }
 
     // Driver Reducer
-    case ACTION_TYPES.GET_ACTIVE_DRIVER: {
+    case SUCCESS(ACTION_TYPES.GET_ACTIVE_DRIVER): {
       return {
         ...state,
-        activeDrivers: action.payload,
+        activeDrivers: action.payload.data,
       };
     }
     case ACTION_TYPES.GET_DEACTIVATED_DRIVER: {
@@ -304,10 +304,10 @@ export const getPendingInvitations = () => async (dispatch) => {
 };
 
 // Driver Actions
-export const getActiveDrivers = () => async (dispatch) => {
+export const getActiveDrivers = (request) => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_ACTIVE_DRIVER,
-    payload: activeDriversData,
+    payload: axios.post(`/api/setting/org/drivers/search`, request),
   });
 };
 
