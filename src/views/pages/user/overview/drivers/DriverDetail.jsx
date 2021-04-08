@@ -32,6 +32,7 @@ const useStyles = makeStyles(styles);
 import { connect } from 'react-redux';
 import { loadVehicles } from 'reducers/vehicle';
 import { IRootState } from 'reducers';
+import InfoWindowPopup from "../components/InfoWindowPopup";
 
 // defaultCenter={{ lat: 40.748817, lng: -73.985428 }}
 const RegularMap = withScriptjs(
@@ -59,11 +60,7 @@ const RegularMap = withScriptjs(
                     }}
             >
               <InfoWindow>
-                <div className="infowindow">
-                  <div className="path">{ maker.formatted_address }</div>
-                  <div className="device-name mb-2">{ maker.serialnumber }</div>
-                  <div><Link to={'/user/overview/assets'} className="assets">Assets</Link></div>
-                </div>
+                <InfoWindowPopup maker={maker}/>
               </InfoWindow>
             </Marker>
           )

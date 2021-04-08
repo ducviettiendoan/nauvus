@@ -41,18 +41,15 @@ export default function GeneralLanguageRegion() {
       <div>
         <Row style={{ marginTop: '20px', display: "flex", justifyContent: "space-between" }} xs={12} sm={12} md={12} >
           <GridItem xs={12} sm={12} md={6}>
-            <GridItem className={classes.vehicleHeader}>Locate</GridItem>
-            <CustomSelect name="selectA" listValues={["New York", "Ohio", "Texas"]} placeholder={"Select Locate"} selectValue={selectValue.selectA} onChange={handleChange} />
+            <CustomSelect labelText="Locate" name="selectA" listValues={["New York", "Ohio", "Texas"]} placeholder={"Select Locate"} selectValue={selectValue.selectA} onChange={handleChange} />
           </GridItem>
           <GridItem xs={12} sm={12} md={6}>
-            <GridItem className={classes.vehicleHeader}>Timezone</GridItem>
-            <CustomSelect name="selectB" listValues={["UTC -4", "UTC -5", "UTC -6"]} placeholder={"Select Timezone"} selectValue={selectValue.selectB} onChange={handleChange} />
+            <CustomSelect labelText="Timezone" name="selectB" listValues={["UTC -4", "UTC -5", "UTC -6"]} placeholder={"Select Timezone"} selectValue={selectValue.selectB} onChange={handleChange} />
           </GridItem>
         </Row>
         <Row style={{ marginTop: '20px', display: "flex", justifyContent: "space-between" }} xs={12} sm={12} md={12} >
           <GridItem xs={12} sm={12} md={6}>
-            <GridItem className={classes.vehicleHeader}>Language</GridItem>
-            <CustomSelect name="selectC" listValues={["English", "Chinese", "Japanese"]} placeholder={"Select Language"} selectValue={selectValue.selectC} onChange={handleChange} />
+            <CustomSelect labelText="Language" name="selectC" listValues={["English", "Chinese", "Japanese"]} placeholder={"Select Language"} selectValue={selectValue.selectC} onChange={handleChange} />
           </GridItem>
         </Row>
       </div>
