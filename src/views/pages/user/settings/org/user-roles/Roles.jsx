@@ -1,6 +1,6 @@
 import React from "react";
 // @material-ui/core components
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Button from "components/CustomButtons/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import CloseIcon from "components/Icons/CloseIcon";
@@ -10,9 +10,9 @@ import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
 import EditIcon from "components/Icons/EditIcon";
 
-import {getRoles} from "reducers/setting-org";
+import { getUserRoles } from "reducers/setting-org";
 import { connect } from 'react-redux';
-import {IRootState} from "reducers";
+import { IRootState } from "reducers";
 
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
@@ -128,12 +128,12 @@ export function Roles(props) {
 
   React.useEffect(() => {
     // Get list data
-    props.getRoles();
+    props.getUserRoles();
   }, []);
 
   const [chipData, setChipData] = React.useState([
-    {key: 0, label: 'Standard Admin'},
-    {key: 1, label: 'Full admin'},
+    { key: 0, label: 'Standard Admin' },
+    { key: 1, label: 'Full admin' },
   ]);
 
   const handleDelete = (chipToDelete) => () => {
@@ -148,7 +148,7 @@ export function Roles(props) {
     {
       title: 'Roles',
       key: 'roles',
-      onHeaderCell: {className: classes.onHeaderCell},
+      onHeaderCell: { className: classes.onHeaderCell },
       render: role => (
         <div className={classes.alignItemsCenter}>
           <div className={classes.textName}>{role}</div>
@@ -158,26 +158,34 @@ export function Roles(props) {
     {
       title: 'Permission',
       key: 'permissions',
-      onHeaderCell: {className: classes.onHeaderCell},
+      onHeaderCell: { className: classes.onHeaderCell },
       render: permission => <div className={classes.textEmail}>{permission}</div>
     },
     {
       title: 'Actions',
       key: 'action',
-      onHeaderCell: {className: classes.onHeaderCell},
+      onHeaderCell: { className: classes.onHeaderCell },
       render: () => (
         <div className={classes.actionButton}>
           <Button justIcon color="twitter" simple>
-            <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+            <EditIcon className={classes.iconButton} style={{ color: "#ffffff", width: '22px', height: '22px' }} />
           </Button>
           <Button justIcon color="google" simple>
-            <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
+            <DeleteIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
           </Button>
         </div>
       )
     }
   ]
-  console.log(props.data)
+
+  const onPageChange = (page, pageSize) => {
+    props.getUserRoles({ page, pageSize });
+  }
+
+  const onShowSizeChange = (page, pageSize) => {
+    props.getUserRoles({ page, pageSize });
+  }
+
   return (
     <div>
       <Table
@@ -189,7 +197,7 @@ export function Roles(props) {
                 <Grid item xl={10} className={classes.chipSelected}>
                   {chipData.map(data => (
                     <Chip
-                      deleteIcon={<CloseIcon/>}
+                      deleteIcon={<CloseIcon />}
                       label={data.label}
                       onDelete={handleDelete(data)}
                       className={classes.chips}
@@ -205,29 +213,38 @@ export function Roles(props) {
               </Grid>
             </Grid>
             <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
-              <ToolboxButton placeholder="Search for role" showFilter showTrash/>
+              <ToolboxButton placeholder="Search for role" showFilter showTrash />
             </Grid>
           </Grid>
         }
         // rowSelection={{}}
+        pagination={{
+          total: props.total,
+          current: props.page,
+          pageSize: props.pageSize,
+          onChange: onPageChange,
+          onShowSizeChange: onShowSizeChange
+        }}
         columns={columns}
         dataSource={props.data}
-        onHeaderRow={{
-          className: classes.onHeaderRow
-        }}
-        onBodyRow={{
-          className: classes.tableRow
-        }}
+        onHeaderRow={{ className: classes.onHeaderRow }}
+        onBodyRow={{ className: classes.tableRow }}
       />
     </div>
   );
 }
 
-export default connect(
-  ({settingOrg}: IRootState) => ({
-    data: settingOrg.roles
-  }),
-  {
-    getRoles
-  }
-)(Roles);
+const mapStateToProps = ({ settingOrg }) => {
+  return {
+    data: settingOrg.userRoles.data,
+    page: settingOrg.userRoles.page,
+    total: settingOrg.userRoles.total,
+    pageSize: settingOrg.userRoles.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getUserRoles
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Roles);
