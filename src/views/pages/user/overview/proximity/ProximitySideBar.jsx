@@ -1,16 +1,18 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 // core components
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
-import { Col, Row } from 'reactstrap';
-import { connect } from 'react-redux';
+import {Col, Row} from 'reactstrap';
+import {connect} from 'react-redux';
 import CustomInput from "components/CustomInput/CustomInput"
-import { Grid } from "@material-ui/core";
+import {Grid} from "@material-ui/core";
+import CustomSelect from "../../../../../components/CustomSelect/CustomSelect";
+import {selectDistance} from "reducers/overview";
 
 const styles = {
   txtMainDevice: {
@@ -62,9 +64,16 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 var ps;
+
 export function ProximitySideBar(props) {
   const classes = useStyles();
   const mainPanelVehicleSideBar = React.createRef();
+
+  console.log(props.distances)
+
+  // useEffect(() => {
+  //   props.getDistance()
+  // }, [])
 
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
@@ -105,13 +114,21 @@ export function ProximitySideBar(props) {
     })
   }
 
+  const handleChange = (event) => {
+    props.selectDistance(event.target.value);
+  }
+
+  const distanceData = [1000, 2000, 3000, 4000, 5000]
+
   return (
     <div ref={mainPanelVehicleSideBar}>
       <Row>
         <Col>
-          <div className={classes.txtMainDevice} style={{ padding: '15px' }}>Proximity Search</div>
-          <div className={classes.txtMainDescription} style={{ padding: '15px' }}>Search for an address to see which assets were previously nearby.</div>
-          <Divider variant="fullWidth" light />
+          <div className={classes.txtMainDevice} style={{padding: '15px'}}>Proximity Search</div>
+          <div className={classes.txtMainDescription} style={{padding: '15px'}}>Search for an address to see which
+            assets were previously nearby.
+          </div>
+          <Divider variant="fullWidth" light/>
         </Col>
       </Row>
 
@@ -126,29 +143,20 @@ export function ProximitySideBar(props) {
             placeholder: "Enter assets",
             onChange: handleInputChange,
             defaultValue: "Title",
-            classes: { input: classes.textInputRoot },
+            classes: {input: classes.textInputRoot},
           }}
           labelProps={{
             shrink: true,
-            classes: { root: classes.textFieldRoot }
+            classes: {root: classes.textFieldRoot}
           }}
         />
-        <CustomInput
-          labelText="Distance (meters)"
+        <CustomSelect
+          labelText="Select distance"
           name="distance"
-          formControlProps={{
-            className: classes.sidebarInput
-          }}
-          inputProps={{
-            placeholder: "Enter distance",
-            onChange: handleInputChange,
-            defaultValue: "100",
-            classes: { input: classes.textInputRoot },
-          }}
-          labelProps={{
-            shrink: true,
-            classes: { root: classes.textFieldRoot }
-          }}
+          listValues={distanceData}
+          placeholder={"Select distances"}
+          selectValue={props.distance}
+          onChange={handleChange}
         />
         <CustomInput
           labelText="Start Time"
@@ -160,11 +168,11 @@ export function ProximitySideBar(props) {
             placeholder: "Enter start time",
             onChange: handleInputChange,
             defaultValue: "Title",
-            classes: { input: classes.textInputRoot },
+            classes: {input: classes.textInputRoot},
           }}
           labelProps={{
             shrink: true,
-            classes: { root: classes.textFieldRoot }
+            classes: {root: classes.textFieldRoot}
           }}
         />
         <CustomInput
@@ -177,11 +185,11 @@ export function ProximitySideBar(props) {
             placeholder: "Enter end time",
             onChange: handleInputChange,
             defaultValue: "Title",
-            classes: { input: classes.textInputRoot },
+            classes: {input: classes.textInputRoot},
           }}
           labelProps={{
             shrink: true,
-            classes: { root: classes.textFieldRoot }
+            classes: {root: classes.textFieldRoot}
           }}
         />
         <Grid className={classes.footerText}>No assets were nearby during the specified time.</Grid>
@@ -190,14 +198,16 @@ export function ProximitySideBar(props) {
   );
 }
 
-const mapStateToProps = ({ vehicle }) => {
+const mapStateToProps = ({vehicle,overview}) => {
+  console.log(overview)
   return {
-    vehicles: vehicle.vehicles
+    vehicles: vehicle.vehicles,
+    distance: overview.distance
   }
 }
 
 const mapDispatchToProps = {
-
+  selectDistance
 }
 
 

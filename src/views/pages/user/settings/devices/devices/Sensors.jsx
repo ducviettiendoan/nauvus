@@ -331,8 +331,10 @@ export function Sensors(props) {
 
 export default connect(
   ({settingDevice}: IRootState) => ({
-    data: settingDevice.sensors
-  }),
+    data: settingDevice.sensors.data,
+    page: settingDevice.sensors.page,
+    total: settingDevice.sensors.total,
+    pageSize: settingDevice.sensors.pageSize  }),
   {
     getSensor
   }

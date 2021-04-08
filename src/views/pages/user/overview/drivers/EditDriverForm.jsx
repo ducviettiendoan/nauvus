@@ -47,7 +47,11 @@ const styles = {
     padding: "0px 0px 0px 0px !important",
   },
   selectField: {
-    paddingTop: "18px"
+    paddingTop: "18px",
+    paddingBottom: "10px",
+    fontWeight: 700,
+    fontSize: '14px',
+    color: '#25345C',
   },
   loginTitle: {
     fontWeight: 700,
@@ -80,6 +84,9 @@ const styles = {
   selectButton: {
     display: "flex",
     justifyContent: "flex-end"
+  },
+  iconDropdown: {
+    color: "red"
   }
 };
 
@@ -119,11 +126,11 @@ export default function EditDriverForm(props) {
     if (!values.notes) {
       errors.notes = 'Notes must not be empty!';
     }
-    if (!values.username) {
-      errors.username = 'Username must not be empty!';
+    if (!values.usernameInput) {
+      errors.usernameInput = 'Username must not be empty!';
     }
-    if (!values.password) {
-      errors.password = 'Password must not be empty!';
+    if (!values.passwordInput) {
+      errors.passwordInput = 'Password must not be empty!';
     }
     if (!values.terminalName) {
       errors.terminalName = 'Home Terminal Name must not be empty!';
@@ -273,17 +280,25 @@ export default function EditDriverForm(props) {
                 />
               </Col>
               <Col>
-                <div className={classes.selectField}>
-                  <div className={classes.vehicleHeader}>Locate</div>
-                  <Field
-                    name="stateProvince"
-                    listValues={["AL-Alabama"]}
-                    placeholder={"AL-Alabama"}
-                    selectValue={selectValue.stateProvince}
-                    onChange={handleChange}
-                    component={CustomSelect}
-                  />
-                </div>
+                <Field
+                  labelProps={{
+                    shrink: true,
+                    classes: {root: classes.textFieldRoot}
+                  }}
+                  selectProps={{
+                    classes: {root: classes.selectField}
+                  }}
+                  labelText="Locate"
+                  name="stateProvince"
+                  listValues={["AL-Alabama"]}
+                  placeholder={"AL-Alabama"}
+                  selectValue={selectValue.stateProvince}
+                  IconComponent={{
+                    classes: {root: classes.iconDropdown}
+                  }}
+                  onChange={handleChange}
+                  component={CustomSelect}
+                />
               </Col>
             </Row>
             <Row>
@@ -335,7 +350,7 @@ export default function EditDriverForm(props) {
                   placeholder="Start typing..."
                   fullWidth
                   margin="normal"
-                  name="username"
+                  name="usernameInput"
                   InputLabelProps={{
                     shrink: true,
                     classes: {root: classes.textFieldRoot}
@@ -358,7 +373,7 @@ export default function EditDriverForm(props) {
                   placeholder="Start typing..."
                   fullWidth
                   margin="normal"
-                  name="password"
+                  name="passwordInput"
                   type="password"
                   InputLabelProps={{
                     shrink: true,

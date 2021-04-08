@@ -58,6 +58,9 @@
 .mb-16 {
   margin-bottom: 16px !important;
 }
+.mt--15 {
+  margin-top: -15px !important;
+}
 .btn-round-active {
   background: #25345C !important;
   border-radius: 28px !important;

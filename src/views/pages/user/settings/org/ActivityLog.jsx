@@ -1,19 +1,15 @@
-import React from "react";
+import React, {useState} from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import BootstrapTable from "react-bootstrap-table-next";
-import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 import {connect} from "react-redux";
 import {IRootState} from "reducers";
 import {getActivityLogs} from "reducers/setting-org";
+import Table from "components/Table/TableV1";
 
 const styles = {
   activityHeader: {
@@ -33,8 +29,6 @@ const styles = {
   textName: {
     fontSize: '16px',
     lineHeight: '24px',
-    marginTop: '14px',
-    marginLeft: '24px',
     color: "#25345C",
     fontWeight: 400
   },
@@ -46,6 +40,37 @@ const styles = {
     color: "#25345C",
     fontWeight: 400
   },
+  gridTitle: {
+    padding: "20px",
+  },
+  onHeaderCell: {
+    fontWeight: "bold",
+    color: "#25345C"
+  },
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
+    },
+  },
+  onHeaderRow: {
+    background: "#ECEEF0",
+  },
+  headLeft: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    "& > div": {
+      marginBottom: "0 !important",
+      marginRight: 8
+    }
+  },
+  tableTitle: {
+    fontSize: "18px",
+    fontWeight: 700,
+    color: "#25345C",
+    display: "flex",
+    alignItems: "center",
+  }
 };
 
 const useStyles = makeStyles(styles);
@@ -58,24 +83,41 @@ export function ActivityLog(props) {
     props.getActivityLogs();
   }, []);
 
-  const formatLogEvent = (cell, row) => {
-    return <>
-      <div className={classes.textName}>{cell}</div>
-    </>
+  const onPageChange = (page, pageSize) => {
+    props.getActivityLogs({ page, pageSize });
   }
-
-  const formatOperation = (cell, row) => {
-    return <>
-      <div className={classes.textName}>{cell}</div>
-      <div className={classes.textSub}>changed MessagePushNotificationsEnabled from false to true.</div>
-    </>
+  const onShowSizeChange = (page, pageSize) => {
+    props.getActivityLogs({ page, pageSize });
   }
-
-  const formatDate = (cell, row) => {
-    return <>
-      <div className={classes.textName}>{cell}</div>
-    </>
-  }
+  const columns = [
+    {
+      title: 'Log Event',
+      key: 'logEvent',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: event => (
+            <div className={classes.textName}>{event}</div>
+      ),
+    },
+    {
+      title: 'Operation',
+      key: 'operation',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: operation => (
+          <>
+            <div className={classes.textName}>{`updated org id '${operation.id}': `}</div>
+            <div className={classes.textName}>{operation.operation}</div>
+          </>
+      )
+    },
+    {
+      title: 'Date',
+      key: 'date',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: roles => (
+          <div className={classes.textName}>{roles}</div>
+      )
+    },
+  ];
 
   return (
     <div>
@@ -83,56 +125,31 @@ export function ActivityLog(props) {
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
-              <Card testimonial>
-                <CardBody>
-                  <GridContainer className={classes.activityHeader}>
-                    <GridItem xs={3} sm={3} md={3} className={classes.activityTitle}>
-                      120 events
-                    </GridItem>
-                    <GridItem xs={9} sm={9} md={9} className={classes.activityButton}>
-                      <GridItem xs={12} sm={12} md={12}>
-                        <ToolboxButton placeholder={"Search events"} />
-                      </GridItem>
-                    </GridItem>
-                  </GridContainer>
-                </CardBody>
-                <div>
-                  <ToolkitProvider
-                    data={props.data}
-                    columns={[
-                      {
-                        dataField: "logEvent",
-                        text: "Log Event",
-                        formatter: formatLogEvent
-                      },
-                      {
-                        dataField: "operation",
-                        text: "Operation",
-                        formatter: formatOperation
-                      },
-                      {
-                        dataField: "date",
-                        text: "Date",
-                        formatter: formatDate
+                  <Table
+                      renderTitle={
+                        <GridContainer justify="space-between" className={classes.gridTitle}>
+                          <GridItem className={classes.tableTitle}>
+                            {props.total} Events
+                          </GridItem>
+                          <GridItem className={classes.headLeft}>
+                            <ToolboxButton placeholder="Search events"/>
+                          </GridItem>
+                        </GridContainer>
                       }
-                    ]}
-                  >
-                    {props => (
-                      <div className="table table-settings">
-                        <BootstrapTable
-                          {...props.baseProps}
-                          bootstrap4={true}
-                          bordered={false}
-                          keyField='id'
-                        />
-                      </div>
-                    )}
-                  </ToolkitProvider>
-                </div>
-              </Card>
+                      pagination={{
+                        total: props.total,
+                        current: props.page,
+                        pageSize: props.pageSize,
+                        onChange: onPageChange,
+                        onShowSizeChange: onShowSizeChange
+                      }}
+                      columns={columns}
+                      dataSource={props.data}
+                      onHeaderRow={{ className: classes.onHeaderRow }}
+                      onBodyRow={{ className: classes.tableRow }}
+                  />
             </GridItem>
           </GridContainer>
-          <GenPaginationV1 total={29} page={1} size={10} />
         </GridItem>
       </GridContainer>
     </div>
@@ -141,7 +158,10 @@ export function ActivityLog(props) {
 
 export default connect(
   ({settingOrg}: IRootState) => ({
-    data: settingOrg.activityLogs
+    data: settingOrg.activityLogs.data,
+    page: settingOrg.activityLogs.page,
+    total: settingOrg.activityLogs.total,
+    pageSize: settingOrg.activityLogs.pageSize
   }),
   {
     getActivityLogs

@@ -13,8 +13,6 @@ import Calendar from "components/Calendar/Calendar";
 import LiveIconWhite from "components/Icons/LiveIconWhite";
 import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
 
-
-
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
     fontSize: 16,
@@ -116,8 +114,8 @@ export default function Dvirs(props) {
   const classes = useStyles();
 
   const [chipData, setChipData] = React.useState([
-    {key: 0, label: 'Cycle Tomorrow'},
-    {key: 1, label: 'Cycle Remaining'},
+    {key: 0, label: 'Standard Admin'},
+    {key: 1, label: 'Full admin'},
   ]);
 
   const handleDelete = (chipToDelete) => () => {
@@ -181,7 +179,7 @@ export default function Dvirs(props) {
       render: engineHours => <div className={classes.textEmail}>{engineHours}</div>                                 
     },
     {
-      title: 'Odormeter',
+      title: 'Odormeter(Mi)',
       key: "odormeter",
       onHeaderCell: {className: classes.onHeaderCellNext},
       render: odormeter => <div className={classes.textEmail}>{odormeter}</div>
@@ -196,7 +194,6 @@ export default function Dvirs(props) {
 
   return (
     <div>
-        
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>       
           <div>
@@ -225,7 +222,7 @@ export default function Dvirs(props) {
                     </Grid>
                   </Grid>
                   <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
-                    <ToolboxButton placeholder="Search driver" showFilter showColumn/>
+                    <ToolboxButton placeholder="Search asset" showFilter showColumn/>
                   </Grid>
                 </Grid>
               }

@@ -16,6 +16,8 @@ export const ACTION_TYPES = {
   GET_ACTIVITY_LOGS_DATA: 'overview/GET_ACTIVITY_LOGS_DATA',
   // chart data activity logs
   GET_CHART_DATA: "overview/GET_CHART_DATA",
+
+  SELECT_DISTANCE: "overview/SELECT_DISTANCE"
 };
 
 const initialState = {
@@ -27,6 +29,7 @@ const initialState = {
   driversData: [],
   activityLogsData: [],
   chartData: [],
+  distance: 3000,
 };
 
 export type OverviewState = Readonly<typeof initialState>;
@@ -80,6 +83,12 @@ export default (state: OverviewState = initialState, action): OverviewState => {
       return {
         ...state,
         chartData: action.payload
+      };
+    }
+    case ACTION_TYPES.SELECT_DISTANCE: {
+      return {
+        ...state,
+        distance: action.payload
       };
     }
     default:
@@ -248,5 +257,10 @@ export const getChartData = () => async dispatch => {
   })
 }
 
-
+export const selectDistance = (distance) => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.SELECT_DISTANCE,
+    payload: distance
+  })
+}
 

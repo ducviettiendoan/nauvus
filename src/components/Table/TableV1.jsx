@@ -113,10 +113,10 @@ const TableRowExpandable = (props) => {
 class TableV1 extends React.Component {
 
   state = {
-    data: [],
     dataSource: [],
     columns: [],
     current: 1,
+    total: 0,
     pageSize: 10,
     rowSelection: false,
     showPagination: true,
@@ -131,14 +131,6 @@ class TableV1 extends React.Component {
       newState = { ...newState, dataSource: props.dataSource }
     }
 
-    if (props.current) {
-      newState = { ...newState, current: props.current }
-    }
-
-    if (props.pageSize) {
-      newState = { ...newState, pageSize: props.pageSize }
-    }
-
     if (props.rowSelection) {
       if (props.rowSelection.selectedRowKeys) {
         newState = { ...newState, selectedRowKeys: props.rowSelection.selectedRowKeys || [] }
@@ -148,15 +140,17 @@ class TableV1 extends React.Component {
     if (props.showPagination) {
       newState = { ...newState, showPagination: props.showPagination }
     }
-    return newState
-  }
 
-  filterData = () => {
-    const { dataSource, pageSize, current } = this.state
-    const startPage = pageSize * current - pageSize;
-    const endPage = pageSize * current > dataSource.length ? dataSource.length : pageSize * current;
-    const data = dataSource.filter((record, index) => startPage <= index && index < endPage);
-    return data;
+    if (props.pagination && props.pagination.total) {
+      newState = { ...newState, total: props.pagination.total }
+    }
+    if (props.pagination && props.pagination.current) {
+      newState = { ...newState, current: props.pagination.current }
+    }
+    if (props.pagination && props.pagination.pageSize) {
+      newState = { ...newState, pageSize: props.pagination.pageSize }
+    }
+    return newState
   }
 
   onSelectAll = () => {
@@ -213,15 +207,19 @@ class TableV1 extends React.Component {
   onSelect = () => {
 
   }
-  onChangePagination = (event, page) => {
-    this.setState({ current: page })
-  }
-  onShowSizeChange = (value) => {
-    const { dataSource, current } = this.state
-    if (Math.ceil(dataSource.length / value) < current) {
-      this.setState({ current: Math.ceil(dataSource.length / value) })
+  onChangePagination = (event, current) => {
+    if (this.props.pagination && this.props.pagination.onChange) {
+      const pageSize = this.props.pagination.pageSize || 10;
+      this.props.pagination.onChange(current, pageSize)
     }
-    this.setState({ pageSize: value })
+  }
+  onShowSizeChange = (pageSize) => {
+    let total = this.props.pagination.total || 0;
+    let current = this.props.pagination.current || 1;
+    if (Math.ceil(total / pageSize) < current) current = Math.ceil(total / pageSize);
+    if (this.props.pagination && this.props.pagination.onShowSizeChange) {
+      this.props.pagination.onShowSizeChange(current, Number(pageSize))
+    }
   }
 
 
@@ -229,10 +227,13 @@ class TableV1 extends React.Component {
 
     const { classes } = this.props;
     const { renderTitle, onHeaderRow, onBodyRow, columns, expandedRowRender, rowSelection } = this.props;
-    const { selectedRowKeys, dataSource, current, pageSize } = this.state;
+    const data = this.state.dataSource || [];
+    const total = this.state.total || 0;
+    const current = this.state.current || 1;
+    const pageSize = this.state.pageSize || 10;
+    const selectedRowKeys = this.state.selectedRowKeys || [];
     const showPagination = this.props.showPagination == false ? false : true;
-    const total = this.props.total || dataSource.length;
-    const data = this.filterData();
+
     return (
 
       <div>
@@ -246,7 +247,7 @@ class TableV1 extends React.Component {
                     <Checkbox
                       tabIndex={-1}
                       checked={selectedRowKeys.length > 0 ? true : false}
-                      checkedIcon={dataSource.length == selectedRowKeys.length ? <CheckSquareOutlined /> : <MinusSquareOutlined />}
+                      checkedIcon={data.length == selectedRowKeys.length ? <CheckSquareOutlined /> : <MinusSquareOutlined />}
                       onChange={this.onSelectAll}
                       classes={{
                         checked: classes.checked,

@@ -4,6 +4,7 @@ import OpenInNewTabIcon from "components/Icons/OpenInNewTabIcon";
 import React from "react";
 import styles from "assets/jss/material-dashboard-pro-react/views/overviewPageStyle.js";
 import {makeStyles} from "@material-ui/core/styles";
+import driving from "../../../../../assets/img/driving.png"
 const useStyles = makeStyles(styles);
 
 const InfoWindowPopup = (props) => {
@@ -13,7 +14,7 @@ const InfoWindowPopup = (props) => {
     console.log(maker)
     return(
     <div className={classes.infowindow}>
-        <img src="https://360.here.com/hs-fs/hubfs/Imported_Blog_Media/S-class-new.jpg?width=1100&height=733&name=S-class-new.jpg" alt="vehicle preview" className={classes.vehiclePreview}/>
+        <img src={driving} alt="vehicle preview" className={classes.vehiclePreview}/>
         <div className={classes.textField}>
             <div className={classes.vehicleInfo}>
                 <div className={classes.deviceName}>{ maker.serialnumber }</div>
