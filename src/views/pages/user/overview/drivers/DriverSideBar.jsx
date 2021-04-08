@@ -18,25 +18,21 @@ import Accordion from "components/Accordion/Accordion";
 import FakeChartImage from "assets/img/svg-image/FakeChartImage";
 import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
 import {Col, Row} from 'reactstrap';
-import ArrowBackIcon from "../../../../../components/Icons/ArrowBackIcon";
-import {Field, Form} from "react-final-form";
-import {Select, TextField} from "final-form-material-ui";
-import DiaLog from "../../../../../components/CustomDialog/Dialog";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import DriverIcon from "../../../../../components/Icons/DriverIcon";
-import PhoneIconField from "../../../../../components/Icons/PhoneIconField";
-import CustomSelect from "../../../../../components/CustomSelect/CustomSelect";
-import GridItem from "../../../../../components/Grid/GridItem";
-import CheckSquareOutlined from "../../../../../components/Icons/CheckSquareOutlined";
-import Checkbox from "@material-ui/core/Checkbox";
-import List from "@material-ui/core/List";
-import {ListItem, ListItemSecondaryAction, ListItemText} from "@material-ui/core";
-import {primaryColor} from "../../../../../assets/jss/material-dashboard-pro-react";
-import RadioButton from "../../../../Components/RadioButton";
+import ArrowBackIcon from "components/Icons/ArrowBackIcon";
+import DiaLog from "components/CustomDialog/Dialog";
+import {primaryColor} from "assets/jss/material-dashboard-pro-react";
 import EditDriverForm from "./EditDriverForm";
+import classNames from "classnames";
+import Grow from "@material-ui/core/Grow";
+import Paper from "@material-ui/core/Paper";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import MenuList from "@material-ui/core/MenuList";
+import MenuItem from "@material-ui/core/MenuItem";
+import Popper from "@material-ui/core/Popper";
+import customDropdownStyle from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle.js";
 
-
-const styles = {
+const useStyles = makeStyles((theme) => ({
+  ...customDropdownStyle(theme),
   sidebarContainer: {
     overflowY: "auto",
   },
@@ -229,13 +225,14 @@ const styles = {
     fontSize: '12px',
     color: '#25345C',
   }
-};
+}));
 
-const useStyles = makeStyles(styles);
+// const useStyles = makeStyles(styles);
 var ps;
 
 export default function DriverSideBar(props) {
   const classes = useStyles();
+
   const mainPanelVehicleSideBar = React.createRef();
 
   const resizeFunction = () => {
@@ -277,6 +274,16 @@ export default function DriverSideBar(props) {
     console.log("CLOSE")
     setOpenInvite(false)
   }
+
+  const [openMore, setOpenMore] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleCloseMore = () => setOpenMore(false)
+  const handleOpenMore = (event) => {
+    setOpenMore(true)
+    setAnchorEl(event.currentTarget);
+  }
+
 
   return (
     <div ref={mainPanelVehicleSideBar} className={classes.sidebarContainer}>
@@ -322,10 +329,40 @@ export default function DriverSideBar(props) {
               justIcon
               round
               className={`btn-36 ${classes.moreAction} mr-2`}
-              onClick={openEditDriver}
+              onClick={handleOpenMore}
             >
               <MoreHorizontalIcon/>
             </Button>
+            <Popper
+              open={openMore}
+              anchorEl={anchorEl}
+              transition
+              disablePortal
+              placement="bottom-end"
+              className={classNames({
+                [classes.popperClose]: !anchorEl,
+                [classes.popperResponsive]: true,
+                [classes.popperNav]: true
+              })}
+            >
+              {({TransitionProps}) => (
+                <Grow
+                  {...TransitionProps}
+                  id="profile-menu-list"
+                  style={{transformOrigin: "0 0 0"}}
+                >
+                  <Paper className={classes.dropdown}>
+                    <ClickAwayListener onClickAway={handleCloseMore}>
+                      <MenuList role="menu">
+                        <MenuItem className={classes.dropdownItem} onClick={openEditDriver}>
+                          Edit Driver
+                        </MenuItem>
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
           </Col>
         </Row>
       </div>
@@ -431,7 +468,7 @@ export default function DriverSideBar(props) {
         handleClose={closeEditDriver}
         open={openInvite}
       >
-        <EditDriverForm />
+        <EditDriverForm/>
       </DiaLog>
     </div>
   );

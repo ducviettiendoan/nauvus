@@ -81,7 +81,8 @@ const customDropdownStyle = theme => ({
     boxShadow: "0 2px 5px 0 rgba(" + hexToRgb(blackColor) + ", 0.26)",
     top: "100%",
     zIndex: "1000",
-    minWidth: "160px",
+    minWidth: "181px",
+    height: "40px",
     padding: "5px 0",
     margin: "2px 0 0",
     fontSize: "14px",
@@ -110,18 +111,18 @@ const customDropdownStyle = theme => ({
   dropdownItem: {
     ...defaultFont,
     fontSize: "13px",
-    padding: "10px 20px",
-    margin: "0 5px",
+    padding: "10px 20px 0px 12px",
     borderRadius: "2px",
     position: "relative",
     transition: "all 150ms linear",
     display: "block",
     clear: "both",
     fontWeight: "400",
-    height: "100%",
+    height: "40px",
     color: grayColor[7],
     whiteSpace: "nowrap",
-    minHeight: "unset"
+    minHeight: "unset",
+    bottom: "13px"
   },
   darkHover: {
     "&:hover": {
