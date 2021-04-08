@@ -1,3 +1,5 @@
+import axios from "axios";
+import { REQUEST, SUCCESS, FAILURE } from "../utils/action-type.util";
 export type SettingDeveloperState = Readonly<typeof initialState>;
 
 //Action Type
@@ -16,6 +18,8 @@ export const ACTION_TYPES = {
 
 //Initial State
 const initialState = {
+  errorMessage: null,
+  loading: false,
   //Developer metric state
   apiTraffics: [],
   webhookTraffics: [],
@@ -31,39 +35,58 @@ const initialState = {
 //Reducer
 export default (state: SettingDeveloperState = initialState, action): SettingDeveloperState => {
   switch (action.type) {
+    case REQUEST(ACTION_TYPES.GET_API_TRAFFIC):
+    case REQUEST(ACTION_TYPES.GET_WEBHOOK_TRAFFIC):
+    case REQUEST(ACTION_TYPES.GET_CHART_DATA):
+    case REQUEST(ACTION_TYPES.GET_API_TOKEN):
+    case REQUEST(ACTION_TYPES.GET_WEBHOOK):
+      return {
+        ...state,
+        loading: true,
+      };
+      case FAILURE(ACTION_TYPES.GET_API_TRAFFIC):
+      case FAILURE(ACTION_TYPES.GET_WEBHOOK_TRAFFIC):
+      case FAILURE(ACTION_TYPES.GET_CHART_DATA):
+      case FAILURE(ACTION_TYPES.GET_API_TOKEN):
+      case FAILURE(ACTION_TYPES.GET_WEBHOOK):
+      return {
+        ...state,
+        loading: false,
+        errorMessage: action.payload,
+      };
     //Developer metric reducer
-    case ACTION_TYPES.GET_API_TRAFFIC: {
+    case SUCCESS(ACTION_TYPES.GET_API_TRAFFIC): {
       return {
         ...state,
-        apiTraffics: action.payload
+        apiTraffics: action.payload.data
       };
     }
-    case ACTION_TYPES.GET_WEBHOOK_TRAFFIC: {
+    case SUCCESS(ACTION_TYPES.GET_WEBHOOK_TRAFFIC): {
       return {
         ...state,
-        webhookTraffics: action.payload
+        webhookTraffics: action.payload.data
       };
     }
-    case ACTION_TYPES.GET_CHART_DATA: {
+    case SUCCESS(ACTION_TYPES.GET_CHART_DATA): {
       return {
         ...state,
-        chartData: action.payload
+        chartData: action.payload.data
       };
     }
 
     //API Token Reducer
-    case ACTION_TYPES.GET_API_TOKEN: {
+    case SUCCESS(ACTION_TYPES.GET_API_TOKEN): {
       return {
         ...state,
-        apiTokens: action.payload
+        apiTokens: action.payload.data
       };
     }
 
     //Webhook Reducer
-    case ACTION_TYPES.GET_WEBHOOK: {
+    case SUCCESS(ACTION_TYPES.GET_WEBHOOK): {
       return {
         ...state,
-        webhooks: action.payload
+        webhooks: action.payload.data
       };
     }
     default:
@@ -204,18 +227,18 @@ export const getChartData = () => async dispatch => {
 };
 
 //API Token action
-export const getApiToken = () => async dispatch => {
+export const getApiToken = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_API_TOKEN,
-    payload: apiTokenData
+    payload: axios.post(`/api/setting/developer/apiToken`, request),
   });
 };
 
 //Webhook action
-export const getWebhook = () => async dispatch => {
+export const getWebhook = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_WEBHOOK,
-    payload: webhookData
+    payload: axios.post(`/api/setting/developer/webhook`, request),
   });
 };
 

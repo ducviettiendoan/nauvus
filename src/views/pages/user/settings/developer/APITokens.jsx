@@ -9,23 +9,18 @@ import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import Button from "components/CustomButtons/Button.js";
-
 import EditIcon from "components/Icons/EditIcon";
 import DeleteIcon from "components/Icons/DeleteIcon";
 import DotIcon from "components/Icons/DotIcon.jsx";
-
-import BootstrapTable from "react-bootstrap-table-next";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import {connect} from "react-redux";
-import {IRootState} from "reducers";
 import {getApiToken} from "reducers/setting-developer";
+import Table from "components/Table/TableV1";
 
 const styles = {
   apiTokensHeader: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 15
   },
   apiTokensTitle: {
     textAlign: "left",
@@ -41,7 +36,6 @@ const styles = {
     fontWeight: 700,
     fontSize: 18,
     textAlign: "left",
-    marginBottom: "14px"
   },
   apiTokensList: {
     margin: "15px"
@@ -60,24 +54,21 @@ const styles = {
   alignItemsCenter: {
     display: "flex",
     alignItems: "center",
-    paddingTop: 20,
-    marginLeft: '24px'
+  },
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
+    },
   },
   textName: {
     fontWeight: 'bold',
     fontSize: '16px',
     lineHeight: '24px',
     color: '#25345C',
-    marginLeft: '24px',
-    marginTop: '25px'
   },
   textSub: {
-    fontWeight: '400',
     fontSize: '16px',
     lineHeight: '24px',
-    marginTop: '25px',
-    marginLeft: '24px',
-    color: "#25345C",
   },
   textScope: {
     fontSize: '16px',
@@ -86,19 +77,14 @@ const styles = {
 
   },
   textStatus: {
-    fontSize: '16px',
-    lineHeight: '24px',
-    margin: '16px',
-    padding: "12px 14px",
+    display: "inline-block",
+    fontSize: '14px',
+    lineHeight: '17px',
+    padding: "12px 16px",
     color: "#27AE60",
     background: "rgba(39, 174, 96, 0.1)",
     borderRadius: 23,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontWeight: 700,
-    width: 71,
-    height: '41px'
+    fontWeight: "bold",
   },
   iconButton: {
     '&:hover': {
@@ -107,7 +93,16 @@ const styles = {
   },
   actionIcon: {
     marginTop: "10px"
-  }
+  },
+  onHeaderRow: {
+    background: "#ECEEF0",
+  },
+  onHeaderCell: {
+    fontWeight: "bold"
+  },
+  dotIcon: {
+    color: "#7CE7AC",
+  },
 };
 
 
@@ -121,59 +116,81 @@ export function APITokens(props) {
     props.getApiToken();
   }, []);
 
-  const formatName = (cell, row) => {
-    return <>
-      <div className={classes.textName}>{cell}</div>
-    </>
+  const onShowSizeChange = (page, pageSize) => {
+    props.getWebhook({ page, pageSize }); 
+    console.log(page, pageSize)
   }
 
-  const formatTokens = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize)
+    props.getUserRoles({ page, pageSize }); 
   }
-
-  const formatScope = (cell, row) => {
-    return <>
-      <div className={classes.alignItemsCenter}>
-        <div><DotIcon style={{color: "#7CE7AC", marginTop: 10}}/></div>
-        <div className={classes.textScope}>{cell}</div>
+  const columns = [
+    {
+      title: 'Name',
+      key: 'name',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: name => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textName}>{name}</div>
+        </div>
+      ),
+    },
+    {
+      title: 'Access Token',
+      key: 'accessTokens',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: accessTokens => <div className={classes.textSub}>{accessTokens}</div>
+    },
+    {
+      title: 'Scope',
+      key: 'scope',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: scope => <div className={classes.alignItemsCenter}>
+      <div><DotIcon className={classes.dotIcon} /></div>
+      <div className={classes.textSub}>{scope}</div>
       </div>
-    </>
-  }
+    },
+    {
+      title: 'Version',
+      key: 'version',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: version => <div className={classes.textSub}>{version}</div>
+    },
+    {
+      title: 'Status',
+      key: 'status',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: status => <div className={classes.textStatus}>{status}</div>
+    },
+    {
+      title: 'Actions',
+      key: 'action',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: () => (
+        <div className={classes.actionButton}>
+          <Button justIcon color="twitter" simple>
+            <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+          </Button>
+          <Button justIcon color="google" simple>
+            <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
+          </Button>
+        </div>
+      )
+    }
+  ]
 
-  const formatVersion = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatStatus = (cell, row) => {
-    return <>
-      <div className={classes.textStatus}>{cell}</div>
-    </>
-  }
-
-  const addActionButton = () => {
-    return (
-      <div className={classes.actionIcon}>
-        <Button justIcon color="twitter" simple>
-          <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
-        </Button>
-        <Button justIcon color="google" simple>
-          <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
-        </Button>
-      </div>
-    )
-  }
   return (
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
-
-              <GridContainer className={classes.apiTokensHeader}>
+              
+                <Table
+        renderTitle={
+          <CardBody>
+          <GridContainer className={classes.apiTokensHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.apiTokensTitle}>
                   6 Tokens
                 </GridItem>
@@ -187,58 +204,26 @@ export function APITokens(props) {
                   </Button>
                 </GridItem>
               </GridContainer>
-              <Card testimonial>
+              </CardBody>
 
-                {/* <CardBody>
-                  
-                </CardBody> */}
-                <ToolkitProvider
-                  data={props.data}
-                  columns={[
-                    {
-                      dataField: "name",
-                      text: "Name",
-                      formatter: formatName
-                    },
-                    {
-                      dataField: "accessTokens",
-                      text: "Acces Tokens",
-                      formatter: formatTokens
-                    },
-                    {
-                      dataField: "scope",
-                      text: "Scope",
-                      formatter: formatScope
-                    },
-                    {
-                      dataField: "version",
-                      text: "Version",
-                      formatter: formatVersion
-                    },
-                    {
-                      dataField: "status",
-                      text: "Status",
-                      formatter: formatStatus
-                    },
-                    {
-                      dataField: "action",
-                      text: "Actions",
-                      formatter: addActionButton
-                    }
-                  ]}
-                >
-                  {props => (
-                    <div className="table table-settings">
-                      <BootstrapTable
-                        {...props.baseProps}
-                        bootstrap4={true}
-                        keyField="id"
-                        bordered={false}
-                      />
-                    </div>
-                  )}
-                </ToolkitProvider>
-                <CardBody style={{marginTop: '-40px'}}>
+        }
+        pagination={{
+          total: props.total,
+          current: props.page,
+          pageSize: props.pageSize,
+          onChange: onPageChange,
+          onShowSizeChange: onShowSizeChange
+        }}
+        columns={columns}
+        dataSource={props.data}
+        onHeaderRow={{
+          className: classes.onHeaderRow
+        }}
+        onBodyRow={{
+          className: classes.tableRow
+        }}
+      />        <Card testimonial>
+                <CardBody>
                   <GridContainer className={classes.apiTokensHeader}>
                     <GridItem className={classes.apiTokensGuide}>
                       Developer Documentation and Guides
@@ -280,11 +265,17 @@ export function APITokens(props) {
   );
 }
 
-export default connect(
-  ({settingDeveloper}: IRootState) => ({
-    data: settingDeveloper.apiTokens
-  }),
-  {
-    getApiToken
-  }
-)(APITokens);
+const mapStateToProps = ({ settingDeveloper }) => {
+  return {
+    data: settingDeveloper.apiTokens.data,
+    page: settingDeveloper.apiTokens.page,
+    total: settingDeveloper.apiTokens.total,
+    pageSize: settingDeveloper.apiTokens.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getApiToken
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(APITokens);

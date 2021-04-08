@@ -205,7 +205,7 @@ function LogsTableDetails(props) {
   }
 
   useEffect(() => {
-    if (selectValue == 1) {
+    if (selectValue == 'FMCSA Audit Transfer') {
       setDialog(true)
     }
   }, [selectValue])
@@ -280,7 +280,7 @@ function LogsTableDetails(props) {
               <FormControl variant="outlined" className={classes.selectForm}>
                 <CustomSelect
                   selectProps={{
-                    disableUnderline: true
+                    disableUnderline: true,
                   }}
                   listValues={listSelectValue}
                   selectValue={selectValue}

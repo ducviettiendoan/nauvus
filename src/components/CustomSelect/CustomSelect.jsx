@@ -28,8 +28,6 @@ const styles = {
         fontSize: "14px",
         borderStyle: 'none',
         borderWidth: 2,
-        paddingRight: "40px !important",
-        paddingBottom: "17px",
         "&:focus": {
             borderRadius: 12,
             backgroundColor: 'white',
@@ -159,7 +157,7 @@ const styles = {
 const useStyles = makeStyles(styles)
 
 const CustomSelect = (props) => {
-    const { name, listValues, placeholder, selectValue, onChange,   customStyle, labelProps, labelText, error, success, id, white, selectProps } = props
+    const { name, listValues, placeholder, selectValue, onChange, customStyle, labelProps, labelText, error, success, id, white, selectProps } = props
     const classes = useStyles();
 
     const iconComponent = (props) => {
@@ -201,9 +199,9 @@ const CustomSelect = (props) => {
     return (
         <FormControl className={classes.selectContainer} className={classes[customStyle]} fullWidth>
             <InputLabel
-              className={classes.labelRoot + " " + labelClasses}
-              htmlFor={id}
-              {...labelProps}
+                className={classes.labelRoot + " " + labelClasses}
+                htmlFor={id}
+                {...labelProps}
             >
                 {labelText}
             </InputLabel>
@@ -219,6 +217,7 @@ const CustomSelect = (props) => {
                 onChange={onChange}
                 name={name}
                 className="fs-13"
+                className={customStyle == "logsSelect" && "mt--15"}
                 inputProps={{ style: { width: 100 } }}
             >
                 {selectValue === "none" && <option value="none" disabled style={{ display: "none" }} >

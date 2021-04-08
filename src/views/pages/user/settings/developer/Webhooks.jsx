@@ -13,14 +13,11 @@ import Button from "components/CustomButtons/Button.js";
 import EditIcon from "components/Icons/EditIcon";
 import DeleteIcon from "components/Icons/DeleteIcon";
 import DotIcon from "components/Icons/DotIcon.jsx";
-
-import BootstrapTable from "react-bootstrap-table-next";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import CopyIcon from "components/Icons/CopyIcon";
 import Link from "@material-ui/core/Link";
 import {connect} from "react-redux";
-import {IRootState} from "reducers";
 import {getWebhook} from "reducers/setting-developer";
+import Table from "components/Table/TableV1";
 
 const styles = {
   webhookHeader: {
@@ -49,7 +46,6 @@ const styles = {
     fontWeight: 700,
     fontSize: 18,
     textAlign: "left",
-    marginBottom: "10px",
     color: "#25345C"
   },
   webhookSubGuide: {
@@ -76,16 +72,10 @@ const styles = {
     fontSize: '16px',
     lineHeight: '24px',
     color: '#25345C',
-    marginLeft: '24px',
-    marginTop: '25px'
   },
   textSub: {
-    fontWeight: '400',
     fontSize: '16px',
     lineHeight: '24px',
-    marginTop: '25px',
-    marginLeft: '24px',
-    color: "#25345C",
   },
   textStatus: {
     fontSize: '16px',
@@ -111,16 +101,51 @@ const styles = {
     marginTop: "10px"
   },
   ipText: {
-    paddingBottom: "8px",
+
   },
   guideText: {
-    paddingBottom: "8px",
     cursor: "pointer",
     color: "#0d6ede"
   },
   dotIcon: {
-    fontSize: "15px"
-  }
+    fontSize: "15px",
+    textAlign: "center"
+  },
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
+    },
+  },
+  onHeaderRow: {
+    background: "#ECEEF0",
+  },
+  gridTitle: {
+    padding: "20px"
+  },
+  onHeaderCell: {
+    fontWeight: "bold"
+  },
+  alignItemsCenter: {
+    display: "flex",
+    alignItems: "center",
+  },
+  dotIcon: {
+    color: "#7CE7AC",
+  },
+  textRoles: {
+    fontSize: '16px',
+    lineHeight: '24px',
+  },
+  textAccess: {
+    display: "inline-block",
+    fontSize: '14px',
+    lineHeight: '17px',
+    padding: "12px 16px",
+    color: "#27AE60",
+    background: "rgba(39, 174, 96, 0.1)",
+    borderRadius: 23,
+    fontWeight: "bold",
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -128,57 +153,75 @@ const useStyles = makeStyles(styles);
 export function Webhooks(props) {
   const classes = useStyles();
 
+  const onShowSizeChange = (page, pageSize) => {
+    props.getWebhook({ page, pageSize }); 
+    console.log(page, pageSize)
+  }
+
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize)
+    props.getUserRoles({ page, pageSize }); 
+  }
+
   React.useEffect(() => {
     // Get list data
     props.getWebhook();
   }, []);
 
-  const formatName = (cell, row) => {
-    return <>
-      <div className={classes.textName}>{cell}</div>
-    </>
-  }
-
-  const formatUrls = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatKey = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatConfigAlert = (cell, row) => {
-    return <>
-      <div className={classes.textStatus}>{cell}</div>
-    </>
-  }
-
-  const addActionButton = () => {
-    return (
-      <div className={classes.actionIcon}>
-        <Button justIcon color="twitter" simple>
-          <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
-        </Button>
-        <Button justIcon color="google" simple>
-          <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
-        </Button>
-        <Button justIcon color="google" simple>
+  const columns = [
+    {
+      title: 'Name',
+      key: 'name',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: name => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textName}>{name}</div>
+        </div>
+      ),
+    },
+    {
+      title: 'URL',
+      key: 'url',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: url => <div className={classes.textSub}>{url}</div>
+    },
+    {
+      title: 'Secret Keys',
+      key: 'secretKey',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: secretKey => <div className={classes.textSub}>{secretKey}</div>
+    },
+    {
+      title: 'Configured Alerts',
+      key: 'configAlert',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: configAlert => <div className={classes.textAccess}>{configAlert}</div>
+    },
+    {
+      title: 'Actions',
+      key: 'action',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: () => (
+        <div className={classes.actionButton}>
+          <Button justIcon color="twitter" simple>
+            <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+          </Button>
+          <Button justIcon color="google" simple>
+            <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
+          </Button>
+          <Button justIcon color="google" simple>
           <CopyIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
         </Button>
-      </div>
-    )
-  }
+        </div>
+      )
+    }
+  ]
   return (
     <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
-              <GridContainer className={classes.webhookHeader}>
+      <Table
+        renderTitle={
+          <CardBody>
+          <GridContainer className={classes.webhookHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.webhookTitle}>
                   5 Webhooks
                 </GridItem>
@@ -192,49 +235,32 @@ export function Webhooks(props) {
                   </Button>
                 </GridItem>
               </GridContainer>
+              </CardBody>
+
+        }
+        pagination={{
+          total: props.total,
+          current: props.page,
+          pageSize: props.pageSize,
+          onChange: onPageChange,
+          onShowSizeChange: onShowSizeChange
+        }}
+        columns={columns}
+        dataSource={props.data}
+        onHeaderRow={{
+          className: classes.onHeaderRow
+        }}
+        onBodyRow={{
+          className: classes.tableRow
+        }}
+      />
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={12}>
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={12}>
               <Card testimonial>
-                <ToolkitProvider
-                  data={props.data}
-                  columns={[
-                    {
-                      dataField: "name",
-                      text: "Name",
-                      formatter: formatName
-                    },
-                    {
-                      dataField: "url",
-                      text: "URL",
-                      formatter: formatUrls
-                    },
-                    {
-                      dataField: "secretKey",
-                      text: "Secret Key",
-                      formatter: formatKey
-                    },
-                    {
-                      dataField: "configAlert",
-                      text: "Configured Alerts",
-                      formatter: formatConfigAlert
-                    },
-                    {
-                      dataField: "action",
-                      text: "Actions",
-                      formatter: addActionButton
-                    }
-                  ]}
-                >
-                  {props => (
-                    <div className="table table-settings">
-                      <BootstrapTable
-                        {...props.baseProps}
-                        bootstrap4={true}
-                        bordered={false}
-                        keyField="id"
-                      />
-                    </div>
-                  )}
-                </ToolkitProvider>
-                <CardBody style={{marginTop: '-40px'}}>
+                
+                <CardBody >
                   <GridContainer className={classes.webhookHeader}>
                     <GridItem className={classes.webhookGuide}>
                       Static Webhook IP addresses
@@ -290,11 +316,17 @@ export function Webhooks(props) {
   );
 }
 
-export default connect(
-  ({settingDeveloper}: IRootState) => ({
-    data: settingDeveloper.webhooks
-  }),
-  {
-    getWebhook
-  }
-)(Webhooks);
+const mapStateToProps = ({ settingDeveloper }) => {
+  return {
+    data: settingDeveloper.webhooks.data,
+    page: settingDeveloper.webhooks.page,
+    total: settingDeveloper.webhooks.total,
+    pageSize: settingDeveloper.webhooks.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getWebhook
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Webhooks);
