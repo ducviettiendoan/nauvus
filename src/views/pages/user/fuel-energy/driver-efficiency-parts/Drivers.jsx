@@ -7,6 +7,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
+import {getDriverEfficiencyDrivers} from "reducers/fuel-energy";
+import { connect } from "react-redux";
 
 
 const styles = {
@@ -25,6 +27,7 @@ const styles = {
         lineHeight: '24px',
         color: '#25345C',
         paddingLeft: "12px"
+
     },
     tableRow: {
         '&:nth-of-type(even)': {
@@ -45,6 +48,7 @@ const styles = {
     onHeaderCellNext: {
         fontWeight: 700,
         color: "#25345C",
+        textAlign: 'center'
     },
     alignItemsCenter: {
         display: "flex",
@@ -60,7 +64,8 @@ const styles = {
         fontSize: '16px',
         lineHeight: '24px',
         color: '#25345C',
-        paddingLeft: "12px"
+        paddingLeft: "12px",
+        fontWeight: 400,
     },
     topHeader: {
         display: "flex",
@@ -98,21 +103,15 @@ const styles = {
 
 };
 
-
-const dumpData = [
-  { driver: "Alexandr Luchin", overall: "39.1 MPG", cruisecontrol: "2.0 gal", coasting: "0.0 kWh", hightorque: "78.1 mi", idling: "0.0", anticipation: "39.2 lb", greenband: "C$10.76", overspeed: "3h 20m", drivingtime: "10s (0.1%)" },
-  { driver: "Alexandr Luchin", overall: "39.1 MPG", cruisecontrol: "2.0 gal", coasting: "0.0 kWh", hightorque: "78.1 mi", idling: "0.0", anticipation: "39.2 lb", greenband: "C$10.76", overspeed: "3h 20m", drivingtime: "10s (0.1%)" },
-  { driver: "Alexandr Luchin", overall: "39.1 MPG", cruisecontrol: "2.0 gal", coasting: "0.0 kWh", hightorque: "78.1 mi", idling: "0.0", anticipation: "39.2 lb", greenband: "C$10.76", overspeed: "3h 20m", drivingtime: "10s (0.1%)" },
-  { driver: "Alexandr Luchin", overall: "39.1 MPG", cruisecontrol: "2.0 gal", coasting: "0.0 kWh", hightorque: "78.1 mi", idling: "0.0", anticipation: "39.2 lb", greenband: "C$10.76", overspeed: "3h 20m", drivingtime: "10s (0.1%)" },
-  { driver: "Alexandr Luchin", overall: "39.1 MPG", cruisecontrol: "2.0 gal", coasting: "0.0 kWh", hightorque: "78.1 mi", idling: "0.0", anticipation: "39.2 lb", greenband: "C$10.76", overspeed: "3h 20m", drivingtime: "10s (0.1%)" },
-  { driver: "Alexandr Luchin", overall: "39.1 MPG", cruisecontrol: "2.0 gal", coasting: "0.0 kWh", hightorque: "78.1 mi", idling: "0.0", anticipation: "39.2 lb", greenband: "C$10.76", overspeed: "3h 20m", drivingtime: "10s (0.1%)" },
-  { driver: "Alexandr Luchin", overall: "39.1 MPG", cruisecontrol: "2.0 gal", coasting: "0.0 kWh", hightorque: "78.1 mi", idling: "0.0", anticipation: "39.2 lb", greenband: "C$10.76", overspeed: "3h 20m", drivingtime: "10s (0.1%)" },
-];
-
 const useStyles = makeStyles(styles);
 
-export default function Drivers() {
+export function Drivers(props) {
   const classes = useStyles();
+
+
+  React.useEffect(() => {
+    props.getDriverEfficiencyDrivers();
+  }, []);
 
   const columns=[
     {
@@ -184,7 +183,7 @@ export default function Drivers() {
   return (
     <div>
           <div>
-            {dumpData.length > 0 && <Table
+            <Table
               renderTitle={
               <div>
                 <Grid container className={classes.gridTitle}>                    
@@ -195,7 +194,7 @@ export default function Drivers() {
                 </div>
               }          
               columns={columns}
-              dataSource={dumpData}
+              dataSource={props.data}
               onHeaderRow={{
                 className: classes.onHeaderRow
               }}
@@ -203,11 +202,26 @@ export default function Drivers() {
                 className: classes.tableRow
               }}
             />
-            }
+            
           </div>
               </div>
   );
 }
+
+const mapStateToProps = ({fuelEnergy}) => {
+  return {
+    data: fuelEnergy.driverEfficiencyDrivers.data,
+    page: fuelEnergy.driverEfficiencyDrivers.page,
+    total: fuelEnergy.driverEfficiencyDrivers.total,
+    pageSize: fuelEnergy.driverEfficiencyDrivers.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getDriverEfficiencyDrivers
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Drivers);
 
 
 

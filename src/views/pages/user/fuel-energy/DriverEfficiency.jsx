@@ -14,6 +14,7 @@ import Vehicle from "./driver-efficiency-parts/Vehicle.jsx";
 import Drivers from "./driver-efficiency-parts/Drivers.jsx";
 import LiveIconWhite from "../../../../components/Icons/LiveIconWhite";
 
+
 const styles = {
   moreAction: {
     background: "#FFFFFF !important",
@@ -46,9 +47,10 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function DriverEfficiency() {
+export default function DriverEfficiency(props) {
   const classes = useStyles();
   const [value, setValue] = useState(0);
+
 
   const handleChangeTab = (newValue) => {
     setValue(newValue);
@@ -90,3 +92,5 @@ export default function DriverEfficiency() {
     </div>
   );
 }
+
+
