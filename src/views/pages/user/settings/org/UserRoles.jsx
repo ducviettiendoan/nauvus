@@ -87,16 +87,17 @@ export default function UserRoles() {
                   >
                     {value === 1 ? "Add Role" : "Invite User"}
                   </Button>
-                  <Button
-                    color="white"
-                    aria-label="edit"
-                    justIcon
-                    round
-                    className={`btn-36 ${classes.moreAction} mr-2`}
-                    onClick={handleOpenMore}
+                  {value === 0 && <Button
+                      color="white"
+                      aria-label="edit"
+                      justIcon
+                      round
+                      className={`btn-36 ${classes.moreAction} mr-2`}
+                      onClick={handleOpenMore}
                   >
-                    <MoreHoriz />
+                    <MoreHoriz/>
                   </Button>
+                  }
                   <Popper
                     open={openMore}
                     anchorEl={anchorEl}

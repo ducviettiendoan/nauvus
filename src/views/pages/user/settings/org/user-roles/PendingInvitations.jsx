@@ -14,6 +14,14 @@ import avatar from "assets/img/faces/avatar.jpg";
 import {connect} from "react-redux";
 import {IRootState} from "reducers";
 import {getUserRoles} from "reducers/setting-org";
+import {Field, Form} from "react-final-form";
+import GridContainer from "../../../../../../components/Grid/GridContainer";
+import GridItem from "../../../../../../components/Grid/GridItem";
+import InputLabel from "@material-ui/core/InputLabel";
+import {Select, TextField} from "final-form-material-ui";
+import MenuItem from "@material-ui/core/MenuItem";
+import DiaLog from "../../../../../../components/CustomDialog/Dialog";
+import InviteUserForm from "./InviteUserForm";
 
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
@@ -125,6 +133,14 @@ const useStyles = makeStyles((theme) => ({
     width: 40,
     height: 40,
     borderRadius: "50%"
+  },
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    margin: "24px",
+    textAlign: "center"
   },
 }));
 
@@ -246,6 +262,7 @@ export function PendingInvitations(props) {
           total: props.total,
           current: props.page,
           pageSize: props.pageSize,
+
           onChange: onPageChange,
           onShowSizeChange: onShowSizeChange
         }}
@@ -254,6 +271,13 @@ export function PendingInvitations(props) {
         onHeaderRow={{ className: classes.onHeaderRow }}
         onBodyRow={{ className: classes.tableRow }}
       />
+      <DiaLog
+          renderTitle={<h3 className={classes.dialogTitle}>Invite User</h3>}
+          handleClose={props.handleClose}
+          open={props.open}
+      >
+        <InviteUserForm handleClose={props.handleClose} />
+      </DiaLog>
     </div>
   );
 }

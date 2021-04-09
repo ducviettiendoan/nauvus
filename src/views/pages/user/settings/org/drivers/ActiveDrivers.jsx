@@ -117,9 +117,6 @@ const styles = {
   onHeaderCell: {
     fontWeight: "bold"
   },
-  gridTitle: {
-    padding: "20px"
-  },
 };
 
 const useStyles = makeStyles(styles);

@@ -11,6 +11,18 @@ import {MoreHoriz} from "@material-ui/icons";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import Gateway from "./devices/Gateway";
 import Sensors from "./devices/Sensors";
+import Popper from "@material-ui/core/Popper";
+import classNames from "classnames";
+import Grow from "@material-ui/core/Grow";
+import Paper from "@material-ui/core/Paper";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import MenuList from "@material-ui/core/MenuList";
+import MenuItem from "@material-ui/core/MenuItem";
+import customDropdownStyle
+  from "../../../../../assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle";
+import Users from "../org/user-roles/Users";
+import PendingInvitations from "../org/user-roles/PendingInvitations";
+
 
 const styles = {
   topHeader: {
@@ -31,15 +43,32 @@ const styles = {
   },
 };
 
-const useStyles = makeStyles(styles);
+const useStyles = makeStyles((theme) => ({
+  ...customDropdownStyle(theme),
+  ...styles
+}))
 
 export default function Devices() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-
+  const [open, setOpen] = React.useState(false);
+  const [openMore, setOpenMore] = React.useState(false);
+  const [openUpload, setOpenUpload] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const handleChangeTab = (newValue) => {
     setValue(newValue);
   };
+  const handleCloseMore = () => setOpenMore(false)
+  const handleOpenMore = (event) => {
+    setOpenMore(true)
+    setAnchorEl(event.currentTarget);
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+    setOpenMore(false)
+    setOpenUpload(false)
+  }
 
   return (
     <div>
@@ -56,22 +85,54 @@ export default function Devices() {
                     round
                     className="btn-round-active mr-2"
                     startIcon={<AddOutlined/>}
+                    onClick={() => setOpen(true)}
                   >
                     Activate Devices
                   </Button>
-                  <Button
-                    color="white"
-                    aria-label="edit"
-                    justIcon
-                    round
-                    className={`btn-36 ${classes.moreAction} mr-2`}
+                  {value === 0 && <Button
+                      color="white"
+                      aria-label="edit"
+                      justIcon
+                      round
+                      className={`btn-36 ${classes.moreAction} mr-2`}
+                      onClick={handleOpenMore}
                   >
                     <MoreHoriz/>
-                  </Button>
+                  </Button>}
+                  <Popper
+                      open={openMore}
+                      anchorEl={anchorEl}
+                      transition
+                      disablePortal
+                      placement="bottom-end"
+                      className={classNames({
+                        [classes.popperClose]: !anchorEl,
+                        [classes.popperResponsive]: true,
+                        [classes.popperNav]: true
+                      })}
+                  >
+                    {({ TransitionProps }) => (
+                        <Grow
+                            {...TransitionProps}
+                            id="profile-menu-list"
+                            style={{ transformOrigin: "0 0 0" }}
+                        >
+                          <Paper className={classes.dropdown}>
+                            <ClickAwayListener onClickAway={handleCloseMore}>
+                              <MenuList role="menu">
+                                <MenuItem className={classes.dropdownItem} onClick={() => setOpenUpload(true)} > Upload CSV </MenuItem>
+                                <MenuItem className={classes.dropdownItem} onClick={handleCloseMore} > Download CSV </MenuItem>
+                                <MenuItem className={classes.dropdownItem} onClick={handleCloseMore} > Purchase Devices </MenuItem>
+                              </MenuList>
+                            </ClickAwayListener>
+                          </Paper>
+                        </Grow>
+                    )}
+                  </Popper>
                 </GridItem>
               </GridContainer>
-              {value === 0 && <Gateway/>}
-              {value === 1 && <Sensors/>}
+              {value === 0 && <Gateway open={open} openUpload={openUpload} handleClose={handleClose}/>}
+              {value === 1 && <Sensors open={open} handleClose={() => setOpen(false)}/>}
             </GridItem>
           </GridContainer>
         </GridItem>
