@@ -1,15 +1,16 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { ROUTE_PATH } from "config/constants";
-
 import Loadable from 'react-loadable';
 
+// import Login from "./views/pages/common/Login";
+// import AuthRouter from './shared/layouts/router/NoAuthRouter';
+
+import RtlLayout from 'layouts/RTL.js';
 import AuthLayout from 'layouts/Auth.js';
 import AdminLayout from 'layouts/Admin.js';
 import UserLayout from 'layouts/User';
 import SettingLayout from 'layouts/Setting';
 import OverviewLayout from 'layouts/Overview';
-import DispatchLayout from 'layouts/Dispatch';
 
 // const ExamModule = Loadable({
 //   loader: () => import(/* webpackChunkName: "exam" */ 'src/shared/modules/exam'),
@@ -30,13 +31,13 @@ import DispatchLayout from 'layouts/Dispatch';
 const Routes = () => (
   <div className="view-routes">
     <Switch>
-      <Route path={ ROUTE_PATH.ADMIN } component={AdminLayout} />
-      <Route path={ ROUTE_PATH.AUTH } component={AuthLayout} />
-      <Route path={ ROUTE_PATH.USER } component={UserLayout} />
-      <Route path={ ROUTE_PATH.SETTING } component={SettingLayout} />
-      <Route path={ ROUTE_PATH.OVERVIEW } component={OverviewLayout} />
-      <Route path={ ROUTE_PATH.DISPATCH } component={DispatchLayout} />
-      <Redirect from="/" to={ ROUTE_PATH.OVERVIEW + "/overview" } />
+      <Route path="/rtl" component={RtlLayout} />
+      <Route path="/auth" component={AuthLayout} />
+      <Route path="/admin" component={AdminLayout} />
+      <Route path="/user" component={UserLayout} />
+      <Route path="/setting" component={SettingLayout} />
+      <Route path="/o" component={OverviewLayout} />
+      <Redirect from="/" to="/o/overview" />
     </Switch>
   </div>
 );

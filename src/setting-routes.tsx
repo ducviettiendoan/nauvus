@@ -1,5 +1,3 @@
-import { ROUTE_PATH } from "config/constants";
-
 import General from "views/pages/user/settings/org/General";
 import UserRoles from "views/pages/user/settings/org/UserRoles";
 import Drivers from "views/pages/user/settings/org/Drivers";
@@ -34,149 +32,149 @@ const dashRoutes = [
     path: "/org/general",
     name: "General",
     component: General,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   {
     path: "/org/user-roles",
     name: "User & Roles",
     component: UserRoles,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   {
     path: "/org/drivers",
     name: "Drivers",
     component: Drivers,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   {
     path: "/org/tags",
     name: "Tags",
     component: Tags,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   {
     path: "/org/feature-management",
     name: "Feature Management",
     component: FeatureManagement,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   {
     path: "/org/activity-log",
     name: "Activity Log",
     component: ActivityLog,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   {
     path: "/org/apps",
     name: "Apps",
     component: Apps,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   {
     path: "/org/billing",
     name: "Billing",
     component: Billing,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   // Devices
   {
     path: "/device/devices",
     name: "Devices",
     component: Devices,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   {
     path: "/device/configuration",
     name: "Configuration",
     component: Configuration,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   // Flett
   {
     path: "/fleet/driver-app",
     name: "Driver App",
     component: DriverApp,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   {
     path: "/fleet/safety",
     name: "Safety",
     component: Safety,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   {
     path: "/fleet/compliance",
     name: "Compliance",
     component: Compliance,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   {
     path: "/fleet/dispatch",
     name: "Dispatch",
     component: Dispatch,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   {
     path: "/fleet/fuel-energy",
     name: "Fuel & Energy",
     component: FuelEnergy,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   {
     path: "/fleet/driver-activity",
     name: "Driver Activity",
     component: DriverActivity,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   {
     path: "/fleet/add-geo",
     name: "Addresses/Geofences",
     component: AddressesGeofences,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   {
     path: "/fleet/maps",
     name: "Maps",
     component: Maps,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   // Link -sharing
   {
     path: "/link-sharing/alert-contacts",
     name: "Alert Contacts",
     component: AlertContacts,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   {
     path: "/link-sharing/scheduled-reports",
     name: "Scheduled Reports",
     component: ScheduledReports,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   {
     path: "/link-sharing/live-sharing",
     name: "Live Sharing",
     component: LiveSharing,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   // developer
   {
     path: "/developer/metrics",
     name: "Developer Metrics",
     component: DeveloperMetrics,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   {
     path: "/developer/api-tokens",
     name: "API Tokens",
     component: APITokens,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
   {
     path: "/developer/webhooks",
     name: "Webhooks",
     component: Webhooks,
-    layout: ROUTE_PATH.SETTING
+    layout: "/setting"
   },
 ];
 export default dashRoutes;
