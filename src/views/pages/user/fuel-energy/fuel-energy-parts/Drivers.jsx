@@ -10,7 +10,8 @@ import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import { InfoOutlined } from "@material-ui/icons";
 import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
-
+import {getDrivers} from "reducers/fuel-energy";
+import {connect} from 'react-redux';
 
 const styles = {
     selected: {
@@ -54,6 +55,7 @@ const styles = {
     onHeaderCellNext: {
         fontWeight: 700,
         color: "#25345C",
+        textAlign: 'center'
     },
     alignItemsCenter: {
         display: "flex",
@@ -79,9 +81,14 @@ const styles = {
         border: "1px solid #ECEEF0 !important",
     },
     textEmail: {
-        display: "flex",
-        justifyContent: "center"
-    },
+      display: "flex",
+      justifyContent: "center",
+      fontSize: '16px',
+      lineHeight: '24px',
+      color: '#25345C',
+      paddingLeft: "12px",
+      fontWeight: 400,
+  },
     topHeader: {
         display: "flex",
         justifyContent: "space-between",
@@ -131,8 +138,12 @@ const dumpData = [
 
 const useStyles = makeStyles(styles);
 
-export default function Drivers() {
+export function Drivers(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    props.getDrivers();
+  }, []);
 
   const columns=[
     {
@@ -204,7 +215,7 @@ export default function Drivers() {
   return (
     <div>
           <div>
-            {dumpData.length > 0 && <Table
+             <Table
               renderTitle={
               <div>
                 <div className={classes.alert}>              
@@ -234,7 +245,7 @@ export default function Drivers() {
                 </div>
               }          
               columns={columns}
-              dataSource={dumpData}
+              dataSource={props.data}
               onHeaderRow={{
                 className: classes.onHeaderRow
               }}
@@ -242,11 +253,27 @@ export default function Drivers() {
                 className: classes.tableRow
               }}
             />
-            }
+            
           </div>
               </div>
   );
 }
+
+const mapStateToProps = ({fuelEnergy}) => {
+  console.log(fuelEnergy.drivers.data);
+  return {
+    data: fuelEnergy.drivers.data,
+    page: fuelEnergy.drivers.page,
+    total: fuelEnergy.drivers.total,
+    pageSize: fuelEnergy.drivers.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getDrivers
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Drivers);
 
 
 

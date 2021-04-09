@@ -11,8 +11,7 @@ import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import Calendar from "components/Calendar/Calendar";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import Button from "components/CustomButtons/Button.js";
-import { getPurchaseReport } from "reducers/fuel-energy";
-import { IRootState } from "reducers";
+import {getFuelPurchase} from "reducers/fuel-energy";
 import { connect } from "react-redux";
 import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
 import LiveIconWhite from "components/Icons/LiveIconWhite";
@@ -130,7 +129,7 @@ export function FuelPurchase(props) {
   const classes = useStyles();
 
   React.useEffect(() => {
-    props.getPurchaseReport();
+    props.getFuelPurchase();
   }, []);
 
   const [tab, setTab] = useState();
@@ -275,35 +274,35 @@ export function FuelPurchase(props) {
               </GridContainer>
 
               <div>
-                {props.data.length > 0 && (
-                  <Table
-                    renderTitle={
-                      <Grid container className={classes.gridTitle}>
-                        <Grid item xs={12} sm={12} md={6}></Grid>
-                        <Grid
-                          xs={12}
-                          sm={12}
-                          md={6}
-                          className={classes.headLeft}
-                        >
-                          <ToolboxButton
-                            placeholder="Search driver"
-                            showFilter
-                            showColumn
-                          />
-                        </Grid>
+                
+                <Table
+                  renderTitle={
+                    <Grid container className={classes.gridTitle}>
+                      <Grid item xs={12} sm={12} md={6}></Grid>
+                      <Grid
+                        xs={12}
+                        sm={12}
+                        md={6}
+                        className={classes.headLeft}
+                      >
+                        <ToolboxButton
+                          placeholder="Search driver"
+                          showFilter
+                          showColumn
+                        />
                       </Grid>
-                    }
-                    columns={columns}
-                    dataSource={props.data}
-                    onHeaderRow={{
-                      className: classes.onHeaderRow,
-                    }}
-                    onBodyRow={{
-                      className: classes.tableRow,
-                    }}
-                  />
-                )}
+                    </Grid>
+                  }
+                  columns={columns}
+                  dataSource={props.data}
+                  onHeaderRow={{
+                    className: classes.onHeaderRow,
+                  }}
+                  onBodyRow={{
+                    className: classes.tableRow,
+                  }}
+                />
+                
               </div>
             </GridItem>
           </GridContainer>
@@ -313,11 +312,18 @@ export function FuelPurchase(props) {
   );
 }
 
-export default connect(
-  ({ fuelEnergy }: IRootState) => ({
-    data: fuelEnergy.purchaseReports,
-  }),
-  {
-    getPurchaseReport,
-  }
-)(FuelPurchase);
+const mapStateToProps = ({fuelEnergy}) => {
+  console.log(fuelEnergy.fuelPurchase.data);
+  return {
+    data: fuelEnergy.fuelPurchase.data,
+    page: fuelEnergy.fuelPurchase.page,
+    total: fuelEnergy.fuelPurchase.total,
+    pageSize: fuelEnergy.fuelPurchase.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getFuelPurchase
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FuelPurchase);
