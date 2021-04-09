@@ -42,6 +42,8 @@ export function Dashboard(props) {
   const [image, setImage] = React.useState("");
   const [color, setColor] = React.useState("blue");
   const [bgColor, setBgColor] = React.useState("white");
+  // const [hasImage, setHasImage] = React.useState(true);
+  const [fixedClasses, setFixedClasses] = React.useState("dropdown");
   const [logo, setLogo] = React.useState(require("assets/img/logo_nauvus.svg"));
 
   const [fetchSession, setFetchSession] = React.useState(false);
@@ -74,6 +76,18 @@ export function Dashboard(props) {
 
   React.useEffect(() => {
     resizeFunction();
+    // console.log(`fetchSession: ${fetchSession}`);
+    // async function fetchUserInfo() {
+    //   try {
+    //     await props.getUserInfo();
+    //   } catch (e) {
+    //   } finally {
+    //     setFetchSession(true);
+    //     console.log(`fetchSession: ${fetchSession}`);
+    //     console.log(props.isAuthenticated);
+    //   }
+    // }
+    // fetchUserInfo();
 
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(mainPanel.current, {
@@ -93,8 +107,35 @@ export function Dashboard(props) {
     };
   }, [1]);
   // functions for changeing the states from components
+  const handleImageClick = image => {
+    setImage(image);
+  };
+  const handleColorClick = color => {
+    setColor(color);
+  };
+  const handleBgColorClick = bgColor => {
+    switch (bgColor) {
+      case "white":
+        setLogo(require("assets/img/logo.svg"));
+        break;
+      default:
+        setLogo(require("assets/img/logo-white.svg"));
+        break;
+    }
+    setBgColor(bgColor);
+  };
+  const handleFixedClick = () => {
+    if (fixedClasses === "dropdown") {
+      setFixedClasses("dropdown show");
+    } else {
+      setFixedClasses("dropdown");
+    }
+  };
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+  const getRoute = () => {
+    return window.location.pathname !== "/user/overview";
   };
   const getActiveRoute = routes => {
     let activeRoute = "Default Brand Text";
@@ -175,9 +216,17 @@ export function Dashboard(props) {
   }
 
   const redirectLogin = () => {
+    // let redirectUri = `${window.location.origin}/auth/login`;
+    // let link = `${COGNOTO_SERVER_URL}/login?client_id=${COGNOTO_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=${COGNOTO_RESPONSE_TYPE}`;
+    // window.location.replace(link);
     history.push("/auth/sign-in");
   }
 
+  // useEffect(() => {
+  //   setInterval(()=> {
+  //     console.log(mobileOpen)
+  //   }, 1000)
+  // },[])
   return (
     <>
       <div className={classes.wrapper}>
