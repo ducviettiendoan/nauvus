@@ -29,6 +29,7 @@ import VehicleSideBar from "views/pages/user/overview/components/VehicleSideBar"
 import ProximitySideBar from "views/pages/user/overview/proximity/ProximitySideBar";
 import {ExtraDriverDetailsSideBar} from "../views/pages/user/overview/components/ExtraDriverDetailsSideBar";
 import DriverSideBar from "../views/pages/user/overview/drivers/DriverSideBar";
+import DriverRecord from "../views/pages/user/overview/drivers/DriverRecord";
 
 var ps;
 
@@ -177,8 +178,8 @@ export function Overview(props) {
   };
 
   const onBackTable = () => {
-    props.setOpenDrawer(false)
     props.history.push("/o/drivers/")
+    props.setOpenDrawer(false)
   }
 
   const renderDataContent = () => {
@@ -198,6 +199,7 @@ export function Overview(props) {
               {window.location.pathname === "/o/overview" && <VehicleSideBar/>}
               {window.location.pathname.indexOf("/o/drivers") !== -1 && <DriverSideBar onBack={onBackTable}/>}
               {window.location.pathname.indexOf("/o/proximity") !== -1 && <ProximitySideBar/>}
+              {window.location.pathname.indexOf("/o/driver-record/") !== -1 && <DriverRecord /> }
             </Drawer>
             <main
               className={clsx(classes.content, {

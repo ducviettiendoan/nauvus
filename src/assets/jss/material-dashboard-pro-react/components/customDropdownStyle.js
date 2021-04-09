@@ -122,7 +122,8 @@ const customDropdownStyle = theme => ({
     color: grayColor[7],
     whiteSpace: "nowrap",
     minHeight: "unset",
-    bottom: "13px"
+    bottom: "13px",
+    background: "#FFFFFF"
   },
   darkHover: {
     "&:hover": {
@@ -140,6 +141,13 @@ const customDropdownStyle = theme => ({
     "&:hover": {
       backgroundColor: primaryColor[0],
       color: whiteColor,
+      ...primaryBoxShadow
+    }
+  },
+  grayHover: {
+    "&:hover": {
+      backgroundColor: grayColor[19],
+      color: blackColor,
       ...primaryBoxShadow
     }
   },

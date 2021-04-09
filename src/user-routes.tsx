@@ -24,6 +24,7 @@ import Assets from "views/pages/user/overview/Assets";
 import Proximity from "views/pages/user/overview/Proximity";
 import Drivers from "views/pages/user/overview/Drivers";
 import DriverDetail from "views/pages/user/overview/drivers/DriverDetail";
+import DriverRecord from "views/pages/user/overview/drivers/DriverRecord";
 import Logs from "views/pages/user/overview/Logs";
 
 // @material-ui/icons
@@ -70,7 +71,15 @@ const dashRoutes = [
         name: "Drivers Detail",
         component: DriverDetail,
         layout: "/o",
-        isFixed: true
+        isFixed: true,
+      },
+      {
+        path: "/driver-record/:id",
+        name: "Drivers Record",
+        component: DriverRecord,
+        layout: "/o",
+        isFixed: true,
+        hideInSideBar: true,
       },
       {
         path: "/drivers",

@@ -205,24 +205,24 @@ const webhookData = () => {
 
 //Action
 //Developer metric Action
-export const getApiTraffic = () => async dispatch => {
+export const getApiTraffic = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_API_TRAFFIC,
-    payload: apiTrafficData()
+    payload: axios.post(`/api/setting/developer/apiTraffic`, request),
   });
 };
 
-export const getWebhookTraffic = () => async dispatch => {
+export const getWebhookTraffic = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_WEBHOOK_TRAFFIC,
-    payload: webhookTrafficData
+    payload: axios.post(`/api/setting/developer/webhook-traffic`, request)
   });
 };
 
-export const getChartData = () => async dispatch => {
+export const getChartData = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_CHART_DATA,
-    payload: lineChartData
+    payload: axios.post(`/api/setting/developer/chartData`, request),
   });
 };
 

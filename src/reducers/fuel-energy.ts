@@ -7,11 +7,25 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar'
 export const ACTION_TYPES = {
     //Fuel Purchase Report
     GET_PURCHASE_REPORT: 'fuel-energy/GET_PURCHASE_REPORT',
+    GET_DRIVERS: 'fuel-energy/dashboard/GET_DRIVERS',
+    GET_VEHICLES: 'fuel-energy/dashboard/GET_VEHICLES',
+    GET_FUEL_PURCHASE: "fuel-enerygy/fuel-purchase/GET_FUEL_PURCHASE",
+    GET_DRIVER_EFFICIENCY_DRIVERS: "fuel-energy/driver-efficiency/GET_DRIVER_EFFICIENCY_DRIVERS",
+    GET_DRIVER_EFFICIENCY_VEHICLES: "fuel-energy/driver-efficiency/GET_DRIVER_EFFICIENCY_VEHICLES",
+
     
   };
 
 const initialState = {
+    errorMessage: null,
+    loading: false,
     purchaseReports: [],
+    drivers: [],
+    vehicles: [],
+    fuelPurchase: [],
+    driverEfficiencyDrivers: [],
+    driverEfficiencyVehicles: [],
+
 }
 
 export type FuelEnergyState = Readonly<typeof initialState>;
@@ -19,43 +33,100 @@ export type FuelEnergyState = Readonly<typeof initialState>;
 // Reducer
 export default (state: FuelEnergyState = initialState, action): FuelEnergyState => {
     switch (action.type) {
-      case ACTION_TYPES.GET_PURCHASE_REPORT: {
+
+      case REQUEST(ACTION_TYPES.GET_DRIVERS):
+      case REQUEST(ACTION_TYPES.GET_VEHICLES):
+      case REQUEST(ACTION_TYPES.GET_DRIVER_EFFICIENCY_DRIVERS):
+      case REQUEST(ACTION_TYPES.GET_FUEL_PURCHASE):
+      case REQUEST(ACTION_TYPES.GET_DRIVER_EFFICIENCY_VEHICLES):
         return {
           ...state,
-          purchaseReports: action.payload
-        };
-      }
+          loading: true,
+
+        }
+
+      case FAILURE(ACTION_TYPES.GET_DRIVERS):
+      case FAILURE(ACTION_TYPES.GET_VEHICLES):
+      case FAILURE(ACTION_TYPES.GET_FUEL_PURCHASE):
+      case FAILURE(ACTION_TYPES.GET_DRIVER_EFFICIENCY_DRIVERS):
+      case FAILURE(ACTION_TYPES.GET_DRIVER_EFFICIENCY_VEHICLES):
+        return {
+          ...state,
+          loading: false,
+          errorMessage: action.payload,
+        }
+
+      case SUCCESS(ACTION_TYPES.GET_DRIVERS):
+        return {
+          ...state,
+          drivers: action.payload.data,
+
+        }
+
+      case SUCCESS(ACTION_TYPES.GET_VEHICLES):
+        return {
+          ...state,
+          vehicles: action.payload.data,
+
+        }
+
+      case SUCCESS(ACTION_TYPES.GET_FUEL_PURCHASE):
+        return {
+          ...state,
+          fuelPurchase: action.payload.data,
+        }
+
+      case SUCCESS(ACTION_TYPES.GET_DRIVER_EFFICIENCY_DRIVERS):
+        return {
+          ...state,
+          driverEfficiencyDrivers: action.payload.data,
+
+        }
+      case SUCCESS(ACTION_TYPES.GET_DRIVER_EFFICIENCY_VEHICLES):
+        return {
+          ...state,
+          driverEfficiencyVehicles: action.payload.data,
+
+        }
+
       default:
         return state;
     }
   };
 
-//Device Data
-const purchaseReportsData = () => {
-    let data = [];
-    for (let i = 0; i < 7; i++) {
-      let item = {
-        id: i + 1,
-        vehicle: "Vehicle 101", 
-        efficiency: "39.1 MPG", 
-        fuelUsed: "2.0 gal", 
-        energyUsed: "0.0 kWh", 
-        distance: "78.1 mi", 
-        drivingElectric: "0.0", 
-        estCarbonEmissions: "39.2 lb", 
-        estCost: "C$10.76", 
-        totalEngineRunTime: "3h 20m", 
-        idleTime: "10s (0.1%)" 
-      };
-      data.push(item);
-    }
-    return data;
-  }
+//Actions
+export const getDrivers = (request) => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_DRIVERS,
+    payload: axios.post("api/fuel-energy/dashboard/drivers", request)
+  });
+};
 
-// Actions
-export const getPurchaseReport = () => async dispatch => {
-    dispatch({
-      type: ACTION_TYPES.GET_PURCHASE_REPORT,
-      payload: purchaseReportsData
-    });
-  };
+export const getVehicles = (request) => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_VEHICLES,
+    payload: axios.post("api/fuel-energy/dashboard/vehicles", request)
+  });
+};
+
+export const getFuelPurchase = (request) => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_FUEL_PURCHASE,
+    payload: axios.post("api/fuel-energy/fuel-purchase", request)
+  });
+};
+
+export const getDriverEfficiencyDrivers = (request) => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_DRIVER_EFFICIENCY_DRIVERS,
+    payload: axios.post("api/fuel-energy/driver-efficiency/drivers", request)
+  });
+};
+
+export const getDriverEfficiencyVehicles = (request) => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_DRIVER_EFFICIENCY_VEHICLES,
+    payload: axios.post("api/fuel-energy/driver-efficiency/vehicles", request)
+  });
+};
+

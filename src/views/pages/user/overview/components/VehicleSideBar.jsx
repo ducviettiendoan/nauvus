@@ -153,7 +153,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between"
   },
-  dropdown: {
+  dropdownVehicle: {
     borderRadius: "12px",
     boxShadow: "0px 1px 10px rgba(0, 0, 0, 0.25)",
     width: "230px",
@@ -164,7 +164,7 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: "8px",
     paddingTop: "8px",
   },
-  dropdownItem: {
+  dropdownItemVehicle: {
     marginLeft: "8px",
     fontWeight: 400,
     fontSize: '12px',
@@ -340,7 +340,7 @@ export function VehicleSideBar(props) {
                   id="profile-menu-list"
                   style={{ transformOrigin: "0 0 0" }}
                 >
-                  <Paper className={classes.dropdown}>
+                  <Paper className={classes.dropdown && classes.dropdownVehicle}>
                     <ClickAwayListener onClickAway={handleCloseMore}>
                       <MenuList role="menu">
                         <Grid xs={12} sm={12} md={12} className={classes.popperInput}>
@@ -351,7 +351,7 @@ export function VehicleSideBar(props) {
                         {listTag.map((value) => {
                           return (
                             <MenuItem key={value} className={classes.itemContainer}>
-                              <div className={classes.dropdownItem}>
+                              <div className={classes.dropdownItemVehicle}>
                                 <Checkbox
                                   edge="end"
                                   onChange={handleToggle(value)}
@@ -363,7 +363,7 @@ export function VehicleSideBar(props) {
                                   }}
                                 />
                               </div>
-                              <div className={classes.dropdownItem}>
+                              <div className={classes.dropdownItemVehicle}>
                                 {value}
                               </div>
                             </MenuItem>

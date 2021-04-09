@@ -175,10 +175,10 @@ export function Users(props) {
       render: () => (
         <div className={classes.actionButton}>
           <Button justIcon color="twitter" simple>
-            <EditIcon className={classes.iconButton} style={{ color: "#ffffff", width: '22px', height: '22px' }} />
+            <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
           </Button>
           <Button justIcon color="google" simple>
-            <DeleteIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
+            <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px' }} />
           </Button>
         </div>
       )

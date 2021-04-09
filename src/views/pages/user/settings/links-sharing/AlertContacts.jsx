@@ -6,19 +6,12 @@ import AddOutlined from "@material-ui/icons/AddOutlined";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
 import Button from "components/CustomButtons/Button.js";
 import { MoreHoriz } from "@material-ui/icons";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import EditIcon from "components/Icons/EditIcon";
 import DeleteIcon from "components/Icons/DeleteIcon";
-import BootstrapTable from "react-bootstrap-table-next";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 import {connect} from "react-redux";
-import {IRootState} from "reducers";
-import {getAlertContact} from "reducers/setting-link-sharing";
 import classNames from "classnames";
 import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
@@ -33,6 +26,8 @@ import OrganizationUpload from "components/CustomUpload/OrganizationUpload";
 import InputLabel from "@material-ui/core/InputLabel";
 import {Field, Form} from "react-final-form";
 import {TextField} from "final-form-material-ui";
+import { getAlertContact } from "reducers/setting-link-sharing";
+import Table from "components/Table/TableV1";
 
 const styles = {
   liveSharingHeader: {
@@ -45,36 +40,21 @@ const styles = {
     fontSize: 18,
     textAlign: "left",
     color: "#25345C",
-    marginTop: '-17px'
+    marginTop: 10
+
   },
   liveSharingButton: {
-    textAlign: "right",
-    marginTop: '2px'
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    "& > div": {
+      marginBottom: "0 !important",
+      marginRight: 8
+    }
   },
   moreAction: {
     background: "#FFFFFF !important",
     border: "1px solid #ECEEF0 !important"
-  },
-  textName: {
-    fontWeight: 'bold',
-    fontSize: '16px',
-    lineHeight: '24px',
-    marginTop: '14px',
-    color: '#25345C',
-    marginLeft: '24px'
-  },
-  textSub: {
-    fontWeight: '400',
-    color: '#25345C',
-    fontSize: '16px',
-    lineHeight: '24px',
-    marginTop: '14px',
-    marginLeft: '24px'
-  },
-  iconButton: {
-    '&:hover': {
-      color: '#25345C !important',
-    },
   },
   topHeader: {
     display: "flex",
@@ -91,6 +71,39 @@ const styles = {
   },
   topHeaderButton: {
     textAlign: "right",
+  },
+  textName: {
+    fontWeight: 'bold',
+    fontSize: '16px',
+    lineHeight: '24px',
+    color: '#25345C',
+  },
+  textSub: {
+    fontSize: '16px',
+    lineHeight: '24px',
+  },
+  iconButton: {
+    '&:hover': {
+      color: '#25345C !important',
+    },
+  },
+  actionIcon: {
+    marginTop: "10px"
+  },
+  onHeaderRow: {
+    background: "#ECEEF0",
+  },
+  onHeaderCell: {
+    fontWeight: "bold"
+  },
+
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
+    },
+  },
+  gridTitle: {
+    padding: "20px"
   },
   dialogTitle: {
     fontWeight: "bold",
@@ -165,36 +178,55 @@ export function AlertContacts(props) {
     props.getAlertContact();
   }, []);
 
-  const formatName = (cell, row) => {
-    return <>
-      <div className={classes.textName}>{cell}</div>
-    </>
+  const onShowSizeChange = (page, pageSize) => {
+    props.getAlertContact({ page, pageSize });
+    console.log(page, pageSize)
   }
 
-  const formatPhone = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize)
+    props.getAlertContact({ page, pageSize });
   }
 
-  const formatEmail = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const addActionButton = () => {
-    return (
-      <>
-        <Button justIcon color="twitter" simple>
-          <EditIcon className={classes.iconButton} style={{ color: "#ffffff", width: '22px', height: '22px' }} />
-        </Button>
-        <Button justIcon color="google" simple>
-          <DeleteIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
-        </Button>
-      </>
-    )
-  }
+  const columns = [
+    {
+      title: 'Name',
+      key: 'name',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: name => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textName}>{name}</div>
+        </div>
+      ),
+    },
+    {
+      title: 'Phone',
+      key: 'phone',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: phone => <div className={classes.textSub}>{phone}</div>
+    },
+    {
+      title: 'Email',
+      key: 'email',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: email => <div className={classes.textSub}>{email}</div>
+    },
+    {
+      title: 'Actions',
+      key: 'action',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: () => (
+        <div className={classes.actionButton}>
+          <Button justIcon color="twitter" simple>
+            <EditIcon className={classes.iconButton} style={{ color: "#ffffff", width: '22px', height: '22px' }} />
+          </Button>
+          <Button justIcon color="google" simple>
+            <DeleteIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
+          </Button>
+        </div>
+      )
+    }
+  ]
 
   return (
     <div>
@@ -330,59 +362,33 @@ export function AlertContacts(props) {
                   </Button>
                 </GridItem>
               </GridContainer>
-
-
-              <Card>
-                <CardBody style={{ height: '74px' }}>
-                  <GridContainer className={classes.liveSharingHeader}>
-                    <GridItem xs={3} sm={3} md={3} className={classes.liveSharingTitle}>
-                      2 contacts
+              <Table
+                renderTitle={
+                  <GridContainer justify="space-between" className={classes.gridTitle}>
+                    <GridItem className={classes.liveSharingTitle}>
+                      22 contacts
                     </GridItem>
-                    <GridItem xs={9} sm={9} md={9} className={classes.liveSharingButton}>
+                    <GridItem className={classes.liveSharingButton}>
                       <ToolboxButton placeholder={"Search contacts"} />
                     </GridItem>
                   </GridContainer>
-                </CardBody>
-                <div>
-                  <ToolkitProvider
-                    data={props.data}
-                    columns={[
-                      {
-                        dataField: "name",
-                        text: "Name",
-                        formatter: formatName
-                      },
-                      {
-                        dataField: "phone",
-                        text: "Phone",
-                        formatter: formatPhone
-                      },
-                      {
-                        dataField: "email",
-                        text: "Email",
-                        formatter: formatEmail
-                      },
-                      {
-                        dataField: "action",
-                        text: "Actions",
-                        formatter: addActionButton
-                      }
-                    ]}
-                  >
-                    {props => (
-                      <div className="table table-settings">
-                        <BootstrapTable
-                          {...props.baseProps}
-                          keyField="id"
-                          bootstrap4={true}
-                          bordered={false}
-                        />
-                      </div>
-                    )}
-                  </ToolkitProvider>
-                </div>
-              </Card>
-              <GenPaginationV1 total={29} page={1} size={10} />
+                }
+                pagination={{
+                  total: props.total,
+                  current: props.page,
+                  pageSize: props.pageSize,
+                  onChange: onPageChange,
+                  onShowSizeChange: onShowSizeChange
+                }}
+                columns={columns}
+                dataSource={props.data}
+                onHeaderRow={{
+                  className: classes.onHeaderRow
+                }}
+                onBodyRow={{
+                  className: classes.tableRow
+                }}
+              />
             </GridItem>
           </GridContainer>
           <Popper
@@ -420,11 +426,17 @@ export function AlertContacts(props) {
   );
 }
 
-export default connect(
-  ({settingLinkSharing}: IRootState) => ({
-    data: settingLinkSharing.alertContacts
-  }),
-  {
-    getAlertContact
-  }
-)(AlertContacts);
+const mapStateToProps = ({ settingLinkSharing }) => {
+  return {
+    data: settingLinkSharing.alertContacts.data,
+    page: settingLinkSharing.alertContacts.page,
+    total: settingLinkSharing.alertContacts.total,
+    pageSize: settingLinkSharing.alertContacts.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getAlertContact
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AlertContacts);

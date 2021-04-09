@@ -31,7 +31,7 @@ export default (state: SettingDeviceState = initialState, action): SettingDevice
     case FAILURE(ACTION_TYPES.GET_SENSOR):
       return {
         ...state,
-        loading: false,
+        loading: false,    //why?
         errorMessage: action.payload,
       };
     case SUCCESS(ACTION_TYPES.GET_GATEWAY): {

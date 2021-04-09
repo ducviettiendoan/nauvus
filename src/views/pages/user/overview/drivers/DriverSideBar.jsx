@@ -1,6 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 // @material-ui/core components
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 // core components
 import Card from "components/Card/Card.js";
@@ -8,7 +8,7 @@ import CardBody from "components/Card/CardBody.js";
 import Divider from '@material-ui/core/Divider';
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
-import {InfoOutlined} from "@material-ui/icons";
+import { InfoOutlined } from "@material-ui/icons";
 import Button from "components/CustomButtons/Button";
 import TruckIcon from "components/Icons/TruckIcon";
 import LocationIcon from "components/Icons/LocationIcon";
@@ -17,10 +17,10 @@ import RecordIcon from "components/Icons/RecordIcon";
 import Accordion from "components/Accordion/Accordion";
 import FakeChartImage from "assets/img/svg-image/FakeChartImage";
 import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
-import {Col, Row} from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import ArrowBackIcon from "components/Icons/ArrowBackIcon";
 import DiaLog from "components/CustomDialog/Dialog";
-import {primaryColor} from "assets/jss/material-dashboard-pro-react";
+import { primaryColor } from "assets/jss/material-dashboard-pro-react";
 import EditDriverForm from "./EditDriverForm";
 import classNames from "classnames";
 import Grow from "@material-ui/core/Grow";
@@ -30,6 +30,10 @@ import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
 import Popper from "@material-ui/core/Popper";
 import customDropdownStyle from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle.js";
+import { useHistory } from "react-router-dom";
+import { setOpenDrawer } from "reducers/overview"
+import { connect } from "react-redux";
+
 
 const useStyles = makeStyles((theme) => ({
   ...customDropdownStyle(theme),
@@ -233,8 +237,9 @@ const useStyles = makeStyles((theme) => ({
 // const useStyles = makeStyles(styles);
 var ps;
 
-export default function DriverSideBar(props) {
+function DriverSideBar(props) {
   const classes = useStyles();
+  const history = useHistory()
 
   const mainPanelVehicleSideBar = React.createRef();
 
@@ -287,26 +292,31 @@ export default function DriverSideBar(props) {
     setAnchorEl(event.currentTarget);
   }
 
+  const handleShowRecord = () => {
+    props.setOpenDrawer(false)
+    history.push("/o/driver-record/1234")
+  }
+
 
   return (
     <div ref={mainPanelVehicleSideBar} className={classes.sidebarContainer}>
-      <Divider/>
+      <Divider />
       <Row>
         <Col>
           <Button
-            startIcon={<ArrowBackIcon/>}
+            startIcon={<ArrowBackIcon />}
             className="btn-round-white 2 w-84 h-41"
-            style={{margin: "13px 0px 0px 16px"}}
+            style={{ margin: "13px 0px 0px 16px" }}
             onClick={props.onBack}
           >
             Back
           </Button>
         </Col>
       </Row>
-      <div style={{padding: "0px 18px"}}>
+      <div style={{ padding: "0px 18px" }}>
         <Card className={classes.alert}>
           <CardBody>
-            <div className="ml-4" style={{textAlign: "left"}}>
+            <div className="ml-4" style={{ textAlign: "left" }}>
               <div className={classes.txtInfoMain}>
                 No location data found for Mar 25, 12:00 AM - Mar 25, 11:59 PM
               </div>
@@ -314,13 +324,13 @@ export default function DriverSideBar(props) {
                 Showing last found location from Feb 8, 2021 2:17 AM
               </div>
             </div>
-            <div style={{position: "absolute", top: "16px", left: "10px"}}>
-              <InfoOutlined/>
+            <div style={{ position: "absolute", top: "16px", left: "10px" }}>
+              <InfoOutlined />
             </div>
           </CardBody>
         </Card>
       </div>
-      <div style={{padding: "0px 18px"}}>
+      <div style={{ padding: "0px 18px" }}>
         <Row className={classes.topHeader}>
           <Col className={classes.topHeaderTitle}>
             Driver details
@@ -334,7 +344,7 @@ export default function DriverSideBar(props) {
               className={`btn-36 ${classes.moreAction} mr-2`}
               onClick={handleOpenMore}
             >
-              <MoreHorizontalIcon/>
+              <MoreHorizontalIcon />
             </Button>
             <Popper
               open={openMore}
@@ -348,11 +358,11 @@ export default function DriverSideBar(props) {
                 [classes.popperNav]: true
               })}
             >
-              {({TransitionProps}) => (
+              {({ TransitionProps }) => (
                 <Grow
                   {...TransitionProps}
                   id="profile-menu-list"
-                  style={{transformOrigin: "0 0 0"}}
+                  style={{ transformOrigin: "0 0 0" }}
                 >
                   <Paper className={classes.dropdown}>
                     <ClickAwayListener onClickAway={handleCloseMore}>
@@ -369,34 +379,34 @@ export default function DriverSideBar(props) {
           </Col>
         </Row>
       </div>
-      <div style={{padding: "0px 18px"}}>
+      <div style={{ padding: "0px 18px" }}>
         <Card>
           <CardBody>
             <Row className={classes.cardHeader}>
               <Col xs={2}>
-                <TruckIcon/>
+                <TruckIcon />
               </Col>
               <Col xs={10}>
                 <Row className={classes.cardHeaderTitle}>Ali Singh</Row>
                 <Row className={classes.cardSubHeaderTitle}>Name</Row>
               </Col>
             </Row>
-            <Divider variant="fullWidth" light/>
+            <Divider variant="fullWidth" light />
             <div className={classes.cardItems}>
               <div>
-                <LocationIcon/>
+                <LocationIcon />
               </div>
               <div className={classes.cardItemsContent}>Tri-State Toolway, East Hazel Crest , IL</div>
             </div>
             <div className={classes.cardItems}>
               <div>
-                <PhoneIcon/>
+                <PhoneIcon />
               </div>
               <div className={classes.cardItemsContent}>4046921660</div>
             </div>
             <div className={classes.cardItems}>
               <div>
-                <RecordIcon/>
+                <RecordIcon />
               </div>
               <div className={classes.cardItemsContent}>View Driver Record</div>
             </div>
@@ -411,7 +421,7 @@ export default function DriverSideBar(props) {
           </CardBody>
         </Card>
       </div>
-      <div style={{padding: "0px 18px"}}>
+      <div style={{ padding: "0px 18px" }}>
         <Card>
           <CardBody>
             <Accordion collapses={
@@ -423,7 +433,9 @@ export default function DriverSideBar(props) {
                     </div>,
                   content:
                     <div className={classes.cardExpandContent}>
-                      <FakeChartImage/>
+                      <div onClick={handleShowRecord} >
+                        <FakeChartImage />
+                      </div>
                       <Row className={classes.cardExpandFooterContent}>
                         <Col className={classes.cardExpandFooterTitle}>
                           Duty Status
@@ -432,7 +444,7 @@ export default function DriverSideBar(props) {
                           Disconnected
                         </Col>
                       </Row>
-                      <Divider variant="fullWidth" light/>
+                      <Divider variant="fullWidth" light />
                       <Row className={classes.cardExpandFooterContent}>
                         <Col className={classes.cardExpandFooterTitle}>
                           Time in current status
@@ -441,7 +453,7 @@ export default function DriverSideBar(props) {
                           0:36
                         </Col>
                       </Row>
-                      <Divider variant="fullWidth" light/>
+                      <Divider variant="fullWidth" light />
                       <Row className={classes.cardExpandFooterContent}>
                         <Col className={classes.cardExpandFooterTitle}>
                           Time until break
@@ -450,7 +462,7 @@ export default function DriverSideBar(props) {
                           -
                         </Col>
                       </Row>
-                      <Divider variant="fullWidth" light/>
+                      <Divider variant="fullWidth" light />
                       <Row className={classes.cardExpandFooterContent}>
                         <Col className={classes.cardExpandFooterTitle}>
                           Drive remaining
@@ -463,9 +475,9 @@ export default function DriverSideBar(props) {
                 },
               ]
             }
-             expansionPanelRounded={{
-               rounded: classes.expansionPanelClassesRounded,
-             }}
+              expansionPanelRounded={{
+                rounded: classes.expansionPanelClassesRounded,
+              }}
             />
           </CardBody>
         </Card>
@@ -480,3 +492,10 @@ export default function DriverSideBar(props) {
     </div>
   );
 }
+
+export default connect(
+  ({ }) => ({
+  }),
+  {
+    setOpenDrawer
+  })(DriverSideBar)
