@@ -1,3 +1,6 @@
+import axios from "axios";
+import { REQUEST, SUCCESS, FAILURE } from "../utils/action-type.util";
+
 export type SettingLinkSharingState = Readonly<typeof initialState>;
 
 //Action Type
@@ -16,6 +19,8 @@ export const ACTION_TYPES = {
 
 //Initial State
 const initialState = {
+  errorMessage: null,
+  loading: false,
   //Alert Contact state
   alertContacts: [],
 
@@ -31,39 +36,58 @@ const initialState = {
 //Reducer
 export default (state: SettingLinkSharingState = initialState, action): SettingLinkSharingState => {
   switch (action.type) {
-    //Alert Contact Reducer
-    case ACTION_TYPES.GET_ALERT_CONTACT: {
+    case REQUEST(ACTION_TYPES.GET_ALERT_CONTACT):
+    case REQUEST(ACTION_TYPES.GET_SCHEDULE_REPORT):
+    case REQUEST(ACTION_TYPES.GET_BY_ASSET):
+    case REQUEST(ACTION_TYPES.GET_BY_LOCATION):
+    case REQUEST(ACTION_TYPES.GET_BY_ROUTE):
       return {
         ...state,
-        alertContacts: action.payload
+        loading: true,
+      };
+    case FAILURE(ACTION_TYPES.GET_ALERT_CONTACT):
+    case FAILURE(ACTION_TYPES.GET_SCHEDULE_REPORT):
+    case FAILURE(ACTION_TYPES.GET_BY_ASSET):
+    case FAILURE(ACTION_TYPES.GET_BY_LOCATION):
+    case FAILURE(ACTION_TYPES.GET_BY_ROUTE):
+      return {
+        ...state,
+        loading: false,
+        errorMessage: action.payload,
+      };
+    //Alert Contact Reducer
+    case SUCCESS(ACTION_TYPES.GET_ALERT_CONTACT): {
+      return {
+        ...state,
+        alertContacts: action.payload.data
       };
     }
 
     //Schedule Report Reducer
-    case ACTION_TYPES.GET_SCHEDULE_REPORT: {
+    case SUCCESS(ACTION_TYPES.GET_SCHEDULE_REPORT): {
       return {
         ...state,
-        scheduleReports: action.payload
+        scheduleReports: action.payload.data
       };
     }
 
     //Live Sharing Reducer
-    case ACTION_TYPES.GET_BY_ASSET: {
+    case SUCCESS(ACTION_TYPES.GET_BY_ASSET): {
       return {
         ...state,
-        byAssets: action.payload
+        byAssets: action.payload.data
       };
     }
-    case ACTION_TYPES.GET_BY_LOCATION: {
+    case SUCCESS(ACTION_TYPES.GET_BY_LOCATION): {
       return {
         ...state,
-        byLocations: action.payload
+        byLocations: action.payload.data
       };
     }
-    case ACTION_TYPES.GET_BY_ROUTE: {
+    case SUCCESS(ACTION_TYPES.GET_BY_ROUTE): {
       return {
         ...state,
-        byRoutes: action.payload
+        byRoutes: action.payload.data
       };
     }
     default:
@@ -71,119 +95,41 @@ export default (state: SettingLinkSharingState = initialState, action): SettingL
   }
 }
 
-//Data
-//Alert Contact Data
-const alertContactData = () => {
-  let data = [];
-  for (let i = 0; i < 6; i++) {
-    let item = {
-      id: i + 1,
-      name: 'Esther Howard',
-      phone: '(347) 555-0133',
-      email: 'debra.holt@example.com'
-    };
-    data.push(item);
-  }
-  return data;
-}
-
-//Schedule Report Data
-const scheduleReportData = () => {
-  let data = [];
-  for (let i = 0; i < 6; i++) {
-    let item = {
-      id: i + 1,
-      name: 'Driver Report',
-      repeat: "Weekly",
-      sendAt: 'Friday 12:00 PM EET',
-      recipients: 2,
-      target : 'Entire Group',
-      createdBy : 'Tatle'
-    };
-    data.push(item);
-  }
-  return data;
-}
-
-//Live Sharing Data
-const byAssetData = () => {
-  let data = [];
-  for (let i = 0; i < 6; i++) {
-    let item = {
-      id: i + 1,
-      name: 'GR9X-6AN-3N5',
-      linkExpires: 'Never'
-    };
-    data.push(item);
-  }
-  return data;
-}
-
-const byLocationData = () => {
-  let data = [];
-  for (let i = 0; i < 6; i++) {
-    let item = {
-      id: i + 1,
-      location: 'Park Plaza Warehouse',
-      name: 'GR9X-6AN-3N5',
-      description: 'By Location' ,
-      linkExpires: 'Never'
-    };
-    data.push(item);
-  }
-  return data;
-}
-
-const byRouteData = () => {
-  let data = [];
-  for (let i = 0; i < 6; i++) {
-    let item = {
-      id: i + 1,
-      route: 'Route 1',
-      name: 'GR9X-6AN-3N5',
-      description: 'By Recurring Route',
-      linkExpires: 'Never'
-    };
-    data.push(item);
-  }
-  return data;
-}
-
 //Action
 //Alert Contact Action
-export const getAlertContact = () => async dispatch => {
+export const getAlertContact = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_ALERT_CONTACT,
-    payload: alertContactData
+    payload: axios.post(`/api/setting/link-sharing/alert-contact`, request),
   });
 };
 
 //Schedule Report Action
-export const getScheduleReport = () => async dispatch => {
+export const getScheduleReport = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_SCHEDULE_REPORT,
-    payload: scheduleReportData
+    payload: axios.post(`/api/setting/link-sharing/scheduled-reports`, request)
   });
 };
 
 //Live Sharing Action
-export const getByAsset = () => async dispatch => {
+export const getByAsset = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_BY_ASSET,
-    payload: byAssetData
+    payload: axios.post(`/api/setting/link-sharing/by-asset`, request)
   });
 };
 
-export const getByLocation = () => async dispatch => {
+export const getByLocation = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_BY_LOCATION,
-    payload: byLocationData
+    payload: axios.post(`/api/setting/link-sharing/by-location`, request)
   });
 };
 
-export const getByRoute = () => async dispatch => {
+export const getByRoute = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_BY_ROUTE,
-    payload: byRouteData
+    payload: axios.post(`/api/setting/link-sharing/by-route`, request)
   });
 };

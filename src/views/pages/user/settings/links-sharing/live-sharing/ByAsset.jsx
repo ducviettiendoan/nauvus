@@ -1,82 +1,24 @@
 import React from "react";
 // @material-ui/core components
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
+import AddOutlined from "@material-ui/icons/AddOutlined";
 // core components
-import PropTypes from 'prop-types';
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import {
-  cardTitle,
-  roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
-import {Tab, Tabs, Typography} from "@material-ui/core";
 import Button from "components/CustomButtons/Button.js";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
-import BootstrapTable from "react-bootstrap-table-next";
-import GenPaginationV1 from "components/Pagination/GenPaginationV1";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import EditIcon from "components/Icons/EditIcon";
 import DeleteIcon from "components/Icons/DeleteIcon";
+import { connect } from "react-redux";
+import { getByAsset } from "reducers/setting-link-sharing";
+import Table from "components/Table/TableV1";
 import CopyIcon from "components/Icons/CopyIcon";
-import {connect} from "react-redux";
-import {IRootState} from "../../../../../../reducers";
-import {getByAsset, getScheduleReport} from "../../../../../../reducers/setting-link-sharing";
-import {ScheduledReports} from "../ScheduledReports";
 
 const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0"
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem"
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px"
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px"
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px"
-    }
-  },
-  iconRose: {
-    color: roseColor
-  },
-  marginTop30: {
-    marginTop: "30px"
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px"
-    }
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  },
   liveSharingHeader: {
     display: "flex",
     justifyContent: "space-between",
@@ -87,38 +29,76 @@ const styles = {
     fontSize: 18,
     textAlign: "left",
     color: "#25345C",
-    marginTop: '-17px'
+    marginTop: 10
+
   },
   liveSharingButton: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    "& > div": {
+      marginBottom: "0 !important",
+      marginRight: 8
+    }
+  },
+  moreAction: {
+    background: "#FFFFFF !important",
+    border: "1px solid #ECEEF0 !important"
+  },
+  topHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 15
+  },
+  topHeaderTitle: {
+    textAlign: "left",
+    fontWeight: 700,
+    fontSize: 18,
+    color: "#25345C",
+    padding: "0 16px !important"
+  },
+  topHeaderButton: {
     textAlign: "right",
-    marginTop: "2px"
   },
   textName: {
     fontWeight: 'bold',
     fontSize: '16px',
     lineHeight: '24px',
-    marginTop: '14px',
     color: '#25345C',
-    marginLeft: '24px'
   },
   textSub: {
-    fontWeight: 400,
     fontSize: '16px',
     lineHeight: '24px',
-    marginTop: '14px',
-    marginLeft: '24px',
-    color: '#25345C'
   },
   iconButton: {
     '&:hover': {
       color: '#25345C !important',
-    }
+    },
+  },
+  actionIcon: {
+    marginTop: "10px"
+  },
+  onHeaderRow: {
+    background: "#ECEEF0",
+  },
+  onHeaderCell: {
+    fontWeight: "bold"
+  },
+
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
+    },
+  },
+  gridTitle: {
+    padding: "20px"
   },
 };
 
 const useStyles = makeStyles(styles);
 
-export function ByAsset(props) {
+function ByAsset(props) {
   const classes = useStyles();
 
   React.useEffect(() => {
@@ -126,33 +106,52 @@ export function ByAsset(props) {
     props.getByAsset();
   }, []);
 
-  const formatName = (cell, row) => {
-    return <>
-      <div className={classes.textName}>{cell}</div>
-    </>
+  const onShowSizeChange = (page, pageSize) => {
+    props.getByAsset({ page, pageSize });
+    console.log(page, pageSize)
   }
 
-  const formatLinkExpires = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize)
+    props.getByAsset({ page, pageSize });
   }
 
-  const addActionButton = () => {
-    return (
-      <>
-        <Button justIcon color="twitter" simple>
-          <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
-        </Button>
-        <Button justIcon color="google" simple>
-          <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
-        </Button>
-        <Button justIcon color="google" simple>
-          <CopyIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
-        </Button>
-      </>
-    )
-  }
+  const columns = [
+    {
+      title: 'Name',
+      key: 'name',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: name => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textName}>{name}</div>
+        </div>
+      ),
+    },
+    {
+      title: 'Link Expires',
+      key: 'linkExpires',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: linkExpires => <div className={classes.textSub}>{linkExpires}</div>
+    },
+    {
+      title: 'Actions',
+      key: 'action',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: () => (
+        <div className={classes.actionButton}>
+          <Button justIcon color="twitter" simple>
+            <EditIcon className={classes.iconButton} style={{ color: "#ffffff", width: '22px', height: '22px' }} />
+          </Button>
+          <Button justIcon color="google" simple>
+            <DeleteIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
+          </Button>
+          <Button justIcon color="google" simple>
+            <CopyIcon className={classes.iconButton} style={{ color: "#ffffff", width: '22px', height: '22px' }} />
+          </Button>
+        </div>
+      )
+    }
+  ]
 
   return (
     <div>
@@ -160,51 +159,33 @@ export function ByAsset(props) {
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
-              <Card>
-                <CardBody style={{height: '74px'}}>
-                  <GridContainer className={classes.liveSharingHeader}>
-                    <GridItem xs={12} sm={3} md={3} className={classes.liveSharingTitle}>
-                      22 assets
+              <Table
+                renderTitle={
+                  <GridContainer justify="space-between" className={classes.gridTitle}>
+                    <GridItem className={classes.liveSharingTitle}>
+                      21 assets
                     </GridItem>
-                    <GridItem xs={12} sm={9} md={9} className={classes.liveSharingButton}>
-                      <ToolboxButton placeholder={"Search assets"}/>
+                    <GridItem className={classes.liveSharingButton}>
+                      <ToolboxButton placeholder={"Search assets"} />
                     </GridItem>
                   </GridContainer>
-                </CardBody>
-                  <ToolkitProvider
-                    data={props.data}
-                    columns={[
-                      {
-                        dataField: "name",
-                        text: "Name",
-                        formatter: formatName
-                      },
-                      {
-                        dataField: "linkExpires",
-                        text: "Link Expires",
-                        formatter: formatLinkExpires
-                      },
-                      {
-                        dataField: "action",
-                        text: "",
-                        formatter: addActionButton
-                      }
-                    ]}
-                  >
-                    {props => (
-                      <div className="table table-settings">
-                        <BootstrapTable
-                          {...props.baseProps}
-                          bootstrap4={true}
-                          bordered={false}
-                          keyField="id"
-                        />
-
-                      </div>
-                    )}
-                  </ToolkitProvider>
-              </Card>
-              <GenPaginationV1 total={29} page={1} size={10}/>
+                }
+                pagination={{
+                  total: props.total,
+                  current: props.page,
+                  pageSize: props.pageSize,
+                  onChange: onPageChange,
+                  onShowSizeChange: onShowSizeChange
+                }}
+                columns={columns}
+                dataSource={props.data}
+                onHeaderRow={{
+                  className: classes.onHeaderRow
+                }}
+                onBodyRow={{
+                  className: classes.tableRow
+                }}
+              />
             </GridItem>
           </GridContainer>
         </GridItem>
@@ -213,11 +194,17 @@ export function ByAsset(props) {
   );
 }
 
-export default connect(
-  ({settingLinkSharing}: IRootState) => ({
-    data: settingLinkSharing.byAssets
-  }),
-  {
-    getByAsset
-  }
-)(ByAsset);
+const mapStateToProps = ({ settingLinkSharing }) => {
+  return {
+    data: settingLinkSharing.byAssets.data,
+    page: settingLinkSharing.byAssets.page,
+    total: settingLinkSharing.byAssets.total,
+    pageSize: settingLinkSharing.byAssets.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getByAsset
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ByAsset);

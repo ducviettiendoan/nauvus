@@ -1,6 +1,6 @@
 import React from "react";
 // @material-ui/core components
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
@@ -12,15 +12,12 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import Button from "components/CustomButtons/Button";
 import Chip from "@material-ui/core/Chip";
+import Grid from '@material-ui/core/Grid';
 import CloseIcon from "components/Icons/CloseIcon";
+import { connect } from "react-redux";
+import { getApiTraffic, getChartData } from "../../../../../../reducers/setting-developer";
+import Table from "components/Table/TableV1";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import BootstrapTable from "react-bootstrap-table-next";
-import {connect} from "react-redux";
-import {IRootState} from "../../../../../../reducers";
-import {getByLocation} from "../../../../../../reducers/setting-link-sharing";
-import {ByLocation} from "../../links-sharing/live-sharing/ByLocation";
-import {getApiTraffic, getChartData} from "../../../../../../reducers/setting-developer";
 
 const styles = {
   colorBlue: {
@@ -46,8 +43,9 @@ const styles = {
     padding: "0 8px!important",
   },
   headContainer: {
-    display: "flex",
-    alignItems: "center"
+    alignItems: "center",
+    textAlign: "left",
+    marginTop: "8px"
   },
   userRolesTitle: {
     fontSize: 16,
@@ -94,6 +92,11 @@ const styles = {
     marginTop: '14px',
     marginLeft: '24px'
   },
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
+    },
+  },
 };
 
 const BorderLinearProgress = withStyles((theme) => ({
@@ -111,47 +114,19 @@ const BorderLinearProgress = withStyles((theme) => ({
 }))(LinearProgress);
 
 const useStyles = makeStyles(styles);
-// const mockData = {
-//   title: {
-//     text: "API Volume"
-//   },
-//   series: [
-//     {
-//       color: '#27AE60',
-//       name: 'Successes',
-//       data: [
-//         ["2021-3-17 11:59:00", 288],
-//         ["2021-3-18 11:59:00", 291],
-//         ["2021-3-18 14:59:00", 301],
-//         ["2021-3-19 11:59:00", 291],
-//         ["2021-3-20 11:59:00", 292],
-//         ["2021-3-21 11:59:00", 282],
-//         ["2021-3-22 11:59:00", 278],
-//         ["2021-3-23 11:59:00", 286],
-//         ["2021-3-24 11:59:00", 288],
-//         ["2021-3-25 11:59:00", 288]
-//       ]
-//     },
-//     {
-//       color: '#E53935',
-//       name: 'Errors',
-//       data: [
-//         ["2021-3-17 11:59:00", 1],
-//         ["2021-3-18 11:59:00", 1],
-//         ["2021-3-19 11:59:00", 1],
-//         ["2021-3-20 11:59:00", 1],
-//         ["2021-3-21 11:59:00", 1],
-//         ["2021-3-22 11:59:00", 1],
-//         ["2021-3-23 11:59:00", 1],
-//         ["2021-3-24 11:59:00", 1],
-//         ["2021-3-25 11:59:00", 1]
-//       ]
-//     }
-//   ],
-// }
 
 export function APITraffic(props) {
   const classes = useStyles();
+
+  const onShowSizeChange = (page, pageSize) => {
+    props.getWebhook({ page, pageSize });
+    console.log(page, pageSize)
+  }
+
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize)
+    props.getUserRoles({ page, pageSize });
+  }
 
   React.useEffect(() => {
     // Get list data
@@ -160,65 +135,72 @@ export function APITraffic(props) {
   }, []);
 
   const [chipData, setChipData] = React.useState([
-    {key: 0, label: 'GBT'},
-    {key: 1, label: '200'},
+    { key: 0, label: 'GBT' },
+    { key: 1, label: '200' },
   ]);
 
-  const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
-  };
+  const handleDelete = (chipToDelete) => () => setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
 
   const handleClearAll = () => {
     setChipData([])
   }
 
-  const formatRequestTime = (cell, row) => {
-    return <>
-      <div className={classes.textName}>{cell}</div>
-    </>
-  }
+  const columns = [
+    {
+      title: 'Request Time',
+      key: 'requestTime',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: requestTime => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textName}>{requestTime}</div>
+        </div>
+      ),
+    },
+    {
+      title: 'API Endpoint',
+      key: 'apiEndpoint',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: apiEndpoint => <div className={classes.textSub}>{apiEndpoint}</div>
+    },
+    {
+      title: 'Status Code',
+      key: 'statusCode',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: statusCode => <div className={classes.textSub}>{statusCode}</div>
+    },
+    {
+      title: 'Method',
+      key: 'method',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: method => <div className={classes.textSub}>{method}</div>
+    },
+    {
+      title: 'Duration',
+      key: 'duration',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: duration => <div className={classes.textSub}>{duration}</div>
+    },
+    {
+      title: 'API Token',
+      key: 'apiToken',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: apiToken => <div className={classes.textSub}>{apiToken}</div>
+    },
+    {
+      title: 'Request ID',
+      key: 'reguestID',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: reguestID => <div className={classes.textSub}>{reguestID}</div>
+    },
 
-  const formatApiEndpoint = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatStatusCode = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatMethod = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatDuration = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatApiToken = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatReguestID = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
+  ]
 
   const rowEvents = {
     onClick: (e, row, rowIndex) => {
       props.onShowDetail();
     }
   };
+
   console.log(props.chartData)
 
   return (
@@ -240,14 +222,14 @@ export function APITraffic(props) {
                           <GridItem className={classes.boldBlueLeft}>99.99%</GridItem>
                         </GridContainer>
                         <div className="mt-2 mb-4">
-                          <BorderLinearProgress variant="determinate" value={99.99}/>
+                          <BorderLinearProgress variant="determinate" value={99.99} />
                         </div>
                         <div className={"py-2 " + classes.fontSize16}>
                           <GridContainer justify="space-between">
                             <GridItem className={classes.colorGrey}>Availability Rate</GridItem>
                             <GridItem className={classes.boldBlueLeft}>99.99%</GridItem>
                           </GridContainer>
-                          <hr className="my-2"/>
+                          <hr className="my-2" />
                           <GridContainer justify="space-between">
                             <GridItem className={classes.colorGrey}>Success Rate</GridItem>
                             <GridItem className={classes.boldBlueLeft}>99.99%</GridItem>
@@ -259,100 +241,61 @@ export function APITraffic(props) {
                   <GridItem className={classes.bigCardGridItem} xs={9}>
                     <Card className={classes.bigCard}>
                       <CardBody>
-                        <EChart data={props.chartData}/>
+                        {/* <EChart data={props.chartData}/> */}
                       </CardBody>
                     </Card>
                   </GridItem>
                 </GridContainer>
               </CardBody>
-              <CardBody>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={6}>
-                    <GridContainer className={classes.headContainer}>
-                      <GridItem xl={2} className={classes.userRolesTitle}>
-                        {chipData.length} selected for
-                      </GridItem>
-                      <GridItem xl={10} className={classes.chipSelected}>
-                        {
-                          chipData.map(data => (
-                            <Chip
-                              deleteIcon={<CloseIcon/>}
-                              label={data.label}
-                              onDelete={handleDelete(data)}
-                              className={classes.chip}
-                            />
-                          ))
-                        }
-                        {
-                          chipData.length > 0
-                            ?
-                            (
-                              <Button onClick={handleClearAll} className={classes.clearAll}>
-                                Clear All
-                              </Button>
-                            )
-                            : ""
-                        }
-                      </GridItem>
-                    </GridContainer>
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={6}>
-                    <ToolboxButton placeholder={"Search vehicle"} showFilter/>
-                  </GridItem>
-                </GridContainer>
-              </CardBody>
-              <ToolkitProvider
-                data={props.data}
-                columns={[
-                  {
-                    dataField: "requestTime",
-                    text: "Request Time",
-                    formatter: formatRequestTime
-                  },
-                  {
-                    dataField: "apiEndpoint",
-                    text: "Api Endpoint",
-                    formatter: formatApiEndpoint
-                  },
-                  {
-                    dataField: "statusCode",
-                    text: "Status Code",
-                    formatter: formatStatusCode
-                  },
-                  {
-                    dataField: "method",
-                    text: "Method",
-                    formatter: formatMethod
-                  },
-                  {
-                    dataField: "duration",
-                    text: "Duration",
-                    formatter: formatDuration
-                  },
-                  {
-                    dataField: "apiToken",
-                    text: "Api Token",
-                    formatter: formatApiToken
-                  },
-                  {
-                    dataField: "reguestID",
-                    text: "Reguest ID",
-                    formatter: formatReguestID
-                  }
-                ]}
-              >
-                {props => (
-                  <div className="table table-settings">
-                    <BootstrapTable
-                      {...props.baseProps}
-                      bootstrap4={true}
-                      bordered={false}
-                      keyField="id"
-                      rowEvents={rowEvents}
-                    />
-                  </div>
-                )}
-              </ToolkitProvider>
+
+              <Table
+                renderTitle={
+                  <CardBody>
+                    <Grid container className={classes.gridTitle}>
+                      <Grid item xs={12} sm={12} md={6}>
+                        <Grid container className={classes.headContainer}>
+                          <Grid item xl={2} className={classes.userRolesTitle}> {chipData.length} selected for </Grid>
+                          <Grid item xl={10} className={classes.chipSelected}>
+                            {chipData.map(data => (
+                              <Chip
+                                deleteIcon={<CloseIcon />}
+                                label={data.label}
+                                onDelete={handleDelete(data)}
+                                className={classes.chip}
+                              />
+                            ))}
+                            {chipData.length > 0 ?
+                              (
+                                <Button onClick={handleClearAll} className={classes.clearAll}>
+                                  Clear All
+                                </Button>
+                              ) : ""}
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                      <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
+                        <ToolboxButton placeholder="Search vehicle" showFilter />
+                      </Grid>
+                    </Grid>
+                  </CardBody>
+
+                }
+                pagination={{
+                  total: props.total,
+                  current: props.page,
+                  pageSize: props.pageSize,
+                  onChange: onPageChange,
+                  onShowSizeChange: onShowSizeChange
+                }}
+                columns={columns}
+                dataSource={props.data}
+                onHeaderRow={{
+                  className: classes.onHeaderRow
+                }}
+                onBodyRow={{
+                  className: classes.tableRow
+                }}
+              />
             </Card>
           </GridItem>
         </GridContainer>
@@ -363,13 +306,20 @@ export function APITraffic(props) {
   );
 }
 
-export default connect(
-  ({settingDeveloper}: IRootState) => ({
-    data: settingDeveloper.apiTraffics,
-    chartData: settingDeveloper.chartData
-  }),
-  {
-    getApiTraffic,
-    getChartData
-  }
-)(APITraffic);
+const mapStateToProps = ({ settingDeveloper }) => {
+  console.log(settingDeveloper.chartData)
+  return {
+    data: settingDeveloper.apiTraffics.data,
+    page: settingDeveloper.apiTraffics.page,
+    total: settingDeveloper.apiTraffics.total,
+    pageSize: settingDeveloper.apiTraffics.pageSize,
+    chartData: settingDeveloper.chartData.data
+  };
+};
+
+const mapDispatchToProps = {
+  getApiTraffic,
+  getChartData
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(APITraffic);

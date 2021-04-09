@@ -14,12 +14,10 @@ import Button from "components/CustomButtons/Button";
 import Chip from "@material-ui/core/Chip";
 import CloseIcon from "components/Icons/CloseIcon";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import BootstrapTable from "react-bootstrap-table-next";
 import {connect} from "react-redux";
-import {IRootState} from "../../../../../../reducers";
-import {getApiTraffic, getChartData, getWebhookTraffic} from "../../../../../../reducers/setting-developer";
-import {APITraffic} from "./APITraffic";
+import {getChartData, getWebhookTraffic} from "../../../../../../reducers/setting-developer";
+import Table from "components/Table/TableV1";
+import Grid from '@material-ui/core/Grid';
 
 const styles = {
   colorBlue: {
@@ -93,6 +91,17 @@ const styles = {
     marginTop: '14px',
     marginLeft: '24px'
   },
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
+    },
+  },
+
+  headContainer: {
+    alignItems: "center",
+    textAlign: "left",
+    marginTop: "8px"
+  },
 };
 
 const BorderLinearProgress = withStyles((theme) => ({
@@ -114,6 +123,16 @@ const useStyles = makeStyles(styles);
 export function WebhookTraffic(props) {
   const classes = useStyles();
 
+  const onShowSizeChange = (page, pageSize) => {
+    props.getWebhook({ page, pageSize });
+    console.log(page, pageSize)
+  }
+
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize)
+    props.getUserRoles({ page, pageSize });
+  }
+
   React.useEffect(() => {
     // Get list data
     props.getWebhookTraffic();
@@ -132,47 +151,56 @@ export function WebhookTraffic(props) {
     setChipData([])
   }
 
-  const formatRequestTime = (cell, row) => {
-    return <>
-      <div className={classes.textName}>{cell}</div>
-    </>
-  }
-
-  const formatPayloadType = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatStatusCode = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatDuration = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatWebhookName = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
-
-  const formatRequestID = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
-  }
+  const columns = [
+    {
+      title: 'Request Time',
+      key: 'requestTime',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: requestTime => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textName}>{requestTime}</div>
+        </div>
+      ),
+    },
+    {
+      title: 'Payload Type',
+      key: 'payloadType',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: payloadType => <div className={classes.textSub}>{payloadType}</div>
+    },
+    {
+      title: 'Status Code',
+      key: 'statusCode',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: statusCode => <div className={classes.textSub}>{statusCode}</div>
+    },
+    {
+      title: 'Duration',
+      key: 'duration',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: duration => <div className={classes.textSub}>{duration}</div>
+    },
+    {
+      title: 'Webhook Name',
+      key: 'webhookName',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: webhookName => <div className={classes.textSub}>{webhookName}</div>
+    },
+    {
+      title: 'Request ID',
+      key: 'requestID',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: requestID => <div className={classes.textSub}>{requestID}</div>
+    },
+    
+  ]
 
   const rowEvents = {
     onClick: (e, row, rowIndex) => {
       props.onShowDetail();
     }
   };
+  
 
   return (
     <GridContainer className="developer-metric-wrapper">
@@ -218,89 +246,54 @@ export function WebhookTraffic(props) {
                   </GridItem>
                 </GridContainer>
               </CardBody>
-              <CardBody>
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={6}>
-                    <GridContainer className={classes.headContainer}>
-                      <GridItem xl={2} className={classes.userRolesTitle}>
-                        {chipData.length} selected for
-                      </GridItem>
-                      <GridItem xl={10} className={classes.chipSelected}>
-                        {
-                          chipData.map(data => (
-                            <Chip
-                              deleteIcon={<CloseIcon/>}
-                              label={data.label}
-                              onDelete={handleDelete(data)}
-                              className={classes.chip}
-                            />
-                          ))
-                        }
-                        {
-                          chipData.length > 0
-                            ?
-                            (
-                              <Button onClick={handleClearAll} className={classes.clearAll}>
-                                Clear All
-                              </Button>
-                            )
-                            : ""
-                        }
-                      </GridItem>
-                    </GridContainer>
-                  </GridItem>
-                  <GridItem xs={12} sm={12} md={6}>
-                    <ToolboxButton placeholder={"Search vehicle"} showFilter/>
-                  </GridItem>
-                </GridContainer>
-              </CardBody>
-              <ToolkitProvider
-                data={props.data}
-                columns={[
-                  {
-                    dataField: "requestTime",
-                    text: "Request Time",
-                    formatter: formatRequestTime
-                  },
-                  {
-                    dataField: "payloadType",
-                    text: "Payload Type",
-                    formatter: formatPayloadType
-                  },
-                  {
-                    dataField: "statusCode",
-                    text: "Status Code",
-                    formatter: formatStatusCode
-                  },
-                  {
-                    dataField: "duration",
-                    text: "Duration",
-                    formatter: formatDuration
-                  },
-                  {
-                    dataField: "webhookName",
-                    text: "WebhookName",
-                    formatter: formatWebhookName
-                  },
-                  {
-                    dataField: "requestID",
-                    text: "Request ID",
-                    formatter: formatRequestID
-                  }
-                ]}
-              >
-                {props => (
-                  <div className="table table-settings">
-                    <BootstrapTable
-                      {...props.baseProps}
-                      bootstrap4={true}
-                      bordered={false}
-                      keyField="id"
-                      rowEvents={rowEvents}
-                    />
-                  </div>
-                )}
-              </ToolkitProvider>
+              <Table
+                renderTitle={
+                  <CardBody>
+                    <Grid container className={classes.gridTitle}>
+                      <Grid item xs={12} sm={12} md={6}>
+                        <Grid container className={classes.headContainer}>
+                          <Grid item xl={2} className={classes.userRolesTitle}> {chipData.length} selected for </Grid>
+                          <Grid item xl={10} className={classes.chipSelected}>
+                            {chipData.map(data => (
+                              <Chip
+                                deleteIcon={<CloseIcon />}
+                                label={data.label}
+                                onDelete={handleDelete(data)}
+                                className={classes.chip}
+                              />
+                            ))}
+                            {chipData.length > 0 ?
+                              (
+                                <Button onClick={handleClearAll} className={classes.clearAll}>
+                                  Clear All
+                                </Button>
+                              ) : ""}
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                      <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
+                        <ToolboxButton placeholder="Search vehicle" showFilter />
+                      </Grid>
+                    </Grid>
+                  </CardBody>
+
+                }
+                pagination={{
+                  total: props.total,
+                  current: props.page,
+                  pageSize: props.pageSize,
+                  onChange: onPageChange,
+                  onShowSizeChange: onShowSizeChange
+                }}
+                columns={columns}
+                dataSource={props.data}
+                onHeaderRow={{
+                  className: classes.onHeaderRow
+                }}
+                onBodyRow={{
+                  className: classes.tableRow
+                }}
+              />
             </Card>
           </GridItem>
         </GridContainer>
@@ -311,13 +304,20 @@ export function WebhookTraffic(props) {
   );
 }
 
-export default connect(
-  ({settingDeveloper}: IRootState) => ({
-    data: settingDeveloper.webhookTraffics,
+const mapStateToProps = ({ settingDeveloper }) => {
+  console.log(settingDeveloper.chartData)
+  return {
+    data: settingDeveloper.webhookTraffics.data,
+    page: settingDeveloper.webhookTraffics.page,
+    total: settingDeveloper.webhookTraffics.total,
+    pageSize: settingDeveloper.webhookTraffics.pageSize,
     chartData: settingDeveloper.chartData
-  }),
-  {
-    getWebhookTraffic,
+  };
+};
+
+const mapDispatchToProps = {
+  getWebhookTraffic,
     getChartData,
-  }
-)(WebhookTraffic);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(WebhookTraffic);
