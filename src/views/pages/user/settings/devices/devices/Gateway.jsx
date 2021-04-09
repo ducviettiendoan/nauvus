@@ -1,29 +1,21 @@
 import React, {useState} from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
-// @material-ui/icons
-// core components
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
+
 import Button from "components/CustomButtons/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import DeleteIcon from "components/Icons/DeleteIcon";
-import DotIcon from "components/Icons/DotIcon";
-import MoreIcon from "components/Icons/MoreIcon";
-import {connect} from "react-redux";
-import {IRootState} from "reducers";
-import {getGateway} from "reducers/setting-device";
-import ChipSelect from 'components/Chip/ChipSelect';
 import Table from "components/Table/TableV1";
+import DotIcon from "components/Icons/DotIcon";
+import EditIcon from "components/Icons/EditIcon";
+import ChipSelect from 'components/Chip/ChipSelect';
+import {getGateway} from "reducers/setting-device";
+import GridContainer from "components/Grid/GridContainer";
+import GridItem from "components/Grid/GridItem";
 
+import {connect} from 'react-redux';
 
-const styles = {
-  userRolesTitle: {
-    fontSize: 16,
-    color: "#25345C",
-    fontWeight: 700,
-    paddingRight: "8px !important"
-  },
+const useStyles = makeStyles((theme) => ({
   selected: {
     height: 24,
     width: "auto",
@@ -32,23 +24,6 @@ const styles = {
     color: "#25345C !important",
     display: "flex",
     alignItems: "center",
-  },
-  clearAll: {
-    textTransform: "none",
-    color: "#8097D8",
-    background: "unset !important",
-    boxShadow: "unset !important",
-    fontSize: 14,
-    fontWeight: 700,
-    padding: 0,
-    "&:hover": {
-      color: "#25345C"
-    }
-  },
-  chipSelected: {
-    display: "flex",
-    alignItems: "center",
-    paddingLeft: "0px !important"
   },
   headContainer: {
     alignItems: "center",
@@ -68,60 +43,21 @@ const styles = {
     fontWeight: 'bold',
     fontSize: '16px',
     lineHeight: '24px',
-    marginTop: '14px',
     color: '#25345C',
-    marginLeft: '24px',
-    paddingTop: '10px !important'
+    marginLeft: '16px'
   },
-  textRoles: {
-    fontSize: '16px',
-    lineHeight: '24px',
-  },
-  textSub: {
-    color: '#25345C',
+  textEmail: {
     fontWeight: 400,
     fontSize: '16px',
     lineHeight: '24px',
-    marginTop: '14px',
-    marginLeft: '24px',
-    paddingTop: '10px !important'
+    color: '#25345C',
+    marginLeft: '16px'
   },
-  actionButton: {
-    paddingTop: '10px !important'
-  },
-  iconButton: {
-    '&:hover': {
-      color: '#25345C !important',
-    }
-  },
-  alignItemsCenter: {
-    display: "flex",
-    alignItems: "center",
-    paddingTop: 20,
-    marginLeft: '24px'
-  },
-  chip: {
+  chips: {
     background: "#ECEEF0",
     color: "#25345C",
-    fontSize: 12,
+    fontSize: "12px",
     marginRight: 8
-  },
-  indeterminateIcon: {
-    width: 20,
-    height: 20
-  },
-  checkBoxIcon: {
-    width: 20,
-    height: 20,
-    marginTop: 30,
-    marginLeft: 12
-  },
-  gridTitle: {
-    padding: "20px",
-  },
-  onHeaderCell: {
-    fontWeight: "bold",
-    color: "#25345C"
   },
   tableRow: {
     '&:nth-of-type(even)': {
@@ -131,24 +67,149 @@ const styles = {
   onHeaderRow: {
     background: "#ECEEF0",
   },
-  tableTitle: {
-    fontSize: "18px",
-    fontWeight: 700,
-    color: "#25345C",
+  gridTitle: {
+    padding: "20px"
+  },
+  onHeaderCell: {
+    fontWeight: "bold",
+    paddingLeft: "30px"
+  },
+  onHeaderConnectCell: {
+    paddingLeft: 18,
+    fontWeight: "bold",
+  },
+  alignItemsCenter: {
     display: "flex",
     alignItems: "center",
-  }
-};
-
-const useStyles = makeStyles(styles);
+  },
+  dotIcon: {
+    color: "#7CE7AC"
+  },
+  textRoles: {
+    fontSize: '16px',
+    lineHeight: '24px',
+  },
+  textAccess: {
+    display: "inline-block",
+    fontSize: '14px',
+    lineHeight: '17px',
+    padding: "12px 16px",
+    color: "#27AE60",
+    background: "rgba(39, 174, 96, 0.1)",
+    borderRadius: 23,
+    fontWeight: "bold",
+  },
+  iconButton: {
+    '&:hover': {
+      color: '#25345C !important',
+    }
+  },
+  avatarImage: {
+    width: 40,
+    height: 40,
+    borderRadius: "50%"
+  },
+  rootSelect: {
+    width: "100%"
+  },
+  formRow: {
+    marginBottom: 16
+  },
+  selectButton: {
+    display: "flex",
+    justifyContent: "flex-end"
+  },
+  formText: {
+    fontSize: "14px",
+    fontFamily: 'Lato',
+    fontWeight: "400",
+  },
+  formTextSpan: {
+    paddingLeft: "30px",
+    color: "#a5a5a5",
+  },
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    margin: "24px",
+    textAlign: "center"
+  },
+}));
 
 export function Gateway(props) {
+
   const classes = useStyles();
-  console.log(props.data)
+
   React.useEffect(() => {
-    // Get list data
     props.getGateway();
   }, []);
+
+  const columns = [
+    {
+      title: 'Gateway Serial',
+      key: 'gatewaySerial',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: gatewaySerial => <div className={classes.textName}>{gatewaySerial}</div>
+    },
+    {
+      title: 'Gateway',
+      key: 'gateway',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: gateway => <div className={classes.textEmail}>{gateway}</div>
+    },
+    {
+      title: 'Name',
+      key: 'name',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: name => <div className={classes.textEmail}>{name}</div>
+    },
+    {
+      title: 'Data Used (This Month)',
+      key: 'dataUsed',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: dataUsed => <div className={classes.textEmail}>{dataUsed}</div>
+    },
+    {
+      title: 'Connectivity',
+      key: 'connectivity',
+      onHeaderCell: {className: classes.onHeaderConnectCell},
+      render: roles => (
+        <div className={classes.alignItemsCenter}>
+          <div><DotIcon className={classes.dotIcon}/></div>
+          <div className={classes.textRoles}>{roles}</div>
+        </div>
+      )
+    },
+    {
+      title: 'Battery',
+      key: 'battery',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: battery => <div className={classes.textEmail}>{battery}</div>
+    },
+    {
+      title: 'Power State',
+      key: 'powerState',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: powerState => <div className={classes.textEmail}>{powerState}</div>
+    },
+    {
+      title: 'Actions',
+      key: 'action',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: () => (
+        <div className={classes.actionButton}>
+          <Button justIcon color="twitter" simple>
+            <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+          </Button>
+          <Button justIcon color="google" simple>
+            <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
+          </Button>
+        </div>
+      )
+    }
+  ];
 
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
@@ -157,140 +218,63 @@ export function Gateway(props) {
   const onSelectChange = selectedRowKeys => setSelectedRowKeys(() => [...selectedRowKeys])
 
   const onPageChange = (page, pageSize) => {
-    props.getGateway({ page, pageSize });
+    console.log(page, pageSize)
+    props.getGateway({page, pageSize});
   }
 
   const onShowSizeChange = (page, pageSize) => {
-    props.getGateway({ page, pageSize });
+    props.getGateway({page, pageSize});
+    console.log(page, pageSize)
   }
-
-
-  const columns = [
-    {
-      title: 'Gateway Serial',
-      key: 'gatewaySerial',
-      onHeaderCell: { className: classes.onHeaderCell },
-      render: cell => (
-          <div className={classes.textName}>{cell}</div>
-      ),
-    },
-    {
-      title: 'Gateway',
-      key: 'gateway',
-      onHeaderCell: { className: classes.onHeaderCell },
-      render: cell => <div className={classes.textSub}>{cell}</div>
-    },
-    {
-      title: 'Name',
-      key: 'name',
-      onHeaderCell: { className: classes.onHeaderCell },
-      render: cell => (
-          <div className={classes.textSub}>{cell}</div>
-
-      )
-    },
-    {
-      title: 'Data Used (This Month)',
-      key: 'dataUsed',
-      onHeaderCell: { className: classes.onHeaderCell },
-      render: cell => <div className={classes.textSub}>{cell}</div>
-
-    },
-    {
-      title: 'Connectivity',
-      key: 'connectivity',
-      onHeaderCell: { className: classes.onHeaderCell },
-      render: cell => (
-          <>
-            <div className={classes.alignItemsCenter}>
-              <div><DotIcon style={{color: "#7CE7AC", marginTop: 10}}/></div>
-              <div className={classes.textRoles}>{cell}</div>
-            </div>
-          </>
-      )
-    },
-    {
-      title: 'Power State',
-      key: 'powerState',
-      onHeaderCell: { className: classes.onHeaderCell },
-      render: cell => <div className={classes.textSub}>{cell}</div>
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      onHeaderCell: { className: classes.onHeaderCell },
-      render: cell => <div className={classes.textSub}>{cell}</div>
-    },
-  ];
-
-  const addActionButton = () => {
-    return (
-      <div className={classes.actionButton}>
-        <Button justIcon color="google" simple>
-          <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
-        </Button>
-        <Button justIcon color="twitter" simple>
-          <MoreIcon className={classes.iconButton} style={{color: "#ffffff", width: '24px', height: '24px'}}/>
-        </Button>
-      </div>
-    )
-  }
-
 
   return (
     <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
-              <Table
-                  renderTitle={
-                    <GridContainer justify="space-between" className={classes.gridTitle}>
-                      <GridItem>
-                        <ChipSelect
-                            data={selectedRowKeys}
-                            handleDelete={handleDelete}
-                            handleClearAll={handleClearAll}
-                        />
-                      </GridItem>
-                      <GridItem className={classes.headLeft}>
-                        <ToolboxButton placeholder={"Search gateways"} showFilter showEdit showLink showTrash/>
-                      </GridItem>
-                    </GridContainer>
-                  }
-                  rowSelection={{
-                    selectedRowKeys,
-                    onChange: onSelectChange,
-                  }}
-                  pagination={{
-                    total: props.total,
-                    current: props.page,
-                    pageSize: props.pageSize,
-                    onChange: onPageChange,
-                    onShowSizeChange: onShowSizeChange
-                  }}
-                  columns={columns}
-                  dataSource={props.data}
-                  onHeaderRow={{ className: classes.onHeaderRow }}
-                  onBodyRow={{ className: classes.tableRow }}
+      <Table
+        renderTitle={
+          <GridContainer justify="space-between" className={classes.gridTitle}>
+            <GridItem>
+              <ChipSelect
+                data={selectedRowKeys}
+                handleDelete={handleDelete}
+                handleClearAll={handleClearAll}
               />
             </GridItem>
+            <GridItem className={classes.headLeft}>
+              <ToolboxButton placeholder="Search for tag or email" showFilter showTrash/>
+            </GridItem>
           </GridContainer>
-
-        </GridItem>
-      </GridContainer>
+        }
+        rowSelection={{
+          selectedRowKeys,
+          onChange: onSelectChange,
+        }}
+        pagination={{
+          total: props.total,
+          current: props.page,
+          pageSize: props.pageSize,
+          onChange: onPageChange,
+          onShowSizeChange: onShowSizeChange
+        }}
+        columns={columns}
+        dataSource={props.data}
+        onHeaderRow={{className: classes.onHeaderRow}}
+        onBodyRow={{className: classes.tableRow}}
+      />
     </div>
   );
 }
 
-export default connect(
-  ({settingDevice}: IRootState) => ({
+const mapStateToProps = ({settingDevice}) => {
+  return {
     data: settingDevice.gateways.data,
     page: settingDevice.gateways.page,
     total: settingDevice.gateways.total,
     pageSize: settingDevice.gateways.pageSize
-  }),
-  {
-    getGateway
-  }
-)(Gateway);
+  };
+};
+
+const mapDispatchToProps = {
+  getGateway
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Gateway);
