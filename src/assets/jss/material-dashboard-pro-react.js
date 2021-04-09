@@ -160,7 +160,8 @@ const grayColor = [
   "#e7e7e7",
   "#212121",
   "#c8c8c8",
-  "#505050"
+  "#505050",
+  "#ECEEF0"
 ];
 const blackColor = "#000";
 const whiteColor = "#FFF";

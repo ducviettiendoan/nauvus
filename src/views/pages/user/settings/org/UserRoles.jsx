@@ -68,6 +68,8 @@ export default function UserRoles() {
     setOpenUpload(false)
   }
 
+  const dropdownItem = classNames(classes.dropdownItem, classes.grayHover);
+  
   return (
     <div>
       <GridContainer>
@@ -118,8 +120,8 @@ export default function UserRoles() {
                         <Paper className={classes.dropdown}>
                           <ClickAwayListener onClickAway={handleCloseMore}>
                             <MenuList role="menu">
-                              <MenuItem className={classes.dropdownItem} onClick={() => setOpenUpload(true)} > Upload CSV </MenuItem>
-                              <MenuItem className={classes.dropdownItem} onClick={handleCloseMore} > Download CSV </MenuItem>
+                              <MenuItem className={dropdownItem} onClick={() => setOpenUpload(true)} > Upload CSV </MenuItem>
+                              <MenuItem className={dropdownItem} onClick={handleCloseMore} > Download CSV </MenuItem>
                             </MenuList>
                           </ClickAwayListener>
                         </Paper>
