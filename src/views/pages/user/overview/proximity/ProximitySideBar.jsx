@@ -118,7 +118,7 @@ export function ProximitySideBar(props) {
     props.selectDistance(event.target.value);
   }
 
-  const distanceData = [1000, 2000, 3000, 4000, 5000]
+  const distanceData = [100, 200, 300, 400, 500]
 
   return (
     <div ref={mainPanelVehicleSideBar}>

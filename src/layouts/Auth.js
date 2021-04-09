@@ -1,3 +1,5 @@
+import { ROUTE_PATH } from "config/constants";
+
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 
@@ -52,7 +54,7 @@ export default function Pages(props) {
       if (prop.collapse) {
         return getRoutes(prop.views);
       }
-      if (prop.layout === "/auth") {
+      if (prop.layout === ROUTE_PATH.AUTH) {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -116,7 +118,7 @@ export default function Pages(props) {
                     <CardBody>
                       <Switch>
                         {getRoutes(routes)}
-                        <Redirect from="/auth" to="/auth/sign-in" />
+                        <Redirect from={ ROUTE_PATH.AUTH } to={ ROUTE_PATH.AUTH + "/sign-in" } />
                       </Switch>
                     </CardBody>
                     </Card>

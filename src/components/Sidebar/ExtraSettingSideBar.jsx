@@ -1,4 +1,5 @@
 import React from "react";
+import { ROUTE_PATH } from "config/constants";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory, useLocation  } from "react-router-dom";
@@ -115,15 +116,15 @@ export function ExtraSideBar(props) {
 
   const initActive = () => {
     setCurrentLink(location.pathname);
-    if (window.location.href.indexOf("/setting/org") > -1) {
+    if (window.location.href.indexOf(ROUTE_PATH.SETTING + "/org") > -1) {
       setCurrentTab("ORGANIZATION");
-    } else if (window.location.href.indexOf("/setting/device") > -1) {
+    } else if (window.location.href.indexOf(ROUTE_PATH.SETTING + "/device") > -1) {
       setCurrentTab("DEVICES");
-    } else if (window.location.href.indexOf("/setting/fleet") > -1) {
+    } else if (window.location.href.indexOf(ROUTE_PATH.SETTING + "/fleet") > -1) {
       setCurrentTab("FLEET");
-    } else if (window.location.href.indexOf("/setting/link-sharing") > -1) {
+    } else if (window.location.href.indexOf(ROUTE_PATH.SETTING + "/link-sharing") > -1) {
       setCurrentTab("LinksSharing");
-    } else if (window.location.href.indexOf("/setting/developer") > -1) {
+    } else if (window.location.href.indexOf(ROUTE_PATH.SETTING + "/developer") > -1) {
       setCurrentTab("DEVELOPER");
     }
   }
@@ -170,14 +171,14 @@ export function ExtraSideBar(props) {
           </ListItem>
           <Collapse in={isOpenList(`ORGANIZATION`)} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              { renderListItem("General", "/setting/org/general") }
-              { renderListItem("User & Roles", "/setting/org/user-roles") }
-              { renderListItem("Drivers", "/setting/org/drivers") }
-              { renderListItem("Tags", "/setting/org/tags") }
-              { renderListItem("Feature Management", "/setting/org/feature-management") }
-              { renderListItem("Activity Log", "/setting/org/activity-log") }
-              { renderListItem("Apps", "/setting/org/apps") }
-              { renderListItem("Billing", "/setting/org/billing") }
+              { renderListItem("General", ROUTE_PATH.SETTING + "/org/general") }
+              { renderListItem("User & Roles", ROUTE_PATH.SETTING + "/org/user-roles") }
+              { renderListItem("Drivers", ROUTE_PATH.SETTING + "/org/drivers") }
+              { renderListItem("Tags", ROUTE_PATH.SETTING + "/org/tags") }
+              { renderListItem("Feature Management", ROUTE_PATH.SETTING + "/org/feature-management") }
+              { renderListItem("Activity Log", ROUTE_PATH.SETTING + "/org/activity-log") }
+              { renderListItem("Apps", ROUTE_PATH.SETTING + "/org/apps") }
+              { renderListItem("Billing", ROUTE_PATH.SETTING + "/org/billing") }
             </List>
           </Collapse>
 
@@ -188,8 +189,8 @@ export function ExtraSideBar(props) {
           </ListItem>
           <Collapse in={isOpenList(`DEVICES`)} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              { renderListItem("Devices", "/setting/device/devices") }
-              { renderListItem("Configuration", "/setting/device/configuration") }
+              { renderListItem("Devices", ROUTE_PATH.SETTING + "/device/devices") }
+              { renderListItem("Configuration", ROUTE_PATH.SETTING + "/device/configuration") }
             </List>
           </Collapse>
 
@@ -200,14 +201,14 @@ export function ExtraSideBar(props) {
           </ListItem>
           <Collapse in={isOpenList(`FLEET`)} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              { renderListItem("Driver App", "/setting/fleet/driver-app") }
-              { renderListItem("Safety", "/setting/fleet/safety") }
-              { renderListItem("Compliance", "/setting/fleet/compliance") }
-              { renderListItem("Dispatch", "/setting/fleet/dispatch") }
-              { renderListItem("Fuel & Energy", "/setting/fleet/fuel-energy") }
-              { renderListItem("Driver Activity", "/setting/fleet/driver-activity") }
-              { renderListItem("Addresses/Geofences", "/setting/fleet/add-geo") }
-              { renderListItem("Maps", "/setting/fleet/maps") }
+              { renderListItem("Driver App", ROUTE_PATH.SETTING + "/fleet/driver-app") }
+              { renderListItem("Safety", ROUTE_PATH.SETTING + "/fleet/safety") }
+              { renderListItem("Compliance", ROUTE_PATH.SETTING + "/fleet/compliance") }
+              { renderListItem("Dispatch", ROUTE_PATH.SETTING + "/fleet/dispatch") }
+              { renderListItem("Fuel & Energy", ROUTE_PATH.SETTING + "/fleet/fuel-energy") }
+              { renderListItem("Driver Activity", ROUTE_PATH.SETTING + "/fleet/driver-activity") }
+              { renderListItem("Addresses/Geofences", ROUTE_PATH.SETTING + "/fleet/add-geo") }
+              { renderListItem("Maps", ROUTE_PATH.SETTING + "/fleet/maps") }
             </List>
           </Collapse>
 
@@ -218,9 +219,9 @@ export function ExtraSideBar(props) {
           </ListItem>
           <Collapse in={isOpenList(`LinksSharing`)} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              { renderListItem("Alert Contacts", "/setting/link-sharing/alert-contacts") }
-              { renderListItem("Scheduled Reports", "/setting/link-sharing/scheduled-reports") }
-              { renderListItem("Live Sharing", "/setting/link-sharing/live-sharing") }
+              { renderListItem("Alert Contacts", ROUTE_PATH.SETTING + "/link-sharing/alert-contacts") }
+              { renderListItem("Scheduled Reports", ROUTE_PATH.SETTING + "/link-sharing/scheduled-reports") }
+              { renderListItem("Live Sharing", ROUTE_PATH.SETTING + "/link-sharing/live-sharing") }
             </List>
           </Collapse>
 
@@ -231,9 +232,9 @@ export function ExtraSideBar(props) {
           </ListItem>
           <Collapse in={isOpenList(`DEVELOPER`)} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              { renderListItem("Developer Metrics", "/setting/developer/metrics") }
-              { renderListItem("API Tokens", "/setting/developer/api-tokens") }
-              { renderListItem("Webhooks", "/setting/developer/webhooks") }
+              { renderListItem("Developer Metrics", ROUTE_PATH.SETTING + "/developer/metrics") }
+              { renderListItem("API Tokens", ROUTE_PATH.SETTING + "/developer/api-tokens") }
+              { renderListItem("Webhooks", ROUTE_PATH.SETTING + "/developer/webhooks") }
             </List>
           </Collapse>
         </List>

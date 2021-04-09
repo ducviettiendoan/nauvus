@@ -38,8 +38,8 @@ const RegularMap = withScriptjs(
     return (
 
       <GoogleMap
-        defaultZoom={12}
-        defaultCenter={props.center}
+        defaultZoom={16}
+        center={props.center}
         defaultOptions={{
           scrollwheel: false,
           mapTypeControl: false,
@@ -55,8 +55,9 @@ const RegularMap = withScriptjs(
                     icon={{
                       url: location,
                     }}
-                    onClick={(marker) => {
-                      console.log(`click on Marker ${marker.latLng.lat()}, ${marker.latLng.lng()}`, marker)
+                    onClick={(maker) => {
+                      // console.log(`click on Marker ${marker.latLng.lat()}, ${marker.latLng.lng()}`, marker)
+                      props.onClickMaker(maker);
                     }}
                   >
                     <Circle
@@ -85,7 +86,7 @@ const RegularMap = withScriptjs(
 
 export function Proximity(props) {
   const classes = useStyles();
-
+  const [geo, setGeo] = React.useState({lat: 40.743817, lng: -73.658648});
 
   React.useEffect(() => {
     async function fetchVehicles() {
@@ -94,6 +95,10 @@ export function Proximity(props) {
 
     fetchVehicles();
   }, [1]);
+
+  const onClickMaker = (maker) => {
+    setGeo({lat: maker.latLng.lat(), lng: maker.latLng.lng()});
+  }
 
   return (
     <div style={{position: 'relative'}}>
@@ -104,39 +109,10 @@ export function Proximity(props) {
         mapElement={<div style={{height: `100%`}}/>}
         isMarkerShown
         data={props.vehicles}
-        center={{lat: 40.748817, lng: -73.985428}}
+        center={geo}
         radius={props.distance}
+        onClickMaker = { onClickMaker }
       />
-      <div className={classes.searchMapContainer}>
-        <Button
-          aria-label="edit"
-          justIcon
-          round
-          className={classes.toogleDrawer}
-          onClick={e => {
-            props.setOpenDrawer(!props.openDrawer)
-          }}
-        >
-          <List/>
-        </Button>
-        <CustomInput
-          formControlProps={{
-            className: classes.btnSearchOnMap
-          }}
-          inputProps={{
-            id: "btn-search-on-map",
-            placeholder: "Search",
-            startAdornment: (
-              <InputAdornment position="start">
-                <Search className={classes.inputAdornmentIcon}/>
-              </InputAdornment>
-            ),
-            onChange: event => {
-              setUsername(event.target.value);
-            },
-          }}
-        />
-      </div>
     </div>
   );
 }
