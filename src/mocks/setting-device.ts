@@ -54,7 +54,7 @@ mock.onPost("/api/setting/device/sensor/search").reply((config) => {
     // Sensors Data
     const sensorsData = () => {
         let data = [];
-        for (let i = 0; i < 6; i++) {
+        for (let i = startPage; i < endPage; i++) {
             let item = {
                 id: i + 1,
                 name: 'Trailer 109 - Right Door',

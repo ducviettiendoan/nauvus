@@ -1,300 +1,199 @@
-import React from "react";
+import React, {useState} from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
-// @material-ui/icons
-// core components
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
+
 import Button from "components/CustomButtons/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
-import CloseIcon from "components/Icons/CloseIcon";
-import DeleteIcon from "components/Icons/DeleteIcon";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import BootstrapTable from "react-bootstrap-table-next";
-import GenPaginationV1 from "components/Pagination/GenPaginationV1";
+import Table from "components/Table/TableV1";
 import EditIcon from "components/Icons/EditIcon";
-import maps from "assets/img/maps.jpg";
-import Chip from "@material-ui/core/Chip";
-import {connect} from "react-redux";
-import {IRootState} from "reducers";
-import {getValidAddress} from "reducers/setting-fleet";
+import GridContainer from "components/Grid/GridContainer";
+import GridItem from "components/Grid/GridItem";
 
-const styles = {
-  userRolesTitle: {
-    fontSize: 16,
-    color: "#25345C",
-    fontWeight: 700,
-    paddingRight: "8px !important"
-  },
-  selected: {
-    height: 24,
-    width: "auto",
-    background: "#ECEEF0 !important",
-    borderRadius: 28,
-    color: "#25345C !important",
+import {connect} from 'react-redux';
+import {getValidAddress} from "reducers/setting-fleet";
+import DeleteIcon from "components/Icons/DeleteIcon";
+
+const useStyles = makeStyles((theme) => ({
+  headLeft: {
+    textAlign: "right",
     display: "flex",
     alignItems: "center",
-  },
-  clearAll: {
-    textTransform: "none",
-    color: "#8097D8",
-    background: "unset !important",
-    boxShadow: "unset !important",
-    fontSize: 14,
-    fontWeight: 700,
-    padding: 0,
-    "&:hover": {
-      color: "#25345C"
+    justifyContent: "flex-end",
+    "& > div": {
+      marginBottom: "0 !important",
+      marginRight: 8
     }
-  },
-  chipSelected: {
-    display: "flex",
-    alignItems: "center",
-    paddingLeft: "0px !important"
-  },
-  headContainer: {
-    display: "flex",
-    alignItems: "center",
-    marginTop: "8px"
   },
   textName: {
     fontWeight: 'bold',
     fontSize: '16px',
     lineHeight: '24px',
     color: '#25345C',
-    marginLeft: '8px'
+    marginLeft: '16px'
+  },
+  textID: {
+    fontWeight: 400,
+    fontSize: '16px',
+    lineHeight: '24px',
+    color: '#C4C4C4',
+    marginLeft: '16px'
   },
   textEmail: {
+    fontWeight: 400,
     fontSize: '16px',
     lineHeight: '24px',
-    color: "#C4C4C4"
+    color: '#25345C',
+    marginLeft: '16px'
   },
-  textRoles: {
-    fontSize: '16px',
-    lineHeight: '24px',
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
+    },
   },
-  textAccess: {
-    fontSize: '16px',
-    lineHeight: '24px',
-    marginTop: '16px',
-    marginBottom: '15px',
-    marginLeft: '24px',
-    padding: "12px 14px",
-    color: "#27AE60",
-    background: "rgba(39, 174, 96, 0.1)",
-    borderRadius: 23,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontWeight: 700,
-    width: 165,
-    height: "41px"
+  onHeaderRow: {
+    background: "#ECEEF0",
   },
-  actionButton: {
-    marginTop: 14
+  gridTitle: {
+    padding: "20px",
+    justifyContent: "flex-end"
+  },
+  onHeaderCell: {
+    fontWeight: "bold",
+    paddingLeft: "30px"
   },
   iconButton: {
     '&:hover': {
       color: '#25345C !important',
     }
   },
-  alignItemsCenter: {
-    display: "flex",
-    alignItems: "center",
-    paddingTop: 20,
-    marginLeft: '24px'
+  formText: {
+    fontSize: "14px",
+    fontFamily: 'Lato',
+    fontWeight: "400",
   },
-  avatarImage: {
-    width: 40,
-    height: 40,
-    borderRadius: "50%"
+  formTextSpan: {
+    paddingLeft: "30px",
+    color: "#a5a5a5",
   },
-  selectStyle: {
-    marginTop: 27,
-    marginLeft: 12
+  textTags: {
+    display: "inline-block",
+    fontSize: '14px',
+    lineHeight: '17px',
+    padding: "12px 16px",
+    color: "#27AE60",
+    background: "rgba(39, 174, 96, 0.1)",
+    borderRadius: 23,
+    fontWeight: "bold",
   },
-  chip: {
-    background: "#ECEEF0",
-    color: "#25345C",
-    fontSize: 12,
-    marginRight: 8
-  },
-};
-
-const useStyles = makeStyles(styles);
+}));
 
 export function ValidAddresses(props) {
+
   const classes = useStyles();
 
   React.useEffect(() => {
-    // Get list data
     props.getValidAddress();
   }, []);
 
-  const [chipData, setChipData] = React.useState([
-    {key: 0, label: 'Standard Admin'},
-    {key: 1, label: 'Full admin'},
-  ]);
+  const columns = [
+    {
+      title: 'Address',
+      key: 'address',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: address => <div className={classes.textName}>{address}</div>
+    },
+    {
+      title: 'Name',
+      key: 'name',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: name => (
+        <div>
+          <div className={classes.textEmail}>{name.addressName}</div>
+          <div className={classes.textID}>ID: {name.addressId}</div>
+        </div>
+      )
+    },
+    {
+      title: 'Tags',
+      key: 'tags',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: tags => (<div className={classes.textTags}>{tags}</div>)
+    },
+    {
+      title: 'Notes',
+      key: 'notes',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: notes => (<div className={classes.textEmail}>{notes}</div>)
+    },
+    {
+      title: 'Address Type',
+      key: 'address_type',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: address_type => (<div className={classes.textEmail}>{address_type}</div>)
+    },
+    {
+      title: 'Actions',
+      key: 'action',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: () => (
+        <div className={classes.actionButton}>
+          <Button justIcon color="twitter" simple>
+            <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+          </Button>
+          <Button justIcon color="google" simple>
+            <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
+          </Button>
+        </div>
+      )
+    }
+  ];
 
-  const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
-  };
-
-  const handleClearAll = () => {
-    setChipData([])
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize)
+    props.getValidAddress({page, pageSize});
   }
 
-  const formatEmail = (cell, row) => {
-    return <>
-      <div className={classes.alignItemsCenter}>
-        <div><img src={maps} alt="user-avatar" className={classes.avatarImage}/></div>
-        <div className={classes.textName}>{cell}</div>
-      </div>
-    </>
-  }
-
-  const formatName = (cell, row) => {
-    return <>
-      <div style={{marginTop: "12px"}}>
-        <div className={classes.textRoles}>{row.name}</div>
-        <div className={classes.textEmail}>ID: {row.number}</div>
-      </div>
-    </>
-  }
-
-  const formatNotes = (cell, row) => {
-    return <>
-      <div className={classes.alignItemsCenter}>
-        <div className={classes.textRoles}>{cell}</div>
-      </div>
-    </>
-  }
-
-  const formatTags = (cell, row) => {
-    return <>
-      <div className={classes.textAccess}>{cell}</div>
-    </>
-  }
-
-  const addActionButton = () => {
-    return (
-      <div className={classes.actionButton}>
-        <Button justIcon color="twitter" simple>
-          <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
-        </Button>
-        <Button justIcon color="google" simple>
-          <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
-        </Button>
-      </div>
-    )
+  const onShowSizeChange = (page, pageSize) => {
+    props.getValidAddress({page, pageSize});
+    console.log(page, pageSize)
   }
 
   return (
     <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card testimonial>
-                <CardBody>
-                  <GridContainer>
-                    <GridItem xs={12} sm={12} md={6}>
-                      <GridContainer className={classes.headContainer}>
-                        <GridItem xl={2} className={classes.userRolesTitle}>
-                          {chipData.length} selected for
-                        </GridItem>
-                        <GridItem xl={10} className={classes.chipSelected}>
-                          {
-                            chipData.map(data => (
-                              <Chip
-                                deleteIcon={<CloseIcon/>}
-                                label={data.label}
-                                onDelete={handleDelete(data)}
-                                className={classes.chip}
-                              />
-                            ))
-                          }
-                          {
-                            chipData.length > 0
-                              ?
-                              (
-                                <Button onClick={handleClearAll} className={classes.clearAll}>
-                                  Clear All
-                                </Button>
-                              )
-                              : ""
-                          }
-                        </GridItem>
-                      </GridContainer>
-                    </GridItem>
-                    <GridItem xs={12} sm={12} md={6}>
-                      <ToolboxButton placeholder={"Search addresses"} showFilter showTrash/>
-                    </GridItem>
-                  </GridContainer>
-                </CardBody>
-                <ToolkitProvider
-                  data={props.data}
-                  columns={[
-                    {
-                      dataField: "address",
-                      text: "Address",
-                      formatter: formatEmail
-                    },
-                    {
-                      dataField: "name",
-                      text: "Name",
-                      formatter: formatName
-                    },
-                    {
-                      dataField: "tags",
-                      text: "Tags",
-                      formatter: formatTags
-                    },
-                    {
-                      dataField: "notes",
-                      text: "Notes",
-                      formatter: formatNotes
-                    },
-                    {
-                      dataField: "address_type",
-                      text: "Address Type",
-                      formatter: formatNotes
-                    },
-                    {
-                      dataField: "action",
-                      text: "Action",
-                      formatter: addActionButton
-                    }
-                  ]}
-                >
-                  {props => (
-                    <div className="table table-settings">
-                      <BootstrapTable
-                        {...props.baseProps}
-                        bootstrap4={true}
-                        bordered={false}
-                        keyField='id'
-                      />
-                    </div>
-                  )}
-                </ToolkitProvider>
-              </Card>
+      <Table
+        renderTitle={
+          <GridContainer className={classes.gridTitle}>
+            <GridItem className={classes.headLeft}>
+              <ToolboxButton placeholder="Search for tag or email" showFilter showTrash/>
             </GridItem>
           </GridContainer>
-          <GenPaginationV1 total={29} page={1} size={10}/>
-        </GridItem>
-      </GridContainer>
+        }
+        pagination={{
+          total: props.total,
+          current: props.page,
+          pageSize: props.pageSize,
+          onChange: onPageChange,
+          onShowSizeChange: onShowSizeChange
+        }}
+        columns={columns}
+        dataSource={props.data}
+        onHeaderRow={{className: classes.onHeaderRow}}
+        onBodyRow={{className: classes.tableRow}}
+      />
     </div>
   );
 }
 
-export default connect(
-  ({settingFleet}: IRootState) => ({
-    data: settingFleet.validAddresses
-  }),
-  {
-    getValidAddress
+const mapStateToProps = ({settingFleet}) => {
+    return {
+      data: settingFleet.validAddresses.data,
+      page: settingFleet.validAddresses.page,
+      total: settingFleet.validAddresses.total,
+      pageSize: settingFleet.validAddresses.pageSize
+    };
   }
-)(ValidAddresses);
+;
+
+const mapDispatchToProps = {getValidAddress};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ValidAddresses);

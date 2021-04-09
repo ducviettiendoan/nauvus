@@ -226,7 +226,7 @@ class TableV1 extends React.Component {
   render() {
 
     const { classes } = this.props;
-    const { renderTitle, onHeaderRow, onBodyRow, columns, expandedRowRender, rowSelection } = this.props;
+    const { renderTitle, onHeaderRow, onBodyRow, columns, expandedRowRender, rowSelection, renderFooter } = this.props;
     const data = this.state.dataSource || [];
     const total = this.state.total || 0;
     const current = this.state.current || 1;
@@ -321,6 +321,7 @@ class TableV1 extends React.Component {
               })}
             </TableBody>
           </Table>
+          {renderFooter && renderFooter}
         </Card>
 
         {showPagination && total > 0 && (

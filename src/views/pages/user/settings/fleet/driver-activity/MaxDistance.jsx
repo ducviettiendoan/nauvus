@@ -1,38 +1,35 @@
-import React from "react";
+import React, {useState} from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
-// core components
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
-import ToolboxButton from "components/CustomButtons/ToolboxButton";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-import BootstrapTable from "react-bootstrap-table-next";
-import GenPaginationV1 from "components/Pagination/GenPaginationV1";
-import Button from "components/CustomButtons/Button";
-import EditIcon from "components/Icons/EditIcon";
-import DeleteIcon from "components/Icons/DeleteIcon";
-import AddOutlined from "@material-ui/icons/AddOutlined";
-import Chip from "@material-ui/core/Chip";
-import CloseIcon from "components/Icons/CloseIcon";
-import {connect} from "react-redux";
-import {IRootState} from "reducers";
-import {getMaxDistance} from "reducers/setting-fleet";
 
-const styles = {
-  userRolesTitle: {
-    fontSize: 16,
-    color: "#25345C",
-    fontWeight: 700,
-    paddingRight: "8px !important"
-  },
-  headContainer: {
+import Button from "components/CustomButtons/Button";
+import ToolboxButton from "components/CustomButtons/ToolboxButton";
+import Table from "components/Table/TableV1";
+import EditIcon from "components/Icons/EditIcon";
+import GridContainer from "components/Grid/GridContainer";
+import GridItem from "components/Grid/GridItem";
+
+import {connect} from 'react-redux';
+import {getMaxDistance} from "reducers/setting-fleet";
+import AddOutlined from "@material-ui/icons/AddOutlined";
+
+const useStyles = makeStyles((theme) => ({
+  selected: {
+    height: 24,
+    width: "auto",
+    background: "#ECEEF0 !important",
+    borderRadius: 28,
+    color: "#25345C !important",
     display: "flex",
     alignItems: "center",
-    marginTop: "5px"
+  },
+  headContainer: {
+    alignItems: "center",
+    textAlign: "left",
+    marginTop: "8px"
   },
   headLeft: {
+    textAlign: "right",
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
@@ -41,208 +38,165 @@ const styles = {
       marginRight: 8
     }
   },
-  chipSelected: {
-    display: "flex",
-    alignItems: "center",
-    paddingLeft: "0px !important"
-  },
-  chip: {
-    background: "#ECEEF0",
-    color: "#25345C",
-    fontSize: 12,
-    marginRight: 8
-  },
-  clearAll: {
-    color: "#8097D8",
-    textTransform: 'none',
-    background: "unset !important",
-    boxShadow: "unset !important",
-    fontSize: 14,
-    fontWeight: 700,
-    padding: 0,
-    "&:hover": {
-      color: "#25345C"
-    }
-  },
-  textSub: {
-    fontWeight: '400',
-    color: '#25345C',
+  textName: {
+    fontWeight: 'bold',
     fontSize: '16px',
     lineHeight: '24px',
-    marginTop: '14px',
-    marginBottom: '14px',
-    marginLeft: '24px'
+    color: '#25345C',
+    marginLeft: '16px'
   },
-  tagButton: {
+  textEmail: {
+    fontWeight: 400,
+    fontSize: '16px',
+    lineHeight: '24px',
+    color: '#25345C',
+    marginLeft: '16px'
+  },
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
+    },
+  },
+  onHeaderRow: {
+    background: "#ECEEF0",
+  },
+  gridTitle: {
+    padding: "20px",
+    justifyContent: "flex-end"
+  },
+  onHeaderCell: {
+    fontWeight: "bold",
+    paddingLeft: "30px"
+  },
+  iconButton: {
+    '&:hover': {
+      color: '#25345C !important',
+    }
+  },
+  textTags: {
+    display: "inline-block",
+    fontSize: '14px',
+    lineHeight: '17px',
+    padding: "12px 16px",
     color: "#27AE60",
-    background: "#e9f7ef",
-    padding: "11px 16px",
-    borderRadius: "28px",
-    textAlign: "center",
-    height: "41px"
+    background: "rgba(39, 174, 96, 0.1)",
+    borderRadius: 23,
+    fontWeight: "bold",
   },
-};
-
-const useStyles = makeStyles(styles);
+  footerButton: {
+    textAlign: "left",
+    padding: "30px 0px 0px 48px !important"
+  }
+}));
 
 export function MaxDistance(props) {
+
   const classes = useStyles();
 
   React.useEffect(() => {
-    // Get list data
     props.getMaxDistance();
   }, []);
 
-  const formatDistance = (cell, row) => {
-    return <div className={classes.textSub}>
-      {
-        cell.map((ele) => {
-          return (<div>{ele}</div>)
-        })
-      }
-    </div>
-  }
-
-  const formatWorkingDays = (cell, row) => {
-    return <div className={classes.textSub}>
-      {
-        cell.map((ele) => {
-          return (<div>{ele}</div>)
-        })
-      }
-    </div>
-  }
-
-  const formatTags = (cell, row) => {
-    return <div className={classes.textSub} style={{marginTop: "28px"}}>
-      {
-        cell.map((ele) => {
-          return (<span className={classes.tagButton}>{ele}</span>)
-        })
-      }
-    </div>
-  }
-
-  const addActionButton = () => {
-    return (
-      <div style={{marginTop: "15px"}}>
-        <Button justIcon color="twitter" simple>
-          <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
-        </Button>
-        <Button justIcon color="google" simple>
-          <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
-        </Button>
-      </div>
-    )
-  }
-
-  const [chipData, setChipData] = React.useState([
-    {key: 0, label: 'Standard Admin'},
-    {key: 1, label: 'Full admin'},
-  ]);
-
-  const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
-  };
-  const handleClearAll = () => {
-    setChipData([])
-  }
-  return (
-    <div>
-      <Card>
-        <CardBody style={{height: '74px'}}>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={6}>
-              <GridContainer className={classes.headContainer}>
-                <GridItem xl={2} className={classes.userRolesTitle}>
-                  {chipData.length} selected for
-                </GridItem>
-                <GridItem xl={10} className={classes.chipSelected}>
-                  {
-                    chipData.map(data => (
-                      <Chip
-                        deleteIcon={<CloseIcon/>}
-                        label={data.label}
-                        onDelete={handleDelete(data)}
-                        className={classes.chip}
-                      />
-                    ))
-                  }
-                  {
-                    chipData.length > 0
-                      ?
-                      (
-                        <Button onClick={handleClearAll} className={classes.clearAll}>
-                          Clear All
-                        </Button>
-                      )
-                      : ""
-                  }
-                </GridItem>
-              </GridContainer>
-            </GridItem>
-            <GridItem xs={12} sm={12} md={6} className={classes.headLeft}>
-              <ToolboxButton placeholder={"Search tags"} showTrash/>
-            </GridItem>
-          </GridContainer>
-        </CardBody>
+  const columns = [
+    {
+      title: 'Distance',
+      key: 'distances',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: distances => (
         <div>
-          <ToolkitProvider
-            data={props.data}
-            columns={[
-              {
-                dataField: "distance",
-                text: "Distances",
-                formatter: formatDistance
-              },
-              {
-                dataField: "workingDays",
-                text: "Working Days",
-                formatter: formatWorkingDays
-              },
-              {
-                dataField: "tags",
-                text: "Tags",
-                formatter: formatTags
-              },
-              {
-                dataField: "action",
-                text: "Actions",
-                formatter: addActionButton
-              }
-            ]}
-          >
-            {props => (
-              <div className="table table-settings">
-                <BootstrapTable
-                  {...props.baseProps}
-                  bootstrap4={true}
-                  keyField="id"
-                  bordered={false}
-                />
-
-              </div>
-            )}
-          </ToolkitProvider>
-          <Button
-            className="btn-round-white-3 h-41 mb-4"
-            startIcon={<AddOutlined/>}
-            style={{boxShadow: "none", marginBottom: "10px"}}
-          >
-            Add working hours
+          <div className={classes.textEmail}>{distances[0]}</div>
+          <div className={classes.textEmail}>{distances[1]}</div>
+        </div>
+      )
+    },
+    {
+      title: 'Working Days',
+      key: 'workingDays',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: workingDays => (
+        <div>
+          <div className={classes.textEmail}>{workingDays[0]}</div>
+          <div className={classes.textEmail}>{workingDays[1]}</div>
+        </div>
+      )
+    },
+    {
+      title: 'Tags',
+      key: 'tags',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: tags => (<div className={classes.textTags}>{tags}</div>)
+    },
+    {
+      title: 'Actions',
+      key: 'action',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: () => (
+        <div className={classes.actionButton}>
+          <Button justIcon color="twitter" simple>
+            <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
           </Button>
         </div>
-      </Card>
-      <GenPaginationV1 total={29} page={1} size={10}/>
+      )
+    }
+  ];
+
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize)
+    props.getMaxDistance({page, pageSize});
+  }
+
+  const onShowSizeChange = (page, pageSize) => {
+    props.getMaxDistance({page, pageSize});
+    console.log(page, pageSize)
+  }
+
+  return (
+    <div>
+      <Table
+        renderTitle={
+          <GridContainer className={classes.gridTitle}>
+            <GridItem className={classes.headLeft}>
+              <ToolboxButton placeholder="Search for tag or email" showFilter showTrash/>
+            </GridItem>
+          </GridContainer>
+        }
+        pagination={{
+          total: props.total,
+          current: props.page,
+          pageSize: props.pageSize,
+          onChange: onPageChange,
+          onShowSizeChange: onShowSizeChange
+        }}
+        columns={columns}
+        dataSource={props.data}
+        onHeaderRow={{className: classes.onHeaderRow}}
+        onBodyRow={{className: classes.tableRow}}
+        renderFooter={
+          <GridItem className={classes.footerButton}>
+            <Button
+              className="btn-transparent w-122 h-41"
+              startIcon={<AddOutlined/>}
+            >
+              Add Working Hours
+            </Button>
+          </GridItem>
+        }
+      />
     </div>
   );
 }
 
-export default connect(
-  ({settingFleet}: IRootState) => ({
-    data: settingFleet.maxDistances
-  }),
-  {
-    getMaxDistance
-  }
-)(MaxDistance);
+const mapStateToProps = ({settingFleet}) => {
+  return {
+    data: settingFleet.maxDistances.data,
+    page: settingFleet.maxDistances.page,
+    total: settingFleet.maxDistances.total,
+    pageSize: settingFleet.maxDistances.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getMaxDistance
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MaxDistance);

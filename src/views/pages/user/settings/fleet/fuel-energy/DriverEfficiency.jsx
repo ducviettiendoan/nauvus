@@ -1,152 +1,228 @@
-import React from "react";
+import React, {useState} from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
-// @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
-// core components
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
 
-import BootstrapTable from "react-bootstrap-table-next";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
-
-import Button from "components/CustomButtons/Button.js";
-import AddOutlined from "@material-ui/icons/AddOutlined";
-
+import Button from "components/CustomButtons/Button";
+import ToolboxButton from "components/CustomButtons/ToolboxButton";
+import DeleteIcon from "components/Icons/DeleteIcon";
+import Table from "components/Table/TableV1";
+import DotIcon from "components/Icons/DotIcon";
 import EditIcon from "components/Icons/EditIcon";
+import ChipSelect from 'components/Chip/ChipSelect';
+import GridContainer from "components/Grid/GridContainer";
+import GridItem from "components/Grid/GridItem";
 
-import {
-  cardTitle,
-  roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
-import {connect} from "react-redux";
-import {IRootState} from "../../../../../../reducers";
-import {getSensor} from "../../../../../../reducers/setting-device";
-import {Sensors} from "../../devices/devices/Sensors";
+import {connect} from 'react-redux';
 import {getDriverEfficiency} from "../../../../../../reducers/setting-fleet";
 
-const styles = {
-  textSub: {
-    fontWeight: '400',
+const useStyles = makeStyles((theme) => ({
+  selected: {
+    height: 24,
+    width: "auto",
+    background: "#ECEEF0 !important",
+    borderRadius: 28,
+    color: "#25345C !important",
+    display: "flex",
+    alignItems: "center",
+  },
+  headContainer: {
+    alignItems: "center",
+    textAlign: "left",
+    marginTop: "8px"
+  },
+  headLeft: {
+    textAlign: "right",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    "& > div": {
+      marginBottom: "0 !important",
+      marginRight: 8
+    }
+  },
+  textName: {
+    fontWeight: 'bold',
     fontSize: '16px',
     lineHeight: '24px',
-    marginTop: '25px',
-    marginLeft: '24px',
+    color: '#25345C',
+    marginLeft: '16px'
+  },
+  textEmail: {
+    fontWeight: 400,
+    fontSize: '16px',
+    lineHeight: '24px',
+    color: '#25345C',
+    marginLeft: '16px'
+  },
+  chips: {
+    background: "#ECEEF0",
     color: "#25345C",
+    fontSize: "12px",
+    marginRight: 8
   },
-  topHeaderButton: {
-    textAlign: "right",
-    marginTop: -50,
-    paddingRight: "0px !important"
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
+    },
   },
-  actionButton: {
-    paddingTop: '12px !important',
+  onHeaderRow: {
+    background: "#ECEEF0",
   },
-};
-
-const useStyles = makeStyles(styles);
+  gridTitle: {
+    padding: "20px",
+    justifyContent: "flex-end"
+  },
+  onHeaderCell: {
+    fontWeight: "bold",
+    paddingLeft: "30px"
+  },
+  onHeaderConnectCell: {
+    paddingLeft: 18,
+    fontWeight: "bold",
+  },
+  alignItemsCenter: {
+    display: "flex",
+    alignItems: "center",
+  },
+  dotIcon: {
+    color: "#7CE7AC"
+  },
+  textRoles: {
+    fontSize: '16px',
+    lineHeight: '24px',
+  },
+  textAccess: {
+    display: "inline-block",
+    fontSize: '14px',
+    lineHeight: '17px',
+    padding: "12px 16px",
+    color: "#27AE60",
+    background: "rgba(39, 174, 96, 0.1)",
+    borderRadius: 23,
+    fontWeight: "bold",
+  },
+  iconButton: {
+    '&:hover': {
+      color: '#25345C !important',
+    }
+  },
+  avatarImage: {
+    width: 40,
+    height: 40,
+    borderRadius: "50%"
+  },
+  rootSelect: {
+    width: "100%"
+  },
+  formRow: {
+    marginBottom: 16
+  },
+  selectButton: {
+    display: "flex",
+    justifyContent: "flex-end"
+  },
+  formText: {
+    fontSize: "14px",
+    fontFamily: 'Lato',
+    fontWeight: "400",
+  },
+  formTextSpan: {
+    paddingLeft: "30px",
+    color: "#a5a5a5",
+  },
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    margin: "24px",
+    textAlign: "center"
+  },
+}));
 
 export function DriverEfficiency(props) {
+
   const classes = useStyles();
 
   React.useEffect(() => {
-    // Get list data
     props.getDriverEfficiency();
   }, []);
 
-  const formatNameProfiles = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
+  const columns = [
+    {
+      title: 'Name Profiles',
+      key: 'nameProfiles',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: nameProfiles => <div className={classes.textName}>{nameProfiles}</div>
+    },
+    {
+      title: 'Vehicles',
+      key: 'vehicles',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: vehicles => <div className={classes.textEmail}>{vehicles}</div>
+    },
+    {
+      title: 'Actions',
+      key: 'action',
+      onHeaderCell: {className: classes.onHeaderCell},
+      render: () => (
+        <div className={classes.actionButton}>
+          <Button justIcon color="twitter" simple>
+            <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+          </Button>
+        </div>
+      )
+    }
+  ];
+
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize)
+    props.getDriverEfficiency({page, pageSize});
   }
 
-  const formatVehicles = (cell, row) => {
-    return <>
-      <div className={classes.textSub}>{cell}</div>
-    </>
+  const onShowSizeChange = (page, pageSize) => {
+    props.getDriverEfficiency({page, pageSize});
+    console.log(page, pageSize)
   }
 
-  const addActionButton = () => {
-    return (
-      <div className={classes.actionButton}>
-        <Button justIcon color="twitter" simple>
-          <EditIcon style={{color: "#ffffff", width: '22px', height: '22px'}}/>
-        </Button>
-      </div>
-    )
-  }
   return (
     <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
-              <GridItem xs={12} sm={12} md={12} xl={12} className={classes.topHeaderButton}>
-                <Button
-                  round
-                  className="btn-round-active mr-2"
-                  startIcon={<AddOutlined/>}
-                >
-                  Create profile
-                </Button>
-                <Button
-                  round
-                  className="btn-round-gray"
-                  startIcon={<AddOutlined/>}
-                >
-                  Essign vehicle
-                </Button>
-              </GridItem>
-              <Card testimonial>
-                <ToolkitProvider
-                  data={props.data}
-                  keyField="_id"
-                  columns={[
-                    {
-                      dataField: "nameProfiles",
-                      text: "Name Profiles",
-                      formatter: formatNameProfiles
-                    },
-                    {
-                      dataField: "vehicles",
-                      text: "Vehicles",
-                      formatter: formatVehicles
-                    },
-                    {
-                      dataField: "actions",
-                      text: "Actions",
-                      formatter: addActionButton
-                    },
-
-                  ]}
-                >
-                  {props => (
-                    <div className="table table-settings">
-                      <BootstrapTable
-                        {...props.baseProps}
-                        bootstrap4={true}
-                        bordered={false}
-                      />
-
-                    </div>
-                  )}
-                </ToolkitProvider>
-              </Card>
+      <Table
+        renderTitle={
+          <GridContainer className={classes.gridTitle}>
+            <GridItem className={classes.headLeft}>
+              <ToolboxButton placeholder="Search for tag or email" showFilter showTrash/>
             </GridItem>
           </GridContainer>
-        </GridItem>
-      </GridContainer>
+        }
+        pagination={{
+          total: props.total,
+          current: props.page,
+          pageSize: props.pageSize,
+          onChange: onPageChange,
+          onShowSizeChange: onShowSizeChange
+        }}
+        columns={columns}
+        dataSource={props.data}
+        onHeaderRow={{className: classes.onHeaderRow}}
+        onBodyRow={{className: classes.tableRow}}
+      />
     </div>
   );
 }
 
-export default connect(
-  ({settingFleet}: IRootState) => ({
-    data: settingFleet.driverEfficiencies
-  }),
-  {
-    getDriverEfficiency
-  }
-)(DriverEfficiency);
+const mapStateToProps = ({settingFleet}) => {
+  console.log(settingFleet.driverEfficiencies)
+  return {
+    data: settingFleet.driverEfficiencies.data,
+    page: settingFleet.driverEfficiencies.page,
+    total: settingFleet.driverEfficiencies.total,
+    pageSize: settingFleet.driverEfficiencies.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getDriverEfficiency
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DriverEfficiency);

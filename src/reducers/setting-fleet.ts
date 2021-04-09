@@ -6,7 +6,7 @@ export type SettingFleetState = Readonly<typeof initialState>;
 //Actions type
 export const ACTION_TYPES = {
   //Fuel-Energy action type
-  GET_DRIVER_EFFICIENCY: 'setting/fleet/GET_GATEWAY',
+  GET_DRIVER_EFFICIENCY: 'setting/fleet/GET_DRIVER_EFFICIENCY',
   GET_FUEL_COST: 'setting/fleet/GET_FUEL_COST',
   GET_FUEL_CARD: 'setting/fleet/GET_FUEL_CARD',
   GET_VEHICLE_FUEL_TYPES: 'setting/fleet/GET_VEHICLE_FUEL_TYPES',
@@ -94,17 +94,20 @@ export default (state: SettingFleetState = initialState, action): SettingFleetSt
         ...state,
         validAddresses: action.payload.data
       };
+
     //Fuel Energy Reducer
     case SUCCESS(ACTION_TYPES.GET_DRIVER_EFFICIENCY):
       return {
         ...state,
         driverEfficiencies: action.payload.data
       };
+
     case SUCCESS(ACTION_TYPES.GET_FUEL_COST):
       return {
         ...state,
         fuelCost: action.payload.data
       };
+
     case SUCCESS(ACTION_TYPES.GET_FUEL_CARD):
       return {
         ...state,
@@ -132,68 +135,68 @@ export default (state: SettingFleetState = initialState, action): SettingFleetSt
 };
 
 //Fuel-Energy actions
-export const getDriverEfficiency = () => async dispatch => {
+export const getDriverEfficiency = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_DRIVER_EFFICIENCY,
-    payload: axios.post(`/api/setting/driver-efficiency/search`),
+    payload: axios.post("/api/setting/driver-efficiency/search", request)
   });
 };
 
-export const getFuelCost = () => async dispatch => {
+export const getFuelCost = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_FUEL_COST,
-    payload: axios.post(`/api/setting/fuel-cost/search`),
+    payload: axios.post(`/api/setting/fuel-cost/search`, request),
   });
 };
 
-export const getFuelCard = () => async dispatch => {
+export const getFuelCard = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_FUEL_CARD,
-    payload: axios.post(`/api/setting/fuel-card/search`),
+    payload: axios.post(`/api/setting/fuel-card/search`, request),
   });
 };
 
-export const getVehicleFuelType = () => async dispatch => {
+export const getVehicleFuelType = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_VEHICLE_FUEL_TYPES,
-    payload: axios.post(`/api/setting/vehicle-fuel-type/search`),
+    payload: axios.post(`/api/setting/vehicle-fuel-type/search`, request),
   });
 };
 
 //Driver activity actions
-export const getWorkingHour = () => async dispatch => {
+export const getWorkingHour = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_WORKING_HOURS,
-    payload: axios.post(`/api/setting/working-hour/search`),
+    payload: axios.post(`/api/setting/working-hour/search`, request),
   });
 };
 
-export const getMaxDistance = () => async dispatch => {
+export const getMaxDistance = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_MAX_DISTANCES,
-    payload: axios.post(`/api/setting/max-distance/search`),
+    payload: axios.post(`/api/setting/max-distance/search`, request),
   });
 };
 
 //Address & Geofences actions
-export const getValidAddress = () => async dispatch => {
+export const getValidAddress = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_VALID_ADDRESS,
-    payload: axios.post(`/api/setting/add-geo/valid-add/search`),
+    payload: axios.post(`/api/setting/add-geo/valid-add/search`, request),
   });
 };
 
-export const getInvalidAddress = () => async dispatch => {
+export const getInvalidAddress = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_INVALID_ADDRESS,
-    payload: axios.post(`/api/setting/add-geo/invalid-add/search`),
+    payload: axios.post(`/api/setting/add-geo/invalid-add/search`, request),
   });
 };
 
 //Maps actions
-export const getSettingMap = () => async dispatch => {
+export const getSettingMap = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_MAPS,
-    payload: axios.post(`/api/setting/map/search`),
+    payload: axios.post(`/api/setting/map/search`, request),
   });
 };
