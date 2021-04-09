@@ -2,19 +2,30 @@ import React from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
 import AddOutlined from "@material-ui/icons/AddOutlined";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
 import Button from "components/CustomButtons/Button.js";
 import { MoreHoriz } from "@material-ui/icons";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import EditIcon from "components/Icons/EditIcon";
 import DeleteIcon from "components/Icons/DeleteIcon";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
+import classNames from "classnames";
+import Grow from "@material-ui/core/Grow";
+import Paper from "@material-ui/core/Paper";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import MenuList from "@material-ui/core/MenuList";
+import MenuItem from "@material-ui/core/MenuItem";
+import Popper from "@material-ui/core/Popper";
+import customDropdownStyle
+  from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle";
+import DiaLog from "components/CustomDialog/Dialog";
+import OrganizationUpload from "components/CustomUpload/OrganizationUpload";
+import InputLabel from "@material-ui/core/InputLabel";
+import {Field, Form} from "react-final-form";
+import {TextField} from "final-form-material-ui";
 import { getAlertContact } from "reducers/setting-link-sharing";
 import Table from "components/Table/TableV1";
 
@@ -94,13 +105,74 @@ const styles = {
   gridTitle: {
     padding: "20px"
   },
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    margin: "24px",
+    marginBottom: "0px",
+    textAlign: "center"
+  },
+  selectButton: {
+    display: "flex",
+    justifyContent: "flex-end"
+  },
+  formRow: {
+    marginBottom: 16
+  },
+  formText: {
+    fontSize: "14px",
+    fontFamily: 'Lato',
+    fontWeight: "400",
+  },
+  formTextSpan: {
+    paddingLeft: "30px",
+    color: "#a5a5a5",
+  },
+  text: {
+    fontSize: 14,
+    fontWeight: 400,
+    color: "#25345C",
+    margin: "24px",
+    marginTop: "8px"
+  }
 };
 
-const useStyles = makeStyles(styles);
-
-function AlertContacts(props) {
+const useStyles = makeStyles((theme) => ({
+  ...customDropdownStyle(theme),
+  ...styles,
+}))
+export function AlertContacts(props) {
   const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const [openMore, setOpenMore] = React.useState(false);
+  const [openUpload, setOpenUpload] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
+  const validate = (values) => {
+    const errors = {};
+    if (!values.fname) errors.fname = 'First name must not be empty!';
+    if (!values.lname) errors.lname = 'Last name must not be empty!';
+    if (!values.phone) errors.phone = 'Phone must not be empty!';
+    if (!values.email) errors.email = 'Email must not be empty!';
+    return errors;
+  };
+  const handleCloseMore = () => setOpenMore(false)
+  const handleOpenMore = (event) => {
+    setOpenMore(true)
+    setAnchorEl(event.currentTarget);
+  }
+
+  const onSubmit = async (values) => {
+    console.log(values);
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+    setOpenMore(false)
+    setOpenUpload(false)
+  }
   React.useEffect(() => {
     // Get list data
     props.getAlertContact();
@@ -167,10 +239,114 @@ function AlertContacts(props) {
                   Alert Contacts List
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
+                  <DiaLog
+                      renderTitle={
+                        <>
+                          <h3 className={classes.dialogTitle}>Add a new contact</h3>
+                          <div className={classes.text}>You are now creating an alert contact. Alert contacts to enable you to send alerts and reports to other people within or outside of your organization.</div>
+                        </>
+                      }
+                      handleClose={handleClose}
+                      open={open}
+                  >
+                    <Form
+                        onSubmit={onSubmit}
+                        validate={validate}
+                        render={({ handleSubmit, reset, submitting, pristine, values }) => {
+                          return (
+                              <form onSubmit={handleSubmit} noValidate>
+                                <GridContainer justify="space-between" >
+                                  <GridItem className={classes.formRow} xs={12}>
+                                    <InputLabel required>First Name</InputLabel>
+                                    <Field
+                                        fullWidth
+                                        required
+                                        name="fname"
+                                        type="text"
+                                        component={TextField}
+                                    />
+                                  </GridItem>
+                                  <GridItem className={classes.formRow} xs={12}>
+                                    <InputLabel required>Last Name</InputLabel>
+                                    <Field
+                                        fullWidth
+                                        required
+                                        name="lname"
+                                        type="text"
+                                        component={TextField}
+                                    />
+                                  </GridItem>
+                                  <GridItem className={classes.formRow} xs={12}>
+                                    <InputLabel required>Phone</InputLabel>
+                                    <Field
+                                        fullWidth
+                                        required
+                                        name="phone"
+                                        type="text"
+                                        placeholder="3605550110"
+                                        component={TextField}
+                                    />
+                                  </GridItem>
+                                  <GridItem className={classes.formRow} xs={12}>
+                                    <InputLabel required>Email</InputLabel>
+                                    <Field
+                                        fullWidth
+                                        required
+                                        name="email"
+                                        type="text"
+                                        placeholder="email@example.com"
+                                        component={TextField}
+                                    />
+                                  </GridItem>
+                                </GridContainer>
+                                <div className={classes.selectButton}>
+                                  <Button
+                                      type="button"
+                                      round
+                                      className="btn-round-active-2 mr-2"
+                                      onClick={props.handleClose}
+                                  > Cancel</Button>
+                                  <Button
+                                      round
+                                      className="btn-round-active mr-2"
+                                      type="submit"
+                                      disabled={submitting}
+                                  > Save</Button>
+                                </div>
+                              </form>
+                          )
+                        }}
+                    />
+                  </DiaLog>
+                  <DiaLog
+                      renderTitle={<h3 className={classes.dialogTitle}>Upload CSV File</h3>}
+                      handleClose={handleClose}
+                      open={openUpload}
+                  >
+                    <p>Manage your contacts</p>
+                    <p>
+                      Manage your contacts via spreadsheet (.CSV file). You can choose to download your existing Contacts List or start from a Sample Template. Please refer to our Knowledge Base to learn more.
+                    </p>
+                    <OrganizationUpload />
+                    <div className={classes.selectButton}>
+                      <Button
+                          type="button"
+                          round
+                          className="btn-round-active-2 mr-2"
+                          onClick={handleClose}
+                      > Cancel</Button>
+                      <Button
+                          round
+                          className="btn-round-active mr-2"
+                          type="submit"
+                      > Preview</Button>
+                    </div>
+                  </DiaLog>
                   <Button
                     round
                     className="btn-round-active w-150 mr-2"
                     startIcon={<AddOutlined />}
+                    onClick={() => setOpen(true)}
                   >
                     Add Contact
                   </Button>
@@ -180,6 +356,7 @@ function AlertContacts(props) {
                     justIcon
                     round
                     className={`btn-36 ${classes.moreAction} mr-2`}
+                    onClick={handleOpenMore}
                   >
                     <MoreHoriz />
                   </Button>
@@ -214,6 +391,35 @@ function AlertContacts(props) {
               />
             </GridItem>
           </GridContainer>
+          <Popper
+              open={openMore}
+              anchorEl={anchorEl}
+              transition
+              disablePortal
+              placement="bottom-end"
+              className={classNames({
+                [classes.popperClose]: !anchorEl,
+                [classes.popperResponsive]: true,
+                [classes.popperNav]: true
+              })}
+          >
+            {({ TransitionProps }) => (
+                <Grow
+                    {...TransitionProps}
+                    id="profile-menu-list"
+                    style={{ transformOrigin: "0 0 0" }}
+                >
+                  <Paper className={classes.dropdown}>
+                    <ClickAwayListener onClickAway={handleCloseMore}>
+                      <MenuList role="menu">
+                        <MenuItem className={classes.dropdownItem} onClick={() => setOpenUpload(true)} > Upload CSV </MenuItem>
+                        <MenuItem className={classes.dropdownItem} onClick={handleCloseMore} > Download CSV </MenuItem>
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+            )}
+          </Popper>
         </GridItem>
       </GridContainer>
     </div>

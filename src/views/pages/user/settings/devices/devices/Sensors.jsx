@@ -20,6 +20,8 @@ import GridItem from "components/Grid/GridItem";
 import OrganizationUpload from "components/CustomUpload/OrganizationUpload";
 
 import {connect} from 'react-redux';
+import InviteUserForm from "../../org/user-roles/InviteUserForm";
+import ActivateDevicesForm from "./ActivateDevicesForm";
 
 const useStyles = makeStyles((theme) => ({
   selected: {
@@ -257,6 +259,14 @@ export function Sensors(props) {
         onHeaderRow={{className: classes.onHeaderRow}}
         onBodyRow={{className: classes.tableRow}}
       />
+
+      <DiaLog
+          renderTitle={<h3 className={classes.dialogTitle}>Activate Devices</h3>}
+          handleClose={props.handleClose}
+          open={props.open}
+      >
+        <ActivateDevicesForm handleClose={props.handleClose}/>
+      </DiaLog>
 
     </div>
   );

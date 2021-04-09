@@ -14,6 +14,10 @@ import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
 
 import {connect} from 'react-redux';
+import DiaLog from "../../../../../../components/CustomDialog/Dialog";
+import OrganizationUpload from "../../../../../../components/CustomUpload/OrganizationUpload";
+import InviteUserForm from "../../org/user-roles/InviteUserForm";
+import ActivateDevicesForm from "./ActivateDevicesForm";
 
 const useStyles = makeStyles((theme) => ({
   selected: {
@@ -260,6 +264,39 @@ export function Gateway(props) {
         onHeaderRow={{className: classes.onHeaderRow}}
         onBodyRow={{className: classes.tableRow}}
       />
+
+      <DiaLog
+          renderTitle={<h3 className={classes.dialogTitle}>Activate Devices</h3>}
+          handleClose={props.handleClose}
+          open={props.open}
+      >
+        <ActivateDevicesForm handleClose={props.handleClose}/>
+      </DiaLog>
+
+      <DiaLog
+          renderTitle={<h3 className={classes.dialogTitle}>Upload CSV File</h3>}
+          handleClose={props.handleClose}
+          open={props.openUpload}
+      >
+        <p>Manage your gateways</p>
+        <p>
+          Manage your gateways via spreadsheet (.CSV file). You can choose to download your existing Gateways List or start from a Sample Template. Please refer to our Knowledge Base to learn more.
+        </p>
+        <OrganizationUpload />
+        <div className={classes.selectButton}>
+          <Button
+              type="button"
+              round
+              className="btn-round-active-2 mr-2"
+              onClick={props.handleClose}
+          > Cancel</Button>
+          <Button
+              round
+              className="btn-round-active mr-2"
+              type="submit"
+          > Preview</Button>
+        </div>
+      </DiaLog>
     </div>
   );
 }

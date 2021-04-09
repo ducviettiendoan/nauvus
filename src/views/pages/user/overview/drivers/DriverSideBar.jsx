@@ -487,7 +487,7 @@ function DriverSideBar(props) {
         handleClose={closeEditDriver}
         open={openInvite}
       >
-        <EditDriverForm />
+        <EditDriverForm handleClose={closeEditDriver}/>
       </DiaLog>
     </div>
   );
