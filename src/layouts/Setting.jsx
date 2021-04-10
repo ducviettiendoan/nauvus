@@ -220,7 +220,7 @@ export function Dashboard(props) {
     // let redirectUri = `${window.location.origin}/auth/login`;
     // let link = `${COGNOTO_SERVER_URL}/login?client_id=${COGNOTO_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=${COGNOTO_RESPONSE_TYPE}`;
     // window.location.replace(link);
-    history.push("/auth/sign-in");
+    history.push(ROUTE_PATH.AUTH + "/sign-in");
   }
 
   // useEffect(() => {

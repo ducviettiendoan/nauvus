@@ -68,11 +68,11 @@ export default function Pages(props) {
     });
   };
   const getBgImage = () => {
-    if (window.location.pathname.indexOf("/auth/sign-in") !== -1) {
+    if (window.location.pathname.indexOf(ROUTE_PATH.AUTH + "/sign-in") !== -1) {
       return bgLogin;
-    } else if (window.location.pathname.indexOf("/auth/sign-up") !== -1) {
+    } else if (window.location.pathname.indexOf(OUTE_PATH.AUTH + "/sign-up") !== -1) {
       return bgRegister;
-    } else if (window.location.pathname.indexOf("/auth/register-vehicle") !== -1) {
+    } else if (window.location.pathname.indexOf(OUTE_PATH.AUTH + "/register-vehicle") !== -1) {
       return bgVehicle;
     }
     //   window.location.pathname.indexOf("/auth/lock-screen-page") !== -1

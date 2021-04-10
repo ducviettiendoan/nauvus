@@ -1,6 +1,7 @@
 import React from "react";
 import cx from "classnames";
 import clsx from 'clsx';
+import { ROUTE_PATH } from "config/constants";
 import {Switch, Route, Redirect, useHistory} from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
@@ -209,7 +210,7 @@ export function Dispatch(props) {
   }
 
   const redirectLogin = () => {
-    history.push("/auth/sign-in");
+    history.push(ROUTE_PATH.AUTH + "/sign-in");
   }
 
   return (

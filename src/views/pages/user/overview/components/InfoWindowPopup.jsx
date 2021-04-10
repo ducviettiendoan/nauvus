@@ -4,7 +4,7 @@ import OpenInNewTabIcon from "components/Icons/OpenInNewTabIcon";
 import React from "react";
 import styles from "assets/jss/material-dashboard-pro-react/views/overviewPageStyle.js";
 import {makeStyles} from "@material-ui/core/styles";
-import driving from "../../../../../assets/img/driving.png"
+import driving from "../../../../../assets/img/dashcam.png"
 const useStyles = makeStyles(styles);
 
 const InfoWindowPopup = (props) => {
