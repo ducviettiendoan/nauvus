@@ -32,18 +32,25 @@ import {loadVehicles} from 'reducers/vehicle';
 
 const useStyles = makeStyles(styles);
 
+const mapStyles = [
+  {
+    featureType: "poi",
+    stylers: [{ visibility: "off" }],
+  }
+];
 
 const RegularMap = withScriptjs(
   withGoogleMap((props) => {
     return (
 
       <GoogleMap
-        defaultZoom={16}
+        defaultZoom={17}
         center={props.center}
         defaultOptions={{
           scrollwheel: false,
           mapTypeControl: false,
-          streetViewControl: false
+          streetViewControl: false,
+          styles: mapStyles,
         }}
       >
         {props.data.map((maker, index) => {
@@ -86,8 +93,7 @@ const RegularMap = withScriptjs(
 
 export function Proximity(props) {
   const classes = useStyles();
-  const [geo, setGeo] = React.useState({lat: 40.743817, lng: -73.658648});
-
+  const [geo, setGeo] = React.useState({lat: 40.746617, lng: -73.658648});
   React.useEffect(() => {
     async function fetchVehicles() {
       await props.loadVehicles();

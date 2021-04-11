@@ -11,7 +11,7 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 import {makeStyles} from "@material-ui/core/styles";
 
 // core components
-import AdminNavbar from "components/Navbars/AdminNavbar.js";
+import OverviewAdminNavbar from "components/Navbars/OverviewAdminNavbar";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import Drawer from '@material-ui/core/Drawer';
@@ -207,7 +207,7 @@ export function Overview(props) {
                 [classes.contentShift]: props.openDrawer,
               })}
             >
-              <AdminNavbar
+              <OverviewAdminNavbar
                 sidebarMinimize={sidebarMinimize.bind(this)}
                 miniActive={miniActive}
                 brandText={getActiveRoute(routes)}
