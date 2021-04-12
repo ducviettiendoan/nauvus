@@ -5,6 +5,7 @@ import VehicleDetails from "views/pages/user/overview/vehicle/VehicleDetails"
 import Alerts from "views/pages/user/alerts/Alerts";
 import ComplianceDashboard from "views/pages/user/compliance/ComplianceDashboard";
 import DriverHOS from "views/pages/user/compliance/DriverHOS";
+import DriverHOSReport from "views/pages/user/compliance/driver-hos/DriverHOSReport";
 import HOSVialations from "views/pages/user/compliance/HOSViolations";
 import UnassignedHOS from "views/pages/user/compliance/UnassignedHOS";
 import DriverHOSAudit from "views/pages/user/compliance/DriverHOSAudit";
@@ -136,6 +137,13 @@ const dashRoutes = [
         name: "Driver HOS",
         component: DriverHOS,
         layout: ROUTE_PATH.USER
+      },
+      {
+        path: "/compliance/driver-hos-report",
+        name: "Driver HOS Report - Ali Singh",
+        component: DriverHOSReport,
+        layout: ROUTE_PATH.USER,
+        isFixed: true
       },
       {
         path: "/compliance/hos-vialations",

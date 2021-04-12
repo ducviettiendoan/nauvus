@@ -27,7 +27,7 @@ export default function ToolboxButton(props) {
     return (
         <div className={classes.headLeft}>
             <SettingSearchBox placeholder={ props.placeholder} />
-            { props.showFilter && <FilterButton /> }
+            { props.showFilter && <FilterButton filterAction={props.filterAction} /> }
             { props.showEdit && <EditButton /> }
             { props.showLink && <LinkButton /> }
             { props.showTrash && <TrashButton /> }
