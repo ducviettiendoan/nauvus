@@ -2,6 +2,7 @@ import React from "react";
 import cx from "classnames";
 import clsx from 'clsx';
 import {Switch, Route, Redirect, useHistory} from "react-router-dom";
+import { ROUTE_PATH } from "config/constants";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
@@ -10,7 +11,7 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 import {makeStyles} from "@material-ui/core/styles";
 
 // core components
-import AdminNavbar from "components/Navbars/AdminNavbar.js";
+import OverviewAdminNavbar from "components/Navbars/OverviewAdminNavbar";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import Drawer from '@material-ui/core/Drawer';
@@ -206,7 +207,7 @@ export function Overview(props) {
                 [classes.contentShift]: props.openDrawer,
               })}
             >
-              <AdminNavbar
+              <OverviewAdminNavbar
                 sidebarMinimize={sidebarMinimize.bind(this)}
                 miniActive={miniActive}
                 brandText={getActiveRoute(routes)}
@@ -227,7 +228,7 @@ export function Overview(props) {
   }
 
   const redirectLogin = () => {
-    history.push("/auth/sign-in");
+    history.push(ROUTE_PATH.AUTH + "/sign-in");
   }
 
   return (

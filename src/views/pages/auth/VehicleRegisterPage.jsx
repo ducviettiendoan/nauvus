@@ -1,6 +1,7 @@
 import React from "react";
 import { toast } from 'react-toastify';
 import { useHistory } from "react-router-dom";
+import { ROUTE_PATH } from "config/constants";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -77,7 +78,7 @@ export function VehicleRegisterPage(props) {
   }
 
   const redirectLogin = () => {
-    history.push("/auth/sign-in");
+    history.push(ROUTE_PATH.AUTH +  "/sign-in");
   }
 
   return (

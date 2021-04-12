@@ -1,3 +1,5 @@
+import { ROUTE_PATH } from "config/constants";
+
 import Overview from "views/pages/user/overview/Overview";
 import Alerts from "views/pages/user/alerts/Alerts";
 import ComplianceDashboard from "views/pages/user/compliance/ComplianceDashboard";
@@ -52,32 +54,32 @@ const dashRoutes = [
     name: "Overview",
     icon: OverviewIcon,
     state: "overviewCollapse",
-    layout: "/o",
+    layout: ROUTE_PATH.OVERVIEW,
     views: [
       {
         path: "/overview",
         name: "Vehicle",
         component: Overview,
-        layout: "/o"
+        layout: ROUTE_PATH.OVERVIEW
       },
       {
         path: "/assets",
         name: "Assets",
         component: Assets,
-        layout: "/o"
+        layout: ROUTE_PATH.OVERVIEW
       },
       {
         path: "/drivers/:id",
         name: "Drivers Detail",
         component: DriverDetail,
-        layout: "/o",
+        layout: ROUTE_PATH.OVERVIEW,
         isFixed: true,
       },
       {
         path: "/driver-record/:id",
         name: "Drivers Record",
         component: DriverRecord,
-        layout: "/o",
+        layout: ROUTE_PATH.OVERVIEW,
         isFixed: true,
         hideInSideBar: true,
       },
@@ -85,19 +87,19 @@ const dashRoutes = [
         path: "/drivers",
         name: "Drivers",
         component: Drivers,
-        layout: "/o"
+        layout: ROUTE_PATH.OVERVIEW
       },
       {
         path: "/proximity",
         name: "Proximity",
         component: Proximity,
-        layout: "/o"
+        layout: ROUTE_PATH.OVERVIEW
       },
       {
         path: "/logs",
         name: "Logs",
         component: Logs,
-        layout: "/o"
+        layout: ROUTE_PATH.OVERVIEW
       },
     ]
   },
@@ -106,56 +108,56 @@ const dashRoutes = [
     name: "Safety",
     icon: SafetyIcon,
     component: Safety,
-    layout: "/user"
+    layout: ROUTE_PATH.USER
   },
   {
     collapse: true,
     name: "Compliance",
     icon: ComplianceIcon,
     state: "complianceCollapse",
-    layout: "/user",
+    layout: ROUTE_PATH.USER,
     views: [
       {
         path: "/compliance/dashboard",
         name: "Compliance",
         component: ComplianceDashboard,
-        layout: "/user"
+        layout: ROUTE_PATH.USER
       },
       {
         path: "/compliance/driver-hos",
         name: "Driver HOS",
         component: DriverHOS,
-        layout: "/user"
+        layout: ROUTE_PATH.USER
       },
       {
         path: "/compliance/hos-vialations",
         name: "HOS Vialations",
         component: HOSVialations,
-        layout: "/user"
+        layout: ROUTE_PATH.USER
       },
       {
         path: "/compliance/unassigned-hos",
         name: "Unassigned HOS",
         component: UnassignedHOS,
-        layout: "/user"
+        layout: ROUTE_PATH.USER
       },
       {
         path: "/compliance/driver-hos-audit",
         name: "Driver HOS audit",
         component: DriverHOSAudit,
-        layout: "/user"
+        layout: ROUTE_PATH.USER
       },
       {
         path: "/compliance/duty-status-summary",
         name: "Duty status Summary",
         component: DutyStatusSummary,
-        layout: "/user"
+        layout: ROUTE_PATH.USER
       },
       {
         path: "/compliance/hos-audit-transfer",
         name: "HOS Audit transfer",
         component: HOSAuditTransfer,
-        layout: "/user"
+        layout: ROUTE_PATH.USER
       },
     ]
   },
@@ -164,39 +166,39 @@ const dashRoutes = [
     name: "Maintenance",
     icon: MaintenanceIcon,
     component: Maintenance,
-    layout: "/user"
+    layout: ROUTE_PATH.USER
   },
   {
     path: "/dispatch",
     name: "Dispatch",
     icon: DispatchIcon,
     component: Dispatch,
-    layout: "/user"
+    layout: ROUTE_PATH.DISPATCH
   },
   {
     collapse: true,
     name: "Fuel & Energy",
     icon: FuelEnergyIcon,
     state: "fuelEnergyCollapse",
-    layout: "/user",
+    layout: ROUTE_PATH.USER,
     views: [
       {
         path: "/fuel-energy/dashboard",
         name: "Fuel & Energy",
         component: FuelEnergy,
-        layout: "/user"
+        layout: ROUTE_PATH.USER
       },
       {
         path: "/fuel-energy/fuel-purchase",
         name: "Fuel Purchase",
         component: FuelPurchase,
-        layout: "/user"
+        layout: ROUTE_PATH.USER
       },
       {
         path: "/fuel-energy/driver-efficiency",
         name: "Driver Efficiency Report",
         component: DriverEfficiency,
-        layout: "/user"
+        layout: ROUTE_PATH.USER
       },
     ]
   },
@@ -205,21 +207,21 @@ const dashRoutes = [
     name: "Documents",
     icon: DocumentsIcon,
     component: Documents,
-    layout: "/user"
+    layout: ROUTE_PATH.USER
   },
   {
     path: "/reports",
     name: "Reports",
     icon: ReportsIcon,
     component: Reports,
-    layout: "/user"
+    layout: ROUTE_PATH.USER
   },
   {
     path: "/internal-tools",
     name: "Internal Tools",
     icon: InternalToolsIcon,
     component: InternalTools,
-    layout: "/user"
+    layout: ROUTE_PATH.USER
   },
   {
     path: "/messages",
@@ -228,7 +230,7 @@ const dashRoutes = [
     extraIcon: StatusGreenIcon,
     component: Messages,
     isFixed: true,
-    layout: "/user",
+    layout: ROUTE_PATH.USER,
   },
   {
     path: "/alerts",
@@ -237,7 +239,7 @@ const dashRoutes = [
     extraIcon: StatusRedIcon,
     component: Alerts,
     isFixed: true,
-    layout: "/user"
+    layout: ROUTE_PATH.USER
   },
   {
     path: "/org/general",
@@ -245,7 +247,7 @@ const dashRoutes = [
     icon: SettingsIcon,
     component: Settings,
     isFixed: true,
-    layout: "/setting"
+    layout: ROUTE_PATH.SETTING
   },
 ];
 export default dashRoutes;

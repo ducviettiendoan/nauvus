@@ -29,7 +29,7 @@ const initialState = {
   driversData: [],
   activityLogsData: [],
   chartData: [],
-  distance: 3000,
+  distance: 100,
 };
 
 export type OverviewState = Readonly<typeof initialState>;

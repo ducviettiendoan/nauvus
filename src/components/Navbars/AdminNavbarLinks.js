@@ -109,7 +109,7 @@ export function HeaderLinks(props) {
         aria-label="edit"
         justIcon
         round
-        className={ `btn-36 ${searchButton} mr-2`}
+        className={ `btn-36 ${searchButton}`}
       >
         <QuestionIcon className={classes.headerLinksSvg + " " + classes.searchIcon} />
       </Button>
@@ -156,7 +156,7 @@ export function HeaderLinks(props) {
             >
               <Paper className={classes.dropdown}>
                 <ClickAwayListener onClickAway={handleCloseProfile}>
-                  <MenuList role="menu">
+                  <MenuList role="menu"  style={{ zIndex: '9999'}}>
                     <MenuItem
                       onClick={handleCloseProfile}
                       className={dropdownItem}

@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import { ROUTE_PATH } from "config/constants";
 import cx from "classnames";
 import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 // creates a beautiful scrollbar
@@ -160,7 +161,7 @@ export function Dashboard(props) {
       if (prop.collapse) {
         return getRoutes(prop.views);
       }
-      if (prop.layout === "/setting") {
+      if (prop.layout === ROUTE_PATH.SETTING) {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -206,7 +207,7 @@ export function Dashboard(props) {
             <div className={classes.container}>
               <Switch>
                 {getRoutes(settingRoutes)}
-                <Redirect from="/user" to="/user/overview" />
+                <Redirect from={ ROUTE_PATH.USER } to={ ROUTE_PATH.USER + "/overview" } />
               </Switch>
             </div>
           </div>
@@ -219,7 +220,7 @@ export function Dashboard(props) {
     // let redirectUri = `${window.location.origin}/auth/login`;
     // let link = `${COGNOTO_SERVER_URL}/login?client_id=${COGNOTO_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=${COGNOTO_RESPONSE_TYPE}`;
     // window.location.replace(link);
-    history.push("/auth/sign-in");
+    history.push(ROUTE_PATH.AUTH + "/sign-in");
   }
 
   // useEffect(() => {

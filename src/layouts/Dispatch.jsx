@@ -1,39 +1,46 @@
 import React from "react";
-import { ROUTE_PATH } from "config/constants";
 import cx from "classnames";
-import { Switch, Route, Redirect, useHistory } from "react-router-dom";
+import clsx from 'clsx';
+import { ROUTE_PATH } from "config/constants";
+import {Switch, Route, Redirect, useHistory} from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 
 // core components
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
-// import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
+import Drawer from '@material-ui/core/Drawer';
 
 import routes from "user-routes";
 
-import styles from "assets/jss/material-dashboard-pro-react/layouts/adminStyle.js";
-
-import { COGNOTO_SERVER_URL, COGNOTO_CLIENT_ID, COGNOTO_RESPONSE_TYPE, PUBLIC_URL } from "config/constants";
+import styles from "assets/jss/material-dashboard-pro-react/layouts/overviewStyle.js";
 
 import Loading from "components/Loading/Loading";
-import { connect } from 'react-redux';
-import { getUserInfo } from '../reducers/authentication';
-import { IRootState } from '../reducers';
+import {connect} from 'react-redux';
+import {getUserInfo} from '../reducers/authentication';
+import {setOpenDrawer} from '../reducers/overview';
+import {IRootState} from '../reducers';
+import Button from '@material-ui/core/Button';
+import VehicleSideBar from "views/pages/user/overview/components/VehicleSideBar";
+import ProximitySideBar from "views/pages/user/overview/proximity/ProximitySideBar";
+import {ExtraDriverDetailsSideBar} from "../views/pages/user/overview/components/ExtraDriverDetailsSideBar";
+import DriverSideBar from "../views/pages/user/overview/drivers/DriverSideBar";
+import DriverRecord from "../views/pages/user/overview/drivers/DriverRecord";
 
 var ps;
 
 const useStyles = makeStyles(styles);
 
-export function Dashboard(props) {
+export function Dispatch(props) {
   const history = useHistory();
-  const { ...rest } = props;
+  const {...rest} = props;
   // states and functions
+  const [openDrawer, setOpenDrawer] = React.useState(false);
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [miniActive, setMiniActive] = React.useState(false);
   const [image, setImage] = React.useState("");
@@ -43,9 +50,6 @@ export function Dashboard(props) {
   const [fixedClasses, setFixedClasses] = React.useState("dropdown");
   const [logo, setLogo] = React.useState(require("assets/img/logo_nauvus.svg"));
 
-  const [fetchSession, setFetchSession] = React.useState(true);
-
-  // styles
   const classes = useStyles();
   const mainPanelClasses =
     classes.mainPanel +
@@ -53,29 +57,16 @@ export function Dashboard(props) {
     cx({
       [classes.mainPanelSidebarMini]: miniActive,
       [classes.mainPanelWithPerfectScrollbar]:
-        navigator.platform.indexOf("Win") > -1
+      navigator.platform.indexOf("Win") > -1
     });
   // ref for main panel div
   const mainPanel = React.createRef();
   // effect instead of componentDidMount, componentDidUpdate and componentWillUnmount
   // React.useEffect(() => {
-    
+
   // });
 
   React.useEffect(() => {
-    // console.log(`fetchSession: ${fetchSession}`);
-    // async function fetchUserInfo() {
-    //   try {
-    //     await props.getUserInfo();
-    //   } catch (e) {
-    //   } finally {
-    //     setFetchSession(true);
-    //     console.log(`fetchSession: ${fetchSession}`);
-    //     console.log(props.isAuthenticated);
-    //   }
-    // }
-    // fetchUserInfo();
-
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(mainPanel.current, {
         suppressScrollX: true,
@@ -122,7 +113,7 @@ export function Dashboard(props) {
     setMobileOpen(!mobileOpen);
   };
   const getRoute = () => {
-    return window.location.pathname !== "/user/overview";
+    return window.location.pathname !== "/o/overview";
   };
   const getActiveRoute = routes => {
     let activeRoute = "Default Brand Text";
@@ -147,7 +138,7 @@ export function Dashboard(props) {
       if (prop.collapse) {
         return getRoutes(prop.views);
       }
-      if (prop.layout === ROUTE_PATH.USER) {
+      if (prop.layout === "/d") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -169,89 +160,97 @@ export function Dashboard(props) {
     }
   };
 
+  const onBackTable = () => {
+    props.history.push("/o/drivers/")
+    props.setOpenDrawer(false)
+  }
+
   const renderDataContent = () => {
     return (
       <>
-        <AdminNavbar
-          sidebarMinimize={sidebarMinimize.bind(this)}
-          miniActive={miniActive}
-          brandText={getActiveRoute(routes)}
-          handleDrawerToggle={handleDrawerToggle}
-          {...rest}
-        />
         <div className="layout-container">
-          {getRoute() ? (
-            <div className={classes.content}>
-              <div className={classes.container}>
+          <div className={classes.root}>
+            <Drawer
+              className={classes.drawer}
+              variant="persistent"
+              anchor="left"
+              open={props.openDrawer}
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+            >
+              {window.location.pathname === "/o/overview" && <VehicleSideBar/>}
+              {window.location.pathname.indexOf("/o/drivers") !== -1 && <DriverSideBar onBack={onBackTable}/>}
+              {window.location.pathname.indexOf("/o/proximity") !== -1 && <ProximitySideBar/>}
+              {window.location.pathname.indexOf("/o/driver-record/") !== -1 && <DriverRecord /> }
+            </Drawer>
+            <main
+              className={clsx(classes.content, {
+                [classes.contentShift]: props.openDrawer,
+              })}
+            >
+              <AdminNavbar
+                sidebarMinimize={sidebarMinimize.bind(this)}
+                miniActive={miniActive}
+                brandText={getActiveRoute(routes)}
+                handleDrawerToggle={handleDrawerToggle}
+                {...rest}
+              />
+              <div style={{position: 'relative'}}>
                 <Switch>
                   {getRoutes(routes)}
-                  <Redirect from={ ROUTE_PATH.OVERVIEW } to={ ROUTE_PATH.OVERVIEW + "/overview" } />
+                  <Redirect from="/o" to="/o/overview"/>
                 </Switch>
               </div>
-            </div>
-          ) : (
-            <div className={classes.map}>
-              <Switch>
-                {getRoutes(routes)}
-                <Redirect from={ ROUTE_PATH.OVERVIEW } to={ ROUTE_PATH.OVERVIEW + "/overview" } />
-              </Switch>
-            </div>
-          )}
+            </main>
+          </div>
         </div>
       </>
     )
   }
 
   const redirectLogin = () => {
-    // let redirectUri = `${window.location.origin}/auth/login`;
-    // let link = `${COGNOTO_SERVER_URL}/login?client_id=${COGNOTO_CLIENT_ID}&redirect_uri=${redirectUri}&response_type=${COGNOTO_RESPONSE_TYPE}`;
-    // window.location.replace(link);
     history.push(ROUTE_PATH.AUTH + "/sign-in");
   }
 
   return (
     <>
       <div className={classes.wrapper}>
-        { fetchSession && props.isAuthenticated && 
-          <Sidebar
-            routes={routes}
-            logoText={"Nauvus"}
-            logo={logo}
-            image={image}
-            handleDrawerToggle={handleDrawerToggle}
-            open={mobileOpen}
-            color={color}
-            bgColor={bgColor}
-            miniActive={miniActive}
-            {...rest}
-          /> 
+        { props.isAuthenticated &&
+        <Sidebar
+          routes={routes}
+          logoText={"Nauvus"}
+          logo={logo}
+          image={image}
+          handleDrawerToggle={handleDrawerToggle}
+          open={mobileOpen}
+          color={color}
+          bgColor={bgColor}
+          miniActive={miniActive}
+          {...rest}
+        />
         }
         <div className={mainPanelClasses} ref={mainPanel}>
-          { fetchSession ?
             <>
-              { props.isAuthenticated ?
+              {props.isAuthenticated ?
                 <>
-                  { props.extraSidebar ? 
+                  {props.extraSidebar ?
                     <>
                       <div id="main">
                         <div className="extraSidebar">div1</div>
-                        <div className="extraContainer">{ renderDataContent() }</div>
+                        <div className="extraContainer">{renderDataContent()}</div>
                       </div>
                     </> :
                     <>
-                      { renderDataContent() }
+                      {renderDataContent()}
                     </>
                   }
                 </> :
                 <>
-                  { redirectLogin() }
+                  {redirectLogin()}
                 </>
               }
-            </> :
-            <>
-              <Loading />
             </>
-          }
         </div>
       </div>
     </>
@@ -259,11 +258,15 @@ export function Dashboard(props) {
 }
 
 export default connect(
-  ({ authentication }: IRootState) => ({
+  ({authentication, overview}: IRootState) => ({
     isAuthenticated: authentication.isAuthenticated,
     user: authentication.user,
+    openDrawer: overview.openDrawer,
+    openDriverDetails: overview.openDriverDetails,
+    openDriver: overview.openDriver
   }),
   {
-    getUserInfo
+    getUserInfo,
+    setOpenDrawer,
   }
-)(Dashboard);
+)(Dispatch);

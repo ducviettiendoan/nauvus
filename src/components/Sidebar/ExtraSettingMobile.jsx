@@ -1,4 +1,5 @@
 import React from "react";
+import { ROUTE_PATH } from "config/constants";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory, useLocation  } from "react-router-dom";
@@ -119,76 +120,76 @@ export function ExtraSideBarMobile(props) {
 
     React.useEffect(() => {
         switch (currentLink) {
-            case "/setting/org/general":
+            case ROUTE_PATH.SETTING + "/org/general":
                 setCurrentPage("General")
                 break;
-            case "/setting/org/user-roles":
+            case ROUTE_PATH.SETTING + "/org/user-roles":
                 setCurrentPage("User & Roles")
                 break;
-            case "/setting/org/drivers":
+            case ROUTE_PATH.SETTING + "/org/drivers":
                 setCurrentPage("Drivers")
                 break;
-            case "/setting/org/tags":
+            case ROUTE_PATH.SETTING + "/org/tags":
                 setCurrentPage("Tags")
                 break;
-            case "/setting/org/feature-management":
+            case ROUTE_PATH.SETTING + "/org/feature-management":
                 setCurrentPage("Feature Management")
                 break;
-            case "/setting/org/activity-log":
+            case ROUTE_PATH.SETTING + "/org/activity-log":
                 setCurrentPage("Activity Log")
                 break;
-            case "/setting/org/apps":
+            case ROUTE_PATH.SETTING + "/org/apps":
                 setCurrentPage("Apps")
                 break;
-            case "/setting/org/billing":
+            case ROUTE_PATH.SETTING + "/org/billing":
                 setCurrentPage("Billing")
                 break;
-            case "/setting/device/devices":
+            case ROUTE_PATH.SETTING + "/device/devices":
                 setCurrentPage("Devices")
                 break;
-            case "/setting/device/configuration":
+            case ROUTE_PATH.SETTING + "/device/configuration":
                 setCurrentPage("Configuration")
                 break;
-            case "/setting/fleet/driver-app":
+            case ROUTE_PATH.SETTING + "/fleet/driver-app":
                 setCurrentPage("Driver App")
                 break;
-            case "/setting/fleet/safety":
+            case ROUTE_PATH.SETTING + "/fleet/safety":
                 setCurrentPage("Safety")
                 break;
-            case "/setting/fleet/compliance":
+            case ROUTE_PATH.SETTING + "/fleet/compliance":
                 setCurrentPage("Compliance")
                 break;
-            case "/setting/fleet/dispatch":
+            case ROUTE_PATH.SETTING + "/fleet/dispatch":
                 setCurrentPage("Dispatch")
                 break;
-            case "/setting/fleet/fuel-energy":
+            case ROUTE_PATH.SETTING + "/fleet/fuel-energy":
                 setCurrentPage("Fuel & Energy")
                 break;
-            case "/setting/fleet/driver-activity":
+            case ROUTE_PATH.SETTING + "/fleet/driver-activity":
                 setCurrentPage("Driver Activity")
                 break;
-            case "/setting/fleet/add-geo":
+            case ROUTE_PATH.SETTING + "/fleet/add-geo":
                 setCurrentPage("Addresses/Geofences")
                 break;
-            case "/setting/fleet/maps":
+            case ROUTE_PATH.SETTING + "/fleet/maps":
                 setCurrentPage("Maps")
                 break;
-            case "/setting/link-sharing/alert-contacts":
+            case ROUTE_PATH.SETTING + "/link-sharing/alert-contacts":
                 setCurrentPage("Alert Contacts")
                 break;
-            case "/setting/link-sharing/scheduled-reports":
+            case ROUTE_PATH.SETTING + "/link-sharing/scheduled-reports":
                 setCurrentPage("Scheduled Reports")
                 break;
-            case "/setting/link-sharing/live-sharing":
+            case ROUTE_PATH.SETTING + "/link-sharing/live-sharing":
                 setCurrentPage("Live Sharing")
                 break;
-            case "/setting/developer/metrics":
+            case ROUTE_PATH.SETTING + "/developer/metrics":
                 setCurrentPage("Developer Metrics")
                 break;
-            case "/setting/developer/api-tokens":
+            case ROUTE_PATH.SETTING + "/developer/api-tokens":
                 setCurrentPage("API Tokens")
                 break;
-            case "/setting/developer/webhooks":
+            case ROUTE_PATH.SETTING + "/developer/webhooks":
                 setCurrentPage("Webhooks")
                 break;
 
@@ -246,14 +247,14 @@ export function ExtraSideBarMobile(props) {
                                 <ListItemText primary="ORGANIZATION" classes={ {primary: classes.txtListItemPrimary} } />
                             </ListItem>
                             <List component="div" disablePadding>
-                                { renderListItem("General", "/setting/org/general") }
-                                { renderListItem("User & Role", "/setting/org/user-roles") }
-                                { renderListItem("Drivers", "/setting/org/drivers") }
-                                { renderListItem("Tags", "/setting/org/tags") }
-                                { renderListItem("Feature Management", "/setting/org/feature-management") }
-                                { renderListItem("Activity Log", "/setting/org/activity-log") }
-                                { renderListItem("Apps", "/setting/org/apps") }
-                                { renderListItem("Billing", "/setting/org/billing") }
+                                { renderListItem("General", ROUTE_PATH.SETTING + "/org/general") }
+                                { renderListItem("User & Role", ROUTE_PATH.SETTING + "/org/user-roles") }
+                                { renderListItem("Drivers", ROUTE_PATH.SETTING + "/org/drivers") }
+                                { renderListItem("Tags", ROUTE_PATH.SETTING + "/org/tags") }
+                                { renderListItem("Feature Management", ROUTE_PATH.SETTING + "/org/feature-management") }
+                                { renderListItem("Activity Log", ROUTE_PATH.SETTING + "/org/activity-log") }
+                                { renderListItem("Apps", ROUTE_PATH.SETTING + "/org/apps") }
+                                { renderListItem("Billing", ROUTE_PATH.SETTING + "/org/billing") }
                             </List>
                             <Divider/>
                             {/* Devices */}
@@ -261,8 +262,8 @@ export function ExtraSideBarMobile(props) {
                                 <ListItemText primary="DEVICES" classes={ {primary: classes.txtListItemPrimary} } />
                             </ListItem>
                             <List component="div" disablePadding>
-                                { renderListItem("Devices", "/setting/device/devices") }
-                                { renderListItem("Configuration", "/setting/device/configuration") }
+                                { renderListItem("Devices", ROUTE_PATH.SETTING + "/device/devices") }
+                                { renderListItem("Configuration", ROUTE_PATH.SETTING + "/device/configuration") }
                             </List>
                             <Divider/>
                             {/* Fleet */}
@@ -270,14 +271,14 @@ export function ExtraSideBarMobile(props) {
                                 <ListItemText primary="FLEET" classes={ {primary: classes.txtListItemPrimary} }  />
                             </ListItem>
                             <List component="div" disablePadding>
-                                { renderListItem("Driver App", "/setting/fleet/driver-app") }
-                                { renderListItem("Safety", "/setting/fleet/safety") }
-                                { renderListItem("Compliance", "/setting/fleet/compliance") }
-                                { renderListItem("Dispatch", "/setting/fleet/dispatch") }
-                                { renderListItem("Fuel & Energy", "/setting/fleet/fuel-energy") }
-                                { renderListItem("Driver Activity", "/setting/fleet/driver-activity") }
-                                { renderListItem("Addresses/Geofences", "/setting/fleet/add-geo") }
-                                { renderListItem("Maps", "/setting/fleet/maps") }
+                                { renderListItem("Driver App", ROUTE_PATH.SETTING + "/fleet/driver-app") }
+                                { renderListItem("Safety", ROUTE_PATH.SETTING + "/fleet/safety") }
+                                { renderListItem("Compliance", ROUTE_PATH.SETTING + "/fleet/compliance") }
+                                { renderListItem("Dispatch", ROUTE_PATH.SETTING + "/fleet/dispatch") }
+                                { renderListItem("Fuel & Energy", ROUTE_PATH.SETTING + "/fleet/fuel-energy") }
+                                { renderListItem("Driver Activity", ROUTE_PATH.SETTING + "/fleet/driver-activity") }
+                                { renderListItem("Addresses/Geofences", ROUTE_PATH.SETTING + "/fleet/add-geo") }
+                                { renderListItem("Maps", ROUTE_PATH.SETTING + "/fleet/maps") }
                             </List>
                             <Divider/>
                             {/* Links & Sharing */}
@@ -285,9 +286,9 @@ export function ExtraSideBarMobile(props) {
                                 <ListItemText primary="LINKS & SHARING" classes={ {primary: classes.txtListItemPrimary} }  />
                             </ListItem>
                             <List component="div" disablePadding>
-                                { renderListItem("Alert Contacts", "/setting/link-sharing/alert-contacts") }
-                                { renderListItem("Scheduled Reports", "/setting/link-sharing/scheduled-reports") }
-                                { renderListItem("Live Sharing", "/setting/link-sharing/live-sharing") }
+                                { renderListItem("Alert Contacts", ROUTE_PATH.SETTING + "/link-sharing/alert-contacts") }
+                                { renderListItem("Scheduled Reports", ROUTE_PATH.SETTING + "/link-sharing/scheduled-reports") }
+                                { renderListItem("Live Sharing", ROUTE_PATH.SETTING + "/link-sharing/live-sharing") }
                             </List>
                             <Divider/>
 
@@ -296,9 +297,9 @@ export function ExtraSideBarMobile(props) {
                                 <ListItemText primary="DEVELOPER" classes={ {primary: classes.txtListItemPrimary} } />
                             </ListItem>
                             <List component="div" disablePadding>
-                                { renderListItem("Developer Metrics", "/setting/developer/metrics") }
-                                { renderListItem("API Tokens", "/setting/developer/api-tokens") }
-                                { renderListItem("Webhooks", "/setting/developer/webhooks") }
+                                { renderListItem("Developer Metrics", ROUTE_PATH.SETTING + "/developer/metrics") }
+                                { renderListItem("API Tokens", ROUTE_PATH.SETTING + "/developer/api-tokens") }
+                                { renderListItem("Webhooks", ROUTE_PATH.SETTING + "/developer/webhooks") }
                             </List>
                         </List>
                     </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import { ROUTE_PATH } from "config/constants";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
@@ -270,7 +271,7 @@ export function Tags(props) {
                             unmountOnExit
                           >
                             <List component="div" disablePadding>
-                              <Link to="/setting/org/user-roles">
+                              <Link to={ ROUTE_PATH.SETTING + "/org/user-roles"}>
                                 <ListItem button className={classes.nested}>
                                   <ListItemText
                                     primary="Names Tags 1"
@@ -280,7 +281,7 @@ export function Tags(props) {
                                   />
                                 </ListItem>
                               </Link>
-                              <Link to="/setting/org/user-roles">
+                              <Link to={ ROUTE_PATH.SETTING + "/org/user-roles"}>
                                 <ListItem button className={classes.nested}>
                                   <ListItemText
                                     primary="Names Tags 2"
@@ -290,7 +291,7 @@ export function Tags(props) {
                                   />
                                 </ListItem>
                               </Link>
-                              <Link to="/setting/org/drivers">
+                              <Link to={ ROUTE_PATH.SETTING + "/org/drivers"}>
                                 <ListItem button className={classes.nested}>
                                   <ListItemText
                                     primary="Names Tags 3"
@@ -323,7 +324,7 @@ export function Tags(props) {
                             unmountOnExit
                           >
                             <List component="div" disablePadding>
-                              <Link to="/setting/org/general">
+                              <Link to={ ROUTE_PATH.SETTING + "/org/general"}>
                                 <ListItem button className={classes.nested}>
                                   <ListItemText
                                     primary="Names Tags 1"
@@ -333,7 +334,7 @@ export function Tags(props) {
                                   />
                                 </ListItem>
                               </Link>
-                              <Link to="/setting/org/user-roles">
+                              <Link to={ ROUTE_PATH.SETTING + "/org/user-roles"}>
                                 <ListItem button className={classes.nested}>
                                   <ListItemText
                                     primary="Names Tags 2"
@@ -343,7 +344,7 @@ export function Tags(props) {
                                   />
                                 </ListItem>
                               </Link>
-                              <Link to="/setting/org/drivers">
+                              <Link to={ ROUTE_PATH.SETTING + "/org/drivers"}>
                                 <ListItem button className={classes.nested}>
                                   <ListItemText
                                     primary="Names Tags 3"
@@ -376,7 +377,7 @@ export function Tags(props) {
                             unmountOnExit
                           >
                             <List component="div" disablePadding>
-                              <Link to="/setting/org/general">
+                              <Link to={ ROUTE_PATH.SETTING + "/org/general"}>
                                 <ListItem button className={classes.nested}>
                                   <ListItemText
                                     primary="Names Tags 1"
@@ -386,7 +387,7 @@ export function Tags(props) {
                                   />
                                 </ListItem>
                               </Link>
-                              <Link to="/setting/org/user-roles">
+                              <Link to={ ROUTE_PATH.SETTING + "/org/user-roles"}>
                                 <ListItem button className={classes.nested}>
                                   <ListItemText
                                     primary="Names Tags 2"
@@ -396,7 +397,7 @@ export function Tags(props) {
                                   />
                                 </ListItem>
                               </Link>
-                              <Link to="/setting/org/drivers">
+                              <Link to={ ROUTE_PATH.SETTING + "/org/drivers"}>
                                 <ListItem button className={classes.nested}>
                                   <ListItemText
                                     primary="Names Tags 3"
@@ -430,7 +431,7 @@ export function Tags(props) {
                           >
                             <List component="div" disablePadding>
                               <ListItem button className={classes.nested}>
-                                <Link to="/setting/link-sharing/alert-contacts">
+                                <Link to={ ROUTE_PATH.SETTING + "/link-sharing/alert-contacts"}>
                                   <ListItemText
                                     primary="Alert Contacts"
                                     classes={{
@@ -440,7 +441,7 @@ export function Tags(props) {
                                 </Link>
                               </ListItem>
                               <ListItem button className={classes.nested}>
-                                <Link to="/setting/link-sharing/scheduled-reports">
+                                <Link to={ ROUTE_PATH.SETTING + "/link-sharing/scheduled-reports"}>
                                   <ListItemText
                                     primary="Scheduled Reports"
                                     classes={{
@@ -450,7 +451,7 @@ export function Tags(props) {
                                 </Link>
                               </ListItem>
                               <ListItem button className={classes.nested}>
-                                <Link to="/setting/link-sharing/live-sharing">
+                                <Link to={ ROUTE_PATH.SETTING + "/link-sharing/live-sharing"}>
                                   <ListItemText
                                     primary="Live Sharing"
                                     classes={{
@@ -482,7 +483,7 @@ export function Tags(props) {
                             unmountOnExit
                           >
                             <List component="div" disablePadding>
-                              <Link to="/setting/org/general">
+                              <Link to={ ROUTE_PATH.SETTING + "/org/general"}>
                                 <ListItem button className={classes.nested}>
                                   <ListItemText
                                     primary="Names Tags 1"
@@ -492,7 +493,7 @@ export function Tags(props) {
                                   />
                                 </ListItem>
                               </Link>
-                              <Link to="/setting/org/user-roles">
+                              <Link to={ ROUTE_PATH.SETTING + "/org/user-roles"}>
                                 <ListItem button className={classes.nested}>
                                   <ListItemText
                                     primary="Names Tags 2"
@@ -502,7 +503,7 @@ export function Tags(props) {
                                   />
                                 </ListItem>
                               </Link>
-                              <Link to="/setting/org/drivers">
+                              <Link to={ ROUTE_PATH.SETTING + "/org/drivers"}>
                                 <ListItem button className={classes.nested}>
                                   <ListItemText
                                     primary="Names Tags 3"
