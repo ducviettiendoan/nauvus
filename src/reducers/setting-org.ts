@@ -101,18 +101,18 @@ export default (
         activeDrivers: action.payload.data,
       };
     }
-    case ACTION_TYPES.GET_DEACTIVATED_DRIVER: {
+    case SUCCESS(ACTION_TYPES.GET_DEACTIVATED_DRIVER): {
       return {
         ...state,
-        deactivatedDrivers: action.payload,
+        deactivatedDrivers: action.payload.data,
       };
     }
 
     // Tag Reducer
-    case ACTION_TYPES.GET_TAGS: {
+    case SUCCESS(ACTION_TYPES.GET_TAGS): {
       return {
         ...state,
-        tags: action.payload,
+        tags: action.payload.data,
       };
     }
 
@@ -141,73 +141,6 @@ export default (
       return state;
   }
 };
-
-// Users & Roles Data
-
-
-const userRolesData = () => {
-  let data = [];
-  for (let i = 0; i < 64; i++) {
-    let item = {
-      id: i + 2,
-      key: i + 2,
-      roles: `Standard Admin ${i + 1}`,
-      permissions: `View and Edit`,
-      access: `Entire Organisation${i}`,
-    };
-    data.push(item);
-  }
-  return data;
-};
-
-const pendingInvitationsData = () => {
-  let data = [];
-  for (let i = 0; i < 64; i++) {
-    let item = {
-      id: i + 2,
-      key: i + 2,
-      user: `Pending User ${i + 1}`,
-      email: `jessica.hanson@example.com${i + 1}`,
-      roles: "Read-Only",
-      access: `Room ${i}`,
-    };
-    data.push(item);
-  }
-  return data;
-};
-
-// Drivers Data
-const activeDriversData = () => {
-  let data = [];
-  for (let i = 0; i < 6; i++) {
-    let item = {
-      id: i + 1,
-      name: "Brooklyn Simmons",
-      username: "greenkoala518",
-      tags: "Status",
-      peerGroup: "Group 12",
-      phone: "(208) 555-0112",
-      dlState: "Maine",
-      dlNumber: "558612",
-    };
-    data.push(item);
-  }
-  return data;
-};
-
-const deactivateDriversData = () => {
-  let data = [];
-  for (let i = 0; i < 6; i++) {
-    let item = {
-      id: i + 1,
-      name: "Chal Vee",
-      username: "Chal",
-    };
-    data.push(item);
-  }
-  return data;
-};
-
 // Tags Data
 const tagsData = [
   {
@@ -234,18 +167,18 @@ export const getActiveDrivers = (request) => async (dispatch) => {
   });
 };
 
-export const getDeactivatedDrivers = () => async (dispatch) => {
+export const getDeactivatedDrivers = (request) => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_DEACTIVATED_DRIVER,
-    payload: deactivateDriversData,
+    payload: axios.post(`/api/setting/org/deact-drivers/search`, request),
   });
 };
 
 // Tags Actions
-export const getTags = () => async (dispatch) => {
+export const getTags = (request) => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_TAGS,
-    payload: tagsData,
+    payload: axios.post("/api/settings/org/tags/search", request),
   });
 };
 

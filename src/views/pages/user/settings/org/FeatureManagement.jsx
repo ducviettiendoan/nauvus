@@ -10,6 +10,8 @@ import CardBody from "components/Card/CardBody.js";
 import Button from "components/CustomButtons/Button"
 import {Divider} from "@material-ui/core";
 import AddOutlined from "@material-ui/icons/AddOutlined";
+import DiaLog from "components/CustomDialog/Dialog";
+import SendFeedbackForm from "./feature-management/SendFeedbackForm";
 
 const styles = {
   allCard: {
@@ -63,15 +65,38 @@ const styles = {
     justifyContent: "space-between",
     alignItems: "center"
   },
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    margin: "24px",
+    textAlign: "center"
+  },
 };
 
 const useStyles = makeStyles(styles);
 
 export default function FeatureManagement() {
+  const [openAdd, setOpenAdd] = React.useState(false);
+  const [title, setTitle] = React.useState("");
   const classes = useStyles();
+
+  const handleOpen = (newTitle) => {
+    setOpenAdd(true);
+    setTitle(newTitle)
+  }
   return (
     <div>
       <GridContainer>
+        <DiaLog
+            renderTitle={<h3 className={classes.dialogTitle}>Feedback</h3>}
+            handleClose={() => {setOpenAdd(false)}
+            }
+            open={openAdd}
+        >
+          <SendFeedbackForm title={title} handleClose={() => {setOpenAdd(false)}}/>
+        </DiaLog>
         <GridItem xs={12} sm={12} md={12} className={classes.allCard}>
           <GridContainer className={classes.rowCard}>
             <GridItem xs={12} sm={6} md={6}>
@@ -120,6 +145,7 @@ export default function FeatureManagement() {
                     <Button
                       round
                       className="btn-round-active w-122 h-41"
+                      onClick={() => {handleOpen("Customize Data Shown in Vehicle List")}}
                     >
                       Send Feedback
                     </Button>
@@ -173,6 +199,7 @@ export default function FeatureManagement() {
                     <Button
                       round
                       className="btn-round-active w-122 h-41"
+                      onClick={() => {handleOpen("Customize Data Shown in Vehicle List")}}
                     >
                       Send Feedback
                     </Button>
@@ -228,6 +255,7 @@ export default function FeatureManagement() {
                     <Button
                       round
                       className="btn-round-active w-122 h-41"
+                      onClick={() => {handleOpen("Customize Data Shown in Vehicle List")}}
                     >
                       Send Feedback
                     </Button>
@@ -281,6 +309,7 @@ export default function FeatureManagement() {
                     <Button
                       round
                       className="btn-round-active w-122 h-41"
+                      onClick={() => {handleOpen("Customize Data Shown in Vehicle List")}}
                     >
                       Send Feedback
                     </Button>

@@ -36,7 +36,7 @@ const styles = {
 }
 const useStyles = makeStyles(styles);
 
-export default function InviteUserForm(props) {
+export default function AddAdminForm(props) {
     const classes = useStyles()
     const roles = [
         { id: 'full_admin', label: 'Full Admin', description: "	Full edit access to all dashboard pages." },
@@ -44,16 +44,15 @@ export default function InviteUserForm(props) {
         { id: 'read_only_admin', label: 'Read-only Admin', description: "	View access except billing and finance pages." },
         { id: 'dispatch', label: 'Dispatch', description: "Edit access to only dispatch and routing features." },
         { id: 'maintenance', label: 'Maintenance', description: "	Edit access to only maintenance features." },
-        { id: 'standard_admin_no_dash', label: "Standard Admin (No Dash Cam Access)", description: "Standard Admin but no access to dashcams." }
+        { id: 'standard_admin_no_dash', label: "Standard Admin (No Dash Cam Access)", description: "Standard Admin but no access to dashcams." },
+        { id: 'read_only_admin_no_dash', label: "Read-only Admin (No Dash Cam Access)", description: "Read-only Admin but no access to dashcams." },
+        { id: 'metafleet_admin', label: "Metafleet Admin (No Dash Cam Access)", description: "Metafleet admin can create child organizations and manage child org API keys." },
+        { id: 'metafleet_API_admin', label: "Metafleet API Admin (No Dash Cam Access)", description: "Metafleet API admin can manage child org API keys." },
+
+
     ]
 
-    const access = [
-        { id: "entire", label: "Entire Organization" },
-        { id: "room", label: "Room" },
-        { id: "new", label: "New" }
-    ]
-
-    const initData = { access: "entire", role: "full_admin" }
+    const initData = {role: "full_admin" }
 
 
     const onSubmit = async (values) => {
@@ -91,7 +90,7 @@ export default function InviteUserForm(props) {
                                 </GridItem>
                             </GridContainer>
                             <GridContainer justify="space-between" className={classes.formRow}>
-                                <GridItem xs={6}>
+                                <GridItem xs={12}>
                                     <InputLabel >Role</InputLabel>
                                     <Field
                                         fullWidth
@@ -101,18 +100,6 @@ export default function InviteUserForm(props) {
                                         style={{ margin: 0 }}
                                     >
                                         {roles.map(role => <MenuItem key={role.id} value={role.id}>{role.label}</MenuItem>)}
-                                    </Field>
-                                </GridItem>
-                                <GridItem xs={6}>
-                                    <InputLabel>Access</InputLabel>
-                                    <Field
-                                        fullWidth
-                                        name="access"
-                                        component={Select}
-                                        formControlProps={{ fullWidth: true }}
-                                        style={{ margin: 0 }}
-                                    >
-                                        {access.map(role => <MenuItem key={role.id} value={role.id}>{role.label}</MenuItem>)}
                                     </Field>
                                 </GridItem>
                             </GridContainer>
