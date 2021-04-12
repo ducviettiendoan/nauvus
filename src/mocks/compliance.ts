@@ -123,3 +123,173 @@ mock.onPost("/api/compliance/HOS/missing-certifications").reply((config) => {
 
   return [200, data];
 })
+
+//Status summary
+mock.onPost("/api/compliance/HOS/status-summary").reply((config) => {
+  let pageSize = 10;
+  let page = 1;
+  if (config.data) {
+    const request = JSON.parse(config.data);
+    page = request.page;
+    pageSize = request.pageSize;
+  }
+
+  const startPage = pageSize * page - pageSize;
+  const endPage = pageSize * page > 64 ? 64 : pageSize * page;
+
+  const statusSummaryData = () => {
+    let data = [];
+    for (let i = startPage; i < endPage; i++) {
+      let item = {
+        id: i + 1,
+        key: i + 1,
+        driver: "Ali Singh",
+        offDuty: "23:59",
+        sleeperBerth: "0:00",
+        driving: "0:00",
+        onDuty: "0:00",
+        yardMoveg: "0:00",
+        personalConveyanceg: "0:00"
+      };
+      data.push(item);
+    }
+    return data;
+  }
+
+  const data = {
+    total: 64,
+    page: page,
+    pageSize: pageSize,
+    data: statusSummaryData(),
+  };
+
+  return [200, data];
+})
+
+//unassigned HOS
+mock.onPost("/api/compliance/HOS/unassigned-HOS").reply((config) => {
+  let pageSize = 10;
+  let page = 1;
+  if (config.data) {
+    const request = JSON.parse(config.data);
+    page = request.page;
+    pageSize = request.pageSize;
+  }
+
+  const startPage = pageSize * page - pageSize;
+  const endPage = pageSize * page > 64 ? 64 : pageSize * page;
+
+  const unassignedHOSData = () => {
+    let data = [];
+    for (let i = startPage; i < endPage; i++) {
+      let item = {
+        id: i + 2,
+        key: i + 2,
+        vehicle: "539",
+        unassignedTime: "48m 10s",
+        unassignedDistance: "46km",
+        segments: "2",
+        pending: "0",
+        annotated: "0",
+      };
+      data.push(item);
+    }
+    return data;
+  }
+
+  const data = {
+    total: 64,
+    page: page,
+    pageSize: pageSize,
+    data: unassignedHOSData(),
+  };
+
+  return [200, data];
+})
+
+//unassigned HOS annotated
+mock.onPost("/api/compliance/HOS/unassigned-HOS-annotated").reply((config) => {
+  let pageSize = 7;
+  let page = 1;
+  if (config.data) {
+    const request = JSON.parse(config.data);
+    page = request.page;
+    pageSize = request.pageSize;
+  }
+
+  const startPage = pageSize * page - pageSize;
+  const endPage = pageSize * page > 64 ? 64 : pageSize * page;
+
+  const unassignedHOSAnnotatedData = () => {
+    let data = [];
+    for (let i = startPage; i < endPage; i++) {
+      let item = {
+        id: i + 2,
+        key: i + 2,
+        startTime: "Apr 1, 2021 9:24 PM EDT",
+        duration: "1m 22s",
+        distance: "0.0 kWh",
+        trip: {
+          from: "Quik X Mississauga",
+          to: "Quik X Mississauga"
+        },
+        annotation: "Yard Move at Quik X  Mississauga",
+      };
+      data.push(item);
+    }
+    return data;
+  }
+
+  const data = {
+    total: 64,
+    page: page,
+    pageSize: pageSize,
+    data: unassignedHOSAnnotatedData(),
+  };
+
+  return [200, data];
+})
+
+//unassigned HOS unassigned
+mock.onPost("/api/compliance/HOS/unassigned-HOS-unassigned").reply((config) => {
+  let pageSize = 7;
+  let page = 1;
+  if (config.data) {
+    const request = JSON.parse(config.data);
+    page = request.page;
+    pageSize = request.pageSize;
+  }
+
+  const startPage = pageSize * page - pageSize;
+  const endPage = pageSize * page > 64 ? 64 : pageSize * page;
+
+  const unassignedHOSUnassignedData = () => {
+    let data = [];
+    for (let i = startPage; i < endPage; i++) {
+      let item = {
+        id: i + 2,
+        key: i + 2,
+        startTime: "Apr 1, 2021 9:24 PM EDT",
+        duration: "1m 22s",
+        distance: "0.0 kWh",
+        trip: {
+          from: "Quik X Mississauga",
+          to: "Quik X Mississauga"
+        },
+        cameraId: "-",
+        annotation: "Yard Move at Quik X  Mississauga",
+      };
+      data.push(item);
+    }
+    return data;
+  }
+
+  const data = {
+    total: 64,
+    page: page,
+    pageSize: pageSize,
+    data: unassignedHOSUnassignedData(),
+  };
+
+  return [200, data];
+})
