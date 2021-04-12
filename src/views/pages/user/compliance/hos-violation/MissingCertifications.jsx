@@ -12,6 +12,7 @@ import {connect} from 'react-redux';
 import {getMissingCertifications, getViolations} from "reducers/compliance";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
+import {Violations} from "./Violations";
 
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
@@ -192,12 +193,22 @@ export function MissingCertifications(props) {
     },
   ]
 
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize)
+    props.getMissingCertifications({page, pageSize});
+  }
+
+  const onShowSizeChange = (page, pageSize) => {
+    props.getMissingCertifications({page, pageSize});
+    console.log(page, pageSize)
+  }
+
   return (
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <div>
-            {props.data.length > 0 && <Table
+            <Table
               renderTitle={
                 <Grid container className={classes.gridTitle}>
                   <Grid item xs={12} sm={12} md={6}>
@@ -226,6 +237,13 @@ export function MissingCertifications(props) {
                   </Grid>
                 </Grid>
               }
+              pagination={{
+                total: props.total,
+                current: props.page,
+                pageSize: props.pageSize,
+                onChange: onPageChange,
+                onShowSizeChange: onShowSizeChange
+              }}
               columns={columns}
               dataSource={props.data}
               onHeaderRow={{
@@ -235,7 +253,6 @@ export function MissingCertifications(props) {
                 className: classes.tableRow
               }}
             />
-            }
           </div>
         </GridItem>
       </GridContainer>
@@ -243,11 +260,17 @@ export function MissingCertifications(props) {
   );
 }
 
-export default connect(
-  ({compliance}: IRootState) => ({
-    data: compliance.missingCertifications
-  }),
-  {
-    getMissingCertifications
-  }
-)(MissingCertifications);
+const mapStateToProps = ({compliance}) => {
+  return {
+    data: compliance.missingCertifications.data,
+    page: compliance.missingCertifications.page,
+    total: compliance.missingCertifications.total,
+    pageSize: compliance.missingCertifications.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getMissingCertifications
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MissingCertifications);

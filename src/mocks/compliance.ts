@@ -83,3 +83,43 @@ mock.onPost("/api/compliance/HOS/violations").reply((config) => {
 
   return [200, data];
 })
+
+mock.onPost("/api/compliance/HOS/missing-certifications").reply((config) => {
+  let pageSize = 10;
+  let page = 1;
+  if (config.data) {
+    const request = JSON.parse(config.data);
+    page = request.page;
+    pageSize = request.pageSize;
+  }
+
+  const startPage = pageSize * page - pageSize;
+  const endPage = pageSize * page > 64 ? 64 : pageSize * page;
+
+  const missingCertificationsData = () => {
+    let data = [];
+    for (let i = startPage; i < endPage; i++) {
+      let item = {
+        id: i + 2,
+        key: i + 2,
+        driver: "John Smith",
+        violationsType: "Missing Driver Certification",
+        date: "Aug 21, 2010",
+        start: "9:06AM",
+        end: "9:23AM",
+        duration: "17m 28s"
+      };
+      data.push(item);
+    }
+    return data;
+  }
+
+  const data = {
+    total: 64,
+    page: page,
+    pageSize: pageSize,
+    data: missingCertificationsData(),
+  };
+
+  return [200, data];
+})

@@ -61,12 +61,14 @@ export default (state: ComplianceState = initialState, action): ComplianceState 
   switch (action.type) {
     case REQUEST(ACTION_TYPES.GET_DRIVER_HOS):
     case REQUEST(ACTION_TYPES.GET_VIOLATIONS):
+    case REQUEST(ACTION_TYPES.GET_MISSING_CERTIFICATIONS):
       return {
         ...state,
         loading: true
       }
     case FAILURE(ACTION_TYPES.GET_DRIVER_HOS):
     case FAILURE(ACTION_TYPES.GET_VIOLATIONS):
+    case FAILURE(ACTION_TYPES.GET_MISSING_CERTIFICATIONS):
       return {
         ...state,
         loading: false,
@@ -82,6 +84,12 @@ export default (state: ComplianceState = initialState, action): ComplianceState 
       return {
         ...state,
         violations: action.payload.data
+      };
+
+    case SUCCESS(ACTION_TYPES.GET_MISSING_CERTIFICATIONS):
+      return {
+        ...state,
+        missingCertifications: action.payload.data
       };
 
     //HOS Audit reducer
@@ -207,24 +215,6 @@ const HOSAuditTransferData = () => {
   return data;
 }
 
-const missingCertificationsData = () => {
-  let data = [];
-  for (let i = 0; i < 20; i++) {
-    let item = {
-      id: i + 2,
-      key: i + 2,
-      driver: "John Smith",
-      violationsType: "Missing Driver Certification",
-      date: "Aug 21, 2010",
-      start: "9:06AM",
-      end: "9:23AM",
-      duration: "17m 28s"
-    };
-    data.push(item);
-  }
-  return data;
-}
-
 //Compliance dashboard
 const driverEfficiencyData = () => {
   let data = [];
@@ -294,10 +284,10 @@ export const getViolations = (request) => async dispatch => {
   });
 };
 
-export const getMissingCertifications = () => async dispatch => {
+export const getMissingCertifications = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_MISSING_CERTIFICATIONS,
-    payload: missingCertificationsData
+    payload: axios.post(`/api/compliance/HOS/missing-certifications`, request),
   });
 };
 
