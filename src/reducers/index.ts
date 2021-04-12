@@ -13,6 +13,7 @@ import settingDeveloper, { SettingDeveloperState } from "./setting-developer";
 import fuelEnergy, { FuelEnergyState } from './fuel-energy';
 import compliance, { ComplianceState } from "./compliance";
 import driverRecord, { DriverRecordState } from "./setting-driver-record"
+import driverHOSReport, { DriverHOSReportState } from "./driver-hos-report"
 
 export interface IRootState {
   readonly authentication: AuthenticationState;

@@ -38,8 +38,9 @@ const styles = {
   },
   cardTable: {
     paddingBottom: "40px",
+    maxWidth: "calc(100vw - 30px)",
     overflow: "unset",
-    overflowY: "unset"
+    overflowY: "unset",
   },
   checkbox: {
     textAlign: 'center'
@@ -54,6 +55,9 @@ const styles = {
     cursor: "pointer",
     marginLeft: "10px"
   },
+  tableWrapper: {
+    overflowX: "auto"
+  }
 }
 
 const useStyles = makeStyles(styles);
@@ -239,88 +243,90 @@ class TableV1 extends React.Component {
       <div>
         <Card testimonial className={classes.cardTable}>
           {renderTitle && renderTitle}
-          <Table >
-            <TableHead {...onHeaderRow}>
-              <TableRow>
-                {rowSelection && (
-                  <TableCell className={classes.checkbox}>
-                    <Checkbox
-                      tabIndex={-1}
-                      checked={selectedRowKeys.length > 0 ? true : false}
-                      checkedIcon={data.length == selectedRowKeys.length ? <CheckSquareOutlined /> : <MinusSquareOutlined />}
-                      onChange={this.onSelectAll}
-                      classes={{
-                        checked: classes.checked,
-                        root: classes.checkRoot
-                      }}
-                    />
-                  </TableCell>
-                )}
-                {columns.map((column) => {
-                  return (
-                    <TableCell key={column.key} {...column.onHeaderCell}>
-                      {(column.title ? column.title : null)}
+          <div className={classes.tableWrapper}>
+            <Table >
+              <TableHead {...onHeaderRow}>
+                <TableRow>
+                  {rowSelection && (
+                    <TableCell className={classes.checkbox}>
+                      <Checkbox
+                        tabIndex={-1}
+                        checked={selectedRowKeys.length > 0 ? true : false}
+                        checkedIcon={data.length == selectedRowKeys.length ? <CheckSquareOutlined /> : <MinusSquareOutlined />}
+                        onChange={this.onSelectAll}
+                        classes={{
+                          checked: classes.checked,
+                          root: classes.checkRoot
+                        }}
+                      />
                     </TableCell>
+                  )}
+                  {columns.map((column) => {
+                    return (
+                      <TableCell key={column.key} {...column.onHeaderCell}>
+                        {(column.title ? column.title : null)}
+                      </TableCell>
+                    )
+                  })}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data.length <= 0 ? (
+                  <TableRow>
+                    <TableCell className={classes.dataEmpty} colSpan={columns.length + 1}>No Data</TableCell>
+                  </TableRow>
+                ) : data.map((record, index) => {
+                  let checked = false;
+                  if (rowSelection) {
+                    if (record.key) checked = selectedRowKeys.includes(record.key);
+                    else checked = selectedRowKeys.includes(index);
+                  }
+                  return (
+
+                    <React.Fragment>
+                      {expandedRowRender ? (
+                        <TableRowExpandable
+                          index={index}
+                          onBodyRow={onBodyRow}
+                          checked={checked}
+                          record={record}
+                          columns={columns}
+                          rowSelection={rowSelection}
+                          onSelectChange={this.onSelectChange}
+                          expandedRowRender={expandedRowRender}
+                        />
+                      ) : (
+                        <TableRow key={index} {...onBodyRow}>
+                          {rowSelection && (
+                            <TableCell className={classes.checkbox}>
+                              <Checkbox
+                                tabIndex={-1}
+                                checked={checked}
+                                onChange={() => this.onSelectChange(record, index)}
+                                checkedIcon={<CheckSquareOutlined />}
+                                classes={{
+                                  checked: classes.checked,
+                                  root: classes.checkRoot
+                                }}
+                              />
+                            </TableCell>
+                          )}
+                          { columns.map(column => {
+                            if (column.render) {
+                              return <TableCell key={column.key} {...column.onCell} >{column.render(record[column.key], record, index)}</TableCell>
+                            }
+                            return <TableCell key={column.key} {...column.onCell}>{record[column.key]} </TableCell>
+                          })}
+                        </TableRow>
+                      )}
+
+                    </React.Fragment>
+
                   )
                 })}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.length <= 0 ? (
-                <TableRow>
-                  <TableCell className={classes.dataEmpty} colSpan={columns.length + 1}>No Data</TableCell>
-                </TableRow>
-              ) : data.map((record, index) => {
-                let checked = false;
-                if (rowSelection) {
-                  if (record.key) checked = selectedRowKeys.includes(record.key);
-                  else checked = selectedRowKeys.includes(index);
-                }
-                return (
-
-                  <React.Fragment>
-                    {expandedRowRender ? (
-                      <TableRowExpandable
-                        index={index}
-                        onBodyRow={onBodyRow}
-                        checked={checked}
-                        record={record}
-                        columns={columns}
-                        rowSelection={rowSelection}
-                        onSelectChange={this.onSelectChange}
-                        expandedRowRender={expandedRowRender}
-                      />
-                    ) : (
-                      <TableRow key={index} {...onBodyRow}>
-                        {rowSelection && (
-                          <TableCell className={classes.checkbox}>
-                            <Checkbox
-                              tabIndex={-1}
-                              checked={checked}
-                              onChange={() => this.onSelectChange(record, index)}
-                              checkedIcon={<CheckSquareOutlined />}
-                              classes={{
-                                checked: classes.checked,
-                                root: classes.checkRoot
-                              }}
-                            />
-                          </TableCell>
-                        )}
-                        { columns.map(column => {
-                          if (column.render) {
-                            return <TableCell key={column.key} {...column.onCell} >{column.render(record[column.key], record, index)}</TableCell>
-                          }
-                          return <TableCell key={column.key} {...column.onCell}>{record[column.key]} </TableCell>
-                        })}
-                      </TableRow>
-                    )}
-
-                  </React.Fragment>
-
-                )
-              })}
-            </TableBody>
-          </Table>
+              </TableBody>
+            </Table>
+          </div>
           {renderFooter && renderFooter}
         </Card>
 

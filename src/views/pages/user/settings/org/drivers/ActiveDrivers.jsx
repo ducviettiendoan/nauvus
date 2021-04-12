@@ -64,9 +64,6 @@ const styles = {
     fontWeight: 400,
     fontSize: '16px',
     lineHeight: '24px',
-    marginTop: '14px',
-    marginLeft: '24px',
-    paddingTop: '12px !important',
     color: '#25345C',
   },
   textTags: {
@@ -153,7 +150,7 @@ export function ActiveDrivers(props) {
       title: 'Username',
       key: 'username',
       onHeaderCell: { className: classes.onHeaderCell },
-      render: cell => <div className={classes.textEmail}>{cell}</div>
+      render: cell => <div className={classes.textSub}>{cell}</div>
     },
     {
       title: 'Tags',
@@ -165,25 +162,25 @@ export function ActiveDrivers(props) {
       title: 'Peer Group',
       key: 'peerGroup',
       onHeaderCell: { className: classes.onHeaderCell },
-      render: cell => <div>{cell}</div>
+      render: cell => <div className={classes.textSub}>{cell}</div>
     },
     {
       title: 'Phone',
       key: 'phone',
       onHeaderCell: { className: classes.onHeaderCell },
-      render: cell => <div>{cell}</div>
+      render: cell => <div className={classes.textSub}>{cell}</div>
     },
     {
       title: 'DL State',
       key: 'dlState',
       onHeaderCell: { className: classes.onHeaderCell },
-      render: cell => <div>{cell}</div>
+      render: cell => <div className={classes.textSub}>{cell}</div>
     },
     {
       title: 'DL Number',
       key: 'dlNumber',
       onHeaderCell: { className: classes.onHeaderCell },
-      render: cell => <div>{cell}</div>
+      render: cell => <div className={classes.textSub}>{cell}</div>
     },
     {
       title: 'Actions',
@@ -237,7 +234,7 @@ export function ActiveDrivers(props) {
               </GridContainer>
             </GridItem>
             <GridItem>
-              <ToolboxButton placeholder="Search gateways" showFilter showTrash />
+              <ToolboxButton placeholder="Search drivers" showFilter showTrash />
             </GridItem>
           </GridContainer>
 

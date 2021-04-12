@@ -13,7 +13,7 @@ import {connect} from 'react-redux';
 import {IRootState} from 'reducers';
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import {getDriversData, setOpenDrawer} from "reducers/overview"
+import {getDriversData, getVehiclesData, setOpenDrawer} from "reducers/overview"
 import DotIcon from "components/Icons/DotIcon";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import CloseIcon from "components/Icons/CloseIcon";
@@ -242,12 +242,19 @@ export function Drivers(props) {
     },
   ]
 
-  const onBackDriver = () => {
-    props.setOpenDrawer(false)
-  }
   const viewDetail = () => {
     props.setOpenDrawer(!props.openDrawer)
     props.history.push("/o/drivers/123456789")
+  }
+
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize)
+    props.getDriversData({page, pageSize});
+  }
+
+  const onShowSizeChange = (page, pageSize) => {
+    props.getDriversData({page, pageSize});
+    console.log(page, pageSize)
   }
 
   return (
@@ -261,7 +268,7 @@ export function Drivers(props) {
                 <DriverDetail/>
                 :
                 (
-                  props.data.length > 0 && <Table
+                  <Table
                     renderTitle={
                       <Grid container className={classes.gridTitle}>
                         <Grid item xs={12} sm={12} md={6}>
@@ -293,6 +300,13 @@ export function Drivers(props) {
                         </Grid>
                       </Grid>
                     }
+                    pagination={{
+                      total: props.total,
+                      current: props.page,
+                      pageSize: props.pageSize,
+                      onChange: onPageChange,
+                      onShowSizeChange: onShowSizeChange
+                    }}
                     columns={columns}
                     dataSource={props.data}
                     onHeaderRow={{
@@ -313,17 +327,21 @@ export function Drivers(props) {
   );
 }
 
-export default connect(
-  ({authentication, vehicle, overview}: IRootState) => ({
+const mapStateToProps = ({authentication, overview}) => {
+  return {
+    data: overview.driversData.data,
+    page: overview.driversData.page,
+    total: overview.driversData.total,
+    pageSize: overview.driversData.pageSize,
     isAuthenticated: authentication.isAuthenticated,
     user: authentication.user,
-    // vehicles: vehicle.vehicles,
-    data: overview.driversData,
-    openDriverDetails : overview.openDriverDetails
-  }),
-  {
-    // loadVehicles,
-    getDriversData,
-    setOpenDrawer
-  }
-)(Drivers);
+    openDriverDetails: overview.openDriverDetails,
+  };
+};
+
+const mapDispatchToProps = {
+  getDriversData,
+  setOpenDrawer
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Drivers);

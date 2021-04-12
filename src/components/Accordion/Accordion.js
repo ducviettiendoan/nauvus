@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
@@ -20,9 +20,9 @@ export default function Accordion(props) {
     setActive(expanded ? panel : -1);
   };
   const classes = useStyles();
-  const { collapses, expansionPanelClasses, expansionSummaryClasses, expansionPanelRounded } = props;
+  const {collapses, expansionPanelClasses, expansionSummaryClasses, expansionPanelRounded} = props;
   return (
-    <div className={{ root: classes.root }, { ...expansionPanelClasses }}>
+    <div className={{root: classes.root}, {...expansionPanelClasses}}>
       {collapses.map((prop, key) => {
         return (
           <ExpansionPanel
@@ -32,16 +32,16 @@ export default function Accordion(props) {
             classes={{
               root: classes.expansionPanel,
               expanded: classes.expansionPanelExpanded,
-            }, { ...expansionPanelRounded }}
+            }, {...expansionPanelRounded}}
           >
             <ExpansionPanelSummary
-              expandIcon={<ExpandMore />}
+              expandIcon={<ExpandMore/>}
               classes={{
                 root: classes.expansionPanelSummary,
                 expanded: classes.expansionPanelSummaryExpaned,
                 content: classes.expansionPanelSummaryContent,
                 expandIcon: classes.expansionPanelSummaryExpandIcon
-              }, { ...expansionSummaryClasses }}
+              }, {...expansionSummaryClasses}}
             >
               <h4 className={classes.title}>{prop.title}</h4>
             </ExpansionPanelSummary>

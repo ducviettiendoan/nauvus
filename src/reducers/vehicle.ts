@@ -134,7 +134,7 @@ const dumpVehicleMockData = () => {
   let data = [];
   for (let i = 0; i < 5; i++) {
     let item = {
-      id: "GR9X-6AN-3N5",
+      id: `GR9X-6AN-3N5 ${i}`,
       vehicle: "Vehicle 101",
       speed: 43
     };

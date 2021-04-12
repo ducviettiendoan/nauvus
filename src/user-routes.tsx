@@ -1,15 +1,18 @@
 import { ROUTE_PATH } from "config/constants";
 
 import Overview from "views/pages/user/overview/Overview";
+import VehicleDetails from "views/pages/user/overview/vehicle/VehicleDetails"
 import Alerts from "views/pages/user/alerts/Alerts";
 import ComplianceDashboard from "views/pages/user/compliance/ComplianceDashboard";
 import DriverHOS from "views/pages/user/compliance/DriverHOS";
+import DriverHOSReport from "views/pages/user/compliance/driver-hos/DriverHOSReport";
 import HOSVialations from "views/pages/user/compliance/HOSViolations";
 import UnassignedHOS from "views/pages/user/compliance/UnassignedHOS";
 import DriverHOSAudit from "views/pages/user/compliance/DriverHOSAudit";
 import DutyStatusSummary from "views/pages/user/compliance/DutyStatusSummary";
 import HOSAuditTransfer from "views/pages/user/compliance/HOSAuditTransfer";
 import FuelPurchase from "views/pages/user/fuel-energy/FuelPurchase";
+import UnassignedHOSReport from "views/pages/user/compliance/unassigned-hos/UnassignedHOSReport"
 
 import Dispatch from "views/pages/user/dispatch/Dispatch";
 import Documents from "views/pages/user/documents/Documents";
@@ -63,6 +66,13 @@ const dashRoutes = [
         layout: ROUTE_PATH.OVERVIEW
       },
       {
+        path: "/vehicle/:id",
+        name: "Vehicle Details",
+        component: VehicleDetails,
+        layout: ROUTE_PATH.OVERVIEW,
+        isFixed: true,
+      },
+      {
         path: "/assets",
         name: "Assets",
         component: Assets,
@@ -81,7 +91,6 @@ const dashRoutes = [
         component: DriverRecord,
         layout: ROUTE_PATH.OVERVIEW,
         isFixed: true,
-        hideInSideBar: true,
       },
       {
         path: "/drivers",
@@ -130,6 +139,13 @@ const dashRoutes = [
         layout: ROUTE_PATH.USER
       },
       {
+        path: "/compliance/driver-hos-report",
+        name: "Driver HOS Report - Ali Singh",
+        component: DriverHOSReport,
+        layout: ROUTE_PATH.USER,
+        isFixed: true
+      },
+      {
         path: "/compliance/hos-vialations",
         name: "HOS Vialations",
         component: HOSVialations,
@@ -140,6 +156,14 @@ const dashRoutes = [
         name: "Unassigned HOS",
         component: UnassignedHOS,
         layout: ROUTE_PATH.USER
+      },
+      {
+        path: "/compliance/unassigned-hos-report/:id",
+        name: "Unassigned HOS Report",
+        component: UnassignedHOSReport,
+        layout: ROUTE_PATH.USER,
+        isFixed: true,
+        hideInSideBar: true,
       },
       {
         path: "/compliance/driver-hos-audit",

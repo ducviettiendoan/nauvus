@@ -7,7 +7,6 @@ import CloseIcon from "components/Icons/CloseIcon";
 import Chip from "@material-ui/core/Chip";
 import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
-import {IRootState} from 'reducers';
 import {connect} from 'react-redux';
 import {getStatusSummary, getUnassignedHOS} from "reducers/compliance";
 import GridContainer from "components/Grid/GridContainer";
@@ -161,12 +160,24 @@ export function UnassignedHOS(props) {
     {key: 1, label: 'Cycle Remaining'},
   ]);
 
+  const onShowSizeChange = (page, pageSize) => {
+    props.getUnassignedHOS({ page, pageSize }); 
+  }
+
+  const onPageChange = (page, pageSize) => {
+    props.getUnassignedHOS({ page, pageSize }); 
+  }
+
   const handleDelete = (chipToDelete) => () => {
     setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
   };
 
   const handleClearAll = () => {
     setChipData([])
+  }
+
+  const viewDetail = () => {
+    props.history.push("/u/compliance/unassigned-hos-report/123456789")
   }
 
   const columns = [
@@ -273,7 +284,8 @@ export function UnassignedHOS(props) {
             </GridItem>
           </GridContainer>
           <div>
-            {props.data.length > 0 && <Table
+            {
+             <Table
               renderTitle={
                 <Grid container className={classes.gridTitle}>
                   <Grid item xs={12} sm={12} md={6}>
@@ -302,12 +314,20 @@ export function UnassignedHOS(props) {
                   </Grid>
                 </Grid>
               }
+              pagination={{
+                total: props.total,
+                current: props.page,
+                pageSize: props.pageSize,
+                onChange: onPageChange,
+                onShowSizeChange: onShowSizeChange
+              }}
               columns={columns}
               dataSource={props.data}
               onHeaderRow={{
                 className: classes.onHeaderRow
               }}
               onBodyRow={{
+                onClick: viewDetail,
                 className: classes.tableRow
               }}
             />
@@ -319,11 +339,18 @@ export function UnassignedHOS(props) {
   );
 }
 
-export default connect(
-  ({compliance}: IRootState) => ({
-    data: compliance.unassignedHOS
-  }),
-  {
-    getUnassignedHOS
-  }
-)(UnassignedHOS);
+const mapStateToProps = ({ compliance }) => {
+  return {
+    data: compliance.unassignedHOS.data,
+    page: compliance.unassignedHOS.page,
+    total: compliance.unassignedHOS.total,
+    pageSize: compliance.unassignedHOS.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getUnassignedHOS, 
+  getStatusSummary
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UnassignedHOS);

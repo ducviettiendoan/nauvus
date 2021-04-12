@@ -96,6 +96,9 @@ const styles = {
     '&:nth-of-type(even)': {
       backgroundColor: "#fbfbfb",
     },
+    '&:hover': {
+      cursor: "pointer"
+    }
   },
 };
 
@@ -195,14 +198,6 @@ export function APITraffic(props) {
 
   ]
 
-  const rowEvents = {
-    onClick: (e, row, rowIndex) => {
-      props.onShowDetail();
-    }
-  };
-
-  console.log(props.chartData)
-
   return (
     <GridContainer className="developer-metric-wrapper">
       <GridItem xs={12} sm={12} md={12}>
@@ -241,7 +236,7 @@ export function APITraffic(props) {
                   <GridItem className={classes.bigCardGridItem} xs={9}>
                     <Card className={classes.bigCard}>
                       <CardBody>
-                        {/* <EChart data={props.chartData}/> */}
+                         <EChart data={props.chartData}/>
                       </CardBody>
                     </Card>
                   </GridItem>
@@ -293,7 +288,8 @@ export function APITraffic(props) {
                   className: classes.onHeaderRow
                 }}
                 onBodyRow={{
-                  className: classes.tableRow
+                  className: classes.tableRow,
+                  onClick: props.onShowDetail,
                 }}
               />
             </Card>
@@ -307,7 +303,6 @@ export function APITraffic(props) {
 }
 
 const mapStateToProps = ({ settingDeveloper }) => {
-  console.log(settingDeveloper.chartData)
   return {
     data: settingDeveloper.apiTraffics.data,
     page: settingDeveloper.apiTraffics.page,

@@ -8,3 +8,5 @@ import "./setting-driver-record"
 import "./fuel-energy";
 import "./fuel-purchase";
 import "./driver-efficiency";
+import "./overview";
+import "./compliance"

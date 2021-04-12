@@ -36,24 +36,15 @@ const styles = {
 }
 const useStyles = makeStyles(styles);
 
-export default function InviteUserForm(props) {
+export default function AddWifiForm(props) {
     const classes = useStyles()
-    const roles = [
-        { id: 'full_admin', label: 'Full Admin', description: "	Full edit access to all dashboard pages." },
-        { id: 'standard_admin', label: 'Standard Admin', description: "Edit access except billing and finance pages." },
-        { id: 'read_only_admin', label: 'Read-only Admin', description: "	View access except billing and finance pages." },
-        { id: 'dispatch', label: 'Dispatch', description: "Edit access to only dispatch and routing features." },
-        { id: 'maintenance', label: 'Maintenance', description: "	Edit access to only maintenance features." },
-        { id: 'standard_admin_no_dash', label: "Standard Admin (No Dash Cam Access)", description: "Standard Admin but no access to dashcams." }
+    const encryptions = [
+        {id: "open", label: "Open"},
+        {id: "wpa_psk", label: "WPA (PSK) - Encrypted"},
+        {id: "wpa_enterprise", label: "WPA Enterprise - Encrypted"},
     ]
 
-    const access = [
-        { id: "entire", label: "Entire Organization" },
-        { id: "room", label: "Room" },
-        { id: "new", label: "New" }
-    ]
-
-    const initData = { access: "entire", role: "full_admin" }
+    const initData = { encryption: "open" }
 
 
     const onSubmit = async (values) => {
@@ -61,7 +52,7 @@ export default function InviteUserForm(props) {
     }
     const validate = (values) => {
         const errors = {};
-        if (!values.email) errors.email = 'Email must not be empty!';
+        if (!values.name) errors.name = 'Network name must not be empty!';
         return errors;
     };
     return(
@@ -71,58 +62,38 @@ export default function InviteUserForm(props) {
                 initialValues={initData}
                 validate={validate}
                 render={({ handleSubmit, reset, submitting, pristine, values }) => {
-                    let role = null;
-                    if (values && values.role) {
-                        let index = roles.findIndex(r => r.id == values.role)
-                        if (index > -1) role = roles[index];
+                    let encryption = null;
+                    if (values && values.encryption) {
+                        let index = encryptions.findIndex(e => e.id == values.encryption)
+                        if (index > -1) encryption = encryptions[index];
                     }
                     return (
                         <form onSubmit={handleSubmit} noValidate>
                             <GridContainer justify="space-between" className={classes.formRow}>
                                 <GridItem xs={12}>
-                                    <InputLabel required>Email</InputLabel>
+                                    <InputLabel required>Network Name</InputLabel>
                                     <Field
                                         fullWidth
                                         required
-                                        name="email"
+                                        name="name"
+                                        placeholder="Network"
                                         type="text"
                                         component={TextField}
                                     />
                                 </GridItem>
                             </GridContainer>
                             <GridContainer justify="space-between" className={classes.formRow}>
-                                <GridItem xs={6}>
-                                    <InputLabel >Role</InputLabel>
-                                    <Field
-                                        fullWidth
-                                        name="role"
-                                        component={Select}
-                                        formControlProps={{ fullWidth: true }}
-                                        style={{ margin: 0 }}
-                                    >
-                                        {roles.map(role => <MenuItem key={role.id} value={role.id}>{role.label}</MenuItem>)}
-                                    </Field>
-                                </GridItem>
-                                <GridItem xs={6}>
-                                    <InputLabel>Access</InputLabel>
-                                    <Field
-                                        fullWidth
-                                        name="access"
-                                        component={Select}
-                                        formControlProps={{ fullWidth: true }}
-                                        style={{ margin: 0 }}
-                                    >
-                                        {access.map(role => <MenuItem key={role.id} value={role.id}>{role.label}</MenuItem>)}
-                                    </Field>
-                                </GridItem>
-                            </GridContainer>
-                            <GridContainer justify="space-between" className={classes.formRow}>
                                 <GridItem xs={12}>
-                                    <InputLabel >Permissions</InputLabel>
-                                    <p className={classes.formText}>
-                                        {role && role.label}
-                                        <span className={classes.formTextSpan}>{role && role.description}</span>
-                                    </p>
+                                    <InputLabel >Encryption Type</InputLabel>
+                                    <Field
+                                        fullWidth
+                                        name="encryption"
+                                        component={Select}
+                                        formControlProps={{ fullWidth: true }}
+                                        style={{ margin: 0 }}
+                                    >
+                                        {encryptions.map(encryption => <MenuItem key={encryption.id} value={encryption.id}>{encryption.label}</MenuItem>)}
+                                    </Field>
                                 </GridItem>
                             </GridContainer>
                             <div className={classes.selectButton}>

@@ -12,8 +12,18 @@ import LiveIconWhite from "../../../../components/Icons/LiveIconWhite";
 import RoundedTabs from "../../../../components/CustomTabs/RoundedTabs";
 import Violations from "./hos-violation/Violations";
 import MissingCertifications from "./hos-violation/MissingCertifications";
+import classNames from "classnames";
+import Grow from "@material-ui/core/Grow";
+import Paper from "@material-ui/core/Paper";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import MenuList from "@material-ui/core/MenuList";
+import MenuItem from "@material-ui/core/MenuItem";
+import Popper from "@material-ui/core/Popper";
+import customDropdownStyle from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle.js";
+import Users from "../settings/org/user-roles/Users";
 
 const useStyles = makeStyles((theme) => ({
+  ...customDropdownStyle(theme),
   topHeader: {
     display: "flex",
     justifyContent: "space-between",
@@ -42,9 +52,20 @@ export default function HOSViolations() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
+  const [openMore, setOpenMore] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
   const handleChangeTab = (newValue) => {
     setValue(newValue);
   };
+
+  const handleCloseMore = () => setOpenMore(false)
+  const handleOpenMore = (event) => {
+    setOpenMore(true)
+    setAnchorEl(event.currentTarget);
+  }
+
+  const dropdownItem = classNames(classes.dropdownItem, classes.grayHover);
 
   return (
     <div>
@@ -64,9 +85,40 @@ export default function HOSViolations() {
                     justIcon
                     round
                     className={`btn-36 ${classes.moreAction} mr-2`}
+                    onClick={handleOpenMore}
                   >
                     <MoreHorizontalIcon/>
                   </Button>
+                  <Popper
+                    open={openMore}
+                    anchorEl={anchorEl}
+                    transition
+                    disablePortal
+                    placement="bottom-end"
+                    className={classNames({
+                      [classes.popperClose]: !anchorEl,
+                      [classes.popperResponsive]: true,
+                      [classes.popperNav]: true
+                    })}
+                  >
+                    {({ TransitionProps }) => (
+                      <Grow
+                        {...TransitionProps}
+                        id="profile-menu-list"
+                        style={{ transformOrigin: "0 0 0" }}
+                      >
+                        <Paper className={classes.dropdown}>
+                          <ClickAwayListener onClickAway={handleCloseMore}>
+                            <MenuList role="menu">
+                              <MenuItem className={dropdownItem} onClick={handleCloseMore} > Schedule Emailed Reports </MenuItem>
+                              <MenuItem className={dropdownItem} onClick={handleCloseMore} > Download CSV </MenuItem>
+                              <MenuItem className={dropdownItem} onClick={handleCloseMore} > Print </MenuItem>
+                            </MenuList>
+                          </ClickAwayListener>
+                        </Paper>
+                      </Grow>
+                    )}
+                  </Popper>
                   <Button round className="btn-round-green w-84">
                     <LiveIconWhite/>
                     Live
@@ -75,7 +127,7 @@ export default function HOSViolations() {
               </GridContainer>
             </GridItem>
           </GridContainer>
-          {value === 0 && <Violations />}
+          {value === 0 && <Violations/>}
           {value === 1 && <MissingCertifications/>}
         </GridItem>
       </GridContainer>
