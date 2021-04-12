@@ -221,6 +221,16 @@ function LogsTableDetails(props) {
     }
   }
 
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize)
+    props.getActivityLogsData({page, pageSize});
+  }
+
+  const onShowSizeChange = (page, pageSize) => {
+    props.getActivityLogsData({page, pageSize});
+    console.log(page, pageSize)
+  }
+
   return (
     <Table
       renderTitle={
@@ -302,6 +312,13 @@ function LogsTableDetails(props) {
           </GridContainer>
         </div>
       }
+      pagination={{
+        total: props.total,
+        current: props.page,
+        pageSize: props.pageSize,
+        onChange: onPageChange,
+        onShowSizeChange: onShowSizeChange
+      }}
       columns={columns}
       dataSource={props.data}
       // rowSelection
@@ -324,7 +341,10 @@ function LogsTableDetails(props) {
 
 const mapStateToProps = ({ overview }) => {
   return {
-    data: overview.activityLogsData
+    data: overview.activityLogsData.data,
+    page: overview.activityLogsData.page,
+    total: overview.activityLogsData.total,
+    pageSize: overview.activityLogsData.pageSize,
   };
 };
 

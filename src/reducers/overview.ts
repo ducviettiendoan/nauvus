@@ -24,12 +24,14 @@ const initialState = {
   openDrawer: true,
   openDriver: false,
   openDriverDetails: false,
+  distance: 100,
   vehiclesData: [],
   trailersData: [],
   driversData: [],
   activityLogsData: [],
   chartData: [],
-  distance: 100,
+  errorMessage: null,
+  loading: false,
 };
 
 export type OverviewState = Readonly<typeof initialState>;
@@ -37,6 +39,45 @@ export type OverviewState = Readonly<typeof initialState>;
 // Reducer
 export default (state: OverviewState = initialState, action): OverviewState => {
   switch (action.type) {
+    case REQUEST(ACTION_TYPES.GET_VEHICLE_DATA):
+    case REQUEST(ACTION_TYPES.GET_TRAILERS_DATA):
+    case REQUEST(ACTION_TYPES.GET_DRIVERS_DATA):
+    case REQUEST(ACTION_TYPES.GET_ACTIVITY_LOGS_DATA):
+      return {
+        ...state,
+        loading: true
+      }
+    case FAILURE(ACTION_TYPES.GET_VEHICLE_DATA):
+    case FAILURE(ACTION_TYPES.GET_TRAILERS_DATA):
+    case FAILURE(ACTION_TYPES.GET_DRIVERS_DATA):
+    case FAILURE(ACTION_TYPES.GET_ACTIVITY_LOGS_DATA):
+      return {
+        ...state,
+        loading: false,
+        errorMessage: action.payload,
+      }
+    case SUCCESS(ACTION_TYPES.GET_VEHICLE_DATA):
+      return {
+        ...state,
+        vehiclesData: action.payload.data
+      };
+    case SUCCESS(ACTION_TYPES.GET_TRAILERS_DATA):
+      return {
+        ...state,
+        trailersData: action.payload.data
+      };
+    case SUCCESS(ACTION_TYPES.GET_DRIVERS_DATA):
+      return {
+        ...state,
+        driversData: action.payload.data
+      };
+    case SUCCESS(ACTION_TYPES.GET_ACTIVITY_LOGS_DATA):
+      return {
+        ...state,
+        activityLogsData: action.payload.data
+      };
+
+
     case ACTION_TYPES.SET_OPEN_DRAWER: {
       return {
         ...state,
@@ -53,30 +94,6 @@ export default (state: OverviewState = initialState, action): OverviewState => {
       return {
         ...state,
         openDriverDetails: action.payload
-      };
-    }
-    case ACTION_TYPES.GET_VEHICLE_DATA: {
-      return {
-        ...state,
-        vehiclesData: action.payload
-      }
-    }
-    case ACTION_TYPES.GET_TRAILERS_DATA: {
-      return {
-        ...state,
-        trailersData: action.payload
-      }
-    }
-    case ACTION_TYPES.GET_DRIVERS_DATA: {
-      return {
-        ...state,
-        driversData: action.payload
-      };
-    }
-    case ACTION_TYPES.GET_ACTIVITY_LOGS_DATA: {
-      return {
-        ...state,
-        activityLogsData: action.payload
       };
     }
     case ACTION_TYPES.GET_CHART_DATA: {
@@ -103,109 +120,6 @@ export const setOpenDrawer = (value) => async dispatch => {
   });
 };
 
-const dumpVehiclesData = () => {
-  let data = [];
-  for (let i = 0; i < 25; i++) {
-    let item = {
-      id: i + 2,
-      key: i + 2,
-      name: `Vehicle 101 ${i + 1}`,
-      location: {
-        location: `Stoney Run Drive, 1.6 mi NW Severn, MD`,
-        time: "2 months ago"
-      },
-      lastTrip: "2 months ago",
-      status: 'Off',
-      fuel: "21%",
-      driver: "Ali Singh",
-      license: "2628PR",
-      tag: "Tegs"
-    };
-    data.push(item);
-  }
-  return data;
-}
-
-const dumpTrailersData = () => {
-  let data = [];
-  for (let i = 0; i < 15; i++) {
-    let item = {
-      id: i + 2,
-      key: i + 2,
-      name: `Vehicle 101 ${i + 1}`,
-      location: {
-        location: `Stoney Run Drive, 1.6 mi NW Severn, MD`,
-        time: "2 months ago"
-      },
-      lastTrip: "2 months ago",
-      status: 'Off',
-      battery: "60%",
-      tag: "Tags"
-    };
-    data.push(item);
-  }
-  return data;
-}
-
-const dumpActivityData = () => {
-  let data = [];
-  for (let i = 0; i < 15; i++) {
-    let item = {
-      id: i,
-      key: i,
-      shift: '0:00:00',
-      driving: '0:00:00',
-      inViolation: '0:00:00',
-      from: '-',
-      to: '-',
-      details: "Missing Driver Certification",
-      date: 'Mon, Mar 29',
-
-      carrierName: "Ali Plus Transport",
-      carrierAddress: "201 Sangamore Rd",
-      carrierId: "Nauvus (82K7)",
-      carrierDotNumber: "1542846",
-
-      driverName: "Ali Singh (alisingh)",
-      driverLicense: "xxx",
-      ruleSet: "NE 80 hour / 8 day",
-      vehicle: "Vehicle 101",
-      homeName: "Ali Plus Transport",
-      homeAddress: "201 Sangamore Rd",
-      shippingId: "-",
-      trailer: "-",
-      distance: "-"
-    };
-    data.push(item);
-  }
-  return data;
-}
-
-const dumpDriversData = () => {
-  let data = [];
-  for (let i = 0; i < 20; i++) {
-    let item = {
-      id: i + 2,
-      key: i + 2,
-      name: {
-        name: "Ali Singh",
-        id_1: "2447",
-        id_2: "4046921660",
-      },
-      drivingStatus: "Driving",
-      currentVehicle: "228",
-      currentLocation: {
-        distance: "8.1 mi SSE",
-        location: "Rockford, IL"
-      },
-      appVersion: "6959",
-      operatingSystem: "Android: 10"
-    };
-    data.push(item);
-  }
-  return data;
-}
-
 const dumpChartData = () => {
   let data = [];
   for (let i = 0; i < 1; i++) {
@@ -222,31 +136,31 @@ const dumpChartData = () => {
   return data;
 }
 
-export const getVehiclesData = () => async dispatch => {
+export const getVehiclesData = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_VEHICLE_DATA,
-    payload: dumpVehiclesData
+    payload: axios.post(`/api/overview/assets/vehicles/`, request),
   });
-}
+};
 
-export const getTrailersData = () => async dispatch => {
+export const getTrailersData = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_TRAILERS_DATA,
-    payload: dumpTrailersData
+    payload: axios.post(`/api/overview/assets/trailers/`, request),
   });
-}
+};
 
-export const getDriversData = () => async dispatch => {
+export const getDriversData = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_DRIVERS_DATA,
-    payload: dumpDriversData
-  })
-}
+    payload: axios.post(`/api/overview/drivers/`, request),
+  });
+};
 
-export const getActivityLogsData = () => async dispatch => {
+export const getActivityLogsData = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_ACTIVITY_LOGS_DATA,
-    payload: dumpActivityData
+    payload: axios.post(`/api/overview/logs/`, request),
   })
 }
 

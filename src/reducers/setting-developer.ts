@@ -1,5 +1,6 @@
 import axios from "axios";
-import { REQUEST, SUCCESS, FAILURE } from "../utils/action-type.util";
+import {REQUEST, SUCCESS, FAILURE} from "../utils/action-type.util";
+
 export type SettingDeveloperState = Readonly<typeof initialState>;
 
 //Action Type
@@ -44,11 +45,11 @@ export default (state: SettingDeveloperState = initialState, action): SettingDev
         ...state,
         loading: true,
       };
-      case FAILURE(ACTION_TYPES.GET_API_TRAFFIC):
-      case FAILURE(ACTION_TYPES.GET_WEBHOOK_TRAFFIC):
-      case FAILURE(ACTION_TYPES.GET_CHART_DATA):
-      case FAILURE(ACTION_TYPES.GET_API_TOKEN):
-      case FAILURE(ACTION_TYPES.GET_WEBHOOK):
+    case FAILURE(ACTION_TYPES.GET_API_TRAFFIC):
+    case FAILURE(ACTION_TYPES.GET_WEBHOOK_TRAFFIC):
+    case FAILURE(ACTION_TYPES.GET_CHART_DATA):
+    case FAILURE(ACTION_TYPES.GET_API_TOKEN):
+    case FAILURE(ACTION_TYPES.GET_WEBHOOK):
       return {
         ...state,
         loading: false,

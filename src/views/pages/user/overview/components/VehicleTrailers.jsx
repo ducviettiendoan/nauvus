@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
 // core components
@@ -12,9 +12,9 @@ import Chip from "@material-ui/core/Chip";
 import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
 import MoreIcon from "components/Icons/MoreIcon";
-import { IRootState } from 'reducers';
-import { connect } from 'react-redux';
-import { getTrailersData } from "reducers/overview"
+import {IRootState} from 'reducers';
+import {connect} from 'react-redux';
+import {getTrailersData, getVehiclesData} from "reducers/overview"
 
 const styles = {
   moreAction: {
@@ -132,8 +132,8 @@ function VehicleTrailers(props) {
   }, [])
 
   const [chipData, setChipData] = useState([
-    { key: 0, label: 'Standard Admin' },
-    { key: 1, label: 'Full admin' },
+    {key: 0, label: 'Standard Admin'},
+    {key: 1, label: 'Full admin'},
   ]);
 
   const handleDelete = (chipToDelete) => () => {
@@ -148,7 +148,7 @@ function VehicleTrailers(props) {
     {
       title: 'Name',
       key: 'name',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: user => (
         <div className={classes.alignItemsCenter}>
           <div className={classes.textTable}>{user}</div>
@@ -158,7 +158,7 @@ function VehicleTrailers(props) {
     {
       title: 'Location',
       key: 'location',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: location => <div className={classes.alignItemsCenter}>
         <div className={classes.textTable}>{location.location}</div>
         <div className={classes.textTable}>{location.time}</div>
@@ -167,7 +167,7 @@ function VehicleTrailers(props) {
     {
       title: 'Last Trip',
       key: 'lastTrip',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: trip => (
         <div className={classes.alignItemsCenter}>
           <div className={classes.textTable}>{trip}</div>
@@ -177,7 +177,7 @@ function VehicleTrailers(props) {
     {
       title: 'Status',
       key: 'status',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: status => (
         <div className={classes.alignItemsCenter}>
           <div className={classes.textTable}>{status}</div>
@@ -187,7 +187,7 @@ function VehicleTrailers(props) {
     {
       title: 'Battery',
       key: 'battery',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: battery => (
         <div className={classes.alignItemsCenter}>
           <div className={classes.textTable}>{battery}</div>
@@ -197,29 +197,39 @@ function VehicleTrailers(props) {
     {
       title: 'Tags',
       key: 'tag',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: tag => <div className={classes.textStatus}>{tag}</div>
     },
     {
       title: 'Actions',
       key: 'action',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: () => (
         <div className={classes.actionButton}>
           <Button justIcon color="google" simple>
-            <DeleteIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
+            <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
           </Button>
           <Button justIcon color="google" simple>
-            <MoreIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
+            <MoreIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
           </Button>
         </div>
       )
     }
   ]
 
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize)
+    props.getTrailersData({page, pageSize});
+  }
+
+  const onShowSizeChange = (page, pageSize) => {
+    props.getTrailersData({page, pageSize});
+    console.log(page, pageSize)
+  }
+
   return (
     <div>
-      {props.data.length > 0 && <Table
+      <Table
         renderTitle={
           <Grid container className={classes.gridTitle}>
             <Grid item xs={12} sm={12} md={6}>
@@ -228,7 +238,7 @@ function VehicleTrailers(props) {
                 <Grid item xl={10} className={classes.chipSelected}>
                   {chipData.map(data => (
                     <Chip
-                      deleteIcon={<CloseIcon />}
+                      deleteIcon={<CloseIcon/>}
                       label={data.label}
                       onDelete={handleDelete(data)}
                       className={classes.chips}
@@ -244,10 +254,17 @@ function VehicleTrailers(props) {
               </Grid>
             </Grid>
             <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
-              <ToolboxButton placeholder="Search in trailer" showFilter showTrash />
+              <ToolboxButton placeholder="Search in trailer" showFilter showTrash/>
             </Grid>
           </Grid>
         }
+        pagination={{
+          total: props.total,
+          current: props.page,
+          pageSize: props.pageSize,
+          onChange: onPageChange,
+          onShowSizeChange: onShowSizeChange
+        }}
         columns={columns}
         dataSource={props.data}
         onHeaderRow={{
@@ -256,16 +273,22 @@ function VehicleTrailers(props) {
         onBodyRow={{
           className: classes.tableRow
         }}
-      />}
+      />
     </div>
   );
 }
 
-export default connect(
-  ({ overview }) => ({
-    data: overview.trailersData
-  }),
-  {
-    getTrailersData
-  }
-)(VehicleTrailers);
+const mapStateToProps = ({overview}) => {
+  return {
+    data: overview.trailersData.data,
+    page: overview.trailersData.page,
+    total: overview.trailersData.total,
+    pageSize: overview.trailersData.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getTrailersData
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(VehicleTrailers);

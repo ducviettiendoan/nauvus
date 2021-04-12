@@ -1,41 +1,30 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
   Marker,
-  Circle,
-  InfoWindow
+  Circle
 } from "react-google-maps";
-
-const {InfoBox} = require("react-google-maps/lib/components/addons/InfoBox");
 import {GOOGLE_MAP_API_KEY} from "config/constants";
-
 // @material-ui/core components
 import {makeStyles} from '@material-ui/core/styles';
 // @material-ui/icons
-import Search from "@material-ui/icons/Search";
 import List from "@material-ui/icons/List";
-import InputAdornment from "@material-ui/core/InputAdornment";
-
 // core components
 import Button from "components/CustomButtons/Button.js";
-import CustomInput from "components/CustomInput/CustomInput.js";
-
 import styles from "assets/jss/material-dashboard-pro-react/views/overviewPageStyle.js";
 import {setOpenDrawer} from 'reducers/overview';
 import location from 'assets/icons/location.svg'
-
 import {connect} from 'react-redux';
 import {loadVehicles} from 'reducers/vehicle';
-
 
 const useStyles = makeStyles(styles);
 
 const mapStyles = [
   {
     featureType: "poi",
-    stylers: [{ visibility: "off" }],
+    stylers: [{visibility: "off"}],
   }
 ];
 
@@ -63,7 +52,6 @@ const RegularMap = withScriptjs(
                       url: location,
                     }}
                     onClick={(maker) => {
-                      // console.log(`click on Marker ${marker.latLng.lat()}, ${marker.latLng.lng()}`, marker)
                       props.onClickMaker(maker);
                     }}
                   >
@@ -117,8 +105,21 @@ export function Proximity(props) {
         data={props.vehicles}
         center={geo}
         radius={props.distance}
-        onClickMaker = { onClickMaker }
+        onClickMaker={onClickMaker}
       />
+      <div className={classes.searchMapContainer} style={{marginTop: "10px"}}>
+        <Button
+          aria-label="edit"
+          justIcon
+          round
+          className={classes.toogleDrawer}
+          onClick={e => {
+            props.setOpenDrawer(!props.openDrawer)
+          }}
+        >
+          <List/>
+        </Button>
+      </div>
     </div>
   );
 }

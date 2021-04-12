@@ -43,7 +43,7 @@ export default function OverviewAdminNavbar(props) {
   return (
     <AppBar className={classes.appBar + appBarClasses}>
       <Toolbar className={classes.container}>
-        { window.location.pathname.indexOf("/o/drivers") !== -1 && 
+        { window.location.pathname.indexOf("/driver-record/12345678") !== -1 &&
           <Button
             startIcon={<ArrowBackIcon />}
             className="btn-round-white 2 w-84 h-41"
