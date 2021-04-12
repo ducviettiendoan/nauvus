@@ -42,10 +42,6 @@ const styles = {
   bigCardGridItem: {
     padding: "0 8px!important",
   },
-  headContainer: {
-    display: "flex",
-    alignItems: "center"
-  },
   userRolesTitle: {
     fontSize: 16,
     color: "#25345C",
@@ -95,8 +91,10 @@ const styles = {
     '&:nth-of-type(even)': {
       backgroundColor: "#fbfbfb",
     },
+    '&:hover': {
+      cursor: "pointer"
+    }
   },
-
   headContainer: {
     alignItems: "center",
     textAlign: "left",
@@ -291,6 +289,7 @@ export function WebhookTraffic(props) {
                   className: classes.onHeaderRow
                 }}
                 onBodyRow={{
+                  onClick: props.onShowDetail,
                   className: classes.tableRow
                 }}
               />
@@ -311,7 +310,7 @@ const mapStateToProps = ({ settingDeveloper }) => {
     page: settingDeveloper.webhookTraffics.page,
     total: settingDeveloper.webhookTraffics.total,
     pageSize: settingDeveloper.webhookTraffics.pageSize,
-    chartData: settingDeveloper.chartData
+    chartData: settingDeveloper.chartData.data
   };
 };
 

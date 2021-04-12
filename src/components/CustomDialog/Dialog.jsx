@@ -19,7 +19,7 @@ const styles = (theme) => ({
     margin: "0 16px 16px",
     border: "1px solid #ECEEF0",
     borderRadius: "12px",
-    overflowY: "scroll"
+    overflowY: "auto"
   }
 });
 

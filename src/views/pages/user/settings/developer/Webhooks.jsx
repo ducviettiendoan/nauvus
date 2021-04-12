@@ -160,7 +160,7 @@ export function Webhooks(props) {
 
   const onPageChange = (page, pageSize) => {
     console.log(page, pageSize)
-    props.getUserRoles({ page, pageSize }); 
+    props.getWebhook({ page, pageSize });
   }
 
   React.useEffect(() => {

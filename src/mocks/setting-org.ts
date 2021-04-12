@@ -51,7 +51,6 @@ mock.onPost("/api/setting/org/drivers/search").reply((config) => {
 
   const startPage = pageSize * page - pageSize;
   const endPage = pageSize * page > 64 ? 64 : pageSize * page;
-  // Users & Roles Data
   const activeDriversData = () => {
     let data = [];
     for (let i = startPage; i < endPage; i++) {
@@ -80,26 +79,59 @@ mock.onPost("/api/setting/org/drivers/search").reply((config) => {
   return [200, data];
 });
 
-const deactivateDriversData = () => {
-  let data = [];
-  for (let i = 0; i < 6; i++) {
-    let item = {
-      id: i + 1,
-      name: "Chal Vee",
-      username: "Chal",
-    };
-    data.push(item);
+mock.onPost("/api/setting/org/deact-drivers/search").reply((config) => {
+  let pageSize = 10;
+  let page = 1;
+  if (config.data) {
+    const request = JSON.parse(config.data);
+    page = request.page;
+    pageSize = request.pageSize;
   }
-  return data;
-};
+
+  const startPage = pageSize * page - pageSize;
+  const endPage = pageSize * page > 64 ? 64 : pageSize * page;
+  const deactivateDriversData = () => {
+    let data = [];
+    for (let i = startPage; i < endPage; i++) {
+      let item = {
+        id: i + 1,
+        name: "Chal Vee",
+        username: "Chal",
+        tags: "Status",
+        peerGroup: "Group 12",
+        phone: "(208) 555-0112",
+        dlState: "Maine",
+        dlNumber: "558612",
+      };
+      data.push(item);
+    }
+    return data;
+  };
+
+  const data = {
+    total: 64,
+    page: page,
+    pageSize: pageSize,
+    data: deactivateDriversData(),
+  };
+
+  return [200, data];
+});
 
 // Tags Data
-const tagsData = [
-  {
-    email: "alma.lawson@example.com",
-    role: "Super Admin",
-  },
-];
+mock.onPost("/api/settings/org/tags/search").reply((config) => {
+  const tagsData = () =>  [
+    {
+      email: "alma.lawson@example.com",
+      role: "Super Admin",
+    },
+  ];
+  const data = {
+    data: tagsData(),
+  };
+  return [200, data];
+})
+
 
 //Activity Logs Data
 mock.onPost("/api/setting/org/activity-log/search").reply((config) => {

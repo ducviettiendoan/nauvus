@@ -96,6 +96,9 @@ const styles = {
     '&:nth-of-type(even)': {
       backgroundColor: "#fbfbfb",
     },
+    '&:hover': {
+      cursor: "pointer"
+    }
   },
 };
 
@@ -285,7 +288,8 @@ export function APITraffic(props) {
                   className: classes.onHeaderRow
                 }}
                 onBodyRow={{
-                  className: classes.tableRow
+                  className: classes.tableRow,
+                  onClick: props.onShowDetail,
                 }}
               />
             </Card>

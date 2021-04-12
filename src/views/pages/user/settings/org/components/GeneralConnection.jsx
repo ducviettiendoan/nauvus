@@ -11,6 +11,8 @@ import TextField from '@material-ui/core/TextField';
 import UserInfoIcon from "components/Icons/UserInfoIcon";
 import Button from "components/CustomButtons/Button.js";
 import { AddOutlined } from "@material-ui/icons";
+import DiaLog from "components/CustomDialog/Dialog";
+import AddWifiForm from "./AddWifiForm";
 
 const styles = {
   textFieldRoot: {
@@ -68,13 +70,22 @@ const styles = {
     display: "flex",
     flexDirection: "row",
     padding: "0px 0px 0px 0px !important"
-  }
+  },
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    margin: "24px",
+    textAlign: "center"
+  },
 };
 
 const useStyles = makeStyles(styles);
 
 export default function GeneralConnection() {
   const classes = useStyles();
+  const [openAdd, setOpenAdd] = React.useState(false);
 
   const [checkedState, setCheckedState] = useState({
     checkedA: false,
@@ -89,6 +100,14 @@ export default function GeneralConnection() {
   return (
     <>
       <div>
+        <DiaLog
+            renderTitle={<h3 className={classes.dialogTitle}>Add Wi-Fi Configuration</h3>}
+            handleClose={() => {setOpenAdd(false)}
+            }
+            open={openAdd}
+        >
+          <AddWifiForm handleClose={() => {setOpenAdd(false)}}/>
+        </DiaLog>
         <Row style={{ marginTop: '20px', paddingRight: '16px', display: "flex", justifyContent: "space-between" }}>
           <GridItem>
             <GridItem className={classes.headerContent}>
@@ -172,6 +191,7 @@ export default function GeneralConnection() {
             <Button
               className="btn-transparent w-142"
               startIcon={<AddOutlined />}
+              onClick={() => {setOpenAdd(true)}}
             >
               Add Network
             </Button>

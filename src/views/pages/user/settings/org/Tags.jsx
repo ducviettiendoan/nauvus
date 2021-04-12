@@ -18,15 +18,15 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import {Link} from "react-router-dom";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import Button from "components/CustomButtons/Button";
-import BootstrapTable from "react-bootstrap-table-next";
-import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import EditIcon from "components/Icons/EditIcon";
 import DeleteIcon from "components/Icons/DeleteIcon";
 import DotIcon from "components/Icons/DotIcon";
 import AddOutlined from "@material-ui/icons/AddOutlined";
 import {connect} from "react-redux";
-import {IRootState} from "reducers";
 import {getTags} from "reducers/setting-org";
+import Table from "components/Table/TableV1";
+import DiaLog from "components/CustomDialog/Dialog";
+import AddAdminForm from "./tags/AddAdminForm";
 
 const styles = {
   cardContainer: {
@@ -36,9 +36,7 @@ const styles = {
     fontWeight: "400",
     fontSize: "16px",
     lineHeight: "24px",
-    marginTop: "24px",
     color: "#25345C",
-    marginLeft: "24px",
   },
   textSub: {
     fontSize: "16px",
@@ -50,7 +48,6 @@ const styles = {
     "&:hover": {
       color: "#25345C !important",
     },
-    marginTop: "24px",
   },
   txtListItemPrimary: {
     fontWeight: "bold",
@@ -78,8 +75,6 @@ const styles = {
   alignItemsCenter: {
     display: "flex",
     alignItems: "center",
-    paddingTop: 20,
-    marginLeft: "24px",
   },
   liveSharingTitle: {
     fontWeight: 700,
@@ -142,6 +137,28 @@ const styles = {
     paddingTop: "15px !important",
     marginTop: "4px !important",
   },
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
+    },
+  },
+  onHeaderRow: {
+    background: "#ECEEF0",
+  },
+  gridTitle: {
+    padding: "20px"
+  },
+  onHeaderCell: {
+    fontWeight: "bold"
+  },
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    margin: "24px",
+    textAlign: "center"
+  },
 };
 
 
@@ -155,6 +172,7 @@ export function Tags(props) {
     props.getTags();
   }, []);
 
+  const [openAdd, setOpenAdd] = React.useState(false);
   const [open, setOpen] = React.useState(true);
   const [currentTab, setCurrentTab] = React.useState("Name Tags A");
 
@@ -172,49 +190,65 @@ export function Tags(props) {
     return open && currentTab === tabName;
   };
 
-  const formatName = (cell, row) => {
-    return (
-      <>
-        <div className={classes.textName}>{cell}</div>
-      </>
-    );
-  };
 
-  const formatLinkExpires = (cell, row) => {
-    return (
-      <>
-        <div className={classes.alignItemsCenter}>
-          <div>
-            <DotIcon style={{color: "#7CE7AC"}}/>
+  const columns = [
+    {
+      title: 'Email',
+      key: 'email',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: cell => <div className={classes.textName}>{cell}</div>,
+    },
+    {
+      title: 'Role',
+      key: 'role',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: (cell) => {
+        return (
+        <>
+          <div className={classes.alignItemsCenter}>
+            <div>
+              <DotIcon style={{color: "#7CE7AC"}}/>
+            </div>
+            <div className={classes.textSub}>{cell}</div>
           </div>
-          <div className={classes.textSub}>{cell}</div>
-        </div>
-      </>
-    );
-  };
-
-  const addActionButton = () => {
-    return (
-      <>
-        <Button justIcon color="twitter" simple>
-          <EditIcon
-            className={classes.iconButton}
-            style={{color: "#ffffff", width: "22px", height: "22px"}}
-          />
-        </Button>
-        <Button justIcon color="google" simple>
-          <DeleteIcon
-            className={classes.iconButton}
-            style={{color: "#C4C4C4", width: "24px", height: "24px"}}
-          />
-        </Button>
-      </>
-    );
-  };
+        </>
+        )
+      }
+    },
+    {
+      title: 'Actions',
+      key: 'action',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: () => (
+          <>
+            <Button justIcon color="twitter" simple>
+              <EditIcon
+                  className={classes.iconButton}
+                  style={{color: "#ffffff", width: "22px", height: "22px"}}
+              />
+            </Button>
+            <Button justIcon color="google" simple>
+              <DeleteIcon
+                  className={classes.iconButton}
+                  style={{color: "#C4C4C4", width: "24px", height: "24px"}}
+              />
+            </Button>
+          </>
+      )
+    }
+  ];
 
   return (
     <div>
       <GridContainer>
+        <DiaLog
+            renderTitle={<h3 className={classes.dialogTitle}>Add Admin</h3>}
+            handleClose={() => {setOpenAdd(false)}
+            }
+            open={openAdd}
+        >
+          <AddAdminForm handleClose={() => {setOpenAdd(false)}}/>
+        </DiaLog>
         <GridItem xs={12} sm={12} md={12}>
           <Card testmonial>
             <GridContainer className={classes.liveSharingHeader}>
@@ -520,255 +554,186 @@ export function Tags(props) {
                     </Card>
                   </GridItem>
                   <GridItem xs={12} sm={9} md={9}>
-                    <Card>
-                      <CardBody>
-                        <GridContainer>
-                          <GridItem xs={2} sm={2} md={4} lg={1} xl={3} className={classes.centerTag}>
-                            Tags
-                          </GridItem>
-                          <GridItem xs={9} sm={9} md={5} lg={9} xl={7} className={classes.centerSection}>
-                            <GridItem className={classes.pushLeft}>
-                              1 vehicle
-                            </GridItem>
-                            <GridItem className={classes.pushLeft}>
-                              1 trailer
-                            </GridItem>
-                            <GridItem className={classes.pushLeft}>
-                              1 address
-                            </GridItem>
-                            <GridItem className={classes.pushLeft}>
-                              1 driver
-                            </GridItem>
-                          </GridItem>
-                          <GridItem xs={1} sm={1} md={3} lg={2} xl={2} className={classes.flexIcon}>
-                            <Button
-                              justIcon
-                              color="twitter"
-                              simple
-                              className={classes.buttonContainer}
-                            >
-                              <EditIcon className={classes.editIcon}/>
-                            </Button>
-                            <Button
-                              justIcon
-                              color="google"
-                              simple
-                              className={classes.buttonContainer}
-                            >
-                              <DeleteIcon
-                                className={`${classes.iconButton} ${classes.deleteIcon2}`}
-                              />
-                            </Button>
+                      <Table
+                          renderTitle={
+                            <CardBody>
+                            <GridContainer>
+                              <GridItem xs={2} sm={2} md={4} lg={1} xl={3} className={classes.centerTag}>
+                                Tags
+                              </GridItem>
+                              <GridItem xs={9} sm={9} md={5} lg={9} xl={7} className={classes.centerSection}>
+                                <GridItem className={classes.pushLeft}>
+                                  1 vehicle
+                                </GridItem>
+                                <GridItem className={classes.pushLeft}>
+                                  1 trailer
+                                </GridItem>
+                                <GridItem className={classes.pushLeft}>
+                                  1 address
+                                </GridItem>
+                                <GridItem className={classes.pushLeft}>
+                                  1 driver
+                                </GridItem>
+                              </GridItem>
+                              <GridItem xs={1} sm={1} md={3} lg={2} xl={2} className={classes.flexIcon}>
+                                <Button
+                                    justIcon
+                                    color="twitter"
+                                    simple
+                                    className={classes.buttonContainer}
+                                >
+                                  <EditIcon className={classes.editIcon}/>
+                                </Button>
+                                <Button
+                                    justIcon
+                                    color="google"
+                                    simple
+                                    className={classes.buttonContainer}
+                                >
+                                  <DeleteIcon
+                                      className={`${classes.iconButton} ${classes.deleteIcon2}`}
+                                  />
+                                </Button>
 
-                            <Button
-                              round
-                              justIcon
-                              className={`btn-36 ${classes.addAction} mr-2`}
-                            >
-                              <AddOutlined style={{color: "#C4C4C4"}}/>
-                            </Button>
-                          </GridItem>
-                        </GridContainer>
-                      </CardBody>
-                      <ToolkitProvider
-                        data={props.data}
-                        keyField="_id"
-                        columns={[
-                          {
-                            dataField: "email",
-                            text: "Email",
-                            formatter: formatName,
-                          },
-                          {
-                            dataField: "role",
-                            text: "Role",
-                            formatter: formatLinkExpires,
-                          },
-                          {
-                            dataField: "action",
-                            text: "Actions",
-                            formatter: addActionButton,
-                          },
-                        ]}
-                      >
-                        {(props) => (
-                          <div className="table table-settings">
-                            <BootstrapTable
-                              {...props.baseProps}
-                              bootstrap4={true}
-                              bordered={false}
-                            />
-                          </div>
-                        )}
-                      </ToolkitProvider>
-                    </Card>
-                    <Card>
-                      <CardBody>
-                        <GridContainer>
-                          <GridItem xs={2} sm={2} md={2} lg={1} xl={3} className={classes.centerTag}>
-                            Tags
-                          </GridItem>
+                                <Button
+                                    round
+                                    justIcon
+                                    className={`btn-36 ${classes.addAction} mr-2`}
+                                    onClick={() => {setOpenAdd(true)}}
+                                >
+                                  <AddOutlined style={{color: "#C4C4C4"}}/>
+                                </Button>
+                              </GridItem>
+                            </GridContainer>
+                            </CardBody>
 
-                          <GridItem xs={9} sm={9} md={9} lg={9} xl={7} className={classes.centerSection}>
-                            <GridItem className={classes.pushLeft}>
-                              1 vehicle
-                            </GridItem>
-                            <GridItem className={classes.pushLeft}>
-                              1 trailer
-                            </GridItem>
-                            <GridItem className={classes.pushLeft}>
-                              1 address
-                            </GridItem>
-                            <GridItem className={classes.pushLeft}
-                            >
-                              1 driver
-                            </GridItem>
-                          </GridItem>
-                          <GridItem xs={1} sm={1} md={1} lg={2} xl={2}
-                                    className={classes.flexIcon}
-                          >
-                            <Button
-                              justIcon
-                              color="twitter"
-                              simple
-                              className={classes.buttonContainer}
-                            >
-                              <EditIcon className={classes.editIcon}/>
-                            </Button>
-                            <Button
-                              justIcon
-                              color="google"
-                              simple
-                              className={classes.buttonContainer}
-                            >
-                              <DeleteIcon
-                                className={`${classes.iconButton} ${classes.deleteIcon2}`}
-                              />
-                            </Button>
-                            <Button
-                              round
-                              justIcon
-                              className={`btn-36 ${classes.addAction} mr-2`}
-                            >
-                              <AddOutlined style={{color: "#C4C4C4"}}/>
-                            </Button>
-                          </GridItem>
-                        </GridContainer>
-                      </CardBody>
-                      <ToolkitProvider
-                        data={props.data}
-                        keyField="_id"
-                        columns={[
-                          {
-                            dataField: "email",
-                            text: "Email",
-                            formatter: formatName,
-                          },
-                          {
-                            dataField: "role",
-                            text: "Role",
-                            formatter: formatLinkExpires,
-                          },
-                          {
-                            dataField: "action",
-                            text: "Actions",
-                            formatter: addActionButton,
-                          },
-                        ]}
-                      >
-                        {(props) => (
-                          <div className="table table-settings">
-                            <BootstrapTable
-                              {...props.baseProps}
-                              bootstrap4={true}
-                              bordered={false}
-                            />
-                          </div>
-                        )}
-                      </ToolkitProvider>
-                    </Card>
-                    <Card>
-                      <CardBody>
-                        <GridContainer>
-                          <GridItem xs={2} sm={2} md={2} lg={1} xl={3} className={classes.centerTag}>
-                            Tags
-                          </GridItem>
 
-                          <GridItem xs={9} sm={9} md={9} lg={9} xl={7} className={classes.centerSection}>
-                            <GridItem className={classes.pushLeft}>
-                              1 vehicle
-                            </GridItem>
-                            <GridItem className={classes.pushLeft}>
-                              1 trailer
-                            </GridItem>
-                            <GridItem className={classes.pushLeft}>
-                              1 address
-                            </GridItem>
-                            <GridItem className={classes.pushLeft}>
-                              1 driver
-                            </GridItem>
-                          </GridItem>
-                          <GridItem xs={1} sm={1} md={1} lg={2} xl={2} className={classes.flexIcon}>
-                            <Button
-                              justIcon
-                              color="twitter"
-                              simple
-                              className={classes.buttonContainer}
-                            >
-                              <EditIcon className={classes.editIcon}/>
-                            </Button>
-                            <Button
-                              justIcon
-                              color="google"
-                              simple
-                              className={classes.buttonContainer}
-                            >
-                              <DeleteIcon
-                                className={`${classes.iconButton} ${classes.deleteIcon2}`}
-                              />
-                            </Button>
-                            <Button
-                              round
-                              justIcon
-                              className={`btn-36 ${classes.addAction} mr-2`}
-                            >
-                              <AddOutlined style={{color: "#C4C4C4"}}/>
-                            </Button>
-                          </GridItem>
-                        </GridContainer>
-                      </CardBody>
-                      <ToolkitProvider
-                        data={props.data}
-                        keyField="_id"
-                        columns={[
-                          {
-                            dataField: "email",
-                            text: "Email",
-                            formatter: formatName,
-                          },
-                          {
-                            dataField: "role",
-                            text: "Role",
-                            formatter: formatLinkExpires,
-                          },
-                          {
-                            dataField: "action",
-                            text: "Actions",
-                            formatter: addActionButton,
-                          },
-                        ]}
-                      >
-                        {(props) => (
-                          <div className="table table-settings">
-                            <BootstrapTable
-                              {...props.baseProps}
-                              bootstrap4={true}
-                              bordered={false}
-                            />
-                          </div>
-                        )}
-                      </ToolkitProvider>
-                    </Card>
+                              }
+                          columns={columns}
+                          dataSource={props.data}
+                          onHeaderRow={{ className: classes.onHeaderRow }}
+                          onBodyRow={{ className: classes.tableRow }}
+                      />
+                    <Table
+                        renderTitle={
+                          <CardBody>
+                            <GridContainer>
+                              <GridItem xs={2} sm={2} md={4} lg={1} xl={3} className={classes.centerTag}>
+                                Tags
+                              </GridItem>
+                              <GridItem xs={9} sm={9} md={5} lg={9} xl={7} className={classes.centerSection}>
+                                <GridItem className={classes.pushLeft}>
+                                  1 vehicle
+                                </GridItem>
+                                <GridItem className={classes.pushLeft}>
+                                  1 trailer
+                                </GridItem>
+                                <GridItem className={classes.pushLeft}>
+                                  1 address
+                                </GridItem>
+                                <GridItem className={classes.pushLeft}>
+                                  1 driver
+                                </GridItem>
+                              </GridItem>
+                              <GridItem xs={1} sm={1} md={3} lg={2} xl={2} className={classes.flexIcon}>
+                                <Button
+                                    justIcon
+                                    color="twitter"
+                                    simple
+                                    className={classes.buttonContainer}
+                                >
+                                  <EditIcon className={classes.editIcon}/>
+                                </Button>
+                                <Button
+                                    justIcon
+                                    color="google"
+                                    simple
+                                    className={classes.buttonContainer}
+                                >
+                                  <DeleteIcon
+                                      className={`${classes.iconButton} ${classes.deleteIcon2}`}
+                                  />
+                                </Button>
+
+                                <Button
+                                    round
+                                    justIcon
+                                    className={`btn-36 ${classes.addAction} mr-2`}
+                                    onClick={() => {setOpenAdd(true)}}
+                                >
+                                  <AddOutlined style={{color: "#C4C4C4"}}/>
+                                </Button>
+                              </GridItem>
+                            </GridContainer>
+                          </CardBody>
+
+
+                        }
+                        columns={columns}
+                        dataSource={props.data}
+                        onHeaderRow={{ className: classes.onHeaderRow }}
+                        onBodyRow={{ className: classes.tableRow }}
+                    />
+                    <Table
+                        renderTitle={
+                          <CardBody>
+                            <GridContainer>
+                              <GridItem xs={2} sm={2} md={4} lg={1} xl={3} className={classes.centerTag}>
+                                Tags
+                              </GridItem>
+                              <GridItem xs={9} sm={9} md={5} lg={9} xl={7} className={classes.centerSection}>
+                                <GridItem className={classes.pushLeft}>
+                                  1 vehicle
+                                </GridItem>
+                                <GridItem className={classes.pushLeft}>
+                                  1 trailer
+                                </GridItem>
+                                <GridItem className={classes.pushLeft}>
+                                  1 address
+                                </GridItem>
+                                <GridItem className={classes.pushLeft}>
+                                  1 driver
+                                </GridItem>
+                              </GridItem>
+                              <GridItem xs={1} sm={1} md={3} lg={2} xl={2} className={classes.flexIcon}>
+                                <Button
+                                    justIcon
+                                    color="twitter"
+                                    simple
+                                    className={classes.buttonContainer}
+                                >
+                                  <EditIcon className={classes.editIcon}/>
+                                </Button>
+                                <Button
+                                    justIcon
+                                    color="google"
+                                    simple
+                                    className={classes.buttonContainer}
+                                >
+                                  <DeleteIcon
+                                      className={`${classes.iconButton} ${classes.deleteIcon2}`}
+                                  />
+                                </Button>
+
+                                <Button
+                                    round
+                                    justIcon
+                                    className={`btn-36 ${classes.addAction} mr-2`}
+                                    onClick={() => {setOpenAdd(true)}}
+                                >
+                                  <AddOutlined style={{color: "#C4C4C4"}}/>
+                                </Button>
+                              </GridItem>
+                            </GridContainer>
+                          </CardBody>
+
+
+                        }
+                        columns={columns}
+                        dataSource={props.data}
+                        onHeaderRow={{ className: classes.onHeaderRow }}
+                        onBodyRow={{ className: classes.tableRow }}
+                    />
                   </GridItem>
                 </GridContainer>
               </GridItem>
@@ -781,8 +746,8 @@ export function Tags(props) {
 }
 
 export default connect(
-  ({settingOrg}: IRootState) => ({
-    data: settingOrg.tags
+  ({settingOrg}) => ({
+    data: settingOrg.tags.data
   }),
   {
     getTags
