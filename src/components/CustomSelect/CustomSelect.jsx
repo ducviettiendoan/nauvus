@@ -33,7 +33,8 @@ const styles = {
             backgroundColor: 'white',
             borderColor: "#B4B4B4"
         },
-        marginTop: "20px"
+        marginTop: "20px",
+        minWidth: "180px"
     },
     icon: {
         color: "#25345C",

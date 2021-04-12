@@ -26,7 +26,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function FilterButton() {
+export default function FilterButton(props) {
     const classes = useStyles();
 
     return (
@@ -34,6 +34,7 @@ export default function FilterButton() {
             color="white"
             round
             className={`${classes.moreAction} ${classes.buttonContainer}`}
+            onClick={props.filterAction}
         >
             <FilterIcon className={classes.iconButtonHeader} />
         </Button>

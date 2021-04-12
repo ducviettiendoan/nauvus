@@ -34,6 +34,10 @@ export const ACTION_TYPES = {
 
   //Unassigned HOS UNASSIGNED action type
   GET_UNASSIGNED_HOS_UNASSIGNED: "compliance/GET_UNASSIGNED_HOS_UNASSIGNED",
+
+  GET_REPORT_DATA: 'setting/device/GET_REPORT_DATA',
+  GET_DUTY_STATUS_DATA: 'setting/device/GET_DUTY_STATUS_DATA'
+
 };
 
 {
@@ -68,6 +72,9 @@ const initialState = {
   //Unassigned HOS Unassigned
   unassignedHOSUnassigned: [],
 
+  reportData: [],
+  dutyStatusData: [],
+
   errorMessage: null,
   loading: false,
 };
@@ -87,6 +94,9 @@ export default (
     case REQUEST(ACTION_TYPES.GET_UNASSIGNED_HOS):
     case REQUEST(ACTION_TYPES.GET_UNASSIGNED_HOS_ANNOTATED):
     case REQUEST(ACTION_TYPES.GET_UNASSIGNED_HOS_UNASSIGNED):
+    case REQUEST(ACTION_TYPES.GET_REPORT_DATA):
+    case REQUEST(ACTION_TYPES.GET_DUTY_STATUS_DATA):
+
       return {
         ...state,
         loading: true,
@@ -98,6 +108,9 @@ export default (
     case FAILURE(ACTION_TYPES.GET_UNASSIGNED_HOS):
     case FAILURE(ACTION_TYPES.GET_UNASSIGNED_HOS_ANNOTATED):
     case FAILURE(ACTION_TYPES.GET_UNASSIGNED_HOS_UNASSIGNED):
+    case FAILURE(ACTION_TYPES.GET_REPORT_DATA):
+    case FAILURE(ACTION_TYPES.GET_DUTY_STATUS_DATA):
+
       return {
         ...state,
         loading: false,
@@ -120,6 +133,32 @@ export default (
         ...state,
         missingCertifications: action.payload.data,
       };
+
+    case SUCCESS(ACTION_TYPES.GET_REPORT_DATA): {
+      return {
+        ...state,
+        reportData: action.payload.data
+      };
+    }
+    case SUCCESS(ACTION_TYPES.GET_DUTY_STATUS_DATA): {
+      return {
+        ...state,
+        dutyStatusData: action.payload.data
+      };
+    }
+    case SUCCESS(ACTION_TYPES.GET_REPORT_DATA): {
+      return {
+        ...state,
+        reportData: action.payload.data
+      };
+    }
+    case SUCCESS(ACTION_TYPES.GET_DUTY_STATUS_DATA): {
+      return {
+        ...state,
+        dutyStatusData: action.payload.data
+      };
+    }
+
 
     //HOS Audit reducer
     case ACTION_TYPES.GET_HOS_AUDIT: {
@@ -357,6 +396,20 @@ export const getUnassignedHOSUnassigned = (request) => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_UNASSIGNED_HOS_UNASSIGNED,
     payload: axios.post(`/api/compliance/HOS/unassigned-HOS-unassigned`, request),
+  });
+};
+
+export const getReportData = (request) => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_REPORT_DATA,
+    payload: axios.post("/api/compliance/HOS/report", request)
+  });
+};
+
+export const getDutyStatusData = (request) => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_DUTY_STATUS_DATA,
+    payload: axios.post("/api/compliance/HOS/duty-status", request)
   });
 };
 
