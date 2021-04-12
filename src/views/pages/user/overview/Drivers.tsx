@@ -242,9 +242,6 @@ export function Drivers(props) {
     },
   ]
 
-  const onBackDriver = () => {
-    props.setOpenDrawer(false)
-  }
   const viewDetail = () => {
     props.setOpenDrawer(!props.openDrawer)
     props.history.push("/o/drivers/123456789")
@@ -329,24 +326,6 @@ export function Drivers(props) {
     </div>
   );
 }
-
-// export default connect(
-//   ({authentication, vehicle, overview}: IRootState) => ({
-//     isAuthenticated: authentication.isAuthenticated,
-//     user: authentication.user,
-//     // vehicles: vehicle.vehicles,
-//     openDriverDetails : overview.openDriverDetails,
-//     data: overview.driversData.data,
-//     page: overview.driversData.page,
-//     total: overview.driversData.total,
-//     pageSize: overview.driversData.pageSize
-//   }),
-//   {
-//     // loadVehicles,
-//     getDriversData,
-//     setOpenDrawer
-//   }
-// )(Drivers);
 
 const mapStateToProps = ({authentication, overview}) => {
   return {
