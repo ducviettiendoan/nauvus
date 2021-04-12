@@ -1,3 +1,6 @@
+import { REQUEST, SUCCESS, FAILURE } from '../utils/action-type.util';
+import axios from 'axios';
+
 export type ComplianceState = Readonly<typeof initialState>;
 
 {/* ACTION TYPES */}
@@ -47,12 +50,40 @@ const initialState = {
   driverEfficiencies: [],
 
   //Unassigned HOS state
-  unassignedHOS: []
+  unassignedHOS: [],
+
+  errorMessage: null,
+  loading: false,
 }
 
 {/* REDUCER */}
 export default (state: ComplianceState = initialState, action): ComplianceState => {
   switch (action.type) {
+    case REQUEST(ACTION_TYPES.GET_DRIVER_HOS):
+    case REQUEST(ACTION_TYPES.GET_VIOLATIONS):
+      return {
+        ...state,
+        loading: true
+      }
+    case FAILURE(ACTION_TYPES.GET_DRIVER_HOS):
+    case FAILURE(ACTION_TYPES.GET_VIOLATIONS):
+      return {
+        ...state,
+        loading: false,
+        errorMessage: action.payload,
+      }
+    case SUCCESS(ACTION_TYPES.GET_DRIVER_HOS):
+      return {
+        ...state,
+        driverHOS: action.payload.data
+      };
+
+    case SUCCESS(ACTION_TYPES.GET_VIOLATIONS):
+      return {
+        ...state,
+        violations: action.payload.data
+      };
+
     //HOS Audit reducer
     case ACTION_TYPES.GET_HOS_AUDIT: {
       return {
@@ -88,14 +119,6 @@ export default (state: ComplianceState = initialState, action): ComplianceState 
       return {
         ...state,
         missingCertifications: action.payload,
-      }
-    }
-
-    //Driver HOS reducer
-    case ACTION_TYPES.GET_DRIVER_HOS: {
-      return {
-        ...state,
-        driverHOS: action.payload
       }
     }
 
@@ -184,25 +207,6 @@ const HOSAuditTransferData = () => {
   return data;
 }
 
-//HOS Violations data
-const violationsData = () => {
-  let data = [];
-  for (let i = 0; i < 20; i++) {
-    let item = {
-      id: i + 2,
-      key: i + 2,
-      driver: "John Smith",
-      violationsType: "Missing Driver Certification",
-      date: "Aug 21, 2010",
-      start: "9:06AM",
-      end: "9:23AM",
-      duration: "17m 28s"
-    };
-    data.push(item);
-  }
-  return data;
-}
-
 const missingCertificationsData = () => {
   let data = [];
   for (let i = 0; i < 20; i++) {
@@ -236,28 +240,6 @@ const driverEfficiencyData = () => {
   return data;
 }
 
-//Driver HOS data
-const driverHOSData = () => {
-  let data = [];
-  for (let i = 0; i < 20; i++) {
-    let item = {
-      id: i + 2,
-      key: i + 2,
-      driver: "Ali Singh",
-      dutyStatus: "Off",
-      timeCurrentStatus: "3:04",
-      vehicle: "1",
-      timeUntilBreak: "8:00",
-      driveRemaining: "7:41",
-      shiftRemaining: "7:41",
-      cycleRemaining: "69:07",
-      cycleTomorrow: "69:07",
-      drivingInVio: "1"
-    };
-    data.push(item);
-  }
-  return data;
-}
 
 //Unassigned HOS data
 const unassignedHOSData = () => {
@@ -305,10 +287,10 @@ export const getHOSAuditTransfer = () => async dispatch => {
 
 //HOS Violations action
 //Violations
-export const getViolations = () => async dispatch => {
+export const getViolations = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_VIOLATIONS,
-    payload: violationsData
+    payload: axios.post(`/api/compliance/HOS/violations`, request),
   });
 };
 
@@ -320,12 +302,13 @@ export const getMissingCertifications = () => async dispatch => {
 };
 
 //DriverHOS action
-export const getDriverHOS = () => async dispatch => {
+export const getDriverHOS = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_DRIVER_HOS,
-    payload: driverHOSData
-  })
-}
+    payload: axios.post(`/api/compliance/driver-HOS`, request),
+  });
+};
+
 
 //Compliance dashboard action
 export const getDriverEfficiency = () => async dispatch => {

@@ -7,7 +7,6 @@ import CloseIcon from "components/Icons/CloseIcon";
 import Chip from "@material-ui/core/Chip";
 import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
-import {IRootState} from 'reducers';
 import {connect} from 'react-redux';
 import {getDriverHOS} from "reducers/compliance";
 import GridContainer from "components/Grid/GridContainer";
@@ -16,6 +15,7 @@ import Calendar from "components/Calendar/Calendar";
 import LiveIconWhite from "components/Icons/LiveIconWhite";
 import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
 import CircleIcon from "components/Icons/CircleIcon";
+import Avatar from '@material-ui/core/Avatar';
 
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
@@ -152,6 +152,12 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 400,
     color: "#25345C",
   },
+  greenAvatar: {
+    background: "#27AE60 !important",
+    marginRight: 8,
+    fontSize: 14,
+    fontWeight: 700,
+  }
 }));
 
 export function DriverHOS(props) {
@@ -190,7 +196,11 @@ export function DriverHOS(props) {
       title: 'Duty Status',
       key: 'dutyStatus',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: dutyStatus => <div className={classes.textStatus}>{dutyStatus}</div>
+      render: dutyStatus =>
+        <div className={classes.alignItemsCenter}>
+          <Avatar className={classes.greenAvatar}>D</Avatar>
+          <div className={classes.textName}>{dutyStatus}</div>
+        </div>
     },
     {
       title: 'Time In Current Status',
@@ -242,6 +252,17 @@ export function DriverHOS(props) {
     }
   ]
 
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize)
+    props.getDriverHOS({page, pageSize});
+  }
+
+  const onShowSizeChange = (page, pageSize) => {
+    props.getDriverHOS({page, pageSize});
+    console.log(page, pageSize)
+  }
+
+
   return (
     <div>
       <GridContainer>
@@ -281,7 +302,7 @@ export function DriverHOS(props) {
             </GridItem>
           </GridContainer>
           <div>
-            {props.data.length > 0 && <Table
+            <Table
               renderTitle={
                 <Grid container className={classes.gridTitle}>
                   <Grid item xs={12} sm={12} md={6}>
@@ -310,6 +331,13 @@ export function DriverHOS(props) {
                   </Grid>
                 </Grid>
               }
+              pagination={{
+                total: props.total,
+                current: props.page,
+                pageSize: props.pageSize,
+                onChange: onPageChange,
+                onShowSizeChange: onShowSizeChange
+              }}
               columns={columns}
               dataSource={props.data}
               onHeaderRow={{
@@ -319,7 +347,6 @@ export function DriverHOS(props) {
                 className: classes.tableRow
               }}
             />
-            }
           </div>
         </GridItem>
       </GridContainer>
@@ -327,11 +354,17 @@ export function DriverHOS(props) {
   );
 }
 
-export default connect(
-  ({compliance}: IRootState) => ({
-    data: compliance.driverHOS
-  }),
-  {
-    getDriverHOS
-  }
-)(DriverHOS);
+const mapStateToProps = ({compliance}) => {
+  return {
+    data: compliance.driverHOS.data,
+    page: compliance.driverHOS.page,
+    total: compliance.driverHOS.total,
+    pageSize: compliance.driverHOS.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getDriverHOS
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DriverHOS);

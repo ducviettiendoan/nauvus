@@ -112,7 +112,6 @@ const customDropdownStyle = theme => ({
     ...defaultFont,
     fontSize: "13px",
     padding: "10px 20px 0px 12px",
-    borderRadius: "2px",
     position: "relative",
     transition: "all 150ms linear",
     display: "block",
