@@ -11,26 +11,15 @@ import PieChart from "components/CustomPieChart/PieChart";
 
 const useStyles = makeStyles(complianceStyle);
 
+
+
 export default function PieChartCard(props) {
   const {title, data, radio} = props
   const classes = useStyles();
 
   return(
     <Card className={classes.root}>
-      <CardHeader
-        title={
-          <Grid container>
-            <Grid item xs={8} sm={12} md={8} className={classes.cardHeaderTitle}>
-              {title}
-            </Grid>
-            <Grid item xs={4} sm={12} md={4} className={classes.cardHeaderSubTitle}>
-              <Link>View Details</Link>
-            </Grid>
-          </Grid>}
-        className={classes.cardHeader}
-      />
-
-      <CardContent>
+      <CardContent style={{padding: "0px"}}>
         <Grid container>
           <Grid item xs={6} className={classes.cardBodyTitle1}>
             <RadioButton checked={true} />
@@ -47,6 +36,20 @@ export default function PieChartCard(props) {
           data={data}
         />
       </CardContent>
+
+      <CardHeader
+        title={
+          <Grid container>
+            <Grid item xs={8} sm={12} md={8} className={classes.cardHeaderTitle}>
+              {title}
+            </Grid>
+            <Grid item xs={4} sm={12} md={4} className={classes.cardHeaderSubTitle}>
+              <Link>View Details</Link>
+            </Grid>
+          </Grid>}
+        className={classes.cardHeader}
+      />
+
     </Card>
   )
 }

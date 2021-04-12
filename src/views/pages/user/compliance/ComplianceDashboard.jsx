@@ -16,6 +16,7 @@ import Chip from "@material-ui/core/Chip";
 import CloseIcon from "components/Icons/CloseIcon";
 import Button from "components/CustomButtons/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
+import { lastDayOfDecade } from "date-fns";
 
 const useStyles = makeStyles(complianceStyle);
 
@@ -69,37 +70,48 @@ export function ComplianceDashboard(props) {
             spacing={2}
             className={classes.gridCardContainer}
           >
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={6}>
               <PieChartCard
+                
                 title={"HOS Violations"}
-                data={[
-                  {name: "In Violation", value: 60},
-                  {name: "Compliant", value: 40},
-                ]}
+                data = {[{
+                  value: 65,
+
+                  itemStyle: {
+                    color: "#739BD3",
+                  },
+      
+                  detail: {
+                    offsetCenter: ['0%', '0%'],
+                    formatter: '{value}%',
+                    fontSize: 21,
+                    fontWeight: 700,
+                    fontFamily: 'Lato',
+                }
+
+                }]}
                 radio={["Hours", "Logs"]}
               />
             </Grid>
-
-            <Grid item xs={12} sm={4}>
+            <Grid item xs={12} sm={6}>
               <PieChartCard
                 title={"Unidentified Driving"}
-                data={[
-                  {name: "Unidentified", value: 30},
-                  {name: "Identified", value: 70}
-                ]}
+                data = {[{
+                  value: 50,
+
+                  itemStyle: {
+                    color: "#739BD3",
+                  },
+      
+                  detail: {
+                      offsetCenter: ['0%', '0%'],
+                      formatter: '{value}%',
+                      fontSize: 21,
+                      fontWeight: 700,
+                      fontFamily: 'Lato',
+                  }
+                }]}
                 radio={["Hours"]}
-
-              />
-            </Grid>
-
-            <Grid item xs={12} sm={4}>
-              <PieChartCard
-                title={"Unassigned Segments"}
-                data={[
-                  {name: "Unassigned", value: 50},
-                  {name: "Managed", value: 50}
-                ]}
-                radio={["Hours", "Segments"]}
               />
             </Grid>
           </Grid>
