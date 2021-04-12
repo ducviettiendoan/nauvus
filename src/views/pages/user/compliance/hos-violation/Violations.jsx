@@ -195,6 +195,16 @@ export function Violations(props) {
     },
   ]
 
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize)
+    props.getViolations({page, pageSize});
+  }
+
+  const onShowSizeChange = (page, pageSize) => {
+    props.getViolations({page, pageSize});
+    console.log(page, pageSize)
+  }
+
   return (
     <div>
       <GridContainer>
@@ -229,6 +239,13 @@ export function Violations(props) {
                   </Grid>
                 </Grid>
               }
+              pagination={{
+                total: props.total,
+                current: props.page,
+                pageSize: props.pageSize,
+                onChange: onPageChange,
+                onShowSizeChange: onShowSizeChange
+              }}
               columns={columns}
               dataSource={props.data}
               onHeaderRow={{
