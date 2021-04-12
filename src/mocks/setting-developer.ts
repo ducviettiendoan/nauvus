@@ -78,7 +78,7 @@ mock.onPost("/api/setting/developer/apiToken").reply((config) => {
   //API Traffic
 
   mock.onPost("/api/setting/developer/apiTraffic").reply((config) => {
-    let pageSize = 10;
+    let pageSize = 2;
     let page = 1;
     if (config.data) {
       const request = JSON.parse(config.data);
@@ -119,7 +119,7 @@ mock.onPost("/api/setting/developer/apiToken").reply((config) => {
   //Webhook Traffic
 
   mock.onPost("/api/setting/developer/webhook-traffic").reply((config) => {
-    let pageSize = 10;
+    let pageSize = 2;
     let page = 1;
     if (config.data) {
       const request = JSON.parse(config.data);
