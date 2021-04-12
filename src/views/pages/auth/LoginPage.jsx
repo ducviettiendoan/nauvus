@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import { connect } from 'react-redux';
 
 // @material-ui/icons
 import Face from "@material-ui/icons/Face";
@@ -34,12 +35,13 @@ import { Link } from "react-router-dom";
 import { loginByCognito } from "reducers/authentication";
 const useStyles = makeStyles(styles);
 
-export default function LoginPage() {
+export function LoginPage(props) {
   const [cardAnimaton, setCardAnimation] = React.useState("cardHidden");
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [usernameState, setUsernameState] = React.useState("success");
   const [passwordState, setPasswordState] = React.useState("success");
+  const [loading, setLoading] = React.useState(false);
 
   const [errorMessage, setErrorMessage] = React.useState("");
   const history = useHistory();
@@ -57,12 +59,7 @@ export default function LoginPage() {
 
   const handleSubmit = async () => {
     setErrorMessage("");
-    //  if (minLengthState === "") {
-    //    setminLengthState("error");
-    //  }
-    //  if (maxLengthState === "") {
-    //    setmaxLengthState("error");
-    //  }
+    setLoading(true);
     console.log(`handleSubmit: ${username} - ${password}`);
     const result = await loginByCognito(username, password);
     if (result.success) {
@@ -70,6 +67,7 @@ export default function LoginPage() {
     } else {
       setErrorMessage(result.message);
     }
+    setLoading(false);
   };
 
   return (
@@ -154,11 +152,11 @@ export default function LoginPage() {
                    <Link to={ `/auth/recovery-password` } className={classes.customRecoveryLink}>Recovery password</Link>
                  </Row>
                  <Row>
-                   <Button round className="btn-round-active w-178 mr-4" onClick={handleSubmit}>
+                   <Button disabled={ loading } round className="btn-round-active w-178 mr-4" onClick={handleSubmit}>
                      Sign In
                    </Button>
                    <Link to={`/auth/sign-up`}>
-                     <Button round className="btn-round-active-2">
+                     <Button disabled={ loading } round className="btn-round-active-2">
                        Sign up
                      </Button>
                    </Link>
@@ -166,3 +164,14 @@ export default function LoginPage() {
            </form>
   );
 }
+
+const mapStateToProps = ({ authentication }) => {
+  return {
+    loading: authentication.loading
+  };
+};
+
+const mapDispatchToProps = {
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
