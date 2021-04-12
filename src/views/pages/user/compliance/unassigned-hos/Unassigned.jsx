@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "components/CustomButtons/Button";
@@ -8,14 +8,13 @@ import Chip from "@material-ui/core/Chip";
 import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
 import {connect} from 'react-redux';
-import {getStatusSummary, getUnassignedHOS} from "reducers/compliance";
+import {getStatusSummary, getUnassignedHOSUnassigned} from "reducers/compliance";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
-import Calendar from "components/Calendar/Calendar";
-import LiveIconWhite from "components/Icons/LiveIconWhite";
-import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
 import CustomizedProgressBars from "components/ProgressBar/ProgressBar";
 import {Col, Row} from "reactstrap";
+import EditIcon from "components/Icons/EditIcon";
+
 
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
@@ -53,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   headContainer: {
     alignItems: "center",
     textAlign: "left",
-    marginTop: "8px"
+    marginTop: "30px"
   },
   headLeft: {
     display: "flex",
@@ -62,7 +61,8 @@ const useStyles = makeStyles((theme) => ({
     "& > div": {
       marginBottom: "0 !important",
       marginRight: 8
-    }
+    },
+    marginTop: "25px"
   },
   textName: {
     fontWeight: 'bold',
@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#25345C',
     paddingLeft: "12px"
   },
-  textEmail: {
+  textSub: {
     fontSize: '16px',
     lineHeight: '21px',
     color: "#25345C",
@@ -94,11 +94,6 @@ const useStyles = makeStyles((theme) => ({
   },
   gridTitle: {
     padding: "20px"
-  },
-  onHeaderCellFirst: {
-    fontWeight: 700,
-    color: "#25345C",
-    paddingLeft: "28px"
   },
   onHeaderCellNext: {
     fontWeight: 700,
@@ -124,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
   topHeaderButton: {
     textAlign: "right !important",
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
   },
   moreAction: {
     background: "#FFFFFF !important",
@@ -145,14 +140,20 @@ const useStyles = makeStyles((theme) => ({
   progressBar: {
     marginTop: 8
   },
+  iconButton: {
+    '&:hover': {
+      color: '#25345C !important',
+    }
+  },
 }));
 
-export function UnassignedHOS(props) {
+export function Unassigned(props) {
   const classes = useStyles();
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
   React.useEffect(() => {
     // Get list data
-    props.getUnassignedHOS();
+    props.getUnassignedHOSUnassigned();
   }, []);
 
   const [chipData, setChipData] = React.useState([
@@ -161,11 +162,11 @@ export function UnassignedHOS(props) {
   ]);
 
   const onShowSizeChange = (page, pageSize) => {
-    props.getUnassignedHOS({ page, pageSize }); 
+    props.getUnassignedHOSUnassigned({ page, pageSize }); 
   }
 
   const onPageChange = (page, pageSize) => {
-    props.getUnassignedHOS({ page, pageSize }); 
+    props.getUnassignedHOSUnassigned({ page, pageSize }); 
   }
 
   const handleDelete = (chipToDelete) => () => {
@@ -176,62 +177,77 @@ export function UnassignedHOS(props) {
     setChipData([])
   }
 
-  const viewDetail = () => {
-    props.history.push("/u/compliance/unassigned-hos-report/123456789")
-  }
+  const onSelectChange = selectedRowKeys => setSelectedRowKeys(() => [...selectedRowKeys])
 
   const columns = [
     {
-      title: 'Vehicle',
-      key: 'vehicle',
-      onHeaderCell: {className: classes.onHeaderCellFirst},
-      render: vehicle => (
+      title: 'Start Time',
+      key: 'startTime',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: startTime => (
         <div className={classes.alignItemsCenter}>
-          <div className={classes.textName}>{vehicle}</div>
+          <div className={classes.textSub} >{startTime}</div>
         </div>
       ),
     },
     {
-      title: 'Unassigned Time',
-      key: 'unassignedTime',
+      title: 'Duration',
+      key: 'duration',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: unassignedTime => <div className={classes.textEmail}>{unassignedTime}</div>
+      render: duration => <div className={classes.textSub}>{duration}</div>
     },
     {
-      title: 'Unassigned Distance',
-      key: 'unassignedDistance',
+      title: 'Distance',
+      key: 'distance',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: unassignedDistance => <div className={classes.textEmail}>{unassignedDistance}</div>
+      render: distance => <div className={classes.textSub}>{distance}</div>
     },
     {
-      title: 'Segments',
-      key: 'segments',
+        title: 'Trip',
+        key: 'trip',
+        onHeaderCell: {className: classes.onHeaderCellNext},
+        render: trip =><div>
+            <div className={classes.textSub}>{trip.to}</div>
+            <div className={classes.textSub}>{trip.from}</div>
+            </div> 
+      },
+      {
+        title: 'Camera ID',
+        key: 'cameraId',
+        onHeaderCell: {className: classes.onHeaderCellNext},
+        render: cameraId => <div className={classes.textSub}>{cameraId}</div>
+      },
+    {
+      title: 'Annotation',
+      key: 'annotation',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: segments => <div className={classes.textEmail}>{segments}</div>
+      render: annotation => <div className={classes.textSub}>{annotation}</div>
     },
     {
-      title: 'Pending',
-      key: 'pending',
-      onHeaderCell: {className: classes.onHeaderCellNext},
-      render: pending => <div className={classes.textEmail}>{pending}</div>
-    },
-    {
-      title: 'Annotated',
-      key: 'annotated',
-      onHeaderCell: {className: classes.onHeaderCellNext},
-      render: annotated => <div className={classes.textEmail}>{annotated}</div>
-    },
+        title: 'Actions',
+        key: 'action',
+        onHeaderCell: { className: classes.onHeaderCell },
+        render: () => (
+          <div className={classes.actionButton}>
+            <Button justIcon color="twitter" simple>
+              <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+            </Button>
+          </div>
+        )
+      }
   ]
 
   return (
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
-              <GridContainer className={classes.topHeader}>
-                <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                  <GridContainer>
+          <div>
+            {
+             <Table
+              renderTitle={
+                <Grid container className={classes.gridTitle}>
+                    <GridItem xs={12} sm={11} md={7} xl={6} className={classes.topHeaderTitle}>
+                    <GridContainer>
                     <GridItem xs={6} className={classes.progress}>
                       <Row>
                         <Col className={classes.progressTitle}>
@@ -262,35 +278,11 @@ export function UnassignedHOS(props) {
                         </Col>
                       </Row>
                     </GridItem>
-                  </GridContainer>
-                </GridItem>
-                <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
-                  <Calendar placeholder="Day"/>
-                  <Button
-                    color="white"
-                    aria-label="edit"
-                    justIcon
-                    round
-                    className={`btn-36 ${classes.moreAction} mr-2`}
-                  >
-                    <MoreHorizontalIcon/>
-                  </Button>
-                  <Button round className="btn-round-green w-84">
-                    <LiveIconWhite/>
-                    Live
-                  </Button>
-                </GridItem>
-              </GridContainer>
-            </GridItem>
-          </GridContainer>
-          <div>
-            {
-             <Table
-              renderTitle={
-                <Grid container className={classes.gridTitle}>
+                    </GridContainer>
+                    </GridItem>
                   <Grid item xs={12} sm={12} md={6}>
                     <Grid container className={classes.headContainer}>
-                      <Grid item xl={2} className={classes.userRolesTitle}> {chipData.length} selected for </Grid>
+                      <Grid item xl={2} className={classes.userRolesTitle}> {chipData.length} records selected </Grid>
                       <Grid item xl={10} className={classes.chipSelected}>
                         {chipData.map(data => (
                           <Chip
@@ -310,10 +302,26 @@ export function UnassignedHOS(props) {
                     </Grid>
                   </Grid>
                   <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
-                    <ToolboxButton placeholder="Search driver" showFilter showColumn/>
+                    <ToolboxButton placeholder="Search driver"/>
+                    <Button
+                      round
+                      className="btn-round-white"
+                    >
+                      Assign Selected
+                    </Button>
+                    <Button
+                      round
+                      className="btn-round-white"
+                    >
+                      Annotate Selected
+                    </Button>
                   </Grid>
                 </Grid>
               }
+              rowSelection={{
+                selectedRowKeys,
+                onChange: onSelectChange,
+              }}
               pagination={{
                 total: props.total,
                 current: props.page,
@@ -327,7 +335,6 @@ export function UnassignedHOS(props) {
                 className: classes.onHeaderRow
               }}
               onBodyRow={{
-                onClick: viewDetail,
                 className: classes.tableRow
               }}
             />
@@ -341,16 +348,16 @@ export function UnassignedHOS(props) {
 
 const mapStateToProps = ({ compliance }) => {
   return {
-    data: compliance.unassignedHOS.data,
-    page: compliance.unassignedHOS.page,
-    total: compliance.unassignedHOS.total,
-    pageSize: compliance.unassignedHOS.pageSize
+    data: compliance.unassignedHOSUnassigned.data,
+    page: compliance.unassignedHOSUnassigned.page,
+    total: compliance.unassignedHOSUnassigned.total,
+    pageSize: compliance.unassignedHOSUnassigned.pageSize
   };
 };
 
 const mapDispatchToProps = {
-  getUnassignedHOS, 
+  getUnassignedHOSUnassigned, 
   getStatusSummary
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UnassignedHOS);
+export default connect(mapStateToProps, mapDispatchToProps)(Unassigned);

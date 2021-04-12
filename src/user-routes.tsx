@@ -11,6 +11,7 @@ import DriverHOSAudit from "views/pages/user/compliance/DriverHOSAudit";
 import DutyStatusSummary from "views/pages/user/compliance/DutyStatusSummary";
 import HOSAuditTransfer from "views/pages/user/compliance/HOSAuditTransfer";
 import FuelPurchase from "views/pages/user/fuel-energy/FuelPurchase";
+import UnassignedHOSReport from "views/pages/user/compliance/unassigned-hos/UnassignedHOSReport"
 
 import Dispatch from "views/pages/user/dispatch/Dispatch";
 import Documents from "views/pages/user/documents/Documents";
@@ -147,6 +148,14 @@ const dashRoutes = [
         name: "Unassigned HOS",
         component: UnassignedHOS,
         layout: ROUTE_PATH.USER
+      },
+      {
+        path: "/compliance/unassigned-hos-report/:id",
+        name: "Unassigned HOS Report",
+        component: UnassignedHOSReport,
+        layout: ROUTE_PATH.USER,
+        isFixed: true,
+        hideInSideBar: true,
       },
       {
         path: "/compliance/driver-hos-audit",
