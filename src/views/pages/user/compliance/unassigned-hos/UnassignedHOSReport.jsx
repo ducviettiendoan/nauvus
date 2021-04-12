@@ -61,7 +61,7 @@ export default function UnassignedHOSReport(props) {
 
               <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} sm={11} md={6} xl={6} className={classes.topHeaderTitle}>
-                    <Button
+                    {/* <Button
                     startIcon={<ArrowBackIcon />}
                     className="btn-round-white 2 w-84 h-41 mr-2"
                     onClick={() => {
@@ -69,7 +69,7 @@ export default function UnassignedHOSReport(props) {
                     }}
                     >
                     Back
-                    </Button>
+                    </Button> */}
                   <RoundedTabs tabs={["Unassigned (5)", "Pending (0)", "Annotated (18)"]} tabValue={handleChangeTab}/>
                 </GridItem>
                 <GridItem xs={12} sm={4} md={6} xl={6} className={classes.topHeaderButton}>

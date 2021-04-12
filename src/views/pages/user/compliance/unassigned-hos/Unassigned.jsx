@@ -246,7 +246,7 @@ export function Unassigned(props) {
              <Table
               renderTitle={
                 <Grid container className={classes.gridTitle}>
-                    <GridItem xs={12} sm={11} md={7} xl={6} className={classes.topHeaderTitle}>
+                    <GridItem xs={12} sm={11} md={7} xl={7} className={classes.topHeaderTitle}>
                     <GridContainer>
                     <GridItem xs={6} className={classes.progress}>
                       <Row>
