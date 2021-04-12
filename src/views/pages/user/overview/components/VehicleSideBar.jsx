@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
 // core components
@@ -26,11 +26,11 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 
 // import PerfectScrollbar from "react-perfect-scrollbar";
 
-import { connect } from 'react-redux';
-import { loadVehicles, loadVehiclesMock } from 'reducers/vehicle';
-import { Grid } from "@material-ui/core";
+import {connect} from 'react-redux';
+import {loadVehicles, loadVehiclesMock} from 'reducers/vehicle';
+import {Grid} from "@material-ui/core";
 import Button from "components/CustomButtons/Button";
-import { MoreHoriz } from "@material-ui/icons";
+import {MoreHoriz} from "@material-ui/icons";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
@@ -40,9 +40,11 @@ import Popper from "@material-ui/core/Popper";
 import customDropdownStyle from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle.js";
 import CheckSquareOutlined from "components/Icons/CheckSquareOutlined";
 import Checkbox from "@material-ui/core/Checkbox";
-import { primaryColor } from "assets/jss/material-dashboard-pro-react";
+import {primaryColor} from "assets/jss/material-dashboard-pro-react";
 import Chip from "@material-ui/core/Chip";
 import CloseIcon from "components/Icons/CloseIcon";
+import {useHistory} from "react-router-dom";
+import {setOpenDrawer} from "reducers/overview"
 
 const useStyles = makeStyles((theme) => ({
   ...customDropdownStyle(theme),
@@ -113,8 +115,10 @@ const useStyles = makeStyles((theme) => ({
   expansionClasses: {
     padding: "0px 15px 0px 8px !important",
     borderBottom: "0px !important",
-    marginTop: "4px !important",
-    marginBottom: "4px !important",
+    borderBottomLeftRadius: "12px !important",
+    borderBottomRightRadius: "12px !important",
+    borderTopLeftRadius: "12px !important",
+    borderTopRightRadius: "12px !important",
     "&:hover": {
       backgroundColor: "#FFFFFF",
       background: "#FFFFFF"
@@ -131,10 +135,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "4px !important"
   },
   expansionPanelClassesRounded: {
-    borderBottomLeftRadius: "12px !important",
-    borderBottomRightRadius: "12px !important",
-    borderTopLeftRadius: "12px !important",
-    borderTopRightRadius: "12px !important",
     border: "1px solid #ECEEF0",
     boxShadow: "inherit"
   },
@@ -195,9 +195,11 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 var ps;
+
 export function VehicleSideBar(props) {
   const classes = useStyles();
   const mainPanelVehicleSideBar = React.createRef();
+  const history = useHistory()
 
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
@@ -227,6 +229,7 @@ export function VehicleSideBar(props) {
   React.useEffect(() => {
     props.loadVehicles()
     props.loadVehiclesMock()
+    props.setOpenDrawer()
   }, [])
 
   // popper
@@ -276,39 +279,26 @@ export function VehicleSideBar(props) {
     setChecked(newChecked)
   };
 
+  const handleShowDetails = () => {
+    props.setOpenDrawer(!props.openDrawer)
+    history.push("/o/vehicle/123456")
+  }
+
+  console.log(props.openDrawer)
+
   return (
-    <div ref={mainPanelVehicleSideBar} className={classes.sidebarContainer} >
-      <Divider />
+    <div ref={mainPanelVehicleSideBar} className={classes.sidebarContainer}>
+      <Divider/>
       <div>
         <div>
           <Grid xs={12} sm={12} md={12} className={classes.sidebarHeader}>
-            <ToolboxButton placeholder="Search asset" showFilter />
+            <ToolboxButton placeholder="Search asset" showFilter/>
           </Grid>
-          <Divider variant="fullWidth" light />
+          <Divider variant="fullWidth" light/>
         </div>
       </div>
 
       <List>
-        {/* {props.vehicles.map((vehicle, index) => (
-          <ListItem button key={index} className={classes.liContainer}>
-            <ListItemIcon className={classes.cameraIcon}><CameraIcon /></ListItemIcon>
-            <ListItemText style={{ marginLeft: "50px" }} primary={
-              <>
-                <div className={classes.txtMainDevice}><span>{vehicle.serialnumber}</span><span style={{ float: "right" }}>- km/h</span></div>
-                <div className={classes.txtSubDevice}><VehicleMapIcon /> <span style={{ top: "-2px", position: "absolute", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%', right: '-21px' }}>{vehicle.formatted_address}</span></div>
-                <Row className={classes.txtSubDevice}>
-                  <Col>
-                    <VehicleUserIcon /> <span style={{ top: "-2px", position: "absolute" }}>---</span>
-                  </Col>
-                  <Col style={{ marginTop: "4px" }}>
-                    <VehicleLinkIcon /> <span style={{ top: "-5px", position: "absolute" }}>---</span>
-                  </Col>
-                </Row>
-              </>
-            } />
-          </ListItem>
-        ))} */}
-
         <Grid className={classes.dropdownContainer}>
           <Grid>Your recent for: </Grid> &nbsp;
           <Grid>
@@ -320,7 +310,7 @@ export function VehicleSideBar(props) {
               className={`btn-36 ${classes.moreAction} mr-2`}
               onClick={handleOpenMore}
             >
-              <MoreHoriz />
+              <MoreHoriz/>
             </Button>
             <Popper
               open={openMore}
@@ -334,17 +324,17 @@ export function VehicleSideBar(props) {
                 [classes.popperNav]: true
               })}
             >
-              {({ TransitionProps }) => (
+              {({TransitionProps}) => (
                 <Grow
                   {...TransitionProps}
                   id="profile-menu-list"
-                  style={{ transformOrigin: "0 0 0" }}
+                  style={{transformOrigin: "0 0 0"}}
                 >
                   <Paper className={classes.dropdown && classes.dropdownVehicle}>
                     <ClickAwayListener onClickAway={handleCloseMore}>
                       <MenuList role="menu">
                         <Grid xs={12} sm={12} md={12} className={classes.popperInput}>
-                          <ToolboxButton placeholder="Search options" />
+                          <ToolboxButton placeholder="Search options"/>
                         </Grid>
                         <Grid>Tags</Grid>
 
@@ -356,7 +346,7 @@ export function VehicleSideBar(props) {
                                   edge="end"
                                   onChange={handleToggle(value)}
                                   checked={checked.indexOf(value) !== -1}
-                                  checkedIcon={<CheckSquareOutlined />}
+                                  checkedIcon={<CheckSquareOutlined/>}
                                   classes={{
                                     checked: classes.checked,
                                     root: classes.checkRoot
@@ -378,10 +368,10 @@ export function VehicleSideBar(props) {
           </Grid>
         </Grid>
 
-        <GridItem className={classes.chipContainer} >
+        <GridItem className={classes.chipContainer}>
           {chipData.map(data => (
             <Chip
-              deleteIcon={<CloseIcon />}
+              deleteIcon={<CloseIcon/>}
               label={data.label}
               onDelete={handleDelete(data)}
               className={classes.chips}
@@ -399,13 +389,21 @@ export function VehicleSideBar(props) {
                     <div>
                       <ListItem key={index} className={classes.liContainer}>
                         <div>
-                          <ListItemIcon className={classes.cameraIcon}><CameraIcon /></ListItemIcon>
-                          <ListItemText style={{ marginLeft: "50px" }} primary={
+                          <ListItemIcon className={classes.cameraIcon}><CameraIcon/></ListItemIcon>
+                          <ListItemText style={{marginLeft: "50px"}} primary={
                             <>
-                              <div className={classes.txtMainDevice}><span>{vehicle.id}</span><span style={{ float: "right" }}></span></div>
-                              <div className={classes.txtSubDevice}><span style={{ top: "-2px", position: "absolute", whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%' }}>{vehicle.vehicle}</span></div>
+                              <div className={classes.txtMainDevice}><span>{vehicle.id}</span><span
+                                style={{float: "right"}}/></div>
+                              <div className={classes.txtSubDevice}><span style={{
+                                top: "-2px",
+                                position: "absolute",
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                width: '100%'
+                              }}>{vehicle.vehicle}</span></div>
                             </>
-                          } />
+                          }/>
                         </div>
                         <div className={classes.txtSubDevice}>
                           <span className={classes.txtSpeed}>{vehicle.speed} -km/h</span>
@@ -413,59 +411,61 @@ export function VehicleSideBar(props) {
                       </ListItem>
                     </div>,
                   content:
-                    <div className={classes.cardExpandContent}>
+                    <div className={classes.cardExpandContent} onClick={handleShowDetails}>
                       <GridItem className={classes.expandedHeader}>
                         <div>
-                          <LocationIcon />
+                          <LocationIcon/>
                           <span className={classes.txtExpansion}>Tri-State Toolway, East Hazel Crest , IL</span>
                         </div>
-                        <OpenInNewTabIcon />
+                        <OpenInNewTabIcon/>
                       </GridItem>
                       <GridItem>
-                        <VehicleUserIcon />
+                        <VehicleUserIcon/>
                         <span className={classes.txtExpansion}>Grigory Mamadov</span>
                       </GridItem>
                       <GridItem>
-                        <VehicleLinkIcon color="#25345C" />
+                        <VehicleLinkIcon color="#25345C"/>
                         <span className={classes.txtExpansion}>53280</span>
                       </GridItem>
                       <GridItem>
-                        <span style={{ color: "#B4B4B4", fontSize: 12 }}>Co Driver:</span> &nbsp;
+                        <span style={{color: "#B4B4B4", fontSize: 12}}>Co Driver:</span> &nbsp;
                         <span className={classes.txtExpansion}>Ali Singh</span>
                       </GridItem>
                     </div>
                 },
               ]
             }
-              expansionSummaryClasses={{
-                root: classes.expansionClasses,
-                content: classes.expansionContentClasses
-              }}
-              expansionPanelClasses={{
-                root: classes.expansionPanelClasses,
-              }}
-              expansionPanelRounded={{
-                rounded: classes.expansionPanelClassesRounded,
-              }}
+                       expansionSummaryClasses={{
+                         root: classes.expansionClasses,
+                         content: classes.expansionContentClasses
+                       }}
+                       expansionPanelClasses={{
+                         root: classes.expansionPanelClasses,
+                       }}
+                       expansionPanelRounded={{
+                         rounded: classes.expansionPanelClassesRounded,
+                       }}
             />
           </Card>
         ))}
 
-        {!props.vehicles.length && <div style={{ textAlign: 'center' }}><h5>No data</h5></div>}
+        {!props.vehicles.length && <div style={{textAlign: 'center'}}><h5>No data</h5></div>}
       </List>
     </div>
   );
 }
 
-const mapStateToProps = ({ vehicle }) => {
+const mapStateToProps = ({vehicle, overview}) => {
   return {
     vehicles: vehicle.vehiclesMock,
+    openDrawer: overview.openDrawer
   }
 }
 
 const mapDispatchToProps = {
   loadVehicles,
-  loadVehiclesMock
+  loadVehiclesMock,
+  setOpenDrawer
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(VehicleSideBar);

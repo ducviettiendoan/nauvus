@@ -1,6 +1,7 @@
 import { ROUTE_PATH } from "config/constants";
 
 import Overview from "views/pages/user/overview/Overview";
+import VehicleDetails from "views/pages/user/overview/vehicle/VehicleDetails"
 import Alerts from "views/pages/user/alerts/Alerts";
 import ComplianceDashboard from "views/pages/user/compliance/ComplianceDashboard";
 import DriverHOS from "views/pages/user/compliance/DriverHOS";
@@ -63,6 +64,13 @@ const dashRoutes = [
         layout: ROUTE_PATH.OVERVIEW
       },
       {
+        path: "/vehicle/:id",
+        name: "Vehicle Details",
+        component: VehicleDetails,
+        layout: ROUTE_PATH.OVERVIEW,
+        isFixed: true,
+      },
+      {
         path: "/assets",
         name: "Assets",
         component: Assets,
@@ -81,7 +89,6 @@ const dashRoutes = [
         component: DriverRecord,
         layout: ROUTE_PATH.OVERVIEW,
         isFixed: true,
-        hideInSideBar: true,
       },
       {
         path: "/drivers",
