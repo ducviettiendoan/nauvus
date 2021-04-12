@@ -115,6 +115,10 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: "0px !important",
     marginTop: "4px !important",
     marginBottom: "4px !important",
+    // borderBottomLeftRadius: "12px !important",
+    // borderBottomRightRadius: "12px !important",
+    // borderTopLeftRadius: "12px !important",
+    // borderTopRightRadius: "12px !important",
     "&:hover": {
       backgroundColor: "#FFFFFF",
       background: "#FFFFFF"

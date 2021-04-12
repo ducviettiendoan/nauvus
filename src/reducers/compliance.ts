@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export type ComplianceState = Readonly<typeof initialState>;
 
-{/* ACTION TYPES */}
+{/* ACTION TYPES */ }
 export const ACTION_TYPES = {
   //HOS Audit action type
   GET_HOS_AUDIT: 'compliance/GET_HOS_AUDIT',
@@ -26,9 +26,11 @@ export const ACTION_TYPES = {
 
   //Unassigned HOS action type
   GET_UNASSIGNED_HOS: 'compliance/GET_UNASSIGNED_HOS',
+  GET_REPORT_DATA: 'setting/device/GET_REPORT_DATA',
+  GET_DUTY_STATUS_DATA: 'setting/device/GET_DUTY_STATUS_DATA'
 }
 
-{/* INITIAL STATE */}
+{/* INITIAL STATE */ }
 const initialState = {
   //HOS audit state
   HOSAudit: [],
@@ -52,16 +54,22 @@ const initialState = {
   //Unassigned HOS state
   unassignedHOS: [],
 
+
+  reportData: [],
+  dutyStatusData: [],
+
   errorMessage: null,
   loading: false,
 }
 
-{/* REDUCER */}
+{/* REDUCER */ }
 export default (state: ComplianceState = initialState, action): ComplianceState => {
   switch (action.type) {
     case REQUEST(ACTION_TYPES.GET_DRIVER_HOS):
     case REQUEST(ACTION_TYPES.GET_VIOLATIONS):
     case REQUEST(ACTION_TYPES.GET_MISSING_CERTIFICATIONS):
+    case REQUEST(ACTION_TYPES.GET_REPORT_DATA):
+    case REQUEST(ACTION_TYPES.GET_DUTY_STATUS_DATA):
       return {
         ...state,
         loading: true
@@ -69,6 +77,8 @@ export default (state: ComplianceState = initialState, action): ComplianceState 
     case FAILURE(ACTION_TYPES.GET_DRIVER_HOS):
     case FAILURE(ACTION_TYPES.GET_VIOLATIONS):
     case FAILURE(ACTION_TYPES.GET_MISSING_CERTIFICATIONS):
+    case FAILURE(ACTION_TYPES.GET_REPORT_DATA):
+    case FAILURE(ACTION_TYPES.GET_DUTY_STATUS_DATA):
       return {
         ...state,
         loading: false,
@@ -91,6 +101,19 @@ export default (state: ComplianceState = initialState, action): ComplianceState 
         ...state,
         missingCertifications: action.payload.data
       };
+
+    case SUCCESS(ACTION_TYPES.GET_REPORT_DATA): {
+      return {
+        ...state,
+        reportData: action.payload.data
+      };
+    }
+    case SUCCESS(ACTION_TYPES.GET_DUTY_STATUS_DATA): {
+      return {
+        ...state,
+        dutyStatusData: action.payload.data
+      };
+    }
 
     //HOS Audit reducer
     case ACTION_TYPES.GET_HOS_AUDIT: {
@@ -150,7 +173,7 @@ export default (state: ComplianceState = initialState, action): ComplianceState 
   }
 }
 
-{/* DATA */}
+{/* DATA */ }
 //HOS Audit data
 const HOSAuditData = () => {
   let data = [];
@@ -250,7 +273,7 @@ const unassignedHOSData = () => {
   return data;
 }
 
-{/* ACTION */}
+{/* ACTION */ }
 //HOS Audit action
 export const getHOSAudit = () => async dispatch => {
   dispatch({
@@ -315,5 +338,20 @@ export const getUnassignedHOS = () => async dispatch => {
     payload: unassignedHOSData
   });
 };
+
+export const getReportData = (request) => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_REPORT_DATA,
+    payload: axios.post("/api/compliance/HOS/report", request)
+  });
+};
+
+export const getDutyStatusData = (request) => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_DUTY_STATUS_DATA,
+    payload: axios.post("/api/compliance/HOS/duty-status", request)
+  });
+};
+
 
 
