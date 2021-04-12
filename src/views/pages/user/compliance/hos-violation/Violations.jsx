@@ -9,9 +9,12 @@ import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
 import {IRootState} from 'reducers';
 import {connect} from 'react-redux';
-import {getViolations} from "reducers/compliance";
+import {getDriverHOS, getViolations} from "reducers/compliance";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
+import OrganizationUpload from "../../../../../components/CustomUpload/OrganizationUpload";
+import DiaLog from "../../../../../components/CustomDialog/Dialog";
+import {DriverHOS} from "../DriverHOS";
 
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
@@ -197,7 +200,7 @@ export function Violations(props) {
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <div>
-            {props.data.length > 0 && <Table
+            <Table
               renderTitle={
                 <Grid container className={classes.gridTitle}>
                   <Grid item xs={12} sm={12} md={6}>
@@ -235,7 +238,6 @@ export function Violations(props) {
                 className: classes.tableRow
               }}
             />
-            }
           </div>
         </GridItem>
       </GridContainer>
@@ -243,11 +245,17 @@ export function Violations(props) {
   );
 }
 
-export default connect(
-  ({compliance}: IRootState) => ({
-    data: compliance.violations
-  }),
-  {
-    getViolations
-  }
-)(Violations);
+const mapStateToProps = ({compliance}) => {
+  return {
+    data: compliance.violations.data,
+    page: compliance.violations.page,
+    total: compliance.violations.total,
+    pageSize: compliance.violations.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getViolations
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Violations);
