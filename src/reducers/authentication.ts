@@ -15,7 +15,8 @@ export const ACTION_TYPES = {
   GET_SESSION: 'authentication/GET_SESSION',
   LOGOUT: 'authentication/LOGOUT',
   CLEAR_AUTH: 'authentication/CLEAR_AUTH',
-  ERROR_MESSAGE: 'authentication/ERROR_MESSAGE'
+  ERROR_MESSAGE: 'authentication/ERROR_MESSAGE',
+  SET_LOADING: 'authentication/SET_LOADING'
 };
 
 const initialState = {
@@ -85,9 +86,23 @@ export default (state: AuthenticationState = initialState, action): Authenticati
         loading: false,
         sessionHasBeenFetched: true
     };
+    case ACTION_TYPES.SET_LOADING:
+      console.log(`ACTION_TYPES.SET_LOADING ${action.payload}`)
+      return {
+        ...state,
+        loading: action.payload,
+    };
     default:
       return state;
   }
+};
+
+const setLoading = async (value) => {
+  console.log(`setLoading`)
+  // await dispatch({
+  //   type: ACTION_TYPES.SET_LOADING,
+  //   payload: value
+  // });
 };
 
 export const getUserInfo = () => async (dispatch) => {
@@ -127,13 +142,14 @@ export const resendConfirmationCode = async (username) => {
 };
 
 export const loginByCognito = async (username, password) => {
+  console.log(`loginByCognito`)
   try {
     const user = await Auth.signIn(username, password);
-    let accessToken = user.signInUserSession.accessToken.jwtToken;
-    console.log(accessToken);
-    // Store 
-    storeAuthToken(accessToken);
-    return { success: true, accessToken};
+    // let accessToken = user.signInUserSession.accessToken.jwtToken;
+    // console.log(accessToken);
+    // // Store 
+    // storeAuthToken(accessToken);
+    return { success: true, accessToken: "accessToken"};
   } catch (error) {
     let messageError = error && error.message ? error.message : 'NotAuthorizedException';
     console.log('error signing in', error);

@@ -447,7 +447,7 @@ export function DriverHOS(props) {
                     <ToolboxButton placeholder="Search tags" />
                   </Grid>
 
-                  <Accordion collapses={
+                  {/* <Accordion collapses={
                     [
                       {
                         title: <Grid style={{ width: "140px", display: "flex", justifyContent: "space-between" }}>
@@ -601,8 +601,44 @@ export function DriverHOS(props) {
                     expansionPanelRounded={{
                       rounded: classes.expansionPanelClassesRounded,
                     }}
-                  />
+                  /> */}
 
+
+                  <Accordion collapses={
+                    [
+                      {
+                        title: <Grid style={{ width: "140px", display: "flex", justifyContent: "space-between" }}>
+                          <Grid className={classes.tagTitle}>Violations</Grid>
+                          <Button className={classes.clearButton}>
+                            Clear
+                        </Button>
+                        </Grid>,
+                        content:
+                          <div className={classes.cardExpandContent}>
+                            <Checkbox
+                              inputProps={{ 'aria-label': 'primary checkbox' }}
+                            />
+                            <Checkbox
+                              defaultChecked
+                              color="primary"
+                              inputProps={{ 'aria-label': 'secondary checkbox' }}
+                            />
+                            <Checkbox inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
+                          </div>
+                      },
+                    ]
+                  }
+                    expansionSummaryClasses={{
+                      root: classes.expansionClasses,
+                      content: classes.expansionContentClasses
+                    }}
+                    expansionPanelClasses={{
+                      root: classes.expansionPanelClasses,
+                    }}
+                    expansionPanelRounded={{
+                      rounded: classes.expansionPanelClassesRounded,
+                    }}
+                  />
                 </MenuList>
               </ClickAwayListener>
             </Paper>
