@@ -38,7 +38,7 @@ export const ACTION_TYPES = {
   GET_REPORT_DATA: 'setting/device/GET_REPORT_DATA',
   GET_DUTY_STATUS_DATA: 'setting/device/GET_DUTY_STATUS_DATA',
   GET_COMPLIANCE_DASHBOARD_DATA: "compliance/GET_COMPLIANCE_DASHBOARD",
-
+  GET_REPORT_DATA_2: 'setting/device/GET_REPORT_DATA_2'
 };
 
 {
@@ -75,6 +75,7 @@ const initialState = {
 
   reportData: [],
   dutyStatusData: [],
+  reportData2: [],
 
   complianceDashboard: [],
 
@@ -100,7 +101,7 @@ export default (
     case REQUEST(ACTION_TYPES.GET_REPORT_DATA):
     case REQUEST(ACTION_TYPES.GET_DUTY_STATUS_DATA):
     case REQUEST(ACTION_TYPES.GET_COMPLIANCE_DASHBOARD_DATA):
-
+    case REQUEST(ACTION_TYPES.GET_REPORT_DATA_2):
       return {
         ...state,
         loading: true,
@@ -115,7 +116,7 @@ export default (
     case FAILURE(ACTION_TYPES.GET_REPORT_DATA):
     case FAILURE(ACTION_TYPES.GET_DUTY_STATUS_DATA):
     case FAILURE(ACTION_TYPES.GET_COMPLIANCE_DASHBOARD_DATA):
-
+    case FAILURE(ACTION_TYPES.GET_REPORT_DATA_2):
       return {
         ...state,
         loading: false,
@@ -151,16 +152,10 @@ export default (
         dutyStatusData: action.payload.data
       };
     }
-    case SUCCESS(ACTION_TYPES.GET_REPORT_DATA): {
+    case SUCCESS(ACTION_TYPES.GET_REPORT_DATA_2): {
       return {
         ...state,
-        reportData: action.payload.data
-      };
-    }
-    case SUCCESS(ACTION_TYPES.GET_DUTY_STATUS_DATA): {
-      return {
-        ...state,
-        dutyStatusData: action.payload.data
+        reportData2: action.payload.data
       };
     }
 
@@ -414,7 +409,14 @@ export const getUnassignedHOSUnassigned = (request) => async (dispatch) => {
 export const getReportData = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_REPORT_DATA,
-    payload: axios.post("/api/compliance/HOS/report", request)
+    payload: axios.post("/api/compliance/HOS/report-1", request)
+  });
+};
+
+export const getReportData2 = (request) => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_REPORT_DATA_2,
+    payload: axios.post("/api/compliance/HOS/report-2", request)
   });
 };
 
