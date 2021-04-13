@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
@@ -13,6 +13,8 @@ import Button from "components/CustomButtons/Button.js";
 import { AddOutlined } from "@material-ui/icons";
 import DiaLog from "components/CustomDialog/Dialog";
 import AddWifiForm from "./AddWifiForm";
+import {connect} from "react-redux";
+import {getNetwork} from "reducers/setting-org";
 
 const styles = {
   textFieldRoot: {
@@ -83,9 +85,14 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function GeneralConnection() {
+function GeneralConnection(props) {
   const classes = useStyles();
-  const [openAdd, setOpenAdd] = React.useState(false);
+  const [openAdd, setOpenAdd] = useState(false);
+  const [networkToDisplay, setNetworkToDisplay] = useState({ encryption: "open" })
+  const [status, setStatus] = useState("")
+  useEffect(() => {
+    props.getNetwork()
+  }, [])
 
   const [checkedState, setCheckedState] = useState({
     checkedA: false,
@@ -95,18 +102,34 @@ export default function GeneralConnection() {
     setCheckedState({ ...checkedState, [event.target.name]: event.target.checked });
   };
 
-  const [listNetworks, setListNetworks] = useState(["wef - WPA", "wef - WPA", "wef - WPA", "wef - WPA"])
+  const encryption_type = {
+    wpa_psk: "WPA (PSK) - Encrypted",
+    wpa_enterprise: "WPA Enterprise - Encrypted",
+    open: "Open"
+  }
+
+  const displayEditWifiForm = (network) => {
+    setNetworkToDisplay(network)
+    setOpenAdd(true)
+    setStatus("Edit")
+  }
+
+  const displayAddWifiForm = () => {
+    setNetworkToDisplay({ encryption: "open" })
+    setOpenAdd(true)
+    setStatus("Add")
+  }
 
   return (
     <>
       <div>
         <DiaLog
-            renderTitle={<h3 className={classes.dialogTitle}>Add Wi-Fi Configuration</h3>}
+            renderTitle={<h3 className={classes.dialogTitle}>{status} Wi-Fi Configuration</h3>}
             handleClose={() => {setOpenAdd(false)}
             }
             open={openAdd}
         >
-          <AddWifiForm handleClose={() => {setOpenAdd(false)}}/>
+          <AddWifiForm initData={networkToDisplay} handleClose={() => {setOpenAdd(false)}}/>
         </DiaLog>
         <Row style={{ marginTop: '20px', paddingRight: '16px', display: "flex", justifyContent: "space-between" }}>
           <GridItem>
@@ -169,13 +192,15 @@ export default function GeneralConnection() {
         <GridItem>
           <Row className={classes.wifiNetworksHeader} >Wi-Fi Networks</Row>
           <Row style={{ display: "flex", flexDirection: "column", paddingBottom: "16px" }}>
-            {listNetworks.map((network, i) => (
+            {props.data && props.data.length > 0 && props.data.map((network, i) => (
               <GridItem key={i} className={classes.lineContainer} >
-                <GridItem className={classes.networkName}>{network}</GridItem>
+                <GridItem className={classes.networkName}>{network.name} - {encryption_type[network.encryption]}</GridItem>
                 <GridItem className={classes.buttonGroupContainer}>
                   <Col style={{ paddingRight: "0px"}}>
                     <Button
                       className="btn-transparent w-29"
+                      onClick={() => {
+                        displayEditWifiForm(network)}}
                     >Edit</Button>
                   </Col>
                   <Col style={{ paddingRight: "0px"}}>
@@ -191,7 +216,7 @@ export default function GeneralConnection() {
             <Button
               className="btn-transparent w-142"
               startIcon={<AddOutlined />}
-              onClick={() => {setOpenAdd(true)}}
+              onClick={displayAddWifiForm}
             >
               Add Network
             </Button>
@@ -201,3 +226,12 @@ export default function GeneralConnection() {
     </>
   );
 }
+
+export default connect(
+    ({settingOrg}) => ({
+      data: settingOrg.networks.data
+    }),
+    {
+      getNetwork
+    }
+)(GeneralConnection);
