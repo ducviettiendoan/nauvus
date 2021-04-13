@@ -163,7 +163,6 @@ const dashRoutes = [
         component: UnassignedHOSReport,
         layout: ROUTE_PATH.USER,
         isFixed: true,
-        hideInSideBar: true,
       },
       {
         path: "/compliance/driver-hos-audit",
