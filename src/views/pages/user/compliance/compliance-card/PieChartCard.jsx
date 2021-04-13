@@ -12,14 +12,13 @@ import PieChart from "components/CustomPieChart/PieChart";
 const useStyles = makeStyles(complianceStyle);
 
 
-
 export default function PieChartCard(props) {
   const {title, data, radio} = props
   const classes = useStyles();
 
   return(
     <Card className={classes.root}>
-      <CardContent style={{padding: "0px"}}>
+      <CardContent className={complianceStyle.chartTop}>
         <Grid container>
           <Grid item xs={6} className={classes.cardBodyTitle1}>
             <RadioButton checked={true} />
@@ -34,6 +33,7 @@ export default function PieChartCard(props) {
         <PieChart
           title={title}
           data={data}
+          style={{paddingTop: "20px"}}
         />
       </CardContent>
 

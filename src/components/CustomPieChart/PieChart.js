@@ -34,7 +34,9 @@ const useStyles = makeStyles((theme) => ({
   cardFooter: {
     display: "flex",
     alignItems: "center",
-    padding: "38px !important",
+    justifyContent: "flex-start",
+    paddingRight: "38px !important",
+    paddingLeft: "38px !important",
   },
 
   cardFooterData: {
@@ -60,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PieChart(props) {
   const {title, data} = props
-  
+
   const classes = useStyles();
 
   const option = {
