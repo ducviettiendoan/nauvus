@@ -294,8 +294,8 @@ mock.onPost("/api/compliance/HOS/unassigned-HOS-unassigned").reply((config) => {
   return [200, data];
 })
 
-mock.onPost("/api/compliance/HOS/report").reply((config) => {
-  let pageSize = 10;
+mock.onPost("/api/compliance/HOS/report-1").reply((config) => {
+  let pageSize = 1;
   let page = 1;
   if (config.data) {
     const request = JSON.parse(config.data);
@@ -419,3 +419,46 @@ mock.onPost("/api/compliance/compliance-dashboard").reply((config) => {
 
   return [200, data];
 })
+
+mock.onPost("/api/compliance/HOS/report-2").reply((config) => {
+  let pageSize = 4;
+  let page = 1;
+  if (config.data) {
+    const request = JSON.parse(config.data);
+    page = request.page;
+    pageSize = request.pageSize;
+  }
+
+  const startPage = pageSize * page - pageSize;
+  const endPage = pageSize * page > 64 ? 64 : pageSize * page;
+  //Compliance Dashboard Data
+  const reportData2 = () => {
+    let data = [];
+    for (let i = startPage; i < endPage; i++) {
+      let item = {
+        id: i + 1,
+        time: {
+          start: "12:00:00 AM EDT",
+          end: "8:55:29 AM EDT"
+        },
+        duration: "9h 6m",
+        status: "Driving",
+        remark: "-",
+        vehicle: "619",
+        location: "0.8 km S Stony Point, NY",
+      };
+      data.push(item);
+    }
+    return data;
+  }
+
+  const data = {
+    total: 64,
+    page: page,
+    pageSize: pageSize,
+    data: reportData2(),
+  };
+
+  return [200, data];
+})
+
