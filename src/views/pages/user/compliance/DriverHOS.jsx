@@ -72,6 +72,9 @@ const useStyles = makeStyles((theme) => ({
     margin: "0px !important",
     "&:hover": {
       color: "#25345C"
+    },
+    "&:focus": {
+      color: "#8CA2EE"
     }
   },
   chipSelected: {
@@ -271,6 +274,11 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     lineHeight: "19px"
   },
+  checkboxContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
 }));
 
 export function DriverHOS(props) {
@@ -395,26 +403,33 @@ export function DriverHOS(props) {
     violations: ["Currently in violations", "Nearing Violation"]
   }
 
-  // checked box in popper
-  const [checked, setChecked] = React.useState({
-    tags: [1],
-    dutyStatus: [1],
-    violations: [1]
-  });
-  const handleToggle = (value) => (event) => {
-    const currentIndex = checked[event.target.name].indexOf(value);
-    const newChecked = { ...checked };
-    if (currentIndex === -1) {
-      newChecked[event.target.name].push(value);
-    } else {
-      newChecked[event.target.name].splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
-  };
-
   const PopperFilter = (props) => {
     const { listTags } = props
+    // checked box in popper
+    const [checked, setChecked] = React.useState({
+      tags: [1],
+      dutyStatus: [1],
+      violations: [1]
+    });
+    const handleToggle = (value) => (event) => {
+      const currentIndex = checked[event.target.name].indexOf(value);
+      const newChecked = { ...checked };
+      if (currentIndex === -1) {
+        newChecked[event.target.name].push(value);
+      } else {
+        newChecked[event.target.name].splice(currentIndex, 1);
+      }
+
+      setChecked(newChecked);
+    };
+
+    const handleClearBox = (value) => () => {
+      setChecked({
+        ...checked,
+        [value]: [1]
+      })
+    }
+
     return (
       <Popper
         open={openMore}
@@ -445,12 +460,12 @@ export function DriverHOS(props) {
                     <ToolboxButton placeholder="Search tags" />
                   </Grid>
 
-                  {/* <Accordion collapses={
+                  <Accordion collapses={
                     [
                       {
                         title: <Grid style={{ width: "140px", display: "flex", justifyContent: "space-between" }}>
                           <Grid className={classes.tagTitle}>Tags</Grid>
-                          <Button className={classes.clearButton}>
+                          <Button className={classes.clearButton} onClick={handleClearBox("tags")}>
                             Clear
                           </Button>
                         </Grid>,
@@ -459,7 +474,7 @@ export function DriverHOS(props) {
                             {listTags.tags.map((value) => {
                               return (
                                 <MenuItem key={value} className={classes.itemContainer}>
-                                  <div style={{display:"flex", alignItems: "center"}}>
+                                  <div className={classes.checkboxContainer}>
                                     <div className={classes.dropdownItemVehicle}>
                                       <Checkbox
                                         name="tags"
@@ -502,7 +517,7 @@ export function DriverHOS(props) {
                       {
                         title: <Grid style={{ width: "140px", display: "flex", justifyContent: "space-between" }}>
                           <Grid className={classes.tagTitle}>Duty Status</Grid>
-                          <Button className={classes.clearButton}>
+                          <Button className={classes.clearButton} onClick={handleClearBox("dutyStatus")}>
                             Clear
                         </Button>
                         </Grid>,
@@ -511,7 +526,7 @@ export function DriverHOS(props) {
                             {listTags.dutyStatus.map((value) => {
                               return (
                                 <MenuItem key={value} className={classes.itemContainer}>
-                                  <div>
+                                  <div className={classes.checkboxContainer}>
                                     <div className={classes.dropdownItemVehicle}>
                                       <Checkbox
                                         name="dutyStatus"
@@ -554,7 +569,7 @@ export function DriverHOS(props) {
                       {
                         title: <Grid style={{ width: "140px", display: "flex", justifyContent: "space-between" }}>
                           <Grid className={classes.tagTitle}>Violations</Grid>
-                          <Button className={classes.clearButton}>
+                          <Button className={classes.clearButton} onClick={handleClearBox("violations")}>
                             Clear
                         </Button>
                         </Grid>,
@@ -563,7 +578,7 @@ export function DriverHOS(props) {
                             {listTags.violations.map((value) => {
                               return (
                                 <MenuItem key={value} className={classes.itemContainer}>
-                                  <div>
+                                  <div className={classes.checkboxContainer}>
                                     <div className={classes.dropdownItemVehicle}>
                                       <Checkbox
                                         name="violations"
@@ -599,43 +614,6 @@ export function DriverHOS(props) {
                     expansionPanelRounded={{
                       rounded: classes.expansionPanelClassesRounded,
                     }}
-                  /> */}
-
-
-                  <Accordion collapses={
-                    [
-                      {
-                        title: <Grid style={{ width: "140px", display: "flex", justifyContent: "space-between" }}>
-                          <Grid className={classes.tagTitle}>Violations</Grid>
-                          <Button className={classes.clearButton}>
-                            Clear
-                        </Button>
-                        </Grid>,
-                        content:
-                          <div className={classes.cardExpandContent}>
-                            <Checkbox
-                              inputProps={{ 'aria-label': 'primary checkbox' }}
-                            />
-                            <Checkbox
-                              defaultChecked
-                              color="primary"
-                              inputProps={{ 'aria-label': 'secondary checkbox' }}
-                            />
-                            <Checkbox inputProps={{ 'aria-label': 'uncontrolled-checkbox' }} />
-                          </div>
-                      },
-                    ]
-                  }
-                    expansionSummaryClasses={{
-                      root: classes.expansionClasses,
-                      content: classes.expansionContentClasses
-                    }}
-                    expansionPanelClasses={{
-                      root: classes.expansionPanelClasses,
-                    }}
-                    expansionPanelRounded={{
-                      rounded: classes.expansionPanelClassesRounded,
-                    }}
                   />
                 </MenuList>
               </ClickAwayListener>
@@ -645,7 +623,6 @@ export function DriverHOS(props) {
       </Popper>
     )
   }
-
 
   return (
     <div>

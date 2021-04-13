@@ -12,6 +12,8 @@ import ArrowBackIcon from "components/Icons/ArrowBackIcon";
 // material-ui icons
 import Menu from "@material-ui/icons/Menu";
 import MoreVert from "@material-ui/icons/MoreVert";
+import LiveIconWhite from "components/Icons/LiveIconWhite";
+
 // import ViewList from "@material-ui/icons/ViewList";
 import ViewList from '@material-ui/icons/Dehaze';
 import MenuIcon from "components/Icons/MenuIcon";
@@ -19,8 +21,13 @@ import MenuIcon from "components/Icons/MenuIcon";
 // core components
 import AdminNavbarLinks from "./AdminNavbarLinks";
 import Button from "components/CustomButtons/Button.js";
+import GridItem from "components/Grid/GridItem.js";
+import CustomDropdown from "components/CustomDropdown/CustomDropdown.js";
+import Calendar from "components/Calendar/Calendar";
+import { Grid } from "@material-ui/core";
 
 import styles from "assets/jss/material-dashboard-pro-react/components/adminNavbarStyle.js";
+
 
 const useStyles = makeStyles(styles);
 
@@ -42,22 +49,12 @@ export default function OverviewAdminNavbar(props) {
   }
   return (
     <AppBar className={classes.appBar + appBarClasses}>
-      <Toolbar className={classes.container}>
-        { window.location.pathname.indexOf("/driver-record/12345678") !== -1 &&
-          <Button
-            startIcon={<ArrowBackIcon />}
-            className="btn-round-white 2 w-84 h-41"
-            style={{ margin: "0px 0px 0px 16px" }}
-            onClick={ onBack }
-          >
-            Back
-          </Button>
-        } 
+      <Toolbar className={classes.container} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <Hidden smDown implementation="css">
           <div className={sidebarMinimize}>
             {props.miniActive ? (
               <Button
-                className={ "btn-36" }
+                className={"btn-36"}
                 justIcon
                 round
                 color="white"
@@ -67,7 +64,7 @@ export default function OverviewAdminNavbar(props) {
               </Button>
             ) : (
               <Button
-                className={ "btn-36" }
+                className={"btn-36"}
                 justIcon
                 round
                 color="white"
@@ -78,12 +75,48 @@ export default function OverviewAdminNavbar(props) {
             )}
           </div>
         </Hidden>
-        <div className={classes.flex}>
+        {/* vehicle details navbar */}
+        {window.location.pathname.indexOf("/vehicle/123456") === -1 && <div className={classes.flex} >
           {/* Here we create navbar brand, based on route name */}
           <Button href="#" className={classes.title} color="transparent">
             {brandText}
           </Button>
-        </div>
+        </div>}
+        {window.location.pathname.indexOf("/vehicle/123456") !== -1 &&
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <GridItem>
+              <CustomDropdown
+                hoverColor="primary"
+                buttonText="Showing Drivers"
+                buttonProps={{
+                  round: true,
+                  fullWidth: true,
+                  style: { marginBottom: "0", background: "#FFFFFF", color: "#25345C", border: "1px solid #ECEEF0", boxShadow: "none" },
+                }}
+              />
+            </GridItem>
+            <Grid>
+              <CustomDropdown
+                hoverColor="primary"
+                buttonText="Graph data"
+                buttonProps={{
+                  round: true,
+                  fullWidth: true,
+                  style: { marginBottom: "0", background: "#FFFFFF", color: "#25345C", border: "1px solid #ECEEF0", boxShadow: "none" },
+                }}
+              />
+            </Grid>
+            <GridItem style={{ paddingRight: "0px !important" }}>
+              <Calendar />
+            </GridItem>
+            <GridItem>
+              <Button round className="btn-round-green w-84">
+                <LiveIconWhite />
+                    Live
+              </Button>
+            </GridItem>
+          </div>
+        }
         <Hidden smDown implementation="css">
           <AdminNavbarLinks rtlActive={rtlActive} />
         </Hidden>
