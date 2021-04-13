@@ -246,3 +246,28 @@ mock.onPost("/api/setting/org/billing/summary/search").reply((config) => {
   return [200, data];
 })
 
+mock.onPost("/api/setting/org/general/network/search").reply((config) => {
+  if (config.data) {
+    const request = JSON.parse(config.data);
+  }
+
+  // Network Data
+  const networkData = () => {
+    let data = [
+        { name: "wef", encryption: "wpa_psk", passphrase: "abcd"},
+        { name: "wef", encryption: "open"},
+        { name: "wef", encryption: "wpa_enterprise", username: "user1", password: "password1"}
+    ];
+    data = data.map((ele, index) => {
+      return {...ele,id: index + 1}
+    } )
+    return data;
+  };
+
+  const data = {
+    data: networkData(),
+  };
+
+  return [200, data];
+})
+
