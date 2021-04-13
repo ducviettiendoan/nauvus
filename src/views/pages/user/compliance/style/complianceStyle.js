@@ -180,6 +180,9 @@ const complianceStyle = {
       backgroundColor: "#fbfbfb",
     },
   },
+  chartTop: {
+    padding: "20px 0px 0px 0px",
+  }
 }
 
 export default complianceStyle
