@@ -241,10 +241,8 @@ const useStyles = makeStyles((theme) => ({
     background: "#FAFAFA",
     "&:hover": {
       background: "#FAFAFA",
-      background: "#FAFAFA",
     },
     "&:focus": {
-      background: "#FAFAFA",
       background: "#FAFAFA",
     }
   },
