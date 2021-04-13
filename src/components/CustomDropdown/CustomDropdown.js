@@ -79,7 +79,7 @@ export default function CustomDropdown(props) {
           {dropdownHeader}
         </MenuItem>
       ) : null}
-      {dropdownList.map((prop, key) => {
+      {dropdownList?.map((prop, key) => {
         if (prop.divider) {
           return (
             <Divider

@@ -10,21 +10,25 @@ import {Row, Col} from "reactstrap";
 import ComplianceCarrierInfo from "./ComplianceCarrierInfo";
 import ComplianceNotifications from "./ComplianceNotifications";
 import ComplianceRuleSet from "./ComplianceRuleSet";
+import Grid from "@material-ui/core/Grid";
 
 const styles = {
   cardContainer: {
     marginTop: "15px !important",
-    height: "calc(100vh - 100px)"
+    minHeight: "calc(100vh - 100px)"
   },
   contentContainer: {
+    width: "auto",
+    margin: "16px",
     display: "flex",
-    margin: "16px 7px 16px 16px",
+    flexDirection: "row-reverse",
+    justifyContent: "center"
   },
   areaGrow: {
     flexGrow: "1"
   },
   areaMenu: {
-    width: "237px"
+    minWidth: "237px",
   },
   footer: {
     position: 'absolute',
@@ -88,13 +92,8 @@ export default function Compliance() {
           <Card className={classes.cardContainer}>
             <Row>
               <Col>
-                <div className={classes.contentContainer}>
-                  <div className={classes.areaGrow}>
-                    {tab === 1 && <ComplianceCarrierInfo/>}
-                    {tab === 2 && <ComplianceNotifications/>}
-                    {tab === 3 && <ComplianceRuleSet/>}
-                  </div>
-                  <div className={classes.areaMenu}>
+                <Grid container className={classes.contentContainer}>
+                  <Grid item className={classes.areaMenu}>
                     <List className={classes.root}>
                       <ListItem button
                                 onClick={() => setTab(1)}
@@ -129,8 +128,13 @@ export default function Compliance() {
                         }} primary="Driver Ruleset" secondary="HOS rules for drivers."/>
                       </ListItem>
                     </List>
-                  </div>
-                </div>
+                  </Grid>
+                  <Grid item className={classes.areaGrow}>
+                    {tab === 1 && <ComplianceCarrierInfo/>}
+                    {tab === 2 && <ComplianceNotifications/>}
+                    {tab === 3 && <ComplianceRuleSet/>}
+                  </Grid>
+                </Grid>
               </Col>
             </Row>
           </Card>

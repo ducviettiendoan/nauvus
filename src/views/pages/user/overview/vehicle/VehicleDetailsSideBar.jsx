@@ -8,7 +8,7 @@ import CardBody from "components/Card/CardBody.js";
 import Divider from '@material-ui/core/Divider';
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
-import {InfoOutlined} from "@material-ui/icons";
+import {InfoOutlined, MoreHoriz} from "@material-ui/icons";
 import Button from "components/CustomButtons/Button";
 import TruckIcon from "components/Icons/TruckIcon";
 import LocationIcon from "components/Icons/LocationIcon";
@@ -32,20 +32,18 @@ import {setOpenDrawer} from "reducers/overview"
 import {connect} from "react-redux";
 import {loadVehicles, loadVehiclesMock} from "reducers/vehicle";
 import NavigationIcon from "components/Icons/NavigationIcon";
-import livestream from "assets/img/livestream.png"
+import driving from "assets/img/driving.png"
+import LiveStreamIcon from "components/Icons/LiveStreamIcon";
+import CameraWhiteIcon from "components/Icons/CameraWhiteIcon";
+import DiaLog from "components/CustomDialog/Dialog";
+import OutwardFacing from "components/CustomCamera/OutwardFacing";
+import RefreshIcon from "components/Icons/RefreshIcon";
 
 
 const useStyles = makeStyles((theme) => ({
   ...customDropdownStyle(theme),
   sidebarContainer: {
     overflowY: "auto",
-  },
-  txtMainDevice: {
-    color: "#25345C",
-    fontWeight: "bold",
-    fontSize: "14px",
-    lineHeight: "21px",
-    marginBottom: "7px"
   },
   txtSubDevice: {
     color: "#C4C4C4",
@@ -59,11 +57,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "12px",
     lineHeight: "18px",
     color: "#27AE60",
-  },
-  cameraIcon: {
-    position: "absolute",
-    top: "20px",
-    left: "25px"
   },
   alert: {
     background: "#ECEEF0",
@@ -130,51 +123,14 @@ const useStyles = makeStyles((theme) => ({
     padding: "19px 0px"
   },
   cardExpandHeaderTitle: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 700,
     color: "#25345C",
     textAlign: "left",
-  },
-  cardExpandHeaderSubTitle: {
-    fontSize: 12,
-    fontWeight: 700,
-    color: "#25345C",
-    textAlign: "right",
   },
   expandTitle: {
     alignItems: "center",
     marginTop: 19
-  },
-  expandTitleLeft: {
-    textAlign: "left",
-    fontSize: 14,
-    fontWeight: 400,
-    color: "#25345C",
-  },
-  expandTitleRight: {
-    textAlign: "right",
-    fontSize: 14,
-    fontWeight: 400,
-    color: "#25345C",
-  },
-  cardExpandContent: {
-    paddingTop: "10px"
-  },
-  cardExpandFooterContent: {
-    alignItems: "center",
-    padding: "10px 0px"
-  },
-  cardExpandFooterTitle: {
-    textAlign: "left",
-    fontSize: 14,
-    fontWeight: 400,
-    color: "#B4B4B4",
-  },
-  cardExpandFooterData: {
-    textAlign: "right",
-    fontSize: 14,
-    fontWeight: 700,
-    color: "#25345C",
   },
   moreAction: {
     background: "#FFFFFF !important",
@@ -186,62 +142,17 @@ const useStyles = makeStyles((theme) => ({
     color: "#25345C",
   },
   dialogTitle: {
-    fontWeight: "bold",
+    fontWeight: 700,
     fontSize: "22px",
     lineHeight: "26px",
     color: "#25345C",
-    margin: "24px",
     textAlign: "center",
   },
-  textFieldRoot: {
-    fontWeight: 'normal',
-    fontSize: '14px',
-    lineHeight: '21px',
-    color: '#C4C4C4'
-  },
-  textInputRoot: {
-    fontWeight: 'bold',
-    fontSize: '14px',
-    lineHeight: '21px',
-    color: '#25345C'
-  },
-  vehicleHeader: {
-    width: "78px",
-    height: "21px",
-    fontFamily: "Lato",
-    fontStyle: "normal",
-    fontWeight: "normal",
-    fontSize: "14px",
-    lineHeight: "21px",
-    color: "#C4C4C4",
-    padding: "0px 0px 0px 0px !important",
-  },
-  selectField: {
-    paddingTop: "18px"
-  },
-  loginTitle: {
+  dialogSubTitle: {
     fontWeight: 700,
-    fontSize: '18px',
-    color: '#25345C',
-    padding: "16px 0px 0px 16px"
-  },
-  checked: {
-    color: primaryColor[0] + "!important"
-  },
-  checkRoot: {
-    padding: "0px",
-    "&:hover": {
-      backgroundColor: "unset"
-    }
-  },
-  listCheck: {
-    width: '100%',
-  },
-  listCheckItems: {
-    paddingLeft: "0px",
-    fontWeight: 400,
-    fontSize: '12px',
-    color: '#25345C',
+    fontSize: "14px",
+    color: "#B4B4B4",
+    textAlign: "center",
   },
   expansionClasses: {
     padding: "0px 15px 0px 15px !important",
@@ -275,7 +186,8 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonFullWidth: {
     minWidth: "100%",
-    background: "rgba(37, 52, 92, 0.1) !important"
+    background: "rgba(37, 52, 92, 0.1) !important",
+    marginBottom: "24px"
   },
   sidebarContent: {
     padding: "0px 18px"
@@ -285,10 +197,63 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  dropdownContent: {
+    margin: "8px 0px 8px 0px !important "
+  },
+  sensorContent: {
+    padding: "0px 15px 15px 15px",
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  sensorDataTitle: {
+    fontWeight: 400,
+    fontSize: '14px',
+    color: '#B4B4B4',
+  },
+  sensorData: {
+    fontWeight: 700,
+    fontSize: '14px',
+    color: '#25345C',
+  },
+  diagContent: {
+    padding: "15px 15px 15px 15px",
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+  viewAllDiag: {
+    fontWeight: 700,
+    fontSize: '12px',
+    color: '#25345C',
+    cursor: "pointer"
+  },
+  diagProgressData: {
+    display: "flex",
+    alignItems: "center",
+  },
+  livestreamButton: {
+    position: "absolute",
+    marginTop: 11,
+    marginLeft: 16
+  },
+  cameraButton: {
+    background: "#25345C !important",
+    border: "none !important",
+    position: "absolute",
+    top: 71,
+    left: 195
+  },
+  selectButton: {
+    textAlign: "right",
+    marginRight: -10,
+    marginTop: 13,
   }
 }));
 
-// const useStyles = makeStyles(styles);
 var ps;
 
 function VehicleDetailsSideBar(props) {
@@ -350,6 +315,9 @@ function VehicleDetailsSideBar(props) {
     props.setOpenDrawer(false)
     history.push("/o/driver-record/1234")
   }
+
+  const [openCamera, setOpenCamera] = React.useState(false);
+  const [openLiveStream, setOpenLiveStream] = React.useState(false);
 
 
   return (
@@ -492,7 +460,7 @@ function VehicleDetailsSideBar(props) {
         </Button>
       </div>
       <div className={classes.sidebarContent}>
-        <Card>
+        <Card className={classes.dropdownContent}>
           <Accordion collapses={
             [
               {
@@ -501,13 +469,28 @@ function VehicleDetailsSideBar(props) {
                     <div className={classes.cardExpandHeaderTitle}>
                       En Route
                     </div>
-                    <div className={classes.cardExpandHeaderSubTitle}>
-                      Taken at 12:02:46 PM
-                    </div>
                   </div>,
                 content:
                   <div style={{width: "100%"}}>
-                    <img src={livestream}/>
+                    <Button
+                      round
+                      className={`btn-round-active h-36 w-166 ${classes.livestreamButton}`}
+                      startIcon={<LiveStreamIcon/>}
+                      onClick={() => setOpenLiveStream(true)}
+                    >
+                      View Live Stream
+                    </Button>
+                    <Button
+                      color="white"
+                      aria-label="edit"
+                      justIcon
+                      round
+                      className={`btn-36 ${classes.cameraButton} mr-2`}
+                      onClick={() => setOpenCamera(true)}
+                    >
+                      <CameraWhiteIcon/>
+                    </Button>
+                    <img src={driving} style={{width: 332, height: 190}}/>
                   </div>
               },
             ]
@@ -524,6 +507,271 @@ function VehicleDetailsSideBar(props) {
                      }}
           />
         </Card>
+        <Card className={classes.dropdownContent}>
+          <Accordion collapses={
+            [
+              {
+                title:
+                  <div className={classes.enRouteContainer}>
+                    <div className={classes.cardExpandHeaderTitle}>
+                      Sensor
+                    </div>
+                  </div>,
+                content:
+                  <div>
+                    <div className={classes.sensorContent}>
+                      <div className={classes.sensorDataTitle}>
+                        Sensor Name
+                      </div>
+                      <div className={classes.sensorData}>
+                        Trailing 101
+                      </div>
+                    </div>
+                    <div className={classes.sensorContent}>
+                      <div className={classes.sensorDataTitle}>
+                        Sensor ID
+                      </div>
+                      <div className={classes.sensorData}>
+                        3FA6P0PU5HR226082
+                      </div>
+                    </div>
+                  </div>
+
+              },
+            ]
+          }
+                     expansionSummaryClasses={{
+                       root: classes.expansionClasses,
+                       content: classes.expansionContentClasses
+                     }}
+                     expansionPanelClasses={{
+                       root: classes.expansionPanelClasses,
+                     }}
+                     expansionPanelRounded={{
+                       rounded: classes.expansionPanelClassesRounded,
+                     }}
+          />
+        </Card>
+        <Card className={classes.dropdownContent}>
+          <Accordion collapses={
+            [
+              {
+                title:
+                  <div className={classes.enRouteContainer}>
+                    <div className={classes.cardExpandHeaderTitle}>
+                      Asset Stats
+                    </div>
+                  </div>,
+                content:
+                  <div className={classes.sensorContent}>
+                    <div className={classes.sensorDataTitle}>
+                      VIN
+                    </div>
+                    <div className={classes.sensorData}>
+                      3FA6P0PU5HR226082
+                    </div>
+                  </div>
+              },
+            ]
+          }
+                     expansionSummaryClasses={{
+                       root: classes.expansionClasses,
+                       content: classes.expansionContentClasses
+                     }}
+                     expansionPanelClasses={{
+                       root: classes.expansionPanelClasses,
+                     }}
+                     expansionPanelRounded={{
+                       rounded: classes.expansionPanelClassesRounded,
+                     }}
+          />
+        </Card>
+        <Card className={classes.dropdownContent}>
+          <Accordion collapses={
+            [
+              {
+                title:
+                  <div className={classes.enRouteContainer}>
+                    <div className={classes.cardExpandHeaderTitle}>
+                      Diagnostics
+                    </div>
+                  </div>,
+                content:
+                  <div>
+                    <div className={classes.diagContent}>
+                      <div className={classes.sensorDataTitle}>
+                        Seatbelt (Driver)
+                      </div>
+                      <div className={classes.sensorData}>
+                        Unbuckled
+                      </div>
+                    </div>
+                    <Divider variant="fullWidth" light/>
+                    <div className={classes.diagContent}>
+                      <div className={classes.sensorDataTitle}>
+                        Engine State
+                      </div>
+                      <div className={classes.sensorData}>
+                        Running
+                      </div>
+                    </div>
+                    <Divider variant="fullWidth" light/>
+                    <div className={classes.diagContent}>
+                      <div className={classes.sensorDataTitle}>
+                        Engine Check Light
+                      </div>
+                      <div className={classes.sensorData}>
+                        Off
+                      </div>
+                    </div>
+                    <Divider variant="fullWidth" light/>
+                    <div className={classes.diagContent}>
+                      <div className={classes.sensorDataTitle}>
+                        Odemeter
+                      </div>
+                      <div className={classes.sensorData}>
+                        1,073,173 km
+                      </div>
+                    </div>
+                    <Divider variant="fullWidth" light/>
+                    <div className={classes.diagContent}>
+                      <div className={classes.sensorDataTitle}>
+                        Fuel
+                      </div>
+                      <div className={classes.sensorData}>
+                        60%
+                      </div>
+                    </div>
+                    <div className={classes.diagContent}>
+                      <div className={classes.viewAllDiag}>
+                        View all 16 diagnostics
+                      </div>
+                    </div>
+                  </div>
+              },
+            ]
+          }
+                     expansionSummaryClasses={{
+                       root: classes.expansionClasses,
+                       content: classes.expansionContentClasses
+                     }}
+                     expansionPanelClasses={{
+                       root: classes.expansionPanelClasses,
+                     }}
+                     expansionPanelRounded={{
+                       rounded: classes.expansionPanelClassesRounded,
+                     }}
+          />
+        </Card>
+        <Card className={classes.dropdownContent}>
+          <Accordion collapses={
+            [
+              {
+                title:
+                  <div className={classes.enRouteContainer}>
+                    <div className={classes.cardExpandHeaderTitle}>
+                      Gateway
+                    </div>
+                  </div>,
+                content:
+                  <div>
+                    No Data
+                  </div>
+              },
+            ]
+          }
+                     expansionSummaryClasses={{
+                       root: classes.expansionClasses,
+                       content: classes.expansionContentClasses
+                     }}
+                     expansionPanelClasses={{
+                       root: classes.expansionPanelClasses,
+                     }}
+                     expansionPanelRounded={{
+                       rounded: classes.expansionPanelClassesRounded,
+                     }}
+          />
+        </Card>
+        <Card className={classes.dropdownContent}>
+          <Accordion collapses={
+            [
+              {
+                title:
+                  <div className={classes.enRouteContainer}>
+                    <div className={classes.cardExpandHeaderTitle}>
+                      Trip History
+                    </div>
+                  </div>,
+                content:
+                  <div>
+                    No Data
+                  </div>
+              },
+            ]
+          }
+                     expansionSummaryClasses={{
+                       root: classes.expansionClasses,
+                       content: classes.expansionContentClasses
+                     }}
+                     expansionPanelClasses={{
+                       root: classes.expansionPanelClasses,
+                     }}
+                     expansionPanelRounded={{
+                       rounded: classes.expansionPanelClassesRounded,
+                     }}
+          />
+        </Card>
+        <DiaLog
+          renderTitle={
+            <>
+              <h3 className={classes.dialogTitle}>New Camera Snapshot</h3>
+              <h4 className={classes.dialogSubTitle}>Taken at 12:02:46 PM </h4>
+            </>
+          }
+          open={openCamera}
+        >
+          <img src={driving} style={{width: 534, marginBottom: 16}}/>
+          <OutwardFacing/>
+          <div className={classes.selectButton}>
+            <Button
+              type="button"
+              round
+              className="btn-round-active-2 mr-2"
+              onClick={() => setOpenCamera(false)}
+            >
+              Close
+            </Button>
+            <Button
+              round
+              className="btn-round-active mr-2"
+              type="submit"
+              startIcon={<RefreshIcon/>}
+            >
+              Refresh
+            </Button>
+          </div>
+        </DiaLog>
+        <DiaLog
+          renderTitle={
+            <>
+              <h3 className={classes.dialogTitle}>Real Time</h3>
+              <h4 className={classes.dialogSubTitle}>Taken at 12:02:46 PM </h4>
+            </>
+          }
+          open={openLiveStream}
+        >
+          <img src={driving} style={{width: 534, marginBottom: 16}}/>
+          <div className={classes.selectButton}>
+            <Button
+              type="button"
+              round
+              className="btn-round-active-2 mr-2"
+              onClick={() => setOpenLiveStream(false)}
+            >
+              Close
+            </Button>
+          </div>
+        </DiaLog>
       </div>
     </div>
   );

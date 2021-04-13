@@ -67,7 +67,7 @@ const containerFluid = {
   marginLeft: "auto",
   "&:before,&:after": {
     display: "table",
-    content: '" "'
+    // content: '" "'
   },
   "&:after": {
     clear: "both"

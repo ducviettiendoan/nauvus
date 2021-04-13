@@ -33,6 +33,9 @@ const styles = {
         margin: "24px",
         textAlign: "center"
     },
+    label: {
+        color: "#25345C"
+    }
 }
 const useStyles = makeStyles(styles);
 
@@ -44,7 +47,7 @@ export default function AddWifiForm(props) {
         {id: "wpa_enterprise", label: "WPA Enterprise - Encrypted"},
     ]
 
-    const initData = { encryption: "open" }
+    const initData = props.initData
 
 
     const onSubmit = async (values) => {
@@ -69,9 +72,9 @@ export default function AddWifiForm(props) {
                     }
                     return (
                         <form onSubmit={handleSubmit} noValidate>
-                            <GridContainer justify="space-between" className={classes.formRow}>
-                                <GridItem xs={12}>
-                                    <InputLabel required>Network Name</InputLabel>
+                            <GridContainer justify="space-between" >
+                                <GridItem className={classes.formRow} xs={12}>
+                                    <InputLabel className={classes.label} required>Network Name</InputLabel>
                                     <Field
                                         fullWidth
                                         required
@@ -81,10 +84,8 @@ export default function AddWifiForm(props) {
                                         component={TextField}
                                     />
                                 </GridItem>
-                            </GridContainer>
-                            <GridContainer justify="space-between" className={classes.formRow}>
-                                <GridItem xs={12}>
-                                    <InputLabel >Encryption Type</InputLabel>
+                                <GridItem className={classes.formRow} xs={12}>
+                                    <InputLabel className={classes.label} >Encryption Type</InputLabel>
                                     <Field
                                         fullWidth
                                         name="encryption"
@@ -95,6 +96,45 @@ export default function AddWifiForm(props) {
                                         {encryptions.map(encryption => <MenuItem key={encryption.id} value={encryption.id}>{encryption.label}</MenuItem>)}
                                     </Field>
                                 </GridItem>
+                                {values.encryption === "wpa_psk" &&
+                                <GridItem className={classes.formRow} xs={12}>
+                                    <InputLabel className={classes.label} >Passphrase</InputLabel>
+                                    <Field
+                                        fullWidth
+                                        required
+                                        name="passphrase"
+                                        placeholder="Passphrase"
+                                        type="text"
+                                        component={TextField}
+                                    />
+                                </GridItem>
+                                }
+                                {values.encryption === "wpa_enterprise" &&
+                                    <>
+                                        <GridItem className={classes.formRow} xs={12}>
+                                            <InputLabel className={classes.label} >802.1x username</InputLabel>
+                                            <Field
+                                                fullWidth
+                                                required
+                                                name="username"
+                                                placeholder="802.1x username"
+                                                type="text"
+                                                component={TextField}
+                                            />
+                                        </GridItem>
+                                        <GridItem className={classes.formRow} xs={12}>
+                                            <InputLabel className={classes.label} >802.1x password</InputLabel>
+                                            <Field
+                                            fullWidth
+                                            required
+                                            name="password"
+                                            placeholder="802.1x password"
+                                            type="text"
+                                            component={TextField}
+                                            />
+                                        </GridItem>
+                                    </>
+                                }
                             </GridContainer>
                             <div className={classes.selectButton}>
                                 <Button

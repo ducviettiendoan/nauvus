@@ -10,8 +10,7 @@ import complianceStyle from './style/complianceStyle';
 import PieChartCard from "./compliance-card/PieChartCard";
 import Table from "components/Table/TableV1";
 import {connect} from "react-redux";
-import {IRootState} from "reducers";
-import {getDriverEfficiency} from "reducers/compliance";
+import {getComplianceDashboardData} from "reducers/compliance";
 import Chip from "@material-ui/core/Chip";
 import CloseIcon from "components/Icons/CloseIcon";
 import Button from "components/CustomButtons/Button";
@@ -58,9 +57,8 @@ export function ComplianceDashboard(props) {
 
   React.useEffect(() => {
     // Get list data
-    props.getDriverEfficiency();
+    props.getComplianceDashboardData();
   }, []);
-
   return (
     <>
       <GridContainer>
@@ -70,7 +68,7 @@ export function ComplianceDashboard(props) {
             spacing={2}
             className={classes.gridCardContainer}
           >
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12} md={6}>
               <PieChartCard
                 
                 title={"HOS Violations"}
@@ -88,12 +86,11 @@ export function ComplianceDashboard(props) {
                     fontWeight: 700,
                     fontFamily: 'Lato',
                 }
-
                 }]}
                 radio={["Hours", "Logs"]}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12} md={6}>
               <PieChartCard
                 title={"Unidentified Driving"}
                 data = {[{
@@ -116,10 +113,10 @@ export function ComplianceDashboard(props) {
             </Grid>
           </Grid>
           <div>
-            {props.data.length > 0 && <Table
+            <Table
               renderTitle={
                 <Grid container className={classes.gridTitle}>
-                  <Grid item xs={12} sm={12} md={6}>
+                  <Grid item xs={12} sm={12} md={7}>
                     <Grid container className={classes.headContainer}>
                       <Grid item xl={2} className={classes.userRolesTitle}> {chipData.length} selected for </Grid>
                       <Grid item xl={10} className={classes.chipSelected}>
@@ -140,8 +137,8 @@ export function ComplianceDashboard(props) {
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
-                    <ToolboxButton placeholder="Search driver" showFilter showColumn/>
+                  <Grid xs={12} sm={12} md={5} className={classes.headLeft}>
+                    <ToolboxButton placeholder="Search driver" showFilter showColumn />
                   </Grid>
                 </Grid>
               }
@@ -154,7 +151,7 @@ export function ComplianceDashboard(props) {
                 className: classes.tableRow
               }}
             />
-            }
+            
           </div>
         </GridItem>
       </GridContainer>
@@ -162,11 +159,17 @@ export function ComplianceDashboard(props) {
   );
 }
 
-export default connect(
-  ({compliance}: IRootState) => ({
-    data: compliance.driverEfficiencies
-  }),
-  {
-    getDriverEfficiency
-  }
-)(ComplianceDashboard);
+const mapStateToProps = ({compliance}) => {
+  return {
+    data: compliance.complianceDashboard.data,
+    page: compliance.complianceDashboard.page,
+    total: compliance.complianceDashboard.total,
+    pageSize: compliance.complianceDashboard.pageSize,
+  };
+};
+
+const mapDispatchToProps = {
+  getComplianceDashboardData
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ComplianceDashboard);

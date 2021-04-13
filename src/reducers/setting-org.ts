@@ -23,6 +23,11 @@ export const ACTION_TYPES = {
   //Invoice action type
   GET_INVOICE: "setting/org/GET_INVOICE",
   GET_INVOICE_SUMMARY: "setting/org/GET_INVOICE_SUMMARY",
+
+  //Network action type
+  GET_NETWORK: "setting/org/GET_NETWORK",
+  ADD_NETWORK: "setting/org/ADD_NETWORK",
+  REMOVE_NETWORK: "setting/org/REMOVE_NETWORK"
 };
 
 const initialState = {
@@ -37,6 +42,7 @@ const initialState = {
   invoicesSummary: [],
   pendingInvitations: [],
   deactivatedDrivers: [],
+  networks: [],
 };
 
 export type SettingOrgState = Readonly<typeof initialState>;
@@ -56,6 +62,9 @@ export default (
     case REQUEST(ACTION_TYPES.GET_ACTIVITY_LOGS):
     case REQUEST(ACTION_TYPES.GET_INVOICE):
     case REQUEST(ACTION_TYPES.GET_INVOICE_SUMMARY):
+    case REQUEST(ACTION_TYPES.GET_NETWORK):
+    case REQUEST(ACTION_TYPES.ADD_NETWORK):
+    case REQUEST(ACTION_TYPES.REMOVE_NETWORK):
       return {
         ...state,
         loading: true,
@@ -69,6 +78,9 @@ export default (
     case FAILURE(ACTION_TYPES.GET_ACTIVITY_LOGS):
     case FAILURE(ACTION_TYPES.GET_INVOICE):
     case FAILURE(ACTION_TYPES.GET_INVOICE_SUMMARY):
+    case FAILURE(ACTION_TYPES.GET_NETWORK):
+    case FAILURE(ACTION_TYPES.ADD_NETWORK):
+    case FAILURE(ACTION_TYPES.REMOVE_NETWORK):
       return {
         ...state,
         loading: false,
@@ -81,6 +93,7 @@ export default (
         userRoles: action.payload.data,
       };
     }
+
     case ACTION_TYPES.GET_ROLES: {
       return {
         ...state,
@@ -137,17 +150,18 @@ export default (
         invoicesSummary: action.payload.data,
       };
     }
+
+    //Network Reducer
+    case SUCCESS(ACTION_TYPES.GET_NETWORK): {
+      return {
+        ...state,
+        networks: action.payload.data,
+      }
+    }
     default:
       return state;
   }
 };
-// Tags Data
-const tagsData = [
-  {
-    email: "alma.lawson@example.com",
-    role: "Super Admin",
-  },
-];
 
 // Actions
 // Users & Roles Actions
@@ -204,3 +218,25 @@ export const getInvoiceSummary = (request) => async (dispatch) => {
     payload: axios.post("/api/setting/org/billing/summary/search", request),
   });
 };
+
+// Network Actions
+export const getNetwork = (request) => async (dispatch) => {
+  dispatch({
+    type: ACTION_TYPES.GET_NETWORK,
+    payload: axios.post("/api/setting/org/general/network/search", request)
+  })
+}
+
+export const removeNetwork = (request) => async (dispatch) => {
+  dispatch({
+    type: ACTION_TYPES.GET_NETWORK,
+    payload: axios.delete("/api/setting/org/general/network", request)
+  })
+}
+
+export const addNetwork = (request) => async (dispatch) => {
+  dispatch({
+    type: ACTION_TYPES.GET_NETWORK,
+    payload: axios.post("/api/setting/org/general/network", request)
+  })
+}
