@@ -374,3 +374,48 @@ mock.onPost("/api/compliance/HOS/duty-status").reply((config) => {
 
   return [200, data];
 })
+
+
+//Compliance Dashboard
+mock.onPost("/api/compliance/compliance-dashboard").reply((config) => {
+  let pageSize = 5;
+  let page = 1;
+  if (config.data) {
+      const request = JSON.parse(config.data);
+      page = request.page;
+      pageSize = request.pageSize;
+  }
+
+  const startPage = pageSize * page - pageSize;
+  const endPage = pageSize * page > 64 ? 64 : pageSize * page;
+  //Compliance Dashboard Data
+  const complianceDashBoardData = () => {
+      let data = [];
+      for (let i = startPage; i < endPage; i++) {
+          let item = {
+              id: i + 1,
+              driver: "Ali Singh",
+              hour: "2h 8min",
+              // fuelUsed: '2.0 gal',
+              // energyUsed: "0.0 kWh",
+              // distance: "78.1 mi",
+              // drivingElectric: '0.0',
+              // estCarbonEmissions: '39.2 lb',
+              // estCost: "C$10.76",
+              // totalEngineRunTime: "3h 20m",
+              // idleTime: "10s (0.1%)",
+          };
+          data.push(item);
+      }
+      return data;
+  }
+
+  const data = {
+      total: 64,
+      page: page,
+      pageSize: pageSize,
+      data: complianceDashBoardData(),
+  };
+
+  return [200, data];
+})

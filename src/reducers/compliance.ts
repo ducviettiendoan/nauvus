@@ -36,7 +36,8 @@ export const ACTION_TYPES = {
   GET_UNASSIGNED_HOS_UNASSIGNED: "compliance/GET_UNASSIGNED_HOS_UNASSIGNED",
 
   GET_REPORT_DATA: 'setting/device/GET_REPORT_DATA',
-  GET_DUTY_STATUS_DATA: 'setting/device/GET_DUTY_STATUS_DATA'
+  GET_DUTY_STATUS_DATA: 'setting/device/GET_DUTY_STATUS_DATA',
+  GET_COMPLIANCE_DASHBOARD_DATA: "compliance/GET_COMPLIANCE_DASHBOARD",
 
 };
 
@@ -75,6 +76,8 @@ const initialState = {
   reportData: [],
   dutyStatusData: [],
 
+  complianceDashboard: [],
+
   errorMessage: null,
   loading: false,
 };
@@ -96,6 +99,7 @@ export default (
     case REQUEST(ACTION_TYPES.GET_UNASSIGNED_HOS_UNASSIGNED):
     case REQUEST(ACTION_TYPES.GET_REPORT_DATA):
     case REQUEST(ACTION_TYPES.GET_DUTY_STATUS_DATA):
+    case REQUEST(ACTION_TYPES.GET_COMPLIANCE_DASHBOARD_DATA):
 
       return {
         ...state,
@@ -110,6 +114,7 @@ export default (
     case FAILURE(ACTION_TYPES.GET_UNASSIGNED_HOS_UNASSIGNED):
     case FAILURE(ACTION_TYPES.GET_REPORT_DATA):
     case FAILURE(ACTION_TYPES.GET_DUTY_STATUS_DATA):
+    case FAILURE(ACTION_TYPES.GET_COMPLIANCE_DASHBOARD_DATA):
 
       return {
         ...state,
@@ -158,7 +163,6 @@ export default (
         dutyStatusData: action.payload.data
       };
     }
-
 
     //HOS Audit reducer
     case ACTION_TYPES.GET_HOS_AUDIT: {
@@ -229,6 +233,14 @@ export default (
         unassignedHOSUnassigned: action.payload.data,
       };
     }
+
+    case SUCCESS(ACTION_TYPES.GET_COMPLIANCE_DASHBOARD_DATA): {
+      return {
+        ...state,
+        complianceDashboard: action.payload.data
+      };
+    }
+
     default:
       return state;
   }
@@ -302,19 +314,19 @@ const HOSAuditTransferData = () => {
 };
 
 //Compliance dashboard
-const driverEfficiencyData = () => {
-  let data = [];
-  for (let i = 0; i < 2; i++) {
-    let item = {
-      id: i + 2,
-      key: i + 2,
-      driver: "Ali Singh",
-      hour: "2h 8min",
-    };
-    data.push(item);
-  }
-  return data;
-};
+// const driverEfficiencyData = () => {
+//   let data = [];
+//   for (let i = 0; i < 2; i++) {
+//     let item = {
+//       id: i + 2,
+//       key: i + 2,
+//       driver: "Ali Singh",
+//       hour: "2h 8min",
+//     };
+//     data.push(item);
+//   }
+//   return data;
+// };
 
 {
   /* ACTION */
@@ -368,12 +380,12 @@ export const getDriverHOS = (request) => async (dispatch) => {
 };
 
 //Compliance dashboard action
-export const getDriverEfficiency = () => async (dispatch) => {
-  dispatch({
-    type: ACTION_TYPES.GET_DRIVER_EFFICIENCY,
-    payload: driverEfficiencyData,
-  });
-};
+// export const getDriverEfficiency = () => async (dispatch) => {
+//   dispatch({
+//     type: ACTION_TYPES.GET_DRIVER_EFFICIENCY,
+//     payload: driverEfficiencyData,
+//   });
+// };
 
 //Unassigned HOS action
 export const getUnassignedHOS = (request) => async (dispatch) => {
@@ -413,3 +425,9 @@ export const getDutyStatusData = (request) => async dispatch => {
   });
 };
 
+export const getComplianceDashboardData = (request) => async (dispatch) => {
+  dispatch({
+    type: ACTION_TYPES.GET_COMPLIANCE_DASHBOARD_DATA,
+    payload: axios.post("api/compliance/compliance-dashboard", request)
+  });
+};
