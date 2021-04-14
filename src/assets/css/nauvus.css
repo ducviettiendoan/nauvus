@@ -188,6 +188,21 @@
   margin: 0px 0px !important;
 }
 
+.btn-round-white-4 {
+  background: #fff !important;
+  border-radius: 28px !important;
+  text-transform: initial !important;
+  font-size: 13px !important;
+  line-height: 17px !important;
+  /* font-family: Lato!important; */
+  font-style: normal!important;
+  font-weight: bold!important;
+  color: #25345C!important;
+  box-shadow: none !important;
+  border: 1px solid #ECEEF0 !important;
+  margin-left: 8px !important;
+}
+
 .btn-round-active-2 {
   background: #eff2fe !important;
   border-radius: 28px !important;
