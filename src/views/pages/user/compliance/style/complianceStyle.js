@@ -87,6 +87,7 @@ const complianceStyle = {
     backgroundColor: "#ECEEF0",
     padding: "20px 35px 20px 35px",
   },
+
   cardBodyTitle1: {
     textAlign: "left",
     paddingLeft: 9
@@ -181,7 +182,45 @@ const complianceStyle = {
     },
   },
   chartTop: {
-    padding: "20px 0px 0px 0px",
+    padding: "20px 0px 0px 0px !important",
+  },
+  header: {
+    fontFamily: "Lato",
+    fontWeight: 700,
+    fontSize: '24px',
+    color: "#25345C",
+    marginBottom: "5px",
+  },
+
+  subHeader: {
+    fontFamily: "Lato",
+    fontWeight: 400,
+    fontSize: '14px',
+    color: "#25345C",
+  },
+
+  barChartSpace: {
+    display: 'flex',
+    justifyContent: "space-between",
+    marginBottom: "0px !important"
+  },
+  barChartSize: {
+    width: "90%",
+    borderRadius: "20px",
+    marginBottom: "0px !important",
+  },
+  headerFirst: {
+    fontWeight: 700,
+    color: "#25345C",
+    paddingLeft: "28px"
+  },
+  alignItemsCenter: {
+    display: "flex",
+    alignItems: "center",
+  },
+  tableStyle:{
+    margin: "0px !important",
+    width: "90%",
   }
 }
 

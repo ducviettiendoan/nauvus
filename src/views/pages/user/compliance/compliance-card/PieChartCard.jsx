@@ -18,7 +18,7 @@ export default function PieChartCard(props) {
 
   return(
     <Card className={classes.root}>
-      <CardContent className={complianceStyle.chartTop}>
+      <CardContent className={classes.chartTop}>
         <Grid container>
           <Grid item xs={6} className={classes.cardBodyTitle1}>
             <RadioButton checked={true} />
@@ -38,15 +38,16 @@ export default function PieChartCard(props) {
       </CardContent>
 
       <CardHeader
-        title={
+          title={
           <Grid container>
-            <Grid item xs={8} sm={12} md={8} className={classes.cardHeaderTitle}>
-              {title}
-            </Grid>
-            <Grid item xs={4} sm={12} md={4} className={classes.cardHeaderSubTitle}>
-              <Link>View Details</Link>
-            </Grid>
+              <Grid item xs={8} sm={12} md={8} className={classes.cardHeaderTitle}>
+                  {title}
+              </Grid>
+              <Grid item xs={4} sm={12} md={4} className={classes.cardHeaderSubTitle}>
+                  <Link>View Details</Link>
+              </Grid>
           </Grid>}
+
         className={classes.cardHeader}
       />
 

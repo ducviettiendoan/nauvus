@@ -15,6 +15,7 @@ import Chip from "@material-ui/core/Chip";
 import CloseIcon from "components/Icons/CloseIcon";
 import Button from "components/CustomButtons/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
+import BarChartCard from "./compliance-card/BarChartCard";
 
 const useStyles = makeStyles(complianceStyle);
 
@@ -47,7 +48,6 @@ export function ComplianceDashboard(props) {
     },
     {
       title: 'Hours in violation',
-
       key: 'hour',
       onHeaderCell: {className: classes.onHeaderCellNext},
       render: hour => <div className={classes.textEmail}>{hour}</div>
@@ -69,7 +69,6 @@ export function ComplianceDashboard(props) {
           >
             <Grid item xs={12} sm={12} md={6}>
               <PieChartCard
-                
                 title={"HOS Violations"}
                 data = {[{
                   value: 65,
@@ -110,6 +109,9 @@ export function ComplianceDashboard(props) {
                 radio={["Hours"]}
               />
             </Grid>
+          </Grid>
+          <Grid item xs={12} sm={12} md={12} style={{marginTop: "20px"}}>
+            <BarChartCard/>
           </Grid>
           <div>
             <Table
