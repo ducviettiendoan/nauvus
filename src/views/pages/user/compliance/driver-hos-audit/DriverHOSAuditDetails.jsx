@@ -8,12 +8,13 @@ import Chip from "@material-ui/core/Chip";
 import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
 import {connect} from 'react-redux';
-import {getHOSAudit} from "reducers/compliance";
+import {getHOSAuditReport} from "reducers/compliance";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
 import Calendar from "components/Calendar/Calendar";
 import LiveIconWhite from "components/Icons/LiveIconWhite";
 import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
+import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
@@ -128,15 +129,22 @@ const useStyles = makeStyles((theme) => ({
     background: "#FFFFFF !important",
     border: "1px solid #ECEEF0 !important"
   },
+  greenAvatar: {
+    background: "#27AE60 !important",
+    marginRight: 8,
+    fontSize: 14,
+    fontWeight: 700,
+  },
 }));
 
-export function DriverHOSAudit(props) {
+
+
+export function DriverHOSAuditDetails(props) {
   const classes = useStyles();
-  // const history = useHistory()
 
   React.useEffect(() => {
     // Get list data
-    props.getHOSAudit();
+    props.getHOSAuditReport();
   }, []);
 
   const [chipData, setChipData] = React.useState([
@@ -154,34 +162,75 @@ export function DriverHOSAudit(props) {
 
   const columns = [
     {
-      title: 'Driver',
-      key: 'driver',
+      title: 'Edit Type',
+      key: 'editType',
       onHeaderCell: {className: classes.onHeaderCellFirst},
-      render: driver => (
+      render: editType => (
         <div className={classes.alignItemsCenter}>
-          <div className={classes.textName}>{driver}</div>
+          <div className={classes.textName}>{editType}</div>
         </div>
       ),
     },
     {
-      title: 'Total Updates',
-
-      key: 'totalUpdate',
+      title: 'Updated At',
+      key: 'updatedAt',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: update => <div className={classes.textEmail}>{update}</div>
-    }
+      render: updatedAt => <div className={classes.textEmail}>{updatedAt}</div>
+    },
+    {
+      title: 'Updated By',
+      key: 'updatedBy',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: updatedBy => <div className={classes.textEmail}>{updatedBy}</div>
+    },
+    {
+      title: 'Vehicle',
+      key: 'vehicle',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: vehicle => <div className={classes.textEmail}>{vehicle}</div>
+    },
+    {
+      title: 'Duty Status',
+      key: 'status',
+      onHeaderCell: { className: classes.onHeaderCellNext },
+      render: status =>
+        <div className={classes.alignItemsCenter}>
+          <Avatar className={classes.greenAvatar}>D</Avatar>
+          <div className={classes.textName}>{status}</div>
+        </div>
+    },
+    {
+      title: 'At',
+      key: 'at',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: at => <div className={classes.textEmail}>{at}</div>
+    },
+    {
+      title: 'Until',
+      key: 'until',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: until => <div className={classes.textEmail}>{until}</div>
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: action => <div className={classes.textEmail}>{action}</div>
+    },
+    {
+      title: 'Mobile Device',
+      key: 'mobileDevice',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: mobileDevice => <div className={classes.textEmail}>{mobileDevice}</div>
+    },
   ]
 
   const onShowSizeChange = (page, pageSize) => {
-    props.getHOSAudit({ page, pageSize });
+    props.getHOSAuditReport({ page, pageSize });
   }
 
   const onPageChange = (page, pageSize) => {
-    props.getHOSAudit({ page, pageSize });
-  }
-
-  const showDetails = () => {
-    props.history.push("/u/compliance/driver-hos-audit-report/123456789")
+    props.getHOSAuditReport({ page, pageSize });
   }
 
   return (
@@ -192,7 +241,7 @@ export function DriverHOSAudit(props) {
             <GridItem xs={12} sm={12} md={12}>
               <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                  148 Drivers
+                  148 Logs
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <Calendar placeholder="Day"/>
@@ -256,7 +305,6 @@ export function DriverHOSAudit(props) {
                 className: classes.onHeaderRow
               }}
               onBodyRow={{
-                onClick: showDetails,
                 className: classes.tableRow
               }}
             />
@@ -269,15 +317,15 @@ export function DriverHOSAudit(props) {
 
 const mapStateToProps = ({compliance}) => {
   return {
-    data: compliance.HOSAudit.data,
-    page: compliance.HOSAudit.page,
-    total: compliance.HOSAudit.total,
-    pageSize: compliance.HOSAudit.pageSize
+    data: compliance.HOSAuditReport.data,
+    page: compliance.HOSAuditReport.page,
+    total: compliance.HOSAuditReport.total,
+    pageSize: compliance.HOSAuditReport.pageSize
   };
 };
 
 const mapDispatchToProps = {
-  getHOSAudit
+  getHOSAuditReport
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DriverHOSAudit);
+export default connect(mapStateToProps, mapDispatchToProps)(DriverHOSAuditDetails);

@@ -38,7 +38,8 @@ export const ACTION_TYPES = {
   GET_REPORT_DATA: 'setting/device/GET_REPORT_DATA',
   GET_DUTY_STATUS_DATA: 'setting/device/GET_DUTY_STATUS_DATA',
   GET_COMPLIANCE_DASHBOARD_DATA: "compliance/GET_COMPLIANCE_DASHBOARD",
-  GET_REPORT_DATA_2: 'setting/device/GET_REPORT_DATA_2'
+  GET_REPORT_DATA_2: 'setting/device/GET_REPORT_DATA_2',
+  GET_HOS_AUDIT_REPORT: 'setting/device/GET_HOS_AUDIT_REPORT'
 };
 
 {
@@ -47,6 +48,7 @@ export const ACTION_TYPES = {
 const initialState = {
   //HOS audit state
   HOSAudit: [],
+  HOSAuditReport: [],
 
   //Status summary state
   statusSummary: [],
@@ -102,6 +104,8 @@ export default (
     case REQUEST(ACTION_TYPES.GET_DUTY_STATUS_DATA):
     case REQUEST(ACTION_TYPES.GET_COMPLIANCE_DASHBOARD_DATA):
     case REQUEST(ACTION_TYPES.GET_REPORT_DATA_2):
+    case REQUEST(ACTION_TYPES.GET_HOS_AUDIT):
+    case REQUEST(ACTION_TYPES.GET_HOS_AUDIT_REPORT):
       return {
         ...state,
         loading: true,
@@ -117,6 +121,8 @@ export default (
     case FAILURE(ACTION_TYPES.GET_DUTY_STATUS_DATA):
     case FAILURE(ACTION_TYPES.GET_COMPLIANCE_DASHBOARD_DATA):
     case FAILURE(ACTION_TYPES.GET_REPORT_DATA_2):
+    case FAILURE(ACTION_TYPES.GET_HOS_AUDIT):
+    case FAILURE(ACTION_TYPES.GET_HOS_AUDIT_REPORT):
       return {
         ...state,
         loading: false,
@@ -158,50 +164,16 @@ export default (
         reportData2: action.payload.data
       };
     }
-
-    //HOS Audit reducer
-    case ACTION_TYPES.GET_HOS_AUDIT: {
+    case SUCCESS(ACTION_TYPES.GET_HOS_AUDIT): {
       return {
         ...state,
-        HOSAudit: action.payload,
+        HOSAudit: action.payload.data
       };
     }
-
-    //Status summary reducer
-    case SUCCESS(ACTION_TYPES.GET_STATUS_SUMMARY): {
+    case SUCCESS(ACTION_TYPES.GET_HOS_AUDIT_REPORT): {
       return {
         ...state,
-        statusSummary: action.payload.data,
-      };
-    }
-
-    //HOS Audit transfer reducer
-    case ACTION_TYPES.GET_HOS_AUDIT_TRANSFER: {
-      return {
-        ...state,
-        HOSAuditTransfer: action.payload,
-      };
-    }
-
-    //HOS Violations reducer
-    case ACTION_TYPES.GET_VIOLATIONS: {
-      return {
-        ...state,
-        violations: action.payload,
-      };
-    }
-    case ACTION_TYPES.GET_MISSING_CERTIFICATIONS: {
-      return {
-        ...state,
-        missingCertifications: action.payload,
-      };
-    }
-
-    //Compliance dashboard reducer
-    case ACTION_TYPES.GET_DRIVER_EFFICIENCY: {
-      return {
-        ...state,
-        driverEfficiencies: action.payload,
+        HOSAuditReport: action.payload.data
       };
     }
 
@@ -241,44 +213,6 @@ export default (
   }
 };
 
-{
-  /* DATA */
-}
-//HOS Audit data
-const HOSAuditData = () => {
-  let data = [];
-  for (let i = 0; i < 64; i++) {
-    let item = {
-      id: i + 1,
-      key: i + 1,
-      driver: "Chal Vee",
-      totalUpdate: "116",
-    };
-    data.push(item);
-  }
-  return data;
-};
-
-//Status summary data
-const statusSummaryData = () => {
-  let data = [];
-  for (let i = 0; i < 64; i++) {
-    let item = {
-      id: i + 1,
-      key: i + 1,
-      driver: "Ali Singh",
-      offDuty: "23:59",
-      sleeperBerth: "0:00",
-      driving: "0:00",
-      onDuty: "0:00",
-      yardMoveg: "0:00",
-      personalConveyanceg: "0:00",
-    };
-    data.push(item);
-  }
-  return data;
-};
-
 //HOS Audit Transfer data
 const HOSAuditTransferData = () => {
   let data = [];
@@ -308,29 +242,21 @@ const HOSAuditTransferData = () => {
   return data;
 };
 
-//Compliance dashboard
-// const driverEfficiencyData = () => {
-//   let data = [];
-//   for (let i = 0; i < 2; i++) {
-//     let item = {
-//       id: i + 2,
-//       key: i + 2,
-//       driver: "Ali Singh",
-//       hour: "2h 8min",
-//     };
-//     data.push(item);
-//   }
-//   return data;
-// };
-
 {
   /* ACTION */
 }
 //HOS Audit action
-export const getHOSAudit = () => async (dispatch) => {
+export const getHOSAudit = (request) => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_HOS_AUDIT,
-    payload: HOSAuditData,
+    payload: axios.post(`/api/compliance/driver-HOS-audit`, request),
+  });
+};
+
+export const getHOSAuditReport = (request) => async (dispatch) => {
+  dispatch({
+    type: ACTION_TYPES.GET_HOS_AUDIT_REPORT,
+    payload: axios.post(`/api/compliance/driver-HOS-audit/report`, request),
   });
 };
 
@@ -373,14 +299,6 @@ export const getDriverHOS = (request) => async (dispatch) => {
     payload: axios.post(`/api/compliance/driver-HOS`, request),
   });
 };
-
-//Compliance dashboard action
-// export const getDriverEfficiency = () => async (dispatch) => {
-//   dispatch({
-//     type: ACTION_TYPES.GET_DRIVER_EFFICIENCY,
-//     payload: driverEfficiencyData,
-//   });
-// };
 
 //Unassigned HOS action
 export const getUnassignedHOS = (request) => async (dispatch) => {
