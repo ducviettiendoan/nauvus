@@ -7,6 +7,8 @@ import { showLoading, hideLoading } from 'react-redux-loading-bar'
 // console.log(awsconfig);
 export const ACTION_TYPES = {
   SET_OPEN_DRAWER: 'overview/SET_OPEN_DRAWER',
+  SET_OPEN_DIAGNOSTICS: "overview/SET_OPEN_DIAGNOSTICS",
+  SET_ANCHOR_EL: "overview/SET_ANCHOR_EL",
   SET_OPEN_DRIVER_DETAILS: 'overview/SET_OPEN_DRIVER_DETAILS',
   SET_OPEN_DRIVER: 'overview/SET_OPEN_DRIVER',
   GET_VEHICLE_DATA: 'overview/GET_VEHICLE_DATA',
@@ -22,6 +24,10 @@ export const ACTION_TYPES = {
 
 const initialState = {
   openDrawer: true,
+  // popper diagnostics
+  openDiagnostics: false,
+  anchorEl: false,
+  // 
   openDriver: false,
   openDriverDetails: false,
   distance: 100,
@@ -84,6 +90,18 @@ export default (state: OverviewState = initialState, action): OverviewState => {
         openDrawer: action.payload
       };
     }
+    case ACTION_TYPES.SET_OPEN_DIAGNOSTICS: {
+      return {
+        ...state,
+        openDiagnostics: action.payload
+      };
+    }
+    case ACTION_TYPES.SET_ANCHOR_EL: {
+      return {
+        ...state,
+        anchorEl: action.payload
+      };
+    }
     case ACTION_TYPES.SET_OPEN_DRIVER: {
       return {
         ...state,
@@ -116,6 +134,20 @@ export default (state: OverviewState = initialState, action): OverviewState => {
 export const setOpenDrawer = (value) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.SET_OPEN_DRAWER,
+    payload: value
+  });
+};
+
+export const setOpenDiagnostics = (value) => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.SET_OPEN_DIAGNOSTICS,
+    payload: value
+  });
+};
+
+export const setAnchorEl = (value) => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.SET_ANCHOR_EL,
     payload: value
   });
 };

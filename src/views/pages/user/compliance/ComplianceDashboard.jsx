@@ -15,7 +15,6 @@ import Chip from "@material-ui/core/Chip";
 import CloseIcon from "components/Icons/CloseIcon";
 import Button from "components/CustomButtons/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
-import { lastDayOfDecade } from "date-fns";
 import BarChartCard from "./compliance-card/BarChartCard";
 
 const useStyles = makeStyles(complianceStyle);

@@ -7,7 +7,6 @@ import CloseIcon from "components/Icons/CloseIcon";
 import Chip from "@material-ui/core/Chip";
 import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
-import {IRootState} from 'reducers';
 import {connect} from 'react-redux';
 import {getHOSAudit} from "reducers/compliance";
 import GridContainer from "components/Grid/GridContainer";
@@ -133,6 +132,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function DriverHOSAudit(props) {
   const classes = useStyles();
+  // const history = useHistory()
 
   React.useEffect(() => {
     // Get list data
@@ -172,6 +172,18 @@ export function DriverHOSAudit(props) {
     }
   ]
 
+  const onShowSizeChange = (page, pageSize) => {
+    props.getHOSAudit({ page, pageSize });
+  }
+
+  const onPageChange = (page, pageSize) => {
+    props.getHOSAudit({ page, pageSize });
+  }
+
+  const showDetails = () => {
+    props.history.push("/u/compliance/driver-hos-audit-report/123456789")
+  }
+
   return (
     <div>
       <GridContainer>
@@ -202,7 +214,7 @@ export function DriverHOSAudit(props) {
             </GridItem>
           </GridContainer>
           <div>
-            {props.data.length > 0 && <Table
+            <Table
               renderTitle={
                 <Grid container className={classes.gridTitle}>
                   <Grid item xs={12} sm={12} md={6}>
@@ -231,16 +243,23 @@ export function DriverHOSAudit(props) {
                   </Grid>
                 </Grid>
               }
+              pagination={{
+                total: props.total,
+                current: props.page,
+                pageSize: props.pageSize,
+                onChange: onPageChange,
+                onShowSizeChange: onShowSizeChange
+              }}
               columns={columns}
               dataSource={props.data}
               onHeaderRow={{
                 className: classes.onHeaderRow
               }}
               onBodyRow={{
+                onClick: showDetails,
                 className: classes.tableRow
               }}
             />
-            }
           </div>
         </GridItem>
       </GridContainer>
@@ -248,11 +267,17 @@ export function DriverHOSAudit(props) {
   );
 }
 
-export default connect(
-  ({compliance}: IRootState) => ({
-    data: compliance.HOSAudit
-  }),
-  {
-    getHOSAudit
-  }
-)(DriverHOSAudit);
+const mapStateToProps = ({compliance}) => {
+  return {
+    data: compliance.HOSAudit.data,
+    page: compliance.HOSAudit.page,
+    total: compliance.HOSAudit.total,
+    pageSize: compliance.HOSAudit.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getHOSAudit
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DriverHOSAudit);
