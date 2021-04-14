@@ -57,7 +57,7 @@ export default function ActivateDevicesForm(props) {
     }
     const validate = (values) => {
         const errors = {};
-        if (!values.email) errors.email = 'Email must not be empty!';
+        if (!values.serialNumbers) errors.serialNumbers = 'Please enter at least 1 serial number!';
         return errors;
     };
     return(

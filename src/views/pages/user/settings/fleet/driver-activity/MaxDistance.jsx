@@ -12,6 +12,8 @@ import GridItem from "components/Grid/GridItem";
 import {connect} from 'react-redux';
 import {getMaxDistance} from "reducers/setting-fleet";
 import AddOutlined from "@material-ui/icons/AddOutlined";
+import DiaLog from "components/CustomDialog/Dialog";
+import AddMaxDistanceForm from "./AddMaxDistanceForm";
 
 const useStyles = makeStyles((theme) => ({
   selected: {
@@ -86,11 +88,19 @@ const useStyles = makeStyles((theme) => ({
   footerButton: {
     textAlign: "left",
     padding: "30px 0px 0px 48px !important"
-  }
+  },
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    margin: "24px",
+    textAlign: "center"
+  },
 }));
 
 export function MaxDistance(props) {
-
+  const {openAdd, setOpenAdd} = props;
   const classes = useStyles();
 
   React.useEffect(() => {
@@ -151,7 +161,19 @@ export function MaxDistance(props) {
   }
 
   return (
-    <div>
+    <>
+      <DiaLog
+          renderTitle={<h3 className={classes.dialogTitle}>Max Distance</h3>}
+          handleClose={() => {
+            setOpenAdd(false)
+          }
+          }
+          open={openAdd}
+      >
+        <AddMaxDistanceForm handleClose={() => {
+          setOpenAdd(false)
+        }}/>
+      </DiaLog>
       <Table
         renderTitle={
           <GridContainer className={classes.gridTitle}>
@@ -182,7 +204,7 @@ export function MaxDistance(props) {
           </GridItem>
         }
       />
-    </div>
+    </>
   );
 }
 
