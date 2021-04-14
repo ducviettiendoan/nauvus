@@ -38,7 +38,11 @@ export const ACTION_TYPES = {
   GET_REPORT_DATA: 'setting/device/GET_REPORT_DATA',
   GET_DUTY_STATUS_DATA: 'setting/device/GET_DUTY_STATUS_DATA',
   GET_COMPLIANCE_DASHBOARD_DATA: "compliance/GET_COMPLIANCE_DASHBOARD",
-  GET_REPORT_DATA_2: 'setting/device/GET_REPORT_DATA_2'
+  GET_REPORT_DATA_2: 'setting/device/GET_REPORT_DATA_2',
+
+  GET_DRIVER_DISTANCE_DATA: "compliance/GET_DRIVER_DISTANCE_DATA",
+  GET_DRIVING_HOURS_DATA: "compliance/GET_DRIVING_HOURS_DATA",
+  GET_FUEL_USAGE_DATA: "compliance/GET_FUEL_USAGE_DATA"
 };
 
 {
@@ -79,6 +83,10 @@ const initialState = {
 
   complianceDashboard: [],
 
+  driverDistance: [],
+  drivingHours: [],
+  fuelUsage: [],
+
   errorMessage: null,
   loading: false,
 };
@@ -102,6 +110,9 @@ export default (
     case REQUEST(ACTION_TYPES.GET_DUTY_STATUS_DATA):
     case REQUEST(ACTION_TYPES.GET_COMPLIANCE_DASHBOARD_DATA):
     case REQUEST(ACTION_TYPES.GET_REPORT_DATA_2):
+    case REQUEST(ACTION_TYPES.GET_DRIVER_DISTANCE_DATA):
+    case REQUEST(ACTION_TYPES.GET_DRIVING_HOURS_DATA):
+    case REQUEST(ACTION_TYPES.GET_FUEL_USAGE_DATA):
       return {
         ...state,
         loading: true,
@@ -117,6 +128,9 @@ export default (
     case FAILURE(ACTION_TYPES.GET_DUTY_STATUS_DATA):
     case FAILURE(ACTION_TYPES.GET_COMPLIANCE_DASHBOARD_DATA):
     case FAILURE(ACTION_TYPES.GET_REPORT_DATA_2):
+    case FAILURE(ACTION_TYPES.GET_DRIVER_DISTANCE_DATA):
+    case FAILURE(ACTION_TYPES.GET_DRIVING_HOURS_DATA):
+    case FAILURE(ACTION_TYPES.GET_FUEL_USAGE_DATA):
       return {
         ...state,
         loading: false,
@@ -156,6 +170,13 @@ export default (
       return {
         ...state,
         reportData2: action.payload.data
+      };
+    }
+
+    case SUCCESS(ACTION_TYPES.GET_DRIVER_DISTANCE_DATA): {
+      return {
+        ...state,
+        driverDistance: action.payload.data
       };
     }
 
@@ -236,6 +257,20 @@ export default (
       };
     }
 
+    case SUCCESS(ACTION_TYPES.GET_DRIVING_HOURS_DATA): {
+      return {
+        ...state,
+        drivingHours: action.payload.data
+      };
+    }
+
+    case SUCCESS(ACTION_TYPES.GET_FUEL_USAGE_DATA): {
+      return {
+        ...state,
+        fuelUsage: action.payload.data
+      };
+    }
+
     default:
       return state;
   }
@@ -307,21 +342,6 @@ const HOSAuditTransferData = () => {
   }
   return data;
 };
-
-//Compliance dashboard
-// const driverEfficiencyData = () => {
-//   let data = [];
-//   for (let i = 0; i < 2; i++) {
-//     let item = {
-//       id: i + 2,
-//       key: i + 2,
-//       driver: "Ali Singh",
-//       hour: "2h 8min",
-//     };
-//     data.push(item);
-//   }
-//   return data;
-// };
 
 {
   /* ACTION */
@@ -431,5 +451,26 @@ export const getComplianceDashboardData = (request) => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_COMPLIANCE_DASHBOARD_DATA,
     payload: axios.post("api/compliance/compliance-dashboard", request)
+  });
+};
+
+export const getDriverDistanceData = (request) => async (dispatch) => {
+  dispatch({
+    type: ACTION_TYPES.GET_DRIVER_DISTANCE_DATA,
+    payload: axios.post("api/compliance/dashboard/driverDistance", request),
+  });
+};
+
+export const getDrivingHoursData = (request) => async (dispatch) => {
+  dispatch({
+    type: ACTION_TYPES.GET_DRIVING_HOURS_DATA,
+    payload: axios.post("api/compliance/dashboard/drivingHours", request),
+  });
+};
+
+export const getFuelUsage = (request) => async (dispatch) => {
+  dispatch({
+    type: ACTION_TYPES.GET_FUEL_USAGE_DATA,
+    payload: axios.post("api/compliance/dashboard/fuelUsage", request),
   });
 };
