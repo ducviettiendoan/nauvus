@@ -462,3 +462,82 @@ mock.onPost("/api/compliance/HOS/report-2").reply((config) => {
   return [200, data];
 })
 
+mock.onPost("/api/compliance/driver-HOS-audit").reply((config) => {
+  let pageSize = 10;
+  let page = 1;
+  if (config.data) {
+    const request = JSON.parse(config.data);
+    page = request.page;
+    pageSize = request.pageSize;
+  }
+
+  const startPage = pageSize * page - pageSize;
+  const endPage = pageSize * page > 64 ? 64 : pageSize * page;
+  //Compliance Dashboard Data
+  const HOSAuditData = () => {
+    let data = [];
+    for (let i = startPage; i < endPage; i++) {
+      let item = {
+        id: i + 1,
+        key: i + 1,
+        driver: "Chal Vee",
+        totalUpdate: "116",
+      };
+      data.push(item);
+    }
+    return data;
+  };
+
+  const data = {
+    total: 64,
+    page: page,
+    pageSize: pageSize,
+    data: HOSAuditData(),
+  };
+
+  return [200, data];
+})
+
+
+mock.onPost("/api/compliance/driver-HOS-audit/report").reply((config) => {
+  let pageSize = 10;
+  let page = 1;
+  if (config.data) {
+    const request = JSON.parse(config.data);
+    page = request.page;
+    pageSize = request.pageSize;
+  }
+
+  const startPage = pageSize * page - pageSize;
+  const endPage = pageSize * page > 64 ? 64 : pageSize * page;
+  //Compliance Dashboard Data
+  const HOSAuditReportData = () => {
+    let data = [];
+    for (let i = startPage; i < endPage; i++) {
+      let item = {
+        id: i + 1,
+        key: i + 1,
+        editType: "Status change",
+        updatedAt: "Apr 1, 2021 8:59 PM EDT",
+        updatedBy: "Ali Singh",
+        vehicle: "Vehicle 101",
+        status: "Driving",
+        at: "Apr 1, 2021 8:59 PM EDT",
+        until: "-",
+        action: "Created",
+        mobileDevice: "Kamal’s iPhone"
+      };
+      data.push(item);
+    }
+    return data;
+  };
+
+  const data = {
+    total: 64,
+    page: page,
+    pageSize: pageSize,
+    data: HOSAuditReportData(),
+  };
+
+  return [200, data];
+})
