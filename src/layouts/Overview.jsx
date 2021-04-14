@@ -1,14 +1,14 @@
 import React from "react";
 import cx from "classnames";
 import clsx from 'clsx';
-import {Switch, Route, Redirect, useHistory} from "react-router-dom";
+import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 import { ROUTE_PATH } from "config/constants";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 
 // @material-ui/core components
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 // core components
 import OverviewAdminNavbar from "components/Navbars/OverviewAdminNavbar";
@@ -21,17 +21,18 @@ import routes from "user-routes";
 import styles from "assets/jss/material-dashboard-pro-react/layouts/overviewStyle.js";
 
 import Loading from "components/Loading/Loading";
-import {connect} from 'react-redux';
-import {getUserInfo} from '../reducers/authentication';
-import {setOpenDrawer} from '../reducers/overview';
-import {IRootState} from '../reducers';
+import { connect } from 'react-redux';
+import { getUserInfo } from '../reducers/authentication';
+import { setOpenDrawer, setOpenDiagnostics, setAnchorEl } from '../reducers/overview';
+import { IRootState } from '../reducers';
 import Button from '@material-ui/core/Button';
 import VehicleSideBar from "views/pages/user/overview/components/VehicleSideBar";
 import ProximitySideBar from "views/pages/user/overview/proximity/ProximitySideBar";
-import {ExtraDriverDetailsSideBar} from "../views/pages/user/overview/components/ExtraDriverDetailsSideBar";
+import { ExtraDriverDetailsSideBar } from "../views/pages/user/overview/components/ExtraDriverDetailsSideBar";
 import DriverSideBar from "../views/pages/user/overview/drivers/DriverSideBar";
 import DriverRecord from "../views/pages/user/overview/drivers/DriverRecord";
 import VehicleDetailsSideBar from "../views/pages/user/overview/vehicle/VehicleDetailsSideBar";
+import DiagnosticsDetails from "../views/pages/user/overview/vehicle/vehicle-sidebar-content/diagnostics/DiagnosticsDetails"
 
 var ps;
 
@@ -39,7 +40,7 @@ const useStyles = makeStyles(styles);
 
 export function Overview(props) {
   const history = useHistory();
-  const {...rest} = props;
+  const { ...rest } = props;
   // states and functions
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -61,7 +62,7 @@ export function Overview(props) {
     cx({
       [classes.mainPanelSidebarMini]: miniActive,
       [classes.mainPanelWithPerfectScrollbar]:
-      navigator.platform.indexOf("Win") > -1
+        navigator.platform.indexOf("Win") > -1
     });
   // ref for main panel div
   const mainPanel = React.createRef();
@@ -143,11 +144,11 @@ export function Overview(props) {
           return collapseActiveRoute;
         }
       } else {
-        if (window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1 ) {
+        if (window.location.href.indexOf(routes[i].layout + routes[i].path) !== -1) {
           return routes[i].name;
-        }else{
+        } else {
           let path = routes[i].path
-          if (window.location.href.indexOf(routes[i].layout + path.toString().slice(0, -3)) !== -1 ) {
+          if (window.location.href.indexOf(routes[i].layout + path.toString().slice(0, -3)) !== -1) {
             return routes[i].name;
           }
         }
@@ -205,12 +206,18 @@ export function Overview(props) {
                 paper: classes.drawerPaper,
               }}
             >
-              {window.location.pathname === "/o/overview" && <VehicleSideBar/>}
-              {window.location.pathname.indexOf("/o/drivers") !== -1 && <DriverSideBar onBack={onBackTable}/>}
-              {window.location.pathname.indexOf("/o/proximity") !== -1 && <ProximitySideBar/>}
-              {window.location.pathname.indexOf("/o/driver-record/") !== -1 && <DriverRecord /> }
-              {window.location.pathname.indexOf("/o/vehicle/") !== -1 && <VehicleDetailsSideBar onBack={onBackVehicle}/> }
+              {window.location.pathname === "/o/overview" && <VehicleSideBar />}
+              {window.location.pathname.indexOf("/o/drivers") !== -1 && <DriverSideBar onBack={onBackTable} />}
+              {window.location.pathname.indexOf("/o/proximity") !== -1 && <ProximitySideBar />}
+              {window.location.pathname.indexOf("/o/driver-record/") !== -1 && <DriverRecord />}
+              {window.location.pathname.indexOf("/o/vehicle/") !== -1 && <VehicleDetailsSideBar onBack={onBackVehicle} />}
             </Drawer>
+            <DiagnosticsDetails
+              openMore={props.openDiagnostics}
+              setOpenMore={props.setOpenDiagnostics}
+              anchorEl={props.anchorEl}
+              setAnchorEl={props.setAnchorEl}
+            />
             <main
               className={clsx(classes.content, {
                 [classes.contentShift]: props.openDrawer,
@@ -223,10 +230,10 @@ export function Overview(props) {
                 handleDrawerToggle={handleDrawerToggle}
                 {...rest}
               />
-              <div style={{position: 'relative'}}>
+              <div style={{ position: 'relative' }}>
                 <Switch>
                   {getRoutes(routes)}
-                  <Redirect from="/o" to="/o/overview"/>
+                  <Redirect from="/o" to="/o/overview" />
                 </Switch>
               </div>
             </main>
@@ -244,18 +251,18 @@ export function Overview(props) {
     <>
       <div className={classes.wrapper}>
         {fetchSession && props.isAuthenticated &&
-        <Sidebar
-          routes={routes}
-          logoText={"Nauvus"}
-          logo={logo}
-          image={image}
-          handleDrawerToggle={handleDrawerToggle}
-          open={mobileOpen}
-          color={color}
-          bgColor={bgColor}
-          miniActive={miniActive}
-          {...rest}
-        />
+          <Sidebar
+            routes={routes}
+            logoText={"Nauvus"}
+            logo={logo}
+            image={image}
+            handleDrawerToggle={handleDrawerToggle}
+            open={mobileOpen}
+            color={color}
+            bgColor={bgColor}
+            miniActive={miniActive}
+            {...rest}
+          />
         }
         <div className={mainPanelClasses} ref={mainPanel}>
           {fetchSession ?
@@ -280,7 +287,7 @@ export function Overview(props) {
               }
             </> :
             <>
-              <Loading/>
+              <Loading />
             </>
           }
         </div>
@@ -290,15 +297,19 @@ export function Overview(props) {
 }
 
 export default connect(
-  ({authentication, overview}: IRootState) => ({
+  ({ authentication, overview }: IRootState) => ({
     isAuthenticated: authentication.isAuthenticated,
     user: authentication.user,
     openDrawer: overview.openDrawer,
+    openDiagnostics: overview.openDiagnostics,
+    anchorEl: overview.anchorEl,
     openDriverDetails: overview.openDriverDetails,
     openDriver: overview.openDriver
   }),
   {
     getUserInfo,
     setOpenDrawer,
+    setOpenDiagnostics,
+    setAnchorEl
   }
 )(Overview);
