@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "components/CustomButtons/Button";
@@ -8,14 +8,13 @@ import Chip from "@material-ui/core/Chip";
 import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
 import {connect} from 'react-redux';
-import {getStatusSummary, getUnassignedHOSAnnotated} from "reducers/compliance";
+import {getHOSAuditReport} from "reducers/compliance";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
-import CustomizedProgressBars from "components/ProgressBar/ProgressBar";
-import {Col, Row} from "reactstrap";
-import EditIcon from "components/Icons/EditIcon";
-import EditHOSSegment from "./EditHOSSegment";
-import DiaLog from "components/CustomDialog/Dialog";
+import Calendar from "components/Calendar/Calendar";
+import LiveIconWhite from "components/Icons/LiveIconWhite";
+import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
+import Avatar from "@material-ui/core/Avatar";
 
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
@@ -53,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   headContainer: {
     alignItems: "center",
     textAlign: "left",
-    marginTop: "30px"
+    marginTop: "8px"
   },
   headLeft: {
     display: "flex",
@@ -62,8 +61,7 @@ const useStyles = makeStyles((theme) => ({
     "& > div": {
       marginBottom: "0 !important",
       marginRight: 8
-    },
-    marginTop: "25px"
+    }
   },
   textName: {
     fontWeight: 'bold',
@@ -72,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#25345C',
     paddingLeft: "12px"
   },
-  textSub: {
+  textEmail: {
     fontSize: '16px',
     lineHeight: '21px',
     color: "#25345C",
@@ -95,6 +93,11 @@ const useStyles = makeStyles((theme) => ({
   },
   gridTitle: {
     padding: "20px"
+  },
+  onHeaderCellFirst: {
+    fontWeight: 700,
+    color: "#25345C",
+    paddingLeft: "28px"
   },
   onHeaderCellNext: {
     fontWeight: 700,
@@ -126,65 +129,28 @@ const useStyles = makeStyles((theme) => ({
     background: "#FFFFFF !important",
     border: "1px solid #ECEEF0 !important"
   },
-  progressTitle: {
-    textAlign: "left",
-    fontWeight: 400,
+  greenAvatar: {
+    background: "#27AE60 !important",
+    marginRight: 8,
     fontSize: 14,
-    color: "#B4B4B4"
-  },
-  progressData: {
-    textAlign: "right",
     fontWeight: 700,
-    fontSize: 14,
-    color: "#25345C"
   },
-  progressBar: {
-    marginTop: 8
-  },
-  iconButton: {
-    '&:hover': {
-      color: '#25345C !important',
-    }
-  },
-  editHeader: {
-    textAlign: "center"
-  },
-  dialogTitle: {
-    fontSize: "22px",
-    fontWeight: "700",
-    lineHeight: "26.4px",
-    color: "#25345C"
-  },
-  dialogSubTitle: {
-    fontWeight: "bold",
-    fontSize: "14px",
-    lineHeight: "17px",
-    color: "#B4B4B4"
-  }
 }));
 
-export function Annotated(props) {
+
+
+export function DriverHOSAuditDetails(props) {
   const classes = useStyles();
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [openForm, setOpenForm] = useState(false);
 
   React.useEffect(() => {
     // Get list data
-    props.getUnassignedHOSAnnotated();
+    props.getHOSAuditReport();
   }, []);
 
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Cycle Tomorrow'},
     {key: 1, label: 'Cycle Remaining'},
   ]);
-
-  const onShowSizeChange = (page, pageSize) => {
-    props.getUnassignedHOSAnnotated({ page, pageSize }); 
-  }
-
-  const onPageChange = (page, pageSize) => {
-    props.getUnassignedHOSAnnotated({ page, pageSize }); 
-  }
 
   const handleDelete = (chipToDelete) => () => {
     setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
@@ -194,112 +160,112 @@ export function Annotated(props) {
     setChipData([])
   }
 
-  const onSelectChange = selectedRowKeys => setSelectedRowKeys(() => [...selectedRowKeys])
-
-  const openEditHOS = () => {
-    setOpenForm(true)
-  }
-
-  const closeEditHOS = () => {
-    setOpenForm(false)
-  }
-
   const columns = [
     {
-      title: 'Start Time',
-      key: 'startTime',
-      onHeaderCell: {className: classes.onHeaderCellNext},
-      render: startTime => (
+      title: 'Edit Type',
+      key: 'editType',
+      onHeaderCell: {className: classes.onHeaderCellFirst},
+      render: editType => (
         <div className={classes.alignItemsCenter}>
-          <div className={classes.textSub} >{startTime}</div>
+          <div className={classes.textName}>{editType}</div>
         </div>
       ),
     },
     {
-      title: 'Duration',
-      key: 'duration',
+      title: 'Updated At',
+      key: 'updatedAt',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: duration => <div className={classes.textSub}>{duration}</div>
+      render: updatedAt => <div className={classes.textEmail}>{updatedAt}</div>
     },
     {
-      title: 'Distance',
-      key: 'distance',
+      title: 'Updated By',
+      key: 'updatedBy',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: distance => <div className={classes.textSub}>{distance}</div>
+      render: updatedBy => <div className={classes.textEmail}>{updatedBy}</div>
     },
     {
-        title: 'Trip',
-        key: 'trip',
-        onHeaderCell: {className: classes.onHeaderCellNext},
-        render: trip =><div>
-            <div className={classes.textSub}>{trip.to}</div>
-            <div className={classes.textSub}>{trip.from}</div>
-            </div> 
-      },
-    {
-      title: 'Annotation',
-      key: 'annotation',
+      title: 'Vehicle',
+      key: 'vehicle',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: annotation => <div className={classes.textSub}>{annotation}</div>
+      render: vehicle => <div className={classes.textEmail}>{vehicle}</div>
     },
     {
-        title: 'Actions',
-        key: 'action',
-        onHeaderCell: { className: classes.onHeaderCellNext },
-        render: () => (
-          <div className={classes.actionButton}>
-            <Button justIcon color="twitter" simple>
-              <EditIcon className={classes.iconButton} onClick={openEditHOS} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
-            </Button>
-          </div>
-        )
-      }
+      title: 'Duty Status',
+      key: 'status',
+      onHeaderCell: { className: classes.onHeaderCellNext },
+      render: status =>
+        <div className={classes.alignItemsCenter}>
+          <Avatar className={classes.greenAvatar}>D</Avatar>
+          <div className={classes.textName}>{status}</div>
+        </div>
+    },
+    {
+      title: 'At',
+      key: 'at',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: at => <div className={classes.textEmail}>{at}</div>
+    },
+    {
+      title: 'Until',
+      key: 'until',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: until => <div className={classes.textEmail}>{until}</div>
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: action => <div className={classes.textEmail}>{action}</div>
+    },
+    {
+      title: 'Mobile Device',
+      key: 'mobileDevice',
+      onHeaderCell: {className: classes.onHeaderCellNext},
+      render: mobileDevice => <div className={classes.textEmail}>{mobileDevice}</div>
+    },
   ]
+
+  const onShowSizeChange = (page, pageSize) => {
+    props.getHOSAuditReport({ page, pageSize });
+  }
+
+  const onPageChange = (page, pageSize) => {
+    props.getHOSAuditReport({ page, pageSize });
+  }
 
   return (
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
-          
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={12}>
+              <GridContainer className={classes.topHeader}>
+                <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
+                  148 Logs
+                </GridItem>
+                <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
+                  <Calendar placeholder="Day"/>
+                  <Button
+                    color="white"
+                    aria-label="edit"
+                    justIcon
+                    round
+                    className={`btn-36 ${classes.moreAction} mr-2`}
+                  >
+                    <MoreHorizontalIcon/>
+                  </Button>
+                  <Button round className="btn-round-green w-84">
+                    <LiveIconWhite/>
+                    Live
+                  </Button>
+                </GridItem>
+              </GridContainer>
+            </GridItem>
+          </GridContainer>
           <div>
-            {
-             <Table
+            <Table
               renderTitle={
                 <Grid container className={classes.gridTitle}>
-                    <GridItem xs={12} sm={11} md={7} xl={7} className={classes.topHeaderTitle}>
-                    <GridContainer>
-                    <GridItem xs={6} className={classes.progress}>
-                      <Row>
-                        <Col className={classes.progressTitle}>
-                          Unassigned Distance
-                        </Col>
-                        <Col className={classes.progressData}>
-                          47.5km
-                        </Col>
-                      </Row>
-                      <Row className={classes.progressBar}>
-                        <Col>
-                          <CustomizedProgressBars value={50}/>
-                        </Col>
-                      </Row>
-                    </GridItem>
-                    <GridItem xs={6}>
-                      <Row>
-                        <Col className={classes.progressTitle}>
-                          Unassigned Distance
-                        </Col>
-                        <Col className={classes.progressData}>
-                          57m 21s km
-                        </Col>
-                      </Row>
-                      <Row className={classes.progressBar}>
-                        <Col>
-                          <CustomizedProgressBars value={80}/>
-                        </Col>
-                      </Row>
-                    </GridItem>
-                    </GridContainer>
-                    </GridItem>
                   <Grid item xs={12} sm={12} md={6}>
                     <Grid container className={classes.headContainer}>
                       <Grid item xl={2} className={classes.userRolesTitle}> {chipData.length} selected for </Grid>
@@ -326,10 +292,6 @@ export function Annotated(props) {
                   </Grid>
                 </Grid>
               }
-              rowSelection={{
-                selectedRowKeys,
-                onChange: onSelectChange,
-              }}
               pagination={{
                 total: props.total,
                 current: props.page,
@@ -346,36 +308,24 @@ export function Annotated(props) {
                 className: classes.tableRow
               }}
             />
-            }
           </div>
         </GridItem>
       </GridContainer>
-      <DiaLog
-        renderTitle={<div className={classes.editHeader}>
-          <h3 className={classes.dialogTitle}>Edit Hos Segment</h3>
-          <p className={classes.dialogSubTitle}>Edit or remove the annotation for the unassigned time</p>
-          </div>}
-        handleClose={closeEditHOS}
-        open={openForm}
-      >
-        <EditHOSSegment handleClose={closeEditHOS}/>
-      </DiaLog>
     </div>
   );
 }
 
-const mapStateToProps = ({ compliance }) => {
+const mapStateToProps = ({compliance}) => {
   return {
-    data: compliance.unassignedHOSAnnotated.data,
-    page: compliance.unassignedHOSAnnotated.page,
-    total: compliance.unassignedHOSAnnotated.total,
-    pageSize: compliance.unassignedHOSAnnotated.pageSize
+    data: compliance.HOSAuditReport.data,
+    page: compliance.HOSAuditReport.page,
+    total: compliance.HOSAuditReport.total,
+    pageSize: compliance.HOSAuditReport.pageSize
   };
 };
 
 const mapDispatchToProps = {
-  getUnassignedHOSAnnotated, 
-  getStatusSummary
+  getHOSAuditReport
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Annotated);
+export default connect(mapStateToProps, mapDispatchToProps)(DriverHOSAuditDetails);

@@ -13,7 +13,8 @@ import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
 import CustomizedProgressBars from "components/ProgressBar/ProgressBar";
 import {Col, Row} from "reactstrap";
-import EditIcon from "components/Icons/EditIcon";
+import AssignHOSSegment from "./AssignHOSSegment";
+import DiaLog from "components/CustomDialog/Dialog";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -145,11 +146,33 @@ const useStyles = makeStyles((theme) => ({
       color: '#25345C !important',
     }
   },
+  actionButton: {
+    paddingRight: "40px",
+    display: "flex",
+    justifyContent: "space-between"
+  },
+  
+  editHeader: {
+    textAlign: "center"
+  },
+  dialogTitle: {
+    fontSize: "22px",
+    fontWeight: "700",
+    lineHeight: "26.4px",
+    color: "#25345C"
+  },
+  dialogSubTitle: {
+    fontWeight: "bold",
+    fontSize: "14px",
+    lineHeight: "17px",
+    color: "#B4B4B4"
+  }
 }));
 
 export function Unassigned(props) {
   const classes = useStyles();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [openForm, setOpenForm] = useState(false);
 
   React.useEffect(() => {
     // Get list data
@@ -178,6 +201,16 @@ export function Unassigned(props) {
   }
 
   const onSelectChange = selectedRowKeys => setSelectedRowKeys(() => [...selectedRowKeys])
+
+  
+  const openAssignHOS = () => {
+    setOpenForm(true)
+  }
+
+  const closeAssignHOS = () => {
+    setOpenForm(false)
+  }
+
 
   const columns = [
     {
@@ -226,11 +259,21 @@ export function Unassigned(props) {
     {
         title: 'Actions',
         key: 'action',
-        onHeaderCell: { className: classes.onHeaderCell },
+        onHeaderCell: { className: classes.onHeaderCellNext },
         render: () => (
           <div className={classes.actionButton}>
-            <Button justIcon color="twitter" simple>
-              <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+            <Button
+              round
+              className="btn-round-white"
+              onClick={openAssignHOS}
+              >
+              Assign
+            </Button>
+            <Button
+              round
+              className="btn-round-white"
+              >
+              Annotate
             </Button>
           </div>
         )
@@ -305,13 +348,13 @@ export function Unassigned(props) {
                     <ToolboxButton placeholder="Search driver"/>
                     <Button
                       round
-                      className="btn-round-white"
+                      className="btn-round-white-4"
                     >
                       Assign Selected
                     </Button>
                     <Button
                       round
-                      className="btn-round-white"
+                      className="btn-round-white-4"
                     >
                       Annotate Selected
                     </Button>
@@ -342,6 +385,16 @@ export function Unassigned(props) {
           </div>
         </GridItem>
       </GridContainer>
+      <DiaLog
+        renderTitle={<div className={classes.editHeader}>
+          <h3 className={classes.dialogTitle}>Assign HOS Segment</h3>
+          <p className={classes.dialogSubTitle}>Apr 1, 2021</p>
+          </div>}
+        handleClose={closeAssignHOS}
+        open={openForm}
+      >
+        <AssignHOSSegment handleClose={closeAssignHOS}/>
+      </DiaLog>
     </div>
   );
 }

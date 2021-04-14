@@ -9,6 +9,7 @@ import DriverHOSReport from "views/pages/user/compliance/driver-hos/DriverHOSRep
 import HOSVialations from "views/pages/user/compliance/HOSViolations";
 import UnassignedHOS from "views/pages/user/compliance/UnassignedHOS";
 import DriverHOSAudit from "views/pages/user/compliance/DriverHOSAudit";
+import DriverHOSAuditDetails from "views/pages/user/compliance/driver-hos-audit/DriverHOSAuditDetails";
 import DutyStatusSummary from "views/pages/user/compliance/DutyStatusSummary";
 import HOSAuditTransfer from "views/pages/user/compliance/HOSAuditTransfer";
 import FuelPurchase from "views/pages/user/fuel-energy/FuelPurchase";
@@ -169,6 +170,13 @@ const dashRoutes = [
         name: "Driver HOS audit",
         component: DriverHOSAudit,
         layout: ROUTE_PATH.USER
+      },
+      {
+        path: "/compliance/driver-hos-audit-report/:id",
+        name: "Driver HOS audit/ Ali Singh",
+        component: DriverHOSAuditDetails,
+        layout: ROUTE_PATH.USER,
+        isFixed: true,
       },
       {
         path: "/compliance/duty-status-summary",
