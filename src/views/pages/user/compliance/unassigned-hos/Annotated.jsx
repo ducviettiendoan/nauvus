@@ -14,6 +14,8 @@ import GridItem from "components/Grid/GridItem";
 import CustomizedProgressBars from "components/ProgressBar/ProgressBar";
 import {Col, Row} from "reactstrap";
 import EditIcon from "components/Icons/EditIcon";
+import EditHOSSegment from "./EditHOSSegment";
+import DiaLog from "components/CustomDialog/Dialog";
 
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
@@ -144,11 +146,27 @@ const useStyles = makeStyles((theme) => ({
       color: '#25345C !important',
     }
   },
+  editHeader: {
+    textAlign: "center"
+  },
+  dialogTitle: {
+    fontSize: "22px",
+    fontWeight: "700",
+    lineHeight: "26.4px",
+    color: "#25345C"
+  },
+  dialogSubTitle: {
+    fontWeight: "bold",
+    fontSize: "14px",
+    lineHeight: "17px",
+    color: "#B4B4B4"
+  }
 }));
 
 export function Annotated(props) {
   const classes = useStyles();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [openForm, setOpenForm] = useState(false);
 
   React.useEffect(() => {
     // Get list data
@@ -177,6 +195,14 @@ export function Annotated(props) {
   }
 
   const onSelectChange = selectedRowKeys => setSelectedRowKeys(() => [...selectedRowKeys])
+
+  const openEditHOS = () => {
+    setOpenForm(true)
+  }
+
+  const closeEditHOS = () => {
+    setOpenForm(false)
+  }
 
   const columns = [
     {
@@ -219,11 +245,11 @@ export function Annotated(props) {
     {
         title: 'Actions',
         key: 'action',
-        onHeaderCell: { className: classes.onHeaderCell },
+        onHeaderCell: { className: classes.onHeaderCellNext },
         render: () => (
           <div className={classes.actionButton}>
             <Button justIcon color="twitter" simple>
-              <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+              <EditIcon className={classes.iconButton} onClick={openEditHOS} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
             </Button>
           </div>
         )
@@ -324,6 +350,16 @@ export function Annotated(props) {
           </div>
         </GridItem>
       </GridContainer>
+      <DiaLog
+        renderTitle={<div className={classes.editHeader}>
+          <h3 className={classes.dialogTitle}>Edit Hos Segment</h3>
+          <p className={classes.dialogSubTitle}>Edit or remove the annotation for the unassigned time</p>
+          </div>}
+        handleClose={closeEditHOS}
+        open={openForm}
+      >
+        <EditHOSSegment handleClose={closeEditHOS}/>
+      </DiaLog>
     </div>
   );
 }
