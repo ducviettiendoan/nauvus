@@ -221,6 +221,23 @@ const complianceStyle = {
   tableStyle:{
     margin: "0px !important",
     width: "90%",
+  },
+  tableHeader: {
+    "&>:last-child": {
+      "&>:first-child": {
+        border: "none",
+        boxShadow: "none",
+        margin: 0,
+        padding: 0,
+      }
+    }
+  },
+  cardFooter:{
+    "&>div>div": {
+      boxShadow:"unset",
+      padding:0,
+      margin: 0,
+    }
   }
 }
 

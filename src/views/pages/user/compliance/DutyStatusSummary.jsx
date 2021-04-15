@@ -7,14 +7,20 @@ import CloseIcon from "components/Icons/CloseIcon";
 import Chip from "@material-ui/core/Chip";
 import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
-import {IRootState} from 'reducers';
 import {connect} from 'react-redux';
-import {getStatusSummary} from "reducers/compliance";
+import {getDutyStatusSummaryData} from "reducers/compliance";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
-import Calendar from "components/Calendar/Calendar";
-import LiveIconWhite from "components/Icons/LiveIconWhite";
-import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
+import Calendar from "../../../../components/Calendar/Calendar";
+import MoreHorizontalIcon from "../../../../components/Icons/MoreHorizontalIcon";
+import Popper from "@material-ui/core/Popper";
+import classNames from "classnames";
+import Grow from "@material-ui/core/Grow";
+import Paper from "@material-ui/core/Paper";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import MenuList from "@material-ui/core/MenuList";
+import MenuItem from "@material-ui/core/MenuItem";
+import LiveIconWhite from "../../../../components/Icons/LiveIconWhite";
 
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
@@ -64,17 +70,18 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   textName: {
-    fontWeight: 'bold',
+    fontWeight: 400,
     fontSize: '16px',
     lineHeight: '24px',
     color: '#25345C',
-    paddingLeft: "12px"
+    paddingLeft: "12px",
+
   },
-  textEmail: {
+  textBold: {
     fontSize: '16px',
     lineHeight: '21px',
     color: "#25345C",
-    fontWeight: 400
+    fontWeight: 700,
   },
   chips: {
     fontWeight: 400,
@@ -129,14 +136,18 @@ const useStyles = makeStyles((theme) => ({
     background: "#FFFFFF !important",
     border: "1px solid #ECEEF0 !important"
   },
+  headerTitle: {
+    fontWeight: 700,
+    fontSize: "18px",
+  }
 }));
 
-export function StatusSummary(props) {
+export function DutyStatusSummary(props) {
   const classes = useStyles();
 
   React.useEffect(() => {
     // Get list data
-    props.getStatusSummary();
+    props.getDutyStatusSummaryData();
   }, []);
 
   const [chipData, setChipData] = React.useState([
@@ -150,7 +161,17 @@ export function StatusSummary(props) {
 
   const handleClearAll = () => {
     setChipData([])
+  };
+
+  const [openMore, setOpenMore] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const handleCloseMore = () => setOpenMore(false)
+  const handleOpenMore = (event) => {
+    setOpenMore(true)
+    setAnchorEl(event.currentTarget);
   }
+
+  const dropdownItem = classNames(classes.dropdownItem, classes.grayHover);
 
   const columns = [
     {
@@ -167,39 +188,49 @@ export function StatusSummary(props) {
       title: 'Off Duty',
       key: 'offDuty',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: update => <div className={classes.textEmail}>{update}</div>
+      render: offDuty => <div className={classes.textName}>{offDuty}</div>
     },
     {
       title: 'Sleeper Berth',
       key: 'sleeperBerth',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: update => <div className={classes.textEmail}>{update}</div>
+      render: sleeperBerth => <div className={classes.textName}>{sleeperBerth}</div>
     },
     {
       title: 'Driving',
       key: 'driving',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: update => <div className={classes.textEmail}>{update}</div>
+      render: driving => <div className={classes.textName}>{driving}</div>
     },
     {
       title: 'On Duty',
       key: 'onDuty',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: update => <div className={classes.textEmail}>{update}</div>
+      render: onDuty => <div className={classes.textName}>{onDuty}</div>
     },
     {
       title: 'Yard Moveg',
       key: 'yardMoveg',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: update => <div className={classes.textEmail}>{update}</div>
+      render: yardMoveg => <div className={classes.textName}>{yardMoveg}</div>
     },
     {
       title: 'Personal Conveyanceg',
       key: 'personalConveyanceg',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: update => <div className={classes.textEmail}>{update}</div>
-    }
+      render: personalConveyanceg => <div className={classes.textName}>{personalConveyanceg}</div>
+    },
   ]
+
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize)
+    props.getDutyStatusData({page, pageSize});
+  }
+
+  const onShowSizeChange = (page, pageSize) => {
+    props.getDutyStatusData({page, pageSize});
+    console.log(page, pageSize)
+  }
 
   return (
     <div>
@@ -209,7 +240,7 @@ export function StatusSummary(props) {
             <GridItem xs={12} sm={12} md={12}>
               <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                  Duty Status Summary Report
+                  <div className={classes.headerTitle}>Duty Status Summary Report</div>
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <Calendar placeholder="Day"/>
@@ -219,9 +250,40 @@ export function StatusSummary(props) {
                     justIcon
                     round
                     className={`btn-36 ${classes.moreAction} mr-2`}
+                    onClick={handleOpenMore}
                   >
                     <MoreHorizontalIcon/>
                   </Button>
+                  <Popper
+                    open={openMore}
+                    anchorEl={anchorEl}
+                    transition
+                    disablePortal
+                    placement="bottom-end"
+                    className={classNames({
+                      [classes.popperClose]: !anchorEl,
+                      [classes.popperResponsive]: true,
+                      [classes.popperNav]: true
+                    })}
+                  >
+                    {({ TransitionProps }) => (
+                      <Grow
+                        {...TransitionProps}
+                        id="profile-menu-list"
+                        style={{ transformOrigin: "0 0 0" }}
+                      >
+                        <Paper className={classes.dropdown}>
+                          <ClickAwayListener onClickAway={handleCloseMore}>
+                            <MenuList role="menu">
+                              <MenuItem className={dropdownItem} onClick={handleCloseMore} > Schedule Emailed Reports </MenuItem>
+                              <MenuItem className={dropdownItem} onClick={handleCloseMore} > Download CSV </MenuItem>
+                              <MenuItem className={dropdownItem} onClick={handleCloseMore} > Print </MenuItem>
+                            </MenuList>
+                          </ClickAwayListener>
+                        </Paper>
+                      </Grow>
+                    )}
+                  </Popper>
                   <Button round className="btn-round-green w-84">
                     <LiveIconWhite/>
                     Live
@@ -230,58 +292,68 @@ export function StatusSummary(props) {
               </GridContainer>
             </GridItem>
           </GridContainer>
-          <div>
-            {props.data.length > 0 && <Table
-              renderTitle={
-                <Grid container className={classes.gridTitle}>
-                  <Grid item xs={12} sm={12} md={6}>
-                    <Grid container className={classes.headContainer}>
-                      <Grid item xl={2} className={classes.userRolesTitle}> {chipData.length} selected for </Grid>
-                      <Grid item xl={10} className={classes.chipSelected}>
-                        {chipData.map(data => (
-                          <Chip
-                            deleteIcon={<CloseIcon/>}
-                            label={data.label}
-                            onDelete={handleDelete(data)}
-                            className={classes.chips}
-                          />
-                        ))}
-                        {chipData.length > 0 ?
-                          (
-                            <Button onClick={handleClearAll} className={classes.clearAll}>
-                              Clear All
-                            </Button>
-                          ) : ""}
-                      </Grid>
+          <Table
+            renderTitle={
+              <Grid container className={classes.gridTitle}>
+                <Grid item xs={12} sm={12} md={6}>
+                  <Grid container className={classes.headContainer}>
+                    <Grid item xl={2} className={classes.userRolesTitle}> {chipData.length} selected for </Grid>
+                    <Grid item xl={10} className={classes.chipSelected}>
+                      {chipData.map(data => (
+                        <Chip
+                          deleteIcon={<CloseIcon/>}
+                          label={data.label}
+                          onDelete={handleDelete(data)}
+                          className={classes.chips}
+                        />
+                      ))}
+                      {chipData.length > 0 ?
+                        (
+                          <Button onClick={handleClearAll} className={classes.clearAll}>
+                            Clear All
+                          </Button>
+                        ) : ""}
                     </Grid>
                   </Grid>
-                  <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
-                    <ToolboxButton placeholder="Search driver" showFilter showColumn/>
-                  </Grid>
                 </Grid>
-              }
-              columns={columns}
-              dataSource={props.data}
-              onHeaderRow={{
-                className: classes.onHeaderRow
-              }}
-              onBodyRow={{
-                className: classes.tableRow
-              }}
-            />
+                <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
+                  <ToolboxButton placeholder="Search driver" showFilter showColumn/>
+                </Grid>
+              </Grid>
             }
-          </div>
+            pagination={{
+              total: props.total,
+              current: props.page,
+              pageSize: props.pageSize,
+              onChange: onPageChange,
+              onShowSizeChange: onShowSizeChange
+            }}
+            columns={columns}
+            dataSource={props.data}
+            onHeaderRow={{
+              className: classes.onHeaderRow
+            }}
+            onBodyRow={{
+              className: classes.tableRow
+            }}
+          />
         </GridItem>
       </GridContainer>
     </div>
   );
 }
 
-export default connect(
-  ({compliance}: IRootState) => ({
-    data: compliance.statusSummary
-  }),
-  {
-    getStatusSummary
-  }
-)(StatusSummary);
+const mapStateToProps = ({compliance}) => {
+  return {
+    data: compliance.dutyStatusSummary.data,
+    page: compliance.dutyStatusSummary.page,
+    total: compliance.dutyStatusSummary.total,
+    pageSize: compliance.dutyStatusSummary.pageSize,
+  };
+};
+
+const mapDispatchToProps = {
+  getDutyStatusSummaryData
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DutyStatusSummary);
