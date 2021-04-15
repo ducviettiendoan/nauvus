@@ -648,4 +648,98 @@ mock.onPost("/api/compliance/driver-HOS-audit/report").reply((config) => {
   return [200, data];
 })
 
+mock.onPost("/api/compliance/duty-status-summary").reply((config) => {
+  let pageSize = 10;
+  let page = 1;
+  if (config.data) {
+    const request = JSON.parse(config.data);
+    page = request.page;
+    pageSize = request.pageSize;
+  }
+
+  const startPage = pageSize * page - pageSize;
+  const endPage = pageSize * page > 64 ? 64 : pageSize * page;
+  //Compliance Dashboard Data
+  const dutyStatusSummary = () => {
+    let data = [];
+    for (let i = startPage; i < endPage; i++) {
+      let item = {
+        id: i + 1,
+        key: i + 1,
+        driver: "Ali Singh",
+        offDuty: "23:59",
+        sleeperBerth: "0:00",
+        driving: "0:00",
+        onDuty: '0:00',
+        yardMoveg: "0:00",
+        personalConveyanceg: "0:00",
+      };
+      data.push(item);
+    }
+    return data;
+  };
+
+  const data = {
+    total: 64,
+    page: page,
+    pageSize: pageSize,
+    data: dutyStatusSummary(),
+  };
+
+  return [200, data];
+});
+
+mock.onPost("/api/compliance/HOS-audit-transfer").reply((config) => {
+  let pageSize = 10;
+  let page = 1;
+  if (config.data) {
+    const request = JSON.parse(config.data);
+    page = request.page;
+    pageSize = request.pageSize;
+  }
+
+  const startPage = pageSize * page - pageSize;
+  const endPage = pageSize * page > 64 ? 64 : pageSize * page;
+  //Compliance Dashboard Data
+  const HOSAuditTransfer = () => {
+    let data = [];
+    for (let i = startPage; i < endPage; i++) {
+      let item = {
+        id: i + 1,
+        key: i + 1,
+        requestedAt: {
+          date: 'Feb 27, 2021',
+          time: '10:08 30 AM PST',
+          service: "Webservice",
+        },
+        status: {
+          id: i+1,
+          data: "Accepted",
+        },
+        driver: {
+          name: "Btady Tom",
+          userId: "ID: 45609823"
+        },
+        dateRequested: {
+          date_1: "Feb 20, 2021",
+          date_2: "Feb 27, 2021",
+        },
+        comment: "mn 1625",
+        internalTools: 'Description',
+      };
+      data.push(item);
+    }
+    return data;
+  };
+
+  const data = {
+    total: 64,
+    page: page,
+    pageSize: pageSize,
+    data: HOSAuditTransfer(),
+  };
+
+  return [200, data];
+});
+
 

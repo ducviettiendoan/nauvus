@@ -7,9 +7,8 @@ import CloseIcon from "components/Icons/CloseIcon";
 import Chip from "@material-ui/core/Chip";
 import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
-import {IRootState} from 'reducers';
 import {connect} from 'react-redux';
-import {getHOSAuditTransfer} from "reducers/compliance";
+import {getHosAuditTransfer, initialState} from "reducers/compliance";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
 import Calendar from "components/Calendar/Calendar";
@@ -17,12 +16,7 @@ import LiveIconWhite from "components/Icons/LiveIconWhite";
 import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
 
 const useStyles = makeStyles((theme) => ({
-  chipOption: {
-    fontSize: 16,
-    color: "#25345C",
-    fontWeight: 700,
-    paddingRight: "8px !important"
-  },
+
   selected: {
     height: 24,
     width: "auto",
@@ -63,13 +57,7 @@ const useStyles = makeStyles((theme) => ({
       marginRight: 8
     }
   },
-  textName: {
-    fontWeight: 'bold',
-    fontSize: '16px',
-    lineHeight: '24px',
-    color: '#25345C',
-    paddingLeft: "12px"
-  },
+
   chips: {
     fontWeight: 400,
     background: "#ECEEF0",
@@ -88,11 +76,7 @@ const useStyles = makeStyles((theme) => ({
   gridTitle: {
     padding: "20px"
   },
-  onHeaderCellFirst: {
-    fontWeight: 700,
-    color: "#25345C",
-    paddingLeft: "28px"
-  },
+
   onHeaderCellNext: {
     fontWeight: 700,
     color: "#25345C",
@@ -144,27 +128,42 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
   },
   textStatus: {
+      fontSize: '14px',
+      lineHeight: '24px',
+      paddingLeft: "0px !important",
+      color: "#27AE60",
+      background: "rgba(39, 174, 96, 0.1)",
+      borderRadius: 23,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      fontWeight: 700,
+      width: "90px",
+      height: "41px",
+  },
+
+  textStatus2: {
     fontSize: '14px',
     lineHeight: '24px',
     paddingLeft: "0px !important",
-    color: "#27AE60",
-    background: "rgba(39, 174, 96, 0.1)",
+    color: "#FF808B",
+    background: "rgba(255, 128, 139, 0.1)",
     borderRadius: 23,
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     fontWeight: 700,
     width: "90px",
-    height: "41px"
+    height: "41px",
   },
+
 }));
 
 export function HOSAuditTransfer(props) {
   const classes = useStyles();
-
   React.useEffect(() => {
     // Get list data
-    props.getHOSAuditTransfer();
+    props.getHosAuditTransfer();
   }, []);
 
   const [chipData, setChipData] = React.useState([
@@ -178,6 +177,29 @@ export function HOSAuditTransfer(props) {
 
   const handleClearAll = () => {
     setChipData([])
+  };
+
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize)
+    props.getHosAuditTransfer({ page, pageSize });
+  }
+
+  const onShowSizeChange = (page, pageSize) => {
+    props.getHosAuditTransfer({ page, pageSize });
+    console.log(page, pageSize)
+  }
+
+  const viewDetail = () => {
+    props.history.push("/u/compliance/driver-hos-report/123")
+  }
+
+  const [openMore, setOpenMore] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleCloseMore = () => setOpenMore(false)
+  const handleOpenMore = (event) => {
+    setOpenMore(true)
+    setAnchorEl(event.currentTarget);
   }
 
   const columns = [
@@ -197,7 +219,9 @@ export function HOSAuditTransfer(props) {
       title: 'Status',
       key: 'status',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: status => <div className={classes.textStatus}>{status}</div>
+      render: (status) => (
+        status.id % 2 === 0 ? <div className={classes.textStatus}>{status.data}</div> : <div className={classes.textStatus2}>{status.data}</div>
+      )
     },
     {
       title: 'Driver',
@@ -265,16 +289,16 @@ export function HOSAuditTransfer(props) {
             </GridItem>
           </GridContainer>
           <div>
-            {props.data.length > 0 && <Table
+            <Table
               renderTitle={
                 <Grid container className={classes.gridTitle}>
                   <Grid item xs={12} sm={12} md={6}>
                     <Grid container className={classes.headContainer}>
-                      <Grid item xl={2} className={classes.chipOption}> {chipData.length} selected for </Grid>
+                      <Grid item xl={2} className={classes.userRolesTitle}> {chipData.length} selected for </Grid>
                       <Grid item xl={10} className={classes.chipSelected}>
                         {chipData.map(data => (
                           <Chip
-                            deleteIcon={<CloseIcon/>}
+                            deleteIcon={<CloseIcon />}
                             label={data.label}
                             onDelete={handleDelete(data)}
                             className={classes.chips}
@@ -290,20 +314,27 @@ export function HOSAuditTransfer(props) {
                     </Grid>
                   </Grid>
                   <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
-                    <ToolboxButton placeholder="Search request" showFilter showColumn/>
+                    <ToolboxButton placeholder="Search driver" showFilter showColumn filterAction={handleOpenMore} />
                   </Grid>
                 </Grid>
               }
+              pagination={{
+                total: props.total,
+                current: props.page,
+                pageSize: props.pageSize,
+                onChange: onPageChange,
+                onShowSizeChange: onShowSizeChange
+              }}
               columns={columns}
               dataSource={props.data}
               onHeaderRow={{
                 className: classes.onHeaderRow
               }}
               onBodyRow={{
+                onClick: viewDetail,
                 className: classes.tableRow
               }}
             />
-            }
           </div>
         </GridItem>
       </GridContainer>
@@ -311,11 +342,18 @@ export function HOSAuditTransfer(props) {
   );
 }
 
-export default connect(
-  ({compliance}: IRootState) => ({
-    data: compliance.HOSAuditTransfer
-  }),
-  {
-    getHOSAuditTransfer
-  }
-)(HOSAuditTransfer);
+const mapStateToProps = ({compliance}) => {
+  return {
+    data: compliance.hosAuditTransfer.data,
+    page: compliance.hosAuditTransfer.page,
+    total: compliance.hosAuditTransfer.total,
+    pageSize: compliance.hosAuditTransfer.pageSize,
+  };
+};
+
+const mapDispatchToProps = {
+  getHosAuditTransfer
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HOSAuditTransfer);
+
