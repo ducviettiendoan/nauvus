@@ -43,13 +43,17 @@ export const ACTION_TYPES = {
   GET_DRIVER_DISTANCE_DATA: "compliance/GET_DRIVER_DISTANCE_DATA",
   GET_DRIVING_HOURS_DATA: "compliance/GET_DRIVING_HOURS_DATA",
   GET_FUEL_USAGE_DATA: "compliance/GET_FUEL_USAGE_DATA",
-  GET_HOS_AUDIT_REPORT: 'setting/device/GET_HOS_AUDIT_REPORT'
+  GET_HOS_AUDIT_REPORT: 'setting/device/GET_HOS_AUDIT_REPORT',
+
+  GET_HOS_TRANSFER: "compliance/GET_HOS_AUDIT_TRANSFER",
+  GET_DUTY_STATUS_SUMMARY: "compliance/GET_DUTY_STATUS_SUMMARY",
+
 };
 
 {
   /* INITIAL STATE */
 }
-const initialState = {
+export const initialState = {
   //HOS audit state
   HOSAudit: [],
   HOSAuditReport: [],
@@ -89,6 +93,10 @@ const initialState = {
   drivingHours: [],
   fuelUsage: [],
 
+  dutyStatusSummary: [],
+  hosAuditTransfer: [],
+
+
   errorMessage: null,
   loading: false,
 };
@@ -117,6 +125,8 @@ export default (
     case REQUEST(ACTION_TYPES.GET_FUEL_USAGE_DATA):
     case REQUEST(ACTION_TYPES.GET_HOS_AUDIT):
     case REQUEST(ACTION_TYPES.GET_HOS_AUDIT_REPORT):
+    case REQUEST(ACTION_TYPES.GET_DUTY_STATUS_SUMMARY):
+    case REQUEST(ACTION_TYPES.GET_HOS_TRANSFER):
       return {
         ...state,
         loading: true,
@@ -137,6 +147,8 @@ export default (
     case FAILURE(ACTION_TYPES.GET_FUEL_USAGE_DATA):
     case FAILURE(ACTION_TYPES.GET_HOS_AUDIT):
     case FAILURE(ACTION_TYPES.GET_HOS_AUDIT_REPORT):
+    case FAILURE(ACTION_TYPES.GET_DUTY_STATUS_SUMMARY):
+    case FAILURE(ACTION_TYPES.GET_HOS_TRANSFER):
       return {
         ...state,
         loading: false,
@@ -263,6 +275,20 @@ export default (
       return {
         ...state,
         fuelUsage: action.payload.data
+      };
+    }
+
+    case SUCCESS(ACTION_TYPES.GET_HOS_TRANSFER): {
+      return {
+        ...state,
+        hosAuditTransfer: action.payload.data
+      };
+    }
+
+    case SUCCESS(ACTION_TYPES.GET_DUTY_STATUS_SUMMARY): {
+      return {
+        ...state,
+        dutyStatusSummary: action.payload.data
       };
     }
 
@@ -428,5 +454,19 @@ export const getFuelUsage = (request) => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_FUEL_USAGE_DATA,
     payload: axios.post("api/compliance/dashboard/fuelUsage", request),
+  });
+};
+
+export const getDutyStatusSummaryData = (request) => async (dispatch) => {
+  dispatch({
+    type: ACTION_TYPES.GET_DUTY_STATUS_SUMMARY,
+    payload: axios.post("api/compliance/duty-status-summary", request),
+  });
+};
+
+export const getHosAuditTransfer = (request) => async (dispatch) => {
+  dispatch({
+    type: ACTION_TYPES.GET_HOS_TRANSFER,
+    payload: axios.post("api/compliance/HOS-audit-transfer", request),
   });
 };

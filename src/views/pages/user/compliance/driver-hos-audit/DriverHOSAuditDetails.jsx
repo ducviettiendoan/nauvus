@@ -15,6 +15,7 @@ import Calendar from "components/Calendar/Calendar";
 import LiveIconWhite from "components/Icons/LiveIconWhite";
 import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
 import Avatar from "@material-ui/core/Avatar";
+import Initials from "components/Initials/Initials";
 
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
@@ -195,7 +196,7 @@ export function DriverHOSAuditDetails(props) {
       onHeaderCell: { className: classes.onHeaderCellNext },
       render: status =>
         <div className={classes.alignItemsCenter}>
-          <Avatar className={classes.greenAvatar}>D</Avatar>
+          <Initials str={status} size="36px"/>
           <div className={classes.textName}>{status}</div>
         </div>
     },

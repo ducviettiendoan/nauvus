@@ -10,6 +10,13 @@ import Link from "@material-ui/core/Link";
 import Table from "components/Table/TableV1";
 import {getDriverDistanceData, getDrivingHoursData, getFuelUsage} from "reducers/compliance";
 import {connect} from "react-redux";
+import ExpandedRow from "../../overview/components/ExpandedRow";
+import GridContainer from "../../../../../components/Grid/GridContainer";
+import GridItem from "../../../../../components/Grid/GridItem";
+import Calendar from "../../../../../components/Calendar/Calendar";
+import FormControl from "@material-ui/core/FormControl";
+import CustomSelect from "../../../../../components/CustomSelect/CustomSelect";
+import Button from "../../../../../components/CustomButtons/Button";
 
 const useStyles = makeStyles(complianceStyle);
 
@@ -97,6 +104,10 @@ export function BarChartCard(props) {
     },
   ];
 
+  const dataChart1 = [12,6,12,9,5.5,7.5,14,5,9,5.5,9,15,5,9,3.5,6];
+  const dataChart2 = [5,2.5,5,4,2,3,6,1.5,3.5,2,4,6,2,3.5,1,3];
+  const dataChart3 = [17,917,13,8,11,20.5,7,12.5,8,13.5,21,7,13.5,4.9,9];
+
   React.useEffect(() => {
     // Get list data
     props.getDriverDistanceData(),
@@ -106,13 +117,13 @@ export function BarChartCard(props) {
 
   return (
     <Grid container className={classes.barChartSpace}>
-      <Grid item xs={4} sm={4} md={4}>
+      <Grid item xs={4} sm={4} md={4} style={{display: "flex", justifyContent: "flex-start", borderRadius: "20px"}}>
         <Card className={classes.barChartSize}>
           <CardHeader
             title={
               <Grid container>
                 <Grid item xs={8} sm={12} md={8} className={classes.cardHeaderTitle}>
-                  Driver Distance
+                  Driving Hours
                 </Grid>
                 <Grid item xs={4} sm={12} md={4} className={classes.cardHeaderSubTitle}>
                   <Link>View Details</Link>
@@ -122,25 +133,24 @@ export function BarChartCard(props) {
           />
           <CardContent className={classes.chartTop}>
             <Grid xs={12} sm={12} md={12} style={{textAlign: 'center'}}>
-              <div className={classes.header}>785.6 km</div>
-              <div className={classes.subHeader}>Avg Distance Driven</div>
+              <div className={classes.header}>8.3 h</div>
+              <div className={classes.subHeader}>Avg Hours Driven</div>
             </Grid>
-            <BarChart/>
+            <BarChart data={dataChart1}/>
           </CardContent>
-
-          {/*Table*/}
-          <Table
-
-            columns={columns1}
-            dataSource={props.dataChart1}
-            onHeaderRow={{
-              className: classes.onHeaderRow
-            }}
-            onBodyRow={{
-              // onClick: viewDetail,
-              className: classes.tableRow
-            }}
-          />
+          <div className={classes.cardFooter}>
+            <Table
+              columns={columns1}
+              dataSource={props.dataChart1}
+              onHeaderRow={{
+                className: classes.onHeaderRow
+              }}
+              onBodyRow={{
+                // onClick: viewDetail,
+                className: classes.tableRow
+              }}
+            />
+          </div>
         </Card>
 
       </Grid>
@@ -164,20 +174,21 @@ export function BarChartCard(props) {
               <div className={classes.header}>8.3 h</div>
               <div className={classes.subHeader}>Avg Hours Driven</div>
             </Grid>
-            <BarChart/>
+            <BarChart data = {dataChart2}/>
           </CardContent>
-          <Table
-
-            columns={columns2}
-            dataSource={props.dataChart2}
-            onHeaderRow={{
-              className: classes.onHeaderRow
-            }}
-            onBodyRow={{
-              // onClick: viewDetail,
-              className: classes.tableRow
-            }}
-          />
+          <div className={classes.cardFooter}>
+            <Table
+              columns={columns2}
+              dataSource={props.dataChart2}
+              onHeaderRow={{
+                className: classes.onHeaderRow
+              }}
+              onBodyRow={{
+                // onClick: viewDetail,
+                className: classes.tableRow
+              }}
+            />
+          </div>
         </Card>
       </Grid>
 
@@ -200,20 +211,23 @@ export function BarChartCard(props) {
               <div className={classes.header}>3.1 gal</div>
               <div className={classes.subHeader}>Total Fuel Used</div>
             </Grid>
-            <BarChart/>
+            <BarChart data = {dataChart3}/>
           </CardContent>
-          <Table
 
-            columns={columns3}
-            dataSource={props.dataChart3}
-            onHeaderRow={{
-              className: classes.onHeaderRow
-            }}
-            onBodyRow={{
-              // onClick: viewDetail,
-              className: classes.tableRow
-            }}
-          />
+          <div className={classes.cardFooter}>
+            <Table
+
+              columns={columns3}
+              dataSource={props.dataChart3}
+              onHeaderRow={{
+                className: classes.onHeaderRow
+              }}
+              onBodyRow={{
+                // onClick: viewDetail,
+                className: classes.tableRow
+              }}
+            />
+          </div>
         </Card>
       </Grid>
     </Grid>

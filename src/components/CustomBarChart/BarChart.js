@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 export default function BarChart(props) {
-    // const {data} = props
+    const {data} = props;
   
     const classes = useStyles();
 
@@ -19,7 +19,7 @@ export default function BarChart(props) {
         'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
     ];
 
-    let data = [12,6,12,9,5.5,7.5,14,5,9,5.5,9,15,5,9,3.5,6];
+    // let data = [12,6,12,9,5.5,7.5,14,5,9,5.5,9,15,5,9,3.5,6];
     let option;
 
     option = {
@@ -30,7 +30,7 @@ export default function BarChart(props) {
             }
         },
         grid: {
-            bottom: 10,
+            bottom: 5,
         },
         xAxis: [
             {
@@ -72,17 +72,7 @@ export default function BarChart(props) {
         <Grid container className={classes.cardFooter}>
               <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                 <ReactEcharts option={option}/>
-                {/*<div style={{display: 'flex',justifyContent: "space-between"}}>*/}
-                {/*    <span>0</span>*/}
-                {/*    <span>km</span\]*/}
-                {/*    <span>500</span>*/}
-                {/*    <span>km</span>*/}
-                {/*    <span>1000</span>*/}
-                {/*    <span>km</span>*/}
-                {/*    <span>1500</span>*/}
-                {/*    <span>km</span>*/}
-                {/*    <span>2000</span>*/}
-                {/*</div>*/}
+
               </Grid>
         </Grid>
       </div>

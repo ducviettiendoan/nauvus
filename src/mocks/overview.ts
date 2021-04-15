@@ -186,3 +186,39 @@ mock.onPost("/api/overview/logs/").reply((config) => {
 
   return [200, data];
 });
+
+mock.onPost("/api/overview/diagnostic/").reply((config) => {
+  let pageSize = 10;
+  let page = 1;
+  if (config.data) {
+    const request = JSON.parse(config.data);
+    page = request.page;
+    pageSize = request.pageSize;
+  }
+
+  const startPage = pageSize * page - pageSize;
+  const endPage = pageSize * page > 64 ? 64 : pageSize * page;
+
+  const diagnosticData = () => {
+    let data = [];
+    for (let i = startPage; i < endPage; i++) {
+      let item = {
+        id: i,
+        key: i,
+        diagnostic: 'DPF Lamp Light',
+        value: '0.25 bar',
+        timeStamp: '5 minutes ago',
+      };
+      data.push(item);
+    }
+    return data;
+  }
+  const data = {
+    total: 64,
+    page: page,
+    pageSize: pageSize,
+    data: diagnosticData(),
+  };
+
+  return [200, data];
+});

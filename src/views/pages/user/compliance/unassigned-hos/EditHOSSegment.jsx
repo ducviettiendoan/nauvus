@@ -8,6 +8,7 @@ import Button from "components/CustomButtons/Button";
 import {Col, Row} from 'reactstrap';
 import {Field, Form} from "react-final-form";
 import {TextField} from "final-form-material-ui";
+import TripDisplay from "./trip/TripDisplay";
 
 const styles = {
   textFieldRoot: {
@@ -44,7 +45,7 @@ const styles = {
   },
   trip: {
       margin: 16,
-      marginBottom: 0 
+      marginBottom: "-30px !important"
   },
   footer: {
       display: "flex",
@@ -145,8 +146,7 @@ export default function EditHOSSegment(props) {
             </Row>
             <Row className={classes.loginTitle}>Trip</Row>
             <div className={classes.trip}>
-            <Row className={classes.destination}>Quik X Mississauga</Row>
-            <Row className={classes.source}>Quik X Mississauga</Row>
+            <TripDisplay from="Quik X Mississauga" to="Quik X Mississauga"/>
             </div>
             <Row>
               <Col>
