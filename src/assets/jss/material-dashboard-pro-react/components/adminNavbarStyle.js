@@ -15,7 +15,7 @@ const headerStyle = () => ({
   appBar: {
     backgroundColor: whiteColor,
     boxShadow: "none",
-    borderBottom: "0",
+    borderBottom: "1px solid #ECEEF0",
     marginBottom: "0",
     position: "sticky",
     width: "100%",

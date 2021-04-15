@@ -2,6 +2,7 @@ import { ROUTE_PATH } from "config/constants";
 
 import Overview from "views/pages/user/overview/Overview";
 import VehicleDetails from "views/pages/user/overview/vehicle/VehicleDetails"
+import TripTimeline from "views/pages/user/overview/vehicle/vehicle-sidebar-content/trip-history/TripTimeline"
 import Alerts from "views/pages/user/alerts/Alerts";
 import ComplianceDashboard from "views/pages/user/compliance/ComplianceDashboard";
 import DriverHOS from "views/pages/user/compliance/DriverHOS";
@@ -69,6 +70,13 @@ const dashRoutes = [
         path: "/vehicle/:id",
         name: "Vehicle Details",
         component: VehicleDetails,
+        layout: ROUTE_PATH.OVERVIEW,
+        isFixed: true,
+      },
+      {
+        path: "/trip-timeline/on-going",
+        name: "Trip Timeline",
+        component: TripTimeline,
         layout: ROUTE_PATH.OVERVIEW,
         isFixed: true,
       },

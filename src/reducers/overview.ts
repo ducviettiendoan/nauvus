@@ -19,6 +19,8 @@ export const ACTION_TYPES = {
   // chart data activity logs
   GET_CHART_DATA: "overview/GET_CHART_DATA",
 
+  GET_DIAGNOSTIC_DATA: "overview/GET_DIAGNOSTIC_DATA",
+
   SELECT_DISTANCE: "overview/SELECT_DISTANCE"
 };
 
@@ -36,6 +38,7 @@ const initialState = {
   driversData: [],
   activityLogsData: [],
   chartData: [],
+  diagnosticData: [],
   errorMessage: null,
   loading: false,
 };
@@ -49,6 +52,7 @@ export default (state: OverviewState = initialState, action): OverviewState => {
     case REQUEST(ACTION_TYPES.GET_TRAILERS_DATA):
     case REQUEST(ACTION_TYPES.GET_DRIVERS_DATA):
     case REQUEST(ACTION_TYPES.GET_ACTIVITY_LOGS_DATA):
+    case REQUEST(ACTION_TYPES.GET_DIAGNOSTIC_DATA):
       return {
         ...state,
         loading: true
@@ -57,6 +61,7 @@ export default (state: OverviewState = initialState, action): OverviewState => {
     case FAILURE(ACTION_TYPES.GET_TRAILERS_DATA):
     case FAILURE(ACTION_TYPES.GET_DRIVERS_DATA):
     case FAILURE(ACTION_TYPES.GET_ACTIVITY_LOGS_DATA):
+    case FAILURE(ACTION_TYPES.GET_DIAGNOSTIC_DATA):
       return {
         ...state,
         loading: false,
@@ -81,6 +86,11 @@ export default (state: OverviewState = initialState, action): OverviewState => {
       return {
         ...state,
         activityLogsData: action.payload.data
+      };
+    case SUCCESS(ACTION_TYPES.GET_DIAGNOSTIC_DATA):
+      return {
+        ...state,
+        diagnosticData: action.payload.data
       };
 
 
@@ -193,6 +203,13 @@ export const getActivityLogsData = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_ACTIVITY_LOGS_DATA,
     payload: axios.post(`/api/overview/logs/`, request),
+  })
+}
+
+export const getDiagnosticData = (request) => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_DIAGNOSTIC_DATA,
+    payload: axios.post(`/api/overview/diagnostic/`, request),
   })
 }
 
