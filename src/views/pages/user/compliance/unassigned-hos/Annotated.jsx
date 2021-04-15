@@ -16,6 +16,7 @@ import {Col, Row} from "reactstrap";
 import EditIcon from "components/Icons/EditIcon";
 import EditHOSSegment from "./EditHOSSegment";
 import DiaLog from "components/CustomDialog/Dialog";
+import TripDisplay from "./trip/TripDisplay";
 
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
@@ -232,8 +233,7 @@ export function Annotated(props) {
         key: 'trip',
         onHeaderCell: {className: classes.onHeaderCellNext},
         render: trip =><div>
-            <div className={classes.textSub}>{trip.to}</div>
-            <div className={classes.textSub}>{trip.from}</div>
+            <TripDisplay from={trip.from} to={trip.to}/>
             </div> 
       },
     {
@@ -351,6 +351,8 @@ export function Annotated(props) {
         </GridItem>
       </GridContainer>
       <DiaLog
+      fullWidth={true}
+      maxWidth="sm"
         renderTitle={<div className={classes.editHeader}>
           <h3 className={classes.dialogTitle}>Edit Hos Segment</h3>
           <p className={classes.dialogSubTitle}>Edit or remove the annotation for the unassigned time</p>
