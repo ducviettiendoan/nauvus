@@ -27,6 +27,7 @@ import Calendar from "components/Calendar/Calendar";
 import { Grid } from "@material-ui/core";
 
 import styles from "assets/jss/material-dashboard-pro-react/components/adminNavbarStyle.js";
+import CustomDateRangePicker from "../CustomDateRangePicker/CustomDateRangePicker";
 
 
 const useStyles = makeStyles(styles);
@@ -107,7 +108,7 @@ export default function OverviewAdminNavbar(props) {
               />
             </Grid>
             <GridItem style={{ paddingRight: "0px !important" }}>
-              <Calendar />
+              <CustomDateRangePicker/>
             </GridItem>
             <GridItem>
               <Button round className="btn-round-green w-84">

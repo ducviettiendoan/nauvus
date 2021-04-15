@@ -109,7 +109,9 @@ const styles = {
   },
   dotIcon: {
     fontSize: "15px",
-    textAlign: "center"
+    textAlign: "center",
+    color: "#7CE7AC",
+
   },
   tableRow: {
     '&:nth-of-type(even)': {
@@ -128,9 +130,6 @@ const styles = {
   alignItemsCenter: {
     display: "flex",
     alignItems: "center",
-  },
-  dotIcon: {
-    color: "#7CE7AC",
   },
   textRoles: {
     fontSize: '16px',
