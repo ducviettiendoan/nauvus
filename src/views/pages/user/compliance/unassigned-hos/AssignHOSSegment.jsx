@@ -15,13 +15,16 @@ import RadioButton from "../../../../Components/RadioButton";
 import {ListItem} from "@material-ui/core";
 import TruckIcon from "components/Icons/TruckIcon";
 import ClockIcon from "components/Icons/ClockIcon";
+import Initials from "components/Initials/Initials";
+import Trip from "./trip/Trips";
 
 const styles = {
   textFieldRoot: {
     fontWeight: 'normal',
     fontSize: '14px',
     lineHeight: '21px',
-    color: '#C4C4C4'
+    color: '#C4C4C4',
+    marginTop: "16px"
   },
   textInputRoot: {
     fontWeight: 'bold',
@@ -35,18 +38,7 @@ const styles = {
     color: '#25345C',
   },
   selectButton: {
-    display: "flex",
-    justifyContent: "flex-end"
-  },
-  destination: {
-    fontSize: "14px",
-    lineHeight: "18px",
-    color: "#25345C",
-  },
-  source: {
-    fontSize: "14px",
-    lineHeight: "18px",
-    color: "#25345C",
+    paddingTop: "50px"
   },
   trip: {
       margin: 16,
@@ -54,7 +46,8 @@ const styles = {
   },
   footer: {
       display: "flex",
-      justifyContent: "space-between"
+      justifyContent: "flex-end",
+      marginBottom: "0 !important"
   },
   avatarImage: {
     width: "80px",
@@ -75,11 +68,13 @@ const styles = {
   },
   selectButton: {
     display: "flex",
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
+    position: "absolute",
+    bottom: "25px"
   },
   form: {
     display: "flex",
-    // width: "900px !important"
+    justifyContent: "space-between"
   },
   detail: {
     border: "1px solid #ECEEF0",
@@ -93,7 +88,8 @@ const styles = {
     fontSize: "14px",
     lineHeight: "18px",
     color: "#25345C",
-    fontWeight: "400"
+    fontWeight: "400",
+    display: "flex"
   },
   time: {
     fontSize: "12px",
@@ -108,6 +104,27 @@ const styles = {
     color: "#25345C",
     fontWeight: "400",
     marginTop: 16
+  },
+  listCheckItems: {
+    textAlign: "left",
+    fontSize: "12px",
+    fontWeight: "400",
+    lineHeight: "18px",
+    color: "#25345C",
+  },
+  clockDetail: {
+    paddingTop: "8px",
+  },
+  toDistance: {
+    color: "#B4B4B4"
+  },
+  driverStatus: {
+    paddingLeft: "20px"
+  },
+  listItem: {
+    paddingLeft: "0 !important",
+    position: "relative",
+    right: "20px"
   }
 };
 
@@ -135,24 +152,23 @@ export default function AssignHOSSegment(props) {
       <Form
         onSubmit={onSubmit}
         render={({handleSubmit, reset, submitting, pristine, values}) => (
-          <form onSubmit={handleSubmit} noValidate className={classes.form}>
+          <form onSubmit={handleSubmit} noValidate className={classes.form} style={{maxWidth:"700"}}>
             <div className={classes.detail}>
             <img src={map} alt="map" className={classes.map}/>
-            <div className={classes.dest}>Sante Drive, Vaughan, ON</div>
-            <div className={classes.time}>2:13 PM EDT</div>
-            <div className={classes.dest}>111 Transam Terminal</div>
-            <div className={classes.time}>Apr 1, 2:57 PM EDT</div>
+            <Trip />
+            
             <div className={classes.tripInfo}>
               <TruckIcon /> 537
             </div>
             <div className={classes.dest}>
-              <ClockIcon /> 16m 1s (6.0 km)
+              <ClockIcon /> 
+              <div className={classes.clockDetail}>16m 1s <span className={classes.toDistance}>(6.0 km)</span></div>
             </div>
             </div>
-            <div>
+            <div className={classes.driverStatus}>
             <div className={classes.avatar}><img src={avatar} alt="user-avatar" className={classes.avatarImage} /></div>
-            <div className={classes.textFieldRoot}>Driver</div>
-            <div>
+            <div className={classes.textFieldRoot} style={{marginBottom: "-20px"}}>Driver</div>
+            <div classname={classes.select}>
                 <Field
                   id="standard-full-width"
                   fullWidth
@@ -169,15 +185,14 @@ export default function AssignHOSSegment(props) {
                 />
             </div>
             <div className={classes.textFieldRoot}>Duty Status</div>
-            <Row>
               <List className={classes.listCheck}>
                   {dutyStatus.map((value) => {
                     return (
-                      <ListItem key={value}>
+                      <ListItem key={value} className={classes.listItem}>
                         <Col xs={1} className={classes.listCheckItems}>
                           <RadioButton/>
                         </Col>
-                        <Col xs={1}> <div className={classes.initial}>D</div></Col>
+                        <Col xs={1}> <Initials str={value} /> </Col>
                         <Col xs={9} className={classes.listCheckItems}>
                           {value}
                         </Col>
@@ -185,7 +200,6 @@ export default function AssignHOSSegment(props) {
                     );
                   })}
               </List>
-            </Row>
             <div className={classes.footer}>
             <div className={classes.selectButton}>
               <Button
