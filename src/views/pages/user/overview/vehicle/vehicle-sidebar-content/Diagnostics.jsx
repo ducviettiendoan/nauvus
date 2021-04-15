@@ -13,8 +13,8 @@ function Diagnostics(props) {
   const classes = useStyles()
 
   // popper
-  const handleShowDiagnostics = (event) => {
-    props.setOpenDiagnostics(true)
+  const handleShowDiagnostics = () => {
+    props.setOpenDiagnostics(!props.openDiagnostics)
     props.setAnchorEl(true)
   }
 

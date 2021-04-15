@@ -5,6 +5,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import TripImageIcon from "components/Icons/TripImageIcon";
 import CustomTimeline from "components/CustomTimeline/CustomTimeline"
 import { Divider } from '@material-ui/core';
+import {useHistory} from "react-router-dom";
+import {connect} from "react-redux";
+import {setOpenDrawer} from "reducers/overview";
 
 const styles = {
   showImageButton: {
@@ -61,8 +64,9 @@ const styles = {
 
 const useStyles = makeStyles(styles)
 
-export default function Trips() {
+export function Trips(props) {
   const classes = useStyles()
+  const history = useHistory()
 
   const timelineContent = [
     {
@@ -85,6 +89,11 @@ export default function Trips() {
 
   const listTrips = ["0"]
 
+  const onRedirect = () => {
+    history.push("/o/trip-timeline/on-going")
+    props.setOpenDrawer(false)
+  }
+
   return (
     <div>
       {listTrips.map((trip, i) => {
@@ -94,6 +103,7 @@ export default function Trips() {
               round
               className={`btn-round-active h-36 w-166 ${classes.showImageButton}`}
               startIcon={<TripImageIcon />}
+              onClick={onRedirect}
             >
               Show trip images
             </Button>
@@ -125,3 +135,14 @@ export default function Trips() {
     </div>
   )
 }
+
+const mapStateToProps = ({ overview }) => {
+  return {
+  };
+};
+
+const mapDispatchToProps = {
+  setOpenDrawer
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Trips);
