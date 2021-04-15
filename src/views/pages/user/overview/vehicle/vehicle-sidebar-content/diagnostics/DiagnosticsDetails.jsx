@@ -140,38 +140,40 @@ function DiagnosticsDetails(props) {
             style={{transformOrigin: "0 0 0"}}
           >
             <Paper className={classes.dropdown && classes.dropdownVehicle}>
-              <MenuList role="menu">
-                <div>
-                  <div className={classes.diagnosticHeader}>
-                    <div className={classes.tableTitle}>
-                      <GridItem xs={12} className={classes.gatewayContentTitle}>
-                        Diagnostic
-                      </GridItem>
-                      <GridItem xs={12} className={classes.gatewayContentSubTitle}>
-                        description
-                      </GridItem>
+              <ClickAwayListener onClickAway={handleCloseMore}>
+                <MenuList role="menu">
+                  <div>
+                    <div className={classes.diagnosticHeader}>
+                      <div className={classes.tableTitle}>
+                        <GridItem xs={12} className={classes.gatewayContentTitle}>
+                          Diagnostic
+                        </GridItem>
+                        <GridItem xs={12} className={classes.gatewayContentSubTitle}>
+                          description
+                        </GridItem>
+                      </div>
+                      <Button
+                        color="white"
+                        aria-label="edit"
+                        justIcon
+                        round
+                        className={`btn-36 ${classes.moreAction} `}
+                        onClick={handleCloseMore}
+                      >
+                        <CloseButtonIcon/>
+                      </Button>
                     </div>
-                    <Button
-                      color="white"
-                      aria-label="edit"
-                      justIcon
-                      round
-                      className={`btn-36 ${classes.moreAction} `}
-                      onClick={handleCloseMore}
-                    >
-                      <CloseButtonIcon/>
-                    </Button>
-                  </div>
 
-                  <Divider variant="fullWidth" light/>
-                  <Table
-                    columns={columns}
-                    dataSource={props.data}
-                    onHeaderRow={{className: classes.onHeaderRow}}
-                    onBodyRow={{className: classes.tableRow}}
-                  />
-                </div>
-              </MenuList>
+                    <Divider variant="fullWidth" light/>
+                    <Table
+                      columns={columns}
+                      dataSource={props.data}
+                      onHeaderRow={{className: classes.onHeaderRow}}
+                      onBodyRow={{className: classes.tableRow}}
+                    />
+                  </div>
+                </MenuList>
+              </ClickAwayListener>
             </Paper>
           </Grow>
         )}
