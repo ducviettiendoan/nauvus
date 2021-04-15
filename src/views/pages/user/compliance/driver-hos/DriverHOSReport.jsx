@@ -493,6 +493,30 @@ function DriverHOSReport(props) {
     </div>
   ]
 
+  const listContent = [
+    {
+      value: "driving",
+      content: <div className={classes.alignItemsCenter}>
+        <Avatar className={classes.greenAvatarSelect}>D</Avatar>
+        <div className={classes.textSelect}>Driving</div>
+      </div>
+    },
+    {
+      value: "onDuty",
+      content: <div className={classes.alignItemsCenter}>
+        <Avatar className={classes.orangeAvatarSelect}>O</Avatar>
+        <div className={classes.textSelect}>On Duty</div>
+      </div>
+    },
+    {
+      value: "sleep",
+      content: <div className={classes.alignItemsCenter}>
+        <Avatar className={classes.blackAvatarSelect}>S</Avatar>
+        <div className={classes.textSelect}>Sleep</div>
+      </div>
+    },
+  ]
+
   return (
     <div>
       <GridContainer className={classes.topHeader}>
@@ -614,10 +638,11 @@ function DriverHOSReport(props) {
             <CustomSelect
               labelText="Status"
               name="selectStatus"
-              listValues={distanceData}
+              // listValues={distanceData}
               placeholder={"Select status"}
               selectValue={selection.selectStatus}
               onChange={handleChange}
+              listContent={listContent}
             />
           </Col>
           <Col>
