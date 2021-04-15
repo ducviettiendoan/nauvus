@@ -58,6 +58,12 @@ const styles = {
     fontSize: "14px",
     lineHeight: "21px",
     color: "#25345C",
+  },
+  headerButton: {
+    padding: "14px 0px 14px 31px !important"
+  },
+  headerButtonRight: {
+    padding: "14px 0px 14px 8px !important"
   }
 };
 
@@ -122,19 +128,19 @@ export function TripTimelineSidebar(props) {
   return (
     <div ref={mainPanelVehicleSideBar}>
       <Row>
-        <Col>
+        <Col xs={4} className={classes.headerButton}>
           <Button
             round
-            className="btn-round-white"
+            className="btn-round-white w-142 h-41"
             startIcon={<ArrowBackIcon/>}
           >
             Previous Trip
           </Button>
         </Col>
-        <Col>
+        <Col xs={8} className={classes.headerButtonRight}>
           <Button
             round
-            className="btn-round-gray"
+            className="btn-round-gray w-116 h-41"
             startIcon={<ArrowBackIcon/>}
           >
             Next Trip
@@ -147,9 +153,6 @@ export function TripTimelineSidebar(props) {
       <Row>
         <Col>
           <div className={classes.txtMainDevice} style={{padding: '15px'}}>Mar 22, 11:03 AM EDT</div>
-          <div className={classes.txtMainDescription} style={{padding: '15px'}}>Search for an address to see which
-            assets were previously nearby.
-          </div>
         </Col>
       </Row>
     </div>
