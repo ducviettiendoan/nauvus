@@ -100,6 +100,16 @@ const styles = {
       cursor: "pointer"
     }
   },
+  onHeaderCell: {
+    fontWeight: "bold",
+    color: '#25345C'
+  },
+  gridTitle: {
+    padding: "20px"
+  },
+  onHeaderRow: {
+    background: "#ECEEF0",
+  },
 };
 
 const BorderLinearProgress = withStyles((theme) => ({
@@ -268,7 +278,7 @@ export function APITraffic(props) {
                           </Grid>
                         </Grid>
                       </Grid>
-                      <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
+                      <Grid item xs={12} sm={12} md={6} className={classes.headLeft}>
                         <ToolboxButton placeholder="Search vehicle" showFilter />
                       </Grid>
                     </Grid>

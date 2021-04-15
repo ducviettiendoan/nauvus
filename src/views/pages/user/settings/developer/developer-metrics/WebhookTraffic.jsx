@@ -15,7 +15,7 @@ import Chip from "@material-ui/core/Chip";
 import CloseIcon from "components/Icons/CloseIcon";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import {connect} from "react-redux";
-import {getChartData, getWebhookTraffic} from "../../../../../../reducers/setting-developer";
+import {getChartData, getWebhookTraffic} from "reducers/setting-developer";
 import Table from "components/Table/TableV1";
 import Grid from '@material-ui/core/Grid';
 
@@ -99,6 +99,16 @@ const styles = {
     alignItems: "center",
     textAlign: "left",
     marginTop: "8px"
+  },
+  onHeaderCell: {
+    fontWeight: "bold",
+    color: '#25345C'
+  },
+  gridTitle: {
+    padding: "20px"
+  },
+  onHeaderRow: {
+    background: "#ECEEF0",
   },
 };
 
@@ -269,7 +279,7 @@ export function WebhookTraffic(props) {
                           </Grid>
                         </Grid>
                       </Grid>
-                      <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
+                      <Grid item xs={12} sm={12} md={6} className={classes.headLeft}>
                         <ToolboxButton placeholder="Search vehicle" showFilter />
                       </Grid>
                     </Grid>

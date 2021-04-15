@@ -17,6 +17,9 @@ import {MoreHoriz} from "@material-ui/icons";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import ValidAddresses from "./addresses-geofences/ValidAddresses";
 import InvalidAddresses from "./addresses-geofences/InvalidAddresses";
+import DiaLog from "../../../../../components/CustomDialog/Dialog";
+import AddWorkingHoursForm from "./driver-activity/AddWorkingHoursForm";
+import AddAddressForm from "./addresses-geofences/AddAddressForm";
 
 const styles = {
   cardTitle,
@@ -84,20 +87,42 @@ const styles = {
     background: "#FFFFFF !important",
     border: "1px solid #ECEEF0 !important"
   },
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    margin: "24px",
+    textAlign: "center"
+  },
 };
 
 const useStyles = makeStyles(styles);
 
-export default function AddressesGeofences() {
+export default function AddressesGeofences(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [openAdd, setOpenAdd] = useState(false);
+
 
   const handleChangeTab = (newValue) => {
     setValue(newValue);
   };
 
   return (
-    <div>
+    <>
+      <DiaLog
+        renderTitle={<h3 className={classes.dialogTitle}>Site Details</h3>}
+        handleClose={() => {
+          setOpenAdd(false)
+        }
+        }
+        open={openAdd}
+      >
+        <AddAddressForm handleClose={() => {
+          setOpenAdd(false)
+        }}/>
+      </DiaLog>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
@@ -113,6 +138,9 @@ export default function AddressesGeofences() {
                     round
                     className="btn-round-active mr-2"
                     startIcon={<AddOutlined/>}
+                    onClick={()=> {
+                      setOpenAdd(true)
+                    }}
                   >
                     Add Address
                   </Button>
@@ -133,6 +161,6 @@ export default function AddressesGeofences() {
           </GridContainer>
         </GridItem>
       </GridContainer>
-    </div>
+    </>
   );
 }

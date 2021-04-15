@@ -7,7 +7,7 @@ import TimelineIcon from "@material-ui/icons/Timeline";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import GridContainer from "../Grid/GridContainer";
 import {makeStyles} from "@material-ui/core/styles";
-import Calendar from "../Calendar/Calendar";
+import CustomDateRangePicker from "../CustomDateRangePicker/CustomDateRangePicker";
 // render echarts option.
 
 const styles = {
@@ -120,7 +120,7 @@ const EChart = (props) => {
         <GridItem xs={6} className={classes.textEnd}>
           <GridContainer justify="flex-end" alignItems="center">
             <GridItem className={classes.noPadding}>
-              <Calendar style={{background: "red"}}/>
+              <CustomDateRangePicker/>
             </GridItem>
             <GridItem className={classes.noPadding}>
               <Button
