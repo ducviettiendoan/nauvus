@@ -10,13 +10,6 @@ import Link from "@material-ui/core/Link";
 import Table from "components/Table/TableV1";
 import {getDriverDistanceData, getDrivingHoursData, getFuelUsage} from "reducers/compliance";
 import {connect} from "react-redux";
-import ExpandedRow from "../../overview/components/ExpandedRow";
-import GridContainer from "../../../../../components/Grid/GridContainer";
-import GridItem from "../../../../../components/Grid/GridItem";
-import Calendar from "../../../../../components/Calendar/Calendar";
-import FormControl from "@material-ui/core/FormControl";
-import CustomSelect from "../../../../../components/CustomSelect/CustomSelect";
-import Button from "../../../../../components/CustomButtons/Button";
 
 const useStyles = makeStyles(complianceStyle);
 

@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import classNames from "classnames"
-// @material-ui/core components
+// @material-ui/core SafetyInbox
 import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
-// core components
+// core SafetyInbox
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 import {connect} from 'react-redux';
 import MenuList from "@material-ui/core/MenuList";
