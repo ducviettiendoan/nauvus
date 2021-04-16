@@ -18,6 +18,9 @@ import Link from "@material-ui/core/Link";
 import {connect} from "react-redux";
 import {getWebhook} from "reducers/setting-developer";
 import Table from "components/Table/TableV1";
+import AddAPIForm from "./api-tokens/AddAPIForm";
+import DiaLog from "../../../../../components/CustomDialog/Dialog";
+import AddWebhookForm from "./webhook/AddWebhookForm";
 
 const styles = {
   webhookHeader: {
@@ -100,9 +103,7 @@ const styles = {
   actionIcon: {
     marginTop: "10px"
   },
-  ipText: {
-
-  },
+  ipText: {},
   guideText: {
     cursor: "pointer",
     color: "#0d6ede"
@@ -145,6 +146,14 @@ const styles = {
     borderRadius: 23,
     fontWeight: "bold",
   },
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    margin: "24px",
+    textAlign: "center"
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -152,14 +161,20 @@ const useStyles = makeStyles(styles);
 export function Webhooks(props) {
   const classes = useStyles();
 
+  const [openDialog, setOpenDialog] = React.useState(false)
+
+  const handleClose = () => {
+    setOpenDialog(false)
+  }
+
   const onShowSizeChange = (page, pageSize) => {
-    props.getWebhook({ page, pageSize }); 
+    props.getWebhook({page, pageSize});
     console.log(page, pageSize)
   }
 
   const onPageChange = (page, pageSize) => {
     console.log(page, pageSize)
-    props.getWebhook({ page, pageSize });
+    props.getWebhook({page, pageSize});
   }
 
   React.useEffect(() => {
@@ -209,8 +224,8 @@ export function Webhooks(props) {
             <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
           </Button>
           <Button justIcon color="google" simple>
-          <CopyIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
-        </Button>
+            <CopyIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+          </Button>
         </div>
       )
     }
@@ -220,21 +235,22 @@ export function Webhooks(props) {
       <Table
         renderTitle={
           <CardBody>
-          <GridContainer className={classes.webhookHeader}>
-                <GridItem xs={12} sm={11} md={8} xl={6} className={classes.webhookTitle}>
-                  5 Webhooks
-                </GridItem>
-                <GridItem xs={12} sm={4} md={4} xl={6} className={classes.webhookBtn}>
-                  <Button
-                    round
-                    className="btn-round-active mr-2"
-                    startIcon={<AddOutlined/>}
-                  >
-                    Add Webhook
-                  </Button>
-                </GridItem>
-              </GridContainer>
-              </CardBody>
+            <GridContainer className={classes.webhookHeader}>
+              <GridItem xs={12} sm={11} md={8} xl={6} className={classes.webhookTitle}>
+                5 Webhooks
+              </GridItem>
+              <GridItem xs={12} sm={4} md={4} xl={6} className={classes.webhookBtn}>
+                <Button
+                  round
+                  className="btn-round-active mr-2"
+                  startIcon={<AddOutlined/>}
+                  onClick={() => setOpenDialog(!openDialog)}
+                >
+                  Add Webhook
+                </Button>
+              </GridItem>
+            </GridContainer>
+          </CardBody>
 
         }
         pagination={{
@@ -253,69 +269,67 @@ export function Webhooks(props) {
           className: classes.tableRow
         }}
       />
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card testimonial>
-                
-                <CardBody >
-                  <GridContainer className={classes.webhookHeader}>
-                    <GridItem className={classes.webhookGuide}>
-                      Static Webhook IP addresses
-                    </GridItem>
-                    <GridItem className={classes.webhookSubGuide}>
-                      Nauvus will post to your webhook URL using one of the following IP addresses. We strongly
-                      encourage you to verify all signatures of incoming webhooks, but if you would also like to
-                      restrict updates by IP address, then please consult the list below. This list is subject to
-                      change, so please check back frequently.
-                    </GridItem>
-                    <GridContainer className={classes.webhookIPList}>
-                      {/*Hard code ip data*/}
-                      <GridItem xs={12} sm={12} md={12} className={classes.webhookIP}>
-                        <DotIcon className={classes.dotIcon}/>
-                        <div className={classes.ipText}>35.166.166.111</div>
-                      </GridItem>
-                      <GridItem xs={12} sm={12} md={12} className={classes.webhookIP}>
-                        <DotIcon className={classes.dotIcon}/>
-                        <div className={classes.ipText}>34.209.175.36</div>
-                      </GridItem>
-                      <GridItem xs={12} sm={12} md={12} className={classes.webhookIP}>
-                        <DotIcon className={classes.dotIcon}/>
-                        <div className={classes.ipText}>52.32.199.170</div>
-                      </GridItem>
-                      <GridItem xs={12} sm={12} md={12} className={classes.webhookIP}>
-                        <DotIcon className={classes.dotIcon}/>
-                        <div className={classes.ipText}>54.149.162.56</div>
-                      </GridItem>
-                    </GridContainer>
-                  </GridContainer>
-                  <GridContainer className={classes.developerGuideHeader}>
-                    <GridItem className={classes.webhookGuide}>
-                      Developer Guides
-                    </GridItem>
-                    <GridContainer className={classes.webhookIPList}>
-                      <GridItem xs={12} sm={12} md={12} className={classes.webhookIP}>
-                        <DotIcon className={classes.dotIcon}/>
-                        <Link className={classes.guideText}>Webhook Guide</Link>
-                      </GridItem>
-                      <GridItem xs={12} sm={12} md={12} className={classes.webhookIP}>
-                        <DotIcon className={classes.dotIcon}/>
-                        <Link className={classes.guideText}>Webhook Reference</Link>
-                      </GridItem>
-                    </GridContainer>
-                  </GridContainer>
-                </CardBody>
-              </Card>
+      <Card testimonial>
+        <CardBody>
+          <GridContainer className={classes.webhookHeader}>
+            <GridItem className={classes.webhookGuide}>
+              Static Webhook IP addresses
             </GridItem>
+            <GridItem className={classes.webhookSubGuide}>
+              Nauvus will post to your webhook URL using one of the following IP addresses. We strongly
+              encourage you to verify all signatures of incoming webhooks, but if you would also like to
+              restrict updates by IP address, then please consult the list below. This list is subject to
+              change, so please check back frequently.
+            </GridItem>
+            <GridContainer className={classes.webhookIPList}>
+              {/*Hard code ip data*/}
+              <GridItem xs={12} sm={12} md={12} className={classes.webhookIP}>
+                <DotIcon className={classes.dotIcon}/>
+                <div className={classes.ipText}>35.166.166.111</div>
+              </GridItem>
+              <GridItem xs={12} sm={12} md={12} className={classes.webhookIP}>
+                <DotIcon className={classes.dotIcon}/>
+                <div className={classes.ipText}>34.209.175.36</div>
+              </GridItem>
+              <GridItem xs={12} sm={12} md={12} className={classes.webhookIP}>
+                <DotIcon className={classes.dotIcon}/>
+                <div className={classes.ipText}>52.32.199.170</div>
+              </GridItem>
+              <GridItem xs={12} sm={12} md={12} className={classes.webhookIP}>
+                <DotIcon className={classes.dotIcon}/>
+                <div className={classes.ipText}>54.149.162.56</div>
+              </GridItem>
+            </GridContainer>
           </GridContainer>
-        </GridItem>
-      </GridContainer>
+          <GridContainer className={classes.developerGuideHeader}>
+            <GridItem className={classes.webhookGuide}>
+              Developer Guides
+            </GridItem>
+            <GridContainer className={classes.webhookIPList}>
+              <GridItem xs={12} sm={12} md={12} className={classes.webhookIP}>
+                <DotIcon className={classes.dotIcon}/>
+                <Link className={classes.guideText}>Webhook Guide</Link>
+              </GridItem>
+              <GridItem xs={12} sm={12} md={12} className={classes.webhookIP}>
+                <DotIcon className={classes.dotIcon}/>
+                <Link className={classes.guideText}>Webhook Reference</Link>
+              </GridItem>
+            </GridContainer>
+          </GridContainer>
+        </CardBody>
+      </Card>
+      <DiaLog
+        renderTitle={<h3 className={classes.dialogTitle}>Add API Token</h3>}
+        handleClose={handleClose}
+        open={openDialog}
+      >
+        <AddWebhookForm close={handleClose}/>
+      </DiaLog>
     </div>
   );
 }
 
-const mapStateToProps = ({ settingDeveloper }) => {
+const mapStateToProps = ({settingDeveloper}) => {
   return {
     data: settingDeveloper.webhooks.data,
     page: settingDeveloper.webhooks.page,

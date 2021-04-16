@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
 import cx from "classnames";
@@ -29,11 +29,15 @@ import { Grid } from "@material-ui/core";
 import styles from "assets/jss/material-dashboard-pro-react/components/adminNavbarStyle.js";
 import CustomDateRangePicker from "../CustomDateRangePicker/CustomDateRangePicker";
 
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
 
 const useStyles = makeStyles(styles);
 
 export default function OverviewAdminNavbar(props) {
   const classes = useStyles();
+  const matches = useMediaQuery('(min-width:1557px)');
+
   const { color, rtlActive, brandText } = props;
   const appBarClasses = cx({
     [" " + classes[color]]: color
@@ -77,12 +81,15 @@ export default function OverviewAdminNavbar(props) {
           </div>
         </Hidden>
         {/* vehicle details navbar */}
+        
         {window.location.pathname.indexOf("/vehicle/123456") === -1 && <div className={classes.flex} >
           {/* Here we create navbar brand, based on route name */}
           <Button href="#" className={classes.title} color="transparent">
             {brandText}
           </Button>
         </div>}
+        <Hidden smDown>
+          <div  style={{display: matches ? "block" : "none"}}>
         {window.location.pathname.indexOf("/vehicle/123456") !== -1 &&
           <div style={{ display: "flex", flexDirection: "row" }}>
             <GridItem>
@@ -118,6 +125,8 @@ export default function OverviewAdminNavbar(props) {
             </GridItem>
           </div>
         }
+        </div>
+        </Hidden>
         <Hidden smDown implementation="css">
           <AdminNavbarLinks rtlActive={rtlActive} />
         </Hidden>

@@ -39,7 +39,7 @@ export default function DriverActivity() {
   };
 
   return (
-    <div>
+    <>
       <GridContainer className={classes.topHeader}>
         <GridItem xs={12} sm={11} md={8} xl={6} className={classes.tabsContainer}>
           <RoundedTabs tabs={["Working Hours", "Max Distance"]} tabValue={handleChangeTab}/>
@@ -68,6 +68,6 @@ export default function DriverActivity() {
       </GridContainer>
       {value === 0 && <WorkingHours openAdd={openAdd} setOpenAdd={setOpenAdd}/>}
       {value === 1 && <MaxDistance openAdd={openAdd} setOpenAdd={setOpenAdd}/>}
-    </div>
+    </>
   );
 }
