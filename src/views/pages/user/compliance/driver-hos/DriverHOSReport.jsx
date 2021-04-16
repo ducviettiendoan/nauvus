@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import FormControl from "@material-ui/core/FormControl";
 import Button from "components/CustomButtons/Button";
 import Calendar from "components/Calendar/Calendar";
@@ -9,15 +9,15 @@ import GridItem from "components/Grid/GridItem";
 import LegendIcon from "components/Icons/LegendIcon";
 import CustomSelect from "components/CustomSelect/CustomSelect";
 import Select from "components/CustomSelect/Select";
-import { getReportData, getDutyStatusData, getReportData2 } from "reducers/compliance"
-import { connect } from 'react-redux';
+import {getReportData, getDutyStatusData, getReportData2} from "reducers/compliance"
+import {connect} from 'react-redux';
 import Table from "components/Table/TableV1";
 import ExpandedRow from "../../overview/components/ExpandedRow"
 import Avatar from '@material-ui/core/Avatar';
-import { MoreHoriz } from "@material-ui/icons";
+import {MoreHoriz} from "@material-ui/icons";
 import chartDialog from "assets/img/ChartDialog.png";
 import DiaLog from "components/CustomDialog/Dialog";
-import { Col, Row } from "reactstrap";
+import {Col, Row} from "reactstrap";
 import CustomInput from "components/CustomInput/CustomInput";
 // @material-ui/icons
 // core components
@@ -108,7 +108,7 @@ const styles = {
     height: "24px !important",
   },
   blackAvatarSelect: {
-    background: "#E29468 !important",
+    background: "#26252A !important",
     marginRight: 8,
     fontSize: 12,
     fontWeight: 700,
@@ -238,7 +238,7 @@ function DriverHOSReport(props) {
     {
       title: 'Duty Status',
       key: 'dutyStatus',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: dutyStatus => (
         <div className={classes.alignItemsCenter}>
           <Avatar className={classes.greenAvatar}>D</Avatar>
@@ -249,13 +249,13 @@ function DriverHOSReport(props) {
     {
       title: 'Time in current status',
       key: 'currentTime',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: currentTime => <div className={classes.textSub}>{currentTime}</div>
     },
     {
       title: 'Vehicle name',
       key: 'vehicleName',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: vehicleName => (
         <div className={classes.alignItemsCenter}>
           <div className={classes.textSub}>{vehicleName}</div>
@@ -265,7 +265,7 @@ function DriverHOSReport(props) {
     {
       title: 'Time until break',
       key: 'timeUntilBreak',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: timeUntilBreak => (
         <div className={classes.alignItemsCenter}>
           <div className={classes.textSub}>{timeUntilBreak}</div>
@@ -275,7 +275,7 @@ function DriverHOSReport(props) {
     {
       title: 'Drive remaining',
       key: 'driveRemaining',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: driveRemaining => (
         <div className={classes.alignItemsCenter}>
           <div className={classes.textSub}>{driveRemaining}</div>
@@ -285,7 +285,7 @@ function DriverHOSReport(props) {
     {
       title: 'Cycle Remaining',
       key: 'cycleRemaining',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: cycleRemaining =>
         <div className={classes.alignItemsCenter}>
           <div className={classes.textSub}>{cycleRemaining}</div>
@@ -295,7 +295,7 @@ function DriverHOSReport(props) {
       title: 'Cycle Tomorrow',
       key: 'cycleTomorrow',
       showExpandable: true,
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: cycleTomorrow => (
         <div className={classes.alignItemsCenter}>
           <div className={classes.textSub}>{cycleTomorrow}</div>
@@ -308,7 +308,7 @@ function DriverHOSReport(props) {
     {
       title: 'Shift',
       key: 'shift',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: shift => (
         <div className={classes.alignItemsCenter}>
           <div className={classes.textSub}>{shift}</div>
@@ -318,7 +318,7 @@ function DriverHOSReport(props) {
     {
       title: 'Driving',
       key: 'driving',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: driving => <div className={classes.alignItemsCenter}>
         <div className={classes.textSub}>{driving}</div>
       </div>
@@ -326,7 +326,7 @@ function DriverHOSReport(props) {
     {
       title: 'In Violation',
       key: 'inViolation',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: inViolation => (
         <div className={classes.alignItemsCenter}>
           <div className={classes.textSub}>{inViolation}</div>
@@ -336,7 +336,7 @@ function DriverHOSReport(props) {
     {
       title: 'From',
       key: 'from',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: from => (
         <div className={classes.alignItemsCenter}>
           <div className={classes.textSub}>{from}</div>
@@ -346,7 +346,7 @@ function DriverHOSReport(props) {
     {
       title: 'To',
       key: 'to',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: to => (
         <div className={classes.alignItemsCenter}>
           <div className={classes.textSub}>{to}</div>
@@ -356,9 +356,9 @@ function DriverHOSReport(props) {
     {
       title: 'Details',
       key: 'details',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: details => <div className={classes.details}>
-        <LegendIcon className={classes.legendIcon} />
+        <LegendIcon className={classes.legendIcon}/>
         <div className={classes.textDetails}>{details}</div>
       </div>
 
@@ -367,7 +367,7 @@ function DriverHOSReport(props) {
       title: 'Date (EDT)',
       key: 'date',
       showExpandable: true,
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: date => (
         <div className={classes.details}>
           <div className={classes.textSub}>{date}</div>
@@ -380,7 +380,7 @@ function DriverHOSReport(props) {
     {
       title: 'Time',
       key: 'time',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: time => (
         <div>
           <div className={classes.textSub}>{time.start}</div>
@@ -391,13 +391,13 @@ function DriverHOSReport(props) {
     {
       title: 'Duration',
       key: 'duration',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: duration => <div className={classes.textSub}>{duration}</div>
     },
     {
       title: 'Status',
       key: 'status',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: status => (
         <div className={classes.alignItemsCenter}>
           <Avatar className={classes.greenAvatar}>D</Avatar>
@@ -408,25 +408,25 @@ function DriverHOSReport(props) {
     {
       title: 'Remark',
       key: 'remark',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: remark => <div className={classes.textSub}>{remark}</div>
     },
     {
       title: 'Vehicle',
       key: 'vehicle',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: vehicle => <div className={classes.textSub}>{vehicle}</div>
     },
     {
       title: 'Location',
       key: 'location',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: location => <div className={classes.textSub}>{location}</div>
     },
     {
       title: 'Action',
       key: 'action',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: () => (
         <div className={classes.actionButton}>
           <Button
@@ -459,11 +459,11 @@ function DriverHOSReport(props) {
 
   const onPageChange = (page, pageSize) => {
     console.log(page, pageSize)
-    props.getReportData({ page, pageSize });
+    props.getReportData({page, pageSize});
   }
 
   const onShowSizeChange = (page, pageSize) => {
-    props.getReportData({ page, pageSize });
+    props.getReportData({page, pageSize});
     console.log(page, pageSize)
   }
 
@@ -479,27 +479,11 @@ function DriverHOSReport(props) {
     })
   }
 
-  const distanceData = [
-    <div className={classes.alignItemsCenter}>
-      <Avatar className={classes.greenAvatarSelect}>D</Avatar>
-      <div className={classes.textSelect}>Driving</div>
-    </div>,
-    <div className={classes.alignItemsCenter}>
-      <Avatar className={classes.orangeAvatarSelect}>O</Avatar>
-      <div className={classes.textSelect}>On Duty</div>
-    </div>,
-    <div className={classes.alignItemsCenter}>
-      <Avatar className={classes.blackAvatarSelect}>S</Avatar>
-      <div className={classes.textSelect}>Sleep</div>
-    </div>
-  ]
-
-  const distenceOptions = [
+  const remarkOptions = [
     {
       label: (
         <div className={classes.alignItemsCenter}>
-          <Avatar className={classes.greenAvatarSelect}>D</Avatar>
-          <div className={classes.textSelect}>Driving</div>
+          <div className={classes.textSelect}>Break</div>
         </div>
       ),
       value: "Value1",
@@ -507,8 +491,7 @@ function DriverHOSReport(props) {
     {
       label: (
         <div className={classes.alignItemsCenter}>
-          <Avatar className={classes.orangeAvatarSelect}>O</Avatar>
-          <div className={classes.textSelect}>On Duty</div>
+          <div className={classes.textSelect}>Pre-Trip Inspection</div>
         </div>
       ),
       value: "Value2",
@@ -516,11 +499,34 @@ function DriverHOSReport(props) {
     {
       label: (
         <div className={classes.alignItemsCenter}>
-          <Avatar className={classes.blackAvatarSelect}>S</Avatar>
-          <div className={classes.textSelect}>Sleep</div>
+          <div className={classes.textSelect}>Post-Trip Inspection</div>
         </div>
       ),
       value: "Value3",
+    },
+    {
+      label: (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textSelect}>Waiting</div>
+        </div>
+      ),
+      value: "Value4",
+    },
+    {
+      label: (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textSelect}>Loading</div>
+        </div>
+      ),
+      value: "Value5",
+    },
+    {
+      label: (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textSelect}>Unloading</div>
+        </div>
+      ),
+      value: "Value6",
     }
   ];
 
@@ -585,7 +591,7 @@ function DriverHOSReport(props) {
           55 Activity
         </GridItem>
         <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
-          <Calendar />
+          <Calendar/>
           <Button
             color="white"
             aria-label="edit"
@@ -593,7 +599,7 @@ function DriverHOSReport(props) {
             round
             className={`btn-36 ${classes.moreAction} mr-2`}
           >
-            <MoreHoriz />
+            <MoreHoriz/>
           </Button>
         </GridItem>
       </GridContainer>
@@ -617,7 +623,7 @@ function DriverHOSReport(props) {
                 <GridItem xs={12} sm={12} md={6}>
                   <GridContainer className={classes.headContainer}>
                     <GridItem>
-                      <Calendar />
+                      <Calendar/>
                     </GridItem>
                   </GridContainer>
                 </GridItem>
@@ -652,7 +658,7 @@ function DriverHOSReport(props) {
               expandedRowRender={(record) => {
                 return (
                   <div>
-                    <ExpandedRow details={record} />
+                    <ExpandedRow details={record}/>
                   </div>
                 )
               }}
@@ -675,7 +681,6 @@ function DriverHOSReport(props) {
         }}
         columns={reportColumns2}
         dataSource={props.reportData2}
-        // rowSelection
         onHeaderRow={{
           className: classes.onHeaderRow
         }}
@@ -692,27 +697,19 @@ function DriverHOSReport(props) {
         }
         open={openDialog}
       >
-        <img src={chartDialog} style={{ width: 532 }} />
-        {/*<TimePickers />*/}
+        <img src={chartDialog} style={{width: 532}}/>
         <Row className={classes.alignItemsCenter}>
           <Col>
-            {/* <CustomSelect
-              labelText="Status"
-              name="selectStatus"
-              // listValues={distanceData}
-              placeholder={"Select status"}
-              selectValue={selection.selectStatus}
-              onChange={handleChange}
-              listContent={listContent}
-            /> */}
             <Select
               label="Status"
               fullWidth={true}
               defaultValue={null}
               options={statusOptions}
               placeholder="Start typing..."
-              SelectProps={{ isClearable: false }}
-              onChange={(value) => { console.log(value); }}
+              SelectProps={{isClearable: false}}
+              onChange={(value) => {
+                console.log(value);
+              }}
             />
           </Col>
           <Col>
@@ -726,33 +723,27 @@ function DriverHOSReport(props) {
                 placeholder: "Enter assets",
                 onChange: handleInputChange,
                 defaultValue: "Title",
-                classes: { input: classes.textInputRoot },
+                classes: {input: classes.textInputRoot},
               }}
               labelProps={{
                 shrink: true,
-                classes: { root: classes.textFieldRoot }
+                classes: {root: classes.textFieldRoot}
               }}
             />
           </Col>
         </Row>
         <Row className={classes.alignItemsCenter}>
           <Col>
-            {/* <Select
-              labelText="Remark"
-              name="distance"
-              listValues={distanceData}
-              placeholder={"Select distances"}
-              selectValue={"Start typing..."}
-            // onChange={handleChange}
-            /> */}
             <Select
               label="Remark"
               fullWidth={true}
               defaultValue={null}
-              options={distenceOptions}
+              options={remarkOptions}
               placeholder="Start typing..."
-              SelectProps={{ isClearable: false }}
-              onChange={(value) => { console.log(value); }}
+              SelectProps={{isClearable: false}}
+              onChange={(value) => {
+                console.log(value);
+              }}
             />
           </Col>
         </Row>
@@ -778,32 +769,32 @@ function DriverHOSReport(props) {
   );
 }
 
-const mapStateToProps = ({ compliance }) => {
-  return {
-    reportData: compliance.reportData.data,
-    reportPage: compliance.reportData.page,
-    reportTotal: compliance.reportData.total,
-    reportPageSize: compliance.reportData.pageSize,
+const mapStateToProps = ({compliance}) => {
+    return {
+      reportData: compliance.reportData.data,
+      reportPage: compliance.reportData.page,
+      reportTotal: compliance.reportData.total,
+      reportPageSize: compliance.reportData.pageSize,
 
-    reportData2: compliance.reportData2.data,
-    reportPage2: compliance.reportData2.page,
-    reportTotal2: compliance.reportData2.total,
-    reportPageSize2: compliance.reportData2.pageSize,
+      reportData2: compliance.reportData2.data,
+      reportPage2: compliance.reportData2.page,
+      reportTotal2: compliance.reportData2.total,
+      reportPageSize2: compliance.reportData2.pageSize,
 
-    dutyData: compliance.dutyStatusData.data,
-    dutyPage: compliance.dutyStatusData.page,
-    dutyTotal: compliance.dutyStatusData.total,
-    dutyPageSize: compliance.dutyStatusData.pageSize,
-  };
-}
-  ;
+      dutyData: compliance.dutyStatusData.data,
+      dutyPage: compliance.dutyStatusData.page,
+      dutyTotal: compliance.dutyStatusData.total,
+      dutyPageSize: compliance.dutyStatusData.pageSize,
+    };
+  }
+;
 
 const mapDispatchToProps =
-{
-  getReportData,
-  getDutyStatusData,
-  getReportData2
-}
-  ;
+  {
+    getReportData,
+    getDutyStatusData,
+    getReportData2
+  }
+;
 
 export default connect(mapStateToProps, mapDispatchToProps)(DriverHOSReport);
