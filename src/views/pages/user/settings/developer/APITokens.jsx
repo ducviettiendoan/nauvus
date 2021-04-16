@@ -15,6 +15,8 @@ import DotIcon from "components/Icons/DotIcon.jsx";
 import {connect} from "react-redux";
 import {getApiToken} from "reducers/setting-developer";
 import Table from "components/Table/TableV1";
+import DiaLog from "components/CustomDialog/Dialog";
+import AddAPIForm from "./api-tokens/AddAPIForm";
 
 const styles = {
   apiTokensHeader: {
@@ -103,6 +105,14 @@ const styles = {
   dotIcon: {
     color: "#7CE7AC",
   },
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    margin: "24px",
+    textAlign: "center"
+  },
 };
 
 
@@ -110,6 +120,12 @@ const useStyles = makeStyles(styles);
 
 export function APITokens(props) {
   const classes = useStyles();
+  const [openDialog, setOpenDialog] = React.useState(false)
+
+  const handleClose = () => {
+    setOpenDialog(false)
+  }
+
 
   React.useEffect(() => {
     // Get list data
@@ -117,13 +133,13 @@ export function APITokens(props) {
   }, []);
 
   const onShowSizeChange = (page, pageSize) => {
-    props.getWebhook({ page, pageSize }); 
+    props.getApiToken({page, pageSize});
     console.log(page, pageSize)
   }
 
   const onPageChange = (page, pageSize) => {
     console.log(page, pageSize)
-    props.getUserRoles({ page, pageSize }); 
+    props.getApiToken({page, pageSize});
   }
   const columns = [
     {
@@ -147,8 +163,8 @@ export function APITokens(props) {
       key: 'scope',
       onHeaderCell: {className: classes.onHeaderCell},
       render: scope => <div className={classes.alignItemsCenter}>
-      <div><DotIcon className={classes.dotIcon} /></div>
-      <div className={classes.textSub}>{scope}</div>
+        <div><DotIcon className={classes.dotIcon}/></div>
+        <div className={classes.textSub}>{scope}</div>
       </div>
     },
     {
@@ -182,29 +198,25 @@ export function APITokens(props) {
 
   return (
     <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
-              
-                <Table
+      <Table
         renderTitle={
           <CardBody>
-          <GridContainer className={classes.apiTokensHeader}>
-                <GridItem xs={12} sm={11} md={8} xl={6} className={classes.apiTokensTitle}>
-                  6 Tokens
-                </GridItem>
-                <GridItem xs={12} sm={4} md={4} xl={6} className={classes.apiTokensBtn}>
-                  <Button
-                    round
-                    className="btn-round-active mr-2"
-                    startIcon={<AddOutlined/>}
-                  >
-                    Add an API Token
-                  </Button>
-                </GridItem>
-              </GridContainer>
-              </CardBody>
+            <GridContainer className={classes.apiTokensHeader}>
+              <GridItem xs={12} sm={11} md={8} xl={6} className={classes.apiTokensTitle}>
+                6 Tokens
+              </GridItem>
+              <GridItem xs={12} sm={4} md={4} xl={6} className={classes.apiTokensBtn}>
+                <Button
+                  round
+                  className="btn-round-active mr-2"
+                  startIcon={<AddOutlined/>}
+                  onClick={() => setOpenDialog(!openDialog)}
+                >
+                  Add an API Token
+                </Button>
+              </GridItem>
+            </GridContainer>
+          </CardBody>
 
         }
         pagination={{
@@ -222,50 +234,53 @@ export function APITokens(props) {
         onBodyRow={{
           className: classes.tableRow
         }}
-      />        <Card testimonial>
-                <CardBody>
-                  <GridContainer className={classes.apiTokensHeader}>
-                    <GridItem className={classes.apiTokensGuide}>
-                      Developer Documentation and Guides
+      />
+      <Card testimonial>
+        <CardBody>
+          <GridContainer className={classes.apiTokensHeader}>
+            <GridItem className={classes.apiTokensGuide}>
+              Developer Documentation and Guides
 
-                    </GridItem>
-                    <GridContainer className={classes.apiTokensList}>
-                      <GridItem xs={3} sm={3} md={3} className={classes.apiTokensDoc}>
-                        API Documentation
-                      </GridItem>
-                      <GridItem xs={9} sm={9} md={9} className={classes.apiTokensRead}>
-                        read through details on how all our APIs work
-                      </GridItem>
-                    </GridContainer>
-                    <GridContainer className={classes.apiTokensList}>
-                      <GridItem xs={3} sm={3} md={3} className={classes.apiTokensDoc}>
-                        API Documentation
-                      </GridItem>
-                      <GridItem xs={9} sm={9} md={9} className={classes.apiTokensRead}>
-                        read through details on how all our APIs work
-                      </GridItem>
-                    </GridContainer>
-                    <GridContainer className={classes.apiTokensList}>
-                      <GridItem xs={3} sm={3} md={3} className={classes.apiTokensDoc}>
-                        API Documentation
-                      </GridItem>
-                      <GridItem xs={9} sm={9} md={9} className={classes.apiTokensRead}>
-                        read through details on how all our APIs work
-                      </GridItem>
-                    </GridContainer>
-                  </GridContainer>
-
-                </CardBody>
-              </Card>
             </GridItem>
+            <GridContainer className={classes.apiTokensList}>
+              <GridItem xs={3} sm={3} md={3} className={classes.apiTokensDoc}>
+                API Documentation
+              </GridItem>
+              <GridItem xs={9} sm={9} md={9} className={classes.apiTokensRead}>
+                read through details on how all our APIs work
+              </GridItem>
+            </GridContainer>
+            <GridContainer className={classes.apiTokensList}>
+              <GridItem xs={3} sm={3} md={3} className={classes.apiTokensDoc}>
+                API Documentation
+              </GridItem>
+              <GridItem xs={9} sm={9} md={9} className={classes.apiTokensRead}>
+                read through details on how all our APIs work
+              </GridItem>
+            </GridContainer>
+            <GridContainer className={classes.apiTokensList}>
+              <GridItem xs={3} sm={3} md={3} className={classes.apiTokensDoc}>
+                API Documentation
+              </GridItem>
+              <GridItem xs={9} sm={9} md={9} className={classes.apiTokensRead}>
+                read through details on how all our APIs work
+              </GridItem>
+            </GridContainer>
           </GridContainer>
-        </GridItem>
-      </GridContainer>
+        </CardBody>
+      </Card>
+      <DiaLog
+        renderTitle={<h3 className={classes.dialogTitle}>Add API Token</h3>}
+        handleClose={handleClose}
+        open={openDialog}
+      >
+        <AddAPIForm close={handleClose}/>
+      </DiaLog>
     </div>
   );
 }
 
-const mapStateToProps = ({ settingDeveloper }) => {
+const mapStateToProps = ({settingDeveloper}) => {
   return {
     data: settingDeveloper.apiTokens.data,
     page: settingDeveloper.apiTokens.page,
