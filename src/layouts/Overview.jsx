@@ -53,6 +53,7 @@ export function Overview(props) {
   const [logo, setLogo] = React.useState(require("assets/img/logo_nauvus.svg"));
 
   const [fetchSession, setFetchSession] = React.useState(false);
+  const isTripTimeline = window.location.pathname.indexOf("/o/trip-timeline/on-going");
 
   // styles
   const classes = useStyles();
@@ -104,6 +105,12 @@ export function Overview(props) {
       window.removeEventListener("resize", resizeFunction);
     };
   }, [1]);
+
+  React.useEffect(() => { 
+    if (isTripTimeline !== -1) {
+      setMiniActive(true);
+    }
+  }, [isTripTimeline]);
   // functions for changeing the states from components
   const handleImageClick = image => {
     setImage(image);
@@ -223,13 +230,15 @@ export function Overview(props) {
                 [classes.contentShift]: props.openDrawer,
               })}
             >
-              <OverviewAdminNavbar
-                sidebarMinimize={sidebarMinimize.bind(this)}
-                miniActive={miniActive}
-                brandText={getActiveRoute(routes)}
-                handleDrawerToggle={handleDrawerToggle}
-                {...rest}
-              />
+              {isTripTimeline === -1 && (
+                <OverviewAdminNavbar
+                  sidebarMinimize={sidebarMinimize.bind(this)}
+                  miniActive={miniActive}
+                  brandText={getActiveRoute(routes)}
+                  handleDrawerToggle={handleDrawerToggle}
+                  {...rest}
+                />
+              )}
               <div style={{ position: 'relative' }}>
                 <Switch>
                   {getRoutes(routes)}
@@ -246,7 +255,7 @@ export function Overview(props) {
   const redirectLogin = () => {
     history.push(ROUTE_PATH.AUTH + "/sign-in");
   }
-
+  console.log("miniActive::"+miniActive);
   return (
     <>
       <div className={classes.wrapper}>

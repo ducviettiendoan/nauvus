@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
@@ -11,6 +11,9 @@ import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import ByAsset from "./live-sharing/ByAsset";
 import ByLocation from "./live-sharing/ByLocation";
 import ByRecurringRoute from "./live-sharing/ByRecurringRoute";
+import DiaLog from "../../../../../components/CustomDialog/Dialog";
+import AddAddressForm from "../fleet/addresses-geofences/AddAddressForm";
+import AddNewURLForm from "./live-sharing/AddNewURLForm";
 
 const styles = {
   createLinkButton: {
@@ -48,6 +51,14 @@ const styles = {
   topHeaderButton: {
     textAlign: "right",
   },
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    margin: "24px",
+    textAlign: "center"
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -56,13 +67,27 @@ export default function LiveSharing() {
   const classes = useStyles();
 
   const [value, setValue] = React.useState(0);
+  const [openAdd, setOpenAdd] = useState(false);
 
   const handleChangeTab = (newValue) => {
     setValue(newValue);
   };
 
   return (
-    <div>
+    <>
+      <DiaLog
+        renderTitle={<h3 className={classes.dialogTitle}>Create a new URL</h3>}
+        handleClose={() => {
+          setOpenAdd(false)
+        }
+        }
+        open={openAdd}
+      >
+        <AddNewURLForm
+          handleClose={() => {
+          setOpenAdd(false)
+        }}/>
+      </DiaLog>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
@@ -77,6 +102,7 @@ export default function LiveSharing() {
                     round
                     className="btn-round-active mr-4"
                     startIcon={<AddOutlined/>}
+                    onClick={()=>{setOpenAdd(true)}}
                   >
                     Create Link
                   </Button>
@@ -89,6 +115,6 @@ export default function LiveSharing() {
           </GridContainer>
         </GridItem>
       </GridContainer>
-    </div>
+    </>
   );
 }
