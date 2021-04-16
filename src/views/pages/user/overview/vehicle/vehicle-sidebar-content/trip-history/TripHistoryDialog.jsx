@@ -16,6 +16,7 @@ import CardBody from "../../../../../../../components/Card/CardBody";
 import availablefootage from "assets/img/availablefootage.png"
 import demomap from "assets/img/demomap.png"
 import CustomTimeline from "../../../../../../../components/CustomTimeline/CustomTimeline";
+import NavigationIcon from "../../../../../../../components/Icons/NavigationIcon";
 
 const styles = {
   formRow: {
@@ -107,9 +108,6 @@ const styles = {
     right: "17px",
     maxWidth: "150px"
   },
-  timelineContent: {
-    minWidth: "237px !important"
-  }
 }
 const useStyles = makeStyles(styles);
 
