@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
@@ -14,6 +14,9 @@ import DeleteIcon from "components/Icons/DeleteIcon";
 import { connect } from "react-redux";
 import { getScheduleReport } from "reducers/setting-link-sharing";
 import Table from "components/Table/TableV1";
+import DiaLog from "../../../../../components/CustomDialog/Dialog";
+import AddAddressForm from "../fleet/addresses-geofences/AddAddressForm";
+import AddScheduledReportForm from "./scheduled-reports/AddScheduledReportForm";
 
 const styles = {
   liveSharingHeader: {
@@ -91,12 +94,30 @@ const styles = {
   gridTitle: {
     padding: "20px"
   },
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    margin: "24px",
+    textAlign: "center",
+    marginBottom: "8px"
+  },
+  dialogSubTitle: {
+    color: "#25345C",
+    fontWeight: 400,
+    fontSize: 16,
+    margin: "24px",
+    marginTop: 0
+  },
+
 };
 
 const useStyles = makeStyles(styles);
 
 function ScheduleReports(props) {
   const classes = useStyles();
+  const [openAdd, setOpenAdd] = useState(false);
 
   React.useEffect(() => {
     // Get list data
@@ -172,7 +193,24 @@ function ScheduleReports(props) {
   ]
 
   return (
-    <div>
+    <>
+      <DiaLog
+        renderTitle={
+          <>
+            <h3 className={classes.dialogTitle}>Add a new scheduled report</h3>
+            <div className={classes.dialogSubTitle}>You are now creating a scheduled report for your organization. Once configured, the report will be sent to the selected recipients at your chosen cadence.</div>
+          </>
+        }
+        handleClose={() => {
+          setOpenAdd(false)
+        }
+        }
+        open={openAdd}
+      >
+        <AddScheduledReportForm handleClose={() => {
+          setOpenAdd(false)
+        }}/>
+      </DiaLog>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
@@ -186,6 +224,7 @@ function ScheduleReports(props) {
                     round
                     className="btn-round-active mr-2"
                     startIcon={<AddOutlined />}
+                    onClick={() => {setOpenAdd(true)}}
                   >
                     Add a Scheduled Report
                   </Button>
@@ -222,7 +261,7 @@ function ScheduleReports(props) {
           </GridContainer>
         </GridItem>
       </GridContainer>
-    </div>
+    </>
   );
 }
 

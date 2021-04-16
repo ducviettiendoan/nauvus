@@ -34,7 +34,6 @@ const styles = {
 
   },
   calendarIcon: {
-    color: "#25345C"
   }
 }
 
