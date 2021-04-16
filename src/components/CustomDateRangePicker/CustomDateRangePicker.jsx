@@ -7,7 +7,7 @@ import Grid from "@material-ui/core/Grid";
 
 const styles = {
   datePickerStyle: {
-    width: 162,
+    minWidth: 162,
     marginRight: 8,
     "& > div::before ": {
       borderBottom: "0 !important"
@@ -19,7 +19,9 @@ const styles = {
     borderRadius: "20px",
     background: "#FFFFFF",
     color: "#25345C !important",
-    textAlign: "end"
+    textAlign: "end",
+    // display: "flex",
+    // justifyContent: "space-between"
   },
   calendarIcon: {
     color: "#25345C"
@@ -36,6 +38,16 @@ const styles = {
     borderRight: "none",
     background: "#FFFFFF"
   },
+  date: {
+    textAlign: "center",
+    fontWeight: 400,
+  },
+  divider: {
+    width: "10px",
+    borderTop: " 2px solid #25345C",
+    marginTop: "0",
+    marginBottom: "0",
+  }
 
 }
 
@@ -46,17 +58,17 @@ const CustomDateRangePicker = props => {
   const [open, setOpen] = React.useState(false);
   const [dateRange, setDateRange] = React.useState({});
 
-  useEffect(() => {
-    console.log(dateRange)
-  }, [dateRange])
-
   const toggle = () => setOpen(!open);
   return (
     <>
       <div className={classes.datePickerStyle}>
+        {/*In case want to display date range*/}
         {/*<Grid container>*/}
-        {/*  <Grid xs={12} item>{dateRange.startDate.toISOString()}</Grid>*/}
-        {/*  <Grid xs={12} item>{dateRange.endDate.toISOString()}</Grid>*/}
+        {/*  <Grid xs={12} className={classes.date} item>{dateRange.startDate && dateRange.startDate.toDateString().slice(4)}</Grid>*/}
+        {/*  <Grid xs={12} className={classes.date} item>*/}
+        {/*    <hr className={classes.divider}/>*/}
+        {/*  </Grid>*/}
+        {/*  <Grid xs={12} className={classes.date} item>{dateRange.endDate && dateRange.endDate.toDateString().slice(4)}</Grid>*/}
         {/*</Grid>*/}
         <Button className={classes.calendarButton} onClick={toggle} round justIcon>
           <CalendarIcon className={classes.calendarIcon}/>
