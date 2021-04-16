@@ -1,13 +1,13 @@
 import React from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 import AddOutlined from "@material-ui/icons/AddOutlined";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Button from "components/CustomButtons/Button.js";
-import { MoreHoriz } from "@material-ui/icons";
+import {MoreHoriz} from "@material-ui/icons";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import EditIcon from "components/Icons/EditIcon";
 import DeleteIcon from "components/Icons/DeleteIcon";
@@ -26,7 +26,7 @@ import OrganizationUpload from "components/CustomUpload/OrganizationUpload";
 import InputLabel from "@material-ui/core/InputLabel";
 import {Field, Form} from "react-final-form";
 import {TextField} from "final-form-material-ui";
-import { getAlertContact } from "reducers/setting-link-sharing";
+import {getAlertContact} from "reducers/setting-link-sharing";
 import Table from "components/Table/TableV1";
 
 const styles = {
@@ -143,6 +143,7 @@ const useStyles = makeStyles((theme) => ({
   ...customDropdownStyle(theme),
   ...styles,
 }))
+
 export function AlertContacts(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -179,20 +180,20 @@ export function AlertContacts(props) {
   }, []);
 
   const onShowSizeChange = (page, pageSize) => {
-    props.getAlertContact({ page, pageSize });
+    props.getAlertContact({page, pageSize});
     console.log(page, pageSize)
   }
 
   const onPageChange = (page, pageSize) => {
     console.log(page, pageSize)
-    props.getAlertContact({ page, pageSize });
+    props.getAlertContact({page, pageSize});
   }
 
   const columns = [
     {
       title: 'Name',
       key: 'name',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: name => (
         <div className={classes.alignItemsCenter}>
           <div className={classes.textName}>{name}</div>
@@ -202,26 +203,26 @@ export function AlertContacts(props) {
     {
       title: 'Phone',
       key: 'phone',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: phone => <div className={classes.textSub}>{phone}</div>
     },
     {
       title: 'Email',
       key: 'email',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: email => <div className={classes.textSub}>{email}</div>
     },
     {
       title: 'Actions',
       key: 'action',
-      onHeaderCell: { className: classes.onHeaderCell },
+      onHeaderCell: {className: classes.onHeaderCell},
       render: () => (
         <div className={classes.actionButton}>
           <Button justIcon color="twitter" simple>
-            <EditIcon className={classes.iconButton} style={{ color: "#ffffff", width: '22px', height: '22px' }} />
+            <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
           </Button>
           <Button justIcon color="google" simple>
-            <DeleteIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
+            <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
           </Button>
         </div>
       )
@@ -240,112 +241,115 @@ export function AlertContacts(props) {
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <DiaLog
-                      renderTitle={
-                        <>
-                          <h3 className={classes.dialogTitle}>Add a new contact</h3>
-                          <div className={classes.text}>You are now creating an alert contact. Alert contacts to enable you to send alerts and reports to other people within or outside of your organization.</div>
-                        </>
-                      }
-                      handleClose={handleClose}
-                      open={open}
+                    renderTitle={
+                      <>
+                        <h3 className={classes.dialogTitle}>Add a new contact</h3>
+                        <div className={classes.text}>You are now creating an alert contact. Alert contacts to enable
+                          you to send alerts and reports to other people within or outside of your organization.
+                        </div>
+                      </>
+                    }
+                    handleClose={handleClose}
+                    open={open}
                   >
                     <Form
-                        onSubmit={onSubmit}
-                        validate={validate}
-                        render={({ handleSubmit, reset, submitting, pristine, values }) => {
-                          return (
-                              <form onSubmit={handleSubmit} noValidate>
-                                <GridContainer justify="space-between" >
-                                  <GridItem className={classes.formRow} xs={12}>
-                                    <InputLabel required>First Name</InputLabel>
-                                    <Field
-                                        fullWidth
-                                        required
-                                        name="fname"
-                                        type="text"
-                                        component={TextField}
-                                    />
-                                  </GridItem>
-                                  <GridItem className={classes.formRow} xs={12}>
-                                    <InputLabel required>Last Name</InputLabel>
-                                    <Field
-                                        fullWidth
-                                        required
-                                        name="lname"
-                                        type="text"
-                                        component={TextField}
-                                    />
-                                  </GridItem>
-                                  <GridItem className={classes.formRow} xs={12}>
-                                    <InputLabel required>Phone</InputLabel>
-                                    <Field
-                                        fullWidth
-                                        required
-                                        name="phone"
-                                        type="text"
-                                        placeholder="3605550110"
-                                        component={TextField}
-                                    />
-                                  </GridItem>
-                                  <GridItem className={classes.formRow} xs={12}>
-                                    <InputLabel required>Email</InputLabel>
-                                    <Field
-                                        fullWidth
-                                        required
-                                        name="email"
-                                        type="text"
-                                        placeholder="email@example.com"
-                                        component={TextField}
-                                    />
-                                  </GridItem>
-                                </GridContainer>
-                                <div className={classes.selectButton}>
-                                  <Button
-                                      type="button"
-                                      round
-                                      className="btn-round-active-2 mr-2"
-                                      onClick={props.handleClose}
-                                  > Cancel</Button>
-                                  <Button
-                                      round
-                                      className="btn-round-active mr-2"
-                                      type="submit"
-                                      disabled={submitting}
-                                  > Save</Button>
-                                </div>
-                              </form>
-                          )
-                        }}
+                      onSubmit={onSubmit}
+                      validate={validate}
+                      render={({handleSubmit, reset, submitting, pristine, values}) => {
+                        return (
+                          <form onSubmit={handleSubmit} noValidate>
+                            <GridContainer justify="space-between">
+                              <GridItem className={classes.formRow} xs={12}>
+                                <InputLabel required>First Name</InputLabel>
+                                <Field
+                                  fullWidth
+                                  required
+                                  name="fname"
+                                  type="text"
+                                  component={TextField}
+                                />
+                              </GridItem>
+                              <GridItem className={classes.formRow} xs={12}>
+                                <InputLabel required>Last Name</InputLabel>
+                                <Field
+                                  fullWidth
+                                  required
+                                  name="lname"
+                                  type="text"
+                                  component={TextField}
+                                />
+                              </GridItem>
+                              <GridItem className={classes.formRow} xs={12}>
+                                <InputLabel required>Phone</InputLabel>
+                                <Field
+                                  fullWidth
+                                  required
+                                  name="phone"
+                                  type="text"
+                                  placeholder="3605550110"
+                                  component={TextField}
+                                />
+                              </GridItem>
+                              <GridItem className={classes.formRow} xs={12}>
+                                <InputLabel required>Email</InputLabel>
+                                <Field
+                                  fullWidth
+                                  required
+                                  name="email"
+                                  type="text"
+                                  placeholder="email@example.com"
+                                  component={TextField}
+                                />
+                              </GridItem>
+                            </GridContainer>
+                            <div className={classes.selectButton}>
+                              <Button
+                                type="button"
+                                round
+                                className="btn-round-active-2 mr-2"
+                                onClick={props.handleClose}
+                              > Cancel</Button>
+                              <Button
+                                round
+                                className="btn-round-active mr-2"
+                                type="submit"
+                                disabled={submitting}
+                              > Save</Button>
+                            </div>
+                          </form>
+                        )
+                      }}
                     />
                   </DiaLog>
                   <DiaLog
-                      renderTitle={<h3 className={classes.dialogTitle}>Upload CSV File</h3>}
-                      handleClose={handleClose}
-                      open={openUpload}
+                    renderTitle={<h3 className={classes.dialogTitle}>Upload CSV File</h3>}
+                    handleClose={handleClose}
+                    open={openUpload}
                   >
                     <p>Manage your contacts</p>
                     <p>
-                      Manage your contacts via spreadsheet (.CSV file). You can choose to download your existing Contacts List or start from a Sample Template. Please refer to our Knowledge Base to learn more.
+                      Manage your contacts via spreadsheet (.CSV file). You can choose to download your existing
+                      Contacts List or start from a Sample Template. Please refer to our Knowledge Base to learn more.
                     </p>
-                    <OrganizationUpload />
+                    <OrganizationUpload/>
                     <div className={classes.selectButton}>
                       <Button
-                          type="button"
-                          round
-                          className="btn-round-active-2 mr-2"
-                          onClick={handleClose}
+                        type="button"
+                        round
+                        className="btn-round-active-2 mr-2"
+                        onClick={handleClose}
                       > Cancel</Button>
                       <Button
-                          round
-                          className="btn-round-active mr-2"
-                          type="submit"
+                        round
+                        className="btn-round-active mr-2"
+                        type="submit"
                       > Preview</Button>
                     </div>
                   </DiaLog>
                   <Button
                     round
                     className="btn-round-active w-150 mr-2"
-                    startIcon={<AddOutlined />}
+                    startIcon={<AddOutlined/>}
                     onClick={() => setOpen(true)}
                   >
                     Add Contact
@@ -358,7 +362,7 @@ export function AlertContacts(props) {
                     className={`btn-36 ${classes.moreAction} mr-2`}
                     onClick={handleOpenMore}
                   >
-                    <MoreHoriz />
+                    <MoreHoriz/>
                   </Button>
                 </GridItem>
               </GridContainer>
@@ -369,7 +373,7 @@ export function AlertContacts(props) {
                       22 contacts
                     </GridItem>
                     <GridItem className={classes.liveSharingButton}>
-                      <ToolboxButton placeholder={"Search contacts"} />
+                      <ToolboxButton placeholder={"Search contacts"}/>
                     </GridItem>
                   </GridContainer>
                 }
@@ -392,32 +396,33 @@ export function AlertContacts(props) {
             </GridItem>
           </GridContainer>
           <Popper
-              open={openMore}
-              anchorEl={anchorEl}
-              transition
-              disablePortal
-              placement="bottom-end"
-              className={classNames({
-                [classes.popperClose]: !anchorEl,
-                [classes.popperResponsive]: true,
-                [classes.popperNav]: true
-              })}
+            open={openMore}
+            anchorEl={anchorEl}
+            transition
+            disablePortal
+            placement="bottom-end"
+            className={classNames({
+              [classes.popperClose]: !anchorEl,
+              [classes.popperResponsive]: true,
+              [classes.popperNav]: true
+            })}
           >
-            {({ TransitionProps }) => (
-                <Grow
-                    {...TransitionProps}
-                    id="profile-menu-list"
-                    style={{ transformOrigin: "0 0 0" }}
-                >
-                  <Paper className={classes.dropdown}>
-                    <ClickAwayListener onClickAway={handleCloseMore}>
-                      <MenuList role="menu">
-                        <MenuItem className={classes.dropdownItem} onClick={() => setOpenUpload(true)} > Upload CSV </MenuItem>
-                        <MenuItem className={classes.dropdownItem} onClick={handleCloseMore} > Download CSV </MenuItem>
-                      </MenuList>
-                    </ClickAwayListener>
-                  </Paper>
-                </Grow>
+            {({TransitionProps}) => (
+              <Grow
+                {...TransitionProps}
+                id="profile-menu-list"
+                style={{transformOrigin: "0 0 0"}}
+              >
+                <Paper className={classes.dropdown}>
+                  <ClickAwayListener onClickAway={handleCloseMore}>
+                    <MenuList role="menu">
+                      <MenuItem className={classes.dropdownItem} onClick={() => setOpenUpload(true)}> Upload
+                        CSV </MenuItem>
+                      <MenuItem className={classes.dropdownItem} onClick={handleCloseMore}> Download CSV </MenuItem>
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
             )}
           </Popper>
         </GridItem>
@@ -426,7 +431,7 @@ export function AlertContacts(props) {
   );
 }
 
-const mapStateToProps = ({ settingLinkSharing }) => {
+const mapStateToProps = ({settingLinkSharing}) => {
   return {
     data: settingLinkSharing.alertContacts.data,
     page: settingLinkSharing.alertContacts.page,

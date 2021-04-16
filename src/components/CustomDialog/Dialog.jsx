@@ -58,11 +58,14 @@ const DialogTitle = withStyles((theme) => ({
 export default function CustomizedDialogs(props) {
   const classes = useStyles();
   const open = props.open || false;
+  const maxWidth = props.maxWidth || "sm";
+  const fullWidth = !props.fullWidth ? false: true;
 
   return (
     <div>
       <Dialog
-        fullWidth
+        fullWidth={fullWidth}
+        maxWidth={maxWidth}
         classes={{ paper: classes.paper, root: classes.root }}
         // onClose={handleClose}
         open={open}

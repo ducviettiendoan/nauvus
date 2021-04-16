@@ -15,6 +15,7 @@ import CustomizedProgressBars from "components/ProgressBar/ProgressBar";
 import {Col, Row} from "reactstrap";
 import AssignHOSSegment from "./AssignHOSSegment";
 import DiaLog from "components/CustomDialog/Dialog";
+import { TripDisplay } from "./trip/TripDisplay";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -68,15 +69,13 @@ const useStyles = makeStyles((theme) => ({
   textName: {
     fontWeight: 'bold',
     fontSize: '16px',
-    lineHeight: '24px',
     color: '#25345C',
     paddingLeft: "12px"
   },
   textSub: {
     fontSize: '16px',
-    lineHeight: '21px',
     color: "#25345C",
-    fontWeight: 400
+    fontWeight: 400,
   },
   chips: {
     fontWeight: 400,
@@ -240,8 +239,7 @@ export function Unassigned(props) {
         key: 'trip',
         onHeaderCell: {className: classes.onHeaderCellNext},
         render: trip =><div>
-            <div className={classes.textSub}>{trip.to}</div>
-            <div className={classes.textSub}>{trip.from}</div>
+            <TripDisplay from={trip.from} to={trip.to}/>
             </div> 
       },
       {
@@ -250,12 +248,6 @@ export function Unassigned(props) {
         onHeaderCell: {className: classes.onHeaderCellNext},
         render: cameraId => <div className={classes.textSub}>{cameraId}</div>
       },
-    {
-      title: 'Annotation',
-      key: 'annotation',
-      onHeaderCell: {className: classes.onHeaderCellNext},
-      render: annotation => <div className={classes.textSub}>{annotation}</div>
-    },
     {
         title: 'Actions',
         key: 'action',
@@ -386,6 +378,8 @@ export function Unassigned(props) {
         </GridItem>
       </GridContainer>
       <DiaLog
+        fullWidth={false}
+        maxWidth="md"
         renderTitle={<div className={classes.editHeader}>
           <h3 className={classes.dialogTitle}>Assign HOS Segment</h3>
           <p className={classes.dialogSubTitle}>Apr 1, 2021</p>

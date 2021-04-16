@@ -7,7 +7,8 @@ import Calendar from "components/Calendar/Calendar";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
 import LegendIcon from "components/Icons/LegendIcon";
-import CustomSelect from "components/CustomSelect/CustomSelect"
+import CustomSelect from "components/CustomSelect/CustomSelect";
+import Select from "components/CustomSelect/Select";
 import {getReportData, getDutyStatusData, getReportData2} from "reducers/compliance"
 import {connect} from 'react-redux';
 import Table from "components/Table/TableV1";
@@ -107,7 +108,7 @@ const styles = {
     height: "24px !important",
   },
   blackAvatarSelect: {
-    background: "#E29468 !important",
+    background: "#26252A !important",
     marginRight: 8,
     fontSize: 12,
     fontWeight: 700,
@@ -478,19 +479,109 @@ function DriverHOSReport(props) {
     })
   }
 
-  const distanceData = [
-    <div className={classes.alignItemsCenter}>
-      <Avatar className={classes.greenAvatarSelect}>D</Avatar>
-      <div className={classes.textSelect}>Driving</div>
-    </div>,
-    <div className={classes.alignItemsCenter}>
-      <Avatar className={classes.orangeAvatarSelect}>O</Avatar>
-      <div className={classes.textSelect}>On Duty</div>
-    </div>,
-    <div className={classes.alignItemsCenter}>
-      <Avatar className={classes.blackAvatarSelect}>S</Avatar>
-      <div className={classes.textSelect}>Sleep</div>
-    </div>
+  const remarkOptions = [
+    {
+      label: (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textSelect}>Break</div>
+        </div>
+      ),
+      value: "Value1",
+    },
+    {
+      label: (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textSelect}>Pre-Trip Inspection</div>
+        </div>
+      ),
+      value: "Value2",
+    },
+    {
+      label: (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textSelect}>Post-Trip Inspection</div>
+        </div>
+      ),
+      value: "Value3",
+    },
+    {
+      label: (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textSelect}>Waiting</div>
+        </div>
+      ),
+      value: "Value4",
+    },
+    {
+      label: (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textSelect}>Loading</div>
+        </div>
+      ),
+      value: "Value5",
+    },
+    {
+      label: (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textSelect}>Unloading</div>
+        </div>
+      ),
+      value: "Value6",
+    }
+  ];
+
+  const statusOptions = [
+    {
+      label: (
+        <div className={classes.alignItemsCenter}>
+          <Avatar className={classes.greenAvatarSelect}>D</Avatar>
+          <div className={classes.textSelect}>Driving</div>
+        </div>
+      ),
+      value: "Value1",
+    },
+    {
+      label: (
+        <div className={classes.alignItemsCenter}>
+          <Avatar className={classes.orangeAvatarSelect}>O</Avatar>
+          <div className={classes.textSelect}>On Duty</div>
+        </div>
+      ),
+      value: "Value2",
+    },
+    {
+      label: (
+        <div className={classes.alignItemsCenter}>
+          <Avatar className={classes.blackAvatarSelect}>S</Avatar>
+          <div className={classes.textSelect}>Sleep</div>
+        </div>
+      ),
+      value: "Value3",
+    }
+  ]
+
+  const listContent = [
+    {
+      value: "driving",
+      content: <div className={classes.alignItemsCenter}>
+        <Avatar className={classes.greenAvatarSelect}>D</Avatar>
+        <div className={classes.textSelect}>Driving</div>
+      </div>
+    },
+    {
+      value: "onDuty",
+      content: <div className={classes.alignItemsCenter}>
+        <Avatar className={classes.orangeAvatarSelect}>O</Avatar>
+        <div className={classes.textSelect}>On Duty</div>
+      </div>
+    },
+    {
+      value: "sleep",
+      content: <div className={classes.alignItemsCenter}>
+        <Avatar className={classes.blackAvatarSelect}>S</Avatar>
+        <div className={classes.textSelect}>Sleep</div>
+      </div>
+    },
   ]
 
   return (
@@ -590,7 +681,6 @@ function DriverHOSReport(props) {
         }}
         columns={reportColumns2}
         dataSource={props.reportData2}
-        // rowSelection
         onHeaderRow={{
           className: classes.onHeaderRow
         }}
@@ -608,16 +698,18 @@ function DriverHOSReport(props) {
         open={openDialog}
       >
         <img src={chartDialog} style={{width: 532}}/>
-        {/*<TimePickers />*/}
         <Row className={classes.alignItemsCenter}>
           <Col>
-            <CustomSelect
-              labelText="Status"
-              name="selectStatus"
-              listValues={distanceData}
-              placeholder={"Select status"}
-              selectValue={selection.selectStatus}
-              onChange={handleChange}
+            <Select
+              label="Status"
+              fullWidth={true}
+              defaultValue={null}
+              options={statusOptions}
+              placeholder="Start typing..."
+              SelectProps={{isClearable: false}}
+              onChange={(value) => {
+                console.log(value);
+              }}
             />
           </Col>
           <Col>
@@ -642,13 +734,16 @@ function DriverHOSReport(props) {
         </Row>
         <Row className={classes.alignItemsCenter}>
           <Col>
-            <CustomSelect
-              labelText="Remark"
-              name="distance"
-              listValues={distanceData}
-              placeholder={"Select distances"}
-              selectValue={"Start typing..."}
-              // onChange={handleChange}
+            <Select
+              label="Remark"
+              fullWidth={true}
+              defaultValue={null}
+              options={remarkOptions}
+              placeholder="Start typing..."
+              SelectProps={{isClearable: false}}
+              onChange={(value) => {
+                console.log(value);
+              }}
             />
           </Col>
         </Row>
