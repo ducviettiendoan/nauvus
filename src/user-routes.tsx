@@ -35,6 +35,8 @@ import DriverRecord from "views/pages/user/overview/drivers/DriverRecord";
 import Logs from "views/pages/user/overview/Logs";
 import Coaching from "views/pages/user/safety/Coaching";
 import DashCam from "views/pages/user/safety/DashCam";
+import DriverAssignment from "views/pages/user/safety/DriverAssignment";
+import UnassignedDetail from "views/pages/user/safety/driver-assignment/unassigned/UnassignedDetail"
 import Cameras from "views/pages/user/safety/Cameras";
 
 import VideoRetrieval from "views/pages/user/safety/VideoRetrieval";
@@ -139,13 +141,13 @@ const dashRoutes = [
         component: SafetyInboxCrash,
         layout: ROUTE_PATH.USER,
         isFixed: true,
-      }, 
+      },
       {
         path: "/safety/inbox",
         name: "Safety Inbox",
         component: Safety,
         layout: ROUTE_PATH.USER
-      }, 
+      },
       {
         path: '/safety/inbox/crash',
         name: "SafetyInboxCrash",
@@ -180,6 +182,19 @@ const dashRoutes = [
         layout: ROUTE_PATH.USER,
       },
 
+      {
+        path: "/safety/driver-assignment/:id",
+        name: "Driver Assignment Details",
+        component: UnassignedDetail,
+        layout: ROUTE_PATH.USER,
+        isFixed: true
+      },
+      {
+        path: "/safety/driver-assignment",
+        name: "Driver Assignment",
+        component: DriverAssignment,
+        layout: ROUTE_PATH.USER
+      },
     ]
   },
 
