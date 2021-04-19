@@ -27,12 +27,14 @@ import Reports from "views/pages/user/reports/Reports";
 import Safety from "views/pages/user/safety/Safety";
 import Settings from "views/pages/user/settings/Settings";
 import Assets from "views/pages/user/overview/Assets";
-import SafetyInboxCrash from "views/pages/user/safety/components/SafetyInboxCrash";
+import SafetyInboxCrash from "views/pages/user/safety/crash/Crash";
 import Proximity from "views/pages/user/overview/Proximity";
 import Drivers from "views/pages/user/overview/Drivers";
 import DriverDetail from "views/pages/user/overview/drivers/DriverDetail";
 import DriverRecord from "views/pages/user/overview/drivers/DriverRecord";
 import Logs from "views/pages/user/overview/Logs";
+import Coaching from "views/pages/user/safety/Coaching";
+import DashCam from "views/pages/user/safety/DashCam";
 
 // @material-ui/icons
 import OverviewIcon from "components/Icons/OverviewIcon";
@@ -130,19 +132,40 @@ const dashRoutes = [
     layout: ROUTE_PATH.USER,
     views: [
       {
+        path: "/safety/inbox/crash/:id",
+        name: "Crash",
+        component: SafetyInboxCrash,
+        layout: ROUTE_PATH.USER,
+        isFixed: true,
+      }, 
+      {
         path: "/safety/inbox",
         name: "Safety Inbox",
         component: Safety,
         layout: ROUTE_PATH.USER
-      },
-
+      }, 
       {
         path: '/safety/inbox/crash',
         name: "SafetyInboxCrash",
         component: SafetyInboxCrash,
         layout: ROUTE_PATH.USER,
         isFixed: true,
-      }
+      },
+
+      {
+        path: "/safety/coaching",
+        name: "Coaching",
+        component: Coaching,
+        layout: ROUTE_PATH.USER
+      },
+
+      {
+        path: "/safety/dash-cam",
+        name: "Dash Cam",
+        component: DashCam,
+        layout: ROUTE_PATH.USER
+      },
+
     ]
   },
 
