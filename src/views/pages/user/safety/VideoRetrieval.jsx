@@ -7,9 +7,7 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import {makeStyles} from '@material-ui/core/styles';
-import {cardTitle, roseColor,} from "assets/jss/material-dashboard-pro-react.js";
-import Starred from "./components/Starred";
-import {setShowCrash} from "reducers/safety";
+import {cardTitle, roseColor,} from "assets/jss/material-dashboard-pro-react.js"; 
 import Button from "components/CustomButtons/Button";
 import CustomDateRangePicker from "components/CustomDateRangePicker/CustomDateRangePicker";
 import Saved from "./video-retrieval/Saved";
@@ -187,8 +185,7 @@ const mapStateToProps = ({safety}) => {
   };
 };
 
-const mapDispatchToProps = {
-  setShowCrash
+const mapDispatchToProps = { 
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(VideoRetrieval);

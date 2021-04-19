@@ -22,9 +22,6 @@ import InboxList from "./components/InboxList";
 import Dismissed from "./components/Dismissed";
 import Starred from "./components/Starred";
 
-import { setShowCrash } from "reducers/safety";
-import Crash from './crash/Crash';
-
 
 const styles = {
   cardTitle,
@@ -200,8 +197,7 @@ const mapStateToProps = ({ safety }) => {
   };
 };
 
-const mapDispatchToProps = {
-  setShowCrash
+const mapDispatchToProps = { 
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Safety);

@@ -3,8 +3,7 @@ import axios from "axios";
 import { REQUEST, SUCCESS, FAILURE } from "../utils/action-type.util";
 
 export const ACTION_TYPES = {
-  GET_USER_ROLES: "safety/GET_USER_ROLES",
-  SET_SHOW_CRASH: "safety/SET_SHOW_CRASH",
+  SET_SHOW_BACK: "safety/SET_SHOW_BACK", 
   GET_SAFETY_COACHING_DRIVER_QUEUE: "safety/GET_SAFETY_COACHING_DRIVER_QUEUE",
   GET_SAFETY_DASH_CAM: "safety/GET_SAFETY_DASH_CAM",
   GET_UNASSIGNED_ASSIGNMENT: "safety/GET_UNASSIGNED_ASSIGNMENT",
@@ -19,14 +18,14 @@ const initialState = {
   errorMessage: null,
   loading: false,
   showCrash: true,
+  showBack: false,
 };
 
 export type SafetyState = Readonly<typeof initialState>;
 
 // Reducer
 export default (state: SafetyState = initialState, action): SafetyState => {
-  switch (action.type) {
-    case REQUEST(ACTION_TYPES.GET_USER_ROLES):
+  switch (action.type) { 
     case REQUEST(ACTION_TYPES.GET_SAFETY_COACHING_DRIVER_QUEUE):
     case REQUEST(ACTION_TYPES.GET_SAFETY_DASH_CAM):
     case REQUEST(ACTION_TYPES.GET_UNASSIGNED_ASSIGNMENT):
@@ -34,8 +33,7 @@ export default (state: SafetyState = initialState, action): SafetyState => {
       return {
         ...state,
         loading: true,
-      };
-    case FAILURE(ACTION_TYPES.GET_USER_ROLES):
+      }; 
     case FAILURE(ACTION_TYPES.GET_SAFETY_COACHING_DRIVER_QUEUE):
     case FAILURE(ACTION_TYPES.GET_SAFETY_DASH_CAM):
     case FAILURE(ACTION_TYPES.GET_UNASSIGNED_ASSIGNMENT):
@@ -45,10 +43,10 @@ export default (state: SafetyState = initialState, action): SafetyState => {
         loading: false,
         errorMessage: action.payload,
       };
-    case ACTION_TYPES.SET_SHOW_CRASH:
+    case ACTION_TYPES.SET_SHOW_BACK:
       return {
         ...state,
-        showCrash: action.payload,
+        showBack: action.payload,
       };
 
     case SUCCESS(ACTION_TYPES.GET_SAFETY_COACHING_DRIVER_QUEUE): {
@@ -84,16 +82,9 @@ export default (state: SafetyState = initialState, action): SafetyState => {
   }
 };
 
-export const getUserRoles = (request) => async (dispatch) => {
+export const setShowButtonBack = (action) => async (dispatch) => {
   dispatch({
-    type: ACTION_TYPES.GET_USER_ROLES,
-    payload: axios.post(`/api/setting/org/user-roles/search`, request),
-  });
-};
-
-export const setShowCrash = (action) => async (dispatch) => {
-  dispatch({
-    type: ACTION_TYPES.SET_SHOW_CRASH,
+    type: ACTION_TYPES.SET_SHOW_BACK,
     payload: action,
   });
 };
