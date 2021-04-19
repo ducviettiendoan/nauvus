@@ -2,30 +2,23 @@ import React, {useEffect} from 'react';
 import clsx from "clsx";
 import {Drawer} from "@material-ui/core";
 import {setOpenDrawer} from "reducers/overview";
-import {connect} from "react-redux";
-import {Trips} from "./Trips";
-import {makeStyles} from "@material-ui/core/styles";
-import {TripTimelineSidebar} from "./TripTimelineSideBar";
+import {connect} from "react-redux"; 
+import {makeStyles} from "@material-ui/core/styles"; 
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
 import timelineImg from "assets/img/triptimeline.png";
 import IconButton from "@material-ui/core/IconButton";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import Divider from "@material-ui/core/Divider";
-import trip from "../../../../../../../assets/img/TripHistoryContent.png"
-import {Col, Row} from "reactstrap";
-import DriverIcon from "../../../../../../../components/Icons/DriverIcon";
-import TripDriverIcon from "../../../../../../../components/Icons/TripDriverIcon";
-import TruckIcon from "../../../../../../../components/Icons/TruckIcon";
-import tripmap from "../../../../../../../assets/img/tripmapdemo.png"
-import CustomTimeline from "../../../../../../../components/CustomTimeline/CustomTimeline";
-import Button from "../../../../../../../components/CustomButtons/Button";
-import NavigationIcon from "../../../../../../../components/Icons/NavigationIcon";
-import OrganizationUpload from "../../../../../../../components/CustomUpload/OrganizationUpload";
-import DiaLog from "../../../../../../../components/CustomDialog/Dialog";
+import Divider from "@material-ui/core/Divider"; 
+import {Col, Row} from "reactstrap"; 
+import TripDriverIcon from "components/Icons/TripDriverIcon";
+import TruckIcon from "components/Icons/TruckIcon";
+import tripmap from "assets/img/tripmapdemo.png"
+import CustomTimeline from "components/CustomTimeline/CustomTimeline";
+import Button from "components/CustomButtons/Button";
+import DiaLog from "components/CustomDialog/Dialog";
 import TripHistoryDialog from "./TripHistoryDialog";
-import ArrowBackIcon from "../../../../../../../components/Icons/ArrowBackIcon";
+import ArrowBackIcon from "components/Icons/ArrowBackIcon";
 
 const drawerWidth = 525;
 const useStyles = makeStyles((theme) => ({
@@ -313,7 +306,6 @@ export function TripTimeline(props) {
         </Row>
       </Drawer>
       <DiaLog
-        // fullWidth={false}
         maxWidth={"md"}
         renderTitle={<div>
           <h3 className={classes.dialogTitle}>Request Video</h3>

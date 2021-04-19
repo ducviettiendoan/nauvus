@@ -14,7 +14,7 @@ import Menu from "@material-ui/icons/Menu";
 import MoreVert from "@material-ui/icons/MoreVert";
 // import ViewList from "@material-ui/icons/ViewList";
 import ViewList from '@material-ui/icons/Dehaze';
-import MenuIcon from "components/Icons/MenuIcon";
+import ArrowLeftIcon from "components/Icons/ArrowLeftIcon";
 
 // core components
 import AdminNavbarLinks from "./AdminNavbarLinks";
@@ -41,9 +41,19 @@ export default function AdminNavbar(props) {
       <Toolbar className={classes.container}>
         <Hidden smDown implementation="css">
           <div className={sidebarMinimize}>
+            {props.showBack && (
+              <Button
+                className="btn-round-white 2 w-84 h-41 mr-3"
+                onClick={props.onBack}
+                startIcon={<ArrowLeftIcon />}
+              >
+                Back
+              </Button>
+
+            )}
             {props.miniActive ? (
               <Button
-                className={ "btn-36" }
+                className={"btn-36"}
                 justIcon
                 round
                 color="white"
@@ -53,7 +63,7 @@ export default function AdminNavbar(props) {
               </Button>
             ) : (
               <Button
-                className={ "btn-36" }
+                className={"btn-36"}
                 justIcon
                 round
                 color="white"
@@ -91,6 +101,7 @@ export default function AdminNavbar(props) {
 
 AdminNavbar.propTypes = {
   color: PropTypes.oneOf(["primary", "info", "success", "warning", "danger"]),
+  showBack: PropTypes.bool,
   rtlActive: PropTypes.bool,
   brandText: PropTypes.string,
   miniActive: PropTypes.bool,

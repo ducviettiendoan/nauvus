@@ -218,7 +218,7 @@ const CustomSelect = (props) => {
   const options = props.options || [];
   const placeholder = props.placeholder || null;
   const defaultValue = props.defaultValue || null;
-
+  const variant = props.variant || "standard";
   return (
     <FormControl className={classes.selectContainer} className={classes[customStyle]} fullWidth>
       <InputLabel
@@ -236,8 +236,10 @@ const CustomSelect = (props) => {
         onChange={onChange}
         MenuProps={menuProps}
         defaultValue={defaultValue}
+        variant={variant}
         IconComponent={iconComponent}
         classes={{ root: classes.select, underline: underlineClasses }}
+
       >
         {placeholder && <option disabled value={null} className={classes.optionEmpty} >{placeholder}</option>}
         {options.map((v, i) => <MenuItem key={i} value={v.value}>{v.label}</MenuItem>)}
