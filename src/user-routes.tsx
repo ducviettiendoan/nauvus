@@ -35,6 +35,7 @@ import DriverRecord from "views/pages/user/overview/drivers/DriverRecord";
 import Logs from "views/pages/user/overview/Logs";
 import Coaching from "views/pages/user/safety/Coaching";
 import DashCam from "views/pages/user/safety/DashCam";
+import Cameras from "views/pages/user/safety/Cameras";
 
 // @material-ui/icons
 import OverviewIcon from "components/Icons/OverviewIcon";
@@ -163,6 +164,13 @@ const dashRoutes = [
         path: "/safety/dash-cam",
         name: "Dash Cam",
         component: DashCam,
+        layout: ROUTE_PATH.USER
+      },
+
+      {
+        path: "/safety/cameras",
+        name: "Cameras",
+        component: Cameras,
         layout: ROUTE_PATH.USER
       },
 
