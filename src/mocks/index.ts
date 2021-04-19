@@ -9,4 +9,5 @@ import "./fuel-energy";
 import "./fuel-purchase";
 import "./driver-efficiency";
 import "./overview";
-import "./compliance"
+import "./compliance";
+import "./safety";

@@ -48,9 +48,6 @@ export const ACTION_TYPES = {
   GET_HOS_TRANSFER: "compliance/GET_HOS_AUDIT_TRANSFER",
   GET_DUTY_STATUS_SUMMARY: "compliance/GET_DUTY_STATUS_SUMMARY",
 
-  //Safety Coaching:
-  GET_SAFETY_COACHING_DRIVER_QUEUE: "compliance/GET_SAFETY_COACHING_DRIVER_QUEUE",
-  GET_SAFETY_DASH_CAM: "compliance/GET_SAFETY_DASH_CAM",
 };
 
 {
@@ -99,10 +96,6 @@ export const initialState = {
   dutyStatusSummary: [],
   hosAuditTransfer: [],
 
-  //Safety Coaching:
-  coachingDriverQueue: [],
-  dashCam: [],
-
   errorMessage: null,
   loading: false,
 };
@@ -134,11 +127,6 @@ export default (
     case REQUEST(ACTION_TYPES.GET_DUTY_STATUS_SUMMARY):
     case REQUEST(ACTION_TYPES.GET_HOS_TRANSFER):
 
-
-    //Safety Coaching:
-    case REQUEST(ACTION_TYPES.GET_SAFETY_COACHING_DRIVER_QUEUE):
-    case REQUEST(ACTION_TYPES.GET_SAFETY_DASH_CAM):
-
       return {
         ...state,
         loading: true,
@@ -161,9 +149,6 @@ export default (
     case FAILURE(ACTION_TYPES.GET_HOS_AUDIT_REPORT):
     case FAILURE(ACTION_TYPES.GET_DUTY_STATUS_SUMMARY):
     case FAILURE(ACTION_TYPES.GET_HOS_TRANSFER):
-    //Safety Coaching:
-    case FAILURE(ACTION_TYPES.GET_SAFETY_COACHING_DRIVER_QUEUE):
-    case FAILURE(ACTION_TYPES.GET_SAFETY_DASH_CAM):
       return {
         ...state,
         loading: false,
@@ -304,21 +289,6 @@ export default (
       return {
         ...state,
         dutyStatusSummary: action.payload.data
-      };
-    }
-
-    //Safety Coaching:
-    case SUCCESS(ACTION_TYPES.GET_SAFETY_COACHING_DRIVER_QUEUE): {
-      return {
-        ...state,
-        coachingDriverQueue: action.payload.data
-      };
-    }
-
-    case SUCCESS(ACTION_TYPES.GET_SAFETY_DASH_CAM): {
-      return {
-        ...state,
-        dashCam: action.payload.data
       };
     }
 
@@ -501,16 +471,16 @@ export const getHosAuditTransfer = (request) => async (dispatch) => {
   });
 };
 
-export const getCoachingDriverQueueData = (request) => async (dispatch) => {
-  dispatch({
-    type: ACTION_TYPES.GET_SAFETY_COACHING_DRIVER_QUEUE,
-    payload: axios.post("api/safety/coaching-driver-queue", request),
-  });
-};
-
-export const getDashCamData = (request) => async (dispatch) => {
-  dispatch({
-    type: ACTION_TYPES.GET_SAFETY_DASH_CAM,
-    payload: axios.post("api/safety/dash-cam", request),
-  });
-};
+// export const getCoachingDriverQueueData = (request) => async (dispatch) => {
+//   dispatch({
+//     type: ACTION_TYPES.GET_SAFETY_COACHING_DRIVER_QUEUE,
+//     payload: axios.post("api/safety/coaching-driver-queue", request),
+//   });
+// };
+//
+// export const getDashCamData = (request) => async (dispatch) => {
+//   dispatch({
+//     type: ACTION_TYPES.GET_SAFETY_DASH_CAM,
+//     payload: axios.post("api/safety/dash-cam", request),
+//   });
+// };
