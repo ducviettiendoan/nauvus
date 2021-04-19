@@ -4,11 +4,10 @@ import {makeStyles} from "@material-ui/core/styles";
 import Button from "components/CustomButtons/Button";
 import Grid from '@material-ui/core/Grid';
 import {connect} from 'react-redux';
-import {getDashCamData} from "reducers/compliance";
+import {getDashCamData} from "reducers/safety";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
 import Calendar from "../../../../components/Calendar/Calendar";
-import classNames from "classnames";
 import LiveIconWhite from "../../../../components/Icons/LiveIconWhite";
 import Table from "components/Table/TableV1";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
@@ -244,12 +243,13 @@ export function DashCam(props) {
   );
 }
 
-const mapStateToProps = ({compliance}) => {
+const mapStateToProps = ({safety}) => {
+  console.log(safety.dashCam)
   return {
-    data: compliance.dashCam.data,
-    page: compliance.dashCam.page,
-    total: compliance.dashCam.total,
-    pageSize: compliance.dashCam.pageSize,
+    data: safety.dashCam.data,
+    page: safety.dashCam.page,
+    total: safety.dashCam.total,
+    pageSize: safety.dashCam.pageSize,
   };
 };
 
