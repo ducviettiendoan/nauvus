@@ -1,22 +1,16 @@
 import React, {useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import GridContainer from "components/Grid/GridContainer";
-import GridItem from "components/Grid/GridItem";
-import InputLabel from "@material-ui/core/InputLabel";
-import {Field, Form} from "react-final-form";
+import {Form} from "react-final-form";
 import Select from "components/CustomSelect/Select";
-import MenuItem from "@material-ui/core/MenuItem";
 import Button from "components/CustomButtons/Button";
-import CustomSelect from "../../../../../../../components/CustomSelect/Select";
 import {Col, Row} from "reactstrap";
-import Avatar from "@material-ui/core/Avatar";
-import CustomInput from "../../../../../../../components/CustomInput/CustomInput";
-import Card from "../../../../../../../components/Card/Card";
-import CardBody from "../../../../../../../components/Card/CardBody";
+import CustomInput from "components/CustomInput/CustomInput";
+import Card from "components/Card/Card";
+import CardBody from "components/Card/CardBody";
 import availablefootage from "assets/img/availablefootage.png"
-import demomap from "assets/img/demomap.png"
-import CustomTimeline from "../../../../../../../components/CustomTimeline/CustomTimeline";
-import NavigationIcon from "../../../../../../../components/Icons/NavigationIcon";
+import CustomTimeline from "components/CustomTimeline/CustomTimeline";
+import {GoogleMap, withGoogleMap, withScriptjs} from "react-google-maps";
+import {GOOGLE_MAP_API_KEY} from "config/constants";
 
 const styles = {
   formRow: {
@@ -111,6 +105,22 @@ const styles = {
 }
 const useStyles = makeStyles(styles);
 
+const RegularMap = withScriptjs(
+  withGoogleMap((props) => {
+    return (
+      <GoogleMap
+        defaultZoom={12}
+        defaultCenter={props.center}
+        defaultOptions={{
+          scrollwheel: false,
+          mapTypeControl: false,
+          streetViewControl: false
+        }}
+      />
+    )
+  })
+);
+
 export default function TripHistoryDialog(props) {
   const classes = useStyles()
 
@@ -127,10 +137,6 @@ export default function TripHistoryDialog(props) {
       errors.name = 'Name must not be empty!';
     return errors;
   };
-
-  const handleChange = (event) => {
-    setSelectValue({...selectValue, [event.target.name]: event.target.value})
-  }
 
   const statusOptions = [
     {
@@ -205,7 +211,6 @@ export default function TripHistoryDialog(props) {
         <div className={classes.time}> 11:38 AM EDT</div>
       </div>,
       color: "green",
-      root: classes.timelineContent
     },
     {
       title: "A",
@@ -214,9 +219,24 @@ export default function TripHistoryDialog(props) {
         <div className={classes.time}>Mar 22, 11:37 AM EDT</div>
       </div>,
       color: "red",
-      root: classes.timelineContent
     }
   ]
+
+  const renderMap = () => {
+    return (
+      <div style={{position: 'relative'}}>
+        <RegularMap
+          googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAP_API_KEY}`}
+          loadingElement={<div style={{height: 280}}/>}
+          containerElement={<div/>}
+          mapElement={<div style={{height: 280, borderRadius: 12}}/>}
+          isMarkerShown
+          data={props.vehicles}
+          center={{lat: 40.748817, lng: -73.985428}}
+        />
+      </div>
+    )
+  }
 
   return (
     <div>
@@ -302,7 +322,7 @@ export default function TripHistoryDialog(props) {
               </Row>
               <Row>
                 <Col>
-                  <img src={demomap} className={classes.mapDemo}/>
+                  {renderMap()}
                 </Col>
                 <Col>
                   <div className={classes.tripContainer}>

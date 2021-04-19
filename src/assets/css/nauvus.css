@@ -319,6 +319,11 @@
   height: calc(100vh - 68px);
 }
 
+.containerElementMapMini {
+  height: auto;
+  padding: 16px;
+}
+
 /* google map */
 .gm-style-iw > button {
   display: none !important;
