@@ -7,7 +7,7 @@ import Table from "components/Table/TableV1";
 import {connect} from 'react-redux';
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
-import {getCoachingDriverQueueData} from "reducers/compliance";
+import {getCoachingDriverQueueData} from "reducers/safety";
 
 const useStyles = makeStyles((theme) => ({
   headLeft: {
@@ -217,12 +217,12 @@ export function Effectiveness(props) {
   );
 }
 
-const mapStateToProps = ({compliance}) => {
+const mapStateToProps = ({safety}) => {
   return {
-    data: compliance.coachingDriverQueue.data,
-    page: compliance.coachingDriverQueue.page,
-    total: compliance.coachingDriverQueue.total,
-    pageSize: compliance.coachingDriverQueue.pageSize
+    data: safety.coachingDriverQueue.data,
+    page: safety.coachingDriverQueue.page,
+    total: safety.coachingDriverQueue.total,
+    pageSize: safety.coachingDriverQueue.pageSize
   };
 };
 
