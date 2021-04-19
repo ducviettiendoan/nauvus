@@ -13,7 +13,7 @@ import settingDeveloper, { SettingDeveloperState } from "./setting-developer";
 import fuelEnergy, { FuelEnergyState } from './fuel-energy';
 import compliance, { ComplianceState } from "./compliance";
 import driverRecord, { DriverRecordState } from "./setting-driver-record"
-import driverHOSReport, { DriverHOSReportState } from "./driver-hos-report"
+import safety, { SafetyState } from "./safety";
 
 export interface IRootState {
   readonly authentication: AuthenticationState;
@@ -28,7 +28,8 @@ export interface IRootState {
   readonly settingDeveloper: SettingDeveloperState;
   readonly fuelEnergy: FuelEnergyState;
   readonly compliance: ComplianceState;
-  readonly driverRecord: DriverRecordState
+  readonly driverRecord: DriverRecordState;
+  readonly safety: SafetyState;
 }
 
 const rootReducer = combineReducers<IRootState>({
@@ -44,7 +45,8 @@ const rootReducer = combineReducers<IRootState>({
   settingDeveloper,
   fuelEnergy,
   compliance,
-  driverRecord
+  driverRecord,
+  safety
 });
 
 export default rootReducer;

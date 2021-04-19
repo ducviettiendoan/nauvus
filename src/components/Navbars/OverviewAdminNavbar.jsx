@@ -81,14 +81,15 @@ export default function OverviewAdminNavbar(props) {
           </div>
         </Hidden>
         {/* vehicle details navbar */}
-        <Hidden smDown>
-          <div  style={{display: matches ? "block" : "none"}}>
+        
         {window.location.pathname.indexOf("/vehicle/123456") === -1 && <div className={classes.flex} >
           {/* Here we create navbar brand, based on route name */}
           <Button href="#" className={classes.title} color="transparent">
             {brandText}
           </Button>
         </div>}
+        <Hidden smDown>
+          <div  style={{display: matches ? "block" : "none"}}>
         {window.location.pathname.indexOf("/vehicle/123456") !== -1 &&
           <div style={{ display: "flex", flexDirection: "row" }}>
             <GridItem>

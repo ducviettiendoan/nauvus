@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-// @material-ui/core components
+// @material-ui/core SafetyInbox
 import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
-// core components
+// core SafetyInbox
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 import Button from "components/CustomButtons/Button";
 import {Col, Row} from 'reactstrap';

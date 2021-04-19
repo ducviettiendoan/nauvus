@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
-// @material-ui/core components
+// @material-ui/core SafetyInbox
 import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
-// core components
+// core SafetyInbox
 import Divider from '@material-ui/core/Divider';
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
