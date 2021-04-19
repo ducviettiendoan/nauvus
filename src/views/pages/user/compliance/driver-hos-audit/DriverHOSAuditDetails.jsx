@@ -1,5 +1,5 @@
 import React from "react";
-// @material-ui/core components
+// @material-ui/core SafetyInbox
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "components/CustomButtons/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";

@@ -59,7 +59,7 @@ export function Dashboard(props) {
   const mainPanel = React.createRef();
   // effect instead of componentDidMount, componentDidUpdate and componentWillUnmount
   // React.useEffect(() => {
-    
+
   // });
 
   React.useEffect(() => {
@@ -185,7 +185,7 @@ export function Dashboard(props) {
               <div className={classes.container}>
                 <Switch>
                   {getRoutes(routes)}
-                  <Redirect from={ ROUTE_PATH.OVERVIEW } to={ ROUTE_PATH.OVERVIEW + "/overview" } />
+                  <Redirect from={ROUTE_PATH.OVERVIEW} to={ROUTE_PATH.OVERVIEW + "/overview"} />
                 </Switch>
               </div>
             </div>
@@ -193,7 +193,7 @@ export function Dashboard(props) {
             <div className={classes.map}>
               <Switch>
                 {getRoutes(routes)}
-                <Redirect from={ ROUTE_PATH.OVERVIEW } to={ ROUTE_PATH.OVERVIEW + "/overview" } />
+                <Redirect from={ROUTE_PATH.OVERVIEW} to={ROUTE_PATH.OVERVIEW + "/overview"} />
               </Switch>
             </div>
           )}
@@ -212,7 +212,7 @@ export function Dashboard(props) {
   return (
     <>
       <div className={classes.wrapper}>
-        { fetchSession && props.isAuthenticated && 
+        {fetchSession && props.isAuthenticated &&
           <Sidebar
             routes={routes}
             logoText={"Nauvus"}
@@ -224,27 +224,27 @@ export function Dashboard(props) {
             bgColor={bgColor}
             miniActive={miniActive}
             {...rest}
-          /> 
+          />
         }
         <div className={mainPanelClasses} ref={mainPanel}>
-          { fetchSession ?
+          {fetchSession ?
             <>
-              { props.isAuthenticated ?
+              {props.isAuthenticated ?
                 <>
-                  { props.extraSidebar ? 
+                  {props.extraSidebar ?
                     <>
                       <div id="main">
                         <div className="extraSidebar">div1</div>
-                        <div className="extraContainer">{ renderDataContent() }</div>
+                        <div className="extraContainer">{renderDataContent()}</div>
                       </div>
                     </> :
                     <>
-                      { renderDataContent() }
+                      {renderDataContent()}
                     </>
                   }
                 </> :
                 <>
-                  { redirectLogin() }
+                  {redirectLogin()}
                 </>
               }
             </> :
@@ -257,13 +257,15 @@ export function Dashboard(props) {
     </>
   );
 }
-
-export default connect(
-  ({ authentication }: IRootState) => ({
+const mapStateToProps = ({ authentication }) => {
+  return {
     isAuthenticated: authentication.isAuthenticated,
-    user: authentication.user,
-  }),
-  {
-    getUserInfo
-  }
-)(Dashboard);
+    user: authentication.user
+  };
+};
+
+const mapDispatchToProps = {
+  getUserInfo
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

@@ -2,6 +2,7 @@ import React from "react";
 // @material-ui/core components
 // @material-ui/icons
 // core components
+import { connect } from "react-redux";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
@@ -82,7 +83,7 @@ const styles = {
     marginTop: 15
   },
   topHeaderButton: {
-    
+
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "center",
@@ -98,7 +99,7 @@ const styles = {
     fontWeight: 700,
     paddingRight: "0px !important",
     paddingLeft: "23px !important",
-    
+
   },
   chipSelected: {
     display: "flex",
@@ -132,39 +133,29 @@ const styles = {
       marginRight: 8
     }
   },
-  chipRow:{
+  chipRow: {
     marginLeft: "8px",
   },
   cardMargin: {
     margin: "16px !important",
   },
-  subTitleposition:{
+  subTitleposition: {
     display: "flex",
     justifyContent: "flex-end",
     padding: "0px 30px 0px 0px !important",
-    
+
   }
 
 };
 
 const useStyles = makeStyles(styles);
 
-function a11yProps(index) {
-  return {
-    id: `scrollable-force-tab-${index}`,
-    'aria-controls': `scrollable-force-tabpanel-${index}`,
-  };
-};
-
-
-
-export default function Safety(){
+function Safety(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   const handleChangeTab = (newValue) => {
     setValue(newValue);
-    
   };
 
   return (
@@ -172,31 +163,41 @@ export default function Safety(){
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
-            {/* 1st Bar */}
             <GridItem xs={12} sm={12} md={12}>
-            <GridContainer className={classes.topHeader}>
-                  <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                    <RoundedTabs tabs={["Inbox List", "Resolved List", "Dismissed", "Starred"]} tabValue={handleChangeTab}/>
-                  </GridItem>
-                  <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
-                    <FormControl variant="outlined">
-                      <Calendar />
-                    </FormControl>
-                    <FormControl variant="outlined" className="moreIcon">
-                      <IconButton style={{width: "42px", height: "42px"}}>
-                        <MoreHorizIcon fontSize="small" style={{color: "#25345C"}} />
-                      </IconButton>
-                    </FormControl>
-                  </GridItem>
-                </GridContainer>
-              </GridItem> 
+              <GridContainer className={classes.topHeader}>
+                <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
+                  <RoundedTabs tabs={["Inbox List", "Resolved List", "Dismissed", "Starred"]} tabValue={handleChangeTab} />
+                </GridItem>
+                <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
+                  <FormControl variant="outlined">
+                    <Calendar />
+                  </FormControl>
+                  <FormControl variant="outlined" className="moreIcon">
+                    <IconButton style={{ width: "42px", height: "42px" }}>
+                      <MoreHorizIcon fontSize="small" style={{ color: "#25345C" }} />
+                    </IconButton>
+                  </FormControl>
+                </GridItem>
+              </GridContainer>
+            </GridItem>
           </GridContainer>
-          { value === 0 && <InboxList/>}
-          { value === 1 && <ResolvedList/>}
-          { value === 2 && <Dismissed/>}
-          { value === 3 && <Starred/>}
+          {value === 0 && <InboxList />}
+          {value === 1 && <ResolvedList />}
+          {value === 2 && <Dismissed />}
+          {value === 3 && <Starred />}
         </GridItem>
       </GridContainer>
     </div>
   );
 }
+
+const mapStateToProps = ({ safety }) => {
+  return {
+    showCrash: safety.showCrash
+  };
+};
+
+const mapDispatchToProps = { 
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Safety);

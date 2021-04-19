@@ -1,5 +1,6 @@
 // tutorial custom 
 // https://github.com/iulian-radu-at/react-select-material-ui/blob/master/storybook/stories.tsx
+// https://dccs-it-business-solutions.github.io/react-searchable-select-mui/?path=/story/searchable-select--examples
 
 
 
@@ -11,6 +12,7 @@ import ExpandMoreIcon from 'components/Icons/ExpandMoreIcon';
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import classNames from "classnames";
+import SearchBox from "components/SearchBox/SettingSearchBox";
 import {
   dangerColor,
   defaultFont,
@@ -18,16 +20,13 @@ import {
   primaryColor,
   successColor, whiteColor
 } from "assets/jss/material-dashboard-pro-react";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 
 const styles = {
-  selectContainer: {
-    width: "100%",
-    borderBottom: "1px solid #ECEEF0",
-    display: "flex",
-    alignItems: "center",
-    justifyContents: "center",
-  },
   select: {
+    borderRadius: "26px",
+  },
+  root: {
     color: "#B4B4B4",
     fontWeight: 500,
     fontSize: "14px",
@@ -35,11 +34,11 @@ const styles = {
     borderWidth: 2,
     "&:focus": {
       borderRadius: 12,
-      backgroundColor: 'white',
+      backgroundColor: 'unset',
       borderColor: "#B4B4B4"
     },
-    marginTop: "20px",
-    minWidth: "180px"
+    marginTop: "0",
+    minWidth: 100,
   },
   icon: {
     color: "#25345C",
@@ -163,6 +162,21 @@ const styles = {
     color: "#B4B4B4",
     fontWeight: 500,
     display: "none"
+  },
+  outlined: {
+    margin: 0,
+    padding: "12px 24px",
+    borderRadius: 26,
+    background: "#fff",
+    color: "#25345C",
+    textAlign: "center",
+    "&:focus": {
+      borderRadius: 26,
+      backgroundColor: '#fff',
+    },
+  },
+  searchBox: {
+    padding: "8px 16px 0"
   }
 }
 
@@ -174,7 +188,7 @@ const CustomSelect = (props) => {
 
   const iconComponent = (props) => {
     return (
-      <ExpandMoreIcon className={props.className + " " + classes.icon} />
+      <ExpandMoreIcon className={props.className} />
     )
   };
 
@@ -212,37 +226,55 @@ const CustomSelect = (props) => {
     if (props.onChange) props.onChange(e.target.value)
   }
 
-  const [value, setValue] = useState(props.value || null)
+  const [value, setValue] = useState(props.value || props.defaultValue)
 
   const label = props.label || null;
   const options = props.options || [];
   const placeholder = props.placeholder || null;
   const defaultValue = props.defaultValue || null;
-
+  const variant = props.variant || "standard";
+  const fullWidth = props.fullWidth || false;
+  const autoComplete = props.autoComplete || false;
   return (
-    <FormControl className={classes.selectContainer} className={classes[customStyle]} fullWidth>
-      <InputLabel
-        {...labelProps}
-        htmlFor={id}
-        className={classes.labelRoot + " " + labelClasses}
-      >
-        {label}
-      </InputLabel>
-      <Select
-        {...selectProps}
-        value={value}
-        displayEmpty
-        className="fs-13"
-        onChange={onChange}
-        MenuProps={menuProps}
-        defaultValue={defaultValue}
-        IconComponent={iconComponent}
-        classes={{ root: classes.select, underline: underlineClasses }}
-      >
-        {placeholder && <option disabled value={null} className={classes.optionEmpty} >{placeholder}</option>}
-        {options.map((v, i) => <MenuItem key={i} value={v.value}>{v.label}</MenuItem>)}
-      </Select>
-    </FormControl>
+    <div className={props.className}>
+      <FormControl className={classes.selectContainer} fullWidth={fullWidth}>
+        <InputLabel
+          {...labelProps}
+          htmlFor={id}
+          className={classes.labelRoot + " " + labelClasses}
+        >
+          {label}
+        </InputLabel>
+        <Select
+          {...selectProps}
+          value={value}
+          displayEmpty
+          defaultValue={defaultValue}
+          className="fs-13"
+          onChange={onChange}
+          MenuProps={menuProps}
+          variant={variant}
+          IconComponent={iconComponent}
+          className={classes.select}
+          classes={{
+            root: classes.root,
+            underline: underlineClasses,
+            outlined: classes.outlined,
+            notchedOutline: classes.notchedOutline
+          }}
+        >
+          {placeholder && <option disabled value={null} className={classes.optionEmpty} >{placeholder}</option>}
+          {autoComplete && (
+            <ClickAwayListener onClickAway={() => null}>
+              <div className={classes.searchBox}>
+                <SearchBox placeholder="Search assigned coach" />
+              </div>
+            </ClickAwayListener>
+          )}
+          {options.map((v, i) => <MenuItem key={i} value={v.value}>{v.label}</MenuItem>)}
+        </Select>
+      </FormControl>
+    </div>
   );
 };
 

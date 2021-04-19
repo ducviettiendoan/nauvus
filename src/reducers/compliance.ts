@@ -96,7 +96,6 @@ export const initialState = {
   dutyStatusSummary: [],
   hosAuditTransfer: [],
 
-
   errorMessage: null,
   loading: false,
 };
@@ -127,6 +126,7 @@ export default (
     case REQUEST(ACTION_TYPES.GET_HOS_AUDIT_REPORT):
     case REQUEST(ACTION_TYPES.GET_DUTY_STATUS_SUMMARY):
     case REQUEST(ACTION_TYPES.GET_HOS_TRANSFER):
+
       return {
         ...state,
         loading: true,
@@ -470,3 +470,17 @@ export const getHosAuditTransfer = (request) => async (dispatch) => {
     payload: axios.post("api/compliance/HOS-audit-transfer", request),
   });
 };
+
+// export const getCoachingDriverQueueData = (request) => async (dispatch) => {
+//   dispatch({
+//     type: ACTION_TYPES.GET_SAFETY_COACHING_DRIVER_QUEUE,
+//     payload: axios.post("api/safety/coaching-driver-queue", request),
+//   });
+// };
+//
+// export const getDashCamData = (request) => async (dispatch) => {
+//   dispatch({
+//     type: ACTION_TYPES.GET_SAFETY_DASH_CAM,
+//     payload: axios.post("api/safety/dash-cam", request),
+//   });
+// };
