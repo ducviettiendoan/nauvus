@@ -35,6 +35,8 @@ import DriverRecord from "views/pages/user/overview/drivers/DriverRecord";
 import Logs from "views/pages/user/overview/Logs";
 import Coaching from "views/pages/user/safety/Coaching";
 import DashCam from "views/pages/user/safety/DashCam";
+import Cameras from "views/pages/user/safety/Cameras";
+
 import VideoRetrieval from "views/pages/user/safety/VideoRetrieval";
 // @material-ui/icons
 import OverviewIcon from "components/Icons/OverviewIcon";
@@ -165,12 +167,17 @@ const dashRoutes = [
         component: DashCam,
         layout: ROUTE_PATH.USER
       },
-
+      {
+        path: "/safety/cameras",
+        name: "Cameras",
+        component: Cameras,
+        layout: ROUTE_PATH.USER
+      },
       {
         path: "/safety/video-retrieval",
         name: "Video Retrieval",
         component: VideoRetrieval,
-        layout: ROUTE_PATH.USER
+        layout: ROUTE_PATH.USER,
       },
 
     ]
