@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react"
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Button from "components/CustomButtons/Button.js";
-import Card from "components/Card/Card.js";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import Calendar from "components/Calendar/Calendar";
 // utils
@@ -26,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
   topHeaderButton: {
     display: "flex",
-    textAlign: "right",
+    justifyContent: "flex-end"
   },
 }))
 
@@ -45,23 +44,21 @@ function DriverAssignment(props) {
           <GridItem xs={12} sm={12} md={12}>
             <GridContainer className={classes.topHeader}>
               <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                <RoundedTabs tabs={["By Asset", "By Location", "By Recurring Route"]} tabValue={handleChangeTab} />
+                <RoundedTabs tabs={["Unassigned", "Assigned", "Training Images"]} tabValue={handleChangeTab} />
               </GridItem>
               <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                 <Button
                   round
-                  className="btn-round-active mr-4"
+                  className="btn-round-active mr-2"
                 >
                   Ungroup by Vehicle
                 </Button>
-                <Calendar />
+                <Calendar isNotContainer={true} />
               </GridItem>
             </GridContainer>
-            <Card>
-              {value === 0 && <Unassigned />}
-              {value === 1 && <Assigned />}
-              {value === 2 && <TrainingImage />}
-            </Card>
+            {value === 0 && <Unassigned />}
+            {value === 1 && <Assigned />}
+            {value === 2 && <TrainingImage />}
           </GridItem>
         </GridContainer>
       </GridItem>

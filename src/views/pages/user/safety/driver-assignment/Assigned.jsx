@@ -14,7 +14,7 @@ function Unassigned(props) {
   const classes = useStyles()
 
   return (
-    <GridContainer>
+    <GridContainer style={{ height: "100vh" }}>
       <GridItem xs={12} sm={12} md={12}>
         <GridContainer>
           <GridItem xs={12} sm={12} md={12}>

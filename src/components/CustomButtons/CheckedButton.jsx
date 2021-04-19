@@ -20,7 +20,7 @@ const styles = {
     left: "5px !important",
     width: "24px !important",
     height: "24px !important",
-    margin: "5px 17px 5px 18px !important",
+    margin: "0px 17px 13px 13px !important",
   },
 };
 

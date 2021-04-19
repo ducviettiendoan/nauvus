@@ -7,7 +7,7 @@ import {
 } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import Grid from "@material-ui/core/Grid";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import CalendarIcon from "../Icons/CalendarIcon";
 
 const styles = {
@@ -52,7 +52,7 @@ export default function Calendar(props) {
   return (
     <>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <Grid container justify="flex-end" className="keyBoardDatePickerContainer">
+        <Grid container={!props.isNotContainer} justify="flex-end" className="keyBoardDatePickerContainer">
           <KeyboardDatePicker
             className={classes.datePickerStyle}
             disableToolbar
