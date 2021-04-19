@@ -33,6 +33,8 @@ import Drivers from "views/pages/user/overview/Drivers";
 import DriverDetail from "views/pages/user/overview/drivers/DriverDetail";
 import DriverRecord from "views/pages/user/overview/drivers/DriverRecord";
 import Logs from "views/pages/user/overview/Logs";
+import Coaching from "views/pages/user/safety/Coaching";
+import DashCam from "views/pages/user/safety/DashCam";
 
 // @material-ui/icons
 import OverviewIcon from "components/Icons/OverviewIcon";
@@ -148,7 +150,22 @@ const dashRoutes = [
         component: SafetyInboxCrash,
         layout: ROUTE_PATH.USER,
         isFixed: true,
-      }
+      },
+
+      {
+        path: "/safety/coaching",
+        name: "Coaching",
+        component: Coaching,
+        layout: ROUTE_PATH.USER
+      },
+
+      {
+        path: "/safety/dash-cam",
+        name: "Dash Cam",
+        component: DashCam,
+        layout: ROUTE_PATH.USER
+      },
+
     ]
   },
 
