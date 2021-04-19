@@ -52,8 +52,6 @@ const useStyles = makeStyles(styles)
 
 export default function CustomTimeline(props) {
   const { timelineContent } = props
-  console.log(timelineContent)
-
   const classes = useStyles()
 
   return (

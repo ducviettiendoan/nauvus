@@ -37,7 +37,9 @@ import Coaching from "views/pages/user/safety/Coaching";
 import DashCam from "views/pages/user/safety/DashCam";
 import DriverAssignment from "views/pages/user/safety/DriverAssignment";
 import UnassignedDetail from "views/pages/user/safety/driver-assignment/unassigned/UnassignedDetail"
+import Cameras from "views/pages/user/safety/Cameras";
 
+import VideoRetrieval from "views/pages/user/safety/VideoRetrieval";
 // @material-ui/icons
 import OverviewIcon from "components/Icons/OverviewIcon";
 import ComplianceIcon from "components/Icons/ComplianceIcon";
@@ -167,6 +169,18 @@ const dashRoutes = [
         component: DashCam,
         layout: ROUTE_PATH.USER
       },
+      {
+        path: "/safety/cameras",
+        name: "Cameras",
+        component: Cameras,
+        layout: ROUTE_PATH.USER
+      },
+      {
+        path: "/safety/video-retrieval",
+        name: "Video Retrieval",
+        component: VideoRetrieval,
+        layout: ROUTE_PATH.USER,
+      },
 
       {
         path: "/safety/driver-assignment/:id",
@@ -212,7 +226,7 @@ const dashRoutes = [
       },
       {
         path: "/compliance/hos-vialations",
-        name: "HOS Vialations",
+        name: "HOS Violations",
         component: HOSVialations,
         layout: ROUTE_PATH.USER
       },
