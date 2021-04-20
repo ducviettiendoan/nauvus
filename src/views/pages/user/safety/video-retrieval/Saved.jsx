@@ -8,7 +8,7 @@ import CloseIcon from "components/Icons/CloseIcon";
 import Button from "@material-ui/core/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import CardBody from "components/Card/CardBody";
-import VideoCard from "./saved/VideoCard";
+import VideoCard from "./VideoCard";
 import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 
 const styles = {
@@ -38,9 +38,6 @@ const styles = {
       color: "#25345C"
     }
   },
-  // gridTitle: {
-  //   padding: "20px"
-  // },
   headContainer: {
     alignItems: "center",
     textAlign: "left",
@@ -72,7 +69,7 @@ export default function Saved() {
     setChipData([])
   }
 
-  const mockData = {dateTime: "Feb 3, 2021, 4:24 PM", id: "709", driver: "Haydee Watson Peigan", route: "Trail SE, 8 km NNW", vehicle: "Shepard, AB", length: 1, favorite: false}
+  const mockData = {dateTime: "Feb 3, 2021, 4:24 PM", id: "709", driver: "Haydee Watson Peigan", route: "Trail SE, 8 km NNW", location: "Shepard, AB", length: 1, favorite: false}
 
   return (
     <div>

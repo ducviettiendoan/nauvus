@@ -88,7 +88,7 @@ const styles = {
     lineHeight: "18px",
     color: "#B4B4B4",
     fontWeight: "400",
-    marginBottom: 4
+    marginBottom: 4,
   },
   tripContainer: {
     marginBottom: "12px !important"

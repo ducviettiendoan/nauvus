@@ -40,6 +40,7 @@ import UnassignedDetail from "views/pages/user/safety/driver-assignment/unassign
 import Cameras from "views/pages/user/safety/Cameras";
 
 import VideoRetrieval from "views/pages/user/safety/VideoRetrieval";
+import Retrieval from "views/pages/user/safety/video-retrieval/Retrieval"
 // @material-ui/icons
 import OverviewIcon from "components/Icons/OverviewIcon";
 import ComplianceIcon from "components/Icons/ComplianceIcon";
@@ -167,12 +168,17 @@ const dashRoutes = [
         layout: ROUTE_PATH.SAFETY
       },
       {
-        path: "/video-retrieval",
-        name: "Video Retrieval",
+        path: "/safety/video-retrieval",
+        name: "Video Library",
         component: VideoRetrieval,
         layout: ROUTE_PATH.SAFETY,
       },
-
+      {
+        path: "/retrieval",
+        name: "Video Retrieval",
+        component: Retrieval,
+        layout: ROUTE_PATH.USER,
+      },
       {
         path: "/driver-assignment/:id",
         name: "Driver Assignment Details",

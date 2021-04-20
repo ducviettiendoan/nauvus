@@ -7,62 +7,14 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import {makeStyles} from '@material-ui/core/styles';
-import {cardTitle, roseColor,} from "assets/jss/material-dashboard-pro-react.js"; 
 import Button from "components/CustomButtons/Button";
 import CustomDateRangePicker from "components/CustomDateRangePicker/CustomDateRangePicker";
 import Saved from "./video-retrieval/Saved";
+import DiaLog from "components/CustomDialog/Dialog";
+import TripHistoryDialog from "../overview/vehicle/vehicle-sidebar-content/trip-history/TripHistoryDialog";
 
 
 const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0"
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem"
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px"
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px"
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px"
-    }
-  },
-  iconRose: {
-    color: roseColor
-  },
-  marginTop30: {
-    marginTop: "30px"
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px"
-    }
-  },
-  cardTestimonialDescription: {
-    // fontStyle: italics
-    color: "#999999"
-  },
   topHeaderTitle: {
     textAlign: "left",
   },
@@ -78,64 +30,20 @@ const styles = {
     justifyContent: "flex-end",
     alignItems: "center",
   },
-  headContainer: {
-    alignItems: "center",
-    textAlign: "left",
-    marginTop: "8px"
-  },
-  userRolesTitle: {
-    fontSize: 16,
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
     color: "#25345C",
-    fontWeight: 700,
-    paddingRight: "0px !important",
-    paddingLeft: "23px !important",
-
+    margin: "24px",
+    textAlign: "center"
   },
-  chipSelected: {
-    display: "flex",
-    alignItems: "center",
-    paddingLeft: "0px !important"
+  dialogSubTitle: {
+    fontWeight: "bold",
+    fontSize: "14px",
+    color: "#B4B4B4",
+    textAlign: "center"
   },
-  chips: {
-    background: "#ECEEF0",
-    color: "#25345C",
-    fontSize: "12px",
-    marginRight: 8
-  },
-  clearAll: {
-    textTransform: "none",
-    color: "#8097D8",
-    background: "unset !important",
-    boxShadow: "unset !important",
-    fontSize: 14,
-    fontWeight: 700,
-    padding: 0,
-    "&:hover": {
-      color: "#25345C"
-    }
-  },
-  headLeft: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    "& > div": {
-      marginBottom: "0 !important",
-      marginRight: 8
-    }
-  },
-  chipRow: {
-    marginLeft: "8px",
-  },
-  cardMargin: {
-    margin: "16px !important",
-  },
-  subTitleposition: {
-    display: "flex",
-    justifyContent: "flex-end",
-    padding: "0px 30px 0px 0px !important",
-
-  }
-
 };
 
 const useStyles = makeStyles(styles);
@@ -143,25 +51,42 @@ const useStyles = makeStyles(styles);
 function VideoRetrieval(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [openDialog, setOpenDialog] = React.useState(false)
 
   const handleChangeTab = (newValue) => {
     setValue(newValue);
   };
 
+  const handleClose = () => {
+    setOpenDialog(false)
+  }
+
   return (
     <>
+      <DiaLog
+        maxWidth={"md"}
+        renderTitle={<div>
+          <h3 className={classes.dialogTitle}>Request Video</h3>
+          <h4 className={classes.dialogSubTitle}>View historical video from your camera </h4>
+        </div>}
+        handleClose={handleClose}
+        open={openDialog}
+      >
+        <TripHistoryDialog close={handleClose}/>
+      </DiaLog>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
               <GridContainer className={classes.topHeader}>
-                <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
+                <GridItem xs={12} sm={8} md={8} xl={6} className={classes.topHeaderTitle}>
                   <RoundedTabs tabs={["Saved", "Requests", "Starred"]} tabValue={handleChangeTab}/>
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <Button
                     round
                     className="btn-round-active mr-2"
+                    onClick={() => {setOpenDialog(true)}}
                   >
                     Request Video
                   </Button>
@@ -171,8 +96,8 @@ function VideoRetrieval(props) {
             </GridItem>
           </GridContainer>
           {value === 0 && <Saved />}
-          {/*{value === 1 && <Requests />}*/}
-          {/*{value === 2 && <Starred />}*/}
+          {value === 1 && <Saved />}
+          {value === 2 && <Saved />}
         </GridItem>
       </GridContainer>
     </>
@@ -181,7 +106,6 @@ function VideoRetrieval(props) {
 
 const mapStateToProps = ({safety}) => {
   return {
-    showCrash: safety.showCrash
   };
 };
 
