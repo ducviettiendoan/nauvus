@@ -9,6 +9,7 @@ import StarYellowIcon from "components/Icons/StarYellowIcon";
 const styles = {
   card: {
     margin: "8px 0",
+    boxShadow: "none"
   },
   videoCard: {
     marginBottom: 60
@@ -52,13 +53,16 @@ const styles = {
     padding: "5px 11px",
     background: "#ECEEF0",
     borderRadius: "18px"
+  },
+  img: {
+    borderRadius: 8
   }
 }
 const useStyles = makeStyles(styles);
 
 const VideoCard = (props) => {
   const classes = useStyles()
-  const {dateTime, id, driver, route, vehicle, length, favorite} = props.data
+  const {dateTime, id, driver, route, location, length, favorite} = props.data
   const [favoriteState, setFavoriteState] = useState(favorite)
   const handleFavorite = () => {
     setFavoriteState(favoriteState => !favoriteState)
@@ -66,7 +70,7 @@ const VideoCard = (props) => {
   return (
     <GridItem className={classes.videoCard} xs={12} sm={6} md={4} lg={3}>
       <Card className={classes.card}>
-        <img src={img}/>
+        <img className={classes.img} src={img}/>
         <div className={classes.imgControl}>
           <div className={classes.duration}>{length} min</div>
           {favoriteState ? <StarYellowIcon style={{fontSize: 18}} onClick={handleFavorite}/> : <StarGreyIcon style={{fontSize: 18}} onClick={handleFavorite}/>}
@@ -77,7 +81,7 @@ const VideoCard = (props) => {
       <div className={classes.subText}>{id}</div>
       <div className={classes.sText}>{driver}</div>
       <div className={classes.sText}>{route}</div>
-      <div className={classes.sText}>{vehicle}</div>
+      <div className={classes.sText}>{location}</div>
       </GridItem>
     </GridItem>
   )
