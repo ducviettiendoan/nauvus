@@ -38,6 +38,7 @@ import DashCam from "views/pages/user/safety/DashCam";
 import DriverAssignment from "views/pages/user/safety/DriverAssignment";
 import UnassignedDetail from "views/pages/user/safety/driver-assignment/unassigned/UnassignedDetail"
 import Cameras from "views/pages/user/safety/Cameras";
+import SafetyReport from "views/pages/user/safety/Report"
 
 import VideoRetrieval from "views/pages/user/safety/VideoRetrieval";
 // @material-ui/icons
@@ -193,6 +194,13 @@ const dashRoutes = [
         path: "/safety/driver-assignment",
         name: "Driver Assignment",
         component: DriverAssignment,
+        layout: ROUTE_PATH.USER
+      },
+
+      {
+        path: "/safety/report",
+        name: "Driver Safety Report",
+        component: SafetyReport,
         layout: ROUTE_PATH.USER
       },
     ]
