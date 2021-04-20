@@ -121,7 +121,7 @@ const styles = {
     fontWeight: "400",
     fontSize: "18px",
     lineHeight: "1.42857",
-    top: "10px",
+    top: 0,
     letterSpacing: "unset",
     "& + $underline": {
       marginTop: "0px"
@@ -177,6 +177,9 @@ const styles = {
   },
   searchBox: {
     padding: "8px 16px 0"
+  },
+  selectContainer: {
+    paddingTop: 6
   }
 }
 

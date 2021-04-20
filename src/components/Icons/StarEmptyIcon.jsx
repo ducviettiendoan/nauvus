@@ -1,0 +1,15 @@
+import React from 'react';
+import {SvgIcon} from '@material-ui/core';
+
+function StarEmptyIcon(props) {
+  return (
+    <SvgIcon viewBox="0 0 16 14" {...props}>
+      <svg width="16" height="14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 0.0625L7.54688 1.09375L5.92188 4.73438L0.828125 5.28125L1.67188 6.03125L4.625 8.70312L3.5625 13.7031L4.54688 13.1406L8 11.1406L11.4531 13.1406L12.4375 13.7031L11.375 8.70312L14.3281 6.03125L15.1719 5.28125L10.0781 4.73438L8.45312 1.09375L8 0.0625ZM8 2.51562L9.28125 5.40625L9.40625 5.67188L12.8281 6.03125L10.2656 8.34375L10.9844 11.7031L8.25 10.1406L8 9.98438L7.75 10.1406L5.01562 11.7031L5.73438 8.34375L3.17188 6.03125L6.59375 5.67188L6.71875 5.40625L8 2.51562Z" fill="#C4C4C4"/>
+      </svg>
+
+    </SvgIcon>
+  );
+}
+
+export default StarEmptyIcon;

@@ -88,7 +88,7 @@ const styles = {
     lineHeight: "18px",
     color: "#B4B4B4",
     fontWeight: "400",
-    marginBottom: 4
+    marginBottom: 4,
   },
   tripContainer: {
     marginBottom: "12px !important"
@@ -101,6 +101,9 @@ const styles = {
     position: "relative",
     right: "17px",
     maxWidth: "150px"
+  },
+  selectLabel: {
+    top: "0px !important"
   },
 }
 const useStyles = makeStyles(styles);
@@ -138,7 +141,7 @@ export default function TripHistoryDialog(props) {
     return errors;
   };
 
-  const statusOptions = [
+  const vehicleOptions = [
     {
       label: (
         <div className={classes.alignItemsCenter}>
@@ -247,15 +250,19 @@ export default function TripHistoryDialog(props) {
         render={({handleSubmit, reset, submitting, pristine, values}) => {
           return (
             <form onSubmit={handleSubmit} noValidate>
-              <Row>
+              <Row style={{ alignItems: "center", }}>
                 <Col>
                   <Select
                     label="Vehicle"
+                    labelProps={{
+                      classes: { root: classes.selectLabel }
+                    }}
+                    name="driver"
                     fullWidth={true}
-                    defaultValue={null}
-                    options={statusOptions}
+                    defaultValue={"Value1"}
+                    options={vehicleOptions}
                     placeholder="Start typing..."
-                    SelectProps={{isClearable: false}}
+                    SelectProps={{ isClearable: false }}
                     onChange={(value) => {
                       console.log(value);
                     }}
@@ -286,7 +293,7 @@ export default function TripHistoryDialog(props) {
                   <img src={availablefootage} className={classes.footage}/>
                 </CardBody>
               </Card>
-              <Row>
+              <Row style={{ alignItems: "center" }}>
                 <Col>
                   <CustomInput
                     labelText="Time"
@@ -309,11 +316,15 @@ export default function TripHistoryDialog(props) {
                 <Col>
                   <Select
                     label="Duration"
+                    labelProps={{
+                      classes: { root: classes.selectLabel }
+                    }}
+                    name="driver"
                     fullWidth={true}
-                    defaultValue={null}
+                    defaultValue={"Value1"}
                     options={durationOptions}
                     placeholder="Start typing..."
-                    SelectProps={{isClearable: false}}
+                    SelectProps={{ isClearable: false }}
                     onChange={(value) => {
                       console.log(value);
                     }}
