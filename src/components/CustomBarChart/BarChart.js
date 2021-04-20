@@ -19,7 +19,6 @@ export default function BarChart(props) {
         'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
     ];
 
-    // let data = [12,6,12,9,5.5,7.5,14,5,9,5.5,9,15,5,9,3.5,6];
     let option;
 
     option = {
