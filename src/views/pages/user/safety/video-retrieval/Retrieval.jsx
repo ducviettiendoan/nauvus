@@ -84,7 +84,8 @@ const styles = theme => ({
     display: "flex",
     flexDirection: "row",
     padding: 16,
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    overflow: "hidden"
   },
   tripContent: {
     paddingLeft: "5px",
@@ -109,7 +110,7 @@ const styles = theme => ({
     marginBottom: "12px !important",
     width: "100%",
     paddingTop: "4px",
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('lg')]: {
       width: "306px",
     },
   },
@@ -120,16 +121,16 @@ const styles = theme => ({
   mapWrapper: {
     padding: 0,
     width: "100%",
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('lg')]: {
       width: "calc(100% - 306px)",
     },
   },
   buttonPaddingLeft: {
-    padding: "12px 16px",
+    padding: "12px 16px!important",
     marginRight: 8
   },
   buttonPadding: {
-    padding: "12px 16px",
+    padding: "12px 16px!important",
   },
   location: {
     width: 270,

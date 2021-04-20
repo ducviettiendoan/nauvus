@@ -22,11 +22,13 @@ import DiaLog from "components/CustomDialog/Dialog";
 import {GoogleMap, withGoogleMap, withScriptjs} from "react-google-maps";
 import {GOOGLE_MAP_API_KEY} from "config/constants";
 import avatar from "assets/img/faces/avatar.jpg";
-import StarYellowIcon from "../../../../../components/Icons/StarYellowIcon";
-import StarGreyIcon from "../../../../../components/Icons/StarGreyIcon";
+import StarYellowIcon from "components/Icons/StarYellowIcon";
+import StarGreyIcon from "components/Icons/StarGreyIcon";
 import Chip from "@material-ui/core/Chip";
-import CloseIcon from "../../../../../components/Icons/CloseIcon";
+import CloseIcon from "components/Icons/CloseIcon";
 import AddOutlined from "@material-ui/icons/AddOutlined";
+import LocationIcon from "components/Icons/LocationIcon";
+
 
 const RegularMap = withScriptjs(
   withGoogleMap((props) => {
@@ -44,159 +46,221 @@ const RegularMap = withScriptjs(
   })
 );
 
-const useStyles = makeStyles({
-  txtInfoMain: {
-    fontSize: 14,
-    fontWeight: 400,
-    color: "#25345C",
-    marginBottom: 0,
-    marginLeft: 8
-  },
-  alert: {
-    background: "#ECEEF0",
-    margin: "20px 0px !important",
-  },
-  alertFooter: {
-    background: "#ECEEF0",
-    margin: "20px 0px !important",
-    width: "50%"
-  },
-  crashImage: {
-    width: "100%",
-    borderRadius: 12
-  },
-  title: {
-    fontWeight: 700,
-    fontSize: 14,
-    color: "#25345C",
-  },
-  chart: {
-    marginTop: 16
-  },
-  pagination: {
-    marginTop: 16
-  },
-  moreAction: {
-    background: "#FFFFFF !important",
-    border: "1px solid #ECEEF0 !important"
-  },
-  topHeader: {
-    marginTop: 16
-  },
-  selectTitle: {
-    fontSize: 18,
-    fontWeight: 700,
-    margin: 0,
-    "&> span": {
-      color: "#c7c7c7"
-    }
-  },
-  headerTitle: {
-    display: "flex", alignItems: "center"
-  },
-  viewDetail: {
-    padding: 16
-  },
-  timeline: {
-    position: "relative",
-    right: "17px",
-    maxWidth: "150px"
-  },
-  dest: {
-    fontSize: "14px",
-    lineHeight: "18px",
-    color: "#25345C",
-    fontWeight: "400",
-    display: "flex"
-  },
-  time: {
-    fontSize: "12px",
-    lineHeight: "18px",
-    color: "#B4B4B4",
-    fontWeight: "400",
-    marginBottom: 4
-  },
-  tripContainer: {
-    marginBottom: "12px !important",
-    marginLeft: "16px"
-  },
-  tripContent: {
-    paddingLeft: "5px",
-    minWidth: "237px !important"
-  },
-  activity: {
-    fontSize: 18,
-    fontWeight: 700,
-    margin: "16px 0",
-  },
-  avatar: {
-    padding: 24,
-    textAlign: "center",
-    "& > h3": {
+const styles = theme => (
+  {
+    txtInfoMain: {
+      fontSize: 14,
+      fontWeight: 400,
+      color: "#25345C",
+      marginBottom: 0,
+      marginLeft: 8
+    },
+    alert: {
+      background: "#ECEEF0",
+      margin: "20px 0px !important",
+    },
+    alertFooter: {
+      background: "#ECEEF0",
+      margin: "20px 0px !important",
+      width: "100%",
+      [theme.breakpoints.up('md')]: {
+        width: "50%",
+      },
+    },
+    crashImage: {
+      width: "100%",
+      borderRadius: 12
+    },
+    title: {
+      fontWeight: 700,
+      fontSize: 14,
+      color: "#25345C",
+    },
+    chart: {
+      marginTop: 16
+    },
+    pagination: {
+      marginTop: 16
+    },
+    moreAction: {
+      background: "#FFFFFF !important",
+      border: "1px solid #ECEEF0 !important"
+    },
+    topHeader: {
+      marginTop: 16
+    },
+    selectTitle: {
+      fontSize: 18,
+      fontWeight: 700,
+      margin: 0,
+      color: "#25345C",
+      "&> span": {
+        color: "#c7c7c7"
+      }
+    },
+    headerTitle: {
+      display: "flex",
+      alignItems: "center"
+    },
+    viewDetail: {
+      padding: 16
+    },
+    activity: {
+      fontSize: 18,
+      fontWeight: 700,
+      margin: "16px 0",
+      color: "#25345c"
+    },
+    avatar: {
+      padding: 24,
+      textAlign: "center",
+      "& > h3": {
+        fontSize: 18,
+        fontWeight: 700,
+        margin: "16px 0 0",
+      },
+      "& > img": {
+        padding: "0 24px",
+        borderRadius: "50%"
+      },
+      "& > p": {
+        fontSize: 14,
+        fontWeight: 400,
+        marginBottom: 16
+      }
+    },
+    dialogTitle: {
       fontSize: 18,
       fontWeight: 700,
       margin: "16px 0 0",
     },
-    "& > img": {
-      padding: "0 24px",
-      borderRadius: "50%"
+    cardInfo: {
+      padding: 16
     },
-    "& > p": {
+    viewHeader: {
+      display: "flex",
+      alignItems: "center"
+    },
+    alertFooterContent: {
+      alignItems: "center",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between"
+    },
+    txtInfoMainFooter: {
+      fontWeight: 700,
       fontSize: 14,
-      fontWeight: 400,
-      marginBottom: 16
+      color: "#B4B4B4",
+      lineHeight: "16.8px",
+      marginBottom: 0,
+    },
+    chipSelected: {
+      display: "flex",
+      alignItems: "center",
+      paddingLeft: "0px !important",
+      paddingTop: "23px"
+    },
+    chips: {
+      background: "#ECEEF0",
+      color: "#25345C",
+      fontSize: "12px",
+      marginRight: 8,
+      fontWeight: 400
+    },
+    clearAll: {
+      textTransform: "none",
+      color: "#8097D8",
+      background: "unset !important",
+      boxShadow: "unset !important",
+      fontSize: 14,
+      fontWeight: 700,
+      padding: 0,
+      "&:hover": {
+        color: "#25345C"
+      }
+    },
+    cardMargin: {
+      margin: "16px",
+      display: "flex",
+      flexDirection: "row",
+      padding: 16,
+      flexWrap: "wrap"
+    },
+    tripContent: {
+      paddingLeft: "5px",
+      minWidth: "237px !important"
+    },
+    dest: {
+      fontSize: "14px",
+      lineHeight: "18px",
+      color: "#25345C",
+      fontWeight: "400",
+      display: "flex"
+    },
+    time: {
+      fontSize: "12px",
+      lineHeight: "18px",
+      color: "#B4B4B4",
+      fontWeight: "400",
+      marginBottom: 4,
+      textAlign: "left"
+    },
+    tripContainer: {
+      marginBottom: "12px !important",
+      width: "100%",
+      paddingTop: "4px",
+      [theme.breakpoints.up('md')]: {
+        width: "306px",
+      },
+    },
+    timeline: {
+      maxWidth: "306px",
+      margin: "auto"
+    },
+    mapWrapper: {
+      padding: 0,
+      width: "100%",
+      [theme.breakpoints.up('md')]: {
+        width: "calc(100% - 306px)",
+      },
+    },
+    buttonPaddingLeft: {
+      padding: "12px 16px!important",
+      marginRight: 8
+    },
+    buttonPadding: {
+      padding: "12px 16px!important",
+    },
+    location: {
+      width: 270,
+      margin: "auto",
+      marginTop: "16px",
+      marginBottom: "16px",
+      textAlign: "left",
+      display: "flex",
+      alignItems: "center"
+    },
+    subText: {
+      color: "#25345C",
+      fontWeight: 700,
+      fontSize: 16
+    },
+    icon: {
+      marginRight: 10,
+      fontSize: 18
+    },
+    mapContainer: {
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap"
+    },
+    buttons: {
+      textAlign: "center"
     }
-  },
-  dialogTitle: {
-    fontSize: 18,
-    fontWeight: 700,
-    margin: "16px 0 0",
-  },
-  cardInfo: {
-    padding: 16
-  },
-  viewHeader: {
-    display: "flex",
-    alignItems: "center"
-  },
-  alertFooterContent: {
-    alignItems: "center",
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  txtInfoMainFooter: {
-    fontWeight: 700,
-    fontSize: 14,
-    color: "#B4B4B4",
-    lineHeight: "16.8px",
-    marginBottom: 0,
-  },
-  chipSelected: {
-    display: "flex",
-    alignItems: "center",
-    paddingLeft: "0px !important",
-    paddingTop: "23px"
-  },
-  chips: {
-    background: "#ECEEF0",
-    color: "#25345C",
-    fontSize: "12px",
-    marginRight: 8
-  },
-  clearAll: {
-    textTransform: "none",
-    color: "#8097D8",
-    background: "unset !important",
-    boxShadow: "unset !important",
-    fontSize: 14,
-    fontWeight: 700,
-    padding: 0,
-    "&:hover": {
-      color: "#25345C"
-    }
-  },
-});
+  }
+)
+
+const useStyles = makeStyles(styles);
 
 function Crash(props) {
   const classes = useStyles();
@@ -237,6 +301,19 @@ function Crash(props) {
     }
   ]
 
+  const renderMap = () => {
+    return (
+      <RegularMap
+        googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAP_API_KEY}`}
+        loadingElement={<div style={{height: 280}}/>}
+        containerElement={<div className={classes.mapWrapper}/>}
+        mapElement={<div style={{height: 280, borderRadius: 12}}/>}
+        isMarkerShown
+        center={{lat: 40.748817, lng: -73.985428}}
+      />
+    )
+  }
+
   const data = [
     {
       label: "Collision Risk",
@@ -275,52 +352,65 @@ function Crash(props) {
       color: "red",
     }
   ]
+  const [openDialog, setOpenDialog] = React.useState(false)
+  const handleClose = () => {
+    setOpenDialog(false)
+  }
 
   return (
     <div>
+
       <GridContainer className={classes.topHeader} justify="space-between">
         <GridItem className={classes.headerTitle}>
           <p className={classes.selectTitle}>Crash: <span>Jun 24, 4:06 AM EDT</span></p>
           <MultipleSearchBox className="ml-3" data={data}/>
         </GridItem>
-        <GridItem className={classes.headerTitle}>
-          <p className={classes.selectTitle}><span>Driver:</span> Alexandr Fedyachkin</p>
-          <Select
-            options={listValueCoach}
-            variant="outlined"
-            defaultValue={1}
-            className="ml-3"
-            autoComplete
-            onChange={(value) => {
-              console.log(value);
-            }}
-          />
-          <Select
-            options={listValues}
-            variant="outlined"
-            defaultValue={4}
-            onChange={(value) => {
-              console.log(value);
-            }}
-            className="ml-3"
-          />
-          <Button
-            color="white"
-            aria-label="edit"
-            justIcon
-            round
-            className={`btn-36 ${classes.moreAction} m-0 ml-3`}
-          >
-            <MoreHoriz/>
-          </Button>
+        <GridItem>
+          <GridContainer>
+            <GridItem className={classes.headerTitle}>
+              <p className={classes.selectTitle}><span>Driver:</span> Alexandr Fedyachkin</p>
+            </GridItem>
+            <GridItem className={classes.headerTitle}>
+              <Select
+                options={listValueCoach}
+                variant="outlined"
+                defaultValue={1}
+                autoComplete
+                onChange={(value) => {
+                  console.log(value);
+                }}
+              />
+            </GridItem>
+            <GridItem className={classes.headerTitle}>
+              <Select
+                options={listValues}
+                variant="outlined"
+                defaultValue={4}
+                onChange={(value) => {
+                  console.log(value);
+                }}
+              />
+            </GridItem>
+            <GridItem className={classes.headerTitle}>
+              <Button
+                color="white"
+                aria-label="edit"
+                justIcon
+                round
+                className={`btn-36 ${classes.moreAction} m-0 `}
+              >
+                <MoreHoriz/>
+              </Button>
+            </GridItem>
+          </GridContainer>
         </GridItem>
       </GridContainer>
 
       {view ? (
         <React.Fragment>
           <Card className={classes.viewDetail}>
-            <GridContainer>
-              <GridItem md={9}>
+            <GridContainer style={{justifyContent: "center"}}>
+              <GridItem xs={12} lg={9}>
                 <div className={classes.viewHeader}>
                   {favoriteState ? <StarYellowIcon style={{fontSize: 18, marginRight: 10, marginBottom: 3}}
                                                    onClick={handleFavorite}/> :
@@ -384,36 +474,38 @@ function Crash(props) {
                       officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
                   </CardBody>
                 </Card>
-                <GridContainer>
-                  <GridItem md={8}>
-                    <div style={{position: 'relative'}}>
-                      <RegularMap
-                        googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAP_API_KEY}`}
-                        loadingElement={<div style={{height: 280}}/>}
-                        containerElement={<div/>}
-                        mapElement={<div style={{height: 280, borderRadius: 12}}/>}
-                        isMarkerShown
-                        data={props.vehicles}
-                        center={{lat: 40.748817, lng: -73.985428}}
-                      />
-                    </div>
-                  </GridItem>
-                  <GridItem md={4}>
-                    <div className={classes.tripContainer}>
+
+                <div className={classes.mapContainer}>
+                  {renderMap()}
+                  <div className={classes.tripContainer}>
+                    <div className={classes.timeline}>
                       <CustomTimeline
                         timelineContent={timelineContent}
                         classes={{
                           root: classes.timelineContent
                         }}
                       />
-                      <p>Highway 401Express, Mississauga, ON</p>
-                      <div>
-                        <Button round className="btn-round-gray w-116 h-41 mr-2"> View trip </Button>
-                        <Button round className={`btn-round-active h-41`}> View incident report </Button>
-                      </div>
                     </div>
-                  </GridItem>
-                </GridContainer>
+                    <div className={classes.location}>
+                      <LocationIcon className={classes.icon}/>
+                      <span className={classes.subText}>Highway 401Express, Mississauga, ON</span>
+                    </div>
+                    <div className={classes.buttons}>
+                      <Button
+                        round
+                        className={`btn-round-white h-41 ` + classes.buttonPaddingLeft}
+                      >
+                        View Trip
+                      </Button>
+                      <Button
+                        round
+                        className={`btn-round-active h-41 ` + classes.buttonPadding}
+                      >
+                        View Incident Report
+                      </Button>
+                    </div>
+                  </div>
+                </div>
                 <h3 className={classes.activity}>Activity</h3>
                 <Card className={classes.alertFooter}>
                   <CardBody>
@@ -425,7 +517,7 @@ function Crash(props) {
                 </Card>
 
               </GridItem>
-              <GridItem md={3}>
+              <GridItem xs={12} sm={6} lg={3}>
                 <Card className={classes.avatar}>
                   <img className="w-100" src={avatar} alt="..."/>
                   <h3>Alexandr Fedyachkin</h3>
@@ -433,7 +525,7 @@ function Crash(props) {
                   <div>
                     <Button
                       round
-                      className={`btn-round-active h-41`}
+                      className={`btn-round-active h-41 ` + classes.buttonPadding}
                       startIcon={<ShareIcon/>}
                       onClick={() => setOpen(true)}
                     >
