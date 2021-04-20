@@ -7,11 +7,11 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import {makeStyles} from '@material-ui/core/styles';
-import {cardTitle, roseColor,} from "assets/jss/material-dashboard-pro-react.js"; 
 import Button from "components/CustomButtons/Button";
 import CustomDateRangePicker from "components/CustomDateRangePicker/CustomDateRangePicker";
 import Saved from "./video-retrieval/Saved";
-import Retrieval from "./video-retrieval/Retrieval";
+import DiaLog from "components/CustomDialog/Dialog";
+import TripHistoryDialog from "../overview/vehicle/vehicle-sidebar-content/trip-history/TripHistoryDialog";
 
 
 const styles = {
@@ -30,7 +30,20 @@ const styles = {
     justifyContent: "flex-end",
     alignItems: "center",
   },
-
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    margin: "24px",
+    textAlign: "center"
+  },
+  dialogSubTitle: {
+    fontWeight: "bold",
+    fontSize: "14px",
+    color: "#B4B4B4",
+    textAlign: "center"
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -38,14 +51,29 @@ const useStyles = makeStyles(styles);
 function VideoRetrieval(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [openDialog, setOpenDialog] = React.useState(false)
 
   const handleChangeTab = (newValue) => {
     setValue(newValue);
   };
-  const mockData = {dateTime: "Feb 3, 2021, 4:24 PM", id: "709", driver: "Haydee Watson Peigan", route: "Trail SE, 8 km NNW", location: "Shepard, AB", length: 1, favorite: false}
+
+  const handleClose = () => {
+    setOpenDialog(false)
+  }
 
   return (
     <>
+      <DiaLog
+        maxWidth={"md"}
+        renderTitle={<div>
+          <h3 className={classes.dialogTitle}>Request Video</h3>
+          <h4 className={classes.dialogSubTitle}>View historical video from your camera </h4>
+        </div>}
+        handleClose={handleClose}
+        open={openDialog}
+      >
+        <TripHistoryDialog close={handleClose}/>
+      </DiaLog>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
@@ -58,6 +86,7 @@ function VideoRetrieval(props) {
                   <Button
                     round
                     className="btn-round-active mr-2"
+                    onClick={() => {setOpenDialog(true)}}
                   >
                     Request Video
                   </Button>
@@ -67,8 +96,8 @@ function VideoRetrieval(props) {
             </GridItem>
           </GridContainer>
           {value === 0 && <Saved />}
-          {value === 1 && <Retrieval data={mockData} />}
-          {/*{value === 2 && <Starred />}*/}
+          {value === 1 && <Saved />}
+          {value === 2 && <Saved />}
         </GridItem>
       </GridContainer>
     </>
@@ -77,7 +106,6 @@ function VideoRetrieval(props) {
 
 const mapStateToProps = ({safety}) => {
   return {
-    showCrash: safety.showCrash
   };
 };
 

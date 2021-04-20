@@ -256,7 +256,6 @@ export function TripTimeline(props) {
           containerElement={<div className="containerElementMapMini"/>}
           mapElement={<div style={{height: 280, borderRadius: 12}}/>}
           isMarkerShown
-          data={props.vehicles}
           center={{lat: 40.748817, lng: -73.985428}}
         />
       </div>

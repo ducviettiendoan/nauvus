@@ -12,7 +12,7 @@ const styles = {
     boxShadow: "none"
   },
   videoCard: {
-    marginBottom: 60
+    marginBottom: 40
   },
   text: {
     fontSize: 18,
