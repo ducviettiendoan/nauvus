@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import Loadable from 'react-loadable';
 import { ROUTE_PATH } from "config/constants";
 // import Login from "./views/pages/common/Login";
 // import AuthRouter from './shared/layouts/router/NoAuthRouter';
@@ -11,6 +10,7 @@ import UserLayout from 'layouts/User';
 import SettingLayout from 'layouts/Setting';
 import OverviewLayout from 'layouts/Overview';
 import DispatchLayout from 'layouts/Dispatch';
+import SafetyLayout from 'layouts/Safety';
 
 // const ExamModule = Loadable({
 //   loader: () => import(/* webpackChunkName: "exam" */ 'src/shared/modules/exam'),
@@ -37,6 +37,7 @@ const Routes = () => (
       <Route path={ ROUTE_PATH.SETTING } component={SettingLayout} />
       <Route path={ ROUTE_PATH.OVERVIEW } component={OverviewLayout} />
       <Route path={ ROUTE_PATH.DISPATCH } component={DispatchLayout} />
+      <Route path={ ROUTE_PATH.SAFETY } component={SafetyLayout} />
       <Redirect from="/" to={ ROUTE_PATH.OVERVIEW + "/overview" } />
     </Switch>
   </div>
