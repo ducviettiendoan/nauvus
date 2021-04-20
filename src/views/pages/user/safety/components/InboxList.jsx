@@ -1,42 +1,21 @@
 import React from "react";
 // @material-ui/core components
 // @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
 import Chip from "@material-ui/core/Chip";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
-import RoundedTabs from "components/CustomTabs/RoundedTabs";
-import PropTypes from 'prop-types';
 import SafetyCard from "./Card";
-import CustomInput from "components/CustomInput/CustomInput.js";
-import Tab from '@material-ui/core/Tab';
 import "./Safety.css";
-import ReplayIcon from '@material-ui/icons/Replay';
 import Button from "@material-ui/core/Button"
-import { makeStyles, withStyles } from '@material-ui/core/styles';
-import InputAdornment from "@material-ui/core/InputAdornment";
+import { makeStyles } from '@material-ui/core/styles';
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
-import TabPanel from '@material-ui/lab/TabPanel'
-import {
-  cardTitle,
-  roseColor,
-} from "assets/jss/material-dashboard-pro-react.js";
-import { AppBar, Box, InputBase, Tabs, Typography } from "@material-ui/core";
-import IconButton from "@material-ui/core/IconButton";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import Calendar from "components/Calendar/Calendar";
+import { Link } from 'react-router-dom';
+import { cardTitle, roseColor } from "assets/jss/material-dashboard-pro-react.js";
 import CloseIcon from "components/Icons/CloseIcon";
 import GenPaginationV1 from "components/Pagination/GenPaginationV1";
-import ArrowRightIcon from "components/Icons/ArrowRightIcon";
-import ArrowLeftIcon from "components/Icons/ArrowLeftIcon";
-import ArrowUpIcon from "components/Icons/ArrowUpIcon";
-import DropDownIcon from "components/Icons/DropDownIcon";
 
 
 const styles = {
@@ -99,7 +78,7 @@ const styles = {
     marginTop: 15
   },
   topHeaderButton: {
-    
+
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "center",
@@ -115,7 +94,7 @@ const styles = {
     fontWeight: 700,
     paddingRight: "0px !important",
     paddingLeft: "23px !important",
-    
+
   },
   chipSelected: {
     display: "flex",
@@ -149,21 +128,21 @@ const styles = {
       marginRight: 8
     }
   },
-  chipRow:{
+  chipRow: {
     marginLeft: "8px",
   },
   cardMargin: {
     margin: "16px !important",
   },
-  subTitleposition:{
+  subTitleposition: {
     display: "flex",
     justifyContent: "flex-end",
     padding: "0px 30px 0px 0px !important",
-    
+
   },
-  secondPage:{
+  secondPage: {
     backgroundColor: "#ECEEF0",
-},
+  },
 
 };
 
@@ -174,18 +153,9 @@ export default function InboxList() {
 
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  const handleChangeTab = (newValue) => {
-    setValue(newValue);
-    
-  };
-
   const [chipData, setChipData] = React.useState([
-    {key: 0, label: 'Standard Admin'},
-    {key: 1, label: 'Full admin'},
+    { key: 0, label: 'Standard Admin' },
+    { key: 1, label: 'Full admin' },
   ]);
 
   const handleDelete = (chipToDelete) => () => {
@@ -200,77 +170,64 @@ export default function InboxList() {
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
-              {/* Main Card */}
-              <Card testimonial className={classes.cardMargin}>
-                <CardBody className="body">
+            {/* Main Card */}
+            <Card testimonial className={classes.cardMargin}>
+              <CardBody className="body">
 
-                  {/* Nav Bar */}
-                  <GridContainer className={classes.gridTitle}>
+                {/* Nav Bar */}
+                <GridContainer className={classes.gridTitle}>
                   <GridItem xs={12} sm={12} md={6}>
-                  <GridContainer className={classes.headContainer}>
-                    <GridItem xl={2} className={classes.userRolesTitle}> {chipData.length} selected for </GridItem>
-                    <GridItem xl={10} className={classes.chipSelected}>
-                      {chipData.map(data => (
-                        <Chip
-                          deleteIcon={<CloseIcon/>}
-                          label={data.label}
-                          onDelete={handleDelete(data)}
-                          className={classes.chips}
-                        />
-                      ))}
-                      {chipData.length > 0 ?
-                        (
-                          <Button onClick={handleClearAll} className={classes.clearAll}>
-                            Clear All
-                          </Button>
-                        ) : ""}
-                    </GridItem>
-                  </GridContainer>
+                    <GridContainer className={classes.headContainer}>
+                      <GridItem xl={2} className={classes.userRolesTitle}> {chipData.length} selected for </GridItem>
+                      <GridItem xl={10} className={classes.chipSelected}>
+                        {chipData.map(data => (
+                          <Chip
+                            deleteIcon={<CloseIcon />}
+                            label={data.label}
+                            onDelete={handleDelete(data)}
+                            className={classes.chips}
+                          />
+                        ))}
+                        {chipData.length > 0 ?
+                          (
+                            <Button onClick={handleClearAll} className={classes.clearAll}>
+                              Clear All
+                            </Button>
+                          ) : ""}
+                      </GridItem>
+                    </GridContainer>
                   </GridItem>
 
-                  <GridItem xs={12} sm={12} md={6} className={classes.headLeft}> 
-                    <ToolboxButton placeholder="Search for tag or email" showFilter/>
+                  <GridItem xs={12} sm={12} md={6} className={classes.headLeft}>
+                    <ToolboxButton placeholder="Search for tag or email" showFilter />
                   </GridItem>
 
-                  </GridContainer>
-                  
-                  {/* 3 Cards */}
-                  <SafetyCard />
-                  <SafetyCard background="#ECEEF0"/>
-                  <SafetyCard/>
-                </CardBody>
-              </Card>
+                </GridContainer>
 
-              <GridContainer>
-                <GridItem xs={9} sm={9} md={8}>
-                  <GenPaginationV1
-                    total={50}
-                    page={1}
-                    size={5}
-                    pages={[
-                      {text: <ArrowRightIcon />, arrow: true, disabled: true},
-                      {text: <ArrowLeftIcon />, arrow: true, disabled: true},
-                      {active: true, text: 1},
-                      {text: 2},
-                      {text: 3},
-                      {text: 4},
-                      {text: 5},
-                      {text: <ArrowRightIcon />, arrow: true},
-                      {text: <ArrowUpIcon />, arrow: true},
-                    ]}
-                  />
-                </GridItem>
-                <GridItem xs={3} sm={3} md={4} >
-                  <GridContainer className={classes.subTitleposition}>
-                    <div>Showing 1-6 of 50</div>
-                    <div style={{marginLeft: "36px"}}>Items per page:  7</div>
-                    <DropDownIcon className={classes.dropDownIcon} style={{paddingBottom: "5px"}}/>
-                  </GridContainer>
-                </GridItem>
-              </GridContainer>          
-          
+                {/* 3 Cards */}
+                {/*<Link to="/safety/inbox/crash/12345"><SafetyCard /></Link>*/}
+                {/*<Link to="/safety/inbox/crash/12345"><SafetyCard background="#ECEEF0" /></Link>*/}
+                {/*<Link to="/safety/inbox/crash/12345"><SafetyCard /></Link>*/}
+                <SafetyCard />
+                <SafetyCard background="#ECEEF0" />
+                <SafetyCard />
+              </CardBody>
+            </Card>
+
+            <div className="w-100">
+              <GenPaginationV1
+                total={50}
+                current={1}
+                pageSize={10}
+                showSizeChanger
+                // onChange={this.onChangePagination}
+                // onShowSizeChange={this.onShowSizeChange}
+                pageSizeOptions={[10, 20, 30, 40]}
+              />
+            </div>
+
           </GridContainer>
-          
+
         </GridItem>
       </GridContainer>
     </div>
