@@ -9,14 +9,12 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import { InfoOutlined, MoreHoriz } from "@material-ui/icons";
 import { makeStyles } from '@material-ui/core/styles';
-import { setShowCrash } from "reducers/safety";
+import { setShowButtonBack } from "reducers/safety";
 import crashImage from "assets/img/crashImage.png";
 import LineChartCard from "../components/LineChart";
 import GenPaginationV1 from 'components/Pagination/GenPaginationV1';
 import Button from "components/CustomButtons/Button";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import ExpandMoreIcon from 'components/Icons/ExpandMoreIcon';
+import Select from "components/CustomSelect/Select";
 
 
 const useStyles = makeStyles({
@@ -24,6 +22,7 @@ const useStyles = makeStyles({
     fontSize: 14,
     fontWeight: 400,
     color: "#25345C",
+    marginBottom: 0,
     marginLeft: 8
   },
   alert: {
@@ -52,96 +51,74 @@ const useStyles = makeStyles({
   topHeader: {
     marginTop: 16
   },
-  selectForm: {
-    width: "100%",
-    height: "44px",
-    background: "#FFFFFF",
-    boxSizing: "border-box",
-    borderRadius: "20px",
-    padding: "0x !important",
-    border: "1px solid #ECEEF0 !important",
-    "&::before": {
-      borderBottom: "0px",
-    },
-    "& > select:focus": {
-      backgroundColor: "#FFFFFF !important",
-    },
-    "&:hover": {
-      borderBottom: "0px",
-    },
-    marginRight: 15,
+  selectTitle: {
+    fontSize: 18,
+    fontWeight: 700,
+    margin: 0,
+    "&> span": {
+      color: "#c7c7c7"
+    }
   },
-  select: {
-    color: "#25345C",
-    fontWeight: 400,
-    fontSize: 14,
-    borderStyle: "none",
-    borderWidth: 2,
-    marginRight: 15,
-    paddingTop: 14,
-    paddingBottom: 15,
-    "&:focus": {
-      borderRadius: 12,
-      backgroundColor: "white",
-      borderColor: "#B4B4B4",
-    },
-  },
+  headerTitle: {
+    display: "flex", alignItems: "center"
+  }
 });
 
 function Crash(props) {
   const classes = useStyles();
-  useEffect(() => { props.setShowCrash(true) }, []);
+  useEffect(() => { props.setShowButtonBack(true) }, []);
 
   const listValues = [
-    "test"
+    { label: "Request minute of video", value: 1 },
+    { label: "Add star", value: 2 },
+    { label: "Dismiss", value: 3 },
+    { label: "Needs Review", value: 4 },
   ]
-  const menuProps = {
-    classes: {
-      paper: classes.paper,
-      list: classes.list,
-    },
-    anchorOrigin: {
-      vertical: "bottom",
-      horizontal: "left",
-    },
-    transformOrigin: {
-      vertical: "top",
-      horizontal: "left",
-    },
-    getContentAnchorEl: null,
-  };
-
-
-
   return (
     <div>
       <GridContainer className={classes.topHeader} justify="space-between">
-        <GridItem className={classes.topHeaderTitle}>
-          <p>Crash: Jun 24, 4:06 AM EDT</p>
-        </GridItem>
-        <GridItem >
+        <GridItem className={classes.headerTitle}>
+          <p className={classes.selectTitle}>Crash: <span>Jun 24, 4:06 AM EDT</span></p>
           <Select
-            fullWidth
-            disableUnderline
-            MenuProps={menuProps}
-            className={classes.selectForm}
-            classes={{ root: classes.select }}
-            IconComponent={() => (<ExpandMoreIcon className={classes.dropDownIcon} />)}
-          // value={selectValue1}
-          // onChange={handleChange} 
-          >
-            {listValues.map((value, i) => (
-              <MenuItem key={i} value={i}>
-                {value}
-              </MenuItem>
-            ))}
-          </Select>
+            defaultValue={null}
+            options={listValues}
+            variant="outlined"
+            defaultValue={1}
+            className="ml-3"
+            onChange={(value) => {
+              console.log(value);
+            }}
+          />
+        </GridItem>
+        <GridItem className={classes.headerTitle}>
+          <p className={classes.selectTitle}><span>Driver:</span> Alexandr Fedyachkin</p>
+          <Select
+            defaultValue={null}
+            options={listValues}
+            variant="outlined"
+            defaultValue={1}
+            className="ml-3"
+            autoComplete
+            onChange={(value) => {
+              console.log(value);
+            }}
+          />
+          <Select
+            defaultValue={null}
+            options={listValues}
+            variant="outlined"
+            defaultValue={2}
+            onChange={(value) => {
+              console.log(value);
+            }}
+            className="ml-3"
+          />
           <Button
             color="white"
             aria-label="edit"
             justIcon
             round
-            className={`btn-36 ${classes.moreAction} m-0`}
+            className={`btn-36 ${classes.moreAction} m-0 ml-3`}
           // onClick={handleOpenMore}
           >
             <MoreHoriz />
@@ -193,7 +170,7 @@ const mapStateToProps = ({ safety }) => {
 };
 
 const mapDispatchToProps = {
-  setShowCrash
+  setShowButtonBack
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Crash);

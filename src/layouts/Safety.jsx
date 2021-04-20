@@ -177,6 +177,7 @@ export function Dashboard(props) {
           miniActive={miniActive}
           brandText={getActiveRoute(routes)}
           handleDrawerToggle={handleDrawerToggle}
+          showBack={props.showBack}
           {...rest}
         />
         <div className="layout-container">
@@ -257,10 +258,11 @@ export function Dashboard(props) {
     </>
   );
 }
-const mapStateToProps = ({ authentication }) => {
+const mapStateToProps = ({ authentication, safety }) => {
   return {
     isAuthenticated: authentication.isAuthenticated,
-    user: authentication.user
+    user: authentication.user,
+    showBack: safety.showBack
   };
 };
 

@@ -2,25 +2,15 @@ import React from "react";
 // @material-ui/core components
 // @material-ui/icons
 // core components
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
-// import SafetyCard from "./Card.jsx"
-// import "./Safety.css";
-import { makeStyles } from '@material-ui/core/styles';
-import {
-  cardTitle,
-  roseColor,
-} from "assets/jss/material-dashboard-pro-react.js";
-import IconButton from "@material-ui/core/IconButton";
-import FormControl from "@material-ui/core/FormControl";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
-import Calendar from "../../../../components/Calendar/Calendar";
-import ResolvedList from "./components/ResolvedList";
-import InboxList from "./components/InboxList";
-import Dismissed from "./components/Dismissed";
-import Starred from "./components/Starred";
+import {makeStyles} from '@material-ui/core/styles';
+import {cardTitle, roseColor,} from "assets/jss/material-dashboard-pro-react.js"; 
+import Button from "components/CustomButtons/Button";
+import CustomDateRangePicker from "components/CustomDateRangePicker/CustomDateRangePicker";
+import Saved from "./video-retrieval/Saved";
 
 
 const styles = {
@@ -150,7 +140,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-function Safety(props) {
+function VideoRetrieval(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -159,39 +149,37 @@ function Safety(props) {
   };
 
   return (
-    <div>
+    <>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
               <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                  <RoundedTabs tabs={["Inbox List", "Resolved List", "Dismissed", "Starred"]} tabValue={handleChangeTab} />
+                  <RoundedTabs tabs={["Saved", "Requests", "Starred"]} tabValue={handleChangeTab}/>
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
-                  <FormControl variant="outlined">
-                    <Calendar />
-                  </FormControl>
-                  <FormControl variant="outlined" className="moreIcon">
-                    <IconButton style={{ width: "42px", height: "42px" }}>
-                      <MoreHorizIcon fontSize="small" style={{ color: "#25345C" }} />
-                    </IconButton>
-                  </FormControl>
+                  <Button
+                    round
+                    className="btn-round-active mr-2"
+                  >
+                    Request Video
+                  </Button>
+                  <CustomDateRangePicker/>
                 </GridItem>
               </GridContainer>
             </GridItem>
           </GridContainer>
-          {value === 0 && <InboxList />}
-          {value === 1 && <ResolvedList />}
-          {value === 2 && <Dismissed />}
-          {value === 3 && <Starred />}
+          {value === 0 && <Saved />}
+          {/*{value === 1 && <Requests />}*/}
+          {/*{value === 2 && <Starred />}*/}
         </GridItem>
       </GridContainer>
-    </div>
+    </>
   );
 }
 
-const mapStateToProps = ({ safety }) => {
+const mapStateToProps = ({safety}) => {
   return {
     showCrash: safety.showCrash
   };
@@ -200,4 +188,4 @@ const mapStateToProps = ({ safety }) => {
 const mapDispatchToProps = { 
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Safety);
+export default connect(mapStateToProps, mapDispatchToProps)(VideoRetrieval);
