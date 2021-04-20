@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "components/CustomButtons/Button";
@@ -11,7 +11,8 @@ import GridItem from "components/Grid/GridItem";
 import Card from '@material-ui/core/Card';
 import CameraCard from "./cameras/CameraCard";
 import GenPaginationV1 from "../../../../components/Pagination/GenPaginationV1";
-
+import {getCamerasData} from "../../../../reducers/safety";
+import {connect} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
@@ -60,19 +61,7 @@ const useStyles = makeStyles((theme) => ({
       marginRight: 8
     }
   },
-  textName: {
-    fontWeight: 'bold',
-    fontSize: '16px',
-    lineHeight: '24px',
-    color: '#25345C',
-    paddingLeft: "12px"
-  },
-  textBold: {
-    fontSize: '16px',
-    lineHeight: '21px',
-    color: "#25345C",
-    fontWeight: 700,
-  },
+
   chips: {
     fontWeight: 400,
     background: "#ECEEF0",
@@ -80,52 +69,18 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "12px",
     marginRight: 8
   },
-  tableRow: {
-    '&:nth-of-type(even)': {
-      backgroundColor: "#fbfbfb",
-    },
-  },
-  onHeaderRow: {
-    background: "#ECEEF0",
-  },
+
   gridTitle: {
     padding: "20px"
   },
-  onHeaderCellFirst: {
-    fontWeight: 700,
-    color: "#25345C",
-    paddingLeft: "28px"
-  },
-  onHeaderCellNext: {
-    fontWeight: 700,
-    color: "#25345C",
-  },
-  alignItemsCenter: {
-    display: "flex",
-    alignItems: "center",
-  },
+
   topHeader: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: 15
   },
-  topHeaderTitle: {
-    textAlign: "left",
-    fontWeight: 700,
-    fontSize: 18,
-    color: "#25345C",
-    padding: "0 16px !important"
-  },
-  topHeaderButton: {
-    textAlign: "right !important",
-    display: "flex",
-    alignItems: "center"
-  },
-  moreAction: {
-    background: "#FFFFFF !important",
-    border: "1px solid #ECEEF0 !important"
-  },
+
   button:{
     background: "#25345C !important",
     borderRadius: "28px !important",
@@ -137,46 +92,26 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold!important",
     width: "100%",
   },
-  userOnline: {
-    color: "green",
-    fontWeight: 700,
-  },
-  userOffline: {
-    color: "red",
-    fontWeight: 700,
-  },
+
   time: {
     color: "#C4C4C4",
   },
-  liveButton: {
-    background: '#ECEEF0!important',
-    borderRadius: "22px !important",
-    textTransform: "initial !important",
-    lineHeight: "17px !important",
-    fontStyle: "normal!important",
-    fontWeight: "bold!important",
-    color: "#25345C!important",
-    height: "30px",
-    border: "none !important",
-    marginLeft: "0px !important",
-    width: "60px",
-    position: "absolute",
-    top: "-5px",
+
+  pagination: {
+    marginTop: "20px",
+    padding: "0px !important",
+    "&>div":{
+      padding: '0px !important',
+    }
   },
+  card: {
+    borderRadius: "12px",
+  }
 
 }));
 
-export default function Cameras(props) {
+export function Cameras(props) {
   const classes = useStyles();
-
-  // const showTime = (time) => {
-  //   if (time<60){
-  //     return time;
-  //   }
-  //   else{
-  //     return
-  //   }
-  // }
 
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Cycle Tomorrow'},
@@ -191,57 +126,15 @@ export default function Cameras(props) {
     setChipData([])
   }
 
-  const usersData = {
-    user1: {
-      series: 154,
-      place: "West Carolina IIL",
-      name: 'John Ursul',
-      status: {
-        name: "Update",
-        online: true,
-        time: 5,
-      }
-    },
-
-    user2: {
-      series: 112,
-      place: "Florida, L2",
-      name: 'Markus Hennry',
-      status: {
-        name: "Update",
-        online: false,
-        time: 21,
-      }
-    },
-
-    user3: {
-      series: 234,
-      place: "New York, B1 LL",
-      name: 'Erick Danko',
-      status: {
-        name: "Update",
-        online: false,
-        time: 11,
-      }
-    },
-
-    user4: {
-      series: 323,
-      place: "San Francisco, K1",
-      name: 'Ricardo Santaro',
-      status: {
-        name: "Update",
-        online: false,
-        time: 11,
-      }
-    },
-  }
+  React.useEffect(() => {
+    props.getCamerasData()
+  }, []);
 
   return (
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
-          <Card>
+          <Card className={classes.card}>
             <Grid container className={classes.gridTitle}>
               <Grid item xs={12} sm={12} md={6}>
                 <Grid container className={classes.headContainer}>
@@ -270,21 +163,40 @@ export default function Cameras(props) {
             </Grid>
 
             <Grid container>
-                <CameraCard series={usersData.user1.series} place={usersData.user1.place} name={usersData.user1.name} status={usersData.user1.status}/>
-                <CameraCard series={usersData.user2.series} place={usersData.user2.place} name={usersData.user2.name} status={usersData.user2.status}/>
-                <CameraCard series={usersData.user3.series} place={usersData.user3.place} name={usersData.user3.name} status={usersData.user3.status}/>
-                <CameraCard series={usersData.user4.series} place={usersData.user4.place} name={usersData.user4.name} status={usersData.user4.status}/>
-                <CameraCard series={usersData.user1.series} place={usersData.user1.place} name={usersData.user1.name} status={usersData.user1.status}/>
-                <CameraCard series={usersData.user2.series} place={usersData.user2.place} name={usersData.user2.name} status={usersData.user2.status}/>
-                <CameraCard series={usersData.user3.series} place={usersData.user3.place} name={usersData.user3.name} status={usersData.user3.status}/>
-                <CameraCard series={usersData.user4.series} place={usersData.user4.place} name={usersData.user4.name} status={usersData.user4.status}/>
+              { props.data && props.data.length > 0 &&
+                <>
+                  <CameraCard series={props.data[0].series} place={props.data[0].place} name={props.data[0].name} img = {props.data[0].img} status={props.data[0].status}/>
+                  <CameraCard series={props.data[1].series} place={props.data[1].place} name={props.data[1].name} img = {props.data[1].img} status={props.data[1].status}/>
+                  <CameraCard series={props.data[2].series} place={props.data[2].place} name={props.data[2].name} img = {props.data[2].img} status={props.data[2].status}/>
+                  <CameraCard series={props.data[3].series} place={props.data[3].place} name={props.data[3].name} img = {props.data[3].img} status={props.data[3].status}/>
+                  <CameraCard series={props.data[0].series} place={props.data[0].place} name={props.data[0].name} img = {props.data[0].img} status={props.data[0].status}/>
+                  <CameraCard series={props.data[1].series} place={props.data[1].place} name={props.data[1].name} img = {props.data[1].img} status={props.data[1].status}/>
+                  <CameraCard series={props.data[2].series} place={props.data[2].place} name={props.data[2].name} img = {props.data[2].img} status={props.data[2].status}/>
+                  <CameraCard series={props.data[3].series} place={props.data[3].place} name={props.data[3].name} img = {props.data[3].img} status={props.data[3].status}/>
+                </>
+              }
             </Grid>
 
           </Card>
-          <GenPaginationV1 pageSize={1} total={3}/>
+          <Grid item xs={12} sm={12} md={12} className={classes.pagination}>
+            <GenPaginationV1 pageSize={1} total={3}/>
+          </Grid>
         </GridItem>
       </GridContainer>
     </div>
   );
 }
+
+const mapStateToProps = ({safety}) => {
+  console.log(safety.cameras);
+  return {
+    data: safety.cameras.data,
+  };
+};
+
+const mapDispatchToProps = {
+  getCamerasData
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cameras);
 

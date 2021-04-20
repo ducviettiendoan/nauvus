@@ -18,21 +18,7 @@ import LiveIconGreen from "../../../../../components/Icons/LiveIconGreen";
 
 
 const useStyles = makeStyles((theme) => ({
-  userRolesTitle: {
-    fontSize: 16,
-    color: "#25345C",
-    fontWeight: 700,
-    paddingRight: "8px !important"
-  },
-  selected: {
-    height: 24,
-    width: "auto",
-    background: "#ECEEF0 !important",
-    borderRadius: 28,
-    color: "#25345C !important",
-    display: "flex",
-    alignItems: "center",
-  },
+
   clearAll: {
     textTransform: "none",
     color: "#8097D8",
@@ -45,91 +31,14 @@ const useStyles = makeStyles((theme) => ({
       color: "#25345C"
     }
   },
-  chipSelected: {
-    display: "flex",
-    alignItems: "center",
-    paddingLeft: "0px !important"
-  },
-  headContainer: {
-    alignItems: "center",
-    textAlign: "left",
-    marginTop: "8px"
-  },
-  headLeft: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    "& > div": {
-      marginBottom: "0 !important",
-      marginRight: 8
-    }
-  },
-  textName: {
-    fontWeight: 'bold',
-    fontSize: '16px',
-    lineHeight: '24px',
-    color: '#25345C',
-    paddingLeft: "12px"
-  },
-  textBold: {
-    fontSize: '16px',
-    lineHeight: '21px',
-    color: "#25345C",
-    fontWeight: 700,
-  },
-  chips: {
-    fontWeight: 400,
-    background: "#ECEEF0",
-    color: "#25345C",
-    fontSize: "12px",
-    marginRight: 8
-  },
-  tableRow: {
-    '&:nth-of-type(even)': {
-      backgroundColor: "#fbfbfb",
-    },
-  },
-  onHeaderRow: {
-    background: "#ECEEF0",
-  },
-  gridTitle: {
-    padding: "20px"
-  },
-  onHeaderCellFirst: {
-    fontWeight: 700,
-    color: "#25345C",
-    paddingLeft: "28px"
-  },
-  onHeaderCellNext: {
-    fontWeight: 700,
-    color: "#25345C",
-  },
-  alignItemsCenter: {
-    display: "flex",
-    alignItems: "center",
-  },
+
   topHeader: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: 15
   },
-  topHeaderTitle: {
-    textAlign: "left",
-    fontWeight: 700,
-    fontSize: 18,
-    color: "#25345C",
-    padding: "0 16px !important"
-  },
-  topHeaderButton: {
-    textAlign: "right !important",
-    display: "flex",
-    alignItems: "center"
-  },
-  moreAction: {
-    background: "#FFFFFF !important",
-    border: "1px solid #ECEEF0 !important"
-  },
+
   onlineButton:{
     background: "#25345C !important",
     borderRadius: "28px !important",
@@ -180,26 +89,37 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     top: "5px",
     left: "25px",
-  }
+  },
+  liveButtonPosition: {
+    position: "relative",
+    marginBottom: 40
+  },
+  cardFont: {
+    fontSize: "14px",
+    fontWeight: 400,
+  },
+  cardFirstLine: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: 'center',
+    marginTop: "12px",
+  },
+  lineHeight: {
+    paddingTop: "12px",
+  },
+  cardLastLine: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: 'center',
+    marginTop: '12px',
+    marginBottom: "21px",
+  },
+
 }));
 
 export default function CameraCard(props) {
-  const {series,place,name,status} = props;
+  const {series,place,name,img,status} = props;
   const classes = useStyles();
-
-  const [chipData, setChipData] = React.useState([
-    {key: 0, label: 'Cycle Tomorrow'},
-    {key: 1, label: 'Cycle Remaining'},
-  ]);
-
-  const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
-  };
-
-  const handleClearAll = () => {
-    setChipData([])
-  }
-
 
   const userStatus = status.online ? <div className={classes.userOnline}>Driving</div> : <div className={classes.userOffline}>Offline</div>;
   const showLiveButton = status.online ?
@@ -211,7 +131,7 @@ export default function CameraCard(props) {
     null;
   const showDetailButton = status.online ?
     <Button round className={classes.onlineButton}>
-      Update Settings
+      Copy Details
     </Button>
     :
     <Button round className={classes.offlineButton}>
@@ -219,23 +139,23 @@ export default function CameraCard(props) {
     </Button>
 
   return (
-        <GridItem xs={12} sm={6} md={4} lg={3} style={{position: "relative", marginBottom: 40}}>
+        <GridItem xs={12} sm={6} md={4} lg={3} className={classes.liveButtonPosition}>
           {showLiveButton}
           <img
             style={{ width: "100%"}}
-            src={Driver}
+            src={img}
             alt="picture"
           />
-          <Grid container style={{ fontSize: "14px", fontWeight: 400}}>
-            <Grid item xs={12} style={{display: "flex", justifyContent: "space-between", alignItems: 'center'}}>
+          <Grid container className={classes.cardFont}>
+            <Grid item xs={12} className={classes.cardFirstLine}>
               {series}
               {userStatus}
             </Grid>
-            <Grid item xs={12}>{place}</Grid>
-            <Grid item xs={12}>{name}</Grid>
-            <Grid item xs={12} style={{display: "flex", justifyContent: "space-between", alignItems: 'center'}}>
+            <Grid item xs={12} className={classes.lineHeight}>{place}</Grid>
+            <Grid item xs={12} className={classes.lineHeight}>{name}</Grid>
+            <Grid item xs={12} className={classes.cardLastLine}>
               {status.name}
-              <div className={classes.time}>{status.time} min ago</div>
+              <div className={classes.time}>{status.time} ago</div>
             </Grid>
             {showDetailButton}
           </Grid>

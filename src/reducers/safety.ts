@@ -7,11 +7,13 @@ export const ACTION_TYPES = {
   SET_SHOW_CRASH: "safety/SET_SHOW_CRASH",
   GET_SAFETY_COACHING_DRIVER_QUEUE: "safety/GET_SAFETY_COACHING_DRIVER_QUEUE",
   GET_SAFETY_DASH_CAM: "safety/GET_SAFETY_DASH_CAM",
+  GET_SAFETY_CAMERAS: "safety/GET_SAFETY_CAMERAS",
 };
 
 const initialState = {
   coachingDriverQueue: [],
   dashCam: [],
+  cameras: [],
   errorMessage: null,
   loading: false,
   showCrash: true,
@@ -25,6 +27,7 @@ export default (state: SafetyState = initialState, action): SafetyState => {
     case REQUEST(ACTION_TYPES.GET_USER_ROLES):
     case REQUEST(ACTION_TYPES.GET_SAFETY_COACHING_DRIVER_QUEUE):
     case REQUEST(ACTION_TYPES.GET_SAFETY_DASH_CAM):
+    case REQUEST(ACTION_TYPES.GET_SAFETY_CAMERAS):
       return {
         ...state,
         loading: true,
@@ -32,6 +35,7 @@ export default (state: SafetyState = initialState, action): SafetyState => {
     case FAILURE(ACTION_TYPES.GET_USER_ROLES):
     case FAILURE(ACTION_TYPES.GET_SAFETY_COACHING_DRIVER_QUEUE):
     case FAILURE(ACTION_TYPES.GET_SAFETY_DASH_CAM):
+    case FAILURE(ACTION_TYPES.GET_SAFETY_CAMERAS):
       return {
         ...state,
         loading: false,
@@ -54,6 +58,13 @@ export default (state: SafetyState = initialState, action): SafetyState => {
       return {
         ...state,
         dashCam: action.payload.data
+      };
+    }
+
+    case SUCCESS(ACTION_TYPES.GET_SAFETY_CAMERAS): {
+      return {
+        ...state,
+        cameras: action.payload.data,
       };
     }
 
@@ -89,3 +100,11 @@ export const getDashCamData = (request) => async (dispatch) => {
     payload: axios.post("api/safety/dash-cam", request),
   });
 };
+
+export const getCamerasData = (request) => async (dispatch) => {
+  dispatch({
+    type: ACTION_TYPES.GET_SAFETY_CAMERAS,
+    payload: axios.post("api/safety/cameras", request),
+  });
+};
+
