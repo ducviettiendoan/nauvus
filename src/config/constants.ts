@@ -13,11 +13,12 @@ export const VERSION = "0.1.beta3";
 
 export const ROUTE_PATH = {
     ADMIN: '/admin',
+    SAFETY: '/safety',
     AUTH: '/a',
     USER: '/u',
     SETTING: '/s',
     OVERVIEW: '/o',
-    DISPATCH: '/d'
+    DISPATCH: '/d',
 };
 
 export const AUTHORITIES = {
