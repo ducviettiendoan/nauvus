@@ -1,4 +1,4 @@
-import { ROUTE_PATH } from "config/constants";
+import {ROUTE_PATH} from "config/constants";
 
 import Overview from "views/pages/user/overview/Overview";
 import VehicleDetails from "views/pages/user/overview/vehicle/VehicleDetails"
@@ -57,8 +57,6 @@ import SettingsIcon from "components/Icons/SettingsIcon";
 
 import StatusGreenIcon from "components/Icons/StatusGreenIcon";
 import StatusRedIcon from "components/Icons/StatusRedIcon";
-
-import VehicleRegisterPage from "views/pages/auth/VehicleRegisterPage";
 
 const dashRoutes = [
   {
@@ -134,53 +132,46 @@ const dashRoutes = [
     name: "Safety",
     icon: SafetyIcon,
     state: "safetyCollapse",
-    layout: ROUTE_PATH.USER,
+    layout: ROUTE_PATH.SAFETY,
     views: [
       {
-        path: "/safety/inbox/crash/:id",
+        // path: "/inbox/crash/:id",
+        path: "/crash",
         name: "Crash",
         component: SafetyInboxCrash,
-        layout: ROUTE_PATH.USER,
-        isFixed: true,
+        layout: ROUTE_PATH.SAFETY,
+        // isFixed: true,
       },
       {
-        path: "/safety/inbox",
+        path: "/inbox",
         name: "Safety Inbox",
         component: Safety,
-        layout: ROUTE_PATH.USER
+        layout: ROUTE_PATH.SAFETY
       },
       {
-        path: '/safety/inbox/crash',
-        name: "SafetyInboxCrash",
-        component: SafetyInboxCrash,
-        layout: ROUTE_PATH.USER,
-        isFixed: true,
-      },
-
-      {
-        path: "/safety/coaching",
+        path: "/coaching",
         name: "Coaching",
         component: Coaching,
-        layout: ROUTE_PATH.USER
+        layout: ROUTE_PATH.SAFETY
       },
 
       {
-        path: "/safety/dash-cam",
+        path: "/dash-cam",
         name: "Dash Cam",
         component: DashCam,
-        layout: ROUTE_PATH.USER
+        layout: ROUTE_PATH.SAFETY
       },
       {
-        path: "/safety/cameras",
+        path: "/cameras",
         name: "Cameras",
         component: Cameras,
-        layout: ROUTE_PATH.USER
+        layout: ROUTE_PATH.SAFETY
       },
       {
         path: "/safety/video-retrieval",
         name: "Video Library",
         component: VideoRetrieval,
-        layout: ROUTE_PATH.USER,
+        layout: ROUTE_PATH.SAFETY,
       },
       {
         path: "/retrieval",
@@ -189,17 +180,17 @@ const dashRoutes = [
         layout: ROUTE_PATH.USER,
       },
       {
-        path: "/safety/driver-assignment/:id",
+        path: "/driver-assignment/:id",
         name: "Driver Assignment Details",
         component: UnassignedDetail,
-        layout: ROUTE_PATH.USER,
+        layout: ROUTE_PATH.SAFETY,
         isFixed: true
       },
       {
-        path: "/safety/driver-assignment",
+        path: "/driver-assignment",
         name: "Driver Assignment",
         component: DriverAssignment,
-        layout: ROUTE_PATH.USER
+        layout: ROUTE_PATH.SAFETY
       },
     ]
   },

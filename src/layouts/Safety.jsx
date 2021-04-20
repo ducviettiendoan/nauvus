@@ -30,7 +30,7 @@ var ps;
 
 const useStyles = makeStyles(styles);
 
-export function Dashboard(props) {
+export function Safety(props) {
   const history = useHistory();
   const { ...rest } = props;
   // states and functions
@@ -44,7 +44,15 @@ export function Dashboard(props) {
   const [logo, setLogo] = React.useState(require("assets/img/logo_nauvus.svg"));
 
   const [fetchSession, setFetchSession] = React.useState(true);
+  const safetyInbox = window.location.pathname.indexOf("/safety/inbox/crash");
 
+  React.useEffect(() => {
+    if (safetyInbox !== -1) {
+      setMiniActive(true);
+    } else {
+      setMiniActive(false);
+    }
+  }, [safetyInbox]);
   // styles
   const classes = useStyles();
   const mainPanelClasses =
@@ -147,7 +155,7 @@ export function Dashboard(props) {
       if (prop.collapse) {
         return getRoutes(prop.views);
       }
-      if (prop.layout === ROUTE_PATH.USER) {
+      if (prop.layout === ROUTE_PATH.SAFETY) {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -270,4 +278,4 @@ const mapDispatchToProps = {
   getUserInfo
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Safety);
