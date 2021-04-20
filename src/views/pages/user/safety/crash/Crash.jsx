@@ -149,7 +149,7 @@ const useStyles = makeStyles({
 
 function Crash(props) {
   const classes = useStyles();
-  const [view, setView] = React.useState(true);
+  const [view, setView] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   useEffect(() => { props.setShowButtonBack(true) }, []);
 
@@ -354,7 +354,7 @@ function Crash(props) {
           <h3 className={classes.title}>31 km/h - Limit 100</h3>
           <GridContainer>
             <GridItem md={6}>
-              <img className={classes.crashImage} src={crashImage} />
+              <img className={classes.crashImage} onClick={() => setView(true)} src={crashImage} />
             </GridItem>
             <GridItem md={6}>
               <img className={classes.crashImage} src={crashImage} />
