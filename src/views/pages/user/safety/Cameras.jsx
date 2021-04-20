@@ -270,21 +270,14 @@ export default function Cameras(props) {
             </Grid>
 
             <Grid container>
-              {/*1st column*/}
-              <GridItem xs={12} sm={12} sm={12} style={{display: 'flex'}}>
                 <CameraCard series={usersData.user1.series} place={usersData.user1.place} name={usersData.user1.name} status={usersData.user1.status}/>
                 <CameraCard series={usersData.user2.series} place={usersData.user2.place} name={usersData.user2.name} status={usersData.user2.status}/>
                 <CameraCard series={usersData.user3.series} place={usersData.user3.place} name={usersData.user3.name} status={usersData.user3.status}/>
                 <CameraCard series={usersData.user4.series} place={usersData.user4.place} name={usersData.user4.name} status={usersData.user4.status}/>
-              </GridItem>
-
-              {/*2nd column*/}
-              <GridItem xs={12} sm={12} sm={12} style={{display: 'flex', marginTop: "30px"}}>
                 <CameraCard series={usersData.user1.series} place={usersData.user1.place} name={usersData.user1.name} status={usersData.user1.status}/>
                 <CameraCard series={usersData.user2.series} place={usersData.user2.place} name={usersData.user2.name} status={usersData.user2.status}/>
                 <CameraCard series={usersData.user3.series} place={usersData.user3.place} name={usersData.user3.name} status={usersData.user3.status}/>
                 <CameraCard series={usersData.user4.series} place={usersData.user4.place} name={usersData.user4.name} status={usersData.user4.status}/>
-              </GridItem>
             </Grid>
 
           </Card>

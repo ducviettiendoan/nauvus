@@ -219,11 +219,10 @@ export default function CameraCard(props) {
     </Button>
 
   return (
-    <div>
-        <GridItem xs={12} sm={12} sm={12} style={{position: "relative"}}>
+        <GridItem xs={12} sm={6} md={4} lg={3} style={{position: "relative", marginBottom: 40}}>
           {showLiveButton}
           <img
-            style={{ width: "100%", height: "300px"}}
+            style={{ width: "100%"}}
             src={Driver}
             alt="picture"
           />
@@ -241,7 +240,6 @@ export default function CameraCard(props) {
             {showDetailButton}
           </Grid>
         </GridItem>
-    </div>
   );
 }
 
