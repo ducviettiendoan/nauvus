@@ -1,4 +1,4 @@
-import { ROUTE_PATH } from "config/constants";
+import {ROUTE_PATH} from "config/constants";
 
 import Overview from "views/pages/user/overview/Overview";
 import VehicleDetails from "views/pages/user/overview/vehicle/VehicleDetails"
@@ -134,11 +134,12 @@ const dashRoutes = [
     layout: ROUTE_PATH.SAFETY,
     views: [
       {
-        path: "/inbox/crash/:id",
+        // path: "/inbox/crash/:id",
+        path: "/crash",
         name: "Crash",
         component: SafetyInboxCrash,
         layout: ROUTE_PATH.SAFETY,
-        isFixed: true,
+        // isFixed: true,
       },
       {
         path: "/inbox",
@@ -146,14 +147,6 @@ const dashRoutes = [
         component: Safety,
         layout: ROUTE_PATH.SAFETY
       },
-      {
-        path: '/inbox/crash',
-        name: "SafetyInboxCrash",
-        component: SafetyInboxCrash,
-        layout: ROUTE_PATH.SAFETY,
-        isFixed: true,
-      },
-
       {
         path: "/coaching",
         name: "Coaching",
