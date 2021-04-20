@@ -1,5 +1,8 @@
 import mock from "../utils/axios-mock";
-import Driver from"assets/img/bg-driving.png";
+import Driver1 from "assets/img/driver-01.png";
+import Driver2 from "assets/img/driver-02.png";
+import Driver3 from "assets/img/driverError.png";
+import Driver4 from "assets/img/driver-04.png";
 
 mock.onPost("/api/safety/coaching-driver-queue").reply((config) => {
     let pageSize = 10;
@@ -165,7 +168,7 @@ mock.onPost("/api/safety/cameras").reply((config) => {
             series: 154,
             place: "West Carolina IIL",
             name: 'John Ursul',
-            img: Driver,
+            img: Driver1,
             status: {
                 name: "Update",
                 online: true,
@@ -179,7 +182,7 @@ mock.onPost("/api/safety/cameras").reply((config) => {
             series: 112,
             place: "Florida, L2",
             name: 'Markus Hennry',
-            img: Driver,
+            img: Driver2,
             status: {
                 name: "Update",
                 online: false,
@@ -193,7 +196,7 @@ mock.onPost("/api/safety/cameras").reply((config) => {
             series: 234,
             place: "New York, B1 LL",
             name: 'Erick Danko',
-            img: Driver,
+            img: Driver3,
             status: {
                 name: "Update",
                 online: false,
@@ -207,7 +210,7 @@ mock.onPost("/api/safety/cameras").reply((config) => {
             series: 323,
             place: "San Francisco, K1",
             name: 'Ricardo Santaro',
-            img: Driver,
+            img: Driver4,
             status: {
                 name: "Update",
                 online: false,

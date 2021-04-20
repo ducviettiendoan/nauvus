@@ -2,20 +2,9 @@ import React from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "components/CustomButtons/Button";
-import ToolboxButton from "components/CustomButtons/ToolboxButton";
-import CloseIcon from "components/Icons/CloseIcon";
-import Chip from "@material-ui/core/Chip";
 import Grid from '@material-ui/core/Grid';
-import Table from "components/Table/TableV1";
-import {IRootState} from 'reducers';
-import {connect} from 'react-redux';
-import {getDriverHOS, getViolations} from "reducers/compliance";
-import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
-import Card from '@material-ui/core/Card';
-import Driver from"assets/img/bg-driving.png";
-import LiveIconGreen from "../../../../../components/Icons/LiveIconGreen";
-
+import LiveIconGreen from "components/Icons/LiveIconGreen";
 
 const useStyles = makeStyles((theme) => ({
 
@@ -78,7 +67,6 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "22px !important",
     textTransform: "initial !important",
     lineHeight: "17px !important",
-    /* font-family: Lato!important; */
     fontStyle: "normal!important",
     fontWeight: "bold!important",
     color: "#25345C!important",
@@ -89,10 +77,13 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     top: "5px",
     left: "25px",
+    "&>span>svg": {
+      marginRight: "0px !important",
+    }
   },
   liveButtonPosition: {
     position: "relative",
-    marginBottom: 40
+    marginBottom: 40,
   },
   cardFont: {
     fontSize: "14px",
@@ -118,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CameraCard(props) {
-  const {series,place,name,img,status} = props;
+  const {id,series,place,name,img,status} = props;
   const classes = useStyles();
 
   const userStatus = status.online ? <div className={classes.userOnline}>Driving</div> : <div className={classes.userOffline}>Offline</div>;
@@ -135,17 +126,20 @@ export default function CameraCard(props) {
     </Button>
     :
     <Button round className={classes.offlineButton}>
-      Update Settings
+      Copy Details
     </Button>
+
 
   return (
         <GridItem xs={12} sm={6} md={4} lg={3} className={classes.liveButtonPosition}>
           {showLiveButton}
+
           <img
             style={{ width: "100%"}}
             src={img}
             alt="picture"
           />
+
           <Grid container className={classes.cardFont}>
             <Grid item xs={12} className={classes.cardFirstLine}>
               {series}
