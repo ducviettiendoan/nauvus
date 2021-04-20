@@ -11,8 +11,7 @@ import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import ByAsset from "./live-sharing/ByAsset";
 import ByLocation from "./live-sharing/ByLocation";
 import ByRecurringRoute from "./live-sharing/ByRecurringRoute";
-import DiaLog from "../../../../../components/CustomDialog/Dialog";
-import AddAddressForm from "../fleet/addresses-geofences/AddAddressForm";
+import DiaLog from "components/CustomDialog/Dialog";
 import AddNewURLForm from "./live-sharing/AddNewURLForm";
 
 const styles = {
@@ -67,16 +66,28 @@ export default function LiveSharing() {
   const classes = useStyles();
 
   const [value, setValue] = React.useState(0);
+  const [dialogValue, setDialogValue] = React.useState(0)
   const [openAdd, setOpenAdd] = useState(false);
 
   const handleChangeTab = (newValue) => {
     setValue(newValue);
   };
 
+  const handleChangeDialogTab = (newValue) => {
+    setDialogValue(newValue);
+  };
+
   return (
     <>
       <DiaLog
-        renderTitle={<h3 className={classes.dialogTitle}>Create a new URL</h3>}
+        renderTitle={
+          <>
+            <h3 className={classes.dialogTitle}>Create a new URL</h3>
+            <div className={classes.dialogTitle}>
+            <RoundedTabs tabs={["For Asset(S)", "For A Location", "For A Recurring Route"]} tabValue={handleChangeDialogTab}/>
+            </div>
+            </>
+        }
         handleClose={() => {
           setOpenAdd(false)
         }
@@ -84,6 +95,7 @@ export default function LiveSharing() {
         open={openAdd}
       >
         <AddNewURLForm
+          dialogValue={dialogValue}
           handleClose={() => {
           setOpenAdd(false)
         }}/>
