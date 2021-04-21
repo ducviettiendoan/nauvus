@@ -1,18 +1,26 @@
-import React, {useState} from "react";
-import {makeStyles} from "@material-ui/core/styles";
-import {Form} from "react-final-form";
+import React, { useState } from "react";
+// core components
+import GridContainer from "components/Grid/GridContainer.js";
+import GridItem from "components/Grid/GridItem.js";
+import { makeStyles } from "@material-ui/core/styles";
+import { Form } from "react-final-form";
 import Select from "components/CustomSelect/Select";
 import Button from "components/CustomButtons/Button";
-import {Col, Row} from "reactstrap";
+import { Col, Row } from "reactstrap";
 import CustomInput from "components/CustomInput/CustomInput";
-import Card from "components/Card/Card";
-import CardBody from "components/Card/CardBody";
-import availablefootage from "assets/img/availablefootage.png"
 import CustomTimeline from "components/CustomTimeline/CustomTimeline";
-import {GoogleMap, withGoogleMap, withScriptjs} from "react-google-maps";
-import {GOOGLE_MAP_API_KEY} from "config/constants";
+import TruckIcon from "components/Icons/TruckIcon"
+// utils
+import { GoogleMap, withGoogleMap, withScriptjs } from "react-google-maps";
+import { GOOGLE_MAP_API_KEY } from "config/constants";
+import driver from "assets/img/driver.png";
+import { Grid } from "@material-ui/core";
+
 
 const styles = {
+  root: {
+    width: 650
+  },
   formRow: {
     marginBottom: 16
   },
@@ -70,9 +78,6 @@ const styles = {
     width: "100%",
     paddingTop: "24px",
   },
-  footage: {
-    width: 500
-  },
   mapDemo: {
     width: 250
   },
@@ -88,7 +93,7 @@ const styles = {
     lineHeight: "18px",
     color: "#B4B4B4",
     fontWeight: "400",
-    marginBottom: 4,
+    marginBottom: 4
   },
   tripContainer: {
     marginBottom: "12px !important"
@@ -105,7 +110,15 @@ const styles = {
   selectLabel: {
     top: "0px !important"
   },
+  driverName: {
+    fontSize: "16px",
+    lineHeight: "21px",
+    color: "#25345C",
+    paddingLeft: "6px",
+    fontWeight: 700
+  }
 }
+
 const useStyles = makeStyles(styles);
 
 const RegularMap = withScriptjs(
@@ -124,7 +137,7 @@ const RegularMap = withScriptjs(
   })
 );
 
-export default function TripHistoryDialog(props) {
+export default function AssignDriverDialog(props) {
   const classes = useStyles()
 
   const [selectValue, setSelectValue] = useState({
@@ -141,7 +154,7 @@ export default function TripHistoryDialog(props) {
     return errors;
   };
 
-  const vehicleOptions = [
+  const driverOptions = [
     {
       label: (
         <div className={classes.alignItemsCenter}>
@@ -227,40 +240,40 @@ export default function TripHistoryDialog(props) {
 
   const renderMap = () => {
     return (
-      <div style={{position: 'relative'}}>
+      <div style={{ position: 'relative' }}>
         <RegularMap
           googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAP_API_KEY}`}
-          loadingElement={<div style={{height: 280}}/>}
-          containerElement={<div/>}
-          mapElement={<div style={{height: 280, borderRadius: 12}}/>}
+          loadingElement={<div style={{ height: 280 }} />}
+          containerElement={<div />}
+          mapElement={<div style={{ height: 280, borderRadius: 12 }} />}
           isMarkerShown
           data={props.vehicles}
-          center={{lat: 40.748817, lng: -73.985428}}
+          center={{ lat: 40.748817, lng: -73.985428 }}
         />
       </div>
     )
   }
 
   return (
-    <div>
+    <div className={classes.root}>
       <Form
-        style={{overflow: "unset"}}
+        style={{ overflow: "unset" }}
         onSubmit={onSubmit}
         validate={validate}
-        render={({handleSubmit, reset, submitting, pristine, values}) => {
+        render={({ handleSubmit, reset, submitting, pristine, values }) => {
           return (
             <form onSubmit={handleSubmit} noValidate>
               <Row style={{ alignItems: "center", }}>
                 <Col>
                   <Select
-                    label="Vehicle"
+                    label="Driver"
                     labelProps={{
                       classes: { root: classes.selectLabel }
                     }}
                     name="driver"
                     fullWidth={true}
                     defaultValue={"Value1"}
-                    options={vehicleOptions}
+                    options={driverOptions}
                     placeholder="Start typing..."
                     SelectProps={{ isClearable: false }}
                     onChange={(value) => {
@@ -279,20 +292,19 @@ export default function TripHistoryDialog(props) {
                       placeholder: "Enter assets",
                       onChange: handleInputChange,
                       defaultValue: "Mar 22, 2021",
-                      classes: {input: classes.textInputRoot},
+                      classes: { input: classes.textInputRoot },
                     }}
                     labelProps={{
                       shrink: true,
-                      classes: {root: classes.textFieldRoot}
+                      classes: { root: classes.textFieldRoot }
                     }}
                   />
                 </Col>
               </Row>
-              <Card>
-                <CardBody>
-                  <img src={availablefootage} className={classes.footage}/>
-                </CardBody>
-              </Card>
+              <Grid xs={12} md={12} xl={6}>
+                <img src={driver} style={{ width: "100%" }} />
+              </Grid>
+
               <Row style={{ alignItems: "center" }}>
                 <Col>
                   <CustomInput
@@ -305,11 +317,11 @@ export default function TripHistoryDialog(props) {
                       placeholder: "Enter time",
                       onChange: handleInputChange,
                       defaultValue: "11:37 AM",
-                      classes: {input: classes.textInputRoot},
+                      classes: { input: classes.textInputRoot },
                     }}
                     labelProps={{
                       shrink: true,
-                      classes: {root: classes.textFieldRoot}
+                      classes: { root: classes.textFieldRoot }
                     }}
                   />
                 </Col>
@@ -319,9 +331,8 @@ export default function TripHistoryDialog(props) {
                     labelProps={{
                       classes: { root: classes.selectLabel }
                     }}
-                    name="driver"
                     fullWidth={true}
-                    defaultValue={"Value1"}
+                    defaultValue={null}
                     options={durationOptions}
                     placeholder="Start typing..."
                     SelectProps={{ isClearable: false }}
@@ -345,6 +356,10 @@ export default function TripHistoryDialog(props) {
                         }}
                       />
                     </div>
+                  </div>
+                  <div style={{ display: "flex", paddingLeft: "30px", alignItems: "center" }}>
+                    <TruckIcon />
+                    <div className={classes.driverName}>Bashir Said Isse</div>
                   </div>
                 </Col>
               </Row>

@@ -4,7 +4,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import Button from "components/CustomButtons/Button";
 import Grid from '@material-ui/core/Grid';
 import {connect} from 'react-redux';
-import {getDashCamData} from "reducers/safety";
+import {getDashCamData} from "../../../../reducers/safety";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
 import Calendar from "../../../../components/Calendar/Calendar";
@@ -189,6 +189,16 @@ export function DashCam(props) {
     console.log(page, pageSize)
   }
 
+  const [dataA, setDataA] = React.useState(null)
+  const [dataB, setDataB] = React.useState([])
+
+  if (props.data) {
+    console.log("true")
+  }
+
+  const dataReturn = props.data;
+  console.log(dataReturn)
+
   return (
     <div>
 
@@ -244,7 +254,7 @@ export function DashCam(props) {
 }
 
 const mapStateToProps = ({safety}) => {
-  console.log(safety.dashCam)
+  // console.log(safety.dashCam)
   return {
     data: safety.dashCam.data,
     page: safety.dashCam.page,

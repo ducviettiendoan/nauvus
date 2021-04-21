@@ -13,7 +13,8 @@ import CustomTimeline from "components/CustomTimeline/CustomTimeline"
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import Calendar from "components/Calendar/Calendar";
 import Assigned from "../Assigned";
-
+import DiaLog from "components/CustomDialog/Dialog";
+import AssignDriverDialog from "./AssignDriverDialog"
 // utils
 import { getUnassignedDetailsData } from "reducers/safety"
 import avatar from "assets/img/faces/avatar.jpg";
@@ -197,6 +198,23 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-end"
   },
+  dialogHeader: {
+    padding: "4px 16px 16px 16px"
+  },
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    margin: "24px",
+    textAlign: "center"
+  },
+  dialogSubTitle: {
+    fontWeight: "bold",
+    fontSize: "14px",
+    color: "#B4B4B4",
+    textAlign: "center"
+  },
 }))
 
 function UnassignedDetails(props) {
@@ -288,6 +306,17 @@ function UnassignedDetails(props) {
     }
   ]
 
+  // dialog states
+  const [openDialog, setOpenDialog] = React.useState(false)
+
+  const handleOpen = () => {
+    setOpenDialog(!openDialog)
+  }
+
+  const handleClose = () => {
+    setOpenDialog(false)
+  }
+
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
@@ -301,6 +330,7 @@ function UnassignedDetails(props) {
                 <Button
                   round
                   className="btn-round-active mr-2 h-41"
+                  onClick={handleOpen}
                 >
                   Ungroup by Vehicle
                 </Button>
@@ -379,6 +409,17 @@ function UnassignedDetails(props) {
 
           </GridItem>
         </GridContainer>
+        <DiaLog
+          maxWidth={"md"}
+          renderTitle={<div className={classes.dialogHeader}>
+            <h3 className={classes.dialogTitle}>Assign a driver</h3>
+            <h4 className={classes.dialogSubTitle}>Match trips with the driver to get more accurate insights on your fleet</h4>
+          </div>}
+          handleClose={handleClose}
+          open={openDialog}
+        >
+          <AssignDriverDialog close={handleClose} />
+        </DiaLog>
       </GridItem>
     </GridContainer>
   )
