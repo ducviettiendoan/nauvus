@@ -76,6 +76,13 @@ const vehicleSidebarContentStyle = ((theme) => ({
     fontSize: '14px',
     color: '#B4B4B4',
   },
+
+  sensorDataTitle2: {
+    fontWeight: 400,
+    fontSize: '16px',
+    color: '#B4B4B4',
+  },
+
   sensorData: {
     fontWeight: 700,
     fontSize: '14px',
@@ -86,7 +93,14 @@ const vehicleSidebarContentStyle = ((theme) => ({
     display: "flex",
     alignItems: "center",
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+  },
+  diagContent2: {
+    padding: "15px 15px 8px 15px",
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   viewAllDiag: {
     fontWeight: 700,
@@ -135,5 +149,71 @@ const vehicleSidebarContentStyle = ((theme) => ({
     marginRight: -10,
     marginTop: 13,
   },
+  chips: {
+    fontWeight: 400,
+    background: "#ECEEF0",
+    color: "#B4B4B4",
+    fontSize: "12px",
+  },
+  topHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 15
+  },
+  topHeaderTitle: {
+    textAlign: "left",
+    fontWeight: 700,
+    fontSize: 18,
+    color: "#25345C",
+    padding: "0 16px !important"
+  },
+  topHeaderButton: {
+    textAlign: "right !important",
+    display: "flex",
+    alignItems: "center"
+  },
+  gridTitle: {
+    padding: "20px"
+  },
+  tableTitle: {
+    display: "flex",
+    justifyContent: "center",
+    fontFamily: "Lato",
+    fontSize: "16px",
+    fontWeight: 700,
+  },
+  centerTitle: {
+    display: "flex",
+    alignItems: "center",
+  },
+  headLeft: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    "& > div": {
+      marginBottom: "0 !important",
+      marginRight: 8
+    }
+  },
+  card: {
+    "& > div":{
+      height: "100%",
+    }
+  },
+  moreAction: {
+    background: "#FFFFFF !important",
+    border: "1px solid #ECEEF0 !important"
+  },
+  chartContent: {
+    border: "1px rgba(236, 236, 242, 1) solid",
+    borderRadius: "15px",
+    paddingBottom: "24px",
+  },
+  contentFont: {
+    fontWeight: 700,
+    fontSize: "16px",
+  }
+
 }));
 export default vehicleSidebarContentStyle

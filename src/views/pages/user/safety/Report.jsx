@@ -11,8 +11,8 @@ import { MoreHoriz } from "@material-ui/icons";
 import { connect } from "react-redux"
 import { makeStyles } from "@material-ui/core";
 // tabs components
-import DriverReport from "./report/DriverReport";
-import VehicleReport from "./report/VehicleReport";
+import DriverReport from "./report/components/DriverReport";
+import VehicleReport from "./report/components/VehicleReport";
 
 
 const useStyles = makeStyles((theme) => ({

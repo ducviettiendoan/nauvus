@@ -38,8 +38,9 @@ import DashCam from "views/pages/user/safety/DashCam";
 import DriverAssignment from "views/pages/user/safety/DriverAssignment";
 import UnassignedDetail from "views/pages/user/safety/driver-assignment/unassigned/UnassignedDetail"
 import Cameras from "views/pages/user/safety/Cameras";
-import SafetyReport from "views/pages/user/safety/Report"
-
+import SafetyReport from "views/pages/user/safety/Report";
+import SafetyReportDetails from "views/pages/user/safety/report/SafetyReportDetails";
+import SafetyReportTable from "views/pages/user/safety/report/SafetyReportTable"
 import VideoRetrieval from "views/pages/user/safety/VideoRetrieval";
 import Retrieval from "views/pages/user/safety/video-retrieval/Retrieval"
 // @material-ui/icons
@@ -195,9 +196,21 @@ const dashRoutes = [
       },
 
       {
-        path: "/safety/report",
-        name: "Driver Safety Report",
+        path: "/safety-report",
+        name: "Safety Report",
         component: SafetyReport,
+        layout: ROUTE_PATH.USER
+      },
+      {
+        path: "/safety-report-details",
+        name: "Safety Report Details",
+        component: SafetyReportDetails,
+        layout: ROUTE_PATH.USER
+      },
+      {
+        path: "/safety-report-table",
+        name: "Safety Report Table",
+        component: SafetyReportTable,
         layout: ROUTE_PATH.USER
       },
     ]
