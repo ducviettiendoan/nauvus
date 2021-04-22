@@ -10,8 +10,8 @@ import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import Table from "components/Table/TableV1";
 import Chip from "@material-ui/core/Chip";
 import { Grid, makeStyles } from "@material-ui/core";
-import ReportPieChart from "../components/safety-report/ReportPieChart"
-import ReportLineChart from "../components/safety-report/ReportLineChart"
+import ReportPieChart from "../../components/safety-report/ReportPieChart"
+import ReportLineChart from "../../components/safety-report/ReportLineChart"
 // utils
 import { connect } from "react-redux"
 

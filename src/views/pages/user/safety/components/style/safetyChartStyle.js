@@ -9,7 +9,8 @@ const safetyChartStyle = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "16px 32px 16px 32px"
+    padding: "16px 32px 16px 32px",
+    marginBottom: "20px"
   },
   safetyTitle: {
     color: "#25345C",

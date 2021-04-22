@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 //material-ui/lab components
@@ -9,6 +9,10 @@ import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
 import {getDriverEfficiencyDrivers} from "reducers/fuel-energy";
 import { connect } from "react-redux";
+import CloseIcon from "components/Icons/CloseIcon";
+import Chip from "@material-ui/core/Chip";
+import Button from "components/CustomButtons/Button.js";
+import { useHistory } from "react-router-dom";
 
 
 const styles = {
@@ -99,7 +103,56 @@ const styles = {
         marginBottom: "5px !important",
         marginRight: "-14px"
         }
+    },
+    
+  userRolesTitle: {
+    fontSize: 16,
+    color: "#25345C",
+    fontWeight: 700,
+    paddingRight: "8px !important"
+  },
+  selected: {
+    height: 24,
+    width: "auto",
+    background: "#ECEEF0 !important",
+    borderRadius: 28,
+    color: "#25345C !important",
+    display: "flex",
+    alignItems: "center",
+  },
+  clearAll: {
+    textTransform: "none",
+    color: "#8097D8",
+    background: "unset !important",
+    boxShadow: "unset !important",
+    fontSize: 14,
+    fontWeight: 700,
+    padding: 0,
+    "&:hover": {
+      color: "#25345C"
     }
+  },
+  chipSelected: {
+    display: "flex",
+    alignItems: "center",
+    paddingLeft: "0px !important"
+  },
+  headContainer: {
+    alignItems: "center",
+    textAlign: "left",
+    marginTop: "8px"
+  },
+  headRight: {
+    display: "flex",
+    justifyContent: "flex-end"
+  },
+  chips: {
+    background: "#ECEEF0",
+    color: "#25345C",
+    fontSize: "12px",
+    marginRight: 8,
+    fontWeight: 400,
+  },
 
 };
 
@@ -107,7 +160,32 @@ const useStyles = makeStyles(styles);
 
 export function Drivers(props) {
   const classes = useStyles();
+  const history = useHistory();
 
+  const onPageChange = (page, pageSize) => {
+    props.getDriverEfficiencyDrivers()({page, pageSize});
+  }
+
+  const onShowSizeChange = (page, pageSize) => {
+    props.getDriverEfficiencyDrivers()({page, pageSize});
+  }
+
+  const viewDetail = () => {
+    history.push("/u/fuel-energy/driver-efficiency-report/123456789")
+  }
+
+  const [chipData, setChipData] = useState([
+    {key: 0, label: 'Alexandr Luchin'},
+  ]);
+
+  
+  const handleDelete = (chipToDelete) => () => {
+    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+  };
+
+  const handleClearAll = () => {
+    setChipData([])
+  }
 
   React.useEffect(() => {
     props.getDriverEfficiencyDrivers();
@@ -186,8 +264,32 @@ export function Drivers(props) {
             <Table
               renderTitle={
               <div>
-                <Grid container className={classes.gridTitle}>                    
-                  <Grid xs={12} sm={12} md={12} className={classes.headLeft}>
+                <Grid container className={classes.gridTitle}> 
+                <Grid item xs={12} sm={12} md={4}>
+                          <Grid container className={classes.headContainer}>
+                            <Grid item xl={2}
+                                  className={classes.userRolesTitle}> {chipData.length} selected
+                              for </Grid>
+                            <Grid item xl={10} className={classes.chipSelected}>
+                              {chipData.map(data => (
+                                <Chip
+                                  deleteIcon={<CloseIcon/>}
+                                  label={data.label}
+                                  onDelete={handleDelete(data)}
+                                  className={classes.chips}
+                                />
+                              ))}
+                              {chipData.length > 0 ?
+                                (
+                                  <Button onClick={handleClearAll}
+                                          className={classes.clearAll}>
+                                    Clear All
+                                  </Button>
+                                ) : ""}
+                            </Grid>
+                          </Grid>
+                        </Grid>                   
+                  <Grid xs={12} sm={12} md={8} className={classes.headLeft}>
                     <ToolboxButton placeholder="Search driver" showFilter showColumn/>
                   </Grid>
                 </Grid>
@@ -199,7 +301,15 @@ export function Drivers(props) {
                 className: classes.onHeaderRow
               }}
               onBodyRow={{
+                onClick: viewDetail,
                 className: classes.tableRow
+              }}
+              pagination={{
+                total: props.total,
+                current: props.page,
+                pageSize: props.pageSize,
+                onChange: onPageChange,
+                onShowSizeChange: onShowSizeChange
               }}
             />
             
