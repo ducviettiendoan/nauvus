@@ -141,6 +141,14 @@ const useStyles = makeStyles(styles);
 export function Vehicle(props) {
   const classes = useStyles();
 
+  const onPageChange = (page, pageSize) => {
+    props.getVehicles({page, pageSize});
+  }
+
+  const onShowSizeChange = (page, pageSize) => {
+    props.getVehicles({page, pageSize});
+  }
+
   React.useEffect(() => {
     props.getVehicles();
   }, []);
@@ -251,6 +259,13 @@ export function Vehicle(props) {
           }}
           onBodyRow={{
             className: classes.tableRow
+          }}
+          pagination={{
+            total: props.total,
+            current: props.page,
+            pageSize: props.pageSize,
+            onChange: onPageChange,
+            onShowSizeChange: onShowSizeChange
           }}
         />
       </div>
