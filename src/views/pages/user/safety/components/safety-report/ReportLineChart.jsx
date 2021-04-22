@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ReactECharts from 'echarts-for-react';
+import * as echarts from 'echarts';
 import GridItem from "components/Grid/GridItem";
 import Button from "components/CustomButtons/Button.js";
 import GridContainer from "components/Grid/GridContainer";
@@ -22,20 +23,68 @@ const ReportLineChart = (props) => {
 
   const option = {
     color: colors,
-
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: {
-        type: 'cross'
-      }
-    },
     grid: {
-      // top: 300,
-      // bottom: 200,
       left: '3%',
       right: '4%',
       bottom: '3%',
       containLabel: true
+    },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'cross',
+        animation: false,
+        label: {
+          backgroundColor: '#505765'
+        }
+      }
+    },
+    legend: {
+      data: [
+        {
+          name: "Total Insidents/1000 ml",
+          icon: "none",
+          textStyle: {
+            color: colors[0]
+          }
+        },
+        {
+          name: "Crash",
+          icon: "none",
+          textStyle: {
+            color: colors[1]
+          }
+        },
+        {
+          name: "Harsh Turn",
+          icon: "none",
+          textStyle: {
+            color: "#B4B4B4"
+          }
+        },
+        {
+          name: "Harsh Accel",
+          icon: "none",
+          textStyle: {
+            color: "#B4B4B4"
+          }
+        },
+        {
+          name: "Rolling Stop",
+          icon: "none",
+          textStyle: {
+            color: "#B4B4B4"
+          }
+        },
+        {
+          name: "Harsh Brake",
+          icon: "none",
+          textStyle: {
+            color: "#B4B4B4"
+          }
+        },
+      ],
+      left: -20
     },
     xAxis: [
       {
@@ -44,7 +93,7 @@ const ReportLineChart = (props) => {
           alignWithLabel: true
         },
         axisLine: {
-          onZero: false,
+          onZero: true,
           lineStyle: {
             color: colors[1]
           }
@@ -57,56 +106,135 @@ const ReportLineChart = (props) => {
             }
           }
         },
-        data: ['Feb 2', '11:59 PM', 'Feb 9', '11:59 PM', 'Feb 16', '11:59PM', 'March 02']
+        data: ['Feb 2', '11:59 PM', 'Feb 9', '11:59 PM', 'Feb 16', '11:59PM', 'Feb 23', '11:59 PM', 'March 02']
       },
-      {
-        type: 'category',
-        axisTick: {
-          alignWithLabel: true
-        },
-        axisLine: {
-          onZero: false,
-          lineStyle: {
-            color: colors[0]
-          }
-        },
-        axisPointer: {
-          label: {
-            formatter: function (params) {
-              return params.value
-                + (params.seriesData.length ? '：' + params.seriesData[0].data : '');
-            }
-          }
-        },
-        data: ['Feb 2', '11:59 PM', 'Feb 9', '11:59 PM', 'Feb 16', '11:59PM', 'March 02', '11:59 PM']
-      }
     ],
     yAxis: [
       {
-        type: 'value'
-      }
+        type: 'value',
+        // show: false
+      },
+      {
+        type: 'value',
+        show: false
+      },
     ],
     series: [
       {
         name: 'Total Insidents/1000 ml',
         type: 'line',
-        xAxisIndex: 1,
         smooth: true,
+        lineStyle: {
+          width: 1
+        },
+        showSymbol: false,
         emphasis: {
           focus: 'series'
         },
-        data: [15.0, 13.0, 5.0, 20.2, 11.0, 17.9, 13.3, 18.9]
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+            offset: 0,
+            color: 'rgba(115,155,211, -0.9497)'
+          }, {
+            offset: 1,
+            color: '#FFFFFF'
+          }])
+        },
+        data: [5.0, 10.0, 15.0, 13.0, 5.0, 20.2, 11.0, 17.9, 13.3, 18.9, 3.0]
       },
       {
         name: 'Crash',
         type: 'line',
+        yAxisIndex: 1,
         smooth: true,
+        showSymbol: false,
+        areaStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+            offset: 0,
+            color: 'rgb(115,194,211, -0.509)'
+          }, {
+            offset: 1,
+            color: '#FFFFFF'
+          }])
+        },
+        lineStyle: {
+          width: 1
+        },
         emphasis: {
           focus: 'series'
         },
-        data: [17.0, 16.5, 3.0, 26.8, 8.0, 20.5, 10.0]
-      }
-    ]
+        data: [20.0, 18.0, 17.0, 14.0, 3.0, 26.8, 8.0, 20.5, 10.0, 15.0, 16.0]
+      },
+      {
+        name: 'Harsh Turn',
+        type: 'line',
+        yAxisIndex: 1,
+        smooth: true,
+        showSymbol: false,
+        areaStyle: {
+
+        },
+        lineStyle: {
+          width: 1
+        },
+        emphasis: {
+          focus: 'series'
+        },
+        data: []
+      },
+      {
+        name: 'Harsh Accel',
+        type: 'line',
+        yAxisIndex: 1,
+        smooth: true,
+        showSymbol: false,
+        areaStyle: {
+
+        },
+        lineStyle: {
+          width: 1
+        },
+        emphasis: {
+          focus: 'series'
+        },
+        data: []
+      },
+      {
+        name: 'Rolling Stop',
+        type: 'line',
+        yAxisIndex: 1,
+        smooth: true,
+        showSymbol: false,
+        areaStyle: {
+
+        },
+        lineStyle: {
+          width: 1
+        },
+        emphasis: {
+          focus: 'series',
+
+        },
+        data: []
+      },
+      {
+        name: 'Harsh Brake',
+        type: 'line',
+        yAxisIndex: 1,
+        smooth: true,
+        showSymbol: false,
+        areaStyle: {
+
+        },
+        lineStyle: {
+          width: 1
+        },
+        emphasis: {
+          focus: 'series'
+        },
+        data: []
+      },
+    ],
   };
 
   return (
