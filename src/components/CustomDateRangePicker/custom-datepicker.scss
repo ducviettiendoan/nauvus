@@ -1,6 +1,6 @@
 .drp-buttons {
   border-top: none !important;
-  position: absolute;
+  //position: absolute;
   bottom: 0;
   right: 0;
 }
@@ -48,6 +48,11 @@
 }
 
 .daterangepicker .drp-calendar.left {
+  @media screen and (min-width: 1200px) {
+    margin-left: 64px;
+  }
+  margin-left: 0;
+  border-left: none!important;
   .calendar-table {
     border-radius: 12px !important;
     border-left: unset;
@@ -62,6 +67,10 @@
   font-size: 14px !important;
   line-height: 17px !important;
   color: #25345C;
+  border: none!important;
+  border-radius: 12px!important;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.25);
+
 
   td.active {
     background: #E5E7EC;
@@ -116,5 +125,62 @@
   display: none !important;
 }
 
+.table-condensed {
+  tbody {
+    background: white;
+    border-bottom-left-radius: 12px!important;
+    border-bottom-right-radius: 12px!important;
+  }
+  thead {
+    tr:first-child {
+      border-bottom: 35px solid #f7f8fa;
+    }
+    tr:nth-child(2) {
+      background: white;
+      border-top-left-radius: 12px !important;
+      border-top-right-radius: 12px !important;
+      border-top: white solid;
+    }
 
+  }
+}
+
+.daterangepicker .calendar-table {
+  background: none;
+  border: none;
+}
+
+.daterangepicker .drp-calendar {
+  max-width: none;
+}
+
+.drp-calendar {
+  width: 300px;
+  float: none!important;
+}
+
+.calendar-container {
+  display: flex;
+}
+
+.yearselect, .monthselect, .hourselect, .minuteselect, .ampmselect {
+  background: none!important;
+  border: none!important;
+}
+
+.ranges {
+  ul {
+    li:last-child {
+      margin-bottom: 36px;
+      margin-top: 32px;
+    }
+  }
+}
+
+.calendar-wrapper {
+  @media screen and (min-width: 1200px) {
+    display: flex;
+  }
+  display: block;
+}
 

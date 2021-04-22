@@ -36,7 +36,9 @@ const styles = {
     fontStyle: "normal",
     fontSize: "14px",
     lineHeight: "16.8px",
-    padding: "12.5px 31px 12.5px 16px"
+    padding: "12.5px 31px 12.5px 16px",
+    // width: "200px"
+    width: "max-content"
   },
   calendarIcon: {
     color: "#25345C"
@@ -79,22 +81,28 @@ const CustomDateRangePicker = props => {
     setState({ start, end });
   };
   const label =
-    start.format('MMMM D, HH:MM A') + ' - ' + end.format('MMMM D, HH:MM A YYYY');
+    start.format('MMM D, HH:MM A YYYY') + ' - ' + end.format('MMM D, HH:MM A YYYY');
+
+  useEffect(() => {
+    let drp = document.querySelector(".daterangepicker")
+    let drpLeft = document.querySelector(".drp-calendar.left")
+    let drpRight = document.querySelector(".drp-calendar.right")
+    drp.removeChild(drpLeft)
+    let wrapper = document.createElement('div')
+    wrapper.className = "calendar-wrapper"
+    drp.removeChild(drpRight)
+    wrapper.appendChild(drpLeft)
+    wrapper.appendChild(drpRight)
+    let ranges = document.querySelector(".ranges")
+    let container = document.createElement('div')
+    container.className = "calendar-container"
+    drp.replaceChild(container, ranges)
+    container.appendChild(ranges)
+    container.appendChild(wrapper)
+  }, [])
 
   return (
     <>
-      {/* <div className={classes.datePickerStyle}>
-        <Button className={classes.calendarButton} onClick={toggle} round justIcon>
-          <CalendarIcon className={classes.calendarIcon}/>
-        </Button>
-      </div>
-      <div className={classes.menu}>
-        <DateRangePicker
-          open={open}
-          toggle={toggle}
-          onChange={(range) => setDateRange(range)}
-        />
-      </div> */}
       <DateRangePicker
         initialSettings={{
           keepOpen: true,
@@ -149,5 +157,6 @@ const CustomDateRangePicker = props => {
 
   );
 }
+
 
 export default CustomDateRangePicker;
