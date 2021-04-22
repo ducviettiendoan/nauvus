@@ -9,6 +9,7 @@ export const ACTION_TYPES = {
   GET_SAFETY_CAMERAS: "safety/GET_SAFETY_CAMERAS",
   GET_UNASSIGNED_ASSIGNMENT: "safety/GET_UNASSIGNED_ASSIGNMENT",
   GET_UNASSIGNED_DETAILS: "safety/GET_UNASSIGNED_DETAILS",
+  GET_SAFETY_REPORT_TABLE: "safety/GET_SAFETY_REPORT_TABLE",
 };
 
 const initialState = {
@@ -17,6 +18,7 @@ const initialState = {
   cameras: [],
   unassignedAssignment: [],
   unassignedDetails: [],
+  reportDetails: [],
   errorMessage: null,
   loading: false,
   showCrash: true,
@@ -33,6 +35,7 @@ export default (state: SafetyState = initialState, action): SafetyState => {
     case REQUEST(ACTION_TYPES.GET_SAFETY_CAMERAS):
     case REQUEST(ACTION_TYPES.GET_UNASSIGNED_ASSIGNMENT):
     case REQUEST(ACTION_TYPES.GET_UNASSIGNED_DETAILS):
+    case REQUEST(ACTION_TYPES.GET_SAFETY_REPORT_TABLE):
       return {
         ...state,
         loading: true,
@@ -42,6 +45,7 @@ export default (state: SafetyState = initialState, action): SafetyState => {
     case FAILURE(ACTION_TYPES.GET_SAFETY_CAMERAS):
     case FAILURE(ACTION_TYPES.GET_UNASSIGNED_ASSIGNMENT):
     case FAILURE(ACTION_TYPES.GET_UNASSIGNED_DETAILS):
+    case FAILURE(ACTION_TYPES.GET_SAFETY_REPORT_TABLE):
       return {
         ...state,
         loading: false,
@@ -84,6 +88,13 @@ export default (state: SafetyState = initialState, action): SafetyState => {
       return {
         ...state,
         unassignedDetails: action.payload.data
+      };
+    }
+
+    case SUCCESS(ACTION_TYPES.GET_SAFETY_REPORT_TABLE): {
+      return {
+        ...state,
+        reportDetails: action.payload.data
       };
     }
 
@@ -131,5 +142,12 @@ export const getUnassignedDetailsData = (request) => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_UNASSIGNED_DETAILS,
     payload: axios.post("api/safety/assignment/unassigned/details", request),
+  });
+};
+
+export const getSafetyReportDetails = (request) => async (dispatch) => {
+  dispatch({
+    type: ACTION_TYPES.GET_SAFETY_REPORT_TABLE,
+    payload: axios.post("api/safety/safety-report-table", request),
   });
 };

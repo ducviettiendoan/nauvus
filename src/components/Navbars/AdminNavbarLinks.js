@@ -102,7 +102,7 @@ export function HeaderLinks(props) {
         round
         className={ `btn-36 ${searchButton} mr-2`}
       >
-        <SearchIcon className={classes.headerLinksSvg + " " + classes.searchIcon} />
+        <SearchIcon style={{fontSize: 14}} className={classes.searchIcon} />
       </Button>
       <Button
         color="white"
@@ -111,7 +111,7 @@ export function HeaderLinks(props) {
         round
         className={ `btn-36 ${searchButton}`}
       >
-        <QuestionIcon className={classes.headerLinksSvg + " " + classes.searchIcon} />
+        <QuestionIcon  className={classes.searchIcon} />
       </Button>
       
       <div className={managerClasses}>
