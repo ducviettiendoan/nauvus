@@ -179,7 +179,15 @@ export function Cameras(props) {
 
           </Card>
           <Grid item xs={12} sm={12} md={12} className={classes.pagination}>
-            <GenPaginationV1 pageSize={1} total={3}/>
+            <GenPaginationV1
+              total={50}
+              current={1}
+              pageSize={6}
+              showSizeChanger
+              onChange={null}
+              onShowSizeChange={null}
+              pageSizeOptions={[6, 12, 18, 24]}
+            />
           </Grid>
         </GridItem>
       </GridContainer>
