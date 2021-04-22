@@ -374,7 +374,7 @@ function Crash(props) {
               <Select
                 options={listValueCoach}
                 variant="outlined"
-                defaultValue={1}
+                value={1}
                 autoComplete
                 onChange={(value) => {
                   console.log(value);
@@ -385,7 +385,7 @@ function Crash(props) {
               <Select
                 options={listValues}
                 variant="outlined"
-                defaultValue={4}
+                value={4}
                 onChange={(value) => {
                   console.log(value);
                 }}

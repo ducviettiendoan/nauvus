@@ -330,7 +330,6 @@ const CustomSelect = (props) => {
                     return (
                       <Chip
                         clickable
-                        variant="outlined"
                         className={classes.chip}
                         deleteIcon={<CloseIcon />}
                         key={options[index]?.value}
