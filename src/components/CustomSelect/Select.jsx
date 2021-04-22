@@ -281,7 +281,7 @@ const CustomSelect = (props) => {
         <Chip
           label="Add"
           icon={<AddOutlined />}
-          style={{ background: "#fff" }}
+          style={{ background: "#fff", cursor: "pointer" }}
         />
       </div>
     )

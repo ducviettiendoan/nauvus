@@ -24,9 +24,6 @@ import { GOOGLE_MAP_API_KEY } from "config/constants";
 import avatar from "assets/img/faces/avatar.jpg";
 import StarYellowIcon from "components/Icons/StarYellowIcon";
 import StarGreyIcon from "components/Icons/StarGreyIcon";
-import Chip from "@material-ui/core/Chip";
-import CloseIcon from "components/Icons/CloseIcon";
-import AddOutlined from "@material-ui/icons/AddOutlined";
 import LocationIcon from "components/Icons/LocationIcon";
 
 
@@ -264,7 +261,7 @@ const useStyles = makeStyles(styles);
 
 function Crash(props) {
   const classes = useStyles();
-  const [view, setView] = React.useState(true);
+  const [view, setView] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   useEffect(() => {
     props.setShowButtonBack(true)
