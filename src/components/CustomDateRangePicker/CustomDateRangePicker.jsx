@@ -27,10 +27,16 @@ const styles = {
     border: "1px solid rgba(18, 18, 18, 0.1)",
     borderRadius: "20px",
     background: "#FFFFFF",
+    display: "flex",
+    alignItems: "center"
+  },
+  datePickerLabelStyle: {
     color: "#25345C !important",
-    textAlign: "end",
-    // display: "flex",
-    // justifyContent: "space-between"
+    fontWeight: 400,
+    fontStyle: "normal",
+    fontSize: "14px",
+    lineHeight: "16.8px",
+    padding: "12.5px 31px 12.5px 16px"
   },
   calendarIcon: {
     color: "#25345C"
@@ -131,7 +137,9 @@ const CustomDateRangePicker = props => {
         onCallback={handleCallback}
       >
         <div className={classes.datePickerStyle}>
-          {label} 
+          <div className={classes.datePickerLabelStyle}>
+            {label}
+          </div>
           <Button className={classes.calendarButton} round justIcon>
             <CalendarIcon className={classes.calendarIcon}/>
           </Button>
