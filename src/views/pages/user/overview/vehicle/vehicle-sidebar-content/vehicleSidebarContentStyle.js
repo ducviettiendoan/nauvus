@@ -213,7 +213,14 @@ const vehicleSidebarContentStyle = ((theme) => ({
   contentFont: {
     fontWeight: 700,
     fontSize: "16px",
-  }
+  },
+  pagination: {
+    marginTop: "20px",
+    padding: "0px !important",
+    "&>div":{
+      padding: '0px !important',
+    }
+  },
 
 }));
 export default vehicleSidebarContentStyle

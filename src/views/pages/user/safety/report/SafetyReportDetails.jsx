@@ -13,6 +13,7 @@ import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import SafetyDetailsCard from "./SafetyDetailsCard";
 import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
 import Button from "components/CustomButtons/Button";
+import GenPaginationV1 from "../../../../../components/Pagination/GenPaginationV1";
 
 const useStyles = makeStyles(vehicleSidebarContentStyle);
 
@@ -124,7 +125,7 @@ export default function SafetyReportDetails(props) {
                 round
                 className={`btn-36 ${classes.moreAction} mr-2`}
               >
-                <MoreHorizontalIcon />
+                <MoreHorizontalIcon/>
               </Button>
             </GridItem>
           </GridContainer>
@@ -156,6 +157,19 @@ export default function SafetyReportDetails(props) {
 
         </GridContainer>
       </Card>
+
+      <GridItem xs={12} sm={12} md={12} className={classes.pagination}>
+        <GenPaginationV1
+          total={50}
+          current={1}
+          pageSize={6}
+          showSizeChanger
+          onChange={null}
+          onShowSizeChange={null}
+          pageSizeOptions={[6, 12, 18, 24]}
+        />
+    </GridItem>
+
     </div>
   )
 }
