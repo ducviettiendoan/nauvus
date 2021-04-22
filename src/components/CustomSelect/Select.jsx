@@ -4,13 +4,16 @@
 
 
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import ExpandMoreIcon from 'components/Icons/ExpandMoreIcon';
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
+import Chip from "@material-ui/core/Chip";
+import CloseIcon from "components/Icons/CloseIcon";
+import AddOutlined from "@material-ui/icons/AddOutlined";
 import classNames from "classnames";
 import SearchBox from "components/SearchBox/SettingSearchBox";
 import {
@@ -25,6 +28,18 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 const styles = {
   select: {
     borderRadius: "26px",
+  },
+  multiple: {
+    "&:hover:not($disabled):before,&:before": {
+      border: "none!important"
+    },
+    "&:after": {
+      border: "none!important"
+    },
+    "&>:first-child": {
+      paddingRight: 0,
+      minWidth: 0
+    },
   },
   root: {
     color: "#B4B4B4",
@@ -140,6 +155,15 @@ const styles = {
       fontWeight: "300"
     }
   },
+  underlineMultiple: {
+    "&:hover:not($disabled):before,&:before": {
+      borderColor: "none",
+      borderWidth: 0
+    },
+    "&:after": {
+      borderColor: "none"
+    },
+  },
   underlineError: {
     "&:after": {
       borderColor: dangerColor[0]
@@ -180,6 +204,9 @@ const styles = {
   },
   selectContainer: {
     paddingTop: 6
+  },
+  chip: {
+    marginRight: 4
   }
 }
 
@@ -188,24 +215,6 @@ const useStyles = makeStyles(styles)
 const CustomSelect = (props) => {
   const { customStyle, labelProps, error, success, id, white, selectProps } = props
   const classes = useStyles();
-
-  const iconComponent = (props) => {
-    return (
-      <ExpandMoreIcon className={props.className} />
-    )
-  };
-
-  const underlineClasses = classNames({
-    [classes.underlineError]: error,
-    [classes.underlineSuccess]: success && !error,
-    [classes.underline]: true,
-    [classes.whiteUnderline]: white
-  });
-
-  const labelClasses = classNames({
-    [" " + classes.labelRootError]: error,
-    [" " + classes.labelRootSuccess]: success && !error
-  });
 
   // moves the menu below the select input
   const menuProps = {
@@ -229,7 +238,9 @@ const CustomSelect = (props) => {
     if (props.onChange) props.onChange(e.target.value)
   }
 
-  const [value, setValue] = useState(props.value || props.defaultValue)
+  useEffect(() => {
+    if(props.value) setValue(props.value)
+  },[props.value])
 
   const label = props.label || null;
   const options = props.options || [];
@@ -238,8 +249,49 @@ const CustomSelect = (props) => {
   const variant = props.variant || "standard";
   const fullWidth = props.fullWidth || false;
   const autoComplete = props.autoComplete || false;
+  const multiple = props.multiple || false;  
+  const [value, setValue] = useState(multiple ? [] : null)
+
+  const underlineClasses = classNames({
+    [classes.underlineError]: error,
+    [classes.whiteUnderline]: white,
+    [classes.underlineSuccess]: success && !error,
+    [classes.underline]: true,
+  });
+
+  const labelClasses = classNames({
+    [" " + classes.labelRootError]: error,
+    [" " + classes.labelRootSuccess]: success && !error
+  });
+
+  const [open, setOpen] = useState(false)
+  const handleDelete = (e, v) => {
+    e.preventDefault();
+    console.log(v);
+  }
+  const handleClose = () => setOpen(false);
+
+  const handleOpen = () => setOpen(true);
+
+  const singleComponent = (props) => (<ExpandMoreIcon className={props.className} />);
+
+  const multipleComponent = () => {
+    return (
+      <div onClick={handleOpen}>
+        <Chip
+          label="Add"
+          icon={<AddOutlined />}
+          style={{ background: "#fff" }}
+        />
+      </div>
+    )
+  }
+
+  console.log(value);
+
   return (
     <div className={props.className}>
+
       <FormControl className={classes.selectContainer} fullWidth={fullWidth}>
         <InputLabel
           {...labelProps}
@@ -250,20 +302,48 @@ const CustomSelect = (props) => {
         </InputLabel>
         <Select
           {...selectProps}
-          value={value}
           displayEmpty
-          defaultValue={defaultValue}
-          className="fs-13"
-          onChange={onChange}
-          MenuProps={menuProps}
+          value={value}
+          open={open}
           variant={variant}
-          IconComponent={iconComponent}
-          className={classes.select}
+          multiple={multiple}
+          onChange={onChange}
+          onOpen={handleOpen}
+          onClose={handleClose}
+          MenuProps={menuProps}
+          defaultValue={defaultValue}
+          className={multiple ? classes.multiple : classes.select}
+          IconComponent={multiple ? multipleComponent : singleComponent}
           classes={{
             root: classes.root,
             underline: underlineClasses,
             outlined: classes.outlined,
             notchedOutline: classes.notchedOutline
+          }}
+
+          renderValue={(selected) => {
+            if (multiple) {
+              return (
+                <div className={classes.chips}>
+                  {selected.map(s => {
+                    const index = options.findIndex(o => o.value == s);
+                    return (
+                      <Chip
+                        clickable
+                        variant="outlined"
+                        className={classes.chip}
+                        deleteIcon={<CloseIcon />}
+                        key={options[index]?.value}
+                        label={options[index]?.label}
+                        onDelete={(e) => handleDelete(e, options[index]?.value)}
+                      />
+                    )
+                  })}
+                </div>
+              )
+            }
+            const index = options.findIndex(o => o.value == selected);
+            return options[index]?.label
           }}
         >
           {placeholder && <option disabled value={null} className={classes.optionEmpty} >{placeholder}</option>}
