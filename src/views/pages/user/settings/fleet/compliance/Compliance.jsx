@@ -130,9 +130,9 @@ export default function Compliance() {
                     </List>
                   </Grid>
                   <Grid item className={classes.areaGrow}>
-                    {tab === 1 && <ComplianceCarrierInfo/>}
+                    {tab === 3 && <ComplianceCarrierInfo/>}
                     {tab === 2 && <ComplianceNotifications/>}
-                    {tab === 3 && <ComplianceRuleSet/>}
+                    {tab === 1 && <ComplianceRuleSet/>}
                   </Grid>
                 </Grid>
               </Col>
