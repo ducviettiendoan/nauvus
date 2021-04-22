@@ -4,7 +4,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import GridItem from "components/Grid/GridItem.js";
 import CardBody from "components/Card/CardBody.js";
 import Switch from "components/CustomSwitch/Switch.jsx"
-import GridContainer from "../../../../../../components/Grid/GridContainer";
+import GridContainer from "components/Grid/GridContainer";
 
 const styles = {
   cardContainer: {

@@ -12,8 +12,7 @@ import AddIcon from "components/Icons/AddIcon";
 import DiaLog from "components/CustomDialog/Dialog";
 import AddRulesetForm from "./AddRulesetForm";
 import Table from "components/Table/TableV1";
-import {Row} from "reactstrap";
-import GridContainer from "../../../../../../components/Grid/GridContainer";
+import GridContainer from "components/Grid/GridContainer";
 
 const styles = {
   cardContainer: {
