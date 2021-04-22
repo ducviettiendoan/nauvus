@@ -20,6 +20,7 @@ import Dispatch from "views/pages/user/dispatch/Dispatch";
 import Documents from "views/pages/user/documents/Documents";
 import FuelEnergy from "views/pages/user/fuel-energy/FuelEnergy";
 import DriverEfficiency from "views/pages/user/fuel-energy/DriverEfficiency"
+import DriverEfficiencyReport from "views/pages/user/fuel-energy/driver-efficiency-parts/DriverEfficiencyReport"
 import InternalTools from "views/pages/user/internal-tools/InternalTools";
 import Maintenance from "views/pages/user/maintenance/Maintenance";
 import Messages from "views/pages/user/messages/Messages";
@@ -326,6 +327,13 @@ const dashRoutes = [
         name: "Driver Efficiency Report",
         component: DriverEfficiency,
         layout: ROUTE_PATH.USER
+      },
+      {
+        path: "/fuel-energy/driver-efficiency-report/:id",
+        name: "Driver Efficiency",
+        component: DriverEfficiencyReport,
+        layout: ROUTE_PATH.USER,
+        isFixed: true,
       },
     ]
   },

@@ -125,21 +125,18 @@ const styles = {
 
 };
 
-
-const dumpData = [
-  { vehicle: "Vehicle 101", efficiency: "39.1 MPG", fuelUsed: "2.0 gal", energyUsed: "0.0 kWh", distance: "78.1 mi", drivingElectric: "0.0", estCarbonEmissions: "39.2 lb", estCost: "C$10.76", totalEngineRunTime: "3h 20m", idleTime: "10s (0.1%)" },
-  { vehicle: "Vehicle 101", efficiency: "39.1 MPG", fuelUsed: "2.0 gal", energyUsed: "0.0 kWh", distance: "78.1 mi", drivingElectric: "0.0", estCarbonEmissions: "39.2 lb", estCost: "C$10.76", totalEngineRunTime: "3h 20m", idleTime: "10s (0.1%)" },
-  { vehicle: "Vehicle 101", efficiency: "39.1 MPG", fuelUsed: "2.0 gal", energyUsed: "0.0 kWh", distance: "78.1 mi", drivingElectric: "0.0", estCarbonEmissions: "39.2 lb", estCost: "C$10.76", totalEngineRunTime: "3h 20m", idleTime: "10s (0.1%)" },
-  { vehicle: "Vehicle 101", efficiency: "39.1 MPG", fuelUsed: "2.0 gal", energyUsed: "0.0 kWh", distance: "78.1 mi", drivingElectric: "0.0", estCarbonEmissions: "39.2 lb", estCost: "C$10.76", totalEngineRunTime: "3h 20m", idleTime: "10s (0.1%)" },
-  { vehicle: "Vehicle 101", efficiency: "39.1 MPG", fuelUsed: "2.0 gal", energyUsed: "0.0 kWh", distance: "78.1 mi", drivingElectric: "0.0", estCarbonEmissions: "39.2 lb", estCost: "C$10.76", totalEngineRunTime: "3h 20m", idleTime: "10s (0.1%)" },
-  { vehicle: "Vehicle 101", efficiency: "39.1 MPG", fuelUsed: "2.0 gal", energyUsed: "0.0 kWh", distance: "78.1 mi", drivingElectric: "0.0", estCarbonEmissions: "39.2 lb", estCost: "C$10.76", totalEngineRunTime: "3h 20m", idleTime: "10s (0.1%)" },
-  { vehicle: "Vehicle 101", efficiency: "39.1 MPG", fuelUsed: "2.0 gal", energyUsed: "0.0 kWh", distance: "78.1 mi", drivingElectric: "0.0", estCarbonEmissions: "39.2 lb", estCost: "C$10.76", totalEngineRunTime: "3h 20m", idleTime: "10s (0.1%)" },
-];
-
 const useStyles = makeStyles(styles);
 
 export function Drivers(props) {
   const classes = useStyles();
+
+  const onPageChange = (page, pageSize) => {
+    props.getDrivers({page, pageSize});
+  }
+
+  const onShowSizeChange = (page, pageSize) => {
+    props.getDrivers({page, pageSize});
+  }
 
   React.useEffect(() => {
     props.getDrivers();
@@ -251,6 +248,13 @@ export function Drivers(props) {
               }}
               onBodyRow={{
                 className: classes.tableRow
+              }}
+              pagination={{
+                total: props.total,
+                current: props.page,
+                pageSize: props.pageSize,
+                onChange: onPageChange,
+                onShowSizeChange: onShowSizeChange
               }}
             />
             

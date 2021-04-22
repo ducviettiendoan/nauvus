@@ -17,7 +17,7 @@ mock.onPost("/api/fuel-energy/driver-efficiency/drivers").reply((config) => {
         for (let i = startPage; i < endPage; i++) {
             let item = {
                 id: i + 1,
-                driver: "AlexandrLuchin",
+                driver: "Alexandr Luchin",
                 overall: "39.1 MPG",
                 cruisecontrol: "2.0 gal",
                 coasting: "0.0 kwH",
