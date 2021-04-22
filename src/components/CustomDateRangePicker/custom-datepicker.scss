@@ -1,0 +1,67 @@
+.drp-buttons {
+    border-top: none !important;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.drp-buttons .drp-selected {
+    display: none;
+}
+
+.drp-buttons .applyBtn {
+    background: #FFFFFF;
+    border: 1px solid #ECEEF0;
+    box-sizing: border-box;
+    border-radius: 22px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px !important;
+    line-height: 17px !important;
+    color: #25345C;
+    height: 41px;
+    width: 69px;
+}
+
+.drp-buttons .cancelBtn {
+    background: rgba(37, 52, 92, 0.1);
+    border: 1px solid #ECEEF0;
+    box-sizing: border-box;
+    border-radius: 22px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px !important;
+    line-height: 17px !important;
+    color: #25345C;
+    height: 41px;
+    width: 69px;
+}
+ 
+
+.daterangepicker .drp-calendar.left {
+    border-left: none !important;
+}
+
+.daterangepicker {
+    .ranges {
+        margin-top: 0px !important;
+        height: 330px;
+        border-right: 1px solid #EBEBEB;
+        li {
+            font-family: Lato;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 17px;
+            color: #25345C;
+            padding: 9px 24px;
+        };
+        li.active {
+            background: #EAEEF2;
+            border-radius: 24px;        
+            color: #25345C;
+        }
+    }
+}
