@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import cx from "classnames";
 
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Hidden from "@material-ui/core/Hidden";
@@ -38,7 +38,7 @@ export default function OverviewAdminNavbar(props) {
   const classes = useStyles();
   const matches = useMediaQuery('(min-width:1557px)');
 
-  const { color, rtlActive, brandText } = props;
+  const {color, rtlActive, brandText} = props;
   const appBarClasses = cx({
     [" " + classes[color]]: color
   });
@@ -54,7 +54,8 @@ export default function OverviewAdminNavbar(props) {
   }
   return (
     <AppBar className={classes.appBar + appBarClasses}>
-      <Toolbar className={classes.container} style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <Toolbar className={classes.container}
+               style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
         <Hidden smDown implementation="css">
           <div className={sidebarMinimize}>
             {props.miniActive ? (
@@ -65,7 +66,7 @@ export default function OverviewAdminNavbar(props) {
                 color="white"
                 onClick={props.sidebarMinimize}
               >
-                <ViewList className={classes.sidebarMiniIcon} />
+                <ViewList className={classes.sidebarMiniIcon}/>
               </Button>
             ) : (
               <Button
@@ -75,60 +76,80 @@ export default function OverviewAdminNavbar(props) {
                 color="white"
                 onClick={props.sidebarMinimize}
               >
-                <MoreVert className={classes.sidebarMiniIcon} />
+                <MoreVert className={classes.sidebarMiniIcon}/>
               </Button>
             )}
           </div>
         </Hidden>
         {/* vehicle details navbar */}
-        
-        {window.location.pathname.indexOf("/vehicle/123456") === -1 && <div className={classes.flex} >
+
+        {window.location.pathname.indexOf("/vehicle/123456") === -1 && <div className={classes.flex}>
           {/* Here we create navbar brand, based on route name */}
           <Button href="#" className={classes.title} color="transparent">
             {brandText}
           </Button>
         </div>}
         <Hidden smDown>
-          <div  style={{display: matches ? "block" : "none"}}>
-        {window.location.pathname.indexOf("/vehicle/123456") !== -1 &&
-          <div style={{ display: "flex", flexDirection: "row" }}>
-            <GridItem>
-              <CustomDropdown
-                hoverColor="primary"
-                buttonText="Showing Drivers"
-                buttonProps={{
-                  round: true,
-                  fullWidth: true,
-                  style: { marginBottom: "0", background: "#FFFFFF", color: "#25345C", border: "1px solid #ECEEF0", boxShadow: "none" },
-                }}
-              />
-            </GridItem>
-            <Grid>
-              <CustomDropdown
-                hoverColor="primary"
-                buttonText="Graph data"
-                buttonProps={{
-                  round: true,
-                  fullWidth: true,
-                  style: { marginBottom: "0", background: "#FFFFFF", color: "#25345C", border: "1px solid #ECEEF0", boxShadow: "none" },
-                }}
-              />
-            </Grid>
-            <GridItem style={{ paddingRight: "0px !important" }}>
-              <CustomDateRangePicker/>
-            </GridItem>
-            <GridItem>
-              <Button round className="btn-round-green w-84">
-                <LiveIconWhite />
-                    Live
-              </Button>
-            </GridItem>
+          <div>
+            {window.location.pathname.indexOf("/vehicle/123456") !== -1 &&
+            <div style={{display: "flex", flexDirection: "row"}}>\
+              {matches &&
+              <>
+              <GridItem>
+                <CustomDropdown
+                  hoverColor="primary"
+                  buttonText="Showing Drivers"
+                  buttonProps={{
+                    round: true,
+                    fullWidth: true,
+                    style: {
+                      marginBottom: "0",
+                      background: "#FFFFFF",
+                      color: "#25345C",
+                      border: "1px solid #ECEEF0",
+                      boxShadow: "none"
+                    },
+                  }}
+                />
+              </GridItem>
+              <GridItem>
+                <CustomDropdown
+                  hoverColor="primary"
+                  buttonText="Graph data"
+                  buttonProps={{
+                    round: true,
+                    fullWidth: true,
+                    style: {
+                      marginBottom: "0",
+                      background: "#FFFFFF",
+                      color: "#25345C",
+                      border: "1px solid #ECEEF0",
+                      boxShadow: "none"
+                    },
+                  }}
+                />
+
+              </GridItem>
+              </>
+
+              }
+              <GridItem style={{paddingRight: "0px !important"}}>
+                <CustomDateRangePicker/>
+              </GridItem>
+              {matches &&
+              <GridItem>
+                <Button round className="btn-round-green w-84">
+                  <LiveIconWhite/>
+                  Live
+                </Button>
+              </GridItem>
+              }
+            </div>
+            }
           </div>
-        }
-        </div>
         </Hidden>
         <Hidden smDown implementation="css">
-          <AdminNavbarLinks rtlActive={rtlActive} />
+          <AdminNavbarLinks rtlActive={rtlActive}/>
         </Hidden>
         <Hidden mdUp implementation="css">
           <Button
@@ -138,7 +159,7 @@ export default function OverviewAdminNavbar(props) {
             aria-label="open drawer"
             onClick={props.handleDrawerToggle}
           >
-            <Menu />
+            <Menu/>
           </Button>
         </Hidden>
       </Toolbar>

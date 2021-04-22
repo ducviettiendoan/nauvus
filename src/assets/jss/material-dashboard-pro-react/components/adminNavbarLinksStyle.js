@@ -147,12 +147,7 @@ const adminNavbarLinksStyle = theme => ({
       display: "inline-block"
     }
   },
-  headerLinksSvg: {
-    width: "25px !important",
-    height: "25px !important",
-    top: "3px !important",
-    left: "3px !important"
-  }
+
 });
 
 export default adminNavbarLinksStyle;
