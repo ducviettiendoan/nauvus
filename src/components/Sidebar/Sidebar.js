@@ -51,7 +51,7 @@ class SidebarWrapper extends React.Component {
           {headerLinks}
           {links}
         </div>
-        <div className={ `fixed-menu` }>
+        <div className={`fixed-menu`}>
           {fixedLinks}
         </div>
       </>
@@ -106,6 +106,9 @@ class Sidebar extends React.Component {
   activeFixedRoute = routeName => {
     if (routeName === "/org/general" && window.location.href.indexOf("/setting/") > -1) {
       return "active";
+    }
+    else if (routeName === "/messages" && window.location.href.indexOf("/m/") > -1) {
+      return "active"
     }
     return window.location.href.indexOf(routeName) > -1 ? "active" : "";
   };
@@ -184,7 +187,7 @@ class Sidebar extends React.Component {
               typeof prop.icon === "string" ? (
                 <Icon className={itemIcon}>{prop.icon}</Icon>
               ) : (
-                <div style={{ position: 'relative'}}>
+                <div style={{ position: 'relative' }}>
                   <prop.icon className={itemIcon} />
                   { prop.extraIcon && <prop.extraIcon className={itemIcon} style={{ position: "absolute", left: "6px", top: "2px" }} />}
                 </div>
@@ -203,7 +206,7 @@ class Sidebar extends React.Component {
               )}
             />
           </NavLink>
-          <div className={ this.activeFixedRoute(prop.path) ? `nav-div-active` : `` }></div>
+          <div className={this.activeFixedRoute(prop.path) ? `nav-div-active` : ``}></div>
         </ListItem>
       );
     });
@@ -397,7 +400,7 @@ class Sidebar extends React.Component {
               )}
             />
           </NavLink>
-          <div className={ this.activeRoute(prop.path) ? `nav-div-active` : `` }></div>
+          <div className={this.activeRoute(prop.path) ? `nav-div-active` : ``}></div>
         </ListItem>
       );
     });
@@ -416,7 +419,7 @@ class Sidebar extends React.Component {
       <List className={classes.list}>{this.createLinks(routes)}</List>
     );
     var fixedLinks = (
-      <List className={classes.list} style={{ marginTop: "5px"}}>{this.createFixedLinks(routes)}</List>
+      <List className={classes.list} style={{ marginTop: "5px" }}>{this.createFixedLinks(routes)}</List>
     );
 
     const logoNormal =

@@ -19,6 +19,7 @@ export const ROUTE_PATH = {
     SETTING: '/s',
     OVERVIEW: '/o',
     DISPATCH: '/d',
+    MESSAGES: '/m',
 };
 
 export const AUTHORITIES = {

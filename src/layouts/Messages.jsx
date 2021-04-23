@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ROUTE_PATH } from "config/constants";
 import cx from "classnames";
 import { Switch, Route, Redirect, useHistory } from "react-router-dom";
@@ -14,6 +14,8 @@ import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 // import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
+import ExtraSettingSideBar from "components/Sidebar/ExtraSettingSideBar";
+import ExtraMessagesSideBar from "../components/Sidebar/ExtraMessagesSideBar"
 
 import routes from "user-routes";
 
@@ -24,19 +26,33 @@ import { COGNOTO_SERVER_URL, COGNOTO_CLIENT_ID, COGNOTO_RESPONSE_TYPE, PUBLIC_UR
 import Loading from "components/Loading/Loading";
 import { connect } from 'react-redux';
 import { getUserInfo } from '../reducers/authentication';
-import { setShowButtonBack } from "reducers/safety";
+import { IRootState } from '../reducers';
+import ExtraSettingMobile from "../components/Sidebar/ExtraSettingMobile";
+import ExtraMessagesMobile from "../components/Sidebar/ExtraMessagesMobile"
 
+// Messages components:
+import Messages from "views/pages/user/messages/Messages"
 
 var ps;
 
 const useStyles = makeStyles(styles);
 
-export function Safety(props) {
+const messagesRoute = [
+  {
+    path: "/messages",
+    name: "Messages",
+    component: Messages,
+    layout: ROUTE_PATH.MESSAGES
+  },
+]
+
+export function MessagesLayout(props) {
   const history = useHistory();
   const { ...rest } = props;
   // states and functions
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [miniActive, setMiniActive] = React.useState(false);
+  const [miniActive, setMiniActive] = React.useState(true);
+  const [displaySetting, setDisplaySetting] = React.useState(true)
   const [image, setImage] = React.useState("");
   const [color, setColor] = React.useState("blue");
   const [bgColor, setBgColor] = React.useState("white");
@@ -44,22 +60,8 @@ export function Safety(props) {
   const [fixedClasses, setFixedClasses] = React.useState("dropdown");
   const [logo, setLogo] = React.useState(require("assets/img/logo_nauvus.svg"));
 
-  const [fetchSession, setFetchSession] = React.useState(true);
-  const [showBack, setShowBack] = React.useState(false);
-  const safetyCrash = window.location.pathname.indexOf("/safety/crash");
-  const driverAssignmentDetails = window.location.pathname.indexOf("/safety/driver-assignment/123");
-  const videoRetrieval = window.location.pathname.indexOf("/safety/video-retrieval");
+  const [fetchSession, setFetchSession] = React.useState(false);
 
-  React.useEffect(() => {
-    if (safetyCrash !== -1 || driverAssignmentDetails !== -1 || videoRetrieval !== -1) {
-      setMiniActive(true);
-      props.setShowButtonBack(true)
-    }
-    else {
-      setMiniActive(false)
-      props.setShowButtonBack(false);
-    }
-  }, [safetyCrash, driverAssignmentDetails, videoRetrieval]);
   // styles
   const classes = useStyles();
   const mainPanelClasses =
@@ -77,7 +79,17 @@ export function Safety(props) {
 
   // });
 
+  // To render correct layout for mobile on open
   React.useEffect(() => {
+    if (window.innerWidth >= 960) {
+      setDisplaySetting(true)
+    } else {
+      setDisplaySetting(false)
+    }
+  }, [])
+
+  React.useEffect(() => {
+    resizeFunction();
     // console.log(`fetchSession: ${fetchSession}`);
     // async function fetchUserInfo() {
     //   try {
@@ -108,7 +120,31 @@ export function Safety(props) {
       window.removeEventListener("resize", resizeFunction);
     };
   }, [1]);
-
+  // functions for changeing the states from components
+  const handleImageClick = image => {
+    setImage(image);
+  };
+  const handleColorClick = color => {
+    setColor(color);
+  };
+  const handleBgColorClick = bgColor => {
+    switch (bgColor) {
+      case "white":
+        setLogo(require("assets/img/logo.svg"));
+        break;
+      default:
+        setLogo(require("assets/img/logo-white.svg"));
+        break;
+    }
+    setBgColor(bgColor);
+  };
+  const handleFixedClick = () => {
+    if (fixedClasses === "dropdown") {
+      setFixedClasses("dropdown show");
+    } else {
+      setFixedClasses("dropdown");
+    }
+  };
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -138,7 +174,7 @@ export function Safety(props) {
       if (prop.collapse) {
         return getRoutes(prop.views);
       }
-      if (prop.layout === ROUTE_PATH.SAFETY) {
+      if (prop.layout === ROUTE_PATH.MESSAGES) {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -157,12 +193,15 @@ export function Safety(props) {
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
       setMobileOpen(false);
+      setDisplaySetting(true)
+    } else {
+      setMiniActive(false);
+      setDisplaySetting(false)
     }
+
+
   };
 
-  const onBack = () => {
-    props.history.goBack()
-  }
 
   const renderDataContent = () => {
     return (
@@ -170,30 +209,21 @@ export function Safety(props) {
         <AdminNavbar
           sidebarMinimize={sidebarMinimize.bind(this)}
           miniActive={miniActive}
-          brandText={getActiveRoute(routes)}
+          brandText={getActiveRoute(messagesRoute)}
           handleDrawerToggle={handleDrawerToggle}
-          showBack={props.showBack}
-          onBack={onBack}
+          displaySetting={displaySetting}
           {...rest}
         />
         <div className="layout-container">
-          {getRoute() ? (
-            <div className={classes.content}>
-              <div className={classes.container}>
-                <Switch>
-                  {getRoutes(routes)}
-                  <Redirect from={ROUTE_PATH.OVERVIEW} to={ROUTE_PATH.OVERVIEW + "/overview"} />
-                </Switch>
-              </div>
-            </div>
-          ) : (
-            <div className={classes.map}>
+          <div className={classes.content}>
+            {displaySetting || <ExtraMessagesMobile />}
+            <div className={classes.container}>
               <Switch>
-                {getRoutes(routes)}
-                <Redirect from={ROUTE_PATH.OVERVIEW} to={ROUTE_PATH.OVERVIEW + "/overview"} />
+                {getRoutes(messagesRoute)}
+                <Redirect from={ROUTE_PATH.MESSAGES} to={ROUTE_PATH.MESSAGES + "/messages"} />
               </Switch>
             </div>
-          )}
+          </div>
         </div>
       </>
     )
@@ -206,10 +236,15 @@ export function Safety(props) {
     history.push(ROUTE_PATH.AUTH + "/sign-in");
   }
 
+  // useEffect(() => {
+  //   setInterval(()=> {
+  //     console.log(mobileOpen)
+  //   }, 1000)
+  // },[])
   return (
     <>
       <div className={classes.wrapper}>
-        {fetchSession && props.isAuthenticated &&
+        {props.isAuthenticated &&
           <Sidebar
             routes={routes}
             logoText={"Nauvus"}
@@ -224,47 +259,37 @@ export function Safety(props) {
           />
         }
         <div className={mainPanelClasses} ref={mainPanel}>
-          {fetchSession ?
-            <>
-              {props.isAuthenticated ?
-                <>
-                  {props.extraSidebar ?
-                    <>
-                      <div id="main">
-                        <div className="extraSidebar">div1</div>
-                        <div className="extraContainer">{renderDataContent()}</div>
-                      </div>
-                    </> :
-                    <>
-                      {renderDataContent()}
-                    </>
+          <>
+            {props.isAuthenticated ?
+              <>
+                <div id="main" style={{ display: "flex" }}>
+                  {displaySetting &&
+                    <div className="messagesSidebar">
+                      <ExtraMessagesSideBar />
+                    </div>
                   }
-                </> :
-                <>
-                  {redirectLogin()}
-                </>
-              }
-            </> :
-            <>
-              <Loading />
-            </>
-          }
+                  <div className="messagesContainer">
+                    {renderDataContent()}
+                  </div>
+                </div>
+              </> :
+              <>
+                {redirectLogin()}
+              </>
+            }
+          </>
         </div>
       </div>
     </>
   );
 }
-const mapStateToProps = ({ authentication, safety }) => {
-  return {
+
+export default connect(
+  ({ authentication }: IRootState) => ({
     isAuthenticated: authentication.isAuthenticated,
     user: authentication.user,
-    showBack: safety.showBack
-  };
-};
-
-const mapDispatchToProps = {
-  getUserInfo,
-  setShowButtonBack
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Safety);
+  }),
+  {
+    getUserInfo
+  }
+)(MessagesLayout);

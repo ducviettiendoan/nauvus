@@ -11,6 +11,7 @@ import SettingLayout from 'layouts/Setting';
 import OverviewLayout from 'layouts/Overview';
 import DispatchLayout from 'layouts/Dispatch';
 import SafetyLayout from 'layouts/Safety';
+import MessagesLayout from 'layouts/Messages';
 
 // const ExamModule = Loadable({
 //   loader: () => import(/* webpackChunkName: "exam" */ 'src/shared/modules/exam'),
@@ -38,6 +39,7 @@ const Routes = () => (
       <Route path={ ROUTE_PATH.OVERVIEW } component={OverviewLayout} />
       <Route path={ ROUTE_PATH.DISPATCH } component={DispatchLayout} />
       <Route path={ ROUTE_PATH.SAFETY } component={SafetyLayout} />
+      <Route path={ ROUTE_PATH.MESSAGES } component={MessagesLayout} />
       <Redirect from="/" to={ ROUTE_PATH.OVERVIEW + "/overview" } />
     </Switch>
   </div>

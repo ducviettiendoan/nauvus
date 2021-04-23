@@ -8,9 +8,9 @@ import {makeStyles} from "@material-ui/core/styles";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
-import DriverAppDvirs from "./driver-app/DriverAppDvirs";
+import DriverAppFeatures from "./driver-app/DriverAppFeatures";
 import DriverAppGeneral from "./driver-app/DriverAppGeneral";
-import DriverAppRoutes from "./driver-app/DriverAppRoutes";
+import DriverAppWorkflows from "./driver-app/DriverAppWorkflows";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 
 const styles = {
@@ -40,7 +40,7 @@ export default function DriverApp() {
   return (
     <div style={{paddingTop: "16px"}}>
 
-      <RoundedTabs tabs={["General", "Dvirs", "Routes"]} tabValue={handleChangeTab}/>
+      <RoundedTabs tabs={["General", "Features", "Workflows"]} tabValue={handleChangeTab}/>
 
       <Card style={{padding: "0px 20px", marginTop: "16px"}}>
 
@@ -54,8 +54,8 @@ export default function DriverApp() {
                   </GridItem>
                 </GridContainer>
                 {value === 0 && <DriverAppGeneral/>}
-                {value === 1 && <DriverAppDvirs/>}
-                {value === 2 && <DriverAppRoutes/>}
+                {value === 1 && <DriverAppFeatures/>}
+                {value === 2 && <DriverAppWorkflows/>}
               </GridItem>
             </GridContainer>
           </GridItem>
