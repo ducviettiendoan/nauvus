@@ -7,7 +7,7 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 // import SafetyCard from "./Card.jsx"
-// import "./Safety.css";
+// import "./SafetyInbox.css";
 import { makeStyles } from '@material-ui/core/styles';
 import {
   cardTitle,
@@ -150,7 +150,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-function Safety(props) {
+function SafetyInbox(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -200,4 +200,4 @@ const mapStateToProps = ({ safety }) => {
 const mapDispatchToProps = { 
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Safety);
+export default connect(mapStateToProps, mapDispatchToProps)(SafetyInbox);

@@ -11,7 +11,7 @@ import { InfoOutlined, MoreHoriz } from "@material-ui/icons";
 import { makeStyles } from '@material-ui/core/styles';
 import { setShowButtonBack } from "reducers/safety";
 import crashImage from "assets/img/crashImage.png";
-import LineChartCard from "../components/LineChart";
+import LineChartCard from "../report/components/LineChart";
 import GenPaginationV1 from 'components/Pagination/GenPaginationV1';
 import Button from "components/CustomButtons/Button";
 import Select from "components/CustomSelect/Select";
