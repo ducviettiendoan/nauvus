@@ -143,7 +143,7 @@ const dashRoutes = [
         name: "Crash",
         component: SafetyInboxCrash,
         layout: ROUTE_PATH.SAFETY,
-        // isFixed: true,
+        isFixed: true,
       },
       {
         path: "/inbox",
