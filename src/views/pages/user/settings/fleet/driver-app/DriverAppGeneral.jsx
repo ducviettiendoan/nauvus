@@ -8,10 +8,6 @@ import {makeStyles} from "@material-ui/core/styles";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import CardBody from "components/Card/CardBody.js";
-import {
-  cardTitle,
-  roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
 import Button from "components/CustomButtons/Button.js";
 import Switch from "components/CustomSwitch/Switch.jsx"
 import {Divider} from "@material-ui/core";
@@ -133,7 +129,7 @@ export default function DriverAppGeneral() {
           </GridItem>
           <Divider variant="fullWidth" light/>
         </GridItem>
-        <GridItem className={classes.cardMultipleContent} xs={9} sm={9} md={9}>
+        <GridItem className={classes.cardMultipleContent} xs={12} sm={11} md={9}>
           <GridItem xs={12} sm={12} md={12} className={classes.gridContent}>
             <GridItem className={classes.cardItem} xs={12} sm={12} md={12}>
               <GridItem className={classes.headerItem}>
@@ -147,21 +143,21 @@ export default function DriverAppGeneral() {
           </GridItem>
           <Divider variant="fullWidth" light/>
         </GridItem>
-        <GridItem className={classes.cardMultipleContent} xs={9} sm={9} md={9}>
+        <GridItem className={classes.cardMultipleContent} xs={12} sm={11} md={9}>
           <GridItem xs={12} sm={12} md={12} className={classes.gridContent}>
             <GridItem className={classes.cardItem} xs={12} sm={12} md={12}>
               <GridItem className={classes.headerItem}>
                 Trailer Selection
               </GridItem>
               <GridItem className={classes.contentItem} xs={12} sm={12} md={12}>
-                Allow drivers to see and select trailers in the Samsara Driver app.
+                Allow drivers to see and select trailers in the Nauvus Driver app.
               </GridItem>
             </GridItem>
             <Switch onChange={handleChange} className={classes.switch}/>
           </GridItem>
           <Divider variant="fullWidth" light/>
         </GridItem>
-        <GridItem className={classes.cardMultipleContent} xs={9} sm={9} md={9}>
+        <GridItem className={classes.cardMultipleContent} xs={12} sm={11} md={9}>
           <GridItem xs={12} sm={12} md={12} className={classes.gridContent}>
             <GridItem className={classes.cardItem} xs={12} sm={12} md={12}>
               <GridItem className={classes.headerItem}>
@@ -175,7 +171,7 @@ export default function DriverAppGeneral() {
           </GridItem>
           <Divider variant="fullWidth" light/>
         </GridItem>
-        <GridItem className={classes.cardMultipleContent2} xs={9} sm={9} md={9}>
+        <GridItem className={classes.cardMultipleContent2} xs={12} sm={11} md={9}>
           <GridItem xs={12} sm={12} md={12} className={classes.gridContent}>
             <GridItem className={classes.cardItem} xs={12} sm={12} md={12}>
               <GridItem className={classes.headerItem}>
@@ -189,7 +185,7 @@ export default function DriverAppGeneral() {
             <Switch onChange={handleChange} className={classes.switch}/>
           </GridItem>
         </GridItem>
-        <GridItem className={classes.cardMultipleContent2} xs={9} sm={9} md={9}>
+        <GridItem className={classes.cardMultipleContent2} xs={12} sm={11} md={9}>
           <GridItem xs={12} sm={12} md={12} className={classes.gridContent}>
             <GridItem className={classes.cardItem} xs={12} sm={12} md={12}>
               <GridItem className={classes.headerItem}>
