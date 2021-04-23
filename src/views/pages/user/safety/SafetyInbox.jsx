@@ -7,7 +7,7 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 // import SafetyCard from "./Card.jsx"
-// import "./Safety.css";
+// import "./SafetyInbox.css";
 import { makeStyles } from '@material-ui/core/styles';
 import {
   cardTitle,
@@ -17,10 +17,10 @@ import IconButton from "@material-ui/core/IconButton";
 import FormControl from "@material-ui/core/FormControl";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import Calendar from "../../../../components/Calendar/Calendar";
-import ResolvedList from "./components/ResolvedList";
-import InboxList from "./components/InboxList";
-import Dismissed from "./components/Dismissed";
-import Starred from "./components/Starred";
+import InboxList from "./inbox/InboxList";
+import ResolvedList from "./inbox/ResolvedList";
+import Starred from "./inbox/Starred";
+import Dismissed from "./inbox/Dismissed";
 
 
 const styles = {
@@ -150,7 +150,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-function Safety(props) {
+function SafetyInbox(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -200,4 +200,4 @@ const mapStateToProps = ({ safety }) => {
 const mapDispatchToProps = { 
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Safety);
+export default connect(mapStateToProps, mapDispatchToProps)(SafetyInbox);
