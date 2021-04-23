@@ -10,6 +10,7 @@ import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import CardBody from "components/Card/CardBody";
 import VideoCard from "./VideoCard";
 import GenPaginationV1 from "components/Pagination/GenPaginationV1";
+import {useHistory} from "react-router-dom";
 
 const styles = {
   cardMargin: {
@@ -55,6 +56,7 @@ const useStyles = makeStyles(styles);
 
 export default function Saved() {
   const classes = useStyles();
+  const history = useHistory()
 
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Standard Admin'},
@@ -70,6 +72,10 @@ export default function Saved() {
   }
 
   const mockData = {dateTime: "Feb 3, 2021, 4:24 PM", id: "709", driver: "Haydee Watson Peigan", route: "Trail SE, 8 km NNW", location: "Shepard, AB", length: 1, favorite: false}
+
+  const viewRetrieval = () => {
+    history.push("/safety/video-retrieval")
+  }
 
   return (
     <div>
@@ -105,7 +111,7 @@ export default function Saved() {
                   </GridItem>
                 </GridContainer>
                 <GridContainer>
-                  <VideoCard data={mockData}/>
+                  <VideoCard data={mockData} onClick={viewRetrieval}/>
                   <VideoCard data={mockData}/>
                   <VideoCard data={mockData}/>
                   <VideoCard data={mockData}/>

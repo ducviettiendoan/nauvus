@@ -47,16 +47,19 @@ export function Safety(props) {
   const [fetchSession, setFetchSession] = React.useState(true);
   const [showBack, setShowBack] = React.useState(false);
   const safetyCrash = window.location.pathname.indexOf("/safety/crash");
+  const driverAssignmentDetails = window.location.pathname.indexOf("/safety/driver-assignment/123");
+  const videoRetrieval = window.location.pathname.indexOf("/safety/video-retrieval");
 
   React.useEffect(() => {
-    if (safetyCrash !== -1) {
+    if (safetyCrash !== -1 || driverAssignmentDetails !== -1 || videoRetrieval !== -1) {
       setMiniActive(true);
       props.setShowButtonBack(true)
-    } else {
+    }
+    else {
       setMiniActive(false)
       props.setShowButtonBack(false);
     }
-  }, [safetyCrash]);
+  }, [safetyCrash, driverAssignmentDetails, videoRetrieval]);
   // styles
   const classes = useStyles();
   const mainPanelClasses =
