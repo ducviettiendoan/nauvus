@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import defaultImage from "assets/img/Upload.png";
@@ -47,7 +46,6 @@ export default function OrganizationUpload() {
       reader.readAsDataURL(newFile);
     }
   };
-  // eslint-disable-next-line
   const handleSubmit = e => {
     e.preventDefault();
     // this.state.file is the file/image uploaded

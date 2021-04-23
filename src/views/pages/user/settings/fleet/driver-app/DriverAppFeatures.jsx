@@ -9,10 +9,12 @@ import GridItem from "components/Grid/GridItem.js";
 import CardBody from "components/Card/CardBody.js";
 import Button from "components/CustomButtons/Button.js";
 import Switch from "components/CustomSwitch/Switch.jsx"
-import CustomCheckbox from "../../../../../../components/CustomCheckbox/CustomCheckbox";
-import AddIcon from "../../../../../../components/Icons/AddIcon";
-import DiaLog from "../../../../../../components/CustomDialog/Dialog";
-import AddAdminForm from "../../org/tags/AddAdminForm";
+import CustomCheckbox from "components/CustomCheckbox/CustomCheckbox";
+import AddIcon from "components/Icons/AddIcon";
+import DiaLog from "components/CustomDialog/Dialog";
+import AddCustomTileForm from "./AddCustomTileForm";
+import EditIcon from "components/Icons/EditIcon";
+import DeleteIcon from "components/Icons/DeleteIcon";
 
 const styles = {
   gridContent: {
@@ -137,22 +139,58 @@ const styles = {
     color: "#B4B4B4",
     textAlign: "center",
   },
+  tileColor: {
+    width: 18,
+    height: 18,
+    borderRadius: "25%",
+    margin: 12
+  },
+  tileName: {
+    fontWeight: 700,
+    fontSize: 16,
+    color: "#25345C",
+  },
+  tileWrapper: {
+    display: "flex"
+  }
+
+
 };
 
 const useStyles = makeStyles(styles);
 
-export default function DriverAppDvirs() {
+const mockData = [
+  {color: "#5AD0D9", name: "Custom Tile 1", link: "https://www.google.com/maps/@21.0491812,105.7928849,16z?hl=vi"},
+  {color: "#E77FF0", name: "Custom Tile 2", link: "https://www.google.com/maps/@21.0491812,105.7928849,16z?hl=vi"},
+  {color: "#D78526", name: "Custom Tile 3", link: "https://www.google.com/maps/@21.0491812,105.7928849,16z?hl=vi"}
+]
+
+export default function DriverAppFeatures() {
   const classes = useStyles();
   const [openAdd, setOpenAdd] = useState(false)
+  const [currentTile, setCurrentTile] = useState({})
+  const [dialogTitle, setDialogTitle] = useState("Add")
   const handleChange = (event) => {
   };
+
+  const handleEditDialog = (data) => {
+    setCurrentTile(data)
+    setOpenAdd(true)
+    setDialogTitle("Edit")
+  }
+
+  const handleAddDialog = () => {
+    setOpenAdd(true)
+    setDialogTitle("Add")
+
+  }
 
   return (
     <GridContainer>
       <DiaLog
         renderTitle={
           <>
-            <h3 className={classes.dialogTitle}>Add Custom Tile</h3>
+            <h3 className={classes.dialogTitle}>{dialogTitle} Custom Tile</h3>
             <h4 className={classes.dialogSubTitle}>Information for the DVIR entry</h4>
           </>
         }
@@ -160,9 +198,11 @@ export default function DriverAppDvirs() {
           setOpenAdd(false)
         }
         }
+        fullWidth={true}
+        maxWidth="md"
         open={openAdd}
       >
-        <AddAdminForm handleClose={() => {
+        <AddCustomTileForm data={currentTile} handleClose={() => {
           setOpenAdd(false)
         }}/>
       </DiaLog>
@@ -181,13 +221,43 @@ export default function DriverAppDvirs() {
               className="btn-round-white-3 h-41"
               startIcon={<AddIcon/>}
               style={{boxShadow: 'none'}}
-              onClick={() => {
-                setOpenAdd(true)
-              }}
+              onClick={handleAddDialog}
             >
-              Add Title
+              Add Tile
             </Button>
           </GridItem>
+          <div>
+            {mockData.map((ele) => {
+              const {color, name, link} = ele
+              return (
+                <div className={classes.tileWrapper}>
+                  <div className={classes.tileColor} style={{background: color}}></div>
+                  <div>
+                    <div className={classes.tileName}>{name}</div>
+                    <div className={classes.contentItem}>{link}</div>
+                  </div>
+                  <div>
+                    <Button
+                      onClick={() => {
+                        handleEditDialog(ele)
+                      }}
+                      justIcon
+                      color="twitter"
+                      simple
+                    >
+                      <EditIcon className={classes.iconButton}
+                                style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+                    </Button>
+                    <Button justIcon color="google" simple>
+                      <DeleteIcon className={classes.iconButton}
+                                  style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
+                    </Button>
+                  </div>
+                </div>
+              )
+            })
+            }
+          </div>
 
           <GridItem xs={12} className={classes.gridContent}>
             <GridItem className={classes.cardItem} xs={12}>
