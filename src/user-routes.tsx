@@ -25,7 +25,7 @@ import InternalTools from "views/pages/user/internal-tools/InternalTools";
 import Maintenance from "views/pages/user/maintenance/Maintenance";
 import Messages from "views/pages/user/messages/Messages";
 import Reports from "views/pages/user/reports/Reports";
-import Safety from "views/pages/user/safety/Safety";
+import SafetyInbox from "views/pages/user/safety/SafetyInbox";
 import Settings from "views/pages/user/settings/Settings";
 import Assets from "views/pages/user/overview/Assets";
 import SafetyInboxCrash from "views/pages/user/safety/crash/Crash";
@@ -138,17 +138,29 @@ const dashRoutes = [
     layout: ROUTE_PATH.SAFETY,
     views: [
       {
-        // path: "/inbox/crash/:id",
         path: "/crash",
         name: "Crash",
         component: SafetyInboxCrash,
         layout: ROUTE_PATH.SAFETY,
-        // isFixed: true,
+        isFixed: true,
       },
       {
         path: "/inbox",
         name: "Safety Inbox",
-        component: Safety,
+        component: SafetyInbox,
+        layout: ROUTE_PATH.SAFETY
+      },
+      {
+        path: "/driver-assignment/:id",
+        name: "Driver Assignment Details",
+        component: UnassignedDetail,
+        layout: ROUTE_PATH.SAFETY,
+        isFixed: true
+      },
+      {
+        path: "/driver-assignment",
+        name: "Driver Assignment",
+        component: DriverAssignment,
         layout: ROUTE_PATH.SAFETY
       },
       {
@@ -171,48 +183,35 @@ const dashRoutes = [
         layout: ROUTE_PATH.SAFETY
       },
       {
-        path: "/safety/video-retrieval",
+        path: "/video-library",
         name: "Video Library",
         component: VideoRetrieval,
         layout: ROUTE_PATH.SAFETY,
       },
       {
-        path: "/retrieval",
+        path: "/video-retrieval",
         name: "Video Retrieval",
         component: Retrieval,
-        layout: ROUTE_PATH.USER,
-      },
-      {
-        path: "/driver-assignment/:id",
-        name: "Driver Assignment Details",
-        component: UnassignedDetail,
         layout: ROUTE_PATH.SAFETY,
         isFixed: true
       },
       {
-        path: "/driver-assignment",
-        name: "Driver Assignment",
-        component: DriverAssignment,
-        layout: ROUTE_PATH.SAFETY
-      },
-
-      {
         path: "/safety-report",
         name: "Safety Report",
         component: SafetyReport,
-        layout: ROUTE_PATH.USER
+        layout: ROUTE_PATH.SAFETY
       },
       {
         path: "/safety-report-details",
         name: "Safety Report Details",
         component: SafetyReportDetails,
-        layout: ROUTE_PATH.USER
+        layout: ROUTE_PATH.SAFETY
       },
       {
         path: "/safety-report-table",
         name: "Safety Report Table",
         component: SafetyReportTable,
-        layout: ROUTE_PATH.USER
+        layout: ROUTE_PATH.SAFETY
       },
     ]
   },

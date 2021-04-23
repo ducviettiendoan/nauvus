@@ -7,7 +7,6 @@ import customDropdownStyle
 import Divider from "@material-ui/core/Divider";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import Trips from "./trip-history/Trips";
-import Routes from "./trip-history/Routes";
 
 const useStyles = makeStyles((theme) => ({
   ...customDropdownStyle(theme),
