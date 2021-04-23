@@ -333,7 +333,6 @@ const dashRoutes = [
         name: "Driver Efficiency",
         component: DriverEfficiencyReport,
         layout: ROUTE_PATH.USER,
-        isFixed: true,
       },
     ]
   },
