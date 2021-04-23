@@ -25,7 +25,7 @@ import InternalTools from "views/pages/user/internal-tools/InternalTools";
 import Maintenance from "views/pages/user/maintenance/Maintenance";
 import Messages from "views/pages/user/messages/Messages";
 import Reports from "views/pages/user/reports/Reports";
-import Safety from "views/pages/user/safety/Safety";
+import SafetyInbox from "views/pages/user/safety/SafetyInbox";
 import Settings from "views/pages/user/settings/Settings";
 import Assets from "views/pages/user/overview/Assets";
 import SafetyInboxCrash from "views/pages/user/safety/crash/Crash";
@@ -148,7 +148,7 @@ const dashRoutes = [
       {
         path: "/inbox",
         name: "Safety Inbox",
-        component: Safety,
+        component: SafetyInbox,
         layout: ROUTE_PATH.SAFETY
       },
       {
