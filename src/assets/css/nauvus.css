@@ -298,6 +298,22 @@
   top: 0
 }
 
+.messagesSidebar {
+  float: left;
+  min-width: 330px;
+  background-color: white;
+  height: 100vh;
+  border-right: 1px solid #25345c1f;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+}
+
+.messagesContainer{
+  width: calc(100% - 330px);
+  float: left;
+}
+
 .extraContainer {
   width: calc(100% - 260px);
   float: left

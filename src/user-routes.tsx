@@ -365,7 +365,7 @@ const dashRoutes = [
     extraIcon: StatusGreenIcon,
     component: Messages,
     isFixed: true,
-    layout: ROUTE_PATH.USER,
+    layout: ROUTE_PATH.MESSAGES,
   },
   {
     path: "/alerts",
