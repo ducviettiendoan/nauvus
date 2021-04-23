@@ -85,7 +85,7 @@ export default function OverviewAdminNavbar(props) {
             {brandText}
           </Button>
         </div>}
-        <Hidden smDown>
+        <Hidden smDown implementation="css"> 
           <div>
             {window.location.pathname.indexOf("/vehicle/123456") !== -1 &&
             <div style={{display: "flex", flexDirection: "row"}}>
