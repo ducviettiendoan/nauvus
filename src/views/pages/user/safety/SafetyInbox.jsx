@@ -17,10 +17,10 @@ import IconButton from "@material-ui/core/IconButton";
 import FormControl from "@material-ui/core/FormControl";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import Calendar from "../../../../components/Calendar/Calendar";
-import ResolvedList from "./components/ResolvedList";
-import InboxList from "./components/InboxList";
-import Dismissed from "./components/Dismissed";
-import Starred from "./components/Starred";
+import InboxList from "./inbox/InboxList";
+import ResolvedList from "./inbox/ResolvedList";
+import Starred from "./inbox/Starred";
+import Dismissed from "./inbox/Dismissed";
 
 
 const styles = {
