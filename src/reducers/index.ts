@@ -14,6 +14,7 @@ import fuelEnergy, { FuelEnergyState } from './fuel-energy';
 import compliance, { ComplianceState } from "./compliance";
 import driverRecord, { DriverRecordState } from "./setting-driver-record"
 import safety, { SafetyState } from "./safety";
+import messages, { MessagesState } from "./messages"
 
 export interface IRootState {
   readonly authentication: AuthenticationState;
@@ -30,6 +31,7 @@ export interface IRootState {
   readonly compliance: ComplianceState;
   readonly driverRecord: DriverRecordState;
   readonly safety: SafetyState;
+  readonly messages: MessagesState
 }
 
 const rootReducer = combineReducers<IRootState>({
@@ -46,7 +48,8 @@ const rootReducer = combineReducers<IRootState>({
   fuelEnergy,
   compliance,
   driverRecord,
-  safety
+  safety,
+  messages
 });
 
 export default rootReducer;

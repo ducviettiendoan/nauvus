@@ -55,7 +55,8 @@ const styles = {
     borderRadius: "18px"
   },
   img: {
-    borderRadius: 8
+    borderRadius: 8,
+    cursor: "pointer"
   }
 }
 const useStyles = makeStyles(styles);
@@ -68,7 +69,7 @@ const VideoCard = (props) => {
     setFavoriteState(favoriteState => !favoriteState)
   }
   return (
-    <GridItem className={classes.videoCard} xs={12} sm={6} md={4} lg={3}>
+    <GridItem onClick={props.onClick} className={classes.videoCard} xs={12} sm={6} md={4} lg={3}>
       <Card className={classes.card}>
         <img className={classes.img} src={img}/>
         <div className={classes.imgControl}>

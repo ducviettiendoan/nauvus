@@ -9,18 +9,14 @@ import Button from "components/CustomButtons/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import DeleteIcon from "components/Icons/DeleteIcon";
 import Table from "components/Table/TableV1";
-import DotIcon from "components/Icons/DotIcon";
 import EditIcon from "components/Icons/EditIcon";
-import avatar from "assets/img/faces/avatar.jpg";
 import ChipSelect from 'components/Chip/ChipSelect';
-import {getGateway, getSensor} from "reducers/setting-device";
+import { getSensor} from "reducers/setting-device";
 import DiaLog from "components/CustomDialog/Dialog";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
-import OrganizationUpload from "components/CustomUpload/OrganizationUpload";
 
 import {connect} from 'react-redux';
-import InviteUserForm from "../../org/user-roles/InviteUserForm";
 import ActivateDevicesForm from "./ActivateDevicesForm";
 
 const useStyles = makeStyles((theme) => ({

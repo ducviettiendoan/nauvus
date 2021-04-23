@@ -19,7 +19,7 @@ import Calendar from "../../../../../components/Calendar/Calendar";
 import Select from "@material-ui/core/Select";
 import DropDownIcon from "../../../../../components/Icons/DropDownIcon";
 import MenuItem from "@material-ui/core/MenuItem";
-import LineChartCard from "./LineChart";
+import LineChartCard from "../report/components/LineChart";
 
 
 

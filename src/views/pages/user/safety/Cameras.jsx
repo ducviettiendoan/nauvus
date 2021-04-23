@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "components/CustomButtons/Button";
@@ -10,8 +10,8 @@ import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
 import Card from '@material-ui/core/Card';
 import CameraCard from "./cameras/CameraCard";
-import GenPaginationV1 from "../../../../components/Pagination/GenPaginationV1";
-import {getCamerasData} from "../../../../reducers/safety";
+import GenPaginationV1 from "components/Pagination/GenPaginationV1";
+import {getCamerasData} from "reducers/safety";
 import {connect} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -96,7 +96,6 @@ const useStyles = makeStyles((theme) => ({
   time: {
     color: "#C4C4C4",
   },
-
   pagination: {
     marginTop: "20px",
     padding: "0px !important",
@@ -106,8 +105,10 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     borderRadius: "12px",
+  },
+  container: {
+    paddingTop: "16px"
   }
-
 }));
 
 export function Cameras(props) {
@@ -132,7 +133,7 @@ export function Cameras(props) {
 
   return (
     <div>
-      <GridContainer>
+      <GridContainer className={classes.container}>
         <GridItem xs={12} sm={12} md={12}>
           <Card className={classes.card}>
             <Grid container className={classes.gridTitle}>
