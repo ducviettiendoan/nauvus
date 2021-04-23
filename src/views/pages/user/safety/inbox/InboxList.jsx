@@ -205,12 +205,12 @@ export default function InboxList() {
                 </GridContainer>
 
                 {/* 3 Cards */}
-                {/*<Link to="/safety/inbox/crash/12345"><SafetyCard /></Link>*/}
-                {/*<Link to="/safety/inbox/crash/12345"><SafetyCard background="#ECEEF0" /></Link>*/}
-                {/*<Link to="/safety/inbox/crash/12345"><SafetyCard /></Link>*/}
-                <SafetyCard />
+                <Link to="/safety/crash"><SafetyCard /></Link>
+                <Link to="/safety/crash"><SafetyCard background="#ECEEF0" /></Link>
+                <Link to="/safety/crash"><SafetyCard /></Link>
+                {/* <SafetyCard />
                 <SafetyCard background="#ECEEF0" />
-                <SafetyCard />
+                <SafetyCard /> */}
               </CardBody>
             </Card>
 

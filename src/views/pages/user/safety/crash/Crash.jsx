@@ -9,7 +9,6 @@ import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import { InfoOutlined, MoreHoriz } from "@material-ui/icons";
 import { makeStyles } from '@material-ui/core/styles';
-import { setShowButtonBack } from "reducers/safety";
 import crashImage from "assets/img/crashImage.png";
 import LineChartCard from "../report/components/LineChart";
 import GenPaginationV1 from 'components/Pagination/GenPaginationV1';
@@ -263,9 +262,6 @@ function Crash(props) {
   const classes = useStyles();
   const [view, setView] = React.useState(false);
   const [open, setOpen] = React.useState(false);
-  useEffect(() => {
-    props.setShowButtonBack(true)
-  }, []);
 
   const [favoriteState, setFavoriteState] = useState(false)
 
@@ -422,20 +418,6 @@ function Crash(props) {
                     console.log(value);
                   }}
                 />
-                {/* {chipData.map(data => (
-                  <Chip
-                    deleteIcon={<CloseIcon />}
-                    label={data.label}
-                    onDelete={handleDelete(data)}
-                    className={classes.chips}
-                  />
-                ))}
-                <Button
-                  className="btn-transparent w-84 h-41"
-                  startIcon={<AddOutlined />}
-                >
-                  Add
-                  </Button> */}
               </div>
               <Card className={classes.cardInfo}>
                 <GridContainer justify="space-between">
@@ -615,8 +597,7 @@ const mapStateToProps = ({ safety }) => {
   };
 };
 
-const mapDispatchToProps = {
-  setShowButtonBack
+const mapDispatchToProps = { 
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Crash);

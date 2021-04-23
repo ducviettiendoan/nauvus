@@ -24,7 +24,8 @@ import { COGNOTO_SERVER_URL, COGNOTO_CLIENT_ID, COGNOTO_RESPONSE_TYPE, PUBLIC_UR
 import Loading from "components/Loading/Loading";
 import { connect } from 'react-redux';
 import { getUserInfo } from '../reducers/authentication';
-import { IRootState } from '../reducers';
+import { setShowButtonBack } from "reducers/safety";
+
 
 var ps;
 
@@ -44,15 +45,18 @@ export function Safety(props) {
   const [logo, setLogo] = React.useState(require("assets/img/logo_nauvus.svg"));
 
   const [fetchSession, setFetchSession] = React.useState(true);
-  const safetyInbox = window.location.pathname.indexOf("/safety/inbox/crash");
+  const [showBack, setShowBack] = React.useState(false);
+  const safetyCrash = window.location.pathname.indexOf("/safety/crash");
 
   React.useEffect(() => {
-    if (safetyInbox !== -1) {
+    if (safetyCrash !== -1) {
       setMiniActive(true);
+      props.setShowButtonBack(true)
     } else {
-      setMiniActive(false);
+      setMiniActive(false)
+      props.setShowButtonBack(false);
     }
-  }, [safetyInbox]);
+  }, [safetyCrash]);
   // styles
   const classes = useStyles();
   const mainPanelClasses =
@@ -101,31 +105,7 @@ export function Safety(props) {
       window.removeEventListener("resize", resizeFunction);
     };
   }, [1]);
-  // functions for changeing the states from components
-  const handleImageClick = image => {
-    setImage(image);
-  };
-  const handleColorClick = color => {
-    setColor(color);
-  };
-  const handleBgColorClick = bgColor => {
-    switch (bgColor) {
-      case "white":
-        setLogo(require("assets/img/logo.svg"));
-        break;
-      default:
-        setLogo(require("assets/img/logo-white.svg"));
-        break;
-    }
-    setBgColor(bgColor);
-  };
-  const handleFixedClick = () => {
-    if (fixedClasses === "dropdown") {
-      setFixedClasses("dropdown show");
-    } else {
-      setFixedClasses("dropdown");
-    }
-  };
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -177,6 +157,10 @@ export function Safety(props) {
     }
   };
 
+  const onBack = () => {
+    props.history.goBack()
+  }
+
   const renderDataContent = () => {
     return (
       <>
@@ -186,6 +170,7 @@ export function Safety(props) {
           brandText={getActiveRoute(routes)}
           handleDrawerToggle={handleDrawerToggle}
           showBack={props.showBack}
+          onBack={onBack}
           {...rest}
         />
         <div className="layout-container">
@@ -275,7 +260,8 @@ const mapStateToProps = ({ authentication, safety }) => {
 };
 
 const mapDispatchToProps = {
-  getUserInfo
+  getUserInfo,
+  setShowButtonBack
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Safety);
