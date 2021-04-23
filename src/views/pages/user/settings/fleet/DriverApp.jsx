@@ -40,7 +40,7 @@ export default function DriverApp() {
   return (
     <div style={{paddingTop: "16px"}}>
 
-      <RoundedTabs tabs={["General", "Dvirs", "Routes"]} tabValue={handleChangeTab}/>
+      <RoundedTabs tabs={["General", "Features", "Workflows"]} tabValue={handleChangeTab}/>
 
       <Card style={{padding: "0px 20px", marginTop: "16px"}}>
 
