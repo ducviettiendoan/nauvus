@@ -71,13 +71,17 @@ export default function EnRoute() {
       <DiaLog
         renderTitle={
           <>
-            <h3 className={classes.dialogTitle}>New Camera Snapshot</h3>
+            <h3 className={classes.dialogTitle}>Video Feed</h3>
             <h4 className={classes.dialogSubTitle}>Taken at 12:02:46 PM </h4>
           </>
         }
         open={openCamera}
       >
-        <img src={driving} style={{width: 534, marginBottom: 16}}/>
+        {/* <img src={driving} style={{width: 534, marginBottom: 16}}/> */}
+        <div style={{marginBottom: 16}}>
+          <video src="https://storage.googleapis.com/pte-magic-banner/pexels-kelly-lacy-6534370.mp4" width="534" controls>
+          </video>
+        </div>
         <OutwardFacing/>
         <div className={classes.selectButton}>
           <Button

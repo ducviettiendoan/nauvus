@@ -37,7 +37,7 @@ const useStyles = makeStyles(styles);
 const RegularMap = withScriptjs(
   withGoogleMap((props) => {
     return (
-
+ 
       <GoogleMap
         defaultZoom={12}
         defaultCenter={props.center}
@@ -82,6 +82,7 @@ export function VehicleDetails(props) {
 
   React.useEffect(() => {
     // setInterval( fetchVehicles , 10000);
+    props.setOpenDrawer(true);
     async function fetchVehicles() {
       await props.loadVehicles();
     }
