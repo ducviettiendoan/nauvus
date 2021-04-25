@@ -205,9 +205,9 @@ export default function InboxList() {
                 </GridContainer>
 
                 {/* 3 Cards */}
-                <Link to="/safety/crash"><SafetyCard /></Link>
-                <Link to="/safety/crash"><SafetyCard background="#ECEEF0" /></Link>
-                <Link to="/safety/crash"><SafetyCard /></Link>
+                <Link to="/safety/crash"><SafetyCard imageUrl={ "https://storage.googleapis.com/pte-magic-banner/safety-1.png"} /></Link>
+                <Link to="/safety/crash"><SafetyCard imageUrl={ "https://storage.googleapis.com/pte-magic-banner/safety-2.png"} background="#ECEEF0" /></Link>
+                <Link to="/safety/crash"><SafetyCard imageUrl={ "https://storage.googleapis.com/pte-magic-banner/safety-3.png"} /></Link>
                 {/* <SafetyCard />
                 <SafetyCard background="#ECEEF0" />
                 <SafetyCard /> */}
