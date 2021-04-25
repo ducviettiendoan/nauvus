@@ -55,7 +55,7 @@ export default function EnRoute() {
                   </Button>
                   {/* <img src={driving} style={{width: 332, height: 190}}/> */}
                   <div>
-                    <video src="https://storage.googleapis.com/pte-magic-banner/pexels-kelly-lacy-6534370.mp4" width="332" controls autoplay="true" loop="true">
+                    <video src="https://storage.googleapis.com/pte-magic-banner/pexels-kelly-lacy-6534370.mp4" width="332" autoplay="true" loop="true">
                     </video>
                   </div>
                 </div>
@@ -85,7 +85,7 @@ export default function EnRoute() {
       >
         {/* <img src={driving} style={{width: 534, marginBottom: 16}}/> */}
         <div style={{marginBottom: 16}}>
-          <video src="https://storage.googleapis.com/pte-magic-banner/two-screen.mp4" width="534" controls autoplay="true" loop="true">
+          <video src="https://storage.googleapis.com/pte-magic-banner/two-screen.mp4" width="534" autoplay="true" loop="true">
           </video>
         </div>
         {/* <OutwardFacing/> */}

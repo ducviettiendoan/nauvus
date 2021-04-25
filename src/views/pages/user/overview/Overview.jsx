@@ -23,6 +23,8 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 
 import styles from "assets/jss/material-dashboard-pro-react/views/overviewPageStyle.js";
 import pinMaker from 'assets/icons/pinMaker.svg';
+import navigatorMaker from 'assets/icons/navigator.svg';
+// import navigatorMaker from 'assets/icons/navigator.png';
 import { Link } from "react-router-dom";
 
 import { setOpenDrawer } from 'reducers/overview';
@@ -42,14 +44,14 @@ const RegularMap = withScriptjs(
     return (
 
       <GoogleMap
-        defaultZoom={12}
+        defaultZoom={17}
         defaultCenter={props.center}
         defaultOptions={{
           scrollwheel: false,
           mapTypeControl: false,
           streetViewControl: false
         }}
-
+        mapTypeId={ props.mapType }
       >
         {props.data.map((maker, index) => {
           console.log(`maker ${index}`, maker)
@@ -57,16 +59,18 @@ const RegularMap = withScriptjs(
             return (
               <Marker position={{ lat: maker.latitude, lng: maker.longitude }}
                 icon={{
-                  url: pinMaker,
+                  url: props.mapType === 'roadmap' ? pinMaker : navigatorMaker,
                   anchor: new google.maps.Point(5, 58),
                 }}
                 onClick={(marker) => {
                   console.log(`click on Marker ${marker.latLng.lat()} - ${marker.latLng.lng()}`, marker)
+                  props.onChangeMapType()
                 }}
               >
-                <InfoWindow>
+                { props.isPopupShown && <InfoWindow>
                   <InfoWindowPopup maker={maker} />
                 </InfoWindow>
+                }
               </Marker>
             )
           }
@@ -82,6 +86,9 @@ export function Overview(props) {
   const classes = useStyles();
   const theme = useTheme();
 
+  const [mapType, setMapType] = React.useState('roadmap');
+  const [isPopupShown, setPopupShown] = React.useState(true);
+  
   React.useEffect(() => {
     // setInterval( fetchVehicles , 10000);
     async function fetchVehicles() {
@@ -90,6 +97,16 @@ export function Overview(props) {
     fetchVehicles();
   }, [1]);
 
+  const onChangeMapType = () => {
+    console.log(`change map type`);
+    if (mapType === 'roadmap') {
+      setMapType('satellite');
+      setPopupShown(false);
+    } else {
+      setMapType('roadmap');
+      setPopupShown(true);
+    }
+  }
 
   return (
     <div style={{ position: 'relative' }}>
@@ -98,9 +115,11 @@ export function Overview(props) {
         loadingElement={<div style={{ height: `100%` }} />}
         containerElement={<div className="containerElementMap" />}
         mapElement={<div style={{ height: `100%` }} />}
-        isMarkerShown
+        isPopupShown={ isPopupShown }
         data={props.vehicles}
-        center={{ lat: 40.748817, lng: -73.985428 }}
+        mapType={ mapType }
+        center={{ lat: 40.8426401415982, lng: -73.28993055963367 }}
+        onChangeMapType = { onChangeMapType }
       />
       <div className={classes.searchMapContainer}>
         <Button

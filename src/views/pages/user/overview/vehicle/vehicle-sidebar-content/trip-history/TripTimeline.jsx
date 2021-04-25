@@ -23,6 +23,7 @@ import driver from "assets/img/driver.png";
 import CustomDropdown from "components/CustomDropdown/CustomDropdown";
 import {GoogleMap, withGoogleMap, withScriptjs} from "react-google-maps";
 import {GOOGLE_MAP_API_KEY} from "config/constants";
+import { Link } from 'react-router-dom';
 
 const drawerWidth = 525;
 const useStyles = makeStyles((theme) => ({
@@ -211,7 +212,8 @@ export function TripTimeline(props) {
   const classes = useStyles()
 
   useEffect(() => {
-    props.setOpenDrawer(false)
+    props.setOpenDrawer(false);
+    setOpen(true);
   }, [])
 
   const handleDrawerOpen = () => {
@@ -274,9 +276,11 @@ export function TripTimeline(props) {
         <GridContainer className={classes.tripContentTitle}>
           <GridItem>
             <div className={classes.drawerHeader}>
-              <IconButton onClick={handleDrawerClose}>
-                <ChevronLeftIcon/>
-              </IconButton>
+              <Link to={"/o/vehicle/123456"}>
+                <IconButton>
+                  <ChevronLeftIcon/>
+                </IconButton>
+              </Link>
               <span className={classes.sidebarTitle}>Trip Timeline Ongoing</span>
             </div>
           </GridItem>
