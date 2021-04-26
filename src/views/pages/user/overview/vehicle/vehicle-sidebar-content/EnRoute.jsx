@@ -35,6 +35,7 @@ export default function EnRoute() {
                 <div style={{width: "100%"}}>
                   <Button
                     round
+                    style={{ zIndex: "9999" }}
                     className={`btn-round-active h-36 w-166 ${classes.livestreamButton}`}
                     startIcon={<LiveStreamIcon/>}
                     onClick={() => setOpenLiveStream(true)}
@@ -46,12 +47,17 @@ export default function EnRoute() {
                     aria-label="edit"
                     justIcon
                     round
+                    style={{ zIndex: "9999" }}
                     className={`btn-36 ${classes.cameraButton} mr-2`}
                     onClick={() => setOpenCamera(true)}
                   >
                     <CameraWhiteIcon/>
                   </Button>
-                  <img src={driving} style={{width: 332, height: 190}}/>
+                  {/* <img src={driving} style={{width: 332, height: 190}}/> */}
+                  <div>
+                    <video src="https://storage.googleapis.com/pte-magic-banner/pexels-kelly-lacy-6534370.mp4" width="332" autoplay="true" loop="true">
+                    </video>
+                  </div>
                 </div>
             },
           ]
@@ -71,14 +77,18 @@ export default function EnRoute() {
       <DiaLog
         renderTitle={
           <>
-            <h3 className={classes.dialogTitle}>New Camera Snapshot</h3>
+            <h3 className={classes.dialogTitle}>Video Feed</h3>
             <h4 className={classes.dialogSubTitle}>Taken at 12:02:46 PM </h4>
           </>
         }
         open={openCamera}
       >
-        <img src={driving} style={{width: 534, marginBottom: 16}}/>
-        <OutwardFacing/>
+        {/* <img src={driving} style={{width: 534, marginBottom: 16}}/> */}
+        <div style={{marginBottom: 16}}>
+          <video src="https://storage.googleapis.com/pte-magic-banner/two-screen.mp4" width="534" autoplay="true" loop="true">
+          </video>
+        </div>
+        {/* <OutwardFacing/> */}
         <div className={classes.selectButton}>
           <Button
             type="button"

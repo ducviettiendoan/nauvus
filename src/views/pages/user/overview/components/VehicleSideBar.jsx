@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import classNames from "classnames";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
@@ -65,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
   },
   sidebarHeader: {
     width: "100%",
-    height: "65px",
+    height: "66px",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -288,7 +289,6 @@ export function VehicleSideBar(props) {
 
   return (
     <div ref={mainPanelVehicleSideBar} className={classes.sidebarContainer}>
-      <Divider/>
       <div>
         <div>
           <Grid xs={12} sm={12} md={12} className={classes.sidebarHeader}>
@@ -411,13 +411,15 @@ export function VehicleSideBar(props) {
                       </ListItem>
                     </div>,
                   content:
-                    <div className={classes.cardExpandContent} onClick={handleShowDetails}>
+                    <div className={classes.cardExpandContent}>
                       <GridItem className={classes.expandedHeader}>
                         <div>
                           <LocationIcon/>
                           <span className={classes.txtExpansion}>Tri-State Toolway, East Hazel Crest , IL</span>
                         </div>
-                        <OpenInNewTabIcon/>
+                        <Link to={ "/o/vehicle/123456" }>
+                          <OpenInNewTabIcon/>
+                        </Link>
                       </GridItem>
                       <GridItem>
                         <VehicleUserIcon/>

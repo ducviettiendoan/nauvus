@@ -24,7 +24,7 @@ import avatar from "assets/img/faces/avatar.jpg";
 import StarYellowIcon from "components/Icons/StarYellowIcon";
 import StarGreyIcon from "components/Icons/StarGreyIcon";
 import LocationIcon from "components/Icons/LocationIcon";
-
+import LiveStreamIcon from "components/Icons/LiveStreamIcon";
 
 const RegularMap = withScriptjs(
   withGoogleMap((props) => {
@@ -537,11 +537,23 @@ function Crash(props) {
           </Card>
           <h3 className={classes.title}>31 km/h - Limit 100</h3>
           <GridContainer>
-            <GridItem md={6}>
-              <img className={classes.crashImage} onClick={() => setView(true)} src={crashImage} />
+            <GridItem md={6}> 
+              <div style={{ position: 'relative' }}>
+                <Button
+                    round
+                    style={{ zIndex: "9999", position: 'absolute', left: '10px', top: '7px' }}
+                    className={`btn-round-active h-36 w-166 ${classes.livestreamButton}`}
+                    onClick={() => setView(true)}
+                  >
+                    View
+                  </Button>
+                  <video width="100%" src="https://storage.googleapis.com/pte-magic-banner/facing.mp4" controls loop="true">
+                </video>
+              </div>
             </GridItem>
             <GridItem md={6}>
-              <img className={classes.crashImage} src={crashImage} />
+              <video width="100%" src="https://storage.googleapis.com/pte-magic-banner/pexels-kelly-lacy-6534370.mp4" controls loop="true">
+              </video>
             </GridItem>
           </GridContainer>
           <div className={classes.chart}>

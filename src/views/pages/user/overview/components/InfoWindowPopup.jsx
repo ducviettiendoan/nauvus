@@ -5,6 +5,7 @@ import React from "react";
 import styles from "assets/jss/material-dashboard-pro-react/views/overviewPageStyle.js";
 import {makeStyles} from "@material-ui/core/styles";
 import driving from "../../../../../assets/img/dashcam.png"
+import { Link } from "react-router-dom";
 const useStyles = makeStyles(styles);
 
 const InfoWindowPopup = (props) => {
@@ -31,7 +32,9 @@ const InfoWindowPopup = (props) => {
             </div>
             <div >
                 <ZoomIcon className={classes.zoom}/>
-                <OpenInNewTabIcon className={classes.newTab}/>
+                <Link to={ "/o/vehicle/123456" }>
+                    <OpenInNewTabIcon className={classes.newTab} classes={{ root: classes.newTab }} />
+                </Link>
             </div>
         </div>
     </div>

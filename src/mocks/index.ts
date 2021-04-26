@@ -11,3 +11,4 @@ import "./driver-efficiency";
 import "./overview";
 import "./compliance";
 import "./safety";
+import "./messages"
