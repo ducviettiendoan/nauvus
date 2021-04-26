@@ -23,6 +23,7 @@ import DriverEfficiency from "views/pages/user/fuel-energy/DriverEfficiency"
 import DriverEfficiencyReport from "views/pages/user/fuel-energy/driver-efficiency-parts/DriverEfficiencyReport"
 import InternalTools from "views/pages/user/internal-tools/InternalTools";
 import Maintenance from "views/pages/user/maintenance/Maintenance";
+import DriverVehicleReport from "views/pages/user/maintenance/components/DriverVehicleReport";
 import Messages from "views/pages/user/messages/Messages";
 import Reports from "views/pages/user/reports/Reports";
 import SafetyInbox from "views/pages/user/safety/SafetyInbox";
@@ -289,11 +290,25 @@ const dashRoutes = [
     ]
   },
   {
-    path: "/maintenance",
+    collapse: true,
     name: "Maintenance",
     icon: MaintenanceIcon,
-    component: Maintenance,
-    layout: ROUTE_PATH.USER
+    state: "maintenaceCollapse",
+    layout: ROUTE_PATH.USER,
+    views: [
+      {
+      path: "/maintenance/dashboard",
+      name: "Maintenance",
+      component: Maintenance,
+      layout: ROUTE_PATH.USER,
+
+      },
+      { path: "/maintenance/driver-vehicle-inspection-report/vehicle101",
+        name: "Driver Vehicle Inspection Reports",
+        component: DriverVehicleReport,
+        layout: ROUTE_PATH.USER
+      }
+    ]
   },
   {
     path: "/dispatch",
