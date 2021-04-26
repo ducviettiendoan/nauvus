@@ -17,6 +17,7 @@ import Compliance from "views/pages/user/settings/fleet/compliance/Compliance";
 import Dispatch from "views/pages/user/settings/fleet/Dispatch";
 import DriverActivity from "views/pages/user/settings/fleet/DriverActivity";
 import DriverApp from "views/pages/user/settings/fleet/DriverApp";
+import CreateWorkflow from "views/pages/user/settings/fleet/driver-app/CreateWorkflow";
 import FuelEnergy from "views/pages/user/settings/fleet/FuelEnergy";
 import Maps from "views/pages/user/settings/fleet/Maps";
 import Safety from "views/pages/user/settings/fleet/Safety";
@@ -91,7 +92,14 @@ const dashRoutes = [
     component: Configuration,
     layout: ROUTE_PATH.SETTING
   },
-  // Flett
+  // Fleet
+  {
+    path: "/fleet/workflow-create",
+    name: "Driver App",
+    component: CreateWorkflow,
+    layout: ROUTE_PATH.SETTING,
+    isFixed: true,
+  },
   {
     path: "/fleet/driver-app",
     name: "Driver App",

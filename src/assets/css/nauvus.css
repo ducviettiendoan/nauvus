@@ -82,6 +82,10 @@
   font-weight: bold!important;
 }
 
+.btn-blue {
+  background: #25345C !important;
+}
+
 .btn-round-red {
   background: #E53935 !important;
   border-radius: 28px !important;
