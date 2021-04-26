@@ -1,25 +1,23 @@
 import React, {useState} from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import withStyles from "@material-ui/core/styles/withStyles";
-import LinearProgress from "@material-ui/core/LinearProgress";
 import Button from "components/CustomButtons/Button";
 import Chip from "@material-ui/core/Chip";
 import Grid from '@material-ui/core/Grid';
-import { connect } from "react-redux";
-import {getIFTAData} from "../../../../reducers/fuel-energy";
+import {connect} from "react-redux";
+import {getIFTAData} from "reducers/fuel-energy";
 import Table from "components/Table/TableV1";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import Calendar from "components/Calendar/Calendar";
 import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
 import LiveIconWhite from "components/Icons/LiveIconWhite";
 import AddOutlined from "@material-ui/icons/AddOutlined";
-import FilterButton from "../../../../components/CustomButtons/FilterButton";
-import GenPaginationV1 from "../../../../components/Pagination/GenPaginationV1";
+import FilterButton from "components/CustomButtons/FilterButton";
+import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 
 const styles = {
   colorBlue: {
@@ -56,7 +54,7 @@ const styles = {
     lineHeight: '24px',
     // marginTop: '14px',
     color: '#25345C',
-    marginLeft: '24px'
+    paddingLeft: "12px"
   },
   textSub: {
     fontWeight: '400',
@@ -64,7 +62,6 @@ const styles = {
     fontSize: '16px',
     lineHeight: '24px',
     marginTop: '14px',
-    marginLeft: '24px'
   },
   tableRow: {
     '&:nth-of-type(even)': {
@@ -125,12 +122,9 @@ const styles = {
     fontWeight: 400,
   },
   textEmail: {
-    display: "flex",
-    justifyContent: "center",
     fontSize: '16px',
     lineHeight: '24px',
     color: '#25345C',
-    paddingLeft: "12px",
     fontWeight: 400,
   },
 
@@ -142,7 +136,6 @@ const styles = {
   onHeaderCellNext: {
     fontWeight: 700,
     color: "#25345C",
-    textAlign: 'center'
   },
   title: {
     color: "#25345C",
@@ -221,7 +214,7 @@ const styles = {
   headerRight: {
     textAlign: "right",
   },
-  textTitle:{
+  textTitle: {
     fontWeight: 700,
     color: "rgba(37, 52, 92, 1)",
     fontSize: "16px",
@@ -230,7 +223,7 @@ const styles = {
   pagination: {
     marginTop: "20px",
     padding: "0px !important",
-    "&>div":{
+    "&>div": {
       padding: '0px !important',
     }
   },
@@ -244,24 +237,22 @@ const styles = {
     /* font-family: Lato!important; */
     fontStyle: "normal!important",
     fontWeight: "bold!important",
-
+  },
+  tableHeader: {
+    marginBottom: "8px"
+  },
+  tableHeadButton: {
+    marginTop: "14px",
+    marginBottom: "30px"
+  },
+  tableSubHeader: {
+    display: "flex",
+    justifyContent: "space-around"
+  },
+  tableSubHeaderField: {
+    borderRight: "1px solid #ECECF2"
   }
 };
-
-const BorderLinearProgress = withStyles((theme) => ({
-  root: {
-    height: 5,
-    borderRadius: 5,
-  },
-  colorPrimary: {
-    backgroundColor: theme.palette.grey[theme.palette.type === 'light' ? 200 : 700],
-  },
-  bar: {
-    borderRadius: 5,
-    backgroundColor: '#F4BE5E',
-  },
-
-}))(LinearProgress);
 
 const useStyles = makeStyles(styles);
 
@@ -278,33 +269,37 @@ export function IFTA(props) {
     setValue(newValue);
   };
 
-  const columns=[
+  const columns = [
     {
       key: "jurisdiction",
       title: "Jurisdiction",
       onHeaderCell: {className: classes.onHeaderCellFirst},
       render: (jurisdiction) => (
         jurisdiction.id % 2 === 0 ?
-        <div className={classes.alignItemsCenter}>
-          <div className={classes.textName}>{jurisdiction.jurisdictionEven}</div>
-        </div>
-        :
-        <div className={classes.alignItemsCenter}>
-          <div className={classes.textName}>{jurisdiction.jurisdictionOdd}</div>
-        </div>
+          <div className={classes.alignItemsCenter}>
+            <div className={classes.textName}>{jurisdiction.jurisdictionEven}</div>
+          </div>
+          :
+          <div className={classes.alignItemsCenter}>
+            <div className={classes.textName}>{jurisdiction.jurisdictionOdd}</div>
+          </div>
       ),
     },
     {
       key: "taxableMiles",
       title: "Taxable Miles",
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: taxableMiles => taxableMiles.id % 2 === 0 ? <div className={classes.textEmail}>{taxableMiles.taxableMilesEven}</div> : <div className={classes.textEmail}>{taxableMiles.taxableMilesOdd}</div>
+      render: taxableMiles => taxableMiles.id % 2 === 0 ?
+        <div className={classes.textEmail}>{taxableMiles.taxableMilesEven}</div> :
+        <div className={classes.textEmail}>{taxableMiles.taxableMilesOdd}</div>
     },
     {
       key: "totalMiles",
       title: "Total Miles",
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: totalMiles => totalMiles.id % 2 === 0 ? <div className={classes.textEmail}>{totalMiles.totalMilesEven}</div> : <div className={classes.textEmail}>{totalMiles.totalMilesOdd}</div>
+      render: totalMiles => totalMiles.id % 2 === 0 ?
+        <div className={classes.textEmail}>{totalMiles.totalMilesEven}</div> :
+        <div className={classes.textEmail}>{totalMiles.totalMilesOdd}</div>
     },
     {
       key: "taxPaidGallons",
@@ -343,8 +338,8 @@ export function IFTA(props) {
 
             <Table
               renderTitle={
-                <div style={{marginBottom: "8px"}}>
-                  <Grid container style={{marginBottom: "30px"}}>
+                <div className={classes.tableHeader}>
+                  <Grid container className={classes.tableHeadButton}>
                     <Grid item xs={6} sm={6} md={6} className={classes.headerLeft}>
                       <div className={classes.textTitle}>Fleet IFTA MPG</div>
                       <Chip
@@ -355,30 +350,30 @@ export function IFTA(props) {
                     <Grid item xs={6} sm={6} md={6} className={classes.headerRight}>
                       <Button
                         round
-                        className="btn-round-active"
-                        startIcon={<AddOutlined />}
+                        className="btn-round-active mr-2"
+                        startIcon={<AddOutlined/>}
                         // onClick={() => setOpen(true)}
                       >
-                        {"Add purchase"}
+                        Add purchase
                       </Button>
                       <FilterButton/>
                     </Grid>
                   </Grid>
 
-                  <Grid container style={{display: "flex", justifyContent: "space-around"}}>
-                    <Grid xs={12} sm={2} md={2} style={{ borderRight: "1px solid #ECECF2" }}>
+                  <Grid container className={classes.tableSubHeader}>
+                    <Grid xs={12} sm={2} md={2} className={classes.tableSubHeaderField}>
                       <div className={classes.cardHeaderTitle}>105.2 mi</div>
                       <div className={classes.cardHeaderSubTitle}>IFTA Miles</div>
                     </Grid>
-                    <Grid xs={12} sm={2} md={2} style={{ borderRight: "1px solid #ECECF2" }}>
+                    <Grid xs={12} sm={2} md={2} className={classes.tableSubHeaderField}>
                       <Grid className={classes.cardHeaderTitle}>12.2 mi</Grid>
                       <Grid className={classes.cardHeaderSubTitle}>Non-IFTA Miles</Grid>
                     </Grid>
-                    <Grid xs={12} sm={2} md={2} style={{ borderRight: "1px solid #ECECF2" }}>
+                    <Grid xs={12} sm={2} md={2} className={classes.tableSubHeaderField}>
                       <Grid className={classes.cardHeaderTitle}>117.4 mi</Grid>
                       <Grid className={classes.cardHeaderSubTitle}>Total Miles</Grid>
                     </Grid>
-                    <Grid xs={12} sm={2} md={2} style={{ borderRight: "1px solid #ECECF2" }}>
+                    <Grid xs={12} sm={2} md={2} className={classes.tableSubHeaderField}>
                       <Grid className={classes.cardHeaderTitle}>125.4 mi</Grid>
                       <Grid className={classes.cardHeaderSubTitle}>IFTA MPG</Grid>
                     </Grid>
@@ -421,7 +416,7 @@ export function IFTA(props) {
   );
 }
 
-const mapStateToProps = ({ fuelEnergy }) => {
+const mapStateToProps = ({fuelEnergy}) => {
   return {
     data: fuelEnergy.iftaData.data,
     page: fuelEnergy.iftaData.page,

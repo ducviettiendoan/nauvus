@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import LocalPrintshopOutlinedIcon from '@material-ui/icons/LocalPrintshopOutlined';
 import AddOutlined from "@material-ui/icons/AddOutlined";
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
@@ -170,8 +170,8 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
-    "&> svg": { color: "#27AE60" },
-    "&> span": { fontSize: 12, fontWeight: 400 },
+    "&> svg": {color: "#27AE60"},
+    "&> span": {fontSize: 12, fontWeight: 400},
   },
   textField: {
     "&> div:hover:before, &> div:before,&> div:after": {
@@ -192,11 +192,12 @@ export default function Messages() {
         <div className={classes.boxNotFound}>
           <div className="text-center">
             <h3 className={classes.title}>No messages found?</h3>
-            <p className={classes.description}>Try to create more new conversation or wait until someone will send you a message</p>
+            <p className={classes.description}>Try to create more new conversation or wait until someone will send you a
+              message</p>
             <Button
               round
               className={`btn-round-active h-41 m-0`}
-              startIcon={<AddOutlined />}
+              startIcon={<AddOutlined/>}
               onClick={() => setDetail(true)}
             > Create Chat </Button>
           </div>
@@ -211,7 +212,7 @@ export default function Messages() {
               <Button
                 round
                 className={`btn-round-active h-41 m-0`}
-                startIcon={<EditOutlinedIcon />}
+                startIcon={<EditOutlinedIcon/>}
                 onClick={() => setOpen(true)}
               > New Message </Button>
             </GridItem>
@@ -220,26 +221,26 @@ export default function Messages() {
             <CardHeader className={classes.cardHeader}>
               <GridContainer justify="space-between" alignItems="center">
                 <GridItem className="d-flex">
-                  <img src={avatar} alt="user-avatar" className={classes.avatarImage} />
+                  <img src={avatar} alt="user-avatar" className={classes.avatarImage}/>
                   <div>
                     <div className={classes.chatName}>Elisabeth Synsky</div>
                     <div className={classes.chatRole}>Driver</div>
                   </div>
                 </GridItem>
-                <GridItem><LocalPrintshopOutlinedIcon style={{ color: "#C4C4C4" }} /></GridItem>
+                <GridItem><LocalPrintshopOutlinedIcon style={{color: "#C4C4C4"}}/></GridItem>
               </GridContainer>
             </CardHeader>
             <CardBody className={classes.cardBody}>
               <GridContainer>
                 <GridItem md={6}>
                   <div className={classes.infoMessage}>
-                    <img src={avatar} alt="user-avatar" />
+                    <img src={avatar} alt="user-avatar"/>
                     <h3>Elisabeth Synsky</h3>
                     <p>Marth 28, 5:28 AM</p>
                   </div>
                   <div className={classes.textMessage}>
                     <p>Garage Repair Ticket #60 has been created.</p>
-                    <MoreHorizIcon />
+                    <MoreHorizIcon/>
                   </div>
                 </GridItem>
               </GridContainer>
@@ -250,10 +251,12 @@ export default function Messages() {
                     <p>Marth 29, 6:03 PM</p>
                   </div>
                   <div className={classes.textMessageRight}>
-                    <p>Reminder to everyone! The duration of Pre-Trip Inspections in On-Duty Status must be at least 15 minutes for each vehicle. First PTI in the yard, if you have a Truck & Trailer you should have 30 minutes. On-Duty Status, 15 minutes for Truck and 15 minutes for Trailer.</p>
+                    <p>Reminder to everyone! The duration of Pre-Trip Inspections in On-Duty Status must be at least 15
+                      minutes for each vehicle. First PTI in the yard, if you have a Truck & Trailer you should have 30
+                      minutes. On-Duty Status, 15 minutes for Truck and 15 minutes for Trailer.</p>
                   </div>
                   <div className={classes.readRight}>
-                    <CheckIcon />
+                    <CheckIcon/>
                     <span>Read</span>
                   </div>
                 </GridItem>
@@ -261,13 +264,15 @@ export default function Messages() {
               <GridContainer>
                 <GridItem md={6}>
                   <div className={classes.infoMessage}>
-                    <img src={avatar} alt="user-avatar" />
+                    <img src={avatar} alt="user-avatar"/>
                     <h3>Elisabeth Synsky</h3>
                     <p>Marth 28, 5:28 AM</p>
                   </div>
                   <div className={classes.textMessage}>
-                    <p>Reminder to everyone! The duration of Pre-Trip Inspections in On-Duty Status must be at least 15 minutes for each vehicle. First PTI in the yard, if you have a Truck & Trailer you should have 30 minutes. On-Duty Status, 15 minutes for Truck and 15 minutes for Trailer.</p>
-                    <MoreHorizIcon />
+                    <p>Reminder to everyone! The duration of Pre-Trip Inspections in On-Duty Status must be at least 15
+                      minutes for each vehicle. First PTI in the yard, if you have a Truck & Trailer you should have 30
+                      minutes. On-Duty Status, 15 minutes for Truck and 15 minutes for Trailer.</p>
+                    <MoreHorizIcon/>
                   </div>
                 </GridItem>
               </GridContainer>
@@ -282,10 +287,12 @@ export default function Messages() {
                     <p>Reminder to everyone!</p>
                   </div>
                   <div className={classes.textMessageRight}>
-                    <p>Reminder to everyone! The duration of Pre-Trip Inspections in On-Duty Status must be at least 15 minutes for each vehicle. First PTI in the yard, if you have a Truck & Trailer you should have 30 minutes. On-Duty Status, 15 minutes for Truck and 15 minutes for Trailer.</p>
+                    <p>Reminder to everyone! The duration of Pre-Trip Inspections in On-Duty Status must be at least 15
+                      minutes for each vehicle. First PTI in the yard, if you have a Truck & Trailer you should have 30
+                      minutes. On-Duty Status, 15 minutes for Truck and 15 minutes for Trailer.</p>
                   </div>
                   <div className={classes.readRight}>
-                    <CheckIcon />
+                    <CheckIcon/>
                     <span>Read</span>
                   </div>
                 </GridItem>
@@ -301,7 +308,7 @@ export default function Messages() {
               <Button
                 round
                 className="btn-round-active m-0"
-                startIcon={<SendIcon />}
+                startIcon={<SendIcon/>}
               > Send </Button>
             </CardFooter>
           </Card>

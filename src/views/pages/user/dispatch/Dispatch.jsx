@@ -4,7 +4,7 @@ import {
   withGoogleMap,
   GoogleMap,
   Marker,
-  Circle
+  Circle, InfoWindow
 } from "react-google-maps";
 import {GOOGLE_MAP_API_KEY} from "config/constants";
 // @material-ui/core components
@@ -17,7 +17,8 @@ import styles from "assets/jss/material-dashboard-pro-react/views/overviewPageSt
 import location from 'assets/icons/location.svg'
 import {connect} from 'react-redux';
 import {loadVehicles} from 'reducers/vehicle';
-import {setOpenDispatchDrawer} from "../../../../reducers/dispatch";
+import {setOpenDispatchDrawer} from "reducers/dispatch";
+import InfoWindowPopup from "../overview/components/InfoWindowPopup";
 
 const useStyles = makeStyles(styles);
 
@@ -51,22 +52,15 @@ const RegularMap = withScriptjs(
                     icon={{
                       url: location,
                     }}
-                    onClick={(maker) => {
-                      props.onClickMaker(maker);
+                    onClick={(marker) => {
+                      console.log(`click on Marker ${marker.latLng.lat()} - ${marker.latLng.lng()}`, marker)
+                      props.onChangeMapType()
                     }}
                   >
-                    <Circle
-                      radius={props.radius}
-                      options={{
-                        strokeColor: "#E5E5E5",
-                        strokeWeight: 0,
-                        fillColor: "#E5E5E5 solid",
-                      }}
-                      defaultCenter={{
-                        lat: maker.latitude,
-                        lng: maker.longitude
-                      }}
-                    />
+                    {props.isPopupShown && <InfoWindow>
+                      <InfoWindowPopup maker={maker}/>
+                    </InfoWindow>
+                    }
                   </Marker>
                 </>
               )
@@ -82,6 +76,9 @@ const RegularMap = withScriptjs(
 export function Dispatch(props) {
   const classes = useStyles();
   const [geo, setGeo] = React.useState({lat: 40.746617, lng: -73.658648});
+  const [isPopupShown, setPopupShown] = React.useState(true);
+  const [mapType, setMapType] = React.useState('roadmap');
+
   React.useEffect(() => {
     async function fetchVehicles() {
       await props.loadVehicles();
@@ -94,6 +91,17 @@ export function Dispatch(props) {
     setGeo({lat: maker.latLng.lat(), lng: maker.latLng.lng()});
   }
 
+  const onChangeMapType = () => {
+    console.log(`change map type`);
+    if (mapType === 'roadmap') {
+      setMapType('satellite');
+      setPopupShown(false);
+    } else {
+      setMapType('roadmap');
+      setPopupShown(true);
+    }
+  }
+
   return (
     <div style={{position: 'relative'}}>
       <RegularMap
@@ -101,10 +109,11 @@ export function Dispatch(props) {
         loadingElement={<div style={{height: `100%`}}/>}
         containerElement={<div className="containerElementMap"/>}
         mapElement={<div style={{height: `100%`}}/>}
-        isMarkerShown
+        isPopupShown={isPopupShown}
         data={props.vehicles}
         center={geo}
         onClickMaker={onClickMaker}
+        onChangeMapType={onChangeMapType}
       />
       <div className={classes.searchMapContainer} style={{marginTop: "10px"}}>
         <Button

@@ -233,6 +233,12 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     marginTop: "24px"
   },
+  chipWrapper: {
+    paddingBottom: "5px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center"
+  }
 }));
 
 var ps;
@@ -445,7 +451,7 @@ export function DispatchSideBar(props) {
               </Popper>
             </Grid>
           </div>
-          <Grid style={{paddingBottom: "5px", display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+          <Grid className={classes.chipWrapper}>
             <GridItem className={classes.chipContainer}>
               {chipData.map(data => (
                 <Chip
@@ -536,7 +542,6 @@ export function DispatchSideBar(props) {
                       >
                         Dispatch
                       </Button>}
-
                   </Grid>
                 </Grid>
               )
