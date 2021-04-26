@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import ReactECharts from 'echarts-for-react';
 import * as echarts from 'echarts';
 import GridItem from "components/Grid/GridItem";
 import Button from "components/CustomButtons/Button.js";
 import GridContainer from "components/Grid/GridContainer";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import { Grid } from '@material-ui/core';
+import {Grid} from '@material-ui/core';
 import Calendar from "components/Calendar/Calendar";
 // @material-ui/icons
-import { MoreHoriz } from "@material-ui/icons";
+import ShareIcon from "components/Icons/ShareIcon";
 // render echarts option.
 
 const styles = {
-    
-title: {
+
+  title: {
     color: "#25345C",
     fontSize: "18px",
     lineHeight: "24px",
@@ -30,7 +30,7 @@ title: {
     marginBottom: "20px",
     // marginLeft: "16px"
   },
-  
+
   cardHeaderTitle: {
     color: "#25345C",
     fontSize: "16px",
@@ -74,7 +74,7 @@ const useStyles = makeStyles(styles);
 
 const ReportLineChart = (props) => {
   const classes = useStyles();
-  const { title } = props
+  const {title} = props
   let colors = ['#E29468', '#1CD67C', '#25345C'];
 
   const option = {
@@ -219,7 +219,7 @@ const ReportLineChart = (props) => {
         smooth: true,
         showSymbol: false,
         areaStyle: {
-          color: new echarts.graphic.LinearGradient(0,0,0,1, [{
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
             offset: 0,
             color: 'rgba(138, 241, 185, 0.1)'
           }, {
@@ -241,9 +241,7 @@ const ReportLineChart = (props) => {
         yAxisIndex: 1,
         smooth: true,
         showSymbol: false,
-        areaStyle: {
-
-        },
+        areaStyle: {},
         lineStyle: {
           width: 1
         },
@@ -258,9 +256,7 @@ const ReportLineChart = (props) => {
         yAxisIndex: 1,
         smooth: true,
         showSymbol: false,
-        areaStyle: {
-
-        },
+        areaStyle: {},
         lineStyle: {
           width: 1
         },
@@ -275,9 +271,7 @@ const ReportLineChart = (props) => {
         yAxisIndex: 1,
         smooth: true,
         showSymbol: false,
-        areaStyle: {
-
-        },
+        areaStyle: {},
         lineStyle: {
           width: 1
         },
@@ -293,9 +287,7 @@ const ReportLineChart = (props) => {
         yAxisIndex: 1,
         smooth: true,
         showSymbol: false,
-        areaStyle: {
-
-        },
+        areaStyle: {},
         lineStyle: {
           width: 1
         },
@@ -310,9 +302,7 @@ const ReportLineChart = (props) => {
         yAxisIndex: 1,
         smooth: true,
         showSymbol: false,
-        areaStyle: {
-
-        },
+        areaStyle: {},
         lineStyle: {
           width: 1
         },
@@ -327,9 +317,7 @@ const ReportLineChart = (props) => {
         yAxisIndex: 1,
         smooth: true,
         showSymbol: false,
-        areaStyle: {
-
-        },
+        areaStyle: {},
         lineStyle: {
           width: 1
         },
@@ -346,7 +334,7 @@ const ReportLineChart = (props) => {
       <GridContainer className={classes.titleContainer}>
         <Grid className={classes.title}>{title}</Grid>
         <Grid className={classes.buttonContainer}>
-          <Calendar isNotContainer={true} />
+          <Calendar isNotContainer={true}/>
           <Button
             color="white"
             aria-label="edit"
@@ -354,14 +342,14 @@ const ReportLineChart = (props) => {
             round
             className={`btn-36 ${classes.moreAction} mr-2`}
           >
-            <MoreHoriz />
+            <ShareIcon/>
           </Button>
         </Grid>
       </GridContainer>
 
       <GridContainer>
-        <GridItem xs={12} >
-          <ReactECharts option={option} />
+        <GridItem xs={12}>
+          <ReactECharts option={option}/>
         </GridItem>
       </GridContainer>
     </Card>
