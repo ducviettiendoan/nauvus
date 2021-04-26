@@ -82,6 +82,18 @@
   font-weight: bold!important;
 }
 
+.btn-round-active-white {
+  background: #fff !important;
+  border-radius: 28px !important;
+  padding: 14px 75px !important;
+  text-transform: initial !important;
+  font-size: 14px !important;
+  line-height: 17px !important;
+  /* font-family: Lato!important; */
+  font-style: normal!important;
+  font-weight: 400 !important;
+}
+
 .btn-blue {
   background: #25345C !important;
 }

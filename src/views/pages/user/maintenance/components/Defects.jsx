@@ -12,6 +12,7 @@ import GridItem from "components/Grid/GridItem";
 import Calendar from "components/Calendar/Calendar";
 import LiveIconWhite from "components/Icons/LiveIconWhite";
 import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
@@ -157,6 +158,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Defects(props) {
   const classes = useStyles();
+  const history = useHistory();
   
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Standard Admin'},
@@ -170,6 +172,11 @@ export default function Defects(props) {
   const handleClearAll = () => {
     setChipData([])
   };
+
+  const viewDetail = () => {
+    history.push("/u/maintenance/driver-vehicle-inspection-report/vehicle101")
+    console.log("clicked")
+  }
 
   let dumpData = [];
   for (let i = 0; i < 7; i++) {
@@ -282,6 +289,7 @@ export default function Defects(props) {
                 className: classes.onHeaderRow
               }}
               onBodyRow={{
+                onClick: viewDetail,
                 className: classes.tableRow
               }}
             />
