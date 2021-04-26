@@ -14,9 +14,8 @@ import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
 
 import {connect} from 'react-redux';
-import DiaLog from "../../../../../../components/CustomDialog/Dialog";
-import OrganizationUpload from "../../../../../../components/CustomUpload/OrganizationUpload";
-import InviteUserForm from "../../org/user-roles/InviteUserForm";
+import DiaLog from "components/CustomDialog/Dialog";
+import OrganizationUpload from "components/CustomUpload/OrganizationUpload";
 import ActivateDevicesForm from "./ActivateDevicesForm";
 
 const useStyles = makeStyles((theme) => ({
