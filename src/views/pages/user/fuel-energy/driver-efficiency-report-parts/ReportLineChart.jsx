@@ -140,19 +140,19 @@ const ReportLineChart = (props) => {
           }
         },
         {
-            name: "Anticipation",
-            icon: "none",
-            textStyle: {
-              color: "#B4B4B4"
-            }
-          },
-          {
-            name: "Green Band",
-            icon: "none",
-            textStyle: {
-              color: "#B4B4B4"
-            }
-          },
+          name: "Anticipation",
+          icon: "none",
+          textStyle: {
+            color: "#B4B4B4"
+          }
+        },
+        {
+          name: "Green Band",
+          icon: "none",
+          textStyle: {
+            color: "#B4B4B4"
+          }
+        },
       ],
       left: -20
     },
@@ -204,10 +204,10 @@ const ReportLineChart = (props) => {
         areaStyle: {
           color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
             offset: 0,
-            color: 'rgba(115,155,211, -0.9497)'
+            color: 'rgba(255, 204, 170, 0.1)'
           }, {
             offset: 1,
-            color: '#FFFFFF'
+            color: "rgba(255, 255, 255, 1)"
           }])
         },
         data: [5.0, 10.0, 15.0, 13.0, 5.0, 20.2, 11.0, 17.9, 13.3, 18.9, 3.0]
@@ -219,12 +219,12 @@ const ReportLineChart = (props) => {
         smooth: true,
         showSymbol: false,
         areaStyle: {
-          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+          color: new echarts.graphic.LinearGradient(0,0,0,1, [{
             offset: 0,
-            color: 'rgba(138, 241, 185, 1)'
+            color: 'rgba(138, 241, 185, 0.1)'
           }, {
             offset: 1,
-            color: '#FFFFFF'
+            color: 'rgba(255, 255, 255, 0.3)'
           }])
         },
         lineStyle: {
@@ -339,7 +339,7 @@ const ReportLineChart = (props) => {
         data: []
       },
     ],
-  };
+  }
 
   return (
     <Card className={classes.root}>

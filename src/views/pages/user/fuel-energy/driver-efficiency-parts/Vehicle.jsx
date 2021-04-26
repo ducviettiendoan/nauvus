@@ -52,10 +52,10 @@ const styles = {
         display: "flex",
         alignItems: "center",
     },
-    moreAction: {
-        background: "#FFFFFF !important",
-        border: "1px solid #ECEEF0 !important",
-    },
+    // moreAction: {
+    //     background: "#FFFFFF !important",
+    //     border: "1px solid #ECEEF0 !important",
+    // },
     textEmail: {
         display: "flex",
         justifyContent: "center",
