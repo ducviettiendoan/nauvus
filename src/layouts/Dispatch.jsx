@@ -1,7 +1,7 @@
 import React from "react";
 import cx from "classnames";
 import clsx from 'clsx';
-import { ROUTE_PATH } from "config/constants";
+import {ROUTE_PATH} from "config/constants";
 import {Switch, Route, Redirect, useHistory} from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
@@ -12,25 +12,16 @@ import {makeStyles} from "@material-ui/core/styles";
 
 // core components
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
-import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import Drawer from '@material-ui/core/Drawer';
 
 import routes from "user-routes";
 
 import styles from "assets/jss/material-dashboard-pro-react/layouts/overviewStyle.js";
-
-import Loading from "components/Loading/Loading";
 import {connect} from 'react-redux';
 import {getUserInfo} from '../reducers/authentication';
-import {setOpenDrawer} from '../reducers/overview';
-import {IRootState} from '../reducers';
-import Button from '@material-ui/core/Button';
-import VehicleSideBar from "views/pages/user/overview/components/VehicleSideBar";
-import ProximitySideBar from "views/pages/user/overview/proximity/ProximitySideBar";
-import {ExtraDriverDetailsSideBar} from "../views/pages/user/overview/components/ExtraDriverDetailsSideBar";
-import DriverSideBar from "../views/pages/user/overview/drivers/DriverSideBar";
-import DriverRecord from "../views/pages/user/overview/drivers/DriverRecord";
+import {setOpenDispatchDrawer} from "../reducers/dispatch";
+import {DispatchSideBar} from "../views/pages/user/dispatch/DispatchSideBar";
 
 var ps;
 
@@ -40,14 +31,11 @@ export function Dispatch(props) {
   const history = useHistory();
   const {...rest} = props;
   // states and functions
-  const [openDrawer, setOpenDrawer] = React.useState(false);
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [miniActive, setMiniActive] = React.useState(false);
   const [image, setImage] = React.useState("");
   const [color, setColor] = React.useState("blue");
   const [bgColor, setBgColor] = React.useState("white");
-  // const [hasImage, setHasImage] = React.useState(true);
-  const [fixedClasses, setFixedClasses] = React.useState("dropdown");
   const [logo, setLogo] = React.useState(require("assets/img/logo_nauvus.svg"));
 
   const classes = useStyles();
@@ -84,37 +72,11 @@ export function Dispatch(props) {
       window.removeEventListener("resize", resizeFunction);
     };
   }, [1]);
-  // functions for changeing the states from components
-  const handleImageClick = image => {
-    setImage(image);
-  };
-  const handleColorClick = color => {
-    setColor(color);
-  };
-  const handleBgColorClick = bgColor => {
-    switch (bgColor) {
-      case "white":
-        setLogo(require("assets/img/logo.svg"));
-        break;
-      default:
-        setLogo(require("assets/img/logo-white.svg"));
-        break;
-    }
-    setBgColor(bgColor);
-  };
-  const handleFixedClick = () => {
-    if (fixedClasses === "dropdown") {
-      setFixedClasses("dropdown show");
-    } else {
-      setFixedClasses("dropdown");
-    }
-  };
+
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-  const getRoute = () => {
-    return window.location.pathname !== "/o/overview";
-  };
+
   const getActiveRoute = routes => {
     let activeRoute = "Default Brand Text";
     for (let i = 0; i < routes.length; i++) {
@@ -160,11 +122,6 @@ export function Dispatch(props) {
     }
   };
 
-  const onBackTable = () => {
-    props.history.push("/o/drivers/")
-    props.setOpenDrawer(false)
-  }
-
   const renderDataContent = () => {
     return (
       <>
@@ -174,19 +131,16 @@ export function Dispatch(props) {
               className={classes.drawer}
               variant="persistent"
               anchor="left"
-              open={props.openDrawer}
+              open={props.openDispatchDrawer}
               classes={{
                 paper: classes.drawerPaper,
               }}
             >
-              {window.location.pathname === "/o/overview" && <VehicleSideBar/>}
-              {window.location.pathname.indexOf("/o/drivers") !== -1 && <DriverSideBar onBack={onBackTable}/>}
-              {window.location.pathname.indexOf("/o/proximity") !== -1 && <ProximitySideBar/>}
-              {window.location.pathname.indexOf("/o/driver-record/") !== -1 && <DriverRecord /> }
+              <DispatchSideBar/>
             </Drawer>
             <main
               className={clsx(classes.content, {
-                [classes.contentShift]: props.openDrawer,
+                [classes.contentShift]: props.openDispatchDrawer,
               })}
             >
               <AdminNavbar
@@ -216,7 +170,7 @@ export function Dispatch(props) {
   return (
     <>
       <div className={classes.wrapper}>
-        { props.isAuthenticated &&
+        {props.isAuthenticated &&
         <Sidebar
           routes={routes}
           logoText={"Nauvus"}
@@ -231,26 +185,26 @@ export function Dispatch(props) {
         />
         }
         <div className={mainPanelClasses} ref={mainPanel}>
-            <>
-              {props.isAuthenticated ?
-                <>
-                  {props.extraSidebar ?
-                    <>
-                      <div id="main">
-                        <div className="extraSidebar">div1</div>
-                        <div className="extraContainer">{renderDataContent()}</div>
-                      </div>
-                    </> :
-                    <>
-                      {renderDataContent()}
-                    </>
-                  }
-                </> :
-                <>
-                  {redirectLogin()}
-                </>
-              }
-            </>
+          <>
+            {props.isAuthenticated ?
+              <>
+                {props.extraSidebar ?
+                  <>
+                    <div id="main">
+                      <div className="extraSidebar">div1</div>
+                      <div className="extraContainer">{renderDataContent()}</div>
+                    </div>
+                  </> :
+                  <>
+                    {renderDataContent()}
+                  </>
+                }
+              </> :
+              <>
+                {redirectLogin()}
+              </>
+            }
+          </>
         </div>
       </div>
     </>
@@ -258,15 +212,13 @@ export function Dispatch(props) {
 }
 
 export default connect(
-  ({authentication, overview}: IRootState) => ({
+  ({authentication, dispatch}) => ({
     isAuthenticated: authentication.isAuthenticated,
     user: authentication.user,
-    openDrawer: overview.openDrawer,
-    openDriverDetails: overview.openDriverDetails,
-    openDriver: overview.openDriver
+    openDispatchDrawer: dispatch.openDispatchDrawer,
   }),
   {
     getUserInfo,
-    setOpenDrawer,
+    setOpenDispatchDrawer,
   }
 )(Dispatch);
