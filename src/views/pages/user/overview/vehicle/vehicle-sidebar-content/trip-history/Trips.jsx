@@ -107,7 +107,7 @@ export function Trips(props) {
             >
               Show trip images
             </Button>
-            <img src={historytrip} />
+            <img src={historytrip} width="100%" />
             <div className={classes.tripHeadData}>
               <div className={classes.tripTitle}>
                 11m 51s§

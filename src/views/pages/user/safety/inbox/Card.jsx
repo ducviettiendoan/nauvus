@@ -2,7 +2,7 @@ import { Grid } from "@material-ui/core";
 import React, { useState } from "react";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
-import NightTime from "assets/img/images.png";
+// import NightTime from "assets/img/images.png";
 import Button from "@material-ui/core/Button";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Link from "@material-ui/core/Link";
@@ -147,7 +147,7 @@ const Card = (props) => {
             <Grid item xs={12} lg={11}>
               <img
                 style={{ width: "100%", height: "100%" }}
-                src={NightTime}
+                src={ props.imageUrl }
                 alt="picture"
               />
             </Grid>

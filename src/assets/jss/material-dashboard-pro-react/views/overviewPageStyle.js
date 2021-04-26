@@ -147,8 +147,10 @@ const overviewPageStyle = theme => ({
     marginRight: "16px"
   },
   newTab: {
-    fontSize: "18px",
-    fill: "none"
+    fontSize: "15px",
+    fill: "none",
+    height: "20px",
+    width: "20px"
   }
 });
 
