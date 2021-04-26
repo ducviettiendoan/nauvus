@@ -215,9 +215,9 @@ export function MessagesLayout(props) {
           {...rest}
         />
         <div className="layout-container">
-          <div className={classes.content}>
+          <div className={classes.content} style={{display:"flex"}}>
             {displaySetting || <ExtraMessagesMobile />}
-            <div className={classes.container}>
+            <div className={classes.container} style={{ flex: 1 }}>
               <Switch>
                 {getRoutes(messagesRoute)}
                 <Redirect from={ROUTE_PATH.MESSAGES} to={ROUTE_PATH.MESSAGES + "/messages"} />
