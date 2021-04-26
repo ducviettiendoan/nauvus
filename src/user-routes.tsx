@@ -19,6 +19,7 @@ import UnassignedHOSReport from "views/pages/user/compliance/unassigned-hos/Unas
 import Dispatch from "views/pages/user/dispatch/Dispatch";
 import Documents from "views/pages/user/documents/Documents";
 import FuelEnergy from "views/pages/user/fuel-energy/FuelEnergy";
+import IFTA from "views/pages/user/fuel-energy/IFTA";
 import DriverEfficiency from "views/pages/user/fuel-energy/DriverEfficiency"
 import DriverEfficiencyReport from "views/pages/user/fuel-energy/driver-efficiency-parts/DriverEfficiencyReport"
 import InternalTools from "views/pages/user/internal-tools/InternalTools";
@@ -44,7 +45,8 @@ import SafetyReport from "views/pages/user/safety/Report";
 import SafetyReportDetails from "views/pages/user/safety/report/SafetyReportDetails";
 import SafetyReportTable from "views/pages/user/safety/report/SafetyReportTable"
 import VideoRetrieval from "views/pages/user/safety/VideoRetrieval";
-import Retrieval from "views/pages/user/safety/video-retrieval/Retrieval"
+import Retrieval from "views/pages/user/safety/video-retrieval/Retrieval";
+
 // @material-ui/icons
 import OverviewIcon from "components/Icons/OverviewIcon";
 import ComplianceIcon from "components/Icons/ComplianceIcon";
@@ -348,6 +350,14 @@ const dashRoutes = [
         component: DriverEfficiencyReport,
         layout: ROUTE_PATH.USER,
       },
+
+      {
+        path: "/fuel-energy/IFTA",
+        name: "IFTA",
+        component: IFTA,
+        layout: ROUTE_PATH.USER,
+      },
+
     ]
   },
   {

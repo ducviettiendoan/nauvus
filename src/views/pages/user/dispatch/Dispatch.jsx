@@ -1,100 +1,140 @@
 import React from "react";
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-// @material-ui/icons
-// import Weekend from "@material-ui/icons/Weekend";
-import FormatQuote from "@material-ui/icons/FormatQuote";
-// core components
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
-import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
-
 import {
-  cardTitle,
-  roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
-
-const styles = {
-  cardTitle,
-  cardTitleWhite: {
-    ...cardTitle,
-    color: "#FFFFFF",
-    marginTop: "0"
-  },
-  cardCategoryWhite: {
-    margin: "0",
-    color: "rgba(255, 255, 255, 0.8)",
-    fontSize: ".875rem"
-  },
-  cardCategory: {
-    color: "#999999",
-    marginTop: "10px"
-  },
-  icon: {
-    color: "#333333",
-    margin: "10px auto 0",
-    width: "130px",
-    height: "130px",
-    border: "1px solid #E5E5E5",
-    borderRadius: "50%",
-    lineHeight: "174px",
-    "& svg": {
-      width: "55px",
-      height: "55px"
-    },
-    "& .fab,& .fas,& .far,& .fal,& .material-icons": {
-      width: "55px",
-      fontSize: "55px"
-    }
-  },
-  iconRose: {
-    color: roseColor
-  },
-  marginTop30: {
-    marginTop: "30px"
-  },
-  testimonialIcon: {
-    marginTop: "30px",
-    "& svg": {
-      width: "40px",
-      height: "40px"
-    }
-  },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
-  }
-};
+  withScriptjs,
+  withGoogleMap,
+  GoogleMap,
+  Marker,
+  Circle
+} from "react-google-maps";
+import {GOOGLE_MAP_API_KEY} from "config/constants";
+// @material-ui/core components
+import {makeStyles} from '@material-ui/core/styles';
+// @material-ui/icons
+import List from "@material-ui/icons/List";
+// core components
+import Button from "components/CustomButtons/Button.js";
+import styles from "assets/jss/material-dashboard-pro-react/views/overviewPageStyle.js";
+import location from 'assets/icons/location.svg'
+import {connect} from 'react-redux';
+import {loadVehicles} from 'reducers/vehicle';
+import {setOpenDispatchDrawer} from "../../../../reducers/dispatch";
 
 const useStyles = makeStyles(styles);
 
-export default function Dispatch() {
+const mapStyles = [
+  {
+    featureType: "poi",
+    stylers: [{visibility: "off"}],
+  }
+];
+
+const RegularMap = withScriptjs(
+  withGoogleMap((props) => {
+    return (
+
+      <GoogleMap
+        defaultZoom={17}
+        center={props.center}
+        defaultOptions={{
+          scrollwheel: false,
+          mapTypeControl: false,
+          streetViewControl: false,
+          styles: mapStyles,
+        }}
+      >
+        {props.data.map((maker, index) => {
+            if (maker.status === 'connected') {
+              return (
+                <>
+                  <Marker
+                    position={{lat: maker.latitude, lng: maker.longitude}}
+                    icon={{
+                      url: location,
+                    }}
+                    onClick={(maker) => {
+                      props.onClickMaker(maker);
+                    }}
+                  >
+                    <Circle
+                      radius={props.radius}
+                      options={{
+                        strokeColor: "#E5E5E5",
+                        strokeWeight: 0,
+                        fillColor: "#E5E5E5 solid",
+                      }}
+                      defaultCenter={{
+                        lat: maker.latitude,
+                        lng: maker.longitude
+                      }}
+                    />
+                  </Marker>
+                </>
+              )
+            }
+          }
+        )
+        }
+      </GoogleMap>
+    )
+  })
+);
+
+export function Dispatch(props) {
   const classes = useStyles();
+  const [geo, setGeo] = React.useState({lat: 40.746617, lng: -73.658648});
+  React.useEffect(() => {
+    async function fetchVehicles() {
+      await props.loadVehicles();
+    }
+
+    fetchVehicles();
+  }, [1]);
+
+  const onClickMaker = (maker) => {
+    setGeo({lat: maker.latLng.lat(), lng: maker.latLng.lng()});
+  }
+
   return (
-    <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card testimonial>
-                <div className={classes.testimonialIcon}>
-                  <FormatQuote />
-                </div>
-                <CardBody>
-                  <h5 className={classes.cardTestimonialDescription}>
-                    No Data
-                  </h5>
-                </CardBody>
-                <CardFooter testimonial>
-                  <h6 className={classes.cardCategory}>@nauvus</h6>
-                </CardFooter>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </GridItem>
-      </GridContainer>
+    <div style={{position: 'relative'}}>
+      <RegularMap
+        googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAP_API_KEY}`}
+        loadingElement={<div style={{height: `100%`}}/>}
+        containerElement={<div className="containerElementMap"/>}
+        mapElement={<div style={{height: `100%`}}/>}
+        isMarkerShown
+        data={props.vehicles}
+        center={geo}
+        onClickMaker={onClickMaker}
+      />
+      <div className={classes.searchMapContainer} style={{marginTop: "10px"}}>
+        <Button
+          aria-label="edit"
+          justIcon
+          round
+          className={classes.toogleDrawer}
+          onClick={e => {
+            props.setOpenDispatchDrawer(!props.openDispatchDrawer)
+          }}
+        >
+          <List/>
+        </Button>
+      </div>
     </div>
   );
 }
+
+const mapStateToProps = ({authentication, vehicle, dispatch}) => {
+  return {
+    isAuthenticated: authentication.isAuthenticated,
+    user: authentication.user,
+    vehicles: vehicle.vehicles,
+    openDispatchDrawer: dispatch.openDispatchDrawer,
+  }
+}
+
+const mapDispatchToProps = {
+  loadVehicles,
+  setOpenDispatchDrawer
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dispatch);

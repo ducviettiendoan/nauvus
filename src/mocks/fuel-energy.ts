@@ -84,4 +84,54 @@ mock.onPost("/api/fuel-energy/dashboard/vehicles").reply((config) => {
     };
 
     return [200, data];
+});
+
+mock.onPost("/api/fuel-energy/IFTA").reply((config) => {
+    let pageSize = 9;
+    let page = 1;
+    if (config.data) {
+        const request = JSON.parse(config.data);
+        page = request.page;
+        pageSize = request.pageSize;
+    }
+
+    const startPage = pageSize * page - pageSize;
+    const endPage = pageSize * page > 64 ? 64 : pageSize * page;
+    // Vehicles Data
+    const iftaData = () => {
+        let data = [];
+        for (let i = startPage; i < endPage; i++) {
+            let item = {
+                id: i + 1,
+                key: i +1,
+                jurisdiction: {
+                    jurisdictionOdd: "DC",
+                    jurisdictionEven: "MD",
+                    id: i+1,
+                },
+                taxableMiles: {
+                    taxableMilesOdd: '0 mil',
+                    taxableMilesEven: "105.7 mil",
+                    id: i+1,
+                },
+                totalMiles: {
+                    totalMilesOdd: "12.2 mil",
+                    totalMilesEven: "105.7 mil",
+                    id: i+1,
+                },
+                taxPaidGallons: "0 gal",
+            };
+            data.push(item);
+        }
+        return data;
+    }
+
+    const data = {
+        total: 64,
+        page: page,
+        pageSize: pageSize,
+        data: iftaData(),
+    };
+
+    return [200, data];
 })

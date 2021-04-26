@@ -18,11 +18,13 @@ import { getDriverEfficiencyReport } from "../../../../../reducers/fuel-energy";
 import Table from "components/Table/TableV1";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import CardHeader from "@material-ui/core/CardHeader";
-import ReportLineChart from "./ReportLineChart"
+import ReportLineChart from "../driver-efficiency-report-parts/ReportLineChart"
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import Calendar from "components/Calendar/Calendar";
 import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
 import LiveIconWhite from "components/Icons/LiveIconWhite";
+import Drivers from "../driver-efficiency-report-parts/Drivers";
+import Vehicle from "../driver-efficiency-report-parts/Vehicle";
 
 const styles = {
   colorBlue: {
@@ -116,11 +118,6 @@ const styles = {
     alignItems: "center",
     paddingLeft: "0px !important"
   },
-  headContainer: {
-    alignItems: "center",
-    textAlign: "left",
-    marginTop: "8px"
-  },
   headRight: {
     display: "flex",
     justifyContent: "flex-end"
@@ -140,14 +137,6 @@ const styles = {
       color: '#25345C',
       paddingLeft: "12px",
       fontWeight: 400,
-  },
-  textName: {
-      fontWeight: 'bold',
-      fontSize: '16px',
-      lineHeight: '24px',
-      color: '#25345C',
-      paddingLeft: "12px"
-
   },
   onHeaderCellFirst: {
     fontWeight: 700,
@@ -208,10 +197,6 @@ buttonContainer: {
   display: "flex",
   alignItems: "center",
 },
-moreAction: {
-  background: "#FFFFFF !important",
-  border: "1px solid #ECEEF0 !important",
-},
 topHeader: {
   display: "flex",
   justifyContent: "space-between",
@@ -232,6 +217,13 @@ topHeaderButton: {
   display: "flex",
   alignItems: "center"
 },
+  table: {
+    "&>div>div": {
+      boxShadow:"unset",
+      padding:0,
+      margin: 0,
+    }
+  },
 };
 
 const BorderLinearProgress = withStyles((theme) => ({
@@ -246,6 +238,7 @@ const BorderLinearProgress = withStyles((theme) => ({
     borderRadius: 5,
     backgroundColor: '#F4BE5E',
   },
+
 }))(LinearProgress);
 
 const useStyles = makeStyles(styles);
@@ -266,7 +259,13 @@ export function DriverEfficiencyReport(props) {
 
   const handleClearAll = () => {
     setChipData([])
-  }
+  };
+
+  const [value, setValue] = useState(0);
+
+  const handleChangeTab = (newValue) => {
+    setValue(newValue);
+  };
 
   const columns=[
     {
@@ -348,7 +347,7 @@ export function DriverEfficiencyReport(props) {
           <GridItem xs={12} sm={12} md={12}>
           <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                  <RoundedTabs tabs={["Drivers", "Vehicle"]} />
+                  <RoundedTabs tabs={["Drivers", "Vehicle"]} tabValue={handleChangeTab}/>
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <Calendar placeholder="Day"/>
@@ -367,124 +366,8 @@ export function DriverEfficiencyReport(props) {
                   </Button>
                 </GridItem> 
               </GridContainer>
-            <Card testimonial>
-              <CardBody className="body">
-              <Grid container className={classes.gridTitle}> 
-                <Grid item xs={12} sm={12} md={4}>
-                          <Grid container className={classes.headContainer}>
-                            <Grid item xl={2}
-                                  className={classes.userRolesTitle}> {chipData.length} selected
-                              for </Grid>
-                            <Grid item xl={10} className={classes.chipSelected}>
-                              {chipData.map(data => (
-                                <Chip
-                                  deleteIcon={<CloseIcon/>}
-                                  label={data.label}
-                                  onDelete={handleDelete(data)}
-                                  className={classes.chips}
-                                />
-                              ))}
-                              {chipData.length > 0 ?
-                                (
-                                  <Button onClick={handleClearAll}
-                                          className={classes.clearAll}>
-                                    Clear All
-                                  </Button>
-                                ) : ""}
-                            </Grid>
-                          </Grid>
-                        </Grid>                   
-                  <Grid xs={12} sm={12} md={8} className={classes.headLeft}>
-                    <ToolboxButton placeholder="Search driver" showFilter showColumn/>
-                  </Grid>
-                </Grid>
-                <GridContainer spacing={2} alignItems="stretch">
-                  <GridItem className={classes.bigCardGridItem} xs={3}>
-                    <Card className={classes.bigCard}>
-                      <CardBody>
-                      <GridContainer className={classes.titleContainer}>
-                      <Grid className={classes.title}>Summary</Grid>
-                      <Button
-                      round
-                      className="btn-round-gray"
-                      >
-                       Dec 28 - Jan 27
-                      </Button>
-                      </GridContainer>
-                        <GridContainer justify="space-between" className={classes.colorBlue}>
-                          <GridItem>Progress</GridItem>
-                          <GridItem className={classes.boldBlueLeft}>50%</GridItem>
-                        </GridContainer>
-                        <div className="mt-2 mb-4">
-                          <BorderLinearProgress variant="determinate" value={50} />
-                        </div>
-                        <div className={"py-2 " + classes.fontSize16}>
-                          <GridContainer justify="space-between">
-                            <GridItem className={classes.colorGrey}>Greenband</GridItem>
-                            <GridItem className={classes.boldBlueLeft}>100</GridItem>
-                          </GridContainer>
-                          <hr className="my-2" />
-                          <GridContainer justify="space-between">
-                            <GridItem className={classes.colorGrey}>Anticipation</GridItem>
-                            <GridItem className={classes.boldBlueLeft}>100</GridItem>
-                          </GridContainer>
-                          <hr className="my-2" />
-                          <GridContainer justify="space-between">
-                            <GridItem className={classes.colorGrey}>High Torque</GridItem>
-                            <GridItem className={classes.boldBlueLeft}>100</GridItem>
-                          </GridContainer>
-                          <hr className="my-2" />
-                          <GridContainer justify="space-between">
-                            <GridItem className={classes.colorGrey}>Idling</GridItem>
-                            <GridItem className={classes.boldBlueLeft}>100</GridItem>
-                          </GridContainer>
-                          <hr className="my-2" />
-                          <GridContainer justify="space-between">
-                            <GridItem className={classes.colorGrey}>Coasting (any gear)</GridItem>
-                            <GridItem className={classes.boldBlueLeft}>100</GridItem>
-                          </GridContainer>
-                          <hr className="my-2" />
-                          <GridContainer justify="space-between">
-                            <GridItem className={classes.colorGrey}>Time Over Speed</GridItem>
-                            <GridItem className={classes.boldBlueLeft}>59</GridItem>
-                          </GridContainer>
-                        </div>
-                        <CardHeader
-                        title={<>
-                        <hr className="my-2" />
-                        <GridContainer className={classes.headerContainer}>
-                        <Grid xs={12} sm={6} md={6} style={{ borderRight: "1px solid #ECECF2" }}>
-                         <Grid className={classes.cardHeaderTitle}>3h 20m</Grid>
-                        <Grid className={classes.cardHeaderSubTitle}>Driving Time</Grid>
-                        </Grid>
-                        <Grid xs={12} sm={6} md={6}>
-                        <Grid className={classes.cardHeaderTitle}>3h 20m</Grid>
-                        <Grid className={classes.cardHeaderSubTitle}>Driving Time</Grid>
-                        </Grid>
-                        </GridContainer>
-                        </>}
-      />
-                      </CardBody>
-                    </Card>
-                  </GridItem>
-                  <GridItem className={classes.bigCardGridItem} xs={9}>
-                      <ReportLineChart title={"Trends"}/>
-                  </GridItem>
-                </GridContainer>
-              </CardBody>
-              <Table
-                columns={columns}
-                dataSource={props.data}
-                onHeaderRow={{
-                  className: classes.onHeaderRow
-                }}
-                onBodyRow={{
-                  className: classes.tableRow,
-                  onClick: props.onShowDetail,
-                }}
-              />
-              
-            </Card>
+              {value === 0 && <Drivers/>}
+              {value === 1 && <Vehicle/>}
           </GridItem>
         </GridContainer>
       </GridItem>
