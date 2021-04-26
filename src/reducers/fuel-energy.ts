@@ -12,7 +12,9 @@ export const ACTION_TYPES = {
     GET_FUEL_PURCHASE: "fuel-enerygy/fuel-purchase/GET_FUEL_PURCHASE",
     GET_DRIVER_EFFICIENCY_DRIVERS: "fuel-energy/driver-efficiency/GET_DRIVER_EFFICIENCY_DRIVERS",
     GET_DRIVER_EFFICIENCY_VEHICLES: "fuel-energy/driver-efficiency/GET_DRIVER_EFFICIENCY_VEHICLES",
-    GET_DRIVER_EFFICIENCY_REPORT: "fuel-energy/driver-efficiency/GET_DRIVER_EFFICIENCY_REPORT"
+    GET_DRIVER_EFFICIENCY_REPORT: "fuel-energy/driver-efficiency/GET_DRIVER_EFFICIENCY_REPORT",
+    GET_IFTA: "fuel-energy/ifta/GET_IFTA",
+
 
     
   };
@@ -26,7 +28,8 @@ const initialState = {
     fuelPurchase: [],
     driverEfficiencyDrivers: [],
     driverEfficiencyVehicles: [],
-    driverEfficiencyReport: []
+    driverEfficiencyReport: [],
+    iftaData: [],
 
 }
 
@@ -42,6 +45,7 @@ export default (state: FuelEnergyState = initialState, action): FuelEnergyState 
       case REQUEST(ACTION_TYPES.GET_FUEL_PURCHASE):
       case REQUEST(ACTION_TYPES.GET_DRIVER_EFFICIENCY_VEHICLES):
       case REQUEST(ACTION_TYPES.GET_DRIVER_EFFICIENCY_REPORT):
+      case REQUEST(ACTION_TYPES.GET_IFTA):
         return {
           ...state,
           loading: true,
@@ -54,6 +58,7 @@ export default (state: FuelEnergyState = initialState, action): FuelEnergyState 
       case FAILURE(ACTION_TYPES.GET_DRIVER_EFFICIENCY_DRIVERS):
       case FAILURE(ACTION_TYPES.GET_DRIVER_EFFICIENCY_VEHICLES):
       case FAILURE(ACTION_TYPES.GET_DRIVER_EFFICIENCY_REPORT):
+      case FAILURE(ACTION_TYPES.GET_IFTA):
         return {
           ...state,
           loading: false,
@@ -98,6 +103,13 @@ export default (state: FuelEnergyState = initialState, action): FuelEnergyState 
           ...state,
           driverEfficiencyReport: action.payload.data,
   
+        }
+
+      case SUCCESS(ACTION_TYPES.GET_IFTA):
+        return {
+          ...state,
+          iftaData: action.payload.data,
+
         }
 
       default:
@@ -146,4 +158,13 @@ export const getDriverEfficiencyReport = (request) => async dispatch => {
     type: ACTION_TYPES.GET_DRIVER_EFFICIENCY_REPORT,
     payload: axios.post("api/fuel-energy/driver-efficiency/report", request)
   });
+
+}
+
+export const getIFTAData = (request) => async dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_IFTA,
+    payload: axios.post("api/fuel-energy/IFTA", request)
+  });
+
 }

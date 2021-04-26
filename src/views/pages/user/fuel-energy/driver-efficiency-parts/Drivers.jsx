@@ -58,10 +58,10 @@ const styles = {
         display: "flex",
         alignItems: "center",
     },
-    moreAction: {
-        background: "#FFFFFF !important",
-        border: "1px solid #ECEEF0 !important",
-    },
+    // moreAction: {
+    //     background: "#FFFFFF !important",
+    //     border: "1px solid #ECEEF0 !important",
+    // },
     textEmail: {
         display: "flex",
         justifyContent: "center",
@@ -111,15 +111,15 @@ const styles = {
     fontWeight: 700,
     paddingRight: "8px !important"
   },
-  selected: {
-    height: 24,
-    width: "auto",
-    background: "#ECEEF0 !important",
-    borderRadius: 28,
-    color: "#25345C !important",
-    display: "flex",
-    alignItems: "center",
-  },
+  // selected: {
+  //   height: 24,
+  //   width: "auto",
+  //   background: "#ECEEF0 !important",
+  //   borderRadius: 28,
+  //   color: "#25345C !important",
+  //   display: "flex",
+  //   alignItems: "center",
+  // },
   clearAll: {
     textTransform: "none",
     color: "#8097D8",
