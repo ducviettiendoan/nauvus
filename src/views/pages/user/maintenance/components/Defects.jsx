@@ -9,12 +9,26 @@ import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
-import Calendar from "components/Calendar/Calendar";
-import LiveIconWhite from "components/Icons/LiveIconWhite";
-import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
+import Popper from "@material-ui/core/Popper";
+import classNames from "classnames";
+import Grow from "@material-ui/core/Grow";
+import Paper from "@material-ui/core/Paper";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import MenuList from "@material-ui/core/MenuList";
+import ArrowRightBlueIcon from "components/Icons/ArrowRightBlueIcon";
+import Accordion from "components/Accordion/Accordion";
+import MenuItem from "@material-ui/core/MenuItem";
+import Checkbox from "@material-ui/core/Checkbox";
+import CheckSquareOutlined from "components/Icons/CheckSquareOutlined";
+import Avatar from "@material-ui/core/Avatar";
+import customDropdownStyle from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle.js";
+import {primaryColor} from "assets/jss/material-dashboard-pro-react";
+import {getDefectsData} from "reducers/maintainance";
+import {connect} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
+  ...customDropdownStyle(theme),
   userRolesTitle: {
     fontSize: 16,
     color: "#25345C",
@@ -73,9 +87,8 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '21px',
     color: "#25345C",
     fontWeight: 400,
-    
-  },
 
+  },
   textEmail2: {
     fontSize: '16px',
     lineHeight: '21px',
@@ -91,12 +104,8 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 8
   },
   tableRow: {
-    '&:nth-of-type()': {
+    '&:nth-of-type(even)': {
       backgroundColor: "#fbfbfb",
-    },
-    '&:nth-of-type(4)': {
-
-        backgroundColor: "#ECEEF0",
     },
   },
   onHeaderRow: {
@@ -138,8 +147,8 @@ const useStyles = makeStyles((theme) => ({
     width: "53px",
     height: "41px"
   },
-
   textStatus2: {
+    border: "1px solid #ECEEF0 !important",
     fontSize: '14px',
     lineHeight: '24px',
     padding: "0px !important",
@@ -153,13 +162,117 @@ const useStyles = makeStyles((theme) => ({
     width: "95px",
     height: "40px"
   },
-
+  dropdownVehicle: {
+    borderRadius: "12px",
+    boxShadow: "0px 1px 10px rgba(0, 0, 0, 0.25)",
+    width: "300px",
+    paddingLeft: "12px",
+    paddingRight: "12px",
+  },
+  popperHeaderContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "10px 5px 20px 5px !important"
+  },
+  popperHeader: {
+    color: "#25345C",
+    fontSize: "24px",
+    lineHeight: "29px",
+    fontWeight: "bold",
+  },
+  popperInput: {
+    paddingBottom: "8px",
+    paddingTop: "8px",
+  },
+  tagTitle: {
+    fontSize: "16px",
+    fontWeight: 700,
+    lineHeight: "19px"
+  },
+  grayAvatar: {
+    background: "#ECEEF0 !important",
+    color: "#B4B4B4",
+    marginRight: 8,
+    fontSize: 12,
+    fontWeight: 700,
+  },
+  dropdownItemVehicle: {
+    marginLeft: "8px",
+    fontWeight: 700,
+    fontSize: '14px',
+    color: '#25345C',
+  },
+  checked: {
+    color: primaryColor[0] + "!important"
+  },
+  checkRoot: {
+    padding: "10px",
+    paddingLeft: "0px !important",
+    "&:hover": {
+      backgroundColor: "unset"
+    }
+  },
+  // accordion style
+  expansionClasses: {
+    padding: "0px 15px 0px 8px !important",
+    borderBottom: "0px !important",
+    minHeight: "20px !important",
+    background: "#FAFAFA",
+    "&:hover": {
+      background: "#FAFAFA",
+    },
+    "&:focus": {
+      background: "#FAFAFA",
+    }
+  },
+  expansionContentClasses: {
+    margin: "0px !important"
+  },
+  expansionPanelClasses: {
+    marginBottom: "4px !important",
+    background: "#FAFAFA",
+  },
+  expansionPanelClassesRounded: {
+    background: "#FAFAFA",
+    border: "1px solid #ECEEF0",
+    boxShadow: "inherit",
+    marginBottom: "8px !important",
+  },
+  // checkedbox accordion style
+  itemContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "0px !important"
+  },
+  checkboxContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  clearButton: {
+    textTransform: "none",
+    color: "#8CA2EE",
+    background: "unset !important",
+    boxShadow: "unset !important",
+    fontSize: 12,
+    fontWeight: 700,
+    padding: 0,
+    margin: "0px !important",
+    "&:hover": {
+      color: "#25345C"
+    },
+    "&:focus": {
+      color: "#8CA2EE"
+    }
+  },
 }));
 
-export default function Defects(props) {
+export function Defects(props) {
   const classes = useStyles();
   const history = useHistory();
-  
+
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Standard Admin'},
     {key: 1, label: 'Full admin'},
@@ -178,26 +291,10 @@ export default function Defects(props) {
     console.log("clicked")
   }
 
-  let dumpData = [];
-  for (let i = 0; i < 7; i++) {
-    let item = {
-      id: i + 2,
-      key: i + 2,
-      asset: "Vehicle 101",
-      currentLocation: "8.1 mi SSE Rockford, IL",
-      lastDvirStatus: "Safe",
-      count: "1",
-      unresolvedDefects: "Fuel Sysrem",
-      actions: "",
-    };
-
-    dumpData.push(item);
-    dumpData.map(data => {
-        if (data.key === 5){
-            data.actions = "Last Dvir";
-        }
-    });
-  };
+  React.useEffect(() => {
+    // Get list data
+    props.getDefectsData();
+  }, []);
 
   const columns = [
     {
@@ -206,8 +303,8 @@ export default function Defects(props) {
       onHeaderCell: {className: classes.onHeaderCellFirst},
       render: asset => (
         <div className={classes.alignItemsCenter}>
-          <div className={classes.textName}>{asset}</div>   
-        </div> 
+          <div className={classes.textName}>{asset}</div>
+        </div>
       ),
     },
     {
@@ -234,26 +331,262 @@ export default function Defects(props) {
       onHeaderCell: {className: classes.onHeaderCellNext},
       render: unresolvedDefects => (
         <div>
-            <span className={classes.textEmail}>{unresolvedDefects}</span>
-            <span className={classes.textEmail2}>Feb 20, 5:13 AM</span>
+          <span className={classes.textEmail}>{unresolvedDefects}</span>
+          <span className={classes.textEmail2}>Feb 20, 5:13 AM</span>
         </div>
       )
-                                    
     },
     {
       title: 'Actions',
-      key: "actions",
+      key: 'action',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: actions => <div className={classes.textStatus2}>{actions}</div>
-    },
+      render: () => <div className={classes.textStatus2}>Last Dvir</div>
+    }
   ]
+
+  // popper
+  const [openMore, setOpenMore] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleCloseMore = () => setOpenMore(false)
+  const handleOpenMore = (event) => {
+    setOpenMore(true)
+    setAnchorEl(event.currentTarget);
+  }
+
+  const listTags = {
+    tags: ["Room", "No road", "In City"],
+    dutyStatus: ["Driving", "On Duty", "Off Duty", "Personal Conveyance", "Sleeper Berth", "Disconnected", "Yard Move"],
+    violations: ["Currently in violations", "Nearing Violation"]
+  }
+
+  const PopperFilter = (props) => {
+    const {listTags} = props
+    // checked box in popper
+    const [checked, setChecked] = React.useState({
+      tags: [1],
+      dutyStatus: [1],
+      violations: [1]
+    });
+    const handleToggle = (value) => (event) => {
+      const currentIndex = checked[event.target.name].indexOf(value);
+      const newChecked = {...checked};
+      if (currentIndex === -1) {
+        newChecked[event.target.name].push(value);
+      } else {
+        newChecked[event.target.name].splice(currentIndex, 1);
+      }
+
+      setChecked(newChecked);
+    };
+
+    const handleClearBox = (value) => () => {
+      setChecked({
+        ...checked,
+        [value]: [1]
+      })
+    }
+
+    return (
+      <Popper
+        open={openMore}
+        anchorEl={anchorEl}
+        transition
+        disablePortal
+        placement="bottom-end"
+        className={classNames({
+          [classes.popperClose]: !anchorEl,
+          [classes.popperResponsive]: true,
+          [classes.popperNav]: true
+        })}
+      >
+        {({TransitionProps}) => (
+          <Grow
+            {...TransitionProps}
+            id="profile-menu-list"
+            style={{transformOrigin: "0 0 0"}}
+          >
+            <Paper className={classes.dropdown && classes.dropdownVehicle}>
+              <ClickAwayListener onClickAway={handleCloseMore}>
+                <MenuList role="menu">
+                  <Grid className={classes.popperHeaderContainer}>
+                    <Grid className={classes.popperHeader}>Filter Options</Grid>
+                    <ArrowRightBlueIcon/>
+                  </Grid>
+                  <Grid xs={12} sm={12} md={12} className={classes.popperInput}>
+                    <ToolboxButton placeholder="Search tags"/>
+                  </Grid>
+
+                  <Accordion collapses={
+                    [
+                      {
+                        title: <Grid style={{width: "140px", display: "flex", justifyContent: "space-between"}}>
+                          <Grid className={classes.tagTitle}>Tags</Grid>
+                          <Button className={classes.clearButton} onClick={handleClearBox("tags")}>
+                            Clear
+                          </Button>
+                        </Grid>,
+                        content:
+                          <div className={classes.cardExpandContent}>
+                            {listTags.tags.map((value) => {
+                              return (
+                                <MenuItem key={value} className={classes.itemContainer}>
+                                  <div className={classes.checkboxContainer}>
+                                    <div className={classes.dropdownItemVehicle}>
+                                      <Checkbox
+                                        name="tags"
+                                        edge="end"
+                                        onChange={handleToggle(value)}
+                                        checked={checked["tags"].indexOf(value) !== -1}
+                                        checkedIcon={<CheckSquareOutlined/>}
+                                        classes={{
+                                          checked: classes.checked,
+                                          root: classes.checkRoot
+                                        }}
+                                      />
+                                    </div>
+                                    <div className={classes.dropdownItemVehicle}>
+                                      {value}
+                                    </div>
+                                  </div>
+                                  <Avatar className={classes.grayAvatar}>5</Avatar>
+                                </MenuItem>
+                              );
+                            })}
+                          </div>
+                      },
+                    ]
+                  }
+                             expansionSummaryClasses={{
+                               root: classes.expansionClasses,
+                               content: classes.expansionContentClasses
+                             }}
+                             expansionPanelClasses={{
+                               root: classes.expansionPanelClasses,
+                             }}
+                             expansionPanelRounded={{
+                               rounded: classes.expansionPanelClassesRounded,
+                             }}
+                  />
+
+                  <Accordion collapses={
+                    [
+                      {
+                        title: <Grid style={{width: "140px", display: "flex", justifyContent: "space-between"}}>
+                          <Grid className={classes.tagTitle}>Duty Status</Grid>
+                          <Button className={classes.clearButton} onClick={handleClearBox("dutyStatus")}>
+                            Clear
+                          </Button>
+                        </Grid>,
+                        content:
+                          <div className={classes.cardExpandContent}>
+                            {listTags.dutyStatus.map((value) => {
+                              return (
+                                <MenuItem key={value} className={classes.itemContainer}>
+                                  <div className={classes.checkboxContainer}>
+                                    <div className={classes.dropdownItemVehicle}>
+                                      <Checkbox
+                                        name="dutyStatus"
+                                        edge="end"
+                                        onChange={handleToggle(value)}
+                                        checked={checked["dutyStatus"].indexOf(value) !== -1}
+                                        checkedIcon={<CheckSquareOutlined/>}
+                                        classes={{
+                                          checked: classes.checked,
+                                          root: classes.checkRoot
+                                        }}
+                                      />
+                                    </div>
+                                    <div className={classes.dropdownItemVehicle}>
+                                      {value}
+                                    </div>
+                                  </div>
+                                  <Avatar className={classes.grayAvatar}>5</Avatar>
+                                </MenuItem>
+                              );
+                            })}
+                          </div>
+                      },
+                    ]
+                  }
+                             expansionSummaryClasses={{
+                               root: classes.expansionClasses,
+                               content: classes.expansionContentClasses
+                             }}
+                             expansionPanelClasses={{
+                               root: classes.expansionPanelClasses,
+                             }}
+                             expansionPanelRounded={{
+                               rounded: classes.expansionPanelClassesRounded,
+                             }}
+                  />
+
+                  <Accordion collapses={
+                    [
+                      {
+                        title: <Grid style={{width: "140px", display: "flex", justifyContent: "space-between"}}>
+                          <Grid className={classes.tagTitle}>Violations</Grid>
+                          <Button className={classes.clearButton} onClick={handleClearBox("violations")}>
+                            Clear
+                          </Button>
+                        </Grid>,
+                        content:
+                          <div className={classes.cardExpandContent}>
+                            {listTags.violations.map((value) => {
+                              return (
+                                <MenuItem key={value} className={classes.itemContainer}>
+                                  <div className={classes.checkboxContainer}>
+                                    <div className={classes.dropdownItemVehicle}>
+                                      <Checkbox
+                                        name="violations"
+                                        edge="end"
+                                        onChange={handleToggle(value)}
+                                        checked={checked["violations"].indexOf(value) !== -1}
+                                        checkedIcon={<CheckSquareOutlined/>}
+                                        classes={{
+                                          checked: classes.checked,
+                                          root: classes.checkRoot
+                                        }}
+                                      />
+                                    </div>
+                                    <div className={classes.dropdownItemVehicle}>
+                                      {value}
+                                    </div>
+                                  </div>
+                                  <Avatar className={classes.grayAvatar}>5</Avatar>
+                                </MenuItem>
+                              );
+                            })}
+                          </div>
+                      },
+                    ]
+                  }
+                             expansionSummaryClasses={{
+                               root: classes.expansionClasses,
+                               content: classes.expansionContentClasses
+                             }}
+                             expansionPanelClasses={{
+                               root: classes.expansionPanelClasses,
+                             }}
+                             expansionPanelRounded={{
+                               rounded: classes.expansionPanelClassesRounded,
+                             }}
+                  />
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+    )
+  }
 
   return (
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <div>
-            {dumpData.length > 0 && <Table
+            <Table
               renderTitle={
                 <Grid container className={classes.gridTitle}>
                   <Grid item xs={12} sm={12} md={6}>
@@ -278,13 +611,14 @@ export default function Defects(props) {
                     </Grid>
                   </Grid>
                   <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
-                    <ToolboxButton placeholder="Search asset" showFilter showColumn/>
+                    <ToolboxButton placeholder="Search asset" showFilter showColumn filterAction={handleOpenMore}/>
+                    <PopperFilter listTags={listTags}/>
                   </Grid>
                 </Grid>
               }
               columns={columns}
-              dataSource={dumpData}
-              pageSize = {7}
+              dataSource={props.data}
+              pageSize={7}
               onHeaderRow={{
                 className: classes.onHeaderRow
               }}
@@ -293,7 +627,6 @@ export default function Defects(props) {
                 className: classes.tableRow
               }}
             />
-            }
           </div>
         </GridItem>
       </GridContainer>
@@ -301,3 +634,17 @@ export default function Defects(props) {
   );
 }
 
+const mapStateToProps = ({maintainance}) => {
+  return {
+    data: maintainance.defects.data,
+    page: maintainance.defects.page,
+    total: maintainance.defects.total,
+    pageSize: maintainance.defects.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getDefectsData
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Defects);
