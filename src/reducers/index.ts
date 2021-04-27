@@ -16,6 +16,8 @@ import driverRecord, {DriverRecordState} from "./setting-driver-record"
 import safety, {SafetyState} from "./safety";
 import messages, {MessagesState} from "./messages"
 import dispatch, {DispatchState} from "./dispatch";
+import documents, {DocumentsState} from "./document";
+import maintainance, {MaintainanceState} from "./maintainance";
 
 export interface IRootState {
   readonly authentication: AuthenticationState;
@@ -34,6 +36,8 @@ export interface IRootState {
   readonly safety: SafetyState;
   readonly messages: MessagesState;
   readonly dispatch: DispatchState;
+  readonly documents: DocumentsState;
+  readonly maintainance: MaintainanceState;
 }
 
 const rootReducer = combineReducers<IRootState>({
@@ -52,7 +56,9 @@ const rootReducer = combineReducers<IRootState>({
   driverRecord,
   safety,
   messages,
-  dispatch
+  dispatch,
+  documents,
+  maintainance,
 });
 
 export default rootReducer;

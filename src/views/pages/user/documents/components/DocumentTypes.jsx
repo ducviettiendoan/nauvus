@@ -1,4 +1,6 @@
 import React from "react";
+import {connect} from 'react-redux';
+import {getTypes} from "reducers/document";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "components/CustomButtons/Button";
@@ -7,12 +9,15 @@ import CloseIcon from "components/Icons/CloseIcon";
 import Chip from "@material-ui/core/Chip";
 import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
-import {connect} from 'react-redux';
-import {getViolations} from "reducers/compliance";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
+import customDropdownStyle from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle.js";
+import {primaryColor} from "assets/jss/material-dashboard-pro-react";
+import EditIcon from "components/Icons/EditIcon";
+import DeleteIcon from "components/Icons/DeleteIcon";
 
 const useStyles = makeStyles((theme) => ({
+  ...customDropdownStyle(theme),
   userRolesTitle: {
     fontSize: 16,
     color: "#25345C",
@@ -38,6 +43,22 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     "&:hover": {
       color: "#25345C"
+    }
+  },
+  clearButton: {
+    textTransform: "none",
+    color: "#8CA2EE",
+    background: "unset !important",
+    boxShadow: "unset !important",
+    fontSize: 12,
+    fontWeight: 700,
+    padding: 0,
+    margin: "0px !important",
+    "&:hover": {
+      color: "#25345C"
+    },
+    "&:focus": {
+      color: "#8CA2EE"
     }
   },
   chipSelected: {
@@ -66,11 +87,11 @@ const useStyles = makeStyles((theme) => ({
     color: '#25345C',
     paddingLeft: "12px"
   },
-  textBold: {
+  textEmail: {
     fontSize: '16px',
     lineHeight: '21px',
     color: "#25345C",
-    fontWeight: 700,
+    fontWeight: 400
   },
   chips: {
     fontWeight: 400,
@@ -99,40 +120,116 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     color: "#25345C",
   },
-  alignItemsCenter: {
-    display: "flex",
-    alignItems: "center",
+  grayAvatar: {
+    background: "#ECEEF0 !important",
+    color: "#B4B4B4",
+    marginRight: 8,
+    fontSize: 12,
+    fontWeight: 700,
   },
-  topHeader: {
+  popperHeaderContainer: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 15
+    padding: "10px 5px 20px 5px !important"
   },
-  topHeaderTitle: {
-    textAlign: "left",
-    fontWeight: 700,
-    fontSize: 18,
+  popperHeader: {
     color: "#25345C",
-    padding: "0 16px !important"
+    fontSize: "24px",
+    lineHeight: "29px",
+    fontWeight: "bold",
   },
-  topHeaderButton: {
-    textAlign: "right !important",
+  dropdownVehicle: {
+    borderRadius: "12px",
+    boxShadow: "0px 1px 10px rgba(0, 0, 0, 0.25)",
+    width: "300px",
+    paddingLeft: "12px",
+    paddingRight: "12px",
+  },
+  popperInput: {
+    paddingBottom: "8px",
+    paddingTop: "8px",
+  },
+  dropdownItemVehicle: {
+    marginLeft: "8px",
+    fontWeight: 700,
+    fontSize: '14px',
+    color: '#25345C',
+  },
+  checked: {
+    color: primaryColor[0] + "!important"
+  },
+  checkRoot: {
+    padding: "10px",
+    paddingLeft: "0px !important",
+    "&:hover": {
+      backgroundColor: "unset"
+    }
+  },
+  // accordion style
+  expansionClasses: {
+    padding: "0px 15px 0px 8px !important",
+    borderBottom: "0px !important",
+    minHeight: "20px !important",
+    background: "#FAFAFA",
+    "&:hover": {
+      background: "#FAFAFA",
+    },
+    "&:focus": {
+      background: "#FAFAFA",
+    }
+  },
+  expansionContentClasses: {
+    margin: "0px !important"
+  },
+  expansionPanelClasses: {
+    marginBottom: "4px !important",
+    background: "#FAFAFA",
+  },
+  expansionPanelClassesRounded: {
+    background: "#FAFAFA",
+    border: "1px solid #ECEEF0",
+    boxShadow: "inherit",
+    marginBottom: "8px !important",
+  },
+  itemContainer: {
     display: "flex",
-    alignItems: "center"
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: "0px !important"
   },
-  moreAction: {
-    background: "#FFFFFF !important",
-    border: "1px solid #ECEEF0 !important"
+  tagTitle: {
+    fontSize: "16px",
+    fontWeight: 700,
+    lineHeight: "19px"
   },
+  checkboxContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  onHeaderCell: {
+    textAlign: "right",
+    paddingRight: "43px",
+    fontWeight: 700,
+    color: "#25345C",
+  },
+  iconButton: {
+    '&:hover': {
+      color: '#25345C !important',
+    }
+  },
+  actionButton: {
+    textAlign: "right",
+  }
 }));
 
-export function Violations(props) {
+export function DocumentTypes(props) {
   const classes = useStyles();
 
   React.useEffect(() => {
     // Get list data
-    props.getViolations();
+    props.getTypes();
   }, []);
 
   const [chipData, setChipData] = React.useState([
@@ -150,54 +247,35 @@ export function Violations(props) {
 
   const columns = [
     {
-      title: 'Driver',
-      key: 'driver',
+      title: 'Document Type Name',
+      key: 'typeName',
       onHeaderCell: {className: classes.onHeaderCellFirst},
-      render: driver => (
-        <div className={classes.alignItemsCenter}>
-          <div className={classes.textName}>{driver}</div>
+      render: typeName => <div className={classes.textName}>{typeName}</div>
+    },
+    {
+      title: 'Actions',
+      key: 'action',
+      onHeaderCell: { className: classes.onHeaderCell },
+      render: () => (
+        <div className={classes.actionButton}>
+          <Button justIcon color="twitter" simple>
+            <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+          </Button>
+          <Button justIcon color="google" simple>
+            <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px' }} />
+          </Button>
         </div>
-      ),
-    },
-    {
-      title: 'Violations Type',
-      key: 'violationsType',
-      onHeaderCell: {className: classes.onHeaderCellNext},
-      render: violationsType => <div className={classes.textEmail}>{violationsType}</div>
-    },
-    {
-      title: 'Date',
-      key: 'date',
-      onHeaderCell: {className: classes.onHeaderCellNext},
-      render: date => <div className={classes.textEmail}>{date}</div>
-    },
-    {
-      title: 'Start',
-      key: 'start',
-      onHeaderCell: {className: classes.onHeaderCellNext},
-      render: start => <div className={classes.textBold}>{start}</div>
-    },
-    {
-      title: 'End',
-      key: 'end',
-      onHeaderCell: {className: classes.onHeaderCellNext},
-      render: end => <div className={classes.textBold}>{end}</div>
-    },
-    {
-      title: 'Duration',
-      key: 'duration',
-      onHeaderCell: {className: classes.onHeaderCellNext},
-      render: duration => <div className={classes.textBold}>{duration}</div>
-    },
+      )
+    }
   ]
 
   const onPageChange = (page, pageSize) => {
     console.log(page, pageSize)
-    props.getViolations({page, pageSize});
+    props.getTypes({page, pageSize});
   }
 
   const onShowSizeChange = (page, pageSize) => {
-    props.getViolations({page, pageSize});
+    props.getTypes({page, pageSize});
     console.log(page, pageSize)
   }
 
@@ -231,7 +309,7 @@ export function Violations(props) {
                     </Grid>
                   </Grid>
                   <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
-                    <ToolboxButton placeholder="Search driver" showFilter showColumn/>
+                    <ToolboxButton placeholder="Search document type" showFilter/>
                   </Grid>
                 </Grid>
               }
@@ -258,17 +336,17 @@ export function Violations(props) {
   );
 }
 
-const mapStateToProps = ({compliance}) => {
+const mapStateToProps = ({documents}) => {
   return {
-    data: compliance.violations.data,
-    page: compliance.violations.page,
-    total: compliance.violations.total,
-    pageSize: compliance.violations.pageSize
+    data: documents.types.data,
+    page: documents.types.page,
+    total: documents.types.total,
+    pageSize: documents.types.pageSize
   };
 };
 
 const mapDispatchToProps = {
-  getViolations
+  getTypes
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Violations);
+export default connect(mapStateToProps, mapDispatchToProps)(DocumentTypes);

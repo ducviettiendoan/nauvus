@@ -1,4 +1,6 @@
 import React from "react";
+import {connect} from 'react-redux';
+import {getSubmitted} from "reducers/document";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "components/CustomButtons/Button";
@@ -9,7 +11,6 @@ import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
-import {useHistory} from "react-router-dom";
 import Popper from "@material-ui/core/Popper";
 import classNames from "classnames";
 import Grow from "@material-ui/core/Grow";
@@ -24,8 +25,6 @@ import CheckSquareOutlined from "components/Icons/CheckSquareOutlined";
 import Avatar from "@material-ui/core/Avatar";
 import customDropdownStyle from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle.js";
 import {primaryColor} from "assets/jss/material-dashboard-pro-react";
-import {getDefectsData} from "reducers/maintainance";
-import {connect} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   ...customDropdownStyle(theme),
@@ -54,6 +53,22 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     "&:hover": {
       color: "#25345C"
+    }
+  },
+  clearButton: {
+    textTransform: "none",
+    color: "#8CA2EE",
+    background: "unset !important",
+    boxShadow: "unset !important",
+    fontSize: 12,
+    fontWeight: 700,
+    padding: 0,
+    margin: "0px !important",
+    "&:hover": {
+      color: "#25345C"
+    },
+    "&:focus": {
+      color: "#8CA2EE"
     }
   },
   chipSelected: {
@@ -86,15 +101,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '16px',
     lineHeight: '21px',
     color: "#25345C",
-    fontWeight: 400,
-
-  },
-  textEmail2: {
-    fontSize: '16px',
-    lineHeight: '21px',
-    color: "#C4C4C4",
-    fontWeight: 400,
-    marginLeft: "10px !important",
+    fontWeight: 400
   },
   chips: {
     fontWeight: 400,
@@ -123,51 +130,12 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     color: "#25345C",
   },
-  alignItemsCenter: {
-    display: "flex",
-    alignItems: "center",
-  },
-  topHeader: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 15
-  },
-  textStatus: {
-    fontSize: '14px',
-    lineHeight: '24px',
-    paddingLeft: "0px !important",
-    color: "#27AE60",
-    background: "rgba(39, 174, 96, 0.1)",
-    borderRadius: 23,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+  grayAvatar: {
+    background: "#ECEEF0 !important",
+    color: "#B4B4B4",
+    marginRight: 8,
+    fontSize: 12,
     fontWeight: 700,
-    width: "53px",
-    height: "41px"
-  },
-  textStatus2: {
-    border: "1px solid #ECEEF0 !important",
-    fontSize: '14px',
-    lineHeight: '24px',
-    padding: "0px !important",
-    color: "#25345C",
-    background: "#FFFFFF",
-    borderRadius: 23,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontWeight: 700,
-    width: "95px",
-    height: "40px"
-  },
-  dropdownVehicle: {
-    borderRadius: "12px",
-    boxShadow: "0px 1px 10px rgba(0, 0, 0, 0.25)",
-    width: "300px",
-    paddingLeft: "12px",
-    paddingRight: "12px",
   },
   popperHeaderContainer: {
     display: "flex",
@@ -181,21 +149,16 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "29px",
     fontWeight: "bold",
   },
+  dropdownVehicle: {
+    borderRadius: "12px",
+    boxShadow: "0px 1px 10px rgba(0, 0, 0, 0.25)",
+    width: "300px",
+    paddingLeft: "12px",
+    paddingRight: "12px",
+  },
   popperInput: {
     paddingBottom: "8px",
     paddingTop: "8px",
-  },
-  tagTitle: {
-    fontSize: "16px",
-    fontWeight: 700,
-    lineHeight: "19px"
-  },
-  grayAvatar: {
-    background: "#ECEEF0 !important",
-    color: "#B4B4B4",
-    marginRight: 8,
-    fontSize: 12,
-    fontWeight: 700,
   },
   dropdownItemVehicle: {
     marginLeft: "8px",
@@ -239,43 +202,35 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "inherit",
     marginBottom: "8px !important",
   },
-  // checkedbox accordion style
   itemContainer: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     padding: "0px !important"
   },
+  tagTitle: {
+    fontSize: "16px",
+    fontWeight: 700,
+    lineHeight: "19px"
+  },
   checkboxContainer: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
   },
-  clearButton: {
-    textTransform: "none",
-    color: "#8CA2EE",
-    background: "unset !important",
-    boxShadow: "unset !important",
-    fontSize: 12,
-    fontWeight: 700,
-    padding: 0,
-    margin: "0px !important",
-    "&:hover": {
-      color: "#25345C"
-    },
-    "&:focus": {
-      color: "#8CA2EE"
-    }
-  },
 }));
 
-export function Defects(props) {
+export function SubmittedDocuments(props) {
   const classes = useStyles();
-  const history = useHistory();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getSubmitted();
+  }, []);
 
   const [chipData, setChipData] = React.useState([
-    {key: 0, label: 'Standard Admin'},
-    {key: 1, label: 'Full admin'},
+    {key: 0, label: 'Cycle Tomorrow'},
+    {key: 1, label: 'Cycle Remaining'},
   ]);
 
   const handleDelete = (chipToDelete) => () => {
@@ -284,65 +239,44 @@ export function Defects(props) {
 
   const handleClearAll = () => {
     setChipData([])
-  };
-
-  const viewDetail = () => {
-    history.push("/u/maintenance/driver-vehicle-inspection-report/vehicle101")
-    console.log("clicked")
   }
-
-  React.useEffect(() => {
-    // Get list data
-    props.getDefectsData();
-  }, []);
 
   const columns = [
     {
-      title: 'Asset',
-      key: 'asset',
+      title: 'Submitted By',
+      key: 'submittedBy',
       onHeaderCell: {className: classes.onHeaderCellFirst},
-      render: asset => (
-        <div className={classes.alignItemsCenter}>
-          <div className={classes.textName}>{asset}</div>
-        </div>
-      ),
+      render: submittedBy => <div className={classes.textName}>{submittedBy}</div>
     },
     {
-      title: 'Current Location',
-      key: 'currentLocation',
+      title: 'Received On',
+      key: 'receivedOn',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: currentLocation => <div className={classes.textEmail}>{currentLocation}</div>
+      render: receivedOn => <div className={classes.textEmail}>{receivedOn}</div>
     },
     {
-      title: 'Last Dvir Status',
-      key: 'lastDvirStatus',
+      title: 'Document Type',
+      key: 'documentType',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: lastDvirStatus => <div className={classes.textStatus}>{lastDvirStatus}</div>
+      render: documentType => <div className={classes.textEmail}>{documentType}</div>
     },
     {
-      title: 'Count',
-      key: 'count',
+      title: 'Notes',
+      key: 'notes',
       onHeaderCell: {className: classes.onHeaderCellNext},
-      render: count => <div className={classes.textEmail}>{count}</div>
+      render: notes => <div className={classes.textEmail}>{notes}</div>
     },
-    {
-      title: 'Unresolved Defects',
-      key: 'unresolvedDefects',
-      onHeaderCell: {className: classes.onHeaderCellNext},
-      render: unresolvedDefects => (
-        <div>
-          <span className={classes.textEmail}>{unresolvedDefects}</span>
-          <span className={classes.textEmail2}>Feb 20, 5:13 AM</span>
-        </div>
-      )
-    },
-    {
-      title: 'Actions',
-      key: 'action',
-      onHeaderCell: {className: classes.onHeaderCellNext},
-      render: () => <div className={classes.textStatus2}>Last Dvir</div>
-    }
   ]
+
+  const onPageChange = (page, pageSize) => {
+    console.log(page, pageSize)
+    props.getSubmitted({page, pageSize});
+  }
+
+  const onShowSizeChange = (page, pageSize) => {
+    props.getSubmitted({page, pageSize});
+    console.log(page, pageSize)
+  }
 
   // popper
   const [openMore, setOpenMore] = React.useState(false);
@@ -611,19 +545,24 @@ export function Defects(props) {
                     </Grid>
                   </Grid>
                   <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
-                    <ToolboxButton placeholder="Search asset" showFilter showColumn filterAction={handleOpenMore}/>
+                    <ToolboxButton placeholder="Search document" showFilter showColumn filterAction={handleOpenMore}/>
                     <PopperFilter listTags={listTags}/>
                   </Grid>
                 </Grid>
               }
+              pagination={{
+                total: props.total,
+                current: props.page,
+                pageSize: props.pageSize,
+                onChange: onPageChange,
+                onShowSizeChange: onShowSizeChange
+              }}
               columns={columns}
               dataSource={props.data}
-              pageSize={7}
               onHeaderRow={{
                 className: classes.onHeaderRow
               }}
               onBodyRow={{
-                onClick: viewDetail,
                 className: classes.tableRow
               }}
             />
@@ -634,17 +573,17 @@ export function Defects(props) {
   );
 }
 
-const mapStateToProps = ({maintainance}) => {
+const mapStateToProps = ({documents}) => {
   return {
-    data: maintainance.defects.data,
-    page: maintainance.defects.page,
-    total: maintainance.defects.total,
-    pageSize: maintainance.defects.pageSize
+    data: documents.submitted.data,
+    page: documents.submitted.page,
+    total: documents.submitted.total,
+    pageSize: documents.submitted.pageSize
   };
 };
 
 const mapDispatchToProps = {
-  getDefectsData
+  getSubmitted
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Defects);
+export default connect(mapStateToProps, mapDispatchToProps)(SubmittedDocuments);
