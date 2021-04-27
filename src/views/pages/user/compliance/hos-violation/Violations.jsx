@@ -7,14 +7,10 @@ import CloseIcon from "components/Icons/CloseIcon";
 import Chip from "@material-ui/core/Chip";
 import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
-import {IRootState} from 'reducers';
 import {connect} from 'react-redux';
-import {getDriverHOS, getViolations} from "reducers/compliance";
+import {getViolations} from "reducers/compliance";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
-import OrganizationUpload from "../../../../../components/CustomUpload/OrganizationUpload";
-import DiaLog from "../../../../../components/CustomDialog/Dialog";
-import {DriverHOS} from "../DriverHOS";
 
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {

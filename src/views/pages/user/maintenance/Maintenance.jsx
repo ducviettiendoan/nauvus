@@ -14,7 +14,7 @@ import Dvirs from "../maintenance/components/Dvirs";
 import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
 import LiveIconWhite from "components/Icons/LiveIconWhite";
-
+import Users from "../settings/org/user-roles/Users";
 
 
 const styles = {
@@ -63,7 +63,7 @@ const styles = {
     marginLeft: "7px",
     height: "41px !important",
   },
-  startIcon:{
+  startIcon: {
     height: "12px",
     width: "12px",
     marginRight: "0px !important",
@@ -79,24 +79,33 @@ export default function Maintenance() {
   const [tab, setTab] = useState(0);
 
   const handleChange = (event) => {
-    setSelectValue({ ...selectValue, [event.target.name]: event.target.value });
-    
+    setSelectValue({...selectValue, [event.target.name]: event.target.value});
+
   };
 
   const handleChangeTab = (newTab) => {
     setTab(newTab);
   };
 
-  const BlueButton = tab === 1 ?                         
-  <Button
-  round
-  className={classes.addButton}
-  startIcon={<AddOutlined className={classes.startIcon}/>}
-  >
-    Add Vehicle DVIR
-  </Button>
-  :
-  null
+  const [open, setOpen] = React.useState(false);
+  const [openMore, setOpenMore] = React.useState(false);
+  const [openUpload, setOpenUpload] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null)
+
+  const handleCloseMore = () => setOpenMore(false)
+
+  const handleOpen = (event) => {
+    setOpen(true);
+  }
+  const handleOpenMore = (event) => {
+    setOpenMore(true)
+    setAnchorEl(event.currentTarget);
+  }
+  const handleClose = () => {
+    setOpen(false)
+    setOpenMore(false)
+    setOpenUpload(false)
+  }
 
   return (
     <div>
@@ -105,55 +114,52 @@ export default function Maintenance() {
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
 
-                <GridContainer>
-                  <GridItem xs={12} sm={12} md={12}>
-                    <GridContainer className={classes.topHeader}>
-                    <GridItem
-                        xs={12}
-                        sm={11}
-                        md={6}
-                        xl={6}
-                        className={classes.topHeaderTitle}
-                    >
-                        <RoundedTabs
+              <GridContainer>
+                <GridItem xs={12} sm={12} md={12}>
+                  <GridContainer className={classes.topHeader}>
+                    <GridItem xs={12} sm={11} md={6} xl={6} className={classes.topHeaderTitle}>
+                      <RoundedTabs
                         tabs={[
-                            "Defects",
-                            "Dvirs"
+                          "Defects",
+                          "Dvirs"
                         ]}
                         tabValue={handleChangeTab}
-                        />
+                      />
                     </GridItem>
-                    <GridItem
-                        xs={12}
-                        sm={4}
-                        md={6}
-                        xl={6}
-                        className={classes.topHeaderButton}
-                    >
-                        <Calendar placeholder="Day" />
-                        <Button
+                    <GridItem xs={12} sm={4} md={6} xl={6} className={classes.topHeaderButton}>
+                      <Calendar placeholder="Day"/>
+                      <Button
                         color="white"
                         aria-label="edit"
                         justIcon
                         round
                         className={`btn-36 ${classes.moreAction} mr-2`}
-                        >
-                        <MoreHorizontalIcon />
-                        </Button>
-                        <Button round className="btn-round-green w-84">
-                          <LiveIconWhite/>
-                          Live
-                        </Button>
-                        {BlueButton} 
+                      >
+                        <MoreHorizontalIcon/>
+                      </Button>
+                      <Button round className="btn-round-green w-84">
+                        <LiveIconWhite/>
+                        Live
+                      </Button>
+                      {tab === 1 &&
+                      <Button
+                        round
+                        className={classes.addButton}
+                        startIcon={<AddOutlined className={classes.startIcon}/>}
+                        onClick={() => setOpen(true)}
+                      >
+                        Add Vehicle DVIR
+                      </Button>
+                      }
                     </GridItem>
-                    </GridContainer>
-                  </GridItem>
-                </GridContainer>             
+                  </GridContainer>
+                </GridItem>
+              </GridContainer>
             </GridItem>
           </GridContainer>
 
           {tab === 0 && <Defects/>}
-          {tab === 1 && <Dvirs/>}
+          {tab === 1 && <Dvirs open={open} openUpload={openUpload} handleClose={handleClose}/>}
         </GridItem>
       </GridContainer>
     </div>

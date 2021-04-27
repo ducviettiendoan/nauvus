@@ -9,9 +9,12 @@ import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
-import Calendar from "components/Calendar/Calendar";
-import LiveIconWhite from "components/Icons/LiveIconWhite";
-import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
+import DiaLog from "components/CustomDialog/Dialog";
+import VehicleDvirForm from "./VehicleDvirForm";
+import {getDvirsData} from "reducers/maintainance";
+import {connect} from "react-redux";
+
+
 
 const useStyles = makeStyles((theme) => ({
   userRolesTitle: {
@@ -106,12 +109,33 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
   },
-
+  dialogForm: {
+    margin: "24px",
+  },
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    textAlign: "center"
+  },
+  dialogRoot: {
+    fontWeight: 'normal',
+    fontSize: '14px',
+    color: '#C4C4C4',
+    marginLeft: "16px",
+    textAlign: "center",
+  },
 
 }));
 
-export default function Dvirs(props) {
+export function Dvirs(props) {
   const classes = useStyles();
+
+  React.useEffect(() => {
+    // Get list data
+    props.getDvirsData();
+  }, []);
 
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Standard Admin'},
@@ -124,23 +148,6 @@ export default function Dvirs(props) {
 
   const handleClearAll = () => {
     setChipData([])
-  };
-
-  let dumpData = [];
-  for (let i = 0; i < 20; i++) {
-    let item = {
-      id: i + 2,
-      key: i + 2,
-      asset: "115",
-      currentDriver: "Shahid Mamino",
-      makeModel: "Freightline R/SCT 120",
-      batteryVoltage: "14.3",
-      engineHours: "46,567",
-      odormeter : "69,469",
-      checkEngineLight: "Off",
-    };
-
-    dumpData.push(item);
   };
 
   const columns = [
@@ -197,7 +204,7 @@ export default function Dvirs(props) {
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>       
           <div>
-            {dumpData.length > 0 && <Table
+            <Table
               renderTitle={
                 <Grid container className={classes.gridTitle}>
                   <Grid item xs={12} sm={12} md={6}>
@@ -227,7 +234,7 @@ export default function Dvirs(props) {
                 </Grid>
               }
               columns={columns}
-              dataSource={dumpData}
+              dataSource={props.data}
               pageSize = {10}
               onHeaderRow={{
                 className: classes.onHeaderRow
@@ -236,11 +243,41 @@ export default function Dvirs(props) {
                 className: classes.tableRow
               }}
             />
-            }
+
           </div>
         </GridItem>
       </GridContainer>
+
+      <DiaLog
+        renderTitle={
+          <div className={classes.dialogForm}>
+            <h3 className={classes.dialogTitle}>Create a new DVIR entry</h3>
+            <div className={classes.dialogRoot}>Information for the DVIR entry</div>
+          </div>
+        }
+        handleClose={props.handleClose}
+        open={props.open}
+
+      >
+        <VehicleDvirForm handleClose={props.handleClose}/>
+      </DiaLog>
+
     </div>
   );
 }
+
+const mapStateToProps = ({maintainance}) => {
+  return {
+    data: maintainance.dvirs.data,
+    page: maintainance.dvirs.page,
+    total: maintainance.dvirs.total,
+    pageSize: maintainance.dvirs.pageSize
+  };
+};
+
+const mapDispatchToProps = {
+  getDvirsData
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dvirs);
 
