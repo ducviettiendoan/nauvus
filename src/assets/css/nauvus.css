@@ -31,11 +31,19 @@
 .h-41 {
   height: 41px !important;
 }
+
+.h-42 {
+  height: 42px !important;
+}
 .w-122 {
   width: 122px !important;
 }
 .w-62 {
   width: 62px !important;
+}
+
+.w-42 {
+  width: 42px !important;
 }
 .w-74 {
   width: 74px !important;
@@ -173,7 +181,6 @@
   font-style: normal!important;
   font-weight: bold!important;
   color: #FFFFFF!important;
-  height: 41px;
   border: none !important;
   margin-left: 0px !important;
 }
