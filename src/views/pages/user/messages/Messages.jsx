@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+import { connect } from "react-redux";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import LocalPrintshopOutlinedIcon from '@material-ui/icons/LocalPrintshopOutlined';
 import AddOutlined from "@material-ui/icons/AddOutlined";
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import TextField from '@material-ui/core/TextField';
+// import { TextField } from 'final-form-material-ui'
 import CheckIcon from '@material-ui/icons/Check';
 import InputLabel from "@material-ui/core/InputLabel";
 import IconButton from "@material-ui/core/IconButton";
 import FormControl from "@material-ui/core/FormControl";
 import LocalOfferOutlined from '@material-ui/icons/LocalOfferOutlined';
 
+import { Field, Form } from "react-final-form";
 // @material-ui/icons 
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
@@ -26,6 +30,8 @@ import Button from "components/CustomButtons/Button";
 import SendIcon from "components/Icons/SendIcon";
 import EditOutlinedIcon from "components/Icons/EditOutlinedIcon";
 import avatar from "assets/img/faces/avatar.jpg";
+
+import { getDetailMessages, sendMessage } from 'reducers/messages';
 
 
 const styles = {
@@ -227,15 +233,40 @@ const styles = {
     color: "#B4B4B4",
     fontWeight: 700,
     fontSize: 12,
+  },
+  form: {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
   }
 };
 
 const useStyles = makeStyles(styles);
 
-export default function Messages() {
-  const [detail, setDetail] = useState(false);
+function Messages(props) { 
+  const [detail, setDetail] = useState(true);
   const [open, setOpen] = useState(false);
   const classes = useStyles();
+
+  useEffect(() => {
+    props.getDetailMessages()
+  }, []);
+
+  const onSubmit = async (values) => {
+    let time = new Date(Date.now());
+    let data = {
+      id: 123,
+      type: "me",
+      name: "Elisabeth Synsky",
+      text: values.text,
+      time: time.toUTCString(),
+      seen: false
+    }
+    props.sendMessage(data)
+  }
+
+
+
   return (
     <React.Fragment>
       {!detail && (
@@ -246,7 +277,7 @@ export default function Messages() {
               message</p>
             <Button
               round
-              className={`btn-round-active h-41 m-0`}
+              className="btn-round-active h-41 m-0"
               startIcon={<AddOutlined />}
               onClick={() => setDetail(true)}
             > Create Chat </Button>
@@ -281,85 +312,82 @@ export default function Messages() {
               </GridContainer>
             </CardHeader>
             <CardBody className={classes.cardBody}>
-              <GridContainer>
-                <GridItem md={6}>
-                  <div className={classes.infoMessage}>
-                    <img src={avatar} alt="user-avatar" />
-                    <h3>Elisabeth Synsky</h3>
-                    <p>Marth 28, 5:28 AM</p>
-                  </div>
-                  <div className={classes.textMessage}>
-                    <p>Garage Repair Ticket #60 has been created.</p>
-                    <MoreHorizIcon />
-                  </div>
-                </GridItem>
-              </GridContainer>
-              <GridContainer justify="flex-end">
-                <GridItem md={6}>
-                  <div className={classes.infoMessageRight}>
-                    <h3>Dispatch</h3>
-                    <p>Marth 29, 6:03 PM</p>
-                  </div>
-                  <div className={classes.textMessageRight}>
-                    <p>Reminder to everyone! The duration of Pre-Trip Inspections in On-Duty Status must be at least 15
-                    minutes for each vehicle. First PTI in the yard, if you have a Truck & Trailer you should have 30
-                      minutes. On-Duty Status, 15 minutes for Truck and 15 minutes for Trailer.</p>
-                  </div>
-                  <div className={classes.readRight}>
-                    <CheckIcon />
-                    <span>Read</span>
-                  </div>
-                </GridItem>
-              </GridContainer>
-              <GridContainer>
-                <GridItem md={6}>
-                  <div className={classes.infoMessage}>
-                    <img src={avatar} alt="user-avatar" />
-                    <h3>Elisabeth Synsky</h3>
-                    <p>Marth 28, 5:28 AM</p>
-                  </div>
-                  <div className={classes.textMessage}>
-                    <p>Reminder to everyone! The duration of Pre-Trip Inspections in On-Duty Status must be at least 15
-                    minutes for each vehicle. First PTI in the yard, if you have a Truck & Trailer you should have 30
-                      minutes. On-Duty Status, 15 minutes for Truck and 15 minutes for Trailer.</p>
-                    <MoreHorizIcon />
-                  </div>
-                </GridItem>
-              </GridContainer>
-
-              <GridContainer justify="flex-end">
-                <GridItem md={6}>
-                  <div className={classes.infoMessageRight}>
-                    <h3>Dispatch</h3>
-                    <p>Marth 29, 6:03 PM</p>
-                  </div>
-                  <div className={classes.textMessageRight}>
-                    <p>Reminder to everyone!</p>
-                  </div>
-                  <div className={classes.textMessageRight}>
-                    <p>Reminder to everyone! The duration of Pre-Trip Inspections in On-Duty Status must be at least 15
-                    minutes for each vehicle. First PTI in the yard, if you have a Truck & Trailer you should have 30
-                      minutes. On-Duty Status, 15 minutes for Truck and 15 minutes for Trailer.</p>
-                  </div>
-                  <div className={classes.readRight}>
-                    <CheckIcon />
-                    <span>Read</span>
-                  </div>
-                </GridItem>
-              </GridContainer>
+              {props.data && props.data.map(d => {
+                if (d.type == "you") {
+                  return (
+                    <GridContainer>
+                      <GridItem md={6}>
+                        <div className={classes.infoMessage}>
+                          <img src={d.avatar} alt="user-avatar" />
+                          <h3>{d.name}</h3>
+                          <p>{d.time}</p>
+                        </div>
+                        <div className={classes.textMessage}>
+                          <p>{d.text}</p>
+                          <MoreHorizIcon />
+                        </div>
+                      </GridItem>
+                    </GridContainer>
+                  )
+                } else {
+                  return (
+                    <GridContainer justify="flex-end">
+                      <GridItem md={6}>
+                        <div className={classes.infoMessageRight}>
+                          <h3>{d.name}</h3>
+                          <p>{d.time}</p>
+                        </div>
+                        <div className={classes.textMessageRight}>
+                          <p>{d.text}</p>
+                        </div>
+                        {d.seen && (
+                          <div className={classes.readRight}>
+                            <CheckIcon />
+                            <span>Read</span>
+                          </div>
+                        )}
+                      </GridItem>
+                    </GridContainer>
+                  )
+                }
+              })}
             </CardBody>
             <CardFooter className={classes.cardFooter}>
-              <TextField
-                fullWidth
-                multiline
-                className={classes.textField}
-                placeholder="Add your message"
-              />
-              <Button
-                round
-                className="btn-round-active m-0"
-                startIcon={<SendIcon />}
-              > Send </Button>
+              <Form
+                onSubmit={onSubmit}
+                render={({ handleSubmit, form, submitting, pristine }) => {
+                  return (
+                    <form
+                      onSubmit={event => {
+                        handleSubmit(event).then(form.reset);
+                      }}
+                      // noValidate
+                      className={classes.form}
+                    >
+                      <Field name="text">
+                        {props => (
+                          <TextField
+                            fullWidth
+                            multiline
+                            className={classes.textField}
+                            placeholder="Add your message"
+                            name={props.input.name}
+                            value={props.input.value}
+                            onChange={props.input.onChange}
+                            {...props.rest}
+                          />
+                        )}
+                      </Field>
+                      <Button
+                        round
+                        type="submit"
+                        startIcon={<SendIcon />}
+                        disabled={submitting || pristine}
+                        className="btn-round-active m-0"
+                      > Send </Button>
+                    </form>
+                  )
+                }} />
             </CardFooter>
           </Card>
         </div>
@@ -431,3 +459,18 @@ export default function Messages() {
     </React.Fragment>
   );
 }
+
+
+const mapStateToProps = ({ messages }) => {
+  console.log(messages);
+  return {
+    data: messages.data
+  };
+};
+
+const mapDispatchToProps = {
+  getDetailMessages,
+  sendMessage
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Messages);
