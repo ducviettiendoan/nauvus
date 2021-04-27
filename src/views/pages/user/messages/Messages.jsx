@@ -1,11 +1,15 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 // @material-ui/core components
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import LocalPrintshopOutlinedIcon from '@material-ui/icons/LocalPrintshopOutlined';
 import AddOutlined from "@material-ui/icons/AddOutlined";
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import TextField from '@material-ui/core/TextField';
 import CheckIcon from '@material-ui/icons/Check';
+import InputLabel from "@material-ui/core/InputLabel";
+import IconButton from "@material-ui/core/IconButton";
+import FormControl from "@material-ui/core/FormControl";
+import LocalOfferOutlined from '@material-ui/icons/LocalOfferOutlined';
 
 // @material-ui/icons 
 // core components
@@ -16,6 +20,7 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import DiaLog from "components/CustomDialog/Dialog";
+import Calendar from "components/Calendar/Calendar";
 
 import Button from "components/CustomButtons/Button";
 import SendIcon from "components/Icons/SendIcon";
@@ -170,13 +175,58 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
-    "&> svg": {color: "#27AE60"},
-    "&> span": {fontSize: 12, fontWeight: 400},
+    "&> svg": { color: "#27AE60" },
+    "&> span": { fontSize: 12, fontWeight: 400 },
   },
   textField: {
     "&> div:hover:before, &> div:before,&> div:after": {
       borderBottom: "none!important",
     }
+  },
+  dialogHeader: {
+    textAlign: "center",
+    margin: "24px",
+    "&> h3": {
+      color: "#25345C",
+      fontWeight: 600,
+      fontSize: 22,
+      margin: 0,
+      marginRight: 16
+    },
+    "&> p": {
+      color: "#B4B4B4",
+      fontWeight: 400,
+      fontSize: 14,
+      margin: 0
+    }
+  },
+  dialogFooter: {
+    textAlign: "right",
+    borderTop: "#eeee solid 1px",
+    paddingTop: 16
+  },
+  selectTag: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center",
+    border: "#eeee solid 1px",
+    borderRadius: 26,
+    fontWeight: 600,
+    minWidth: 120,
+    padding: 8,
+    marginLeft: 8,
+    "&> span": {
+      paddingLeft: 8
+    },
+    "&> svg": {
+      transform: "rotate(90deg)"
+    }
+  },
+  label: {
+    color: "#B4B4B4",
+    fontWeight: 700,
+    fontSize: 12,
   }
 };
 
@@ -197,7 +247,7 @@ export default function Messages() {
             <Button
               round
               className={`btn-round-active h-41 m-0`}
-              startIcon={<AddOutlined/>}
+              startIcon={<AddOutlined />}
               onClick={() => setDetail(true)}
             > Create Chat </Button>
           </div>
@@ -212,7 +262,7 @@ export default function Messages() {
               <Button
                 round
                 className={`btn-round-active h-41 m-0`}
-                startIcon={<EditOutlinedIcon/>}
+                startIcon={<EditOutlinedIcon />}
                 onClick={() => setOpen(true)}
               > New Message </Button>
             </GridItem>
@@ -221,26 +271,26 @@ export default function Messages() {
             <CardHeader className={classes.cardHeader}>
               <GridContainer justify="space-between" alignItems="center">
                 <GridItem className="d-flex">
-                  <img src={avatar} alt="user-avatar" className={classes.avatarImage}/>
+                  <img src={avatar} alt="user-avatar" className={classes.avatarImage} />
                   <div>
                     <div className={classes.chatName}>Elisabeth Synsky</div>
                     <div className={classes.chatRole}>Driver</div>
                   </div>
                 </GridItem>
-                <GridItem><LocalPrintshopOutlinedIcon style={{color: "#C4C4C4"}}/></GridItem>
+                <GridItem><LocalPrintshopOutlinedIcon style={{ color: "#C4C4C4" }} /></GridItem>
               </GridContainer>
             </CardHeader>
             <CardBody className={classes.cardBody}>
               <GridContainer>
                 <GridItem md={6}>
                   <div className={classes.infoMessage}>
-                    <img src={avatar} alt="user-avatar"/>
+                    <img src={avatar} alt="user-avatar" />
                     <h3>Elisabeth Synsky</h3>
                     <p>Marth 28, 5:28 AM</p>
                   </div>
                   <div className={classes.textMessage}>
                     <p>Garage Repair Ticket #60 has been created.</p>
-                    <MoreHorizIcon/>
+                    <MoreHorizIcon />
                   </div>
                 </GridItem>
               </GridContainer>
@@ -252,11 +302,11 @@ export default function Messages() {
                   </div>
                   <div className={classes.textMessageRight}>
                     <p>Reminder to everyone! The duration of Pre-Trip Inspections in On-Duty Status must be at least 15
-                      minutes for each vehicle. First PTI in the yard, if you have a Truck & Trailer you should have 30
+                    minutes for each vehicle. First PTI in the yard, if you have a Truck & Trailer you should have 30
                       minutes. On-Duty Status, 15 minutes for Truck and 15 minutes for Trailer.</p>
                   </div>
                   <div className={classes.readRight}>
-                    <CheckIcon/>
+                    <CheckIcon />
                     <span>Read</span>
                   </div>
                 </GridItem>
@@ -264,15 +314,15 @@ export default function Messages() {
               <GridContainer>
                 <GridItem md={6}>
                   <div className={classes.infoMessage}>
-                    <img src={avatar} alt="user-avatar"/>
+                    <img src={avatar} alt="user-avatar" />
                     <h3>Elisabeth Synsky</h3>
                     <p>Marth 28, 5:28 AM</p>
                   </div>
                   <div className={classes.textMessage}>
                     <p>Reminder to everyone! The duration of Pre-Trip Inspections in On-Duty Status must be at least 15
-                      minutes for each vehicle. First PTI in the yard, if you have a Truck & Trailer you should have 30
+                    minutes for each vehicle. First PTI in the yard, if you have a Truck & Trailer you should have 30
                       minutes. On-Duty Status, 15 minutes for Truck and 15 minutes for Trailer.</p>
-                    <MoreHorizIcon/>
+                    <MoreHorizIcon />
                   </div>
                 </GridItem>
               </GridContainer>
@@ -288,11 +338,11 @@ export default function Messages() {
                   </div>
                   <div className={classes.textMessageRight}>
                     <p>Reminder to everyone! The duration of Pre-Trip Inspections in On-Duty Status must be at least 15
-                      minutes for each vehicle. First PTI in the yard, if you have a Truck & Trailer you should have 30
+                    minutes for each vehicle. First PTI in the yard, if you have a Truck & Trailer you should have 30
                       minutes. On-Duty Status, 15 minutes for Truck and 15 minutes for Trailer.</p>
                   </div>
                   <div className={classes.readRight}>
-                    <CheckIcon/>
+                    <CheckIcon />
                     <span>Read</span>
                   </div>
                 </GridItem>
@@ -308,36 +358,76 @@ export default function Messages() {
               <Button
                 round
                 className="btn-round-active m-0"
-                startIcon={<SendIcon/>}
+                startIcon={<SendIcon />}
               > Send </Button>
             </CardFooter>
           </Card>
-
-          <DiaLog
-            renderTitle={
-              <div className="text-center">
-                <h3 className={classes.dialogTitle}>New message</h3>
-                <p>Compose a direct message to your drivers</p>
-              </div>
-            }
-            fullWidth
-            open={open}
-          >
-            <div className="text-right">
-              <Button
-                round
-                className="btn-round-gray w-116 h-41 mr-2"
-                onClick={() => setOpen(false)}
-              > Cancel </Button>
-              <Button
-                round
-                className={`btn-round-active h-41`}
-                onClick={() => setOpen(false)}
-              > Send </Button>
-            </div>
-          </DiaLog>
         </div>
       )}
+      <DiaLog
+        renderTitle={
+          <div className={classes.dialogHeader}>
+            <h3>New message</h3>
+            <p>Compose a direct message to your drivers</p>
+          </div>
+        }
+        handleClose={() => setOpen(false)}
+        fullWidth
+        open={open}
+      >
+        <GridContainer>
+          <GridItem md={5}>
+            <InputLabel className={classes.label}>Add members</InputLabel>
+            <FormControl variant="outlined" className="moreIcon" style={{ margin: "8px 0" }}>
+              <IconButton style={{ width: "36px", height: "36px" }}>
+                <AddOutlined fontSize="small" style={{ color: "#C4C4C4" }} />
+              </IconButton>
+            </FormControl>
+          </GridItem>
+          <GridItem md={7}>
+            <div>
+              <InputLabel className={classes.label}>Due to  </InputLabel>
+              <GridContainer alignItems="center">
+                <GridItem md={6}>
+                  <FormControl variant="outlined">
+                    <Calendar />
+                  </FormControl>
+                </GridItem>
+                <GridItem md={6}>
+                  <div className={classes.selectTag}>
+                    <LocalOfferOutlined fontSize="small" style={{ color: "#C4C4C4" }} />
+                    <span>Select tag</span>
+                  </div>
+                </GridItem>
+              </GridContainer>
+            </div>
+          </GridItem>
+        </GridContainer>
+        <div className="mt-2">
+          <InputLabel className={classes.label}>Your message</InputLabel>
+          <TextField
+            fullWidth
+            multiline
+            name="message"
+            className={classes.textField}
+            rows={10}
+            rowsMax={20}
+            placeholder="Start typing..."
+          />
+        </div>
+        <div className={classes.dialogFooter}>
+          <Button
+            round
+            className="btn-round-gray w-116 h-41 mr-2"
+            onClick={() => setOpen(false)}
+          > Cancel </Button>
+          <Button
+            round
+            className={`btn-round-active h-41`}
+            onClick={() => setOpen(false)}
+          > Send </Button>
+        </div>
+      </DiaLog>
     </React.Fragment>
   );
 }
