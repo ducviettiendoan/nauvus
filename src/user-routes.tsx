@@ -1,4 +1,4 @@
-import {ROUTE_PATH} from "config/constants";
+import { ROUTE_PATH } from "config/constants";
 
 import Overview from "views/pages/user/overview/Overview";
 import VehicleDetails from "views/pages/user/overview/vehicle/VehicleDetails"
@@ -18,6 +18,7 @@ import UnassignedHOSReport from "views/pages/user/compliance/unassigned-hos/Unas
 
 import Dispatch from "views/pages/user/dispatch/Dispatch";
 import Documents from "views/pages/user/documents/Documents";
+import SubmittedDetail from "./views/pages/user/documents/components/submitted/SubmittedDetail";
 import FuelEnergy from "views/pages/user/fuel-energy/FuelEnergy";
 import IFTA from "views/pages/user/fuel-energy/IFTA";
 import DriverEfficiency from "views/pages/user/fuel-energy/DriverEfficiency"
@@ -299,13 +300,14 @@ const dashRoutes = [
     layout: ROUTE_PATH.USER,
     views: [
       {
-      path: "/maintenance/dashboard",
-      name: "Maintenance",
-      component: Maintenance,
-      layout: ROUTE_PATH.USER,
+        path: "/maintenance/dashboard",
+        name: "Maintenance",
+        component: Maintenance,
+        layout: ROUTE_PATH.USER,
 
       },
-      { path: "/maintenance/driver-vehicle-inspection-report/vehicle101",
+      {
+        path: "/maintenance/driver-vehicle-inspection-report/vehicle101",
         name: "Driver Vehicle Inspection Reports",
         component: DriverVehicleReport,
         layout: ROUTE_PATH.USER
@@ -361,11 +363,26 @@ const dashRoutes = [
     ]
   },
   {
+    collapse: true,
     path: "/documents",
     name: "Documents",
     icon: DocumentsIcon,
-    component: Documents,
-    layout: ROUTE_PATH.USER
+    layout: ROUTE_PATH.USER,
+    views: [
+      {
+        path: "/documents/submitted/:id",
+        name: "Documents Submitted Detail",
+        component: SubmittedDetail,
+        layout: ROUTE_PATH.USER,
+        isFixed: true
+      },
+      {
+        path: "/documents",
+        name: "Documents",
+        component: Documents,
+        layout: ROUTE_PATH.USER,
+      }
+    ]
   },
   {
     path: "/reports",

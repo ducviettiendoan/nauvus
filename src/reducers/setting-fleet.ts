@@ -5,6 +5,14 @@ export type SettingFleetState = Readonly<typeof initialState>;
 
 //Actions type
 export const ACTION_TYPES = {
+  //DriverApp action type
+  CHANGE_TEMPLATE: "setting/fleet/CHANGE_TEMPLATE",
+  CHANGE_TRIGGER: "setting/fleet/CHANGE_TRIGGER",
+  GET_START_WORKFLOW: "setting/fleet/GET_START_WORKFLOW",
+  SET_START_WORKFLOW: "setting/fleet/SET_START_WORKFLOW",
+  GET_STOP_WORKFLOW: "setting/fleet/GET_STOP_WORKFLOW",
+  SET_STOP_WORKFLOW: "setting/fleet/SET_STOP_WORKFLOW",
+  SET_TITLE: "setting/fleet/SET_TITLE",
   //Fuel-Energy action type
   GET_DRIVER_EFFICIENCY: 'setting/fleet/GET_DRIVER_EFFICIENCY',
   GET_FUEL_COST: 'setting/fleet/GET_FUEL_COST',
@@ -25,7 +33,14 @@ export const ACTION_TYPES = {
 
 //Initial State
 const initialState = {
-
+  //Driver App State
+  template: "custom",
+  startWorkflow: {},
+  stopWorkflow: {},
+  trigger: "",
+  title: "",
+  startTitle: "",
+  stopTitle: "",
   //Fuel Energy State
   driverEfficiencies: [],
   fuelCost: [],
@@ -50,6 +65,8 @@ const initialState = {
 export default (state: SettingFleetState = initialState, action): SettingFleetState => {
   switch (action.type) {
     case REQUEST(ACTION_TYPES.GET_MAPS):
+    case REQUEST(ACTION_TYPES.GET_START_WORKFLOW):
+    case REQUEST(ACTION_TYPES.GET_STOP_WORKFLOW):
     case REQUEST(ACTION_TYPES.GET_INVALID_ADDRESS):
     case REQUEST(ACTION_TYPES.GET_VALID_ADDRESS):
     case REQUEST(ACTION_TYPES.GET_DRIVER_EFFICIENCY):
@@ -63,6 +80,8 @@ export default (state: SettingFleetState = initialState, action): SettingFleetSt
         loading: true
       };
     case FAILURE(ACTION_TYPES.GET_MAPS):
+    case FAILURE(ACTION_TYPES.GET_START_WORKFLOW):
+    case FAILURE(ACTION_TYPES.GET_STOP_WORKFLOW):
     case FAILURE(ACTION_TYPES.GET_INVALID_ADDRESS):
     case FAILURE(ACTION_TYPES.GET_VALID_ADDRESS):
     case FAILURE(ACTION_TYPES.GET_DRIVER_EFFICIENCY):
@@ -81,8 +100,47 @@ export default (state: SettingFleetState = initialState, action): SettingFleetSt
       return {
         ...state,
         maps: action.payload.data
-      };
-
+      }
+    // Driver App Reducer
+    case ACTION_TYPES.GET_START_WORKFLOW:
+      return {
+        ...state,
+        startWorkflow: action.payload.tasks,
+        startTitle: action.payload.title
+      }
+    case ACTION_TYPES.GET_STOP_WORKFLOW:
+      return {
+        ...state,
+        stopWorkflow: action.payload.tasks,
+        stopTitle: action.payload.title
+      }
+    case ACTION_TYPES.SET_STOP_WORKFLOW:
+      return {
+        ...state,
+        stopWorkflow: action.payload.tasks,
+        stopTitle: action.payload.title
+      }
+    case ACTION_TYPES.SET_START_WORKFLOW:
+      return {
+        ...state,
+        startWorkflow: action.payload.tasks,
+        startTitle: action.payload.title
+      }
+    case ACTION_TYPES.CHANGE_TEMPLATE:
+      return {
+        ...state,
+        template: action.payload
+      }
+    case ACTION_TYPES.CHANGE_TRIGGER:
+      return {
+        ...state,
+        trigger: action.payload
+      }
+    case ACTION_TYPES.SET_TITLE:
+      return {
+        ...state,
+        title: action.payload
+      }
     //Address & Geofences Reducer
     case SUCCESS(ACTION_TYPES.GET_INVALID_ADDRESS):
       return {
@@ -133,6 +191,88 @@ export default (state: SettingFleetState = initialState, action): SettingFleetSt
       return state;
   }
 };
+
+const mockStartWorkflow = () => {
+  return {
+    title: "Start",
+    tasks: [
+      {id: "task0", title: "Select vehicle", icon: "vehicle"},
+      {id: "task1", title: "Start inspection for vehicle", icon: "document"},
+      {id: "task2", title: "Review unassigned hours", icon: "clock"},
+      {id: "task3", title: "Select trailer", icon: "vehicle"},
+      {id: "task4", title: "Enter shipping ID", icon: "clock"},
+      {id: "task5", title: "Certify logs", icon: "clock"},
+      {id: "task6", title: "Review carrier edits", icon: "clock"},
+      {id: "task7", title: "Go On-Duty", icon: "clock"},
+      {id: "task8", title: "Start inspection for vehicle", icon: "document"},
+      {id: "task9", title: "Start inspection for trailer", icon: "document"},
+    ]
+  }
+}
+
+const mockStopWorkflow = () => {
+  return {
+    title: "Stop",
+    tasks: [
+      {id: "task0", title: "Start inspection for trailer", icon: "document"},
+      {id: "task1", title: "Select trailer", icon: "vehicle"},
+      {id: "task2", title: "Start inspection for trailer", icon: "document"},
+    ]
+  }
+}
+
+
+
+//Driver App
+export const getStartWorkflow = () => dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_START_WORKFLOW,
+    payload: mockStartWorkflow()
+  });
+}
+
+export const getStopWorkflow = () => dispatch => {
+  dispatch({
+    type: ACTION_TYPES.GET_STOP_WORKFLOW,
+    payload: mockStopWorkflow()
+  });
+}
+
+export const setStartWorkflow = workflow => dispatch => {
+  dispatch({
+    type: ACTION_TYPES.SET_START_WORKFLOW,
+    payload: workflow
+  })
+}
+
+export const setStopWorkflow = workflow => dispatch => {
+  dispatch({
+    type: ACTION_TYPES.SET_STOP_WORKFLOW,
+    payload: workflow
+  })
+}
+
+export const changeTrigger = trigger => dispatch => {
+  dispatch({
+    type: ACTION_TYPES.CHANGE_TRIGGER,
+    payload: trigger
+  })
+}
+
+export const changeTemplate = template => dispatch => {
+  dispatch({
+    type: ACTION_TYPES.CHANGE_TEMPLATE,
+    payload: template
+  })
+}
+
+export const setTitle = title => dispatch => {
+  dispatch({
+    type: ACTION_TYPES.SET_TITLE,
+    payload: title
+  })
+}
+
 
 //Fuel-Energy actions
 export const getDriverEfficiency = (request) => async dispatch => {

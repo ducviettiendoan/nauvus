@@ -3,6 +3,8 @@ import React, { useState} from "react";
 import FormOption from "./FormOption";
 import Button from "components/CustomButtons/Button";
 import {useHistory} from "react-router-dom";
+import {connect} from "react-redux";
+import {changeTemplate, changeTrigger, setTitle} from "reducers/setting-fleet";
 
 const styles = {
   selectButton: {
@@ -16,7 +18,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const CreateStartWorkflowForm = (props) => {
+const CreateStopWorkflowForm = (props) => {
   const classes = useStyles()
   const [selected, setSelected] = useState(-1)
   const history = useHistory()
@@ -30,12 +32,17 @@ const CreateStartWorkflowForm = (props) => {
   }
 
   const chooseHandleClick = () => {
+    props.changeTrigger("Arrive at Stop")
     switch (selected) {
       case 0:
         return props.openDocumentDialog()
       case 1:
+        props.setTitle("Drop & Hook")
+        props.changeTemplate("dropNHook")
         return history.push("/s/fleet/workflow-create")
       case 2:
+        props.setTitle("")
+        props.changeTemplate("custom")
         return history.push("/s/fleet/workflow-create")
     }
   }
@@ -63,4 +70,13 @@ const CreateStartWorkflowForm = (props) => {
   )
 }
 
-export default CreateStartWorkflowForm;
+export default connect(
+  ({ settingFleet }) => ({
+
+  }),
+  {
+    changeTemplate,
+    changeTrigger,
+    setTitle
+  }
+)(CreateStopWorkflowForm);
