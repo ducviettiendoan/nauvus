@@ -3,6 +3,8 @@ import React,{useState} from "react";
 import FormOption from "./FormOption";
 import Button from "components/CustomButtons/Button";
 import {useHistory} from "react-router-dom";
+import {changeTemplate, changeTrigger, setTitle} from "reducers/setting-fleet";
+import {connect} from "react-redux";
 
 const styles = {
   selectButton: {
@@ -29,10 +31,15 @@ const CreateStartWorkflowForm = (props) => {
   }
 
   const chooseHandleClick = () => {
+    props.changeTrigger("Sign In")
     switch (selected) {
       case 0:
+        props.setTitle("Sign In")
+        props.changeTemplate("signIn")
         return history.push("/s/fleet/workflow-create")
       case 1:
+        props.setTitle("")
+        props.changeTemplate("custom")
         return history.push("/s/fleet/workflow-create")
     }
   }
@@ -59,4 +66,15 @@ const CreateStartWorkflowForm = (props) => {
   )
 }
 
-export default CreateStartWorkflowForm;
+
+
+export default connect(
+  ({ settingFleet }) => ({
+
+  }),
+  {
+    changeTemplate,
+    changeTrigger,
+    setTitle
+  }
+)(CreateStartWorkflowForm);

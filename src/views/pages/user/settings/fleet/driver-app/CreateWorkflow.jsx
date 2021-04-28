@@ -15,9 +15,14 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
 import Popper from "@material-ui/core/Popper";
-import customDropdownStyle
-  from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle";
+import customDropdownStyle from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle";
 import SettingSearchBox from "components/SearchBox/SettingSearchBox";
+import FlagIcon from "components/Icons/FlagIcon";
+import DocumentIcon from "components/Icons/DocumentIcon";
+import WorkflowClockIcon from "components/Icons/WorkflowClockIcon";
+import WorkflowVehicleIcon from "components/Icons/WorkflowVehicleIcon";
+import {connect} from "react-redux";
+import {changeTemplate, changeTrigger, getStartWorkflow} from "../../../../../../reducers/setting-fleet";
 
 
 const CreateWorkflow = (props) => {
@@ -56,7 +61,7 @@ const CreateWorkflow = (props) => {
     dropdownVehicle: {
       borderRadius: "12px",
       boxShadow: "0px 1px 10px rgba(0, 0, 0, 0.25)",
-      width: "230px",
+      width: "285px",
       paddingLeft: "12px",
       paddingRight: "12px",
     },
@@ -72,33 +77,86 @@ const CreateWorkflow = (props) => {
       top: "unset!important",
       left: "unset!important",
 
-    }
+    },
+    iconWrapper: {
+      width: 40,
+      height: 40,
+      borderRadius: "50%",
+      background: "#ECEEF0",
+      marginRight: 16,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center"
+    },
+    title: {
+      flexGrow: 1,
+      fontSize: 14,
+      color: "#25345C",
+      border: "1px solid #ECEEF0",
+      borderRadius: 32,
+      fontWeight: 400,
+      padding: "16px 24px"
+    },
+    trigger: {
+      padding: "16px!important",
+      margin: " 8px 15px",
+      border: "1px solid #ECEEF0",
+      borderRadius: 12,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      background: "white",
+
+    },
   });
   const useStyles = makeStyles(styles);
   const classes = useStyles()
 
   const allTasks = [
-    {title: "Select vehicle"},
-    {title: "Review unassigned hours"},
-    {title: "Select trailer"},
-    {title: "Enter shipping ID"},
-    {title: "Certify logs"},
-    {title: "Review carrier edits"},
-    {title: "Go On-Duty"},
-    {title: "Start inspection for vehicle"},
-    {title: "Start inspection for trailer"},
-    {title: "Create document"},
-    {title: "Review carrier assignment"},
+    {title: "Select vehicle", icon: "vehicle"},
+    {title: "Review unassigned hours", icon: "clock"},
+    {title: "Select trailer", icon: "vehicle"},
+    {title: "Enter shipping ID", icon: "clock"},
+    {title: "Certify logs", icon: "clock"},
+    {title: "Review carrier edits", icon: "clock"},
+    {title: "Go On-Duty", icon: "clock"},
+    {title: "Start inspection for vehicle", icon: "document"},
+    {title: "Start inspection for trailer", icon: "document"},
+    {title: "Create document", icon: "document"},
+    {title: "Review carrier assignment", icon: "clock"},
   ]
 
-  const initialTask = [
-    {id: "task0", title: "Arrive at stop"},
-    {id: "task1", title: "Create Bill of Lading"},
-    {id: "task2", title: "Start inspection for vehicle"}
-  ]
+  const templates = {
+    "signIn": [
+      {id: "task0", title: "Select vehicle", icon:"vehicle"},
+      {id: "task1", title: "Start inspection for vehicle", icon: "document"},
+      {id: "task2", title: "Review unassigned hours", icon: "clock"},
+      {id: "task3", title: "Select trailer", icon: "vehicle"},
+      {id: "task4", title: "Enter shipping ID", icon: "clock"},
+      {id: "task5", title: "Certify logs", icon: "clock"},
+      {id: "task6", title: "Review carrier edits", icon: "clock"},
+      {id: "task7", title: "Go On-Duty", icon: "clock"},
+      {id: "task8", title: "Start inspection for vehicle", icon: "document"},
+      {id: "task9", title: "Start inspection for trailer", icon: "document"},
+    ],
+    "submitDocument": [
+      {id: "task0", title: "Create document", icon: "document"},
+    ],
+    "dropNHook": [
+      {id: "task0", title: "Start inspection for trailer", icon: "document"},
+      {id: "task1", title: "Select trailer", icon: "vehicle"},
+      {id: "task2", title: "Start inspection for trailer", icon: "document"},
+    ],
+    "custom": []
+  }
 
+  const initialTask = templates[props.template || "custom"]
+
+  const mockTrigger = props.trigger || "Sign in"
+
+  let trigger = props.trigger || mockTrigger
   let initTasks = props.tasks || initialTask
-  const [title, setTitle] = useState("")
+  const [title, setTitle] = useState(props.title)
   const [tasks, setTasks] = useState(initTasks)
   const handleChange = (e) => {
     setTitle(e.target.value)
@@ -107,10 +165,10 @@ const CreateWorkflow = (props) => {
   const onDragEnd = (result) => {
     const {destination, source, draggableId} = result
 
-    if(!destination) {
+    if (!destination) {
       return
     }
-    if(destination.index === source.index) {
+    if (destination.index === source.index) {
       return;
     }
     const newTasks = [...tasks]
@@ -141,7 +199,7 @@ const CreateWorkflow = (props) => {
   }
 
   return (
-    <div >
+    <div>
       <div className={classes.headTool}>
         <input value={title} onChange={handleChange} placeholder="Workflow title" className={classes.workflowTitle}/>
         <div>
@@ -169,20 +227,30 @@ const CreateWorkflow = (props) => {
         </GridContainer>
         <GridContainer>
           <GridItem className={classes.dragAndDrop} xs={12}>
+            <GridItem
+              className={classes.trigger}
+            >
+              <div className={classes.iconWrapper}>
+                <FlagIcon style={{width: "9px", height: "12px"}}/>
+              </div>
+              <div className={classes.title}>
+                {trigger}
+              </div>
+            </GridItem>
             <DragDropContext onDragEnd={onDragEnd}>
-            <Droppable droppableId={"column"}>
-              {(provided) => (
-                <GridItem
-                  innerRef={provided.innerRef}
-                  {...provided.droppableProps}
-                >
-                  {tasks.map((task, index) => {
-                    return <DraggableTask handleDelete={handleDelete} key={task.id} task={task} index={index}/>
-                  })}
-                  {provided.placeholder}
-                </GridItem>
-              )}
-            </Droppable>
+              <Droppable droppableId={"column"}>
+                {(provided) => (
+                  <GridItem
+                    innerRef={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
+                    {tasks.map((task, index) => {
+                      return <DraggableTask handleDelete={handleDelete} key={task.id} task={task} index={index}/>
+                    })}
+                    {provided.placeholder}
+                  </GridItem>
+                )}
+              </Droppable>
             </DragDropContext>
             <Button
               className="btn-round-white-3 h-41"
@@ -204,19 +272,24 @@ const CreateWorkflow = (props) => {
                 [classes.popper]: true
               })}
             >
-              {({ TransitionProps }) => (
+              {({TransitionProps}) => (
                 <Grow
                   {...TransitionProps}
                   id="profile-menu-list"
-                  style={{ transformOrigin: "0 0 0" }}
+                  style={{transformOrigin: "0 0 0"}}
                 >
                   <Paper className={classes.dropdown && classes.dropdownVehicle}>
                     <ClickAwayListener onClickAway={handleCloseMore}>
                       <MenuList role="menu">
-                          <SettingSearchBox placeholder="Search" />
+                        <SettingSearchBox placeholder="Search"/>
                         {allTasks.map((task) => {
                           return (
                             <MenuItem key={task} className={classes.itemContainer} onClick={() => handleAdd(task)}>
+                              <span className={classes.iconWrapper}>
+                                {task.icon === "document" && <DocumentIcon style={{width: "16px", height: "14px"}}/>}
+                                {task.icon === "clock" && <WorkflowClockIcon style={{width: "14px", height: "14px"}}/>}
+                                {task.icon === "vehicle" && <WorkflowVehicleIcon style={{width: "15px", height: "12px"}}/>}
+                              </span>
                               {task.title}
                             </MenuItem>
                           );
@@ -234,4 +307,13 @@ const CreateWorkflow = (props) => {
   )
 }
 
-export default CreateWorkflow
+export default connect(
+  ({ settingFleet }) => ({
+    template: settingFleet.template,
+    trigger: settingFleet.trigger,
+    title: settingFleet.title
+  }),
+  {
+
+  }
+)(CreateWorkflow);
