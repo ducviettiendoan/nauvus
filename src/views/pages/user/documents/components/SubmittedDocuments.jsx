@@ -1,8 +1,8 @@
 import React from "react";
-import {connect} from 'react-redux';
-import {getSubmitted} from "reducers/document";
+import { connect } from 'react-redux';
+import { getSubmitted } from "reducers/document";
 // @material-ui/core components
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Button from "components/CustomButtons/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import CloseIcon from "components/Icons/CloseIcon";
@@ -24,7 +24,8 @@ import Checkbox from "@material-ui/core/Checkbox";
 import CheckSquareOutlined from "components/Icons/CheckSquareOutlined";
 import Avatar from "@material-ui/core/Avatar";
 import customDropdownStyle from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle.js";
-import {primaryColor} from "assets/jss/material-dashboard-pro-react";
+import { primaryColor } from "assets/jss/material-dashboard-pro-react";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   ...customDropdownStyle(theme),
@@ -223,14 +224,16 @@ const useStyles = makeStyles((theme) => ({
 export function SubmittedDocuments(props) {
   const classes = useStyles();
 
+  const history = useHistory()
+
   React.useEffect(() => {
     // Get list data
     props.getSubmitted();
   }, []);
 
   const [chipData, setChipData] = React.useState([
-    {key: 0, label: 'Cycle Tomorrow'},
-    {key: 1, label: 'Cycle Remaining'},
+    { key: 0, label: 'Cycle Tomorrow' },
+    { key: 1, label: 'Cycle Remaining' },
   ]);
 
   const handleDelete = (chipToDelete) => () => {
@@ -245,37 +248,41 @@ export function SubmittedDocuments(props) {
     {
       title: 'Submitted By',
       key: 'submittedBy',
-      onHeaderCell: {className: classes.onHeaderCellFirst},
+      onHeaderCell: { className: classes.onHeaderCellFirst },
       render: submittedBy => <div className={classes.textName}>{submittedBy}</div>
     },
     {
       title: 'Received On',
       key: 'receivedOn',
-      onHeaderCell: {className: classes.onHeaderCellNext},
+      onHeaderCell: { className: classes.onHeaderCellNext },
       render: receivedOn => <div className={classes.textEmail}>{receivedOn}</div>
     },
     {
       title: 'Document Type',
       key: 'documentType',
-      onHeaderCell: {className: classes.onHeaderCellNext},
+      onHeaderCell: { className: classes.onHeaderCellNext },
       render: documentType => <div className={classes.textEmail}>{documentType}</div>
     },
     {
       title: 'Notes',
       key: 'notes',
-      onHeaderCell: {className: classes.onHeaderCellNext},
+      onHeaderCell: { className: classes.onHeaderCellNext },
       render: notes => <div className={classes.textEmail}>{notes}</div>
     },
   ]
 
   const onPageChange = (page, pageSize) => {
     console.log(page, pageSize)
-    props.getSubmitted({page, pageSize});
+    props.getSubmitted({ page, pageSize });
   }
 
   const onShowSizeChange = (page, pageSize) => {
-    props.getSubmitted({page, pageSize});
+    props.getSubmitted({ page, pageSize });
     console.log(page, pageSize)
+  }
+
+  const viewDetail = () => {
+    history.push("/u/documents/submitted/123")
   }
 
   // popper
@@ -295,7 +302,7 @@ export function SubmittedDocuments(props) {
   }
 
   const PopperFilter = (props) => {
-    const {listTags} = props
+    const { listTags } = props
     // checked box in popper
     const [checked, setChecked] = React.useState({
       tags: [1],
@@ -304,7 +311,7 @@ export function SubmittedDocuments(props) {
     });
     const handleToggle = (value) => (event) => {
       const currentIndex = checked[event.target.name].indexOf(value);
-      const newChecked = {...checked};
+      const newChecked = { ...checked };
       if (currentIndex === -1) {
         newChecked[event.target.name].push(value);
       } else {
@@ -334,27 +341,27 @@ export function SubmittedDocuments(props) {
           [classes.popperNav]: true
         })}
       >
-        {({TransitionProps}) => (
+        {({ TransitionProps }) => (
           <Grow
             {...TransitionProps}
             id="profile-menu-list"
-            style={{transformOrigin: "0 0 0"}}
+            style={{ transformOrigin: "0 0 0" }}
           >
             <Paper className={classes.dropdown && classes.dropdownVehicle}>
               <ClickAwayListener onClickAway={handleCloseMore}>
                 <MenuList role="menu">
                   <Grid className={classes.popperHeaderContainer}>
                     <Grid className={classes.popperHeader}>Filter Options</Grid>
-                    <ArrowRightBlueIcon/>
+                    <ArrowRightBlueIcon />
                   </Grid>
                   <Grid xs={12} sm={12} md={12} className={classes.popperInput}>
-                    <ToolboxButton placeholder="Search tags"/>
+                    <ToolboxButton placeholder="Search tags" />
                   </Grid>
 
                   <Accordion collapses={
                     [
                       {
-                        title: <Grid style={{width: "140px", display: "flex", justifyContent: "space-between"}}>
+                        title: <Grid style={{ width: "140px", display: "flex", justifyContent: "space-between" }}>
                           <Grid className={classes.tagTitle}>Tags</Grid>
                           <Button className={classes.clearButton} onClick={handleClearBox("tags")}>
                             Clear
@@ -372,7 +379,7 @@ export function SubmittedDocuments(props) {
                                         edge="end"
                                         onChange={handleToggle(value)}
                                         checked={checked["tags"].indexOf(value) !== -1}
-                                        checkedIcon={<CheckSquareOutlined/>}
+                                        checkedIcon={<CheckSquareOutlined />}
                                         classes={{
                                           checked: classes.checked,
                                           root: classes.checkRoot
@@ -391,22 +398,22 @@ export function SubmittedDocuments(props) {
                       },
                     ]
                   }
-                             expansionSummaryClasses={{
-                               root: classes.expansionClasses,
-                               content: classes.expansionContentClasses
-                             }}
-                             expansionPanelClasses={{
-                               root: classes.expansionPanelClasses,
-                             }}
-                             expansionPanelRounded={{
-                               rounded: classes.expansionPanelClassesRounded,
-                             }}
+                    expansionSummaryClasses={{
+                      root: classes.expansionClasses,
+                      content: classes.expansionContentClasses
+                    }}
+                    expansionPanelClasses={{
+                      root: classes.expansionPanelClasses,
+                    }}
+                    expansionPanelRounded={{
+                      rounded: classes.expansionPanelClassesRounded,
+                    }}
                   />
 
                   <Accordion collapses={
                     [
                       {
-                        title: <Grid style={{width: "140px", display: "flex", justifyContent: "space-between"}}>
+                        title: <Grid style={{ width: "140px", display: "flex", justifyContent: "space-between" }}>
                           <Grid className={classes.tagTitle}>Duty Status</Grid>
                           <Button className={classes.clearButton} onClick={handleClearBox("dutyStatus")}>
                             Clear
@@ -424,7 +431,7 @@ export function SubmittedDocuments(props) {
                                         edge="end"
                                         onChange={handleToggle(value)}
                                         checked={checked["dutyStatus"].indexOf(value) !== -1}
-                                        checkedIcon={<CheckSquareOutlined/>}
+                                        checkedIcon={<CheckSquareOutlined />}
                                         classes={{
                                           checked: classes.checked,
                                           root: classes.checkRoot
@@ -443,22 +450,22 @@ export function SubmittedDocuments(props) {
                       },
                     ]
                   }
-                             expansionSummaryClasses={{
-                               root: classes.expansionClasses,
-                               content: classes.expansionContentClasses
-                             }}
-                             expansionPanelClasses={{
-                               root: classes.expansionPanelClasses,
-                             }}
-                             expansionPanelRounded={{
-                               rounded: classes.expansionPanelClassesRounded,
-                             }}
+                    expansionSummaryClasses={{
+                      root: classes.expansionClasses,
+                      content: classes.expansionContentClasses
+                    }}
+                    expansionPanelClasses={{
+                      root: classes.expansionPanelClasses,
+                    }}
+                    expansionPanelRounded={{
+                      rounded: classes.expansionPanelClassesRounded,
+                    }}
                   />
 
                   <Accordion collapses={
                     [
                       {
-                        title: <Grid style={{width: "140px", display: "flex", justifyContent: "space-between"}}>
+                        title: <Grid style={{ width: "140px", display: "flex", justifyContent: "space-between" }}>
                           <Grid className={classes.tagTitle}>Violations</Grid>
                           <Button className={classes.clearButton} onClick={handleClearBox("violations")}>
                             Clear
@@ -476,7 +483,7 @@ export function SubmittedDocuments(props) {
                                         edge="end"
                                         onChange={handleToggle(value)}
                                         checked={checked["violations"].indexOf(value) !== -1}
-                                        checkedIcon={<CheckSquareOutlined/>}
+                                        checkedIcon={<CheckSquareOutlined />}
                                         classes={{
                                           checked: classes.checked,
                                           root: classes.checkRoot
@@ -495,16 +502,16 @@ export function SubmittedDocuments(props) {
                       },
                     ]
                   }
-                             expansionSummaryClasses={{
-                               root: classes.expansionClasses,
-                               content: classes.expansionContentClasses
-                             }}
-                             expansionPanelClasses={{
-                               root: classes.expansionPanelClasses,
-                             }}
-                             expansionPanelRounded={{
-                               rounded: classes.expansionPanelClassesRounded,
-                             }}
+                    expansionSummaryClasses={{
+                      root: classes.expansionClasses,
+                      content: classes.expansionContentClasses
+                    }}
+                    expansionPanelClasses={{
+                      root: classes.expansionPanelClasses,
+                    }}
+                    expansionPanelRounded={{
+                      rounded: classes.expansionPanelClassesRounded,
+                    }}
                   />
                 </MenuList>
               </ClickAwayListener>
@@ -529,7 +536,7 @@ export function SubmittedDocuments(props) {
                       <Grid item xl={10} className={classes.chipSelected}>
                         {chipData.map(data => (
                           <Chip
-                            deleteIcon={<CloseIcon/>}
+                            deleteIcon={<CloseIcon />}
                             label={data.label}
                             onDelete={handleDelete(data)}
                             className={classes.chips}
@@ -545,8 +552,8 @@ export function SubmittedDocuments(props) {
                     </Grid>
                   </Grid>
                   <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
-                    <ToolboxButton placeholder="Search document" showFilter showColumn filterAction={handleOpenMore}/>
-                    <PopperFilter listTags={listTags}/>
+                    <ToolboxButton placeholder="Search document" showFilter showColumn filterAction={handleOpenMore} />
+                    <PopperFilter listTags={listTags} />
                   </Grid>
                 </Grid>
               }
@@ -563,6 +570,7 @@ export function SubmittedDocuments(props) {
                 className: classes.onHeaderRow
               }}
               onBodyRow={{
+                onClick: viewDetail,
                 className: classes.tableRow
               }}
             />
@@ -573,7 +581,7 @@ export function SubmittedDocuments(props) {
   );
 }
 
-const mapStateToProps = ({documents}) => {
+const mapStateToProps = ({ documents }) => {
   return {
     data: documents.submitted.data,
     page: documents.submitted.page,
