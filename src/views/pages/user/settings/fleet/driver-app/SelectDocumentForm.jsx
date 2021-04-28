@@ -9,6 +9,8 @@ import {Select} from "final-form-material-ui";
 
 import MenuItem from "@material-ui/core/MenuItem";
 import {useHistory} from "react-router-dom";
+import {connect} from "react-redux";
+import {changeTemplate, setTitle} from "reducers/setting-fleet";
 
 const styles = {
   selectButton: {
@@ -87,7 +89,11 @@ const SelectDocumentForm = (props) => {
                   round
                   className="btn-round-active mr-2"
                   type="submit"
-                  onClick={() => history.push("/s/fleet/workflow-create")}
+                  onClick={() => {
+                    props.setTitle("Submit Document")
+                    props.changeTemplate("submitDocument")
+                    return history.push("/s/fleet/workflow-create")
+                  }}
                   disabled={submitting}
                 > Create</Button>
               </div>
@@ -99,4 +105,12 @@ const SelectDocumentForm = (props) => {
   )
 }
 
-export default SelectDocumentForm;
+export default connect(
+  ({ settingFleet }) => ({
+
+  }),
+  {
+    changeTemplate,
+    setTitle
+  }
+)(SelectDocumentForm);

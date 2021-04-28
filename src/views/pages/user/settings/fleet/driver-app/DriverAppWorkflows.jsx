@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 // @material-ui/core components
 import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
@@ -11,6 +11,12 @@ import DiaLog from "components/CustomDialog/Dialog";
 import CreateStartWorkflowForm from "./CreateStartWorkflowForm";
 import CreateStopWorkflowForm from "./CreateStopWorkflowForm";
 import SelectDocumentForm from "./SelectDocumentForm";
+import {
+  getStartWorkflow,
+  getStopWorkflow,
+} from "reducers/setting-fleet";
+import {connect} from "react-redux";
+import StartWorkflow from "./StartWorkflow";
 
 const styles = {
   cardItem: {
@@ -83,7 +89,7 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function DriverAppWorkflows() {
+const DriverAppWorkflows = (props) => {
   const classes = useStyles();
 
   const handleChange = (event) => {
@@ -123,6 +129,11 @@ export default function DriverAppWorkflows() {
       document: false
     })
   }
+
+  useEffect(() => {
+    props.getStartWorkflow()
+    props.getStopWorkflow()
+  }, [])
 
 return (
   <GridContainer>
@@ -176,7 +187,8 @@ return (
           <GridItem className={classes.contentItem} xs={12} sm={12} md={12}>
             Assign tasks for drivers to complete upon sign in.
           </GridItem>
-          <CustomCreateWorkflow onClick={() => handleOpen("start")}/>
+          <StartWorkflow title={props.startTitle} workflow={props.startWorkflow}/>
+          {/*<CustomCreateWorkflow onClick={() => handleOpen("start")}/>*/}
         </GridItem>
         <hr className={classes.divider}/>
 
@@ -194,3 +206,16 @@ return (
   </GridContainer>
 );
 }
+
+export default connect(
+  ({ settingFleet }) => ({
+    startTitle: settingFleet.startTitle,
+    stopTitle: settingFleet.stopTitle,
+    startWorkflow: settingFleet.startWorkflow,
+    stopWorkflow: settingFleet.stopWorkflow
+  }),
+  {
+    getStartWorkflow,
+    getStopWorkflow,
+  }
+)(DriverAppWorkflows)

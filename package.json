@@ -71,6 +71,7 @@
     "postcss-safe-parser": "4.0.1",
     "react": "16.13.1",
     "react-app-polyfill": "^1.0.6",
+    "react-beautiful-dnd": "^13.1.0",
     "react-big-calendar": "0.24.6",
     "react-bootstrap-daterangepicker": "^7.0.0",
     "react-bootstrap-sweetalert": "5.1.9",
