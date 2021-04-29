@@ -16,7 +16,7 @@ import RoundedTabs from "components/CustomTabs/RoundedTabs";
 import Select from "components/CustomSelect/Select";
 import Grid from '@material-ui/core/Grid';
 import defaultImage from "assets/img/Upload.png";
-import GenPaginationV1 from "../../../../../components/Pagination/GenPaginationV1";
+import GenPaginationV1 from "components/Pagination/GenPaginationV1";
 
 const useStyles = makeStyles((theme) => ({
   topHeader: {
@@ -80,12 +80,18 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "18px",
     color: "#B4B4B4",
     fontWeight: "700",
+    paddingLeft: '25px !important',
+    paddingRight: "0px !important",
+    marginTop: "15px",
   },
   attachment: {
     fontSize: "18px",
     lineHeight: "27px",
     color: "#25345C",
     fontWeight: "700",
+    minWidth: "180px",
+    paddingRight: "0px !important",
+    marginTop: "15px",
   },
   dueTo: {
     fontSize: "12px",
@@ -157,6 +163,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-start",
+    padding: "10px !important",
   },
   pictureContainer: {
     width: "30px !important",
@@ -168,7 +175,6 @@ const useStyles = makeStyles((theme) => ({
     "&>img": {
       width: "80% !important",
     },
-
   },
   txtChooseFile: {
     fontWeight: "normal",
@@ -197,6 +203,7 @@ const useStyles = makeStyles((theme) => ({
   },
   addIcon: {
     color: "rgba(196, 196, 196, 1)",
+    cursor: "pointer",
   },
   dueHeader: {
     marginBottom: "15px"
@@ -208,34 +215,51 @@ const useStyles = makeStyles((theme) => ({
       padding: '0px !important',
     }
   },
+  addNote: {
+    color: "#25345C",
+    fontSize: "14px",
+    fontWeight: 700,
+    marginLeft: "5px",
+    cursor: "pointer",
+    width: "120px",
+  },
+  addButton: {
+    display: "flex",
+    alignItems: "center",
+    border: "0px",
+    backgroundColor: "#FFFFFF",
+    marginTop: "20px",
+  },
+  red:{
+    color: "red",
+  },
+  green:{
+    color: "green",
+  }
 }));
 
 export default function DriverVehicleReport(props) {
   const classes = useStyles();
-
   const [tab, setTab] = useState(0);
-
   const handleChangeTab = (newTab) => {
     setTab(newTab);
   };
 
   const listValues = [
     {
-      label: <div style={{color: "red"}}>
+      label: <div className={classes.red}>
         Unresolved
       </div>, value: 1
     },
     {
-      label: <div style={{color: "green"}}>
+      label: <div className={classes.green}>
         Resolved
       </div>, value: 2
     },
   ];
 
   const [file, setFile] = React.useState(null);
-
   const [imagePreviewUrl, setImagePreviewUrl] = React.useState(defaultImage);
-
   const handleImageChange = e => {
     e.preventDefault();
     let reader = new FileReader();
@@ -282,7 +306,6 @@ export default function DriverVehicleReport(props) {
           </GridContainer>
           <Card>
             <CardBody>
-
               <GridContainer className={classes.detailContainer}>
                 <GridItem>
                   <div className={classes.titleDetail}>Inspection Type</div>
@@ -321,7 +344,6 @@ export default function DriverVehicleReport(props) {
                   <div className={classes.detail}>QW14T3</div>
                 </GridItem>
               </GridContainer>
-
               <GridContainer className={classes.resolveArea}>
                 <GridItem xs={12} sm={12} md={12} className={classes.titleResolve}>
                   Resolve Defects
@@ -329,35 +351,24 @@ export default function DriverVehicleReport(props) {
                 <GridItem xs={12} sm={12} md={12} className={classes.detailResolve}>
                   Task created on 07 Jun 2019
                 </GridItem>
-                <GridItem xs={4} className={classes.titleTask}>
-                  Fuel System
-                  <GridContainer>
-                    <GridItem xs={12} lg={6} xl={5} className={classes.styleSelect}>
-                      <Select
-                        options={listValues}
-                        variant="outlined"
-                        value={1}
-                        onChange={(value) => {
-                          console.log(value);
-                        }}
-                      />
-                    </GridItem>
-                    <GridItem xs={12} lg={6} xl={7} className={classes.alignButton}>
-                      <Button
-                        color="white"
-                        aria-label="edit"
-                        justIcon
-                        round
-                        className={` btn-transparent ${classes.addBtn}`}
-                        startIcon={<AddOutlined className={classes.addIcon}/>}
-                      >
-                        Add mechanic note
-                      </Button>
-                    </GridItem>
-                  </GridContainer>
+                <GridItem xs={12} md={12} lg={2} className={classes.styleSelect}>
+                  <div>Fuel System</div>
+                  <Select
+                    options={listValues}
+                    variant="outlined"
+                    value={1}
+                    onChange={(value) => {
+                      console.log(value);
+                    }}
+                  />
                 </GridItem>
-
-                <GridItem xs={2} className={classes.titleTask}>
+                <GridItem xs={12} sm={4} md={4} lg={2} className={classes.alignButton}>
+                  <button className={classes.addButton}>
+                    <AddOutlined className={classes.addIcon}/>
+                    <div className={classes.addNote}>Add mechanic note</div>
+                  </button>
+                </GridItem>
+                <GridItem xs={6} sm={4} md={4} lg={2} className={classes.titleTask}>
                   <div className={classes.dueHeader}>Due to</div>
                   <GridContainer>
                     <GridItem xs={12} className={classes.dueTo}>
@@ -368,8 +379,7 @@ export default function DriverVehicleReport(props) {
                     </GridItem>
                   </GridContainer>
                 </GridItem>
-                <GridItem xs={3} className={classes.attachment}>
-
+                <GridItem xs={6} sm={4} md={4} lg={2} className={classes.attachment}>
                   <div className={classes.dueHeader}>Attachments</div>
                   <Grid item className={classes.uploadSection}>
                     <div className={`picture-container ${classes.organizationUpload}`}>
@@ -381,9 +391,7 @@ export default function DriverVehicleReport(props) {
                     </div>
                   </Grid>
                 </GridItem>
-
               </GridContainer>
-
               <GridContainer>
                 <GridItem xs={12} className={classes.titleResolve}>
                   Walkaround Inspection
@@ -392,7 +400,6 @@ export default function DriverVehicleReport(props) {
                   Walkaround Inspection
                 </GridItem>
               </GridContainer>
-
               <GridContainer className={classes.inspection}>
                 <Grid item xs={6} className={classes.inspectDirectionLeft}>
                   <div className={classes.imageHeaderFront}>Front</div>
@@ -403,7 +410,6 @@ export default function DriverVehicleReport(props) {
                   <img src={back} className={classes.carImage}/>
                 </Grid>
               </GridContainer>
-
             </CardBody>
           </Card>
           <Grid item xs={12} sm={12} md={12} className={classes.pagination}>

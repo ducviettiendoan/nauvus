@@ -122,6 +122,7 @@ class Sidebar extends React.Component {
     const { classes, color, rtlActive } = this.props;
     return routes.map((prop, key) => {
       if (!prop.isFixed) {
+        console.log(prop)
         return null;
       }
       const innerNavLinkClasses =
@@ -217,6 +218,7 @@ class Sidebar extends React.Component {
     const { classes, color, rtlActive } = this.props;
     return routes.map((prop, key) => {
       if (prop.redirect || prop.isFixed) {
+        console.log(prop.path)
         return null;
       }
       if (prop.collapse) {
