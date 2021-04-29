@@ -55,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
   onHeaderCellFirst: {
     fontWeight: 700,
     color: "#25345C",
-    paddingLeft: "28px"
   },
   onHeaderCellNext: {
     fontWeight: 700,
@@ -111,12 +110,11 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   boxNearMeIcon: {
-    display: "flex",
-    justifyContent: "center",
+    display: "flex"
   }
 }));
 
-export function Summary(props) {
+export function Insidents(props) {
   const classes = useStyles();
 
   React.useEffect(() => {
@@ -245,4 +243,4 @@ const mapDispatchToProps = {
   getInsidents
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Summary);
+export default connect(mapStateToProps, mapDispatchToProps)(Insidents);

@@ -16,6 +16,8 @@ import IconButton from "@material-ui/core/IconButton";
 import FormControl from "@material-ui/core/FormControl";
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import Insidents from './Insidents';
+import Configure from './Configure'
+import { setTab } from "reducers/alerts";
 
 const styles = {
   topHeader: {
@@ -36,6 +38,11 @@ const styles = {
     display: "flex",
     alignItems: "center"
   },
+  layoutAlert: {
+    display: "flex",
+    flexDirection: "column",
+    height: "100%"
+  }
 };
 
 const useStyles = makeStyles(styles);
@@ -43,50 +50,46 @@ const useStyles = makeStyles(styles);
 function Alerts(props) {
   const classes = useStyles();
 
-  const [value, setValue] = React.useState(0);
-
-  const handleChangeTab = (newValue) => {
-    setValue(newValue);
+  const handleChangeTab = (value) => {
+    props.setTab(value)
   };
   return (
-    <div>
+    <div className={classes.layoutAlert}>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
-              <GridContainer className={classes.topHeader}>
-                <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                  <RoundedTabs tabs={["Insidents", "Configure"]} tabValue={handleChangeTab} />
-                </GridItem>
-                <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
-                  <Calendar placeholder="Day" />
-                  <div>
-                    <FormControl variant="outlined" className="moreIcon">
-                      <IconButton style={{ width: "40px", height: "40px" }}>
-                        <MoreHorizIcon fontSize="small" style={{ color: "#25345C" }} />
-                      </IconButton>
-                    </FormControl>
-                  </div>
-                  <Button round className="btn-round-green w-84"> <LiveIconWhite /> Live </Button>
-                </GridItem>
-              </GridContainer>
+          <GridContainer className={classes.topHeader}>
+            <GridItem xs={12} sm={11} md={6} xl={6} className={classes.topHeaderTitle}>
+              <RoundedTabs tabs={["Insidents", "Configure"]} value={props.tab} tabValue={handleChangeTab} />
+            </GridItem>
+            <GridItem xs={12} sm={4} md={6} xl={6} className={classes.topHeaderButton}>
+              <Calendar placeholder="Day" />
+              <div>
+                <FormControl variant="outlined" className="moreIcon">
+                  <IconButton style={{ width: "40px", height: "40px" }}>
+                    <MoreHorizIcon fontSize="small" style={{ color: "#25345C" }} />
+                  </IconButton>
+                </FormControl>
+              </div>
+              <Button round className="btn-round-green w-84"> <LiveIconWhite /> Live </Button>
             </GridItem>
           </GridContainer>
-
-          {value === 0 && <Insidents />}
-          {value === 1 && <div>b</div>}
-          {value === 2 && <div>c</div>}
         </GridItem>
       </GridContainer>
+
+      {props.tab === 0 && <Insidents />}
+      {props.tab === 1 && <Configure />}
     </div>
   );
 }
 
-const mapStateToProps = ({ }) => {
-  return {};
+const mapStateToProps = ({ alerts }) => {
+  return {
+    tab: alerts.tab
+  };
 };
 
 const mapDispatchToProps = {
+  setTab
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Alerts);

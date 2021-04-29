@@ -397,7 +397,7 @@ const dashRoutes = [
     extraIcon: StatusRedIcon,
     component: Alerts,
     isFixed: true,
-    layout: ROUTE_PATH.USER
+    layout: ROUTE_PATH.ALERT
   },
   {
     path: "/org/general",

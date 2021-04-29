@@ -14,6 +14,7 @@ export const VERSION = "0.1.beta11";
 export const ROUTE_PATH = {
     ADMIN: '/admin',
     SAFETY: '/safety',
+    ALERT: '/alert',
     AUTH: '/a',
     USER: '/u',
     SETTING: '/s',
