@@ -15,8 +15,8 @@ const initialState = {
   errorMessage: null,
   loading: false,
   insidents: [],
-  extraSidebar: true,
-  tab: 1,
+  extraSidebar: false,
+  tab: 0,
 };
 
 export type AlertsState = Readonly<typeof initialState>;
