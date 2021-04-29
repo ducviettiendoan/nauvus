@@ -171,7 +171,7 @@ export function Drivers(props) {
   }
 
   const viewDetail = () => {
-    history.push("/u/fuel-energy/driver-efficiency-report/123456789")
+    history.push(`/u/fuel-energy/driver-efficiencies-report/123456`)
   }
 
   const [chipData, setChipData] = useState([

@@ -347,7 +347,7 @@ const dashRoutes = [
         layout: ROUTE_PATH.USER
       },
       {
-        path: "/fuel-energy/driver-efficiency-report/:id",
+        path: "/fuel-energy/driver-efficiencies-report",
         name: "Driver Efficiency",
         component: DriverEfficiencyReport,
         layout: ROUTE_PATH.USER,
