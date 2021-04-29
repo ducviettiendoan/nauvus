@@ -202,8 +202,10 @@ const complianceStyle = {
   barChartSpace: {
     display: 'flex',
     justifyContent: "space-between",
-    marginBottom: "0px !important"
+    marginBottom: "0px !important",
+    marginTop: "15px",
   },
+
   barChartSize: {
     width: "90%",
     borderRadius: "20px",
@@ -238,7 +240,29 @@ const complianceStyle = {
       padding:0,
       margin: 0,
     }
-  }
+  },
+  topHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 15
+  },
+  topHeaderTitle: {
+    textAlign: "left",
+    fontWeight: 700,
+    fontSize: 18,
+    color: "#25345C",
+    padding: "0 16px !important"
+  },
+  topHeaderButton: {
+    textAlign: "right !important",
+    display: "flex",
+    alignItems: "center"
+  },
+  moreAction: {
+    background: "#FFFFFF !important",
+    border: "1px solid #ECEEF0 !important"
+  },
 }
 
 export default complianceStyle

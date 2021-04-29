@@ -14,3 +14,4 @@ import "./safety";
 import "./messages";
 import "./document";
 import "./maintainance";
+import "./report";
