@@ -55,7 +55,8 @@ const styles = {
   },
   listCard: {
     border: "1px solid rgba(236, 238, 240, 1)",
-    borderRadius: "10px"
+    borderRadius: "10px",
+    marginBottom: 8
   },
   dialogTitle: {
     fontSize: "22px",
@@ -107,7 +108,7 @@ export default function Reports() {
 
   return (
     <div>
-      {/* <GridContainer>
+       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
@@ -155,7 +156,7 @@ export default function Reports() {
                             unmountOnExit
                           >
                             <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of your assets and drivers.</GridItem>
-                            
+
                           </Collapse>
                           </div>
                           <div className={classes.listCard} >
@@ -179,7 +180,7 @@ export default function Reports() {
                             unmountOnExit
                           >
                             <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of your assets and drivers.</GridItem>
-                            
+
                           </Collapse>
                           </div>
                           <div className={classes.listCard} >
@@ -203,7 +204,7 @@ export default function Reports() {
                             unmountOnExit
                           >
                             <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of your assets and drivers.</GridItem>
-                            
+
                           </Collapse>
                           </div>
                           <div className={classes.listCard} >
@@ -227,7 +228,7 @@ export default function Reports() {
                             unmountOnExit
                           >
                             <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of your assets and drivers.</GridItem>
-                            
+
                           </Collapse>
                           </div>
                           <div className={classes.listCard} >
@@ -251,7 +252,7 @@ export default function Reports() {
                             unmountOnExit
                           >
                             <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of your assets and drivers.</GridItem>
-                            
+
                           </Collapse>
                           </div>
                           <div className={classes.listCard} >
@@ -275,7 +276,7 @@ export default function Reports() {
                             unmountOnExit
                           >
                             <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of your assets and drivers.</GridItem>
-                            
+
                           </Collapse>
                           </div>
                           <div className={classes.listCard} >
@@ -299,7 +300,7 @@ export default function Reports() {
                             unmountOnExit
                           >
                             <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of your assets and drivers.</GridItem>
-                            
+
                           </Collapse>
                           </div>
                           <div className={classes.listCard} >
@@ -323,7 +324,7 @@ export default function Reports() {
                             unmountOnExit
                           >
                             <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of your assets and drivers.</GridItem>
-                            
+
                           </Collapse>
                           </div>
                           <div className={classes.listCard} >
@@ -347,7 +348,7 @@ export default function Reports() {
                             unmountOnExit
                           >
                             <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of your assets and drivers.</GridItem>
-                            
+
                           </Collapse>
                           </div>
                           <div className={classes.listCard} >
@@ -371,7 +372,7 @@ export default function Reports() {
                             unmountOnExit
                           >
                             <GridItem className={classes.detail}>Keep track of asset usage to improve efficiency across your fleet.</GridItem>
-                            
+
                           </Collapse>
                           </div>
                           <div className={classes.listCard} >
@@ -395,7 +396,7 @@ export default function Reports() {
                             unmountOnExit
                           >
                             <GridItem className={classes.detail}>View and manage your drivers’ HOS logs, violations, and history in real-time.</GridItem>
-                            
+
                           </Collapse>
                           </div>
                           <div className={classes.listCard} >
@@ -419,7 +420,7 @@ export default function Reports() {
                             unmountOnExit
                           >
                             <GridItem className={classes.detail}>Understand safety scores and trends for harsh events, speeding, and coaching.</GridItem>
-                            
+
                           </Collapse>
                           </div>
                         </List>
@@ -436,14 +437,13 @@ export default function Reports() {
           <p className={classes.dialogSubTitle}>Custom Report</p>
           </div>}
           handleClose={closeAssignHOS}
-          open={true}
+          open={openForm}
           >
         <ExportCustomReport handleClose={closeAssignHOS}/>
       </DiaLog>
         </GridItem>
       </GridContainer>
-     */}
-     Quynh beo
+
     </div>
   );
 }
