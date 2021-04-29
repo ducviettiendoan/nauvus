@@ -405,7 +405,7 @@ const dashRoutes = [
                 // isFixed: true
             },
             {
-                path: "/report/aaaaaaaaa",
+                path: "/report/",
                 name: "Reports",
                 component: Reports,
                 layout: ROUTE_PATH.USER,

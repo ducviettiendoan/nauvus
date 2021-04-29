@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 //material-ui/lab components
 // @material-ui/icons
 // core components
@@ -8,103 +8,103 @@ import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
 import {getDriverEfficiencyDrivers} from "reducers/fuel-energy";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import CloseIcon from "components/Icons/CloseIcon";
 import Chip from "@material-ui/core/Chip";
 import Button from "components/CustomButtons/Button.js";
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 
 const styles = {
-    selected: {
-        height: 24,
-        width: "auto",
-        background: "#ECEEF0 !important",
-        borderRadius: 28,
-        color: "#25345C !important",
-        display: "flex",
-        alignItems: "center",
-    },
-    textName: {
-        fontWeight: 'bold',
-        fontSize: '16px',
-        lineHeight: '24px',
-        color: '#25345C',
-        paddingLeft: "12px"
+  selected: {
+    height: 24,
+    width: "auto",
+    background: "#ECEEF0 !important",
+    borderRadius: 28,
+    color: "#25345C !important",
+    display: "flex",
+    alignItems: "center",
+  },
+  textName: {
+    fontWeight: 'bold',
+    fontSize: '16px',
+    lineHeight: '24px',
+    color: '#25345C',
+    paddingLeft: "12px"
 
+  },
+  tableRow: {
+    '&:nth-of-type(even)': {
+      backgroundColor: "#fbfbfb",
     },
-    tableRow: {
-        '&:nth-of-type(even)': {
-            backgroundColor: "#fbfbfb",
-        },
-    },
-    onHeaderRow: {
-        background: "#ECEEF0",
-    },
-    gridTitle: {
-        padding: "20px"
-    },
-    onHeaderCellFirst: {
-        fontWeight: 700,
-        color: "#25345C",
-        paddingLeft: "28px"
-    },
-    onHeaderCellNext: {
-        fontWeight: 700,
-        color: "#25345C",
-        textAlign: 'center'
-    },
-    alignItemsCenter: {
-        display: "flex",
-        alignItems: "center",
-    },
-    // moreAction: {
-    //     background: "#FFFFFF !important",
-    //     border: "1px solid #ECEEF0 !important",
-    // },
-    textEmail: {
-        display: "flex",
-        justifyContent: "center",
-        fontSize: '16px',
-        lineHeight: '24px',
-        color: '#25345C',
-        paddingLeft: "12px",
-        fontWeight: 400,
-    },
-    topHeader: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginTop: 16
-    },
-    topHeaderTitle: {
-        textAlign: "left",
-        fontWeight: 700,
-        fontSize: 18,
-        color: "#25345C",
-        padding: "0 16px !important",
-        height: "38px",
-        width: "91px"
-    },
-    topHeaderButton: {
-        textAlign: "right !important",
-        display: "flex",
-        alignItems: "center"
-    },
-    moreAction: {
-        background: "#FFFFFF !important",
-        border: "1px solid #ECEEF0 !important"
-    },
-    headLeft: {
-        display: "flex",
-        justifyContent: "flex-end",
-        "& > div": {
-        marginTop: "-4px !important",
-        marginBottom: "5px !important",
-        marginRight: "-14px"
-        }
-    },
-    
+  },
+  onHeaderRow: {
+    background: "#ECEEF0",
+  },
+  gridTitle: {
+    padding: "20px"
+  },
+  onHeaderCellFirst: {
+    fontWeight: 700,
+    color: "#25345C",
+    paddingLeft: "28px"
+  },
+  onHeaderCellNext: {
+    fontWeight: 700,
+    color: "#25345C",
+    textAlign: 'center'
+  },
+  alignItemsCenter: {
+    display: "flex",
+    alignItems: "center",
+  },
+  // moreAction: {
+  //     background: "#FFFFFF !important",
+  //     border: "1px solid #ECEEF0 !important",
+  // },
+  textEmail: {
+    display: "flex",
+    justifyContent: "center",
+    fontSize: '16px',
+    lineHeight: '24px',
+    color: '#25345C',
+    paddingLeft: "12px",
+    fontWeight: 400,
+  },
+  topHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 16
+  },
+  topHeaderTitle: {
+    textAlign: "left",
+    fontWeight: 700,
+    fontSize: 18,
+    color: "#25345C",
+    padding: "0 16px !important",
+    height: "38px",
+    width: "91px"
+  },
+  topHeaderButton: {
+    textAlign: "right !important",
+    display: "flex",
+    alignItems: "center"
+  },
+  moreAction: {
+    background: "#FFFFFF !important",
+    border: "1px solid #ECEEF0 !important"
+  },
+  headLeft: {
+    display: "flex",
+    justifyContent: "flex-end",
+    "& > div": {
+      marginTop: "-4px !important",
+      marginBottom: "5px !important",
+      marginRight: "-14px"
+    }
+  },
+
   userRolesTitle: {
     fontSize: 16,
     color: "#25345C",
@@ -170,15 +170,15 @@ export function Drivers(props) {
     props.getDriverEfficiencyDrivers()({page, pageSize});
   }
 
-  const viewDetail = () => {
-    history.push(`/u/fuel-energy/driver-efficiencies-report/123456`)
+  const viewDetail = (id) => {
+    history.push(`/u/fuel-energy/driver-efficiencies-report/${id}`)
   }
 
   const [chipData, setChipData] = useState([
     {key: 0, label: 'Alexandr Luchin'},
   ]);
 
-  
+
   const handleDelete = (chipToDelete) => () => {
     setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
   };
@@ -191,7 +191,7 @@ export function Drivers(props) {
     props.getDriverEfficiencyDrivers();
   }, []);
 
-  const columns=[
+  const columns = [
     {
       key: "driver",
       title: "Driver",
@@ -260,61 +260,61 @@ export function Drivers(props) {
 
   return (
     <div>
-          <div>
-            <Table
-              renderTitle={
-              <div>
-                <Grid container className={classes.gridTitle}> 
+      <div>
+        <Table
+          renderTitle={
+            <div>
+              <Grid container className={classes.gridTitle}>
                 <Grid item xs={12} sm={12} md={4}>
-                          <Grid container className={classes.headContainer}>
-                            <Grid item xl={2}
-                                  className={classes.userRolesTitle}> {chipData.length} selected
-                              for </Grid>
-                            <Grid item xl={10} className={classes.chipSelected}>
-                              {chipData.map(data => (
-                                <Chip
-                                  deleteIcon={<CloseIcon/>}
-                                  label={data.label}
-                                  onDelete={handleDelete(data)}
-                                  className={classes.chips}
-                                />
-                              ))}
-                              {chipData.length > 0 ?
-                                (
-                                  <Button onClick={handleClearAll}
-                                          className={classes.clearAll}>
-                                    Clear All
-                                  </Button>
-                                ) : ""}
-                            </Grid>
-                          </Grid>
-                        </Grid>                   
-                  <Grid xs={12} sm={12} md={8} className={classes.headLeft}>
-                    <ToolboxButton placeholder="Search driver" showFilter showColumn/>
+                  <Grid container className={classes.headContainer}>
+                    <Grid item xl={2}
+                          className={classes.userRolesTitle}> {chipData.length} selected
+                      for </Grid>
+                    <Grid item xl={10} className={classes.chipSelected}>
+                      {chipData.map(data => (
+                        <Chip
+                          deleteIcon={<CloseIcon/>}
+                          label={data.label}
+                          onDelete={handleDelete(data)}
+                          className={classes.chips}
+                        />
+                      ))}
+                      {chipData.length > 0 ?
+                        (
+                          <Button onClick={handleClearAll}
+                                  className={classes.clearAll}>
+                            Clear All
+                          </Button>
+                        ) : ""}
+                    </Grid>
                   </Grid>
                 </Grid>
-                </div>
-              }          
-              columns={columns}
-              dataSource={props.data}
-              onHeaderRow={{
-                className: classes.onHeaderRow
-              }}
-              onBodyRow={{
-                onClick: viewDetail,
-                className: classes.tableRow
-              }}
-              pagination={{
-                total: props.total,
-                current: props.page,
-                pageSize: props.pageSize,
-                onChange: onPageChange,
-                onShowSizeChange: onShowSizeChange
-              }}
-            />
-            
-          </div>
-              </div>
+                <Grid xs={12} sm={12} md={8} className={classes.headLeft}>
+                  <ToolboxButton placeholder="Search driver" showFilter showColumn/>
+                </Grid>
+              </Grid>
+            </div>
+          }
+          columns={columns}
+          dataSource={props.data}
+          onHeaderRow={{
+            className: classes.onHeaderRow
+          }}
+          onBodyRow={{
+            onClick: viewDetail,
+            className: classes.tableRow
+          }}
+          pagination={{
+            total: props.total,
+            current: props.page,
+            pageSize: props.pageSize,
+            onChange: onPageChange,
+            onShowSizeChange: onShowSizeChange
+          }}
+        />
+
+      </div>
+    </div>
   );
 }
 
