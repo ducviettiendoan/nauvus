@@ -244,7 +244,7 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 function Messages(props) { 
-  const [detail, setDetail] = useState(true);
+  const [detail, setDetail] = useState(false);
   const [open, setOpen] = useState(false);
   const classes = useStyles();
 
