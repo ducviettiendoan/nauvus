@@ -395,13 +395,19 @@ const dashRoutes = [
         name: "Reports",
         state: "reportsCollapse",
         icon: ReportsIcon,
-        component: Reports,
         layout: ROUTE_PATH.USER,
         views: [
             {
                 path: "/report/dashboard",
                 name: "Dashboard",
                 component: DashboardReport,
+                layout: ROUTE_PATH.USER,
+                // isFixed: true
+            },
+            {
+                path: "/report/aaaaaaaaa",
+                name: "Reports",
+                component: Reports,
                 layout: ROUTE_PATH.USER,
                 // isFixed: true
             }

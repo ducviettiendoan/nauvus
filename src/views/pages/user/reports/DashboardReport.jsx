@@ -2,13 +2,6 @@ import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Grid} from "@material-ui/core";
 import complianceStyle from "../compliance/style/complianceStyle";
-import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
-import Card from "@material-ui/core/Card";
-import Link from "@material-ui/core/Link";
-import Table from "components/Table/TableV1";
-import {getVehicleDriverDistanceData, getVehicleDrivingHoursData, getVehicleFuelUsage} from "reducers/report";
-import {connect} from "react-redux";
 import LiveIconWhite from "components/Icons/LiveIconWhite";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
@@ -17,6 +10,8 @@ import Calendar from "components/Calendar/Calendar";
 import Button from "components/CustomButtons/Button";
 import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
 import VehicleReport from "./dashboard/VehicleReport";
+import TrailerReport from "./dashboard/TrailerReport";
+import DriverReport from "./dashboard/DriverReport";
 
 const useStyles = makeStyles(complianceStyle);
 
@@ -54,6 +49,8 @@ export default function DashboardReport(props) {
         </GridItem>
       </GridContainer>
       {value === 0 && <VehicleReport/>}
+      {value === 1 && <TrailerReport/>}
+      {value === 2 && <DriverReport/>}
     </div>
   )
 };
