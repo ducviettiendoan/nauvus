@@ -15,6 +15,7 @@ const useStyles = makeStyles(complianceStyle);
 
 export function BarChartCard(props) {
   // const {title, data, radio} = props;
+  // console.log(props)
   const classes = useStyles();
 
   const columns1 = [

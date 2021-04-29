@@ -18,6 +18,7 @@ import messages, {MessagesState} from "./messages"
 import dispatch, {DispatchState} from "./dispatch";
 import documents, {DocumentsState} from "./document";
 import maintainance, {MaintainanceState} from "./maintainance";
+import report, {ReportState} from "./report";
 
 export interface IRootState {
   readonly authentication: AuthenticationState;
@@ -38,6 +39,8 @@ export interface IRootState {
   readonly dispatch: DispatchState;
   readonly documents: DocumentsState;
   readonly maintainance: MaintainanceState;
+  readonly report: ReportState;
+
 }
 
 const rootReducer = combineReducers<IRootState>({
@@ -59,6 +62,7 @@ const rootReducer = combineReducers<IRootState>({
   dispatch,
   documents,
   maintainance,
+  report,
 });
 
 export default rootReducer;

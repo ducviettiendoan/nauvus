@@ -16,6 +16,7 @@ import CloseIcon from "components/Icons/CloseIcon";
 import Button from "components/CustomButtons/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import BarChartCard from "./compliance-card/BarChartCard";
+import VehicleReport from "../safety/report/components/VehicleReport";
 
 const useStyles = makeStyles(complianceStyle);
 
