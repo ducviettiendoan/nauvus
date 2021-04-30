@@ -202,8 +202,13 @@ const complianceStyle = {
   barChartSpace: {
     display: 'flex',
     justifyContent: "space-between",
-    marginBottom: "0px !important"
+    marginBottom: "0px !important",
+    marginTop: "15px",
+    paddingBottom: "60px",
+    paddingLeft: "16px",
+    paddingRight: "16px",
   },
+
   barChartSize: {
     width: "90%",
     borderRadius: "20px",
@@ -238,6 +243,32 @@ const complianceStyle = {
       padding:0,
       margin: 0,
     }
+  },
+  topHeader: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginTop: 15
+  },
+  topHeaderTitle: {
+    textAlign: "left",
+    fontWeight: 700,
+    fontSize: 18,
+    color: "#25345C",
+    padding: "0 16px !important"
+  },
+  topHeaderButton: {
+    textAlign: "right !important",
+    display: "flex",
+    alignItems: "center"
+  },
+  moreAction: {
+    background: "#FFFFFF !important",
+    border: "1px solid #ECEEF0 !important"
+  },
+  topCard: {
+    borderRadius: "12px",
+    margin: "16px 0",
   }
 }
 

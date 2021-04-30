@@ -21,6 +21,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Popper from "@material-ui/core/Popper";
 import customDropdownStyle from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle.js";
 import Users from "../settings/org/user-roles/Users";
+import BarChartCard from "./compliance-card/BarChartCard";
 
 const useStyles = makeStyles((theme) => ({
   ...customDropdownStyle(theme),
@@ -75,7 +76,7 @@ export default function HOSViolations() {
             <GridItem xs={12} sm={12} md={12}>
               <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>
-                  <RoundedTabs tabs={["Violations", "MissingCertifications"]} tabValue={handleChangeTab}/>
+                  <RoundedTabs tabs={["Violations", "MissingCertifications", "Chart"]} tabValue={handleChangeTab}/>
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <Calendar placeholder="Day"/>
@@ -129,6 +130,7 @@ export default function HOSViolations() {
           </GridContainer>
           {value === 0 && <Violations/>}
           {value === 1 && <MissingCertifications/>}
+          {value===2 && <BarChartCard/>}
         </GridItem>
       </GridContainer>
     </div>

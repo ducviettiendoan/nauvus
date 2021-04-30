@@ -1,4 +1,4 @@
-import { ROUTE_PATH } from "config/constants";
+import {ROUTE_PATH} from "config/constants";
 
 import Overview from "views/pages/user/overview/Overview";
 import VehicleDetails from "views/pages/user/overview/vehicle/VehicleDetails"
@@ -47,6 +47,8 @@ import SafetyReportDetails from "views/pages/user/safety/report/SafetyReportDeta
 import SafetyReportTable from "views/pages/user/safety/report/SafetyReportTable"
 import VideoRetrieval from "views/pages/user/safety/VideoRetrieval";
 import Retrieval from "views/pages/user/safety/video-retrieval/Retrieval";
+import DashboardReport from "views/pages/user/reports/DashboardReport";
+
 
 // @material-ui/icons
 import OverviewIcon from "components/Icons/OverviewIcon";
@@ -66,363 +68,384 @@ import StatusGreenIcon from "components/Icons/StatusGreenIcon";
 import StatusRedIcon from "components/Icons/StatusRedIcon";
 
 const dashRoutes = [
-  {
-    collapse: true,
-    name: "Overview",
-    icon: OverviewIcon,
-    state: "overviewCollapse",
-    layout: ROUTE_PATH.OVERVIEW,
-    views: [
-      {
-        path: "/overview",
-        name: "Vehicle",
-        component: Overview,
-        layout: ROUTE_PATH.OVERVIEW
-      },
-      {
-        path: "/vehicle/:id",
-        name: "Vehicle Details",
-        component: VehicleDetails,
+    {
+        collapse: true,
+        name: "Overview",
+        icon: OverviewIcon,
+        state: "overviewCollapse",
         layout: ROUTE_PATH.OVERVIEW,
-        isFixed: true,
-      },
-      {
-        path: "/trip-timeline/on-going",
-        name: "Trip Timeline",
-        component: TripTimeline,
-        layout: ROUTE_PATH.OVERVIEW,
-        isFixed: true,
-      },
-      {
-        path: "/assets",
-        name: "Assets",
-        component: Assets,
-        layout: ROUTE_PATH.OVERVIEW
-      },
-      {
-        path: "/drivers/:id",
-        name: "Drivers Detail",
-        component: DriverDetail,
-        layout: ROUTE_PATH.OVERVIEW,
-        isFixed: true,
-      },
-      {
-        path: "/driver-record/:id",
-        name: "Drivers Record",
-        component: DriverRecord,
-        layout: ROUTE_PATH.OVERVIEW,
-        isFixed: true,
-      },
-      {
-        path: "/drivers",
-        name: "Drivers",
-        component: Drivers,
-        layout: ROUTE_PATH.OVERVIEW
-      },
-      {
-        path: "/proximity",
-        name: "Proximity",
-        component: Proximity,
-        layout: ROUTE_PATH.OVERVIEW
-      },
-      {
-        path: "/logs",
-        name: "Logs",
-        component: Logs,
-        layout: ROUTE_PATH.OVERVIEW
-      },
-    ]
-  },
+        views: [
+            {
+                path: "/overview",
+                name: "Vehicle",
+                component: Overview,
+                layout: ROUTE_PATH.OVERVIEW
+            },
+            {
+                path: "/vehicle/:id",
+                name: "Vehicle Details",
+                component: VehicleDetails,
+                layout: ROUTE_PATH.OVERVIEW,
+                isFixed: true,
+            },
+            {
+                path: "/trip-timeline/on-going",
+                name: "Trip Timeline",
+                component: TripTimeline,
+                layout: ROUTE_PATH.OVERVIEW,
+                isFixed: true,
+            },
+            {
+                path: "/assets",
+                name: "Assets",
+                component: Assets,
+                layout: ROUTE_PATH.OVERVIEW
+            },
+            {
+                path: "/drivers/:id",
+                name: "Drivers Detail",
+                component: DriverDetail,
+                layout: ROUTE_PATH.OVERVIEW,
+                isFixed: true,
+            },
+            {
+                path: "/driver-record/:id",
+                name: "Drivers Record",
+                component: DriverRecord,
+                layout: ROUTE_PATH.OVERVIEW,
+                isFixed: true,
+            },
+            {
+                path: "/drivers",
+                name: "Drivers",
+                component: Drivers,
+                layout: ROUTE_PATH.OVERVIEW
+            },
+            {
+                path: "/proximity",
+                name: "Proximity",
+                component: Proximity,
+                layout: ROUTE_PATH.OVERVIEW
+            },
+            {
+                path: "/logs",
+                name: "Logs",
+                component: Logs,
+                layout: ROUTE_PATH.OVERVIEW
+            },
+        ]
+    },
 
-  {
-    collapse: true,
-    name: "Safety",
-    icon: SafetyIcon,
-    state: "safetyCollapse",
-    layout: ROUTE_PATH.SAFETY,
-    views: [
-      {
-        path: "/crash",
-        name: "Crash",
-        component: SafetyInboxCrash,
+    {
+        collapse: true,
+        name: "Safety",
+        icon: SafetyIcon,
+        state: "safetyCollapse",
         layout: ROUTE_PATH.SAFETY,
-        isFixed: true,
-      },
-      {
-        path: "/inbox",
-        name: "Safety Inbox",
-        component: SafetyInbox,
-        layout: ROUTE_PATH.SAFETY
-      },
-      {
-        path: "/driver-assignment/:id",
-        name: "Driver Assignment Details",
-        component: UnassignedDetail,
-        layout: ROUTE_PATH.SAFETY,
-        isFixed: true
-      },
-      {
-        path: "/driver-assignment",
-        name: "Driver Assignment",
-        component: DriverAssignment,
-        layout: ROUTE_PATH.SAFETY
-      },
-      {
-        path: "/coaching",
-        name: "Coaching",
-        component: Coaching,
-        layout: ROUTE_PATH.SAFETY
-      },
+        views: [
+            {
+                path: "/crash",
+                name: "Crash",
+                component: SafetyInboxCrash,
+                layout: ROUTE_PATH.SAFETY,
+                isFixed: true,
+            },
+            {
+                path: "/inbox",
+                name: "Safety Inbox",
+                component: SafetyInbox,
+                layout: ROUTE_PATH.SAFETY
+            },
+            {
+                path: "/driver-assignment/:id",
+                name: "Driver Assignment Details",
+                component: UnassignedDetail,
+                layout: ROUTE_PATH.SAFETY,
+                isFixed: true
+            },
+            {
+                path: "/driver-assignment",
+                name: "Driver Assignment",
+                component: DriverAssignment,
+                layout: ROUTE_PATH.SAFETY
+            },
+            {
+                path: "/coaching",
+                name: "Coaching",
+                component: Coaching,
+                layout: ROUTE_PATH.SAFETY
+            },
 
-      {
-        path: "/dash-cam",
-        name: "Dash Cam",
-        component: DashCam,
-        layout: ROUTE_PATH.SAFETY
-      },
-      {
-        path: "/cameras",
-        name: "Cameras",
-        component: Cameras,
-        layout: ROUTE_PATH.SAFETY
-      },
-      {
-        path: "/video-library",
-        name: "Video Library",
-        component: VideoRetrieval,
-        layout: ROUTE_PATH.SAFETY,
-      },
-      {
-        path: "/video-retrieval",
-        name: "Video Retrieval",
-        component: Retrieval,
-        layout: ROUTE_PATH.SAFETY,
-        isFixed: true
-      },
-      {
-        path: "/safety-report",
-        name: "Safety Report",
-        component: SafetyReport,
-        layout: ROUTE_PATH.SAFETY
-      },
-      {
-        path: "/safety-report-details",
-        name: "Safety Report Details",
-        component: SafetyReportDetails,
-        layout: ROUTE_PATH.SAFETY
-      },
-      {
-        path: "/safety-report-table",
-        name: "Safety Report Table",
-        component: SafetyReportTable,
-        layout: ROUTE_PATH.SAFETY
-      },
-    ]
-  },
+            {
+                path: "/dash-cam",
+                name: "Dash Cam",
+                component: DashCam,
+                layout: ROUTE_PATH.SAFETY
+            },
+            {
+                path: "/cameras",
+                name: "Cameras",
+                component: Cameras,
+                layout: ROUTE_PATH.SAFETY
+            },
+            {
+                path: "/video-library",
+                name: "Video Library",
+                component: VideoRetrieval,
+                layout: ROUTE_PATH.SAFETY,
+            },
+            {
+                path: "/video-retrieval",
+                name: "Video Retrieval",
+                component: Retrieval,
+                layout: ROUTE_PATH.SAFETY,
+                isFixed: true
+            },
+            {
+                path: "/safety-report",
+                name: "Safety Report",
+                component: SafetyReport,
+                layout: ROUTE_PATH.SAFETY
+            },
+            {
+                path: "/safety-report-details",
+                name: "Safety Report Details",
+                component: SafetyReportDetails,
+                layout: ROUTE_PATH.SAFETY
+            },
+            {
+                path: "/safety-report-table",
+                name: "Safety Report Table",
+                component: SafetyReportTable,
+                layout: ROUTE_PATH.SAFETY
+            },
+        ]
+    },
 
-  {
-    collapse: true,
-    name: "Compliance",
-    icon: ComplianceIcon,
-    state: "complianceCollapse",
-    layout: ROUTE_PATH.USER,
-    views: [
-      {
-        path: "/compliance/dashboard",
+    {
+        collapse: true,
         name: "Compliance",
-        component: ComplianceDashboard,
-        layout: ROUTE_PATH.USER
-      },
-      {
-        path: "/compliance/driver-hos",
-        name: "Driver HOS",
-        component: DriverHOS,
-        layout: ROUTE_PATH.USER
-      },
-      {
-        path: "/compliance/driver-hos-report",
-        name: "Driver HOS Report - Ali Singh",
-        component: DriverHOSReport,
+        icon: ComplianceIcon,
+        state: "complianceCollapse",
         layout: ROUTE_PATH.USER,
-        isFixed: true
-      },
-      {
-        path: "/compliance/hos-vialations",
-        name: "HOS Violations",
-        component: HOSVialations,
-        layout: ROUTE_PATH.USER
-      },
-      {
-        path: "/compliance/unassigned-hos",
-        name: "Unassigned HOS",
-        component: UnassignedHOS,
-        layout: ROUTE_PATH.USER
-      },
-      {
-        path: "/compliance/unassigned-hos-report/:id",
-        name: "Unassigned HOS Report",
-        component: UnassignedHOSReport,
-        layout: ROUTE_PATH.USER,
-        isFixed: true,
-      },
-      {
-        path: "/compliance/driver-hos-audit",
-        name: "Driver HOS audit",
-        component: DriverHOSAudit,
-        layout: ROUTE_PATH.USER
-      },
-      {
-        path: "/compliance/driver-hos-audit-report/:id",
-        name: "Driver HOS audit/ Ali Singh",
-        component: DriverHOSAuditDetails,
-        layout: ROUTE_PATH.USER,
-        isFixed: true,
-      },
-      {
-        path: "/compliance/duty-status-summary",
-        name: "Duty status Summary",
-        component: DutyStatusSummary,
-        layout: ROUTE_PATH.USER
-      },
-      {
-        path: "/compliance/hos-audit-transfer",
-        name: "HOS Audit transfer",
-        component: HOSAuditTransfer,
-        layout: ROUTE_PATH.USER
-      },
-    ]
-  },
-  {
-    collapse: true,
-    name: "Maintenance",
-    icon: MaintenanceIcon,
-    state: "maintenaceCollapse",
-    layout: ROUTE_PATH.USER,
-    views: [
-      {
-        path: "/maintenance/dashboard",
+        views: [
+            {
+                path: "/compliance/dashboard",
+                name: "Compliance",
+                component: ComplianceDashboard,
+                layout: ROUTE_PATH.USER
+            },
+            {
+                path: "/compliance/driver-hos",
+                name: "Driver HOS",
+                component: DriverHOS,
+                layout: ROUTE_PATH.USER
+            },
+            {
+                path: "/compliance/driver-hos-report",
+                name: "Driver HOS Report - Ali Singh",
+                component: DriverHOSReport,
+                layout: ROUTE_PATH.USER,
+                isFixed: true
+            },
+            {
+                path: "/compliance/hos-vialations",
+                name: "HOS Violations",
+                component: HOSVialations,
+                layout: ROUTE_PATH.USER
+            },
+            {
+                path: "/compliance/unassigned-hos",
+                name: "Unassigned HOS",
+                component: UnassignedHOS,
+                layout: ROUTE_PATH.USER
+            },
+            {
+                path: "/compliance/unassigned-hos-report/:id",
+                name: "Unassigned HOS Report",
+                component: UnassignedHOSReport,
+                layout: ROUTE_PATH.USER,
+                isFixed: true,
+            },
+            {
+                path: "/compliance/driver-hos-audit",
+                name: "Driver HOS audit",
+                component: DriverHOSAudit,
+                layout: ROUTE_PATH.USER
+            },
+            {
+                path: "/compliance/driver-hos-audit-report/:id",
+                name: "Driver HOS audit/ Ali Singh",
+                component: DriverHOSAuditDetails,
+                layout: ROUTE_PATH.USER,
+                isFixed: true,
+            },
+            {
+                path: "/compliance/duty-status-summary",
+                name: "Duty status Summary",
+                component: DutyStatusSummary,
+                layout: ROUTE_PATH.USER
+            },
+            {
+                path: "/compliance/hos-audit-transfer",
+                name: "HOS Audit transfer",
+                component: HOSAuditTransfer,
+                layout: ROUTE_PATH.USER
+            },
+        ]
+    },
+    {
+        collapse: true,
         name: "Maintenance",
-        component: Maintenance,
+        icon: MaintenanceIcon,
+        state: "maintenaceCollapse",
         layout: ROUTE_PATH.USER,
+        views: [
+            {
+                path: "/maintenance/dashboard",
+                name: "Maintenance",
+                component: Maintenance,
+                layout: ROUTE_PATH.USER,
 
-      },
-      {
-        path: "/maintenance/driver-vehicle-inspection-report/vehicle101",
-        name: "Driver Vehicle Inspection Reports",
-        component: DriverVehicleReport,
-        layout: ROUTE_PATH.USER
-      }
-    ]
-  },
-  {
-    path: "/dispatch",
-    name: "Dispatch",
-    icon: DispatchIcon,
-    component: Dispatch,
-    layout: ROUTE_PATH.DISPATCH
-  },
-  {
-    collapse: true,
-    name: "Fuel & Energy",
-    icon: FuelEnergyIcon,
-    state: "fuelEnergyCollapse",
-    layout: ROUTE_PATH.USER,
-    views: [
-      {
-        path: "/fuel-energy/dashboard",
+            },
+            {
+                path: "/maintenance/driver-vehicle-inspection-report/vehicle101",
+                name: "Driver Vehicle Inspection Reports",
+                component: DriverVehicleReport,
+                layout: ROUTE_PATH.USER
+            }
+        ]
+    },
+    {
+        path: "/dispatch",
+        name: "Dispatch",
+        icon: DispatchIcon,
+        component: Dispatch,
+        layout: ROUTE_PATH.DISPATCH
+    },
+    {
+        collapse: true,
         name: "Fuel & Energy",
-        component: FuelEnergy,
-        layout: ROUTE_PATH.USER
-      },
-      {
-        path: "/fuel-energy/fuel-purchase",
-        name: "Fuel Purchase",
-        component: FuelPurchase,
-        layout: ROUTE_PATH.USER
-      },
-      {
-        path: "/fuel-energy/driver-efficiency",
-        name: "Driver Efficiency Report",
-        component: DriverEfficiency,
-        layout: ROUTE_PATH.USER
-      },
-      {
-        path: "/fuel-energy/driver-efficiencies-report",
-        name: "Driver Efficiency",
-        component: DriverEfficiencyReport,
+        icon: FuelEnergyIcon,
+        state: "fuelEnergyCollapse",
         layout: ROUTE_PATH.USER,
-      },
+        views: [
+            {
+                path: "/fuel-energy/dashboard",
+                name: "Fuel & Energy",
+                component: FuelEnergy,
+                layout: ROUTE_PATH.USER
+            },
+            {
+                path: "/fuel-energy/fuel-purchase",
+                name: "Fuel Purchase",
+                component: FuelPurchase,
+                layout: ROUTE_PATH.USER
+            },
+            {
+                path: "/fuel-energy/driver-efficiency",
+                name: "Driver Efficiency Report",
+                component: DriverEfficiency,
+                layout: ROUTE_PATH.USER
+            },
+            {
+                path: "/fuel-energy/driver-efficiencies-report",
+                name: "Driver Efficiency",
+                component: DriverEfficiencyReport,
+                layout: ROUTE_PATH.USER,
+            },
 
-      {
-        path: "/fuel-energy/IFTA",
-        name: "IFTA",
-        component: IFTA,
-        layout: ROUTE_PATH.USER,
-      },
+            {
+                path: "/fuel-energy/IFTA",
+                name: "IFTA",
+                component: IFTA,
+                layout: ROUTE_PATH.USER,
+            },
 
-    ]
-  },
-  {
-    collapse: true,
-    path: "/documents",
-    name: "Documents",
-    icon: DocumentsIcon,
-    layout: ROUTE_PATH.USER,
-    views: [
-      {
-        path: "/documents/submitted/:id",
-        name: "Documents Submitted Detail",
-        component: SubmittedDetail,
-        layout: ROUTE_PATH.USER,
-        isFixed: true
-      },
-      {
+        ]
+    },
+
+    {
+        collapse: true,
         path: "/documents",
         name: "Documents",
-        component: Documents,
+        state: "documentsCollapse",
+        icon: DocumentsIcon,
         layout: ROUTE_PATH.USER,
-      }
-    ]
-  },
-  {
-    path: "/reports",
-    name: "Reports",
-    icon: ReportsIcon,
-    component: Reports,
-    layout: ROUTE_PATH.USER
-  },
-  {
-    path: "/internal-tools",
-    name: "Internal Tools",
-    icon: InternalToolsIcon,
-    component: InternalTools,
-    layout: ROUTE_PATH.USER
-  },
-  {
-    path: "/messages",
-    name: "Messages",
-    icon: MessagesIcon,
-    extraIcon: StatusGreenIcon,
-    component: Messages,
-    isFixed: true,
-    layout: ROUTE_PATH.MESSAGES,
-  },
-  {
-    path: "/alerts",
-    name: "Alerts",
-    icon: AlertsIcon,
-    extraIcon: StatusRedIcon,
-    component: Alerts,
-    isFixed: true,
-    layout: ROUTE_PATH.USER
-  },
-  {
-    path: "/org/general",
-    name: "Settings",
-    icon: SettingsIcon,
-    component: Settings,
-    isFixed: true,
-    layout: ROUTE_PATH.SETTING
-  },
+        views: [
+            {
+                path: "/documents/submitted/:id",
+                name: "Documents Submitted Detail",
+                component: SubmittedDetail,
+                layout: ROUTE_PATH.USER,
+                isFixed: true
+            },
+            {
+                path: "/documents",
+                name: "Documents",
+                component: Documents,
+                layout: ROUTE_PATH.USER,
+            }
+        ]
+    },
+
+    {
+        collapse: true,
+        path: "/reports",
+        name: "Reports",
+        state: "reportsCollapse",
+        icon: ReportsIcon,
+        layout: ROUTE_PATH.USER,
+        views: [
+            {
+                path: "/report/dashboard",
+                name: "Dashboard",
+                component: DashboardReport,
+                layout: ROUTE_PATH.USER,
+                // isFixed: true
+            },
+            {
+                path: "/report/",
+                name: "Reports",
+                component: Reports,
+                layout: ROUTE_PATH.USER,
+                // isFixed: true
+            }
+        ]
+    },
+
+    {
+        path: "/internal-tools",
+        name: "Internal Tools",
+        icon: InternalToolsIcon,
+        component: InternalTools,
+        layout: ROUTE_PATH.USER
+    },
+    {
+        path: "/messages",
+        name: "Messages",
+        icon: MessagesIcon,
+        extraIcon: StatusGreenIcon,
+        component: Messages,
+        isFixed: true,
+        layout: ROUTE_PATH.MESSAGES,
+    },
+    {
+        path: "/alerts",
+        name: "Alerts",
+        icon: AlertsIcon,
+        extraIcon: StatusRedIcon,
+        component: Alerts,
+        isFixed: true,
+        layout: ROUTE_PATH.USER
+    },
+    {
+        path: "/org/general",
+        name: "Settings",
+        icon: SettingsIcon,
+        component: Settings,
+        isFixed: true,
+        layout: ROUTE_PATH.SETTING
+    },
 ];
 export default dashRoutes;

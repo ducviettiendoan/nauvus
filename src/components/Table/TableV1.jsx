@@ -65,10 +65,10 @@ const useStyles = makeStyles(styles);
 const TableRowExpandable = (props) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const { record, columns, rowSelection, checked, index } = props;
+  const { record, columns, rowSelection, checked, index, onBodyRow } = props;
   return (
     <React.Fragment>
-      <TableRow key={index} {...props.onBodyRow}>
+      <TableRow key={index} {...onBodyRow} onClick={() => onBodyRow.onClick && onBodyRow.onClick(record.id)} >
         {rowSelection && (
           <TableCell className={classes.checkbox}>
             <Checkbox
@@ -296,7 +296,7 @@ class TableV1 extends React.Component {
                           expandedRowRender={expandedRowRender}
                         />
                       ) : (
-                        <TableRow key={index} {...onBodyRow}>
+                        <TableRow key={index} {...onBodyRow} onClick={() => onBodyRow.onClick && onBodyRow.onClick(record.id)}>
                           {rowSelection && (
                             <TableCell className={classes.checkbox}>
                               <Checkbox
