@@ -3,25 +3,17 @@ import {makeStyles} from "@material-ui/core/styles";
 import {Grid} from "@material-ui/core";
 import BarChart from "components/CustomBarChart/BarChart";
 import complianceStyle from "../../compliance/style/complianceStyle";
-import GridContainer from "components/Grid/GridContainer";
-import GridItem from "components/Grid/GridItem";
-import RoundedTabs from "components/CustomTabs/RoundedTabs";
-import Calendar from "components/Calendar/Calendar";
-import Button from "components/CustomButtons/Button";
-import MoreHorizontalIcon from "components/Icons/MoreHorizontalIcon";
-import LiveIconWhite from "components/Icons/LiveIconWhite";
-import {BarChartCard} from "../../compliance/compliance-card/BarChartCard";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import Link from "@material-ui/core/Link";
 import CardContent from "@material-ui/core/CardContent";
-import Table from "../../../../../components/Table/TableV1";
-import {getDriverDistanceData, getDrivingHoursData, getFuelUsage} from "../../../../../reducers/compliance";
+import Table from "components/Table/TableV1";
+import {getVehicleDriverDistanceData, getVehicleDrivingHoursData, getVehicleFuelUsage,getVehicleFuelEfficiency,getIdealHour,getChartData} from "reducers/report";
 import {connect} from "react-redux";
 
 const useStyles = makeStyles(complianceStyle);
 
-export function VehicleReport(props) {
+function VehicleReport(props) {
   // const {title, data, radio} = props;
   const classes = useStyles();
 
@@ -111,47 +103,80 @@ export function VehicleReport(props) {
     },
   ];
 
-  const dataChart1 = [12, 6, 12, 9, 5.5, 7.5, 14, 5, 9, 5.5, 9, 15, 5, 9, 3.5, 6];
-  const dataChart2 = [5, 2.5, 5, 4, 2, 3, 6, 1.5, 3.5, 2, 4, 6, 2, 3.5, 1, 3];
-  const dataChart3 = [17, 917, 13, 8, 11, 20.5, 7, 12.5, 8, 13.5, 21, 7, 13.5, 4.9, 9];
+  const columns4 = [
+    {
+      title: 'Least Efficiency',
+      key: 'leastEfficiency',
+      onHeaderCell: {className: classes.headerFirst},
+      render: leastEfficiency => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textName}>{leastEfficiency}</div>
+        </div>
+      ),
+    },
+    {
+      title: 'Efficiency',
+      key: 'efficiency',
+      onHeaderCell: {className: classes.headerFirst},
+      render: efficiency => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textName}>{efficiency}</div>
+        </div>
+      ),
+    },
+  ];
+
+  const columns5 = [
+    {
+      title: 'Top Idealer',
+      key: 'topIdealer',
+      onHeaderCell: {className: classes.headerFirst},
+      render: topIdealer => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textName}>{topIdealer}</div>
+        </div>
+      ),
+    },
+    {
+      title: 'Idle Time',
+      key: 'idealTime',
+      onHeaderCell: {className: classes.headerFirst},
+      render: idealTime => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textName}>{idealTime}</div>
+        </div>
+      ),
+    },
+
+    {
+      title: 'Fuel Wasted',
+      key: 'fuelWasted',
+      onHeaderCell: {className: classes.headerFirst},
+      render: fuelWasted => (
+        <div className={classes.alignItemsCenter}>
+          <div className={classes.textName}>{fuelWasted}</div>
+        </div>
+      ),
+    },
+  ];
+
 
   React.useEffect(() => {
     // Get list data
-    props.getDriverDistanceData(),
-      props.getDrivingHoursData(),
-      props.getFuelUsage()
+    props.getVehicleDriverDistanceData(),
+      props.getVehicleDrivingHoursData(),
+      props.getVehicleFuelUsage(),
+      props.getVehicleFuelEfficiency(),
+      props.getIdealHour(),
+      props.getChartData()
   }, []);
 
-
   return (
-    <Grid>
-      {/*<GridContainer className={classes.topHeader}>*/}
-      {/*  <GridItem xs={12} sm={11} md={8} xl={6} className={classes.topHeaderTitle}>*/}
-      {/*    <RoundedTabs tabs={["Vehicle", "Trailer", "Driver"]} tabValue={handleChangeTab}/>*/}
-      {/*  </GridItem>*/}
-      {/*  <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>*/}
-      {/*    <Calendar placeholder="Day"/>*/}
-      {/*    <Button*/}
-      {/*      color="white"*/}
-      {/*      aria-label="edit"*/}
-      {/*      justIcon*/}
-      {/*      round*/}
-      {/*      className={`btn-36 ${classes.moreAction} mr-2`}*/}
-      {/*      // onClick={handleOpenMore}*/}
-      {/*    >*/}
-      {/*      <MoreHorizontalIcon/>*/}
-      {/*    </Button>*/}
-      {/*    <Button round className="btn-round-green w-84">*/}
-      {/*      <LiveIconWhite/>*/}
-      {/*      Live*/}
-      {/*    </Button>*/}
-      {/*  </GridItem>*/}
-      {/*</GridContainer>*/}
-
+    <div>
+      <Card className={classes.topCard}>
       <Grid container className={classes.barChartSpace}>
-
         {/*1st chart*/}
-        <Grid item xs={4} sm={4} md={4} style={{display: "flex", justifyContent: "flex-start", borderRadius: "20px"}}>
+        <Grid item xs={4} sm={4} md={4} style={{display:"flex", justifyContent: "flex-start", borderRadius: "20px"}}>
           <Card className={classes.barChartSize}>
             <CardHeader
               title={
@@ -170,7 +195,7 @@ export function VehicleReport(props) {
                 <div className={classes.header}>8.3 h</div>
                 <div className={classes.subHeader}>Avg Hours Driven</div>
               </Grid>
-              <BarChart data={dataChart1}/>
+              {props.dataChart&&props.dataChart.length&& <BarChart data={props.dataChart[0]}/>}
             </CardContent>
             <div className={classes.cardFooter}>
               <Table
@@ -186,7 +211,6 @@ export function VehicleReport(props) {
               />
             </div>
           </Card>
-
         </Grid>
 
         {/*2nd chart*/}
@@ -209,7 +233,7 @@ export function VehicleReport(props) {
                 <div className={classes.header}>8.3 h</div>
                 <div className={classes.subHeader}>Avg Hours Driven</div>
               </Grid>
-              <BarChart data={dataChart2}/>
+              {props.dataChart&&props.dataChart.length&& <BarChart data={props.dataChart[1]}/>}
             </CardContent>
             <div className={classes.cardFooter}>
               <Table
@@ -226,7 +250,6 @@ export function VehicleReport(props) {
             </div>
           </Card>
         </Grid>
-
 
         {/*3rd chart*/}
         <Grid item xs={4} sm={4} md={4} style={{display: "flex", justifyContent: "flex-end", borderRadius: "20px"}}>
@@ -248,7 +271,7 @@ export function VehicleReport(props) {
                 <div className={classes.header}>3.1 gal</div>
                 <div className={classes.subHeader}>Total Fuel Used</div>
               </Grid>
-              <BarChart data={dataChart3}/>
+              {props.dataChart&&props.dataChart.length&& <BarChart data={props.dataChart[2]}/>}
             </CardContent>
 
             <div className={classes.cardFooter}>
@@ -268,36 +291,133 @@ export function VehicleReport(props) {
           </Card>
         </Grid>
       </Grid>
-    </Grid>
+
+      <Grid container className={classes.barChartSpace}>
+        {/*4th chart*/}
+        <Grid item xs={4} sm={4} md={4} style={{display: "flex", justifyContent: "flex-start", borderRadius: "20px"}}>
+          <Card className={classes.barChartSize}>
+            <CardHeader
+              title={
+                <Grid container>
+                  <Grid item xs={8} sm={12} md={8} className={classes.cardHeaderTitle}>
+                    Fuel Efficiency
+                  </Grid>
+                  <Grid item xs={4} sm={12} md={4} className={classes.cardHeaderSubTitle}>
+                    <Link>View Details</Link>
+                  </Grid>
+                </Grid>}
+              className={classes.cardHeader}
+            />
+            <CardContent className={classes.chartTop}>
+              <Grid xs={12} sm={12} md={12} style={{textAlign: 'center'}}>
+                <div className={classes.header}>33.4 l/100 km</div>
+                <div className={classes.subHeader}>Avg Efficiency</div>
+              </Grid>
+              {props.dataChart&&props.dataChart.length&& <BarChart data={props.dataChart[3]}/>}
+            </CardContent>
+            <div className={classes.cardFooter}>
+              <Table
+                columns={columns4}
+                dataSource={props.dataChart4}
+                onHeaderRow={{
+                  className: classes.onHeaderRow
+                }}
+                onBodyRow={{
+                  // onClick: viewDetail,
+                  className: classes.tableRow
+                }}
+              />
+            </div>
+          </Card>
+        </Grid>
+
+        {/*5th chart*/}
+        <Grid item xs={4} sm={4} md={4} style={{display: "flex", justifyContent: "center", borderRadius: "20px"}}>
+          <Card className={classes.barChartSize}>
+            <CardHeader
+              title={
+                <Grid container>
+                  <Grid item xs={8} sm={12} md={8} className={classes.cardHeaderTitle}>
+                    Idle Hours
+                  </Grid>
+                  <Grid item xs={4} sm={12} md={4} className={classes.cardHeaderSubTitle}>
+                    <Link>View Details</Link>
+                  </Grid>
+                </Grid>}
+              className={classes.cardHeader}
+            />
+            <CardContent className={classes.chartTop}>
+              <Grid xs={12} sm={12} md={12} style={{textAlign: 'center'}}>
+                <div className={classes.header}>8.3 h</div>
+                <div className={classes.subHeader}>Avg Hours Driven</div>
+              </Grid>
+              {props.dataChart&&props.dataChart.length&& <BarChart data={props.dataChart[4]}/>}
+            </CardContent>
+            <div className={classes.cardFooter}>
+              <Table
+                columns={columns5}
+                dataSource={props.dataChart5}
+                onHeaderRow={{
+                  className: classes.onHeaderRow
+                }}
+                onBodyRow={{
+                  // onClick: viewDetail,
+                  className: classes.tableRow
+                }}
+              />
+            </div>
+          </Card>
+        </Grid>
+
+        <Grid item xs={4} sm={4} md={4} style={{display: "flex", justifyContent: "flex-end", borderRadius: "20px"}}>
+        </Grid>
+      </Grid>
+      </Card>
+    </div>
   )
 };
 
-const mapStateToProps = ({compliance}) => {
+const mapStateToProps = ({report}) => {
   return {
     //1
-    dataChart1: compliance.driverDistance.data,
-    pageChart1: compliance.driverDistance.page,
-    totalChart1: compliance.driverDistance.total,
-    pageSizeChart1: compliance.driverDistance.pageSize,
+    dataChart1: report.driverDistance.data,
+    pageChart1: report.driverDistance.page,
+    totalChart1: report.driverDistance.total,
+    pageSizeChart1: report.driverDistance.pageSize,
 
     //2
-    dataChart2: compliance.drivingHours.data,
-    pageChart2: compliance.drivingHours.page,
-    totalChart2: compliance.drivingHours.total,
-    pageSizeChart2: compliance.drivingHours.pageSize,
+    dataChart2: report.drivingHours.data,
+    pageChart2: report.drivingHours.page,
+    totalChart2: report.drivingHours.total,
+    pageSizeChart2: report.drivingHours.pageSize,
 
     //3
-    dataChart3: compliance.fuelUsage.data,
-    pageChart3: compliance.fuelUsage.page,
-    totalChart3: compliance.fuelUsage.total,
-    pageSizeChart3: compliance.fuelUsage.pageSize
+    dataChart3: report.fuelUsage.data,
+    pageChart3: report.fuelUsage.page,
+    totalChart3: report.fuelUsage.total,
+    pageSizeChart3: report.fuelUsage.pageSize,
+
+    dataChart4: report.fuelEfficiency.data,
+    pageChart4: report.fuelEfficiency.page,
+    totalChart4: report.fuelEfficiency.total,
+    pageSizeChart4: report.fuelEfficiency.pageSize,
+
+    dataChart5: report.idealHour.data,
+    pageChart5: report.idealHour.page,
+    totalChart5: report.idealHour.total,
+    pageSizeChart5: report.idealHour.pageSize,
+
+    dataChart: report.chartData.data,
   };
 };
 
 const mapDispatchToProps = {
-  getDriverDistanceData,
-  getDrivingHoursData,
-  getFuelUsage,
+  getVehicleDriverDistanceData,
+  getVehicleDrivingHoursData,
+  getVehicleFuelUsage,
+  getVehicleFuelEfficiency,
+  getIdealHour,
+  getChartData
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(VehicleReport);

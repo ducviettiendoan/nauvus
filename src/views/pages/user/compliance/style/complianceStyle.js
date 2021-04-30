@@ -204,6 +204,9 @@ const complianceStyle = {
     justifyContent: "space-between",
     marginBottom: "0px !important",
     marginTop: "15px",
+    paddingBottom: "60px",
+    paddingLeft: "16px",
+    paddingRight: "16px",
   },
 
   barChartSize: {
@@ -263,6 +266,10 @@ const complianceStyle = {
     background: "#FFFFFF !important",
     border: "1px solid #ECEEF0 !important"
   },
+  topCard: {
+    borderRadius: "12px",
+    margin: "16px 0",
+  }
 }
 
 export default complianceStyle
