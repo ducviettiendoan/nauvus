@@ -127,7 +127,8 @@ const appStyle = theme => ({
     width: 370,
     position: "fixed",
     borderRight: "1px solid #ECEEF0",
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
+    overflowY: "auto"
   }
 });
 
