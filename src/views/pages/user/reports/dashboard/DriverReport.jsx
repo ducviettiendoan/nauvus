@@ -10,11 +10,13 @@ import CardContent from "@material-ui/core/CardContent";
 import Table from "components/Table/TableV1";
 import {getDrivingDistanceData,getDrivingHoursData,getChartData} from "reducers/report";
 import {connect} from "react-redux";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles(complianceStyle);
 
 function DriverReport(props) {
   // const {title, data, radio} = props;
+  const history = useHistory()
 
   React.useEffect(() => {
     // Get list data
@@ -27,9 +29,14 @@ function DriverReport(props) {
 
   const [value, setValue] = React.useState(0);
 
+  const viewDetail = (id) => {
+    history.push(`/u/report/viewdetail`)
+  }
+
   const handleChangeTab = (newValue) => {
     setValue(newValue);
   };
+
 
   const columns1 = [
     {
@@ -92,7 +99,7 @@ function DriverReport(props) {
                     Driving Distance
                   </Grid>
                   <Grid item xs={4} sm={12} md={4} className={classes.cardHeaderSubTitle}>
-                    <Link>View Details</Link>
+                    <Link onClick={viewDetail}>View Detail</Link>
                   </Grid>
                 </Grid>}
               className={classes.cardHeader}
@@ -130,7 +137,7 @@ function DriverReport(props) {
                     Driving Hours
                   </Grid>
                   <Grid item xs={4} sm={12} md={4} className={classes.cardHeaderSubTitle}>
-                    <Link>View Details</Link>
+                    <Link onClick={viewDetail}>View Details</Link>
                   </Grid>
                 </Grid>}
               className={classes.cardHeader}
