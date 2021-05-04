@@ -415,13 +415,27 @@ const dashRoutes = [
     },
 
     {
+        path: "/documents",
+        name: "Documents",
+        icon: DocumentsIcon,
+        component: Documents,
+        layout: ROUTE_PATH.USER
+      },
+      {
+        path: "/reports",
+        name: "Reports",
+        icon: ReportsIcon,
+        component: Reports,
+        layout: ROUTE_PATH.USER
+      },
+      {
         path: "/internal-tools",
         name: "Internal Tools",
         icon: InternalToolsIcon,
         component: InternalTools,
         layout: ROUTE_PATH.USER
-    },
-    {
+      },
+      {
         path: "/messages",
         name: "Messages",
         icon: MessagesIcon,
@@ -429,23 +443,24 @@ const dashRoutes = [
         component: Messages,
         isFixed: true,
         layout: ROUTE_PATH.MESSAGES,
-    },
-    {
+      },
+      {
         path: "/alerts",
         name: "Alerts",
         icon: AlertsIcon,
         extraIcon: StatusRedIcon,
         component: Alerts,
         isFixed: true,
-        layout: ROUTE_PATH.USER
-    },
-    {
+        layout: ROUTE_PATH.ALERT
+      },
+      {
         path: "/org/general",
         name: "Settings",
         icon: SettingsIcon,
         component: Settings,
         isFixed: true,
         layout: ROUTE_PATH.SETTING
-    },
+      },
+    
 ];
 export default dashRoutes;

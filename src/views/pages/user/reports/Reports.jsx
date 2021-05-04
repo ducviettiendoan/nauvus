@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
 import FormatQuote from "@material-ui/icons/FormatQuote";
@@ -32,12 +32,12 @@ const styles = {
   },
   topHeaderTitle: {
     textAlign: "left",
-    padding: "0 16px !important",  
+    padding: "0 16px !important",
     marginBottom: "0px !important",
   },
   topHeaderButton: {
     textAlign: "right",
-    
+
   },
   titleHeader: {
     fontSize: "18px",
@@ -108,20 +108,21 @@ export default function Reports() {
 
   return (
     <div>
-       <GridContainer>
+      <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
               <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} sm={11} md={4} xl={2} className={classes.topHeaderTitle}>
-                <SettingSearchBox className={classes.searchBox} style={{marginBottom: "0"}} placeholder="Search reports by name or category" />
-                 
+                  <SettingSearchBox className={classes.searchBox} style={{marginBottom: "0"}}
+                                    placeholder="Search reports by name or category"/>
+
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <Button
                     round
                     className="btn-round-active mr-2"
-                    startIcon={<AddOutlined />}
+                    startIcon={<AddOutlined/>}
                     onClick={openAssignHOS}
                   >
                     Create Custom Report
@@ -131,316 +132,328 @@ export default function Reports() {
               <Card>
                 <CardBody>
                   <List
-                          component="nav"
-                          aria-labelledby="nested-list-subheader"
-                          className={classes.root}
-                        >
-                          <div className={classes.listCard} >
-                          <ListItem
-                            button
-                            onClick={() => handleClick(`Activity`)}
-                          >
-                            <ListItemText
-                              primary="Activity"
-                              classes={{primary: classes.titleHeader}}
-                            />
-                            {isOpenList(`Activity`) ? (
-                              <ExpandLess/>
-                            ) : (
-                              <ExpandMore/>
-                            )}
-                          </ListItem>
-                          <Collapse
-                            in={isOpenList(`Activity`)}
-                            timeout="auto"
-                            unmountOnExit
-                          >
-                            <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of your assets and drivers.</GridItem>
+                    component="nav"
+                    aria-labelledby="nested-list-subheader"
+                    className={classes.root}
+                  >
+                    <div className={classes.listCard}>
+                      <ListItem
+                        button
+                        onClick={() => handleClick(`Activity`)}
+                      >
+                        <ListItemText
+                          primary="Activity"
+                          classes={{primary: classes.titleHeader}}
+                        />
+                        {isOpenList(`Activity`) ? (
+                          <ExpandLess/>
+                        ) : (
+                          <ExpandMore/>
+                        )}
+                      </ListItem>
+                      <Collapse
+                        in={isOpenList(`Activity`)}
+                        timeout="auto"
+                        unmountOnExit
+                      >
+                        <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of
+                          your assets and drivers.</GridItem>
 
-                          </Collapse>
-                          </div>
-                          <div className={classes.listCard} >
-                          <ListItem
-                            button
-                            onClick={() => handleClick(`Activity Summary`)}
-                          >
-                            <ListItemText
-                              primary="Activity Summary"
-                              classes={{primary: classes.titleHeader}}
-                            />
-                            {isOpenList(`Activity Summary`) ? (
-                              <ExpandLess/>
-                            ) : (
-                              <ExpandMore/>
-                            )}
-                          </ListItem>
-                          <Collapse
-                            in={isOpenList(`Activity Summary`)}
-                            timeout="auto"
-                            unmountOnExit
-                          >
-                            <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of your assets and drivers.</GridItem>
+                      </Collapse>
+                    </div>
+                    <div className={classes.listCard}>
+                      <ListItem
+                        button
+                        onClick={() => handleClick(`Activity Summary`)}
+                      >
+                        <ListItemText
+                          primary="Activity Summary"
+                          classes={{primary: classes.titleHeader}}
+                        />
+                        {isOpenList(`Activity Summary`) ? (
+                          <ExpandLess/>
+                        ) : (
+                          <ExpandMore/>
+                        )}
+                      </ListItem>
+                      <Collapse
+                        in={isOpenList(`Activity Summary`)}
+                        timeout="auto"
+                        unmountOnExit
+                      >
+                        <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of
+                          your assets and drivers.</GridItem>
 
-                          </Collapse>
-                          </div>
-                          <div className={classes.listCard} >
-                          <ListItem
-                            button
-                            onClick={() => handleClick(`Trip History`)}
-                          >
-                            <ListItemText
-                              primary="Trip History"
-                              classes={{primary: classes.titleHeader}}
-                            />
-                            {isOpenList(`Trip History`) ? (
-                              <ExpandLess/>
-                            ) : (
-                              <ExpandMore/>
-                            )}
-                          </ListItem>
-                          <Collapse
-                            in={isOpenList(`Trip History`)}
-                            timeout="auto"
-                            unmountOnExit
-                          >
-                            <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of your assets and drivers.</GridItem>
+                      </Collapse>
+                    </div>
+                    <div className={classes.listCard}>
+                      <ListItem
+                        button
+                        onClick={() => handleClick(`Trip History`)}
+                      >
+                        <ListItemText
+                          primary="Trip History"
+                          classes={{primary: classes.titleHeader}}
+                        />
+                        {isOpenList(`Trip History`) ? (
+                          <ExpandLess/>
+                        ) : (
+                          <ExpandMore/>
+                        )}
+                      </ListItem>
+                      <Collapse
+                        in={isOpenList(`Trip History`)}
+                        timeout="auto"
+                        unmountOnExit
+                      >
+                        <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of
+                          your assets and drivers.</GridItem>
 
-                          </Collapse>
-                          </div>
-                          <div className={classes.listCard} >
-                          <ListItem
-                            button
-                            onClick={() => handleClick(`Jurisdiction Mileage`)}
-                          >
-                            <ListItemText
-                              primary="Jurisdiction Mileage"
-                              classes={{primary: classes.titleHeader}}
-                            />
-                            {isOpenList(`Jurisdiction Mileage`) ? (
-                              <ExpandLess/>
-                            ) : (
-                              <ExpandMore/>
-                            )}
-                          </ListItem>
-                          <Collapse
-                            in={isOpenList(`Jurisdiction Mileage`)}
-                            timeout="auto"
-                            unmountOnExit
-                          >
-                            <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of your assets and drivers.</GridItem>
+                      </Collapse>
+                    </div>
+                    <div className={classes.listCard}>
+                      <ListItem
+                        button
+                        onClick={() => handleClick(`Jurisdiction Mileage`)}
+                      >
+                        <ListItemText
+                          primary="Jurisdiction Mileage"
+                          classes={{primary: classes.titleHeader}}
+                        />
+                        {isOpenList(`Jurisdiction Mileage`) ? (
+                          <ExpandLess/>
+                        ) : (
+                          <ExpandMore/>
+                        )}
+                      </ListItem>
+                      <Collapse
+                        in={isOpenList(`Jurisdiction Mileage`)}
+                        timeout="auto"
+                        unmountOnExit
+                      >
+                        <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of
+                          your assets and drivers.</GridItem>
 
-                          </Collapse>
-                          </div>
-                          <div className={classes.listCard} >
-                          <ListItem
-                            button
-                            onClick={() => handleClick(`Start/Stop`)}
-                          >
-                            <ListItemText
-                              primary="Start/Stop"
-                              classes={{primary: classes.titleHeader}}
-                            />
-                            {isOpenList(`Start/Stop`) ? (
-                              <ExpandLess/>
-                            ) : (
-                              <ExpandMore/>
-                            )}
-                          </ListItem>
-                          <Collapse
-                            in={isOpenList(`Start/Stop`)}
-                            timeout="auto"
-                            unmountOnExit
-                          >
-                            <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of your assets and drivers.</GridItem>
+                      </Collapse>
+                    </div>
+                    <div className={classes.listCard}>
+                      <ListItem
+                        button
+                        onClick={() => handleClick(`Start/Stop`)}
+                      >
+                        <ListItemText
+                          primary="Start/Stop"
+                          classes={{primary: classes.titleHeader}}
+                        />
+                        {isOpenList(`Start/Stop`) ? (
+                          <ExpandLess/>
+                        ) : (
+                          <ExpandMore/>
+                        )}
+                      </ListItem>
+                      <Collapse
+                        in={isOpenList(`Start/Stop`)}
+                        timeout="auto"
+                        unmountOnExit
+                      >
+                        <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of
+                          your assets and drivers.</GridItem>
 
-                          </Collapse>
-                          </div>
-                          <div className={classes.listCard} >
-                          <ListItem
-                            button
-                            onClick={() => handleClick(`Privacy Sessions`)}
-                          >
-                            <ListItemText
-                              primary="Privacy Sessions"
-                              classes={{primary: classes.titleHeader}}
-                            />
-                            {isOpenList(`Privacy Sessions`) ? (
-                              <ExpandLess/>
-                            ) : (
-                              <ExpandMore/>
-                            )}
-                          </ListItem>
-                          <Collapse
-                            in={isOpenList(`Privacy Sessions`)}
-                            timeout="auto"
-                            unmountOnExit
-                          >
-                            <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of your assets and drivers.</GridItem>
+                      </Collapse>
+                    </div>
+                    <div className={classes.listCard}>
+                      <ListItem
+                        button
+                        onClick={() => handleClick(`Privacy Sessions`)}
+                      >
+                        <ListItemText
+                          primary="Privacy Sessions"
+                          classes={{primary: classes.titleHeader}}
+                        />
+                        {isOpenList(`Privacy Sessions`) ? (
+                          <ExpandLess/>
+                        ) : (
+                          <ExpandMore/>
+                        )}
+                      </ListItem>
+                      <Collapse
+                        in={isOpenList(`Privacy Sessions`)}
+                        timeout="auto"
+                        unmountOnExit
+                      >
+                        <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of
+                          your assets and drivers.</GridItem>
 
-                          </Collapse>
-                          </div>
-                          <div className={classes.listCard} >
-                          <ListItem
-                            button
-                            onClick={() => handleClick(`Time On Site`)}
-                          >
-                            <ListItemText
-                              primary="Time On Site"
-                              classes={{primary: classes.titleHeader}}
-                            />
-                            {isOpenList(`Time On Site`) ? (
-                              <ExpandLess/>
-                            ) : (
-                              <ExpandMore/>
-                            )}
-                          </ListItem>
-                          <Collapse
-                            in={isOpenList(`Time On Site`)}
-                            timeout="auto"
-                            unmountOnExit
-                          >
-                            <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of your assets and drivers.</GridItem>
+                      </Collapse>
+                    </div>
+                    <div className={classes.listCard}>
+                      <ListItem
+                        button
+                        onClick={() => handleClick(`Time On Site`)}
+                      >
+                        <ListItemText
+                          primary="Time On Site"
+                          classes={{primary: classes.titleHeader}}
+                        />
+                        {isOpenList(`Time On Site`) ? (
+                          <ExpandLess/>
+                        ) : (
+                          <ExpandMore/>
+                        )}
+                      </ListItem>
+                      <Collapse
+                        in={isOpenList(`Time On Site`)}
+                        timeout="auto"
+                        unmountOnExit
+                      >
+                        <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of
+                          your assets and drivers.</GridItem>
 
-                          </Collapse>
-                          </div>
-                          <div className={classes.listCard} >
-                          <ListItem
-                            button
-                            onClick={() => handleClick(`Co-Location`)}
-                          >
-                            <ListItemText
-                              primary="Co-Location"
-                              classes={{primary: classes.titleHeader}}
-                            />
-                            {isOpenList(`Co-Location`) ? (
-                              <ExpandLess/>
-                            ) : (
-                              <ExpandMore/>
-                            )}
-                          </ListItem>
-                          <Collapse
-                            in={isOpenList(`Co-Location`)}
-                            timeout="auto"
-                            unmountOnExit
-                          >
-                            <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of your assets and drivers.</GridItem>
+                      </Collapse>
+                    </div>
+                    <div className={classes.listCard}>
+                      <ListItem
+                        button
+                        onClick={() => handleClick(`Co-Location`)}
+                      >
+                        <ListItemText
+                          primary="Co-Location"
+                          classes={{primary: classes.titleHeader}}
+                        />
+                        {isOpenList(`Co-Location`) ? (
+                          <ExpandLess/>
+                        ) : (
+                          <ExpandMore/>
+                        )}
+                      </ListItem>
+                      <Collapse
+                        in={isOpenList(`Co-Location`)}
+                        timeout="auto"
+                        unmountOnExit
+                      >
+                        <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of
+                          your assets and drivers.</GridItem>
 
-                          </Collapse>
-                          </div>
-                          <div className={classes.listCard} >
-                          <ListItem
-                            button
-                            onClick={() => handleClick(`Fleet Benchmarks`)}
-                          >
-                            <ListItemText
-                              primary="Fleet Benchmarks"
-                              classes={{primary: classes.titleHeader}}
-                            />
-                            {isOpenList(`Fleet Benchmarks`) ? (
-                              <ExpandLess/>
-                            ) : (
-                              <ExpandMore/>
-                            )}
-                          </ListItem>
-                          <Collapse
-                            in={isOpenList(`Fleet Benchmarks`)}
-                            timeout="auto"
-                            unmountOnExit
-                          >
-                            <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of your assets and drivers.</GridItem>
+                      </Collapse>
+                    </div>
+                    <div className={classes.listCard}>
+                      <ListItem
+                        button
+                        onClick={() => handleClick(`Fleet Benchmarks`)}
+                      >
+                        <ListItemText
+                          primary="Fleet Benchmarks"
+                          classes={{primary: classes.titleHeader}}
+                        />
+                        {isOpenList(`Fleet Benchmarks`) ? (
+                          <ExpandLess/>
+                        ) : (
+                          <ExpandMore/>
+                        )}
+                      </ListItem>
+                      <Collapse
+                        in={isOpenList(`Fleet Benchmarks`)}
+                        timeout="auto"
+                        unmountOnExit
+                      >
+                        <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of
+                          your assets and drivers.</GridItem>
 
-                          </Collapse>
-                          </div>
-                          <div className={classes.listCard} >
-                          <ListItem
-                            button
-                            onClick={() => handleClick(`Assets`)}
-                          >
-                            <ListItemText
-                              primary="Assets"
-                              classes={{primary: classes.titleHeader}}
-                            />
-                            {isOpenList(`Assets`) ? (
-                              <ExpandLess/>
-                            ) : (
-                              <ExpandMore/>
-                            )}
-                          </ListItem>
-                          <Collapse
-                            in={isOpenList(`Assets`)}
-                            timeout="auto"
-                            unmountOnExit
-                          >
-                            <GridItem className={classes.detail}>Keep track of asset usage to improve efficiency across your fleet.</GridItem>
+                      </Collapse>
+                    </div>
+                    <div className={classes.listCard}>
+                      <ListItem
+                        button
+                        onClick={() => handleClick(`Assets`)}
+                      >
+                        <ListItemText
+                          primary="Assets"
+                          classes={{primary: classes.titleHeader}}
+                        />
+                        {isOpenList(`Assets`) ? (
+                          <ExpandLess/>
+                        ) : (
+                          <ExpandMore/>
+                        )}
+                      </ListItem>
+                      <Collapse
+                        in={isOpenList(`Assets`)}
+                        timeout="auto"
+                        unmountOnExit
+                      >
+                        <GridItem className={classes.detail}>Keep track of asset usage to improve efficiency across your
+                          fleet.</GridItem>
 
-                          </Collapse>
-                          </div>
-                          <div className={classes.listCard} >
-                          <ListItem
-                            button
-                            onClick={() => handleClick(`Driver Compliance`)}
-                          >
-                            <ListItemText
-                              primary="Driver Compliance"
-                              classes={{primary: classes.titleHeader}}
-                            />
-                            {isOpenList(`Driver Compliance`) ? (
-                              <ExpandLess/>
-                            ) : (
-                              <ExpandMore/>
-                            )}
-                          </ListItem>
-                          <Collapse
-                            in={isOpenList(`Driver Compliance`)}
-                            timeout="auto"
-                            unmountOnExit
-                          >
-                            <GridItem className={classes.detail}>View and manage your drivers’ HOS logs, violations, and history in real-time.</GridItem>
+                      </Collapse>
+                    </div>
+                    <div className={classes.listCard}>
+                      <ListItem
+                        button
+                        onClick={() => handleClick(`Driver Compliance`)}
+                      >
+                        <ListItemText
+                          primary="Driver Compliance"
+                          classes={{primary: classes.titleHeader}}
+                        />
+                        {isOpenList(`Driver Compliance`) ? (
+                          <ExpandLess/>
+                        ) : (
+                          <ExpandMore/>
+                        )}
+                      </ListItem>
+                      <Collapse
+                        in={isOpenList(`Driver Compliance`)}
+                        timeout="auto"
+                        unmountOnExit
+                      >
+                        <GridItem className={classes.detail}>View and manage your drivers’ HOS logs, violations, and
+                          history in real-time.</GridItem>
 
-                          </Collapse>
-                          </div>
-                          <div className={classes.listCard} >
-                          <ListItem
-                            button
-                            onClick={() => handleClick(`Driver Safety`)}
-                          >
-                            <ListItemText
-                              primary="Driver Safety"
-                              classes={{primary: classes.titleHeader}}
-                            />
-                            {isOpenList(`Driver Safety`) ? (
-                              <ExpandLess/>
-                            ) : (
-                              <ExpandMore/>
-                            )}
-                          </ListItem>
-                          <Collapse
-                            in={isOpenList(`Driver Safety`)}
-                            timeout="auto"
-                            unmountOnExit
-                          >
-                            <GridItem className={classes.detail}>Understand safety scores and trends for harsh events, speeding, and coaching.</GridItem>
+                      </Collapse>
+                    </div>
+                    <div className={classes.listCard}>
+                      <ListItem
+                        button
+                        onClick={() => handleClick(`Driver Safety`)}
+                      >
+                        <ListItemText
+                          primary="Driver Safety"
+                          classes={{primary: classes.titleHeader}}
+                        />
+                        {isOpenList(`Driver Safety`) ? (
+                          <ExpandLess/>
+                        ) : (
+                          <ExpandMore/>
+                        )}
+                      </ListItem>
+                      <Collapse
+                        in={isOpenList(`Driver Safety`)}
+                        timeout="auto"
+                        unmountOnExit
+                      >
+                        <GridItem className={classes.detail}>Understand safety scores and trends for harsh events,
+                          speeding, and coaching.</GridItem>
 
-                          </Collapse>
-                          </div>
-                        </List>
+                      </Collapse>
+                    </div>
+                  </List>
                 </CardBody>
 
               </Card>
             </GridItem>
           </GridContainer>
           <DiaLog
-          fullWidth={true}
-          maxWidth="sm"
-          renderTitle={<div className={classes.editHeader}>
-          <h3 className={classes.dialogTitle}>Export Custom Report</h3>
-          <p className={classes.dialogSubTitle}>Custom Report</p>
-          </div>}
-          handleClose={closeAssignHOS}
-          open={openForm}
+            fullWidth={true}
+            maxWidth="sm"
+            renderTitle={<div className={classes.editHeader}>
+              <h3 className={classes.dialogTitle}>Export Custom Report</h3>
+              <p className={classes.dialogSubTitle}>Custom Report</p>
+            </div>}
+            handleClose={closeAssignHOS}
+            open={openForm}
           >
-        <ExportCustomReport handleClose={closeAssignHOS}/>
-      </DiaLog>
+            <ExportCustomReport handleClose={closeAssignHOS}/>
+          </DiaLog>
         </GridItem>
       </GridContainer>
 
