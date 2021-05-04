@@ -18,7 +18,8 @@ import UnassignedHOSReport from "views/pages/user/compliance/unassigned-hos/Unas
 
 import Dispatch from "views/pages/user/dispatch/Dispatch";
 import Documents from "views/pages/user/documents/Documents";
-import SubmittedDetail from "./views/pages/user/documents/components/submitted/SubmittedDetail";
+import SubmittedDetail from "views/pages/user/documents/components/submitted/SubmittedDetail";
+import EditDocumentType from "views/pages/user/documents/components/types/EditDocumentType.jsx"
 import FuelEnergy from "views/pages/user/fuel-energy/FuelEnergy";
 import IFTA from "views/pages/user/fuel-energy/IFTA";
 import DriverEfficiency from "views/pages/user/fuel-energy/DriverEfficiency"
@@ -381,11 +382,18 @@ const dashRoutes = [
                 isFixed: true
             },
             {
+                path: "/documents/type/edit/:id",
+                name: "Edit Driver Documents",
+                component: EditDocumentType,
+                layout: ROUTE_PATH.USER,
+                isFixed: true
+            },
+            {
                 path: "/documents",
                 name: "Documents",
                 component: Documents,
                 layout: ROUTE_PATH.USER,
-            }
+            },
         ]
     },
 
@@ -414,13 +422,6 @@ const dashRoutes = [
         ]
     },
 
-    {
-        path: "/documents",
-        name: "Documents",
-        icon: DocumentsIcon,
-        component: Documents,
-        layout: ROUTE_PATH.USER
-      },
       {
         path: "/reports",
         name: "Reports",
