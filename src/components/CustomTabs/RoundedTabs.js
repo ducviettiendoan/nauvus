@@ -1,7 +1,7 @@
 import React from "react";
-import {Tab, Tabs, Typography} from "@material-ui/core";
+import { Tab, Tabs, Typography } from "@material-ui/core";
 import PropTypes from "prop-types";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Card from "../Card/Card";
 
 const styles = {
@@ -49,11 +49,11 @@ function a11yProps(index) {
 const useStyles = makeStyles(styles);
 
 export default function RoundedTabs(props) {
-  const {tabs} = props
+  const [value, setValue] = React.useState(props.value || 0);
 
-  // const { tabs } = props
-
-  const [value, setValue] = React.useState(0);
+  React.useEffect(() => {
+    setValue(props.value)
+  }, [props.value])
 
   const handleChange = (event, newValue) => {
     props.tabValue(newValue)
@@ -74,7 +74,7 @@ export default function RoundedTabs(props) {
         position="static"
         variant="scrollable"
       >
-        {tabs.map((tab) => {
+        {props.tabs.map((tab) => {
           let tabName = tab
           let tabLabel = tabName.replace(/\s/g, '')
           return (
