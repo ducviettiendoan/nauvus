@@ -120,12 +120,12 @@ const EditDocumentType = (props) => {
           <Button
             type="button"
             round
-            className={`btn-round-active-2 mr`}
+            className={`btn-round-active-2 mr-2`}
           >Cancel
           </Button>
           <Button
             round
-            className="btn-round-active mr"
+            className="btn-round-active"
           >Save
           </Button>
         </div>

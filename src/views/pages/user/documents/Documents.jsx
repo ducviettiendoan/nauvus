@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, {useState} from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
@@ -23,8 +23,8 @@ import DocumentTypes from "./components/DocumentTypes";
 import DiaLog from "components/CustomDialog/Dialog";
 import Checkbox from "@material-ui/core/Checkbox";
 import CheckSquareOutlined from "components/Icons/CheckSquareOutlined";
-import { primaryColor } from "assets/jss/material-dashboard-pro-react";
-import { Grid } from "@material-ui/core";
+import {primaryColor} from "assets/jss/material-dashboard-pro-react";
+import {Grid} from "@material-ui/core";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -78,24 +78,19 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "flex-end",
   },
-  itemContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
+  checkboxContainer: {
     padding: "0px !important",
     borderRadius: "22px",
     border: "1px solid #F4F4F4",
     paddingLeft: "30% !important",
-  },
-  checkboxContainer: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
     "&:hover": {
-      backgroundColor: "#FFFFFF"
+      backgroundColor: "unset"
     },
     "&:focus": {
-      backgroundColor: "#FFFFFF"
+      backgroundColor: "unset"
     },
   },
   dropdownItemVehicle: {
@@ -111,9 +106,15 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px",
     paddingLeft: "0px !important",
     "&:hover": {
-      backgroundColor: "unset"
+      backgroundColor: "unset !important"
     }
   },
+  checkBoxRow: {
+    display: "flex",
+    flexDirection: "row",
+    columnGap: "15px",
+    marginBottom: "20px"
+  }
 }));
 
 export default function Documents() {
@@ -170,12 +171,12 @@ export default function Documents() {
               <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} lg={6} xl={6} className={classes.topHeaderTitle}>
                   <RoundedTabs tabs={["Submitted Documents (1)", "Archived Documents (0)", "Document Types (2)"]}
-                    tabValue={handleChangeTab} />
+                               tabValue={handleChangeTab}/>
                 </GridItem>
                 <GridItem xs={12} sm={8} md={6} lg={6} xl={6} className={classes.topHeaderButton}>
-                  <Calendar placeholder="Day" />
+                  <Calendar placeholder="Day"/>
                   <Button round className="btn-round-green h-42 w-84">
-                    <LiveIconWhite />
+                    <LiveIconWhite/>
                     Live
                   </Button>
                   <Button
@@ -193,7 +194,7 @@ export default function Documents() {
                     className={`btn-36 w-42 ${classes.moreAction} mr-2`}
                     onClick={handleOpenMore}
                   >
-                    <MoreHorizontalIcon />
+                    <MoreHorizontalIcon/>
                   </Button>
                   <Popper
                     open={openMore}
@@ -207,11 +208,11 @@ export default function Documents() {
                       [classes.popperNav]: true
                     })}
                   >
-                    {({ TransitionProps }) => (
+                    {({TransitionProps}) => (
                       <Grow
                         {...TransitionProps}
                         id="profile-menu-list"
-                        style={{ transformOrigin: "0 0 0" }}
+                        style={{transformOrigin: "0 0 0"}}
                       >
                         <Paper className={classes.dropdown}>
                           <ClickAwayListener onClickAway={handleCloseMore}>
@@ -230,9 +231,9 @@ export default function Documents() {
               </GridContainer>
             </GridItem>
           </GridContainer>
-          {value === 0 && <SubmittedDocuments />}
-          {value === 1 && <SubmittedDocuments />}
-          {value === 2 && <DocumentTypes />}
+          {value === 0 && <SubmittedDocuments/>}
+          {value === 1 && <SubmittedDocuments/>}
+          {value === 2 && <DocumentTypes/>}
         </GridItem>
       </GridContainer>
       <DiaLog
@@ -245,142 +246,130 @@ export default function Documents() {
         handleClose={handleCloseDialog}
         open={openDialog}
       >
-        <Grid style={{ display: "flex", flexDirection: "row", columnGap: "15px", marginBottom: "10px" }}>
+        <Grid className={classes.checkBoxRow}>
           <Grid xs={12} sm={6} md={6}>
-            <MenuItem className={classes.itemContainer}>
-              <div className={classes.checkboxContainer}>
-                <div className={classes.dropdownItemVehicle}>
-                  <Checkbox
-                    name="assident"
-                    edge="end"
-                    onChange={handleToggle("assident")}
-                    checked={checked.indexOf("assident") !== -1}
-                    checkedIcon={<CheckSquareOutlined />}
-                    classes={{
-                      checked: classes.checked,
-                      root: classes.checkRoot
-                    }}
-                  />
-                </div>
-                <div className={classes.dropdownItemVehicle}>
-                  Assident
+            <div className={classes.checkboxContainer}>
+              <div className={classes.dropdownItemVehicle}>
+                <Checkbox
+                  name="assident"
+                  edge="end"
+                  onChange={handleToggle("assident")}
+                  checked={checked.indexOf("assident") !== -1}
+                  checkedIcon={<CheckSquareOutlined/>}
+                  classes={{
+                    checked: classes.checked,
+                    root: classes.checkRoot
+                  }}
+                />
               </div>
+              <div className={classes.dropdownItemVehicle}>
+                Assident
               </div>
-            </MenuItem>
+            </div>
           </Grid>
           <Grid xs={12} sm={6} md={6}>
-            <MenuItem className={classes.itemContainer}>
-              <div className={classes.checkboxContainer}>
-                <div className={classes.dropdownItemVehicle}>
-                  <Checkbox
-                    name="citation"
-                    edge="end"
-                    onChange={handleToggle("citation")}
-                    checked={checked.indexOf("citation") !== -1}
-                    checkedIcon={<CheckSquareOutlined />}
-                    classes={{
-                      checked: classes.checked,
-                      root: classes.checkRoot
-                    }}
-                  />
-                </div>
-                <div className={classes.dropdownItemVehicle}>
-                  Citation
+            <div className={classes.checkboxContainer}>
+              <div className={classes.dropdownItemVehicle}>
+                <Checkbox
+                  name="citation"
+                  edge="end"
+                  onChange={handleToggle("citation")}
+                  checked={checked.indexOf("citation") !== -1}
+                  checkedIcon={<CheckSquareOutlined/>}
+                  classes={{
+                    checked: classes.checked,
+                    root: classes.checkRoot
+                  }}
+                />
               </div>
+              <div className={classes.dropdownItemVehicle}>
+                Citation
               </div>
-            </MenuItem>
+            </div>
           </Grid>
         </Grid>
-        <Grid style={{ display: "flex", flexDirection: "row", columnGap: "15px", marginBottom: "10px" }}>
+        <Grid className={classes.checkBoxRow}>
           <Grid xs={12} sm={6} md={6}>
-            <MenuItem className={classes.itemContainer}>
-              <div className={classes.checkboxContainer}>
-                <div className={classes.dropdownItemVehicle}>
-                  <Checkbox
-                    name="proof"
-                    edge="end"
-                    onChange={handleToggle("proof")}
-                    checked={checked.indexOf("proof") !== -1}
-                    checkedIcon={<CheckSquareOutlined />}
-                    classes={{
-                      checked: classes.checked,
-                      root: classes.checkRoot
-                    }}
-                  />
-                </div>
-                <div className={classes.dropdownItemVehicle}>
-                  Proof of Delivery
+            <div className={classes.checkboxContainer}>
+              <div className={classes.dropdownItemVehicle}>
+                <Checkbox
+                  name="proof"
+                  edge="end"
+                  onChange={handleToggle("proof")}
+                  checked={checked.indexOf("proof") !== -1}
+                  checkedIcon={<CheckSquareOutlined/>}
+                  classes={{
+                    checked: classes.checked,
+                    root: classes.checkRoot
+                  }}
+                />
               </div>
+              <div className={classes.dropdownItemVehicle}>
+                Proof of Delivery
               </div>
-            </MenuItem>
+            </div>
           </Grid>
           <Grid xs={12} sm={6} md={6}>
-            <MenuItem className={classes.itemContainer}>
-              <div className={classes.checkboxContainer}>
-                <div className={classes.dropdownItemVehicle}>
-                  <Checkbox
-                    name="bill"
-                    edge="end"
-                    onChange={handleToggle("bill")}
-                    checked={checked.indexOf("bill") !== -1}
-                    checkedIcon={<CheckSquareOutlined />}
-                    classes={{
-                      checked: classes.checked,
-                      root: classes.checkRoot
-                    }}
-                  />
-                </div>
-                <div className={classes.dropdownItemVehicle}>
-                  Bill of Landing
+            <div className={classes.checkboxContainer}>
+              <div className={classes.dropdownItemVehicle}>
+                <Checkbox
+                  name="bill"
+                  edge="end"
+                  onChange={handleToggle("bill")}
+                  checked={checked.indexOf("bill") !== -1}
+                  checkedIcon={<CheckSquareOutlined/>}
+                  classes={{
+                    checked: classes.checked,
+                    root: classes.checkRoot
+                  }}
+                />
               </div>
+              <div className={classes.dropdownItemVehicle}>
+                Bill of Landing
               </div>
-            </MenuItem>
+            </div>
           </Grid>
         </Grid>
-        <Grid style={{ display: "flex", flexDirection: "row", columnGap: "15px", marginBottom: "10px" }}>
+        <Grid className={classes.checkBoxRow}>
           <Grid xs={12} sm={6} md={6}>
-            <MenuItem className={classes.itemContainer}>
-              <div className={classes.checkboxContainer}>
-                <div className={classes.dropdownItemVehicle}>
-                  <Checkbox
-                    name="receipt"
-                    edge="end"
-                    onChange={handleToggle("receipt")}
-                    checked={checked.indexOf("receipt") !== -1}
-                    checkedIcon={<CheckSquareOutlined />}
-                    classes={{
-                      checked: classes.checked,
-                      root: classes.checkRoot
-                    }}
-                  />
-                </div>
-                <div className={classes.dropdownItemVehicle}>
-                  Fuel Receipt
+            <div className={classes.checkboxContainer}>
+              <div className={classes.dropdownItemVehicle}>
+                <Checkbox
+                  name="receipt"
+                  edge="end"
+                  onChange={handleToggle("receipt")}
+                  checked={checked.indexOf("receipt") !== -1}
+                  checkedIcon={<CheckSquareOutlined/>}
+                  classes={{
+                    checked: classes.checked,
+                    root: classes.checkRoot
+                  }}
+                />
               </div>
+              <div className={classes.dropdownItemVehicle}>
+                Fuel Receipt
               </div>
-            </MenuItem>
+            </div>
           </Grid>
           <Grid xs={12} sm={6} md={6}>
-            <MenuItem className={classes.itemContainer}>
-              <div className={classes.checkboxContainer}>
-                <div className={classes.dropdownItemVehicle}>
-                  <Checkbox
-                    name="ticket"
-                    edge="end"
-                    onChange={handleToggle("ticket")}
-                    checked={checked.indexOf("ticket") !== -1}
-                    checkedIcon={<CheckSquareOutlined />}
-                    classes={{
-                      checked: classes.checked,
-                      root: classes.checkRoot
-                    }}
-                  />
-                </div>
-                <div className={classes.dropdownItemVehicle}>
-                  Scale Ticket
+            <div className={classes.checkboxContainer}>
+              <div className={classes.dropdownItemVehicle}>
+                <Checkbox
+                  name="ticket"
+                  edge="end"
+                  onChange={handleToggle("ticket")}
+                  checked={checked.indexOf("ticket") !== -1}
+                  checkedIcon={<CheckSquareOutlined/>}
+                  classes={{
+                    checked: classes.checked,
+                    root: classes.checkRoot
+                  }}
+                />
               </div>
+              <div className={classes.dropdownItemVehicle}>
+                Scale Ticket
               </div>
-            </MenuItem>
+            </div>
           </Grid>
         </Grid>
 
