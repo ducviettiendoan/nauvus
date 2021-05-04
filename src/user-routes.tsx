@@ -18,7 +18,8 @@ import UnassignedHOSReport from "views/pages/user/compliance/unassigned-hos/Unas
 
 import Dispatch from "views/pages/user/dispatch/Dispatch";
 import Documents from "views/pages/user/documents/Documents";
-import SubmittedDetail from "./views/pages/user/documents/components/submitted/SubmittedDetail";
+import SubmittedDetail from "views/pages/user/documents/components/submitted/SubmittedDetail";
+import EditDocumentType from "views/pages/user/documents/components/types/EditDocumentType.jsx"
 import FuelEnergy from "views/pages/user/fuel-energy/FuelEnergy";
 import IFTA from "views/pages/user/fuel-energy/IFTA";
 import DriverEfficiency from "views/pages/user/fuel-energy/DriverEfficiency"
@@ -48,6 +49,7 @@ import SafetyReportTable from "views/pages/user/safety/report/SafetyReportTable"
 import VideoRetrieval from "views/pages/user/safety/VideoRetrieval";
 import Retrieval from "views/pages/user/safety/video-retrieval/Retrieval";
 import DashboardReport from "views/pages/user/reports/DashboardReport";
+import ViewDetail from "views/pages/user/reports/dashboard/ViewDetail";
 
 
 // @material-ui/icons
@@ -381,11 +383,18 @@ const dashRoutes = [
                 isFixed: true
             },
             {
+                path: "/documents/type/edit/:id",
+                name: "Edit Driver Documents",
+                component: EditDocumentType,
+                layout: ROUTE_PATH.USER,
+                isFixed: true
+            },
+            {
                 path: "/documents",
                 name: "Documents",
                 component: Documents,
                 layout: ROUTE_PATH.USER,
-            }
+            },
         ]
     },
 
@@ -397,6 +406,13 @@ const dashRoutes = [
         icon: ReportsIcon,
         layout: ROUTE_PATH.USER,
         views: [
+            {
+                path: "/report/viewdetail",
+                name: "View Detail",
+                component: ViewDetail,
+                layout: ROUTE_PATH.USER,
+                isFixed: true,
+            },
             {
                 path: "/report/dashboard",
                 name: "Dashboard",
@@ -410,32 +426,18 @@ const dashRoutes = [
                 component: Reports,
                 layout: ROUTE_PATH.USER,
                 // isFixed: true
-            }
+            },
+
         ]
     },
-
     {
-        path: "/documents",
-        name: "Documents",
-        icon: DocumentsIcon,
-        component: Documents,
-        layout: ROUTE_PATH.USER
-      },
-      {
-        path: "/reports",
-        name: "Reports",
-        icon: ReportsIcon,
-        component: Reports,
-        layout: ROUTE_PATH.USER
-      },
-      {
         path: "/internal-tools",
         name: "Internal Tools",
         icon: InternalToolsIcon,
         component: InternalTools,
         layout: ROUTE_PATH.USER
-      },
-      {
+    },
+    {
         path: "/messages",
         name: "Messages",
         icon: MessagesIcon,
@@ -443,8 +445,8 @@ const dashRoutes = [
         component: Messages,
         isFixed: true,
         layout: ROUTE_PATH.MESSAGES,
-      },
-      {
+    },
+    {
         path: "/alerts",
         name: "Alerts",
         icon: AlertsIcon,
@@ -452,15 +454,15 @@ const dashRoutes = [
         component: Alerts,
         isFixed: true,
         layout: ROUTE_PATH.ALERT
-      },
-      {
+    },
+    {
         path: "/org/general",
         name: "Settings",
         icon: SettingsIcon,
         component: Settings,
         isFixed: true,
         layout: ROUTE_PATH.SETTING
-      },
-    
+    },
+
 ];
 export default dashRoutes;

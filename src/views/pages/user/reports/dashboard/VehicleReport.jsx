@@ -10,17 +10,22 @@ import CardContent from "@material-ui/core/CardContent";
 import Table from "components/Table/TableV1";
 import {getVehicleDriverDistanceData, getVehicleDrivingHoursData, getVehicleFuelUsage,getVehicleFuelEfficiency,getIdealHour,getChartData} from "reducers/report";
 import {connect} from "react-redux";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles(complianceStyle);
 
 function VehicleReport(props) {
   // const {title, data, radio} = props;
   const classes = useStyles();
-
+  const history = useHistory();
   const [value, setValue] = React.useState(0);
 
   const handleChangeTab = (newValue) => {
     setValue(newValue);
+  };
+
+  const viewDetail = (id) => {
+    history.push(`/u/report/viewdetail`)
   };
 
   const columns1 = [
@@ -185,7 +190,7 @@ function VehicleReport(props) {
                     Driving Hours
                   </Grid>
                   <Grid item xs={4} sm={12} md={4} className={classes.cardHeaderSubTitle}>
-                    <Link>View Details</Link>
+                    <Link onClick={viewDetail}>View Details</Link>
                   </Grid>
                 </Grid>}
               className={classes.cardHeader}
@@ -223,7 +228,7 @@ function VehicleReport(props) {
                     Driving Hours
                   </Grid>
                   <Grid item xs={4} sm={12} md={4} className={classes.cardHeaderSubTitle}>
-                    <Link>View Details</Link>
+                    <Link onClick={viewDetail}>View Details</Link>
                   </Grid>
                 </Grid>}
               className={classes.cardHeader}
@@ -261,7 +266,7 @@ function VehicleReport(props) {
                     Fuel Usage
                   </Grid>
                   <Grid item xs={4} sm={12} md={4} className={classes.cardHeaderSubTitle}>
-                    <Link>View Details</Link>
+                    <Link onClick={viewDetail}>View Details</Link>
                   </Grid>
                 </Grid>}
               className={classes.cardHeader}
@@ -303,7 +308,7 @@ function VehicleReport(props) {
                     Fuel Efficiency
                   </Grid>
                   <Grid item xs={4} sm={12} md={4} className={classes.cardHeaderSubTitle}>
-                    <Link>View Details</Link>
+                    <Link onClick={viewDetail}>View Details</Link>
                   </Grid>
                 </Grid>}
               className={classes.cardHeader}
@@ -341,7 +346,7 @@ function VehicleReport(props) {
                     Idle Hours
                   </Grid>
                   <Grid item xs={4} sm={12} md={4} className={classes.cardHeaderSubTitle}>
-                    <Link>View Details</Link>
+                    <Link onClick={viewDetail}>View Details</Link>
                   </Grid>
                 </Grid>}
               className={classes.cardHeader}

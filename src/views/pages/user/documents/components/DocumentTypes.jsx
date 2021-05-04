@@ -15,6 +15,7 @@ import customDropdownStyle from "assets/jss/material-dashboard-pro-react/compone
 import {primaryColor} from "assets/jss/material-dashboard-pro-react";
 import EditIcon from "components/Icons/EditIcon";
 import DeleteIcon from "components/Icons/DeleteIcon";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   ...customDropdownStyle(theme),
@@ -226,6 +227,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function DocumentTypes(props) {
   const classes = useStyles();
+  const history = useHistory()
 
   React.useEffect(() => {
     // Get list data
@@ -254,11 +256,18 @@ export function DocumentTypes(props) {
     },
     {
       title: 'Actions',
-      key: 'action',
+      key: 'id',
       onHeaderCell: { className: classes.onHeaderCell },
-      render: () => (
+      render: (id) => (
         <div className={classes.actionButton}>
-          <Button justIcon color="twitter" simple>
+          <Button 
+            justIcon 
+            color="twitter" 
+            simple
+            onClick={() => {
+              history.push(`/u/documents/type/edit/${id}`)
+            }}
+            >
             <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
           </Button>
           <Button justIcon color="google" simple>
