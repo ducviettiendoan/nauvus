@@ -10,17 +10,22 @@ import CardContent from "@material-ui/core/CardContent";
 import Table from "components/Table/TableV1";
 import {getUtilizationData,getDormancyData,getDetentionData,getChartData} from "reducers/report";
 import {connect} from "react-redux";
+import {useHistory} from "react-router-dom";
 
 const useStyles = makeStyles(complianceStyle);
 
 function TrailerReport(props) {
   // const {title, data, radio} = props;
   const classes = useStyles();
-
+  const history = useHistory();
   const [value, setValue] = React.useState(0);
 
   const handleChangeTab = (newValue) => {
     setValue(newValue);
+  };
+
+  const viewDetail = (id) => {
+    history.push(`/u/report/viewdetail`)
   };
 
   const columns1 = [
@@ -116,7 +121,7 @@ function TrailerReport(props) {
                     Utilization
                   </Grid>
                   <Grid item xs={4} sm={12} md={4} className={classes.cardHeaderSubTitle}>
-                    <Link>View Details</Link>
+                    <Link onClick={viewDetail}>View Details</Link>
                   </Grid>
                 </Grid>}
               className={classes.cardHeader}
@@ -154,7 +159,7 @@ function TrailerReport(props) {
                     Dormancy
                   </Grid>
                   <Grid item xs={4} sm={12} md={4} className={classes.cardHeaderSubTitle}>
-                    <Link>View Details</Link>
+                    <Link onClick={viewDetail}>View Details</Link>
                   </Grid>
                 </Grid>}
               className={classes.cardHeader}
@@ -192,7 +197,7 @@ function TrailerReport(props) {
                     Detention
                   </Grid>
                   <Grid item xs={4} sm={12} md={4} className={classes.cardHeaderSubTitle}>
-                    <Link>View Details</Link>
+                    <Link onClick={viewDetail}>View Details</Link>
                   </Grid>
                 </Grid>}
               className={classes.cardHeader}

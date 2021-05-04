@@ -48,6 +48,7 @@ import SafetyReportTable from "views/pages/user/safety/report/SafetyReportTable"
 import VideoRetrieval from "views/pages/user/safety/VideoRetrieval";
 import Retrieval from "views/pages/user/safety/video-retrieval/Retrieval";
 import DashboardReport from "views/pages/user/reports/DashboardReport";
+import ViewDetail from "views/pages/user/reports/dashboard/ViewDetail";
 
 
 // @material-ui/icons
@@ -398,6 +399,13 @@ const dashRoutes = [
         layout: ROUTE_PATH.USER,
         views: [
             {
+                path: "/report/viewdetail",
+                name: "View Detail",
+                component: ViewDetail,
+                layout: ROUTE_PATH.USER,
+                isFixed: true,
+            },
+            {
                 path: "/report/dashboard",
                 name: "Dashboard",
                 component: DashboardReport,
@@ -410,7 +418,8 @@ const dashRoutes = [
                 component: Reports,
                 layout: ROUTE_PATH.USER,
                 // isFixed: true
-            }
+            },
+
         ]
     },
 

@@ -7,6 +7,7 @@ import FormatQuote from "@material-ui/icons/FormatQuote";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
+import {Grid} from "@material-ui/core";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import Button from "components/CustomButtons/Button.js";
@@ -17,7 +18,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Collapse from "@material-ui/core/Collapse";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-
+import Accordion from "components/Accordion/Accordion";
+import MenuItem from "@material-ui/core/MenuItem";
+import Checkbox from "@material-ui/core/Checkbox";
+import Avatar from "@material-ui/core/Avatar";
 import SettingSearchBox from "components/SearchBox/SettingSearchBox";
 import ExportCustomReport from "./reports/ExportCustomReport";
 import DiaLog from "components/CustomDialog/Dialog";
@@ -131,6 +135,58 @@ export default function Reports() {
               </GridContainer>
               <Card>
                 <CardBody>
+
+                {/* <Accordion collapses={
+                    [
+                      {
+                        title: <Grid style={{width: "140px", display: "flex", justifyContent: "space-between"}}>
+                          <Grid className={classes.tagTitle}>Tags</Grid>
+                          <Button className={classes.clearButton} onClick={handleClearBox("tags")}>
+                            Clear
+                          </Button>
+                        </Grid>,
+                        content:
+                          <div className={classes.cardExpandContent}>
+                            {listTags.tags.map((value) => {
+                              return (
+                                <MenuItem key={value} className={classes.itemContainer}>
+                                  <div className={classes.checkboxContainer}>
+                                    <div className={classes.dropdownItemVehicle}>
+                                      <Checkbox
+                                        name="tags"
+                                        edge="end"
+                                        onChange={handleToggle(value)}
+                                        checked={checked["tags"].indexOf(value) !== -1}
+                                        checkedIcon={<CheckSquareOutlined/>}
+                                        classes={{
+                                          checked: classes.checked,
+                                          root: classes.checkRoot
+                                        }}
+                                      />
+                                    </div>
+                                    <div className={classes.dropdownItemVehicle}>
+                                      {value}
+                                    </div>
+                                  </div>
+                                  <Avatar className={classes.grayAvatar}>5</Avatar>
+                                </MenuItem>
+                              );
+                            })}
+                          </div>
+                      },
+                    ]
+                  }
+                             expansionSummaryClasses={{
+                               root: classes.expansionClasses,
+                               content: classes.expansionContentClasses
+                             }}
+                             expansionPanelClasses={{
+                               root: classes.expansionPanelClasses,
+                             }}
+                             expansionPanelRounded={{
+                               rounded: classes.expansionPanelClassesRounded,
+                             }}
+                  /> */}
                   <List
                     component="nav"
                     aria-labelledby="nested-list-subheader"
