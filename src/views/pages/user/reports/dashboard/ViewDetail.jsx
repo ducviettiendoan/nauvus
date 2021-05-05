@@ -43,11 +43,7 @@ topHeaderTitle: {
     color: "#25345C",
     padding: "0 16px !important"
 },
-topHeaderButton: {
-    textAlign: "right !important",
-    display: "flex",
-    alignItems: "center"
-},
+
 selected: {
     height: 24,
     width: "auto",
@@ -101,24 +97,7 @@ selected: {
     fontSize: "12px",
     marginRight: 8
   },
-moreAction: {
-    background: "#FFFFFF !important",
-    border: "1px solid #ECEEF0 !important"
-},
-gridTitle: {
-    padding: "20px"
-},
-tableTitle: {
-    display: "flex",
-    justifyContent: "center",
-    fontFamily: "Lato",
-    fontSize: "16px",
-    fontWeight: 700,
-},
-centerTitle: {
-    display: "flex",
-    alignItems: "center",
-},
+
 headLeft: {
     display: "flex",
     alignItems: "center",
@@ -128,40 +107,7 @@ headLeft: {
     marginRight: 8
     }
 },
-onHeaderCellFirst: {
-    fontWeight: 700,
-    color: "#25345C",
-    paddingLeft: "15px"
-},
-onHeaderCellNext: {
-    fontWeight: 700,
-    color: "#25345C",
-},
-textEmail: {
-    fontWeight: 400,
-    fontSize: '14px',
-    lineHeight: '24px',
-    color: '#25345C',
-    paddingLeft: "0px"
-},
-textBold: {
-    fontSize: '16px',
-    lineHeight: '21px',
-    color: "#25345C",
-    fontWeight: 700,
-},
-tableRow: {
-    '&:nth-of-type(even)': {
-    backgroundColor: "#fbfbfb",
-    },
-},
-onHeaderRow: {
-    background: "#ECEEF0",
-},
-alignItemsCenter: {
-    display: "flex",
-    alignItems: "center",
-},
+
 popperHeaderContainer: {
     display: "flex",
     justifyContent: "space-between",
@@ -260,12 +206,7 @@ checkboxContainer: {
     flexDirection: "row",
     alignItems: "center",
 },
-greenAvatar: {
-    background: "#27AE60 !important",
-    marginRight: 8,
-    fontSize: 14,
-    fontWeight: 700,
-},
+
 grayAvatar: {
     background: "#ECEEF0 !important",
     color: "#B4B4B4",
@@ -507,9 +448,9 @@ export default function ViewDetail(props) {
                       {
                         title: <Grid style={{width: "140px", display: "flex", justifyContent: "space-between"}}>
                           <Grid className={classes.tagTitle}>Duty Status</Grid>
-                          <Button className={classes.clearButton} onClick={handleClearBox("dutyStatus")}>
+                          {/* <Button className={classes.clearButton} onClick={handleClearBox("dutyStatus")}>
                             Clear
-                          </Button>
+                          </Button> */}
                         </Grid>,
                         content:
                           <div className={classes.cardExpandContent}>
@@ -620,26 +561,10 @@ export default function ViewDetail(props) {
         <GridItem xs={12} sm={11} md={6} xl={6} className={classes.topHeaderTitle}>
           <RoundedTabs tabs={["Asset","Driver"]} tabValue={handleChangeTab}/>
         </GridItem>
-        <GridItem xs={12} sm={4} md={6} xl={6} className={classes.topHeaderButton}>
-          <Calendar placeholder="Day"/>
-          <FilterButton filterAction={handleOpenMore}/>
-            <PopperFilter listTags={listTags}/>
-          {/* <Button
-            color="white"
-            aria-label="edit"
-            justIcon
-            round
-            className={`btn-36 ${classes.moreAction} mr-2`}
-            // onClick={handleOpenMore}
-          >
-            <FilterButton filterAction={handleOpenMore}/>
-            <PopperFilter listTags={listTags}/>
-          </Button> */}
-          <Button round className="btn-round-green w-84">
-            <LiveIconWhite/>
-            Live
-          </Button>
-        </GridItem>
+        <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
+          <ToolboxButton placeholder="Search driver" showFilter filterAction={handleOpenMore} />
+          <PopperFilter listTags={listTags} />
+        </Grid>
       </GridContainer>
 
       <Card className={classes.card}>
