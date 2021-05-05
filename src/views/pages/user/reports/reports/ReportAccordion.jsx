@@ -35,12 +35,12 @@ const styles = {
     padding: "0px 15px 0px 8px !important",
     borderBottom: "0px !important",
     minHeight: "20px !important",
-    background: "#FAFAFA",
+    background: "#FFFFFF",
     "&:hover": {
-    background: "#FAFAFA",
+    background: "#FFFFFF",
     },
     "&:focus": {
-    background: "#FAFAFA",
+    background: "#FFFFFF",
     },
   },
   expansionContentClasses: {
@@ -49,10 +49,10 @@ const styles = {
   },
   expansionPanelClasses: {
     //   marginBottom: "4px !important",
-      background: "#FAFAFA",
+      background: "#FFFFFF",
   },
   expansionPanelClassesRounded: {
-      background: "#FAFAFA",
+      background: "#FFFFFF",
       border: "1px solid rgba(236, 238, 240, 1)",
       borderRadius: '25px',
       boxShadow: "inherit",
