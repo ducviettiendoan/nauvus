@@ -6,11 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { getInsidents } from "reducers/alerts";
 import Card from "components/Card/Card.js";
 import { Col, Row } from "reactstrap";
-import GeneralOrganization from "../settings/org/components/GeneralOrganization";
-import GeneralLanguageRegion from "../settings/org/components/GeneralLanguageRegion";
-import GeneralConnection from "../settings/org/components/GeneralConnection";
-import GeneralAdvanced from "../settings/org/components/GeneralAdvanced";
-import ConfigureDetails from './ConfigureDetails';
+import ConfigureDetails from "./ConfigureDetails";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Hidden from "@material-ui/core/Hidden";
@@ -129,7 +125,7 @@ const useStyles = makeStyles((theme) => ({
   },
   areaGrow: {
     flexGrow: "1",
-    marginRight: "59px",
+    marginRight: "32px",
   },
   areaMenu: {
     [theme.breakpoints.up("md")]: {
