@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: "40px 0px 15px 0px"
+    padding: "40px 15px 15px 15px"
   },
   container: {
     display: 'flex',
