@@ -1,13 +1,13 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 // @material-ui/core components
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
 import FormatQuote from "@material-ui/icons/FormatQuote";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import {Grid} from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import Button from "components/CustomButtons/Button.js";
@@ -25,7 +25,8 @@ import Avatar from "@material-ui/core/Avatar";
 import SettingSearchBox from "components/SearchBox/SettingSearchBox";
 import ExportCustomReport from "./reports/ExportCustomReport";
 import DiaLog from "components/CustomDialog/Dialog";
-
+import CheckSquareOutlined from "components/Icons/CheckSquareOutlined";
+import ReportAccordion from "./reports/ReportAccordion";
 
 const styles = {
   topHeader: {
@@ -77,6 +78,72 @@ const styles = {
   editHeader: {
     textAlign: "center"
   },
+  expansionClasses: {
+    padding: "0px 15px 0px 8px !important",
+    borderBottom: "0px !important",
+    minHeight: "20px !important",
+    background: "#FAFAFA",
+    "&:hover": {
+    background: "#FAFAFA",
+    },
+    "&:focus": {
+    background: "#FAFAFA",
+    }
+  },
+  expansionContentClasses: {
+      margin: "0px !important"
+  },
+  expansionPanelClasses: {
+      marginBottom: "4px !important",
+      background: "#FAFAFA",
+  },
+  expansionPanelClassesRounded: {
+      background: "#FAFAFA",
+      border: "1px solid #ECEEF0",
+      boxShadow: "inherit",
+      marginBottom: "8px !important",
+  },
+
+  itemContainer: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      padding: "0px !important"
+  },
+  tagTitle: {
+      fontSize: "16px",
+      fontWeight: 700,
+      lineHeight: "19px"
+  },
+  checkboxContainer: {
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+  },
+
+  grayAvatar: {
+      background: "#ECEEF0 !important",
+      color: "#B4B4B4",
+      marginRight: 8,
+      fontSize: 12,
+      fontWeight: 700,
+  },
+  clearButton: {
+      textTransform: "none",
+      color: "#8CA2EE",
+      background: "unset !important",
+      boxShadow: "unset !important",
+      fontSize: 12,
+      fontWeight: 700,
+      padding: 0,
+      margin: "0px !important",
+      "&:hover": {
+      color: "#25345C"
+      },
+      "&:focus": {
+      color: "#8CA2EE"
+      }
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -84,6 +151,7 @@ const useStyles = makeStyles(styles);
 export default function Reports() {
   const classes = useStyles();
   const [openForm, setOpenForm] = useState(false);
+
 
   const [open, setOpen] = React.useState(true);
   const [currentTab, setCurrentTab] = React.useState("Activity");
@@ -108,8 +176,37 @@ export default function Reports() {
 
   const closeAssignHOS = () => {
     setOpenForm(false)
-  }
+  };
 
+  const listTags = {
+    tags: ["Room", "No road", "In City"],
+    dutyStatus: ["Driving", "On Duty", "Off Duty", "Personal Conveyance", "Sleeper Berth", "Disconnected", "Yard Move"],
+    violations: ["Currently in violations", "Nearing Violation"]
+  }
+  const [checked, setChecked] = React.useState({
+    tags: [1],
+    dutyStatus: [1],
+    violations: [1]
+  });
+
+  const handleToggle = (value) => (event) => {
+    const currentIndex = checked[event.target.name].indexOf(value);
+    const newChecked = { ...checked };
+    if (currentIndex === -1) {
+      newChecked[event.target.name].push(value);
+    } else {
+      newChecked[event.target.name].splice(currentIndex, 1);
+    }
+
+    setChecked(newChecked);
+  };
+
+  const handleClearBox = (value) => () => {
+    setChecked({
+      ...checked,
+      [value]: [1]
+    })
+  };
   return (
     <div>
       <GridContainer>
@@ -118,15 +215,15 @@ export default function Reports() {
             <GridItem xs={12} sm={12} md={12}>
               <GridContainer className={classes.topHeader}>
                 <GridItem xs={12} sm={11} md={4} xl={2} className={classes.topHeaderTitle}>
-                  <SettingSearchBox className={classes.searchBox} style={{marginBottom: "0"}}
-                                    placeholder="Search reports by name or category"/>
+                  <SettingSearchBox className={classes.searchBox} style={{ marginBottom: "0" }}
+                    placeholder="Search reports by name or category" />
 
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4} xl={6} className={classes.topHeaderButton}>
                   <Button
                     round
                     className="btn-round-active mr-2"
-                    startIcon={<AddOutlined/>}
+                    startIcon={<AddOutlined />}
                     onClick={openAssignHOS}
                   >
                     Create Custom Report
@@ -135,59 +232,20 @@ export default function Reports() {
               </GridContainer>
               <Card>
                 <CardBody>
-
-                {/* <Accordion collapses={
-                    [
-                      {
-                        title: <Grid style={{width: "140px", display: "flex", justifyContent: "space-between"}}>
-                          <Grid className={classes.tagTitle}>Tags</Grid>
-                          <Button className={classes.clearButton} onClick={handleClearBox("tags")}>
-                            Clear
-                          </Button>
-                        </Grid>,
-                        content:
-                          <div className={classes.cardExpandContent}>
-                            {listTags.tags.map((value) => {
-                              return (
-                                <MenuItem key={value} className={classes.itemContainer}>
-                                  <div className={classes.checkboxContainer}>
-                                    <div className={classes.dropdownItemVehicle}>
-                                      <Checkbox
-                                        name="tags"
-                                        edge="end"
-                                        onChange={handleToggle(value)}
-                                        checked={checked["tags"].indexOf(value) !== -1}
-                                        checkedIcon={<CheckSquareOutlined/>}
-                                        classes={{
-                                          checked: classes.checked,
-                                          root: classes.checkRoot
-                                        }}
-                                      />
-                                    </div>
-                                    <div className={classes.dropdownItemVehicle}>
-                                      {value}
-                                    </div>
-                                  </div>
-                                  <Avatar className={classes.grayAvatar}>5</Avatar>
-                                </MenuItem>
-                              );
-                            })}
-                          </div>
-                      },
-                    ]
-                  }
-                             expansionSummaryClasses={{
-                               root: classes.expansionClasses,
-                               content: classes.expansionContentClasses
-                             }}
-                             expansionPanelClasses={{
-                               root: classes.expansionPanelClasses,
-                             }}
-                             expansionPanelRounded={{
-                               rounded: classes.expansionPanelClassesRounded,
-                             }}
-                  /> */}
-                  <List
+                  <ReportAccordion head={"Activity"} body={"Track distance, driving hours, visits, and other details of your assets and drivers."}/>
+                  <ReportAccordion head={"Activity Sumary"} body={"Track distance, driving hours, visits, and other details of your assets and drivers."}/>
+                  <ReportAccordion head={"Trip History"} body={"Track distance, driving hours, visits, and other details of your assets and drivers."}/>
+                  <ReportAccordion head={"Jurisdiction Mileage"} body={"Track distance, driving hours, visits, and other details of your assets and drivers."}/>
+                  <ReportAccordion head={"Start/Stop"} body={"Track distance, driving hours, visits, and other details of your assets and drivers."}/>
+                  <ReportAccordion head={"Privacy Sessions"} body={"Track distance, driving hours, visits, and other details of your assets and drivers."}/>
+                  <ReportAccordion head={"Time On Site"} body={"Track distance, driving hours, visits, and other details of your assets and drivers."}/>
+                  <ReportAccordion head={"Co-Location"} body={"Track distance, driving hours, visits, and other details of your assets and drivers."}/>
+                  <ReportAccordion head={"Fleet Benchmarks"} body={"Track distance, driving hours, visits, and other details of your assets and drivers."}/>
+                  <ReportAccordion head={"Assets"} body={"Keep track of asset usage to improve efficiency across your fleet."}/>
+                  <ReportAccordion head={"Driver Compliance"} body={"View and manage your drivers’ HOS logs, violations, and history in real-time."}/>
+                  <ReportAccordion head={"Driver Safety"} body={"Understand safety scores and trends for harsh events, speeding, and coaching"}/>
+                  
+                  {/* <List
                     component="nav"
                     aria-labelledby="nested-list-subheader"
                     className={classes.root}
@@ -492,7 +550,7 @@ export default function Reports() {
 
                       </Collapse>
                     </div>
-                  </List>
+                  </List> */}
                 </CardBody>
 
               </Card>
@@ -508,7 +566,7 @@ export default function Reports() {
             handleClose={closeAssignHOS}
             open={openForm}
           >
-            <ExportCustomReport handleClose={closeAssignHOS}/>
+            <ExportCustomReport openTab={openAssignHOS} closeTab={closeAssignHOS} handleClose={closeAssignHOS} />
           </DiaLog>
         </GridItem>
       </GridContainer>
