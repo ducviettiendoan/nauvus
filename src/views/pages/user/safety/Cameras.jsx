@@ -167,7 +167,7 @@ export function Cameras(props) {
             <Grid container>
               { props.data && props.data.length > 0 &&
                 <>
-                  <CameraCard id = {props.data[0].id} series={props.data[0].series} place={props.data[0].place} name={props.data[0].name} img = {props.data[0].img} status={props.data[0].status}/>
+                  <CameraCard id = {props.data[0].id} series={100} place={props.data[0].place} name={props.data[0].name} img = {props.data[0].img} status={props.data[0].status}/>
                   <CameraCard id = {props.data[1].id} series={props.data[1].series} place={props.data[1].place} name={props.data[1].name} img = {props.data[1].img} status={props.data[1].status}/>
                   <CameraCard id = {props.data[2].id} series={props.data[2].series} place={props.data[2].place} name={props.data[2].name} img = {props.data[2].img} status={props.data[2].status}/>
                   <CameraCard id = {props.data[3].id} series={props.data[3].series} place={props.data[3].place} name={props.data[3].name} img = {props.data[3].img} status={props.data[3].status}/>

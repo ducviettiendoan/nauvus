@@ -1,13 +1,12 @@
 import React from "react";
 // @material-ui/core SafetyInbox
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
 // core SafetyInbox
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 import Button from "components/CustomButtons/Button";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import {Form} from "react-final-form";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ExpandLess from "@material-ui/icons/ExpandLess";
@@ -18,6 +17,12 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import MenuItem from "@material-ui/core/MenuItem";
 import Checkbox from "@material-ui/core/Checkbox";
 import CheckSquareOutlined from "components/Icons/CheckSquareOutlined";
+import Grid from '@material-ui/core/Grid';
+import { Col, Row } from 'reactstrap';
+import { Field, Form } from "react-final-form";
+import { TextField } from "final-form-material-ui";
+import Accordion from "components/Accordion/Accordion";
+import CustomSelect from "components/CustomSelect/CustomSelect";
 
 const styles = {
   title: {
@@ -84,6 +89,25 @@ const styles = {
   detailColumn: {
     width: "250px"
   },
+  textFieldRoot: {
+    fontWeight: 'normal',
+    fontSize: '14px',
+    lineHeight: '21px',
+    color: '#C4C4C4'
+  },
+  textInputRoot: {
+    fontWeight: 'bold',
+    fontSize: '14px',
+    lineHeight: '21px',
+    color: '#25345C'
+  },
+  selectField: {
+    paddingTop: "18px",
+    paddingBottom: "10px",
+    fontWeight: 700,
+    fontSize: '14px',
+    color: '#25345C',
+  },
 };
 
 const useStyles = makeStyles(styles);
@@ -97,6 +121,13 @@ export default function FormatReport(props) {
 
   const [open, setOpen] = React.useState(true);
   const [currentTab, setCurrentTab] = React.useState();
+  const [selectValue, setSelectValue] = React.useState({
+    stateProvince: "none",
+  });
+
+  const handleChange = (event) => {
+    setSelectValue({ ...selectValue, [event.target.name]: event.target.value })
+  }
 
   const handleClick = (tabName) => {
     console.log(`on click tab: ${tabName}`);
@@ -124,7 +155,7 @@ export default function FormatReport(props) {
   });
   const handleToggle = (value) => (event) => {
     const currentIndex = checked[event.target.name].indexOf(value);
-    const newChecked = {...checked};
+    const newChecked = { ...checked };
     if (currentIndex === -1) {
       newChecked[event.target.name].push(value);
     } else {
@@ -134,402 +165,154 @@ export default function FormatReport(props) {
     setChecked(newChecked);
   };
 
+
   return (
     <div>
       <Form
         onSubmit={onSubmit}
-        render={({handleSubmit, reset, submitting, pristine, values}) => (
-          <form onSubmit={handleSubmit} noValidate className={classes.form} style={{maxWidth: "700"}}>
-            <List
-              component="nav"
-              aria-labelledby="nested-list-subheader"
-              className={classes.root}
-              subheader={
-                <ListSubheader
-                  component="div"
-                  id="nested-list-subheader"
-                  className={classes.txtListHeader}
-                >
-                  Columns
-                </ListSubheader>
-              }
-            >
-              <div>
-                <ListItem
-                  onClick={() => handleClick(`Created At`)}
-                >
-                  <ListItemText
-                    primary="Created At"
-                    classes={{primary: classes.titleHeader}}
-                  />
-                  {isOpenList(`Created At`) ? (
-                    <ExpandLess/>
-                  ) : (
-                    <ExpandMore/>
-                  )}
-                </ListItem>
-                <Collapse
-                  in={isOpenList(`Created At`)}
-                  timeout="auto"
-                  unmountOnExit
-                >
-                  <GridItem className={classes.detail}>Track distance, driving hours, visits, and other details of
-                    your assets and drivers.</GridItem>
+        render={({ handleSubmit, reset, submitting, pristine, values }) => (
+          <form onSubmit={handleSubmit} noValidate className={classes.form} style={{ maxWidth: "700" }}>
+            <Row>
+              <Col>
+                <Field
+                  id="standard-full-width"
+                  label="Tags"
+                  placeholder="Start typing..."
+                  fullWidth
+                  margin="normal"
+                  name="tags"
+                  InputLabelProps={{
+                    shrink: true,
+                    classes: { root: classes.textFieldRoot }
+                  }}
+                  InputProps={{
+                    classes: { input: classes.textInputRoot }
+                  }}
+                  component={TextField}
+                />
+              </Col>
+            </Row>
 
-                </Collapse>
-              </div>
-            </List>
-
-            {/*<Divider variant="fullWidth" light/>*/}
-            <hr/>
-
-            <List
-              component="nav"
-              aria-labelledby="nested-list-subheader"
-              className={classes.root}
-            >
-              <div className={classes.listCard}>
-                <ListItem
-                  button
-                  onClick={() => handleClick(`Driver`)}
-                >
-                  <ListItemText
-                    primary="Driver"
-                    secondary="2 selected of 15"
-                    classes={{primary: classes.titleHeader, secondary: classes.choicesAmount}}
-                  />
-                  {isOpenList(`Driver`) ? (
-                    <ExpandLess/>
-                  ) : (
-                    <ExpandMore/>
-                  )}
-                </ListItem>
-              </div>
-              <div>
-                <Collapse
-                  in={isOpenList(`Driver`)}
-                  timeout="auto"
-                  unmountOnExit
-                >
-                  <GridItem className={`${classes.detail} ${classes.listCard}`}>
-                    <div className={classes.detailColumn}>
-                      {listTags.driver1.map((value) => {
-                        return (
-                          <MenuItem key={value} className={classes.itemContainer}>
-                            <div className={classes.checkboxContainer}>
-                              <div className={classes.dropdownItem}>
-                                <Checkbox
-                                  // name="tags"
-                                  // edge="end"
-                                  onChange={handleToggle(value)}
-                                  checked={checked["tags"].indexOf(value) !== -1}
-                                  checkedIcon={<CheckSquareOutlined/>}
-                                  classes={{
-                                    checked: classes.checked,
-                                    root: classes.checkRoot
-                                  }}
-                                />
-                              </div>
-                              <div className={classes.dropdownItem}>
-                                {value}
-                              </div>
-                            </div>
-                          </MenuItem>
-                        );
-                      })}
-                    </div>
-                    <div className={classes.detailColumn}>
-                      {listTags.driver2.map((value) => {
-                        return (
-                          <MenuItem key={value} className={classes.itemContainer}>
-                            <div className={classes.checkboxContainer}>
-                              <div className={classes.dropdownItem}>
-                                <Checkbox
-                                  name="tags"
-                                  edge="end"
-                                  onChange={handleToggle(value)}
-                                  checked={checked["tags"].indexOf(value) !== -1}
-                                  checkedIcon={<CheckSquareOutlined/>}
-                                  classes={{
-                                    checked: classes.checked,
-                                    root: classes.checkRoot
-                                  }}
-                                />
-                              </div>
-                              <div className={classes.dropdownItem}>
-                                {value}
-                              </div>
-                            </div>
-                          </MenuItem>
-                        );
-                      })}
-                    </div>
-                  </GridItem>
-
-                </Collapse>
-              </div>
-              <div className={classes.listCard}>
-                <ListItem
-                  button
-                  onClick={() => handleClick(`Activity Fuel`)}
-                >
-                  <ListItemText
-                    primary="Activity Fuel"
-                    secondary="0 selected of 22"
-                    classes={{primary: classes.titleHeader, secondary: classes.choicesAmount}}
-                  />
-                  {isOpenList(`Activity Fuel`) ? (
-                    <ExpandLess/>
-                  ) : (
-                    <ExpandMore/>
-                  )}
-                </ListItem>
-              </div>
-              <div>
-                <Collapse
-                  in={isOpenList(`Activity Fuel`)}
-                  timeout="auto"
-                  unmountOnExit
-                >
-                  <GridItem className={`${classes.detail} ${classes.listCard}`}>
-                    <div className={classes.detailColumn}>
-                      {listTags.driver1.map((value) => {
-                        return (
-                          <MenuItem key={value} className={classes.itemContainer}>
-                            <div className={classes.checkboxContainer}>
-                              <div className={classes.dropdownItem}>
-                                <Checkbox
-                                  name="tags"
-                                  edge="end"
-                                  onChange={handleToggle(value)}
-                                  checked={checked["tags"].indexOf(value) !== -1}
-                                  checkedIcon={<CheckSquareOutlined/>}
-                                  classes={{
-                                    checked: classes.checked,
-                                    root: classes.checkRoot
-                                  }}
-                                />
-                              </div>
-                              <div className={classes.dropdownItem}>
-                                {value}
-                              </div>
-                            </div>
-                          </MenuItem>
-                        );
-                      })}
-                    </div>
-                    <div className={classes.detailColumn}>
-                      {listTags.driver2.map((value) => {
-                        return (
-                          <MenuItem key={value} className={classes.itemContainer}>
-                            <div className={classes.checkboxContainer}>
-                              <div className={classes.dropdownItem}>
-                                <Checkbox
-                                  name="tags"
-                                  edge="end"
-                                  onChange={handleToggle(value)}
-                                  checked={checked["tags"].indexOf(value) !== -1}
-                                  checkedIcon={<CheckSquareOutlined/>}
-                                  classes={{
-                                    checked: classes.checked,
-                                    root: classes.checkRoot
-                                  }}
-                                />
-                              </div>
-                              <div className={classes.dropdownItem}>
-                                {value}
-                              </div>
-                            </div>
-                          </MenuItem>
-                        );
-                      })}
-                    </div>
-                  </GridItem>
-
-                </Collapse>
-              </div>
-              <div className={classes.listCard}>
-                <ListItem
-                  button
-                  onClick={() => handleClick(`Safety`)}
-                >
-                  <ListItemText
-                    primary="Safety"
-                    secondary="0 selected of 10"
-                    classes={{primary: classes.titleHeader, secondary: classes.choicesAmount}}
-                  />
-                  {isOpenList(`Safety`) ? (
-                    <ExpandLess/>
-                  ) : (
-                    <ExpandMore/>
-                  )}
-                </ListItem>
-              </div>
-              <div>
-                <Collapse
-                  in={isOpenList(`Safety`)}
-                  timeout="auto"
-                  unmountOnExit
-                >
-                  <GridItem className={`${classes.detail} ${classes.listCard}`}>
-                    <div className={classes.detailColumn}>
-                      {listTags.driver1.map((value) => {
-                        return (
-                          <MenuItem key={value} className={classes.itemContainer}>
-                            <div className={classes.checkboxContainer}>
-                              <div className={classes.dropdownItem}>
-                                <Checkbox
-                                  name="tags"
-                                  edge="end"
-                                  onChange={handleToggle(value)}
-                                  checked={checked["tags"].indexOf(value) !== -1}
-                                  checkedIcon={<CheckSquareOutlined/>}
-                                  classes={{
-                                    checked: classes.checked,
-                                    root: classes.checkRoot
-                                  }}
-                                />
-                              </div>
-                              <div className={classes.dropdownItem}>
-                                {value}
-                              </div>
-                            </div>
-                          </MenuItem>
-                        );
-                      })}
-                    </div>
-                    <div className={classes.detailColumn}>
-                      {listTags.driver2.map((value) => {
-                        return (
-                          <MenuItem key={value} className={classes.itemContainer}>
-                            <div className={classes.checkboxContainer}>
-                              <div className={classes.dropdownItem}>
-                                <Checkbox
-                                  name="tags"
-                                  edge="end"
-                                  onChange={handleToggle(value)}
-                                  checked={checked["tags"].indexOf(value) !== -1}
-                                  checkedIcon={<CheckSquareOutlined/>}
-                                  classes={{
-                                    checked: classes.checked,
-                                    root: classes.checkRoot
-                                  }}
-                                />
-                              </div>
-                              <div className={classes.dropdownItem}>
-                                {value}
-                              </div>
-                            </div>
-                          </MenuItem>
-                        );
-                      })}
-                    </div>
-                  </GridItem>
-
-                </Collapse>
-              </div>
-
-              <div className={classes.listCard}>
-                <ListItem
-                  button
-                  onClick={() => handleClick(`Compliance`)}
-                >
-                  <ListItemText
-                    primary="Compliance"
-                    secondary="0 selected of 7"
-                    classes={{primary: classes.titleHeader, secondary: classes.choicesAmount}}
-                  />
-                  {isOpenList(`Compliance`) ? (
-                    <ExpandLess/>
-                  ) : (
-                    <ExpandMore/>
-                  )}
-                </ListItem>
-              </div>
-              <div>
-                <Collapse
-                  in={isOpenList(`Compliance`)}
-                  timeout="auto"
-                  unmountOnExit
-                >
-                  <GridItem className={`${classes.detail} ${classes.listCard}`}>
-                    <div className={classes.detailColumn}>
-                      {listTags.driver1.map((value) => {
-                        return (
-                          <MenuItem key={value} className={classes.itemContainer}>
-                            <div className={classes.checkboxContainer}>
-                              <div className={classes.dropdownItem}>
-                                <Checkbox
-                                  name="tags"
-                                  edge="end"
-                                  onChange={handleToggle(value)}
-                                  checked={checked["tags"].indexOf(value) !== -1}
-                                  checkedIcon={<CheckSquareOutlined/>}
-                                  classes={{
-                                    checked: classes.checked,
-                                    root: classes.checkRoot
-                                  }}
-                                />
-                              </div>
-                              <div className={classes.dropdownItem}>
-                                {value}
-                              </div>
-                            </div>
-                          </MenuItem>
-                        );
-                      })}
-                    </div>
-                    <div className={classes.detailColumn}>
-                      {listTags.driver2.map((value) => {
-                        return (
-                          <MenuItem key={value} className={classes.itemContainer}>
-                            <div className={classes.checkboxContainer}>
-                              <div className={classes.dropdownItem}>
-                                <Checkbox
-                                  name="tags"
-                                  edge="end"
-                                  onChange={handleToggle(value)}
-                                  checked={checked["tags"].indexOf(value) !== -1}
-                                  checkedIcon={<CheckSquareOutlined/>}
-                                  classes={{
-                                    checked: classes.checked,
-                                    root: classes.checkRoot
-                                  }}
-                                />
-                              </div>
-                              <div className={classes.dropdownItem}>
-                                {value}
-                              </div>
-                            </div>
-                          </MenuItem>
-                        );
-                      })}
-                    </div>
-                  </GridItem>
-
-                </Collapse>
-              </div>
-
-            </List>
-
-
-            <div className={classes.footer}>
-              <div className={classes.selectButton}>
-                <Button
-                  type="button"
-                  round
-                  className={`btn-round-active-2 ${classes.buttonSetting}`}
-                  onClick={props.handleClose}
-                > Cancel
-                </Button>
-                <Button
-                  round
-                  className={`btn-round-active ${classes.buttonSetting}`}
-                  type="submit"
-                  disabled={submitting}
-                > Save</Button>
-              </div>
-            </div>
+            <Row style={{display: "flex", alignItems: "center"}}>
+              <Col>
+                <Field
+                  labelProps={{
+                    shrink: true,
+                    classes: { root: classes.textFieldRoot }
+                  }}
+                  selectProps={{
+                    classes: { root: classes.selectField }
+                  }}
+                  name="stateProvince"
+                  listValues={["AL-Alabama"]}
+                  placeholder={"AL-Alabama"}
+                  selectValue={selectValue.stateProvince}
+                  IconComponent={{
+                    classes: { root: classes.iconDropdown }
+                  }}
+                  onChange={handleChange}
+                  component={CustomSelect}
+                />
+              </Col>
+              <Col>
+                <Field
+                  id="standard-full-width"
+                  label="Username"
+                  placeholder="Start typing..."
+                  fullWidth
+                  margin="normal"
+                  name="tags"
+                  InputLabelProps={{
+                    shrink: true,
+                    classes: { root: classes.textFieldRoot }
+                  }}
+                  InputProps={{
+                    classes: { input: classes.textInputRoot }
+                  }}
+                  component={TextField}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Field
+                  labelProps={{
+                    shrink: true,
+                    classes: { root: classes.textFieldRoot }
+                  }}
+                  selectProps={{
+                    classes: { root: classes.selectField }
+                  }}
+                  name="stateProvince"
+                  listValues={["AL-Alabama"]}
+                  placeholder={"AL-Alabama"}
+                  selectValue={selectValue.stateProvince}
+                  IconComponent={{
+                    classes: { root: classes.iconDropdown }
+                  }}
+                  onChange={handleChange}
+                  component={CustomSelect}
+                />
+              </Col>
+              <Col>
+                <Field
+                  id="standard-full-width"
+                  label="Username"
+                  placeholder="Start typing..."
+                  fullWidth
+                  margin="normal"
+                  name="tags"
+                  InputLabelProps={{
+                    shrink: true,
+                    classes: { root: classes.textFieldRoot }
+                  }}
+                  InputProps={{
+                    classes: { input: classes.textInputRoot }
+                  }}
+                  component={TextField}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Field
+                  labelProps={{
+                    shrink: true,
+                    classes: { root: classes.textFieldRoot }
+                  }}
+                  selectProps={{
+                    classes: { root: classes.selectField }
+                  }}
+                  name="stateProvince"
+                  listValues={["AL-Alabama"]}
+                  placeholder={"AL-Alabama"}
+                  selectValue={selectValue.stateProvince}
+                  IconComponent={{
+                    classes: { root: classes.iconDropdown }
+                  }}
+                  onChange={handleChange}
+                  component={CustomSelect}
+                />
+              </Col>
+              <Col>
+                <Field
+                  id="standard-full-width"
+                  label="Username"
+                  placeholder="Start typing..."
+                  fullWidth
+                  margin="normal"
+                  name="tags"
+                  InputLabelProps={{
+                    shrink: true,
+                    classes: { root: classes.textFieldRoot }
+                  }}
+                  InputProps={{
+                    classes: { input: classes.textInputRoot }
+                  }}
+                  component={TextField}
+                />
+              </Col>
+            </Row>
           </form>
         )}
       />
