@@ -57,6 +57,9 @@ const styles = {
   },
   tableWrapper: {
     overflowX: "auto"
+  },
+  pointer: {
+    cursor: "pointer"
   }
 }
 
@@ -294,9 +297,12 @@ class TableV1 extends React.Component {
                           rowSelection={rowSelection}
                           onSelectChange={this.onSelectChange}
                           expandedRowRender={expandedRowRender}
+                          className={ onBodyRow.onClick ? classes.pointer : '' }
                         />
                       ) : (
-                        <TableRow key={index} {...onBodyRow} onClick={() => onBodyRow.onClick && onBodyRow.onClick(record.id)}>
+                        <TableRow key={index} {...onBodyRow} 
+                        className={ onBodyRow.onClick ? classes.pointer : '' }
+                        onClick={() => onBodyRow.onClick && onBodyRow.onClick(record.id)}>
                           {rowSelection && (
                             <TableCell className={classes.checkbox}>
                               <Checkbox

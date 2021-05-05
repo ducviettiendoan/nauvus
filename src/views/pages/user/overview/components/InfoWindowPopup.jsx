@@ -13,6 +13,12 @@ const InfoWindowPopup = (props) => {
 
     const {maker} = props
     console.log(maker)
+
+    const toggleFullScreen = () => {
+        var map = document.querySelector(".gm-style");
+        map.requestFullscreen();
+    }
+
     return(
     <div className={classes.infowindow}>
         <img src={driving} alt="vehicle preview" className={classes.vehiclePreview}/>
@@ -31,7 +37,9 @@ const InfoWindowPopup = (props) => {
                 <span className={classes.fuelPercent}>64%</span>
             </div>
             <div >
-                <ZoomIcon className={classes.zoom}/>
+                <Link onClick={ toggleFullScreen } >
+                    <ZoomIcon className={classes.zoom}/>
+                </Link>
                 <Link to={ "/o/vehicle/123456" }>
                     <OpenInNewTabIcon className={classes.newTab} classes={{ root: classes.newTab }} />
                 </Link>
