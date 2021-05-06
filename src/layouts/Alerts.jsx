@@ -1,7 +1,7 @@
 import React from "react";
 import { ROUTE_PATH } from "config/constants";
 import cx from "classnames";
-import clsx from 'clsx';
+import clsx from "clsx";
 import { Switch, Route, Redirect, useHistory } from "react-router-dom";
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
@@ -9,7 +9,7 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import Drawer from '@material-ui/core/Drawer';
+import Drawer from "@material-ui/core/Drawer";
 
 // core components
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
@@ -20,11 +20,12 @@ import routes from "user-routes";
 
 import styles from "assets/jss/material-dashboard-pro-react/layouts/alertStyle.js";
 import Loading from "components/Loading/Loading";
-import { connect } from 'react-redux';
-import { getUserInfo } from '../reducers/authentication';
+import { connect } from "react-redux";
+import { getUserInfo } from "../reducers/authentication";
 import { setShowButtonBack } from "reducers/safety";
 import ExtraAlertsSideBar from "components/Sidebar/ExtraAlertsSideBar";
-
+import { ExtraAlertMobile } from "../components/Sidebar/ExtraAlertMobile";
+import { setTab } from "reducers/alerts";
 
 var ps;
 
@@ -36,6 +37,7 @@ export function Safety(props) {
   // states and functions
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [miniActive, setMiniActive] = React.useState(false);
+  const [displaySetting, setDisplaySetting] = React.useState(true);
   const [image, setImage] = React.useState("");
   const [color, setColor] = React.useState("blue");
   const [bgColor, setBgColor] = React.useState("white");
@@ -47,7 +49,7 @@ export function Safety(props) {
 
   React.useEffect(() => {
     if (alert !== -1) setMiniActive(true);
-    else setMiniActive(false)
+    else setMiniActive(false);
   }, [alert]);
   // styles
   const classes = useStyles();
@@ -57,18 +59,17 @@ export function Safety(props) {
     cx({
       [classes.mainPanelSidebarMini]: miniActive,
       [classes.mainPanelWithPerfectScrollbar]:
-        navigator.platform.indexOf("Win") > -1
+        navigator.platform.indexOf("Win") > -1,
     });
 
   // ref for main panel div
   const mainPanel = React.createRef();
 
   React.useEffect(() => {
-
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(mainPanel.current, {
         suppressScrollX: true,
-        suppressScrollY: false
+        suppressScrollY: false,
       });
       document.body.style.overflow = "hidden";
     }
@@ -83,9 +84,17 @@ export function Safety(props) {
     };
   }, [1]);
 
+  React.useEffect(() => {
+    if (window.innerWidth >= 960) {
+      setDisplaySetting(true);
+    } else {
+      setDisplaySetting(false);
+    }
+  }, []);
+
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
 
-  const getActiveRoute = routes => {
+  const getActiveRoute = (routes) => {
     let activeRoute = "Default Brand Text";
     for (let i = 0; i < routes.length; i++) {
       if (routes[i].collapse) {
@@ -103,78 +112,121 @@ export function Safety(props) {
     }
     return activeRoute;
   };
-  const getRoutes = routes => {
+  const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.collapse) {
         return getRoutes(prop.views);
       }
       if (prop.layout === ROUTE_PATH.ALERT) {
-        return <Route
-          path={prop.layout + prop.path}
-          component={prop.component}
-          key={key}
-        />
+        return (
+          <Route
+            path={prop.layout + prop.path}
+            component={prop.component}
+            key={key}
+          />
+        );
       } else {
         return null;
       }
     });
   };
   const sidebarMinimize = () => setMiniActive(!miniActive);
-  const onBack = () => props.history.goBack()
+  const onBack = () => props.history.goBack();
   const redirectLogin = () => history.push(ROUTE_PATH.AUTH + "/sign-in");
 
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
       setMobileOpen(false);
+      setDisplaySetting(true);
+    } else {
+      setMiniActive(false);
+      setDisplaySetting(false);
     }
   };
 
   const renderDataContent = () => {
     return (
       <div className={classes.root}>
-        <Drawer
-          className={classes.drawer}
-          variant="persistent"
-          anchor="left"
-          open={props.extraSidebar}
-          classes={{
-            paper: classes.drawerPaper,
-          }}
-        >
-          <div className={classes.extraSidebar}>
-            <ExtraAlertsSideBar />
-          </div>
-        </Drawer>
-        <main
-          className={clsx(classes.content, {
-            [classes.contentShift]: props.extraSidebar,
-          })}
-        >
-          <AdminNavbar
-            sidebarMinimize={sidebarMinimize.bind(this)}
-            miniActive={miniActive}
-            brandText={getActiveRoute(routes)}
-            handleDrawerToggle={handleDrawerToggle}
-            showBack={props.showBack}
-            onBack={onBack}
-            {...rest}
-          />
-          <div className={classes.container}>
-            <Switch>
-              {getRoutes(routes)}
-              <Redirect from={ROUTE_PATH.ALERT} to={ROUTE_PATH.ALERT + "/alerts"} />
-            </Switch>
-          </div>
-        </main>
+        {props.tab === 0 && (
+          <main
+            className={clsx(classes.content, {
+              [classes.contentShift]: true,
+            })}
+          >
+            <AdminNavbar
+              sidebarMinimize={sidebarMinimize.bind(this)}
+              miniActive={miniActive}
+              brandText={getActiveRoute(routes)}
+              handleDrawerToggle={handleDrawerToggle}
+              showBack={props.showBack}
+              displaySetting={displaySetting}
+              onBack={onBack}
+              {...rest}
+            />
+            <div className={classes.container}>
+              <Switch>
+                {getRoutes(routes)}
+                <Redirect
+                  from={ROUTE_PATH.ALERT}
+                  to={ROUTE_PATH.ALERT + "/alerts"}
+                />
+              </Switch>
+            </div>
+          </main>
+        )}
+        {props.tab === 1 && (
+          <>
+            {displaySetting && (
+              <Drawer
+                className={classes.drawer}
+                variant="persistent"
+                anchor="left"
+                open={props.extraSidebar}
+                classes={{
+                  paper: classes.drawerPaper,
+                }}
+              >
+                <div className={classes.extraSidebar}>
+                  <ExtraAlertsSideBar />
+                </div>
+              </Drawer>
+            )}
+            <main
+              className={clsx(classes.content, {
+                [classes.contentShift]: props.extraSidebar,
+              })}
+            >
+              <AdminNavbar
+                sidebarMinimize={sidebarMinimize.bind(this)}
+                miniActive={miniActive}
+                brandText={getActiveRoute(routes)}
+                handleDrawerToggle={handleDrawerToggle}
+                showBack={props.showBack}
+                displaySetting={displaySetting}
+                onBack={onBack}
+                {...rest}
+              />
+              <div className={classes.container}>
+                {displaySetting || <ExtraAlertMobile />}
+                <Switch>
+                  {getRoutes(routes)}
+                  <Redirect
+                    from={ROUTE_PATH.ALERT}
+                    to={ROUTE_PATH.ALERT + "/alerts"}
+                  />
+                </Switch>
+              </div>
+            </main>
+          </>
+        )}
       </div>
-    )
-  }
-
+    );
+  };
 
   return (
     <>
       <div className={classes.wrapper}>
-        {fetchSession && props.isAuthenticated &&
+        {fetchSession && props.isAuthenticated && (
           <Sidebar
             routes={routes}
             logoText={"Nauvus"}
@@ -187,9 +239,17 @@ export function Safety(props) {
             miniActive={miniActive}
             {...rest}
           />
-        }
+        )}
         <div className={mainPanelClasses} ref={mainPanel}>
-          {fetchSession ? props.isAuthenticated ? renderDataContent() : redirectLogin() : <Loading />}
+          {fetchSession ? (
+            props.isAuthenticated ? (
+              renderDataContent()
+            ) : (
+              redirectLogin()
+            )
+          ) : (
+            <Loading />
+          )}
         </div>
       </div>
     </>
@@ -199,13 +259,15 @@ const mapStateToProps = ({ authentication, alerts }) => {
   return {
     isAuthenticated: authentication.isAuthenticated,
     user: authentication.user,
-    extraSidebar: alerts.extraSidebar
+    extraSidebar: alerts.extraSidebar,
+    tab: alerts.tab,
   };
 };
 
 const mapDispatchToProps = {
   getUserInfo,
-  setShowButtonBack
+  setShowButtonBack,
+  setTab,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Safety);

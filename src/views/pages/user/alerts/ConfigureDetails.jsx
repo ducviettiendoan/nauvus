@@ -12,7 +12,9 @@ import Divider from "@material-ui/core/Divider";
 import Select from "components/CustomSelect/Select";
 import Calendar from "components/Calendar/Calendar";
 import AddButton from "components/CustomButtons/AddButton";
+import AddOutlined from "@material-ui/icons/AddOutlined";
 import DateTimeRangePicker from "components/CustomDateRangePicker/DateTimeRangePicker";
+import OpenInNewTabIcon from "components/Icons/OpenInNewTabIcon";
 
 const styles = (theme) => ({
   configureHeaderContainer: {
@@ -107,6 +109,24 @@ const styles = (theme) => ({
   },
   selectBox: {
     marginRight: "8px",
+  },
+  sendOptions: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingTop: "16px",
+  },
+  sendOptionButtons: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: "0px !important",
+  },
+  footer: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    paddingTop: "16px",
   },
 });
 
@@ -318,6 +338,104 @@ export default function ConfigureDetails() {
       </div>
       <DateTimeRangePicker timeState={timeState} setTimeState={setTimeState} />
       <Divider variant="fullWidth" light className={classes.dividerLine} />
+      <div className={classes.sendOptions}>
+        <GridItem xs={7} lg={7} xl={9}>
+          <Select
+            label="Send Contact Notifications"
+            fullWidth={true}
+            value={1}
+            options={statusOptions}
+            SelectProps={{ isClearable: false }}
+            onChange={(value) => {
+              console.log(value);
+            }}
+          />
+        </GridItem>
+        <GridItem xs={5} lg={5} xl={3} className={classes.sendOptionButtons}>
+          <Button
+            round
+            className="btn-round-active w-88 h-42 mr-2"
+            startIcon={<AddOutlined />}
+          >
+            New
+          </Button>
+          <Button
+            round
+            className="btn-round-gray h-42 w-108 "
+            startIcon={<OpenInNewTabIcon />}
+          >
+            Manage
+          </Button>
+        </GridItem>
+      </div>
+      <div className={classes.sendOptions}>
+        <GridItem xs={9} lg={9} xl={10}>
+          <Select
+            label="Send Webhook Notifications"
+            fullWidth={true}
+            value={1}
+            options={statusOptions}
+            SelectProps={{ isClearable: false }}
+            onChange={(value) => {
+              console.log(value);
+            }}
+          />
+        </GridItem>
+        <GridItem xs={3} lg={3} xl={2} className={classes.sendOptionButtons}>
+          <Button
+            round
+            className="btn-round-gray h-42 w-108 "
+            startIcon={<OpenInNewTabIcon />}
+          >
+            Manage
+          </Button>
+        </GridItem>
+      </div>
+      <div className={classes.sendOptions}>
+        <GridItem xs={9} lg={9} xl={10}>
+          <Select
+            label="Send Slack Notifications"
+            fullWidth={true}
+            value={1}
+            options={statusOptions}
+            SelectProps={{ isClearable: false }}
+            onChange={(value) => {
+              console.log(value);
+            }}
+          />
+        </GridItem>
+        <GridItem xs={3} lg={3} xl={2} className={classes.sendOptionButtons}>
+          <Button
+            round
+            className="btn-round-gray h-42 w-108 "
+            startIcon={<OpenInNewTabIcon />}
+          >
+            Manage
+          </Button>
+        </GridItem>
+      </div>
+      <div className={classes.sendOptions}>
+        <GridItem xs={12}>
+          <Select
+            label="Description (optional)"
+            fullWidth={true}
+            value={1}
+            options={statusOptions}
+            SelectProps={{ isClearable: false }}
+            onChange={(value) => {
+              console.log(value);
+            }}
+          />
+        </GridItem>
+      </div>
+      <div className={classes.footer}>
+        <Button round className="btn-round-active-2 h-41 w-74 mr-2">
+          Cancel
+        </Button>
+        <Button round className="btn-round-active h-41 w-62">
+          Save
+        </Button>
+      </div>
     </>
   );
 }
