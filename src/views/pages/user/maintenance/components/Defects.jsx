@@ -1,15 +1,15 @@
 import React from "react";
 // @material-ui/core components
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Button from "components/CustomButtons/Button";
 import ToolboxButton from "components/CustomButtons/ToolboxButton";
 import CloseIcon from "components/Icons/CloseIcon";
 import Chip from "@material-ui/core/Chip";
-import Grid from '@material-ui/core/Grid';
+import Grid from "@material-ui/core/Grid";
 import Table from "components/Table/TableV1";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Popper from "@material-ui/core/Popper";
 import classNames from "classnames";
 import Grow from "@material-ui/core/Grow";
@@ -23,9 +23,9 @@ import Checkbox from "@material-ui/core/Checkbox";
 import CheckSquareOutlined from "components/Icons/CheckSquareOutlined";
 import Avatar from "@material-ui/core/Avatar";
 import customDropdownStyle from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle.js";
-import {primaryColor} from "assets/jss/material-dashboard-pro-react";
-import {getDefectsData} from "reducers/maintainance";
-import {connect} from "react-redux";
+import { primaryColor } from "assets/jss/material-dashboard-pro-react";
+import { getDefectsData } from "reducers/maintainance";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   ...customDropdownStyle(theme),
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 16,
     color: "#25345C",
     fontWeight: 700,
-    paddingRight: "8px !important"
+    paddingRight: "8px !important",
   },
   selected: {
     height: 24,
@@ -53,18 +53,18 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     padding: 0,
     "&:hover": {
-      color: "#25345C"
-    }
+      color: "#25345C",
+    },
   },
   chipSelected: {
     display: "flex",
     alignItems: "center",
-    paddingLeft: "0px !important"
+    paddingLeft: "0px !important",
   },
   headContainer: {
     alignItems: "center",
     textAlign: "left",
-    marginTop: "8px"
+    marginTop: "8px",
   },
   headLeft: {
     display: "flex",
@@ -72,26 +72,25 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "flex-end",
     "& > div": {
       marginBottom: "0 !important",
-      marginRight: 8
-    }
+      marginRight: 8,
+    },
   },
   textName: {
-    fontWeight: 'bold',
-    fontSize: '16px',
-    lineHeight: '24px',
-    color: '#25345C',
-    paddingLeft: "12px"
+    fontWeight: "bold",
+    fontSize: "16px",
+    lineHeight: "24px",
+    color: "#25345C",
+    paddingLeft: "12px",
   },
   textEmail: {
-    fontSize: '16px',
-    lineHeight: '21px',
+    fontSize: "16px",
+    lineHeight: "21px",
     color: "#25345C",
     fontWeight: 400,
-
   },
   textEmail2: {
-    fontSize: '16px',
-    lineHeight: '21px',
+    fontSize: "16px",
+    lineHeight: "21px",
     color: "#C4C4C4",
     fontWeight: 400,
     marginLeft: "10px !important",
@@ -101,10 +100,10 @@ const useStyles = makeStyles((theme) => ({
     background: "#ECEEF0",
     color: "#25345C",
     fontSize: "12px",
-    marginRight: 8
+    marginRight: 8,
   },
   tableRow: {
-    '&:nth-of-type(even)': {
+    "&:nth-of-type(even)": {
       backgroundColor: "#fbfbfb",
     },
   },
@@ -112,12 +111,12 @@ const useStyles = makeStyles((theme) => ({
     background: "#ECEEF0",
   },
   gridTitle: {
-    padding: "20px"
+    padding: "20px",
   },
   onHeaderCellFirst: {
     fontWeight: 700,
     color: "#25345C",
-    paddingLeft: "28px"
+    paddingLeft: "28px",
   },
   onHeaderCellNext: {
     fontWeight: 700,
@@ -131,11 +130,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    marginTop: 15
+    marginTop: 15,
   },
   textStatus: {
-    fontSize: '14px',
-    lineHeight: '24px',
+    fontSize: "14px",
+    lineHeight: "24px",
     paddingLeft: "0px !important",
     color: "#27AE60",
     background: "rgba(39, 174, 96, 0.1)",
@@ -145,12 +144,12 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     fontWeight: 700,
     width: "53px",
-    height: "41px"
+    height: "41px",
   },
   textStatus2: {
     border: "1px solid #ECEEF0 !important",
-    fontSize: '14px',
-    lineHeight: '24px',
+    fontSize: "14px",
+    lineHeight: "24px",
     padding: "0px !important",
     color: "#25345C",
     background: "#FFFFFF",
@@ -160,7 +159,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     fontWeight: 700,
     width: "95px",
-    height: "40px"
+    height: "40px",
   },
   dropdownVehicle: {
     borderRadius: "12px",
@@ -173,7 +172,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "10px 5px 20px 5px !important"
+    padding: "10px 5px 20px 5px !important",
   },
   popperHeader: {
     color: "#25345C",
@@ -188,7 +187,7 @@ const useStyles = makeStyles((theme) => ({
   tagTitle: {
     fontSize: "16px",
     fontWeight: 700,
-    lineHeight: "19px"
+    lineHeight: "19px",
   },
   grayAvatar: {
     background: "#ECEEF0 !important",
@@ -200,18 +199,18 @@ const useStyles = makeStyles((theme) => ({
   dropdownItemVehicle: {
     marginLeft: "8px",
     fontWeight: 700,
-    fontSize: '14px',
-    color: '#25345C',
+    fontSize: "14px",
+    color: "#25345C",
   },
   checked: {
-    color: primaryColor[0] + "!important"
+    color: primaryColor[0] + "!important",
   },
   checkRoot: {
     padding: "10px",
     paddingLeft: "0px !important",
     "&:hover": {
-      backgroundColor: "unset"
-    }
+      backgroundColor: "unset",
+    },
   },
   // accordion style
   expansionClasses: {
@@ -224,10 +223,10 @@ const useStyles = makeStyles((theme) => ({
     },
     "&:focus": {
       background: "#FAFAFA",
-    }
+    },
   },
   expansionContentClasses: {
-    margin: "0px !important"
+    margin: "0px !important",
   },
   expansionPanelClasses: {
     marginBottom: "4px !important",
@@ -244,7 +243,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "0px !important"
+    padding: "0px !important",
   },
   checkboxContainer: {
     display: "flex",
@@ -261,11 +260,11 @@ const useStyles = makeStyles((theme) => ({
     padding: 0,
     margin: "0px !important",
     "&:hover": {
-      color: "#25345C"
+      color: "#25345C",
     },
     "&:focus": {
-      color: "#8CA2EE"
-    }
+      color: "#8CA2EE",
+    },
   },
 }));
 
@@ -274,22 +273,25 @@ export function Defects(props) {
   const history = useHistory();
 
   const [chipData, setChipData] = React.useState([
-    {key: 0, label: 'Standard Admin'},
-    {key: 1, label: 'Full admin'},
+    { key: 0, label: "Standard Admin" },
+    { key: 1, label: "Full admin" },
   ]);
 
   const handleDelete = (chipToDelete) => () => {
-    setChipData((chips) => chips.filter((chip) => chip.key !== chipToDelete.key));
+    setChipData((chips) =>
+      chips.filter((chip) => chip.key !== chipToDelete.key)
+    );
   };
 
   const handleClearAll = () => {
-    setChipData([])
+    setChipData([]);
   };
 
-  const viewDetail = () => {
-    history.push("/u/maintenance/driver-vehicle-inspection-report/vehicle101")
-    console.log("clicked")
-  }
+  const viewDetail = (id) => {
+    history.push(
+      `/u/dvir/vehicle${id}`
+    );
+  };
 
   React.useEffect(() => {
     // Get list data
@@ -298,79 +300,91 @@ export function Defects(props) {
 
   const columns = [
     {
-      title: 'Asset',
-      key: 'asset',
-      onHeaderCell: {className: classes.onHeaderCellFirst},
-      render: asset => (
+      title: "Asset",
+      key: "asset",
+      onHeaderCell: { className: classes.onHeaderCellFirst },
+      render: (asset) => (
         <div className={classes.alignItemsCenter}>
           <div className={classes.textName}>{asset}</div>
         </div>
       ),
     },
     {
-      title: 'Current Location',
-      key: 'currentLocation',
-      onHeaderCell: {className: classes.onHeaderCellNext},
-      render: currentLocation => <div className={classes.textEmail}>{currentLocation}</div>
+      title: "Current Location",
+      key: "currentLocation",
+      onHeaderCell: { className: classes.onHeaderCellNext },
+      render: (currentLocation) => (
+        <div className={classes.textEmail}>{currentLocation}</div>
+      ),
     },
     {
-      title: 'Last Dvir Status',
-      key: 'lastDvirStatus',
-      onHeaderCell: {className: classes.onHeaderCellNext},
-      render: lastDvirStatus => <div className={classes.textStatus}>{lastDvirStatus}</div>
+      title: "Last Dvir Status",
+      key: "lastDvirStatus",
+      onHeaderCell: { className: classes.onHeaderCellNext },
+      render: (lastDvirStatus) => (
+        <div className={classes.textStatus}>{lastDvirStatus}</div>
+      ),
     },
     {
-      title: 'Count',
-      key: 'count',
-      onHeaderCell: {className: classes.onHeaderCellNext},
-      render: count => <div className={classes.textEmail}>{count}</div>
+      title: "Count",
+      key: "count",
+      onHeaderCell: { className: classes.onHeaderCellNext },
+      render: (count) => <div className={classes.textEmail}>{count}</div>,
     },
     {
-      title: 'Unresolved Defects',
-      key: 'unresolvedDefects',
-      onHeaderCell: {className: classes.onHeaderCellNext},
-      render: unresolvedDefects => (
+      title: "Unresolved Defects",
+      key: "unresolvedDefects",
+      onHeaderCell: { className: classes.onHeaderCellNext },
+      render: (unresolvedDefects) => (
         <div>
           <span className={classes.textEmail}>{unresolvedDefects}</span>
           <span className={classes.textEmail2}>Feb 20, 5:13 AM</span>
         </div>
-      )
+      ),
     },
     {
-      title: 'Actions',
-      key: 'action',
-      onHeaderCell: {className: classes.onHeaderCellNext},
-      render: () => <div className={classes.textStatus2}>Last Dvir</div>
-    }
-  ]
+      title: "Actions",
+      key: "action",
+      onHeaderCell: { className: classes.onHeaderCellNext },
+      render: () => <div className={classes.textStatus2}>Last Dvir</div>,
+    },
+  ];
 
   // popper
   const [openMore, setOpenMore] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleCloseMore = () => setOpenMore(false)
+  const handleCloseMore = () => setOpenMore(false);
   const handleOpenMore = (event) => {
-    setOpenMore(true)
+    setOpenMore(true);
     setAnchorEl(event.currentTarget);
-  }
+  };
 
   const listTags = {
     tags: ["Room", "No road", "In City"],
-    dutyStatus: ["Driving", "On Duty", "Off Duty", "Personal Conveyance", "Sleeper Berth", "Disconnected", "Yard Move"],
-    violations: ["Currently in violations", "Nearing Violation"]
-  }
+    dutyStatus: [
+      "Driving",
+      "On Duty",
+      "Off Duty",
+      "Personal Conveyance",
+      "Sleeper Berth",
+      "Disconnected",
+      "Yard Move",
+    ],
+    violations: ["Currently in violations", "Nearing Violation"],
+  };
 
   const PopperFilter = (props) => {
-    const {listTags} = props
+    const { listTags } = props;
     // checked box in popper
     const [checked, setChecked] = React.useState({
       tags: [1],
       dutyStatus: [1],
-      violations: [1]
+      violations: [1],
     });
     const handleToggle = (value) => (event) => {
       const currentIndex = checked[event.target.name].indexOf(value);
-      const newChecked = {...checked};
+      const newChecked = { ...checked };
       if (currentIndex === -1) {
         newChecked[event.target.name].push(value);
       } else {
@@ -383,9 +397,9 @@ export function Defects(props) {
     const handleClearBox = (value) => () => {
       setChecked({
         ...checked,
-        [value]: [1]
-      })
-    }
+        [value]: [1],
+      });
+    };
 
     return (
       <Popper
@@ -397,180 +411,252 @@ export function Defects(props) {
         className={classNames({
           [classes.popperClose]: !anchorEl,
           [classes.popperResponsive]: true,
-          [classes.popperNav]: true
+          [classes.popperNav]: true,
         })}
       >
-        {({TransitionProps}) => (
+        {({ TransitionProps }) => (
           <Grow
             {...TransitionProps}
             id="profile-menu-list"
-            style={{transformOrigin: "0 0 0"}}
+            style={{ transformOrigin: "0 0 0" }}
           >
             <Paper className={classes.dropdown && classes.dropdownVehicle}>
               <ClickAwayListener onClickAway={handleCloseMore}>
                 <MenuList role="menu">
                   <Grid className={classes.popperHeaderContainer}>
                     <Grid className={classes.popperHeader}>Filter Options</Grid>
-                    <ArrowRightBlueIcon/>
+                    <ArrowRightBlueIcon />
                   </Grid>
                   <Grid xs={12} sm={12} md={12} className={classes.popperInput}>
-                    <ToolboxButton placeholder="Search tags"/>
+                    <ToolboxButton placeholder="Search tags" />
                   </Grid>
 
-                  <Accordion collapses={
-                    [
+                  <Accordion
+                    collapses={[
                       {
-                        title: <Grid style={{width: "140px", display: "flex", justifyContent: "space-between"}}>
-                          <Grid className={classes.tagTitle}>Tags</Grid>
-                          <Button className={classes.clearButton} onClick={handleClearBox("tags")}>
-                            Clear
-                          </Button>
-                        </Grid>,
-                        content:
+                        title: (
+                          <Grid
+                            style={{
+                              width: "140px",
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <Grid className={classes.tagTitle}>Tags</Grid>
+                            <Button
+                              className={classes.clearButton}
+                              onClick={handleClearBox("tags")}
+                            >
+                              Clear
+                            </Button>
+                          </Grid>
+                        ),
+                        content: (
                           <div className={classes.cardExpandContent}>
                             {listTags.tags.map((value) => {
                               return (
-                                <MenuItem key={value} className={classes.itemContainer}>
+                                <MenuItem
+                                  key={value}
+                                  className={classes.itemContainer}
+                                >
                                   <div className={classes.checkboxContainer}>
-                                    <div className={classes.dropdownItemVehicle}>
+                                    <div
+                                      className={classes.dropdownItemVehicle}
+                                    >
                                       <Checkbox
                                         name="tags"
                                         edge="end"
                                         onChange={handleToggle(value)}
-                                        checked={checked["tags"].indexOf(value) !== -1}
-                                        checkedIcon={<CheckSquareOutlined/>}
+                                        checked={
+                                          checked["tags"].indexOf(value) !== -1
+                                        }
+                                        checkedIcon={<CheckSquareOutlined />}
                                         classes={{
                                           checked: classes.checked,
-                                          root: classes.checkRoot
+                                          root: classes.checkRoot,
                                         }}
                                       />
                                     </div>
-                                    <div className={classes.dropdownItemVehicle}>
+                                    <div
+                                      className={classes.dropdownItemVehicle}
+                                    >
                                       {value}
                                     </div>
                                   </div>
-                                  <Avatar className={classes.grayAvatar}>5</Avatar>
+                                  <Avatar className={classes.grayAvatar}>
+                                    5
+                                  </Avatar>
                                 </MenuItem>
                               );
                             })}
                           </div>
+                        ),
                       },
-                    ]
-                  }
-                             expansionSummaryClasses={{
-                               root: classes.expansionClasses,
-                               content: classes.expansionContentClasses
-                             }}
-                             expansionPanelClasses={{
-                               root: classes.expansionPanelClasses,
-                             }}
-                             expansionPanelRounded={{
-                               rounded: classes.expansionPanelClassesRounded,
-                             }}
+                    ]}
+                    expansionSummaryClasses={{
+                      root: classes.expansionClasses,
+                      content: classes.expansionContentClasses,
+                    }}
+                    expansionPanelClasses={{
+                      root: classes.expansionPanelClasses,
+                    }}
+                    expansionPanelRounded={{
+                      rounded: classes.expansionPanelClassesRounded,
+                    }}
                   />
 
-                  <Accordion collapses={
-                    [
+                  <Accordion
+                    collapses={[
                       {
-                        title: <Grid style={{width: "140px", display: "flex", justifyContent: "space-between"}}>
-                          <Grid className={classes.tagTitle}>Duty Status</Grid>
-                          <Button className={classes.clearButton} onClick={handleClearBox("dutyStatus")}>
-                            Clear
-                          </Button>
-                        </Grid>,
-                        content:
+                        title: (
+                          <Grid
+                            style={{
+                              width: "140px",
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <Grid className={classes.tagTitle}>
+                              Duty Status
+                            </Grid>
+                            <Button
+                              className={classes.clearButton}
+                              onClick={handleClearBox("dutyStatus")}
+                            >
+                              Clear
+                            </Button>
+                          </Grid>
+                        ),
+                        content: (
                           <div className={classes.cardExpandContent}>
                             {listTags.dutyStatus.map((value) => {
                               return (
-                                <MenuItem key={value} className={classes.itemContainer}>
+                                <MenuItem
+                                  key={value}
+                                  className={classes.itemContainer}
+                                >
                                   <div className={classes.checkboxContainer}>
-                                    <div className={classes.dropdownItemVehicle}>
+                                    <div
+                                      className={classes.dropdownItemVehicle}
+                                    >
                                       <Checkbox
                                         name="dutyStatus"
                                         edge="end"
                                         onChange={handleToggle(value)}
-                                        checked={checked["dutyStatus"].indexOf(value) !== -1}
-                                        checkedIcon={<CheckSquareOutlined/>}
+                                        checked={
+                                          checked["dutyStatus"].indexOf(
+                                            value
+                                          ) !== -1
+                                        }
+                                        checkedIcon={<CheckSquareOutlined />}
                                         classes={{
                                           checked: classes.checked,
-                                          root: classes.checkRoot
+                                          root: classes.checkRoot,
                                         }}
                                       />
                                     </div>
-                                    <div className={classes.dropdownItemVehicle}>
+                                    <div
+                                      className={classes.dropdownItemVehicle}
+                                    >
                                       {value}
                                     </div>
                                   </div>
-                                  <Avatar className={classes.grayAvatar}>5</Avatar>
+                                  <Avatar className={classes.grayAvatar}>
+                                    5
+                                  </Avatar>
                                 </MenuItem>
                               );
                             })}
                           </div>
+                        ),
                       },
-                    ]
-                  }
-                             expansionSummaryClasses={{
-                               root: classes.expansionClasses,
-                               content: classes.expansionContentClasses
-                             }}
-                             expansionPanelClasses={{
-                               root: classes.expansionPanelClasses,
-                             }}
-                             expansionPanelRounded={{
-                               rounded: classes.expansionPanelClassesRounded,
-                             }}
+                    ]}
+                    expansionSummaryClasses={{
+                      root: classes.expansionClasses,
+                      content: classes.expansionContentClasses,
+                    }}
+                    expansionPanelClasses={{
+                      root: classes.expansionPanelClasses,
+                    }}
+                    expansionPanelRounded={{
+                      rounded: classes.expansionPanelClassesRounded,
+                    }}
                   />
 
-                  <Accordion collapses={
-                    [
+                  <Accordion
+                    collapses={[
                       {
-                        title: <Grid style={{width: "140px", display: "flex", justifyContent: "space-between"}}>
-                          <Grid className={classes.tagTitle}>Violations</Grid>
-                          <Button className={classes.clearButton} onClick={handleClearBox("violations")}>
-                            Clear
-                          </Button>
-                        </Grid>,
-                        content:
+                        title: (
+                          <Grid
+                            style={{
+                              width: "140px",
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <Grid className={classes.tagTitle}>Violations</Grid>
+                            <Button
+                              className={classes.clearButton}
+                              onClick={handleClearBox("violations")}
+                            >
+                              Clear
+                            </Button>
+                          </Grid>
+                        ),
+                        content: (
                           <div className={classes.cardExpandContent}>
                             {listTags.violations.map((value) => {
                               return (
-                                <MenuItem key={value} className={classes.itemContainer}>
+                                <MenuItem
+                                  key={value}
+                                  className={classes.itemContainer}
+                                >
                                   <div className={classes.checkboxContainer}>
-                                    <div className={classes.dropdownItemVehicle}>
+                                    <div
+                                      className={classes.dropdownItemVehicle}
+                                    >
                                       <Checkbox
                                         name="violations"
                                         edge="end"
                                         onChange={handleToggle(value)}
-                                        checked={checked["violations"].indexOf(value) !== -1}
-                                        checkedIcon={<CheckSquareOutlined/>}
+                                        checked={
+                                          checked["violations"].indexOf(
+                                            value
+                                          ) !== -1
+                                        }
+                                        checkedIcon={<CheckSquareOutlined />}
                                         classes={{
                                           checked: classes.checked,
-                                          root: classes.checkRoot
+                                          root: classes.checkRoot,
                                         }}
                                       />
                                     </div>
-                                    <div className={classes.dropdownItemVehicle}>
+                                    <div
+                                      className={classes.dropdownItemVehicle}
+                                    >
                                       {value}
                                     </div>
                                   </div>
-                                  <Avatar className={classes.grayAvatar}>5</Avatar>
+                                  <Avatar className={classes.grayAvatar}>
+                                    5
+                                  </Avatar>
                                 </MenuItem>
                               );
                             })}
                           </div>
+                        ),
                       },
-                    ]
-                  }
-                             expansionSummaryClasses={{
-                               root: classes.expansionClasses,
-                               content: classes.expansionContentClasses
-                             }}
-                             expansionPanelClasses={{
-                               root: classes.expansionPanelClasses,
-                             }}
-                             expansionPanelRounded={{
-                               rounded: classes.expansionPanelClassesRounded,
-                             }}
+                    ]}
+                    expansionSummaryClasses={{
+                      root: classes.expansionClasses,
+                      content: classes.expansionContentClasses,
+                    }}
+                    expansionPanelClasses={{
+                      root: classes.expansionPanelClasses,
+                    }}
+                    expansionPanelRounded={{
+                      rounded: classes.expansionPanelClassesRounded,
+                    }}
                   />
                 </MenuList>
               </ClickAwayListener>
@@ -578,8 +664,8 @@ export function Defects(props) {
           </Grow>
         )}
       </Popper>
-    )
-  }
+    );
+  };
 
   return (
     <div>
@@ -591,28 +677,40 @@ export function Defects(props) {
                 <Grid container className={classes.gridTitle}>
                   <Grid item xs={12} sm={12} md={6}>
                     <Grid container className={classes.headContainer}>
-                      <Grid item xl={2} className={classes.userRolesTitle}> {chipData.length} selected for </Grid>
+                      <Grid item xl={2} className={classes.userRolesTitle}>
+                        {" "}
+                        {chipData.length} selected for{" "}
+                      </Grid>
                       <Grid item xl={10} className={classes.chipSelected}>
-                        {chipData.map(data => (
+                        {chipData.map((data) => (
                           <Chip
-                            deleteIcon={<CloseIcon/>}
+                            deleteIcon={<CloseIcon />}
                             label={data.label}
                             onDelete={handleDelete(data)}
                             className={classes.chips}
                           />
                         ))}
-                        {chipData.length > 0 ?
-                          (
-                            <Button onClick={handleClearAll} className={classes.clearAll}>
-                              Clear All
-                            </Button>
-                          ) : ""}
+                        {chipData.length > 0 ? (
+                          <Button
+                            onClick={handleClearAll}
+                            className={classes.clearAll}
+                          >
+                            Clear All
+                          </Button>
+                        ) : (
+                          ""
+                        )}
                       </Grid>
                     </Grid>
                   </Grid>
                   <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
-                    <ToolboxButton placeholder="Search asset" showFilter showColumn filterAction={handleOpenMore}/>
-                    <PopperFilter listTags={listTags}/>
+                    <ToolboxButton
+                      placeholder="Search asset"
+                      showFilter
+                      showColumn
+                      filterAction={handleOpenMore}
+                    />
+                    <PopperFilter listTags={listTags} />
                   </Grid>
                 </Grid>
               }
@@ -620,11 +718,11 @@ export function Defects(props) {
               dataSource={props.data}
               pageSize={7}
               onHeaderRow={{
-                className: classes.onHeaderRow
+                className: classes.onHeaderRow,
               }}
               onBodyRow={{
                 onClick: viewDetail,
-                className: classes.tableRow
+                className: classes.tableRow,
               }}
             />
           </div>
@@ -634,17 +732,17 @@ export function Defects(props) {
   );
 }
 
-const mapStateToProps = ({maintainance}) => {
+const mapStateToProps = ({ maintainance }) => {
   return {
     data: maintainance.defects.data,
     page: maintainance.defects.page,
     total: maintainance.defects.total,
-    pageSize: maintainance.defects.pageSize
+    pageSize: maintainance.defects.pageSize,
   };
 };
 
 const mapDispatchToProps = {
-  getDefectsData
+  getDefectsData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Defects);

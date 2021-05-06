@@ -297,26 +297,18 @@ const dashRoutes = [
         ]
     },
     {
-        collapse: true,
+        path: "/maintenance",
         name: "Maintenance",
         icon: MaintenanceIcon,
-        state: "maintenaceCollapse",
+        component: Maintenance,
         layout: ROUTE_PATH.USER,
-        views: [
-            {
-                path: "/maintenance/dashboard",
-                name: "Maintenance",
-                component: Maintenance,
-                layout: ROUTE_PATH.USER,
-
-            },
-            {
-                path: "/maintenance/driver-vehicle-inspection-report/vehicle101",
-                name: "Driver Vehicle Inspection Reports",
-                component: DriverVehicleReport,
-                layout: ROUTE_PATH.USER
-            }
-        ]
+    },
+    {
+        path: "/dvir",
+        name: "DVIR",
+        component: DriverVehicleReport,
+        layout: ROUTE_PATH.USER,
+        isFixed: true
     },
     {
         path: "/dispatch",
@@ -376,14 +368,14 @@ const dashRoutes = [
         layout: ROUTE_PATH.USER,
         views: [
             {
-                path: "/documents/submitted/:id",
+                path: "/documents/submitted/",
                 name: "Documents Submitted Detail",
                 component: SubmittedDetail,
                 layout: ROUTE_PATH.USER,
                 isFixed: true
             },
             {
-                path: "/documents/type/edit/:id",
+                path: "/documents/type/edit/",
                 name: "Edit Driver Documents",
                 component: EditDocumentType,
                 layout: ROUTE_PATH.USER,
