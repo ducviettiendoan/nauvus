@@ -122,6 +122,12 @@ const styles = {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    "&:hover": {
+      backgroundColor: "unset"
+    },
+    "&:focus": {
+      backgroundColor: "unset"
+    },
   },
   detail: {
     display: "flex",
@@ -149,7 +155,7 @@ const styles = {
   },
   checkRoot: {
     "&:hover": {
-      backgroundColor: "unset"
+      backgroundColor: "unset !important"
     }
   },
   checked: {
@@ -293,7 +299,7 @@ export default function SetColumns(props) {
                     <div className={classes.detailColumn}>
                       {listTags.driver1.map((value) => {
                         return (
-                          <MenuItem key={value} className={classes.itemContainer}>
+                          // <MenuItem key={value} className={classes.itemContainer}>
                             <div className={classes.checkboxContainer}>
                               <div className={classes.dropdownItem}>
                                 <Checkbox
@@ -312,14 +318,14 @@ export default function SetColumns(props) {
                                 {value}
                               </div>
                             </div>
-                          </MenuItem>
+                          // </MenuItem>
                         );
                       })}
                     </div>
                     <div className={classes.detailColumn}>
                       {listTags.driver2.map((value) => {
                         return (
-                          <MenuItem key={value} className={classes.itemContainer}>
+                          // <MenuItem key={value} className={classes.itemContainer}>
                             <div className={classes.checkboxContainer}>
                               <div className={classes.dropdownItem}>
                                 <Checkbox
@@ -338,7 +344,7 @@ export default function SetColumns(props) {
                                 {value}
                               </div>
                             </div>
-                          </MenuItem>
+                          // </MenuItem>
                         );
                       })}
                     </div>
@@ -613,7 +619,7 @@ export default function SetColumns(props) {
         handleClose={closeAssignHOS}
         open={openForm}
       >
-        <FormatReport handleClose={closeAssignHOS}/>
+          <FormatReport handleClose={closeAssignHOS}/>
       </DiaLog>
     </div>
   );

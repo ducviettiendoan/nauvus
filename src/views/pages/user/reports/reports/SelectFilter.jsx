@@ -27,8 +27,7 @@ import CustomSelect from "components/CustomSelect/CustomSelect";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import StripeIcon from "../../../../../components/Icons/StripesIcon";
 import AddOutlined from "@material-ui/icons/AddOutlined";
-import SelectFilter from "./SelectFilter";
-import DiaLog from "components/CustomDialog/Dialog";
+import { isClassExpression } from "typescript";
 
 
 const styles = {
@@ -187,26 +186,21 @@ const styles = {
     display: "flex",
     justifyContent: "flex-end",
   },
-  dialogTitle: {
-    fontSize: "22px",
-    fontWeight: "700",
-    lineHeight: "26.4px",
-    color: "#25345C"
-  },
-  dialogSubTitle: {
-    fontWeight: "bold",
+  contentHead: {
     fontSize: "14px",
-    lineHeight: "17px",
-    color: "#B4B4B4"
+    fontWeight: 700,
+    color: "#25345C",
   },
-  editHeader: {
-    textAlign: "center"
-  },
+  contentBody: {
+    fontSize: "12px",
+    fontWeight: 400,
+    color: '#25345C',
+  }
 };
 
 const useStyles = makeStyles(styles);
 
-export default function FormatReport(props) {
+export default function SelectFilter(props) {
   const classes = useStyles();
 
   const onSubmit = async (values) => {
@@ -295,162 +289,10 @@ export default function FormatReport(props) {
               </Col>
             </Row>
 
-            <Row className={classes.row1}>
-              <Col className={classes.column1}>
-                <div className={classes.title}>Column Selected</div>
-              </Col>
-              <Col className={classes.column1}>
-                <div className={classes.title}>Rename column (optional)</div>
-              </Col>
-            </Row>
-
-            <Row className={classes.row}>
-              <StripeIcon/> 
-              <Col className={classes.column1}>
-                <Field
-                  labelProps={{
-                    shrink: true,
-                    classes: {root: classes.textFieldRoot}
-                  }}
-                  selectProps={{
-                    classes: {root: classes.selectField}
-                  }}
-                  name="stateProvince"
-                  listValues={["Eld Exempt"]}
-                  placeholder={"Eld Exempt"}
-                  selectValue={selectValue.stateProvince}
-                  IconComponent={{
-                    classes: {root: classes.iconDropdown}
-                  }}
-                  onChange={handleChange}
-                  component={CustomSelect}
-                />
-              </Col>
-              <Col className={classes.column}>
-                <Field
-                  id="standard-full-width"
-                  
-                  placeholder="Start typing..."
-                  fullWidth
-                  margin="normal"
-                  name="driverLicense"
-                  InputLabelProps={{
-                    shrink: true,
-                    classes: {root: classes.textFieldRoot}
-                  }}
-                  InputProps={{
-                    classes: {input: classes.textInputRoot},
-                    endAdornment: (
-                      <InputAdornment position="start">
-                        <CloseIcon/>
-                      </InputAdornment>
-                    ),
-                  }}
-                  component={TextField}
-                />
-              </Col>
-            </Row>
-            <Row className={classes.row}>
-              <StripeIcon/> 
-              <Col>
-                <Field
-                  labelProps={{
-                    shrink: true,
-                    classes: {root: classes.textFieldRoot}
-                  }}
-                  selectProps={{
-                    classes: {root: classes.selectField}
-                  }}
-                  name="stateProvince"
-                  listValues={["Created At"]}
-                  placeholder={"Created At"}
-                  selectValue={selectValue.stateProvince}
-                  IconComponent={{
-                    classes: {root: classes.iconDropdown}
-                  }}
-                  onChange={handleChange}
-                  component={CustomSelect}
-                />
-              </Col>
-              <Col className={classes.column}>
-                <Field
-                  id="standard-full-width"
-                  
-                  placeholder="Start typing..."
-                  fullWidth
-                  margin="normal"
-                  name="driverLicense"
-                  InputLabelProps={{
-                    shrink: true,
-                    classes: {root: classes.textFieldRoot}
-                  }}
-                  InputProps={{
-                    classes: {input: classes.textInputRoot},
-                    endAdornment: (
-                      <InputAdornment position="start">
-                        <CloseIcon/>
-                      </InputAdornment>
-                    ),
-                  }}
-                  component={TextField}
-                />
-              </Col>
-            </Row>
-            <Row className={classes.row}>
-              <StripeIcon/> 
-              <Col>
-                <Field
-                  labelProps={{
-                    shrink: true,
-                    classes: {root: classes.textFieldRoot}
-                  }}
-                  selectProps={{
-                    classes: {root: classes.selectField}
-                  }}
-                  name="stateProvince"
-                  listValues={["Driver Name"]}
-                  placeholder={"Driver Name"}
-                  selectValue={selectValue.stateProvince}
-                  IconComponent={{
-                    classes: {root: classes.iconDropdown}
-                  }}
-                  onChange={handleChange}
-                  component={CustomSelect}
-                />
-              </Col>
-              <Col className={classes.column}>
-                <Field
-                  id="standard-full-width"
-                  
-                  placeholder="Start typing..."
-                  fullWidth
-                  margin="normal"
-                  name="driverLicense"
-                  InputLabelProps={{
-                    shrink: true,
-                    classes: {root: classes.textFieldRoot}
-                  }}
-                  InputProps={{
-                    classes: {input: classes.textInputRoot},
-                    endAdornment: (
-                      <InputAdornment position="start">
-                        <CloseIcon/>
-                      </InputAdornment>
-                    ),
-                  }}
-                  component={TextField}
-                />
-              </Col>
-            </Row>
-            <Grid item xs={12} xl={12}>
-              <Button
-                className={classes.addButton}
-                startIcon={<AddOutlined />}
-                // onClick={openAssignHOS}
-              >
-                Add Column
-              </Button>
-            </Grid>
+            <GridItem xs={12} lg={12}>
+              <div className={classes.contentHead}>Choose a date range</div>
+              <div className={classes.contentBody}>Select up to 90 days of data. Reports containing more than 14 days of data will be emailed.</div>
+            </GridItem>
 
             <div className={classes.footer}>
               <div className={classes.selectButton}>
@@ -475,19 +317,6 @@ export default function FormatReport(props) {
           </form>
         )}
       />
-      <DiaLog 
-        fullWidth={true}
-        maxWidth="sm"
-        renderTitle={<div className={classes.editHeader}>
-          <h3 className={classes.dialogTitle}>Format Report</h3>
-          <p className={classes.dialogSubTitle}>Select up to 15 columns</p>
-        </div>}
-        handleClose={closeAssignHOS}
-        open={openForm}
-      >
-        <SelectFilter handleClose={closeAssignHOS}/>
-      </DiaLog>
-
     </div>
   );
 }
