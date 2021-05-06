@@ -2,33 +2,15 @@ import React from "react";
 // @material-ui/core SafetyInbox
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
-import CloseIcon from '@material-ui/icons/Close';
 // core SafetyInbox
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 import Button from "components/CustomButtons/Button";
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import Collapse from "@material-ui/core/Collapse";
-import List from "@material-ui/core/List";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import MenuItem from "@material-ui/core/MenuItem";
-import Checkbox from "@material-ui/core/Checkbox";
-import CheckSquareOutlined from "components/Icons/CheckSquareOutlined";
 import Grid from '@material-ui/core/Grid';
 import { Col, Row } from 'reactstrap';
 import { Field, Form } from "react-final-form";
 import { TextField } from "final-form-material-ui";
-import Accordion from "components/Accordion/Accordion";
-import CustomSelect from "components/CustomSelect/CustomSelect";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import StripeIcon from "../../../../../components/Icons/StripesIcon";
-import AddOutlined from "@material-ui/icons/AddOutlined";
-import { isClassExpression } from "typescript";
-
+// import CalendarIcon from "../Icons/CalendarIcon";
+import Calendar from "components/Calendar/Calendar";
 
 const styles = {
   title: {
@@ -51,50 +33,13 @@ const styles = {
     height: "74ps !important",
     margin: "4px"
   },
-  txtListHeader: {
-    fontSize: "14px",
-    lineHeight: "21px",
-    color: "#C4C4C4",
-    fontWeight: "400"
-  },
-  titleHeader: {
-    fontSize: "14px",
-    lineHeight: "22px",
-    color: "#25345C",
-    fontWeight: "700",
-    marginBottom: "4",
-    width: "500px"
-  },
-  listCard: {
-    border: "1px solid rgba(236, 238, 240, 1)",
-    borderRadius: "10px",
-    marginBottom: 8
-  },
-  choicesAmount: {
-    fontSize: "14px",
-    lineHeight: "17px",
-    color: "#B4B4B4 !important",
-    fontWeight: "400",
-  },
-  dropdownItem: {
-    marginLeft: "8px",
-    fontWeight: 400,
-    fontSize: '12px',
-    color: '#25345C',
-  },
-  checkboxContainer: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-  },
+ 
   detail: {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
   },
-  detailColumn: {
-    width: "250px"
-  },
+
   textFieldRoot: {
     fontWeight: 'normal',
     fontSize: '14px',
@@ -104,23 +49,13 @@ const styles = {
   textInputRoot: {
     padding: "6px, 0, 9px !important",
     marginTop: "5px",
-    marginBottom: "5px",
+    marginBottom: "10px",
     fontWeight: 'bold',
     fontSize: '14px',
     lineHeight: '21px',
     color: '#25345C',
     "&>input": {
       padding: "6px, 0, 9px !important",
-    }
-  },
-  selectField: {
-    paddingTop: "27px",
-    marginBottom: "3px",
-    fontWeight: 700,
-    fontSize: '14px',
-    color: '#25345C',
-    "&:focus": {
-      background: "#FFFFFF",
     }
   },
   column: {
@@ -130,14 +65,9 @@ const styles = {
       marginBottom: "0px !important",
     }
   },
-  column1: {
-    "&>div>div": {
-      marginTop: "0px !important",
-    }
-  },
   row: {
-    display: "flex", 
-    alignItems: "flex-end", 
+    display: "flex",
+    alignItems: "flex-end",
     paddingLeft: "16px"
   },
   row1: {
@@ -190,11 +120,19 @@ const styles = {
     fontSize: "14px",
     fontWeight: 700,
     color: "#25345C",
+    paddingLeft: "5px",
   },
   contentBody: {
     fontSize: "12px",
     fontWeight: 400,
     color: '#25345C',
+    paddingLeft: "5px",
+  },
+  calendar: {
+    "&>div":{
+      display: "flex",
+      justifyContent: "flex-start"
+    }
   }
 };
 
@@ -268,11 +206,11 @@ export default function SelectFilter(props) {
         onSubmit={onSubmit}
         render={({ handleSubmit, reset, submitting, pristine, values }) => (
           <form onSubmit={handleSubmit} noValidate className={classes.form} style={{ maxWidth: "700" }}>
-            <Row style={{paddingLeft: "5px"}}>
+            <Row style={{ paddingLeft: "5px" }}>
               <Col className={classes.headColumn}>
                 <Field
                   id="standard-full-width"
-                  label="Report name"
+                  label="Choose filters to apply (optional)."
                   placeholder="Start typing..."
                   fullWidth
                   margin="normal"
@@ -289,11 +227,14 @@ export default function SelectFilter(props) {
               </Col>
             </Row>
 
-            <GridItem xs={12} lg={12}>
+            <Grid item xs={12} lg={12}>
               <div className={classes.contentHead}>Choose a date range</div>
               <div className={classes.contentBody}>Select up to 90 days of data. Reports containing more than 14 days of data will be emailed.</div>
-            </GridItem>
+            </Grid>
 
+            <Grid item xs={12} lg={12} className={classes.calendar}>         
+              <Calendar placeholder="Day"/>
+            </Grid> 
             <div className={classes.footer}>
               <div className={classes.selectButton}>
                 <Button

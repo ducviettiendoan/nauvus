@@ -479,7 +479,7 @@ export default function FormatReport(props) {
         fullWidth={true}
         maxWidth="sm"
         renderTitle={<div className={classes.editHeader}>
-          <h3 className={classes.dialogTitle}>Format Report</h3>
+          <h3 className={classes.dialogTitle}>Select Filter</h3>
           <p className={classes.dialogSubTitle}>Select up to 15 columns</p>
         </div>}
         handleClose={closeAssignHOS}

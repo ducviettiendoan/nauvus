@@ -18,6 +18,7 @@ export const ACTION_TYPES = {
     GET_DETENTION_DATA: 'report/GET_DETENTION_DATA',
     GET_DRIVING_DISTANCE_DATA: "report/GET_DRIVING_DISTANCE_DATA",
     GET_HOURS_DATA: "report/GET_HOURS_DATA",
+    GET_ALL_REPORT: "report/GET_ALL_REPORT"
 };
 
 {
@@ -35,6 +36,7 @@ export const initialState = {
     detention: [],
     drivingDistance: [],
     hoursData: [],
+    allReport: [],
 
     errorMessage: null,
     loading: false,
@@ -59,6 +61,7 @@ export default (
         case REQUEST(ACTION_TYPES.GET_DETENTION_DATA):
         case REQUEST(ACTION_TYPES.GET_DRIVER_DISTANCE_DATA):
         case REQUEST(ACTION_TYPES.GET_HOURS_DATA):
+        case REQUEST(ACTION_TYPES.GET_ALL_REPORT):    
 
             return {
                 ...state,
@@ -76,6 +79,7 @@ export default (
         case FAILURE(ACTION_TYPES.GET_DETENTION_DATA):
         case FAILURE(ACTION_TYPES.GET_DRIVER_DISTANCE_DATA):
         case FAILURE(ACTION_TYPES.GET_HOURS_DATA):
+        case FAILURE(ACTION_TYPES.GET_ALL_REPORT):     
 
             return {
                 ...state,
@@ -157,6 +161,13 @@ export default (
             return {
                 ...state,
                 hoursData: action.payload.data
+            };
+        }
+
+        case SUCCESS(ACTION_TYPES.GET_ALL_REPORT): {
+            return {
+                ...state,
+                allReport: action.payload.data
             };
         }
 
@@ -243,5 +254,12 @@ export const getDrivingHoursData = (request) => async (dispatch) => {
     dispatch({
         type: ACTION_TYPES.GET_HOURS_DATA,
         payload: axios.post("api/report/vehicle/drivingHours", request),
+    });
+};
+
+export const getAllReport = (request) => async (dispatch) => {
+    dispatch({
+        type: ACTION_TYPES.GET_ALL_REPORT,
+        payload: axios.post("api/report/custom-report/all-report", request),
     });
 };
