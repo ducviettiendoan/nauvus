@@ -566,7 +566,7 @@ export default function Reports() {
             handleClose={closeAssignHOS}
             open={openForm}
           >
-            <ExportCustomReport openTab={openAssignHOS} closeTab={closeAssignHOS} handleClose={closeAssignHOS} />
+            <ExportCustomReport openTab={openAssignHOS} handleClose={closeAssignHOS} />
           </DiaLog>
         </GridItem>
       </GridContainer>
