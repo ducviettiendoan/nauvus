@@ -16,8 +16,8 @@ mock.onPost("/api/maintainance/dvirs").reply((config) => {
     let data = [];
     for (let i = startPage; i < endPage; i++) {
       let item = {
-        id: i + 2,
-        key: i + 2,
+        id: i + 1,
+        key: i + 1,
         asset: "115",
         currentDriver: "Shahid Mamino",
         makeModel: "Freightline R/SCT 120",
@@ -57,8 +57,8 @@ mock.onPost("/api/maintainance/defects").reply((config) => {
     let data = [];
     for (let i = startPage; i < endPage; i++) {
       let item = {
-        id: i + 2,
-        key: i + 2,
+        id: i + 1,
+        key: i + 1,
         asset: "Vehicle 101",
         currentLocation: "8.1 mi SSE Rockford, IL",
         lastDvirStatus: "Safe",
