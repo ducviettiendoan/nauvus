@@ -41,7 +41,7 @@ const styles = {
   layoutAlert: {
     display: "flex",
     flexDirection: "column",
-    height: "100%"
+    height: "100%",
   }
 };
 
@@ -61,7 +61,7 @@ function Alerts(props) {
             <GridItem xs={12} sm={11} md={6} xl={6} className={classes.topHeaderTitle}>
               <RoundedTabs tabs={["Insidents", "Configure"]} value={props.tab} tabValue={handleChangeTab} />
             </GridItem>
-            <GridItem xs={12} sm={4} md={6} xl={6} className={classes.topHeaderButton}>
+            {props.tab === 0 && <GridItem xs={12} sm={4} md={6} xl={6} className={classes.topHeaderButton}>
               <Calendar placeholder="Day" />
               <div>
                 <FormControl variant="outlined" className="moreIcon">
@@ -72,6 +72,8 @@ function Alerts(props) {
               </div>
               <Button round className="btn-round-green w-84"> <LiveIconWhite /> Live </Button>
             </GridItem>
+          }
+            
           </GridContainer>
         </GridItem>
       </GridContainer>
