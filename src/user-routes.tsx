@@ -50,6 +50,8 @@ import VideoRetrieval from "views/pages/user/safety/VideoRetrieval";
 import Retrieval from "views/pages/user/safety/video-retrieval/Retrieval";
 import DashboardReport from "views/pages/user/reports/DashboardReport";
 import ViewDetail from "views/pages/user/reports/dashboard/ViewDetail";
+import CustomReport from "views/pages/user/reports/CustomReport";
+import CustomReportName from "views/pages/user/reports/custom-report/CustomReportName";
 
 
 // @material-ui/icons
@@ -399,27 +401,40 @@ const dashRoutes = [
         layout: ROUTE_PATH.USER,
         views: [
             {
-                path: "/report/viewdetail",
+                path: "/reports/custom-report-name",
+                name: "Name",
+                component: CustomReportName,
+                layout: ROUTE_PATH.USER,
+                isFixed: true,
+            },
+            {
+                path: "/reports/viewdetail",
                 name: "View Detail",
                 component: ViewDetail,
                 layout: ROUTE_PATH.USER,
                 isFixed: true,
             },
             {
-                path: "/report/dashboard",
+                path: "/reports/custom-report",
+                name: "Custom Report",
+                component: CustomReport,
+                layout: ROUTE_PATH.USER,
+                // isFixed: true
+            },
+            {
+                path: "/reports/dashboard",
                 name: "Dashboard",
                 component: DashboardReport,
                 layout: ROUTE_PATH.USER,
                 // isFixed: true
             },
             {
-                path: "/report/",
+                path: "/reports",
                 name: "Reports",
                 component: Reports,
                 layout: ROUTE_PATH.USER,
                 // isFixed: true
             },
-
         ]
     },
     {
