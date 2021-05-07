@@ -106,7 +106,7 @@ const dashRoutes = [
                 layout: ROUTE_PATH.OVERVIEW
             },
             {
-                path: "/drivers/:id",
+                path: "/drivers-details",
                 name: "Drivers Detail",
                 component: DriverDetail,
                 layout: ROUTE_PATH.OVERVIEW,
@@ -161,7 +161,7 @@ const dashRoutes = [
                 layout: ROUTE_PATH.SAFETY
             },
             {
-                path: "/driver-assignment/:id",
+                path: "/driver-assignment-details",
                 name: "Driver Assignment Details",
                 component: UnassignedDetail,
                 layout: ROUTE_PATH.SAFETY,
@@ -340,15 +340,16 @@ const dashRoutes = [
             },
             {
                 path: "/fuel-energy/driver-efficiency",
-                name: "Driver Efficiency Report",
+                name: "Driver Efficiency",
                 component: DriverEfficiency,
                 layout: ROUTE_PATH.USER
             },
             {
                 path: "/fuel-energy/driver-efficiencies-report",
-                name: "Driver Efficiency",
+                name: "Driver Efficiency Report",
                 component: DriverEfficiencyReport,
                 layout: ROUTE_PATH.USER,
+                isFixed: true
             },
 
             {

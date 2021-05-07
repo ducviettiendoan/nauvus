@@ -383,8 +383,8 @@ export function DriverHOS(props) {
     console.log(page, pageSize)
   }
 
-  const viewDetail = () => {
-    props.history.push("/u/compliance/driver-hos-report/123")
+  const viewDetail = (id) => {
+    props.history.push(`/u/compliance/driver-hos-report/${id}`)
   }
 
   // popper
