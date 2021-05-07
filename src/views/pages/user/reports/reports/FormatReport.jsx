@@ -219,6 +219,15 @@ export default function FormatReport(props) {
   const [selectValue, setSelectValue] = React.useState({
     stateProvince: "none",
   });
+  //User's input
+  const [input,setInput] = React.useState("");
+
+  const handleChangeInput = (e) => {
+    setInput(e.target.value);
+  }
+  const handleDeleteInput = () => {
+    setInput("");
+  }
 
   const handleChange = (event) => {
     setSelectValue({ ...selectValue, [event.target.name]: event.target.value })
@@ -268,6 +277,8 @@ export default function FormatReport(props) {
     setOpenForm(false)
   };
 
+  console.log(input);
+
   return (
     <div>
       <Form
@@ -316,7 +327,7 @@ export default function FormatReport(props) {
                     classes: {root: classes.selectField}
                   }}
                   name="stateProvince"
-                  listValues={["Eld Exempt"]}
+                  listValues={["Eld Exempt","Hello"]}
                   placeholder={"Eld Exempt"}
                   selectValue={selectValue.stateProvince}
                   IconComponent={{
@@ -328,12 +339,13 @@ export default function FormatReport(props) {
               </Col>
               <Col className={classes.column}>
                 <Field
-                  id="standard-full-width"
+                  id="standard-full-width1"
                   
                   placeholder="Start typing..."
                   fullWidth
                   margin="normal"
-                  name="driverLicense"
+                  name="input1"
+                  onChange = {handleChangeInput}
                   InputLabelProps={{
                     shrink: true,
                     classes: {root: classes.textFieldRoot}
@@ -341,8 +353,8 @@ export default function FormatReport(props) {
                   InputProps={{
                     classes: {input: classes.textInputRoot},
                     endAdornment: (
-                      <InputAdornment position="start">
-                        <CloseIcon/>
+                      <InputAdornment position="start" onClick={handleDeleteInput}>
+                        <CloseIcon />
                       </InputAdornment>
                     ),
                   }}
@@ -374,12 +386,12 @@ export default function FormatReport(props) {
               </Col>
               <Col className={classes.column}>
                 <Field
-                  id="standard-full-width"
+                  id="standard-full-width2"
                   
                   placeholder="Start typing..."
                   fullWidth
                   margin="normal"
-                  name="driverLicense"
+                  name="input2"
                   InputLabelProps={{
                     shrink: true,
                     classes: {root: classes.textFieldRoot}
@@ -420,12 +432,12 @@ export default function FormatReport(props) {
               </Col>
               <Col className={classes.column}>
                 <Field
-                  id="standard-full-width"
+                  id="standard-full-width3"
                   
                   placeholder="Start typing..."
                   fullWidth
                   margin="normal"
-                  name="driverLicense"
+                  name="input3"
                   InputLabelProps={{
                     shrink: true,
                     classes: {root: classes.textFieldRoot}
@@ -466,7 +478,7 @@ export default function FormatReport(props) {
                   className={`btn-round-active ${classes.buttonSetting}`}
                   type="submit"
                   disabled={submitting}
-                  onClick={openAssignHOS}
+                  onClick={props.handleOpen}
                 > Next
                 </Button>
               </div>
@@ -475,18 +487,6 @@ export default function FormatReport(props) {
           </form>
         )}
       />
-      <DiaLog 
-        fullWidth={true}
-        maxWidth="sm"
-        renderTitle={<div className={classes.editHeader}>
-          <h3 className={classes.dialogTitle}>Select Filter</h3>
-          <p className={classes.dialogSubTitle}>Select up to 15 columns</p>
-        </div>}
-        handleClose={closeAssignHOS}
-        open={openForm}
-      >
-        <SelectFilter handleClose={closeAssignHOS}/>
-      </DiaLog>
 
     </div>
   );

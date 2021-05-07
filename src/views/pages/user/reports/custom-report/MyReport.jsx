@@ -221,6 +221,11 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "unset",
     },
   },
+  tableContent: {
+    "&>div>div": {
+      height: "750px",
+    }
+  }
 
 }));
 
@@ -311,7 +316,7 @@ function MyReport(props) {
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
-          <div>
+          <div className = {classes.tableContent}>
             <Table
               renderTitle={
                 <Grid container className={classes.gridTitle}>

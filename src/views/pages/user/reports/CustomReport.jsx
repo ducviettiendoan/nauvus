@@ -131,7 +131,7 @@ function CustomReport(props) {
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
                   <GridContainer className={classes.topHeader}>
-                    <GridItem xs={12} sm={11} md={6} xl={6} className={classes.topHeaderTitle}>
+                    <GridItem xs={12} sm={6} md={6} xl={6} className={classes.topHeaderTitle}>
                       <RoundedTabs
                         tabs={[
                           `All Report (${props.pageSize})`,
@@ -140,7 +140,7 @@ function CustomReport(props) {
                         tabValue={handleChangeTab}
                       />
                     </GridItem>
-                    <GridItem xs={12} sm={4} md={6} xl={6} className={classes.topHeaderButton}>
+                    <GridItem xs={12} sm={6} md={6} xl={6} className={classes.topHeaderButton}>
                         <Button
                         round
                         className= {classes.button}

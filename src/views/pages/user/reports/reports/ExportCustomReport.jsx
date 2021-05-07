@@ -10,8 +10,6 @@ import GridItem from "components/Grid/GridItem.js";
 import { Form } from "react-final-form";
 import BigTruckIcon from "components/Icons/BigTruckIcon";
 import HardDriveIcon from "components/Icons/HardDriveIcon";
-import DiaLog from "components/CustomDialog/Dialog";
-import SetColumns from "./SetColumns";
 
 const styles = {
 
@@ -91,7 +89,7 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function ExportCustomReport(props) {
-  const {openTab,handleClose} = props;
+  const {handleOpen,handleClose} = props;
   const classes = useStyles();
   const [openForm, setOpenForm] = useState(false);
   const [clickDriver, setClickDriver] = useState(false);
@@ -191,14 +189,14 @@ export default function ExportCustomReport(props) {
                     className={`btn-round-active ${classes.buttonSetting}`}
                     type="submit"
                     disabled={submitting}
-                    onClick={openAssignHOS}
+                    onClick={handleOpen}
                   > Next</Button>
                 </div>
               </div>
             </form>
           )}
         />
-        <DiaLog
+        {/* <DiaLog
           fullWidth={true}
           maxWidth="sm"
           renderTitle={<div className={classes.editHeader}>
@@ -209,7 +207,7 @@ export default function ExportCustomReport(props) {
           open={openForm}
         >
           <SetColumns handleClose={closeAssignHOS} />
-        </DiaLog>
+        </DiaLog> */}
     </div>
   );
 }
