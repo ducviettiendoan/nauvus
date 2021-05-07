@@ -5,12 +5,20 @@ import Card from '@material-ui/core/Card';
 import { MoreHoriz } from "@material-ui/icons";
 import GridContainer from "components/Grid/GridContainer";
 import Chip from "@material-ui/core/Chip";
+import classNames from "classnames";
 import CloseIcon from "components/Icons/CloseIcon";
 import GridItem from "components/Grid/GridItem";
 import Calendar from "components/Calendar/Calendar";
 import Button from "components/CustomButtons/Button";
 import {blackColor, hexToRgb, primaryColor, whiteColor} from "assets/jss/material-dashboard-pro-react";
-import customDropdownStyle from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle";
+import MenuItem from "@material-ui/core/MenuItem";
+import MenuList from "@material-ui/core/MenuList";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import Paper from "@material-ui/core/Paper";
+import Grow from "@material-ui/core/Grow";
+import Fade from '@material-ui/core/Fade';
+import Popper from "@material-ui/core/Popper";
+import customDropdownStyle from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle.js";
 
 const useStyles = makeStyles((theme) => ({
 ...customDropdownStyle(theme),
@@ -112,7 +120,11 @@ contentTitle: {
 
 contentCard:{
     marginTop: "30px",
-}
+},
+moreAction: {
+  background: "#25345C !important",
+  border: "1px solid #ECEEF0 !important"
+},
 }));
 
 export default function CustomReportName(props) {
@@ -120,10 +132,10 @@ export default function CustomReportName(props) {
 
   const [value, setValue] = React.useState(0);
 
-  const handleOpenMore = (event) => {
-    setOpenMore(true)
-    setAnchorEl(event.currentTarget);
-  }
+  // const handleOpenMore = (event) => {
+  //   setOpenMore(true)
+  //   setAnchorEl(event.currentTarget);
+  // }
 
   const [chipData, setChipData] = React.useState([
     {key: 0, label: 'Cycle Tomorrow'},
@@ -145,6 +157,29 @@ export default function CustomReportName(props) {
     violations: ["Currently in violations", "Nearing Violation"]
   }
 
+  const [openMore, setOpenMore] = React.useState(false);
+  const [openUpload, setOpenUpload] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleChangeTab = (newValue) => {
+    setValue(newValue);
+    setOpen(false)
+  };
+
+  const dropdownItem = classNames(classes.dropdownItem, classes.grayHover);
+
+  const handleCloseMore = () => setOpenMore(false)
+  const handleOpenMore = (event) => {
+    setOpenMore(true)
+    setAnchorEl(event.currentTarget);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+    setOpenMore(false)
+    setOpenUpload(false)
+  }
+
   return (
     <div>
       <GridContainer className={classes.topHeader}>
@@ -163,6 +198,37 @@ export default function CustomReportName(props) {
             >
             <MoreHoriz/>
             </Button>
+            <Popper
+              open={openMore}
+              anchorEl={anchorEl}
+              transition
+              disablePortal
+              placement="bottom-end"
+              className={classNames({
+                [classes.popperClose]: !anchorEl,
+                [classes.popperResponsive]: true,
+                [classes.popperNav]: true
+              })}
+            >
+              {({ TransitionProps }) => (
+                <Grow
+                  {...TransitionProps}
+                  id="profile-menu-list"
+                  style={{ transformOrigin: "0 0 0" }}
+                >
+                  <Paper className={classes.dropdown}>
+                    <ClickAwayListener onClickAway={handleCloseMore}>
+                      <MenuList role="menu">
+                        <MenuItem className={dropdownItem} >Export</MenuItem>
+                        <MenuItem className={dropdownItem} >Schedule Custom Report</MenuItem>
+                        <MenuItem className={dropdownItem} >Edit Save Report</MenuItem>
+                        <MenuItem className={dropdownItem} >Delete Report</MenuItem>
+                      </MenuList>
+                    </ClickAwayListener>
+                  </Paper>
+                </Grow>
+              )}
+            </Popper>
         </Grid>
       </GridContainer>
 

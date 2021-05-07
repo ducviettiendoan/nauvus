@@ -601,7 +601,7 @@ export default function SetColumns(props) {
                   className={`btn-round-active ${classes.buttonSetting}`}
                   type="submit"
                   disabled={submitting}
-                  onClick={openAssignHOS}
+                  onClick={props.handleOpen}
                 > Next
                 </Button>
               </div>
@@ -609,7 +609,7 @@ export default function SetColumns(props) {
           </form>
         )}
       />
-      <DiaLog
+      {/* <DiaLog
         fullWidth={true}
         maxWidth="sm"
         renderTitle={<div className={classes.editHeader}>
@@ -620,7 +620,7 @@ export default function SetColumns(props) {
         open={openForm}
       >
           <FormatReport handleClose={closeAssignHOS}/>
-      </DiaLog>
+      </DiaLog> */}
     </div>
   );
 }
