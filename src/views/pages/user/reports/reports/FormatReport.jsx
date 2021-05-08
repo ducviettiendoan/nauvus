@@ -6,30 +6,15 @@ import CloseIcon from '@material-ui/icons/Close';
 // core SafetyInbox
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 import Button from "components/CustomButtons/Button";
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import Collapse from "@material-ui/core/Collapse";
-import List from "@material-ui/core/List";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import MenuItem from "@material-ui/core/MenuItem";
-import Checkbox from "@material-ui/core/Checkbox";
-import CheckSquareOutlined from "components/Icons/CheckSquareOutlined";
 import Grid from '@material-ui/core/Grid';
 import { Col, Row } from 'reactstrap';
 import { Field, Form } from "react-final-form";
 import { TextField } from "final-form-material-ui";
-import Accordion from "components/Accordion/Accordion";
 import CustomSelect from "components/CustomSelect/CustomSelect";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import StripeIcon from "../../../../../components/Icons/StripesIcon";
+import StripeIcon from "components/Icons/StripesIcon";
 import AddOutlined from "@material-ui/icons/AddOutlined";
-import SelectFilter from "./SelectFilter";
-import DiaLog from "components/CustomDialog/Dialog";
-
+import { isConstructorDeclaration } from "typescript";
 
 const styles = {
   title: {
@@ -137,8 +122,8 @@ const styles = {
     }
   },
   row: {
-    display: "flex", 
-    alignItems: "flex-end", 
+    display: "flex",
+    alignItems: "flex-end",
     paddingLeft: "16px"
   },
   row1: {
@@ -202,6 +187,9 @@ const styles = {
   editHeader: {
     textAlign: "center"
   },
+  pointer: {
+    cursor: "pointer",
+  }
 };
 
 const useStyles = makeStyles(styles);
@@ -219,18 +207,36 @@ export default function FormatReport(props) {
   const [selectValue, setSelectValue] = React.useState({
     stateProvince: "none",
   });
+  const [selectedValue,setSelectedValue] = React.useState({
+    "select1": "",
+    "select2": "",
+    "select3": ""
+  })
   //User's input
-  const [input,setInput] = React.useState("");
+  const [input, setInput] = React.useState({
+    "input1": true,
+    "input2": true,
+    "input3": true,                                                                                               
+  });
 
-  const handleChangeInput = (e) => {
-    setInput(e.target.value);
-  }
-  const handleDeleteInput = () => {
-    setInput("");
+  const handleDeleteInput = selectedInput => {
+    setInput({
+      ...input,
+      [selectedInput]: false,
+    });
   }
 
-  const handleChange = (event) => {
-    setSelectValue({ ...selectValue, [event.target.name]: event.target.value })
+  // const handleChange = (event) => {
+  //   setSelectValue({ ...selectValue, [event.target.name]: event.target.value })
+  // }
+
+  const handleSelect = (e,choice) => {
+    console.log(choice);
+    console.log(e.target.value);
+    setSelectedValue({
+      ...selectedValue,
+      [choice]: e.target.value
+    })
   }
 
   const handleClick = (tabName) => {
@@ -277,15 +283,13 @@ export default function FormatReport(props) {
     setOpenForm(false)
   };
 
-  console.log(input);
-
   return (
     <div>
       <Form
         onSubmit={onSubmit}
         render={({ handleSubmit, reset, submitting, pristine, values }) => (
           <form onSubmit={handleSubmit} noValidate className={classes.form} style={{ maxWidth: "700" }}>
-            <Row style={{paddingLeft: "5px"}}>
+            <Row style={{ paddingLeft: "5px" }}>
               <Col className={classes.headColumn}>
                 <Field
                   id="standard-full-width"
@@ -314,151 +318,152 @@ export default function FormatReport(props) {
                 <div className={classes.title}>Rename column (optional)</div>
               </Col>
             </Row>
-
-            <Row className={classes.row}>
-              <StripeIcon/> 
+          
+            {input["input1"] && <Row className={classes.row}>
+              <StripeIcon />
               <Col className={classes.column1}>
                 <Field
                   labelProps={{
                     shrink: true,
-                    classes: {root: classes.textFieldRoot}
+                    classes: { root: classes.textFieldRoot }
                   }}
                   selectProps={{
-                    classes: {root: classes.selectField}
+                    classes: { root: classes.selectField }
                   }}
-                  name="stateProvince"
-                  listValues={["Eld Exempt","Hello"]}
-                  placeholder={"Eld Exempt"}
-                  selectValue={selectValue.stateProvince}
+                  name={"select1"}
+                  listValues={["Eld Exempt", "Hello"]}
+                  // placeholder={select}
+                  selectValue={selectedValue["select1"]}
                   IconComponent={{
-                    classes: {root: classes.iconDropdown}
+                    classes: { root: classes.iconDropdown }
                   }}
-                  onChange={handleChange}
+                  onChange={()=>{handleSelect(Object.keys(selectedValue)[0])}}
                   component={CustomSelect}
                 />
               </Col>
               <Col className={classes.column}>
                 <Field
                   id="standard-full-width1"
-                  
+                  value={input}
                   placeholder="Start typing..."
                   fullWidth
                   margin="normal"
                   name="input1"
-                  onChange = {handleChangeInput}
                   InputLabelProps={{
                     shrink: true,
-                    classes: {root: classes.textFieldRoot}
+                    classes: { root: classes.textFieldRoot }
                   }}
                   InputProps={{
-                    classes: {input: classes.textInputRoot},
+                    classes: { input: classes.textInputRoot },
                     endAdornment: (
-                      <InputAdornment position="start" onClick={handleDeleteInput}>
-                        <CloseIcon />
+                      <InputAdornment position="start" className={classes.pointer}>
+                        <CloseIcon onClick={()=>{handleDeleteInput(Object.keys(input)[0])}} />
                       </InputAdornment>
                     ),
                   }}
                   component={TextField}
                 />
               </Col>
-            </Row>
-            <Row className={classes.row}>
-              <StripeIcon/> 
+            </Row>}
+            
+            {input["input2"] && <Row className={classes.row}>
+              <StripeIcon />
               <Col>
                 <Field
                   labelProps={{
                     shrink: true,
-                    classes: {root: classes.textFieldRoot}
+                    classes: { root: classes.textFieldRoot }
                   }}
                   selectProps={{
-                    classes: {root: classes.selectField}
+                    classes: { root: classes.selectField }
                   }}
-                  name="stateProvince"
+                  name={"select2"}
                   listValues={["Created At"]}
-                  placeholder={"Created At"}
-                  selectValue={selectValue.stateProvince}
+                  // placeholder={"Created At"}
+                  selectValue={selectedValue["select2"]}
                   IconComponent={{
-                    classes: {root: classes.iconDropdown}
+                    classes: { root: classes.iconDropdown }
                   }}
-                  onChange={handleChange}
+                  onChange={()=>{handleSelect(Object.keys(selectedValue)[1])}}
                   component={CustomSelect}
                 />
               </Col>
               <Col className={classes.column}>
                 <Field
                   id="standard-full-width2"
-                  
+
                   placeholder="Start typing..."
                   fullWidth
                   margin="normal"
                   name="input2"
                   InputLabelProps={{
                     shrink: true,
-                    classes: {root: classes.textFieldRoot}
+                    classes: { root: classes.textFieldRoot }
                   }}
                   InputProps={{
-                    classes: {input: classes.textInputRoot},
+                    classes: { input: classes.textInputRoot },
                     endAdornment: (
-                      <InputAdornment position="start">
-                        <CloseIcon/>
+                      <InputAdornment position="start" className={classes.pointer}>
+                        <CloseIcon onClick={()=>{handleDeleteInput(Object.keys(input)[1])}}/>
                       </InputAdornment>
                     ),
                   }}
                   component={TextField}
                 />
               </Col>
-            </Row>
-            <Row className={classes.row}>
-              <StripeIcon/> 
+            </Row>}
+
+            {input["input3"] && <Row className={classes.row}>
+              <StripeIcon />
               <Col>
                 <Field
                   labelProps={{
                     shrink: true,
-                    classes: {root: classes.textFieldRoot}
+                    classes: { root: classes.textFieldRoot }
                   }}
                   selectProps={{
-                    classes: {root: classes.selectField}
+                    classes: { root: classes.selectField }
                   }}
-                  name="stateProvince"
+                  name={"select3"}
                   listValues={["Driver Name"]}
-                  placeholder={"Driver Name"}
-                  selectValue={selectValue.stateProvince}
+                  // placeholder={"Driver Name"}
+                  selectValue={selectedValue["select3"]}
                   IconComponent={{
-                    classes: {root: classes.iconDropdown}
+                    classes: { root: classes.iconDropdown }
                   }}
-                  onChange={handleChange}
+                  onChange={()=>{handleSelect(Object.keys(selectedValue)[2])}}
                   component={CustomSelect}
                 />
               </Col>
               <Col className={classes.column}>
                 <Field
                   id="standard-full-width3"
-                  
+
                   placeholder="Start typing..."
                   fullWidth
                   margin="normal"
                   name="input3"
                   InputLabelProps={{
                     shrink: true,
-                    classes: {root: classes.textFieldRoot}
+                    classes: { root: classes.textFieldRoot }
                   }}
                   InputProps={{
-                    classes: {input: classes.textInputRoot},
+                    classes: { input: classes.textInputRoot },
                     endAdornment: (
-                      <InputAdornment position="start">
-                        <CloseIcon/>
+                      <InputAdornment position="start" className={classes.pointer}>
+                        <CloseIcon onClick={()=>{handleDeleteInput(Object.keys(input)[2])}}/>
                       </InputAdornment>
                     ),
                   }}
                   component={TextField}
                 />
               </Col>
-            </Row>
+            </Row>}
             <Grid item xs={12} xl={12}>
               <Button
                 className={classes.addButton}
                 startIcon={<AddOutlined />}
-                // onClick={openAssignHOS}
+              // onClick={openAssignHOS}
               >
                 Add Column
               </Button>
@@ -487,7 +492,6 @@ export default function FormatReport(props) {
           </form>
         )}
       />
-
     </div>
   );
 }

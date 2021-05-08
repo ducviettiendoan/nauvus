@@ -9,9 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import { Col, Row } from 'reactstrap';
 import { Field, Form } from "react-final-form";
 import { TextField } from "final-form-material-ui";
-// import CalendarIcon from "../Icons/CalendarIcon";
-import Calendar from "components/Calendar/Calendar";
-import CustomDateRangePicker from "../../../../../components/CustomDateRangePicker/CustomDateRangePicker";
+import CustomDateRangePicker from "components/CustomDateRangePicker/CustomDateRangePicker";
 
 
 const styles = {
