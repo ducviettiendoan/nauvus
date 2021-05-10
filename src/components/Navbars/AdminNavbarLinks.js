@@ -35,10 +35,22 @@ import { connect } from 'react-redux';
 import { logout } from 'reducers/authentication';
 import { IRootState } from 'reducers';
 
+import DiaLog from "components/CustomDialog/Dialog";
+
 const useStyles = makeStyles(styles);
 
 export function HeaderLinks(props) {
   const history = useHistory();
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
+  const [openMore, setOpenMore] = React.useState(false);
+
+  const handleCloseMore = () => setOpenMore(false);
+  const handleOpenMore = (event) => {
+    setOpenMore(true)
+    setAnchorEl(event.currentTarget);
+  }
   
   const [openNotification, setOpenNotification] = React.useState(null);
   const handleClickNotification = event => {
@@ -96,7 +108,7 @@ export function HeaderLinks(props) {
   return (
     <div className={wrapper}>
       <Button
-        color="white"
+        color="white" 
         aria-label="edit"
         justIcon
         round
@@ -104,16 +116,77 @@ export function HeaderLinks(props) {
       >
         <SearchIcon style={{fontSize: 14}} className={classes.searchIcon} />
       </Button>
+
       <Button
         color="white"
         aria-label="edit"
         justIcon
         round
         className={ `btn-36 ${searchButton}`}
+        onClick={handleOpenMore}
       >
         <QuestionIcon  className={classes.searchIcon} />
       </Button>
-      
+    
+        <Popper
+          open={openMore}
+          anchorEl={anchorEl}
+          transition
+          disablePortal
+          placement="bottom"
+        >   
+          {({ TransitionProps }) => (
+              <Grow
+                {...TransitionProps}
+                id="profile-menu-list"
+                style={{ transformOrigin: "0 0 0" }}
+              >
+                <Paper className={classes.dropdown}>
+                  <ClickAwayListener onClickAway={handleCloseMore}>
+                    <MenuList role="menu"  style={{ zIndex: '9999'}}>
+                      <MenuItem
+                        
+                        className={dropdownItem}
+                      >
+                        {rtlActive ? "الملف الشخصي" : "Get Help"}
+                      </MenuItem>
+                      <MenuItem
+                        
+                        className={dropdownItem}
+                      >
+                        {rtlActive ? "الإعدادات" : "My open Tickets"}
+                      </MenuItem>
+                      <MenuItem
+                        
+                        className={dropdownItem}
+                      >
+                        {rtlActive ? "الخروج" : "Training Center"}
+                      </MenuItem>
+                      <MenuItem
+                        
+                        className={dropdownItem}
+                      >
+                        {rtlActive ? "الخروج" : "Exchange Cable"}
+                      </MenuItem>
+                      <MenuItem
+                        
+                        className={dropdownItem}
+                      >
+                        {rtlActive ? "الخروج" : "What's New"}
+                      </MenuItem>
+                      <MenuItem
+                        
+                        className={dropdownItem}
+                      >
+                        {rtlActive ? "الخروج" : "Send Feedback"}
+                      </MenuItem>
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+        </Popper>
+        
       <div className={managerClasses}>
         <Button
           color="transparent"
