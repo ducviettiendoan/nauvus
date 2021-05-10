@@ -89,6 +89,14 @@ const adminNavbarLinksStyle = theme => ({
       marginLeft: "-5px"
     }
   },
+  popperQuestionIcon:{
+    height: "236px",
+    width: '214px',
+    left: "0px",
+    top: "0px",
+    borderRadius: "8px !important",
+  },
+
   notifications: {
     zIndex: "4",
     [theme.breakpoints.up("md")]: {
