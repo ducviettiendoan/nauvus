@@ -52,6 +52,7 @@ import DashboardReport from "views/pages/user/reports/DashboardReport";
 import ViewDetail from "views/pages/user/reports/dashboard/ViewDetail";
 import CustomReport from "views/pages/user/reports/CustomReport";
 import CustomReportName from "views/pages/user/reports/custom-report/CustomReportName";
+import UserIcon from "views/pages/user/icon/UserIcon";
 
 
 // @material-ui/icons
@@ -443,6 +444,14 @@ const dashRoutes = [
         name: "Internal Tools",
         icon: InternalToolsIcon,
         component: InternalTools,
+        layout: ROUTE_PATH.USER
+    },
+
+    {
+        path: "/user-icon",
+        name: "User Icon",
+        icon: InternalToolsIcon,
+        component: UserIcon,
         layout: ROUTE_PATH.USER
     },
     {

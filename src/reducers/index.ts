@@ -22,6 +22,7 @@ import documents, { DocumentsState } from "./document";
 import maintainance, { MaintainanceState } from "./maintainance";
 import report, {ReportState} from "./report";
 import alerts, { AlertsState } from "./alerts";
+import icon, {IconState} from "./icon";
 
 export interface IRootState {
   readonly authentication: AuthenticationState;
@@ -44,6 +45,7 @@ export interface IRootState {
   readonly maintainance: MaintainanceState;
   readonly report: ReportState;
   readonly alerts: AlertsState;
+  readonly icon: IconState;
 }
 
 const rootReducer = combineReducers<IRootState>({
@@ -67,6 +69,7 @@ const rootReducer = combineReducers<IRootState>({
   maintainance,
   report,
   alerts,
+  icon,
 });
 
 export default rootReducer;
