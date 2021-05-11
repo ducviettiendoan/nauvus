@@ -1,6 +1,6 @@
 import React from "react";
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 // @material-ui/icons
 // import Weekend from "@material-ui/icons/Weekend";
 import FormatQuote from "@material-ui/icons/FormatQuote";
@@ -15,6 +15,10 @@ import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
+import {Field, Form} from "react-final-form";
+import {TextField} from "final-form-material-ui";
+import Button from "../../../../../components/CustomButtons/Button";
+import AddOutlined from "@material-ui/icons/AddOutlined";
 
 const styles = {
   cardTitle,
@@ -65,6 +69,55 @@ const styles = {
   cardTestimonialDescription: {
     fontStyle: "italic",
     color: "#999999"
+  },
+  textFieldRoot: {
+    fontWeight: 'normal',
+    fontSize: '14px',
+    lineHeight: '21px',
+    color: '#C4C4C4',
+  },
+  textInputRoot: {
+    padding: "6px, 0, 9px !important",
+    marginTop: "5px",
+    marginBottom: "85px",
+    fontWeight: 'bold',
+    fontSize: '14px',
+    lineHeight: '21px',
+    color: '#25345C',
+    "&>input": {
+      padding: "6px, 0, 9px !important",
+    }
+  },
+  lastContent: {
+    marginBottom: "72px",
+    color: "#C4C4C4",
+  },
+  button: {
+    background: '#25345C !important',
+    borderRadius: '28px !important',
+    padding: '10px 20px !important',
+    textTransform: 'initial !important',
+    fontSize:' 14px !important',
+    /* font-family: Lato!important; */
+    fontStyle: 'normal!important',
+    fontWeight: 700,
+  },
+  buttonPosition: {
+    textAlign: "right",
+  },
+  title: {
+    marginTop: "108px",
+    fontSize: "32px",
+    color: "#25345C",
+    fontWeight: 700,
+    marginBottom: '5px',
+  },
+  content: {
+    color: "#C4C4C4",
+  },
+  card: {
+    textAlign: "center",
+    height: "750px",
   }
 };
 
@@ -72,29 +125,55 @@ const useStyles = makeStyles(styles);
 
 export default function ActivateDevice() {
   const classes = useStyles();
+  const onSubmit = async (values) => {
+    console.log(values);
+  };
   return (
     <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card testimonial>
-                <div className={classes.testimonialIcon}>
-                  <FormatQuote />
+      <Card className={classes.card}>
+        <div className={classes.title}>Activate Device</div>
+        <div className={classes.content}>To activate a device and associate it with account, enter its serial number below.</div>
+        <div className={classes.content}>Activate multiple devices by copyingand pasting their serial numbers from your order confirmation email.
+        </div>
+        <div className={classes.lastContent}>Each device's serial number can also be found on its label or packaging.
+        </div>
+
+        <Form
+          onSubmit={onSubmit}
+          render={({handleSubmit, reset, submitting, pristine, values}) => (
+            <GridContainer style={{display: "flex", justifyContent: "center"}}>
+              <GridItem xs={7} xl={7}>
+                <Field
+                  id="standard-full-width"
+                  label="Email"
+                  placeholder="Start typing..."
+                  fullWidth
+                  margin="normal"
+                  name="email"
+                  InputLabelProps={{
+                    shrink: true,
+                    classes: {root: classes.textFieldRoot}
+                  }}
+                  InputProps={{
+                    classes: {input: classes.textInputRoot}
+                  }}
+                  component={TextField}
+                />
+
+                <div className={classes.buttonPosition}>
+                  <Button
+                    round
+                    className={classes.button}
+                    startIcon={<AddOutlined/>}
+                  >
+                    Activate Device
+                  </Button>
                 </div>
-                <CardBody>
-                  <h5 className={classes.cardTestimonialDescription}>
-                    No Data
-                  </h5>
-                </CardBody>
-                <CardFooter testimonial>
-                  <h6 className={classes.cardCategory}>@nauvus</h6>
-                </CardFooter>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </GridItem>
-      </GridContainer>
+              </GridItem>
+            </GridContainer>
+          )}
+        />
+      </Card>
     </div>
   );
 }
