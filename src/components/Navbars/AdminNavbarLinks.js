@@ -36,6 +36,10 @@ import { logout } from 'reducers/authentication';
 import { IRootState } from 'reducers';
 
 import DiaLog from "components/CustomDialog/Dialog";
+import getHelpDiaLog from "../../views/pages/user/help-feedback/getHelpDiaLog";
+import ticketDialog from "../../views/pages/user/help-feedback/ticketDiaLog";
+import { FormatListNumbered } from "@material-ui/icons";
+import { set } from "date-fns";
 
 const useStyles = makeStyles(styles);
 
@@ -44,12 +48,36 @@ export function HeaderLinks(props) {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
+  // const [openSubTickets, setOpenSubTickets] = React.useState(false);
+
+  const [openPopper, setOpenPopper] = React.useState({
+    open : false,
+    openSubTickets: false,
+  })
+
+  const handleOpen = (choice) => {
+    setOpenPopper(prev => ({
+      ...prev,
+      [choice]: true,
+    }))
+  }
+
   const [openMore, setOpenMore] = React.useState(false);
 
   const handleCloseMore = () => setOpenMore(false);
   const handleOpenMore = (event) => {
     setOpenMore(true)
     setAnchorEl(event.currentTarget);
+  }
+
+  const handleClose = (choice) => {
+    setOpen(false),
+    setOpenMore(false)
+    console.log(choice)
+    setOpenPopper(prev => ({
+      ...prev,
+      [choice]: false,
+    }))
   }
   
   const [openNotification, setOpenNotification] = React.useState(null);
@@ -144,18 +172,38 @@ export function HeaderLinks(props) {
                 <Paper className={classes.dropdown}>
                   <ClickAwayListener onClickAway={handleCloseMore}>
                     <MenuList role="menu"  style={{ zIndex: '9999'}}>
+                      {/*start get help  */}
                       <MenuItem
-                        
+                        onClick={() => handleOpen(Object.keys(openPopper)[0])}
                         className={dropdownItem}
                       >
-                        {rtlActive ? "الملف الشخصي" : "Get Help"}
+                        {rtlActive ? "الملف الشخصي" : "Get Help"} 
                       </MenuItem>
+                      <DiaLog
+                        renderTitle={<h3 className={classes.dialogTitle}>Compliance Reports Help</h3>}
+                        handleClose={() => handleClose(Object.keys(openPopper)[0])}
+                        open={openPopper.open}
+                      >
+                        <getHelpDiaLog handleClose={handleClose}/>
+                      </DiaLog>
+                       {/*end get help  */}
+
+                        {/* start dialog my tickets */}
                       <MenuItem
-                        
+                        onClick={() => handleOpen(Object.keys(openPopper)[1])}
                         className={dropdownItem}
                       >
                         {rtlActive ? "الإعدادات" : "My open Tickets"}
                       </MenuItem>
+                      <DiaLog
+                        renderTitle={<h3 className={classes.dialogTitle}>Submit Support Ticket</h3>}
+                        handleClose={() => handleClose(Object.keys(openPopper)[1])}
+                        open={openPopper.openSubTickets}
+                      >
+                        <ticketDialog handleClose={handleClose}/>
+                      </DiaLog>
+                        {/* end dialog my tickets */}
+
                       <MenuItem
                         
                         className={dropdownItem}
