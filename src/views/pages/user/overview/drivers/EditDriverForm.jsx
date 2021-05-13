@@ -659,7 +659,7 @@ export default function EditDriverForm(props) {
                     classes: {root: classes.textFieldRoot}
                   }}
                   InputProps={{
-                    classes: {input: classes.textInputRoot}
+                    classes: {input: classes.textInputRoot} 
                   }}
                   component={TextField}
                 />

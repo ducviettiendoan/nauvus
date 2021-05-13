@@ -156,6 +156,15 @@ const adminNavbarLinksStyle = theme => ({
     }
   },
 
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    margin: "24px",
+    textAlign: "center"
+},
+
 });
 
 export default adminNavbarLinksStyle;
