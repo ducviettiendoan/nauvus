@@ -36,8 +36,8 @@ import { logout } from 'reducers/authentication';
 import { IRootState } from 'reducers';
 
 import DiaLog from "components/CustomDialog/Dialog";
-import getHelpDiaLog from "../../views/pages/user/help-feedback/getHelpDiaLog";
-import ticketDialog from "../../views/pages/user/help-feedback/ticketDiaLog";
+import GetHelpDiaLog from "../../views/pages/user/help-feedback/GetHelpDiaLog";
+import TicketDialog from "../../views/pages/user/help-feedback/TicketDiaLog";
 import { FormatListNumbered } from "@material-ui/icons";
 import { set } from "date-fns";
 
@@ -185,7 +185,7 @@ export function HeaderLinks(props) {
                         handleClose={() => handleClose(Object.keys(openPopper)[0])}
                         open={openPopper.open}
                       >
-                        <getHelpDiaLog handleClose={handleClose}/>
+                        <GetHelpDiaLog/>
                       </DiaLog>
                        {/*end get help  */}
 
@@ -201,7 +201,7 @@ export function HeaderLinks(props) {
                         handleClose={() => handleClose(Object.keys(openPopper)[1])}
                         open={openPopper.openSubTickets}
                       >
-                        <ticketDialog handleClose={handleClose}/>
+                        <TicketDialog/>
                       </DiaLog>
                         {/* end dialog my tickets */}
 
