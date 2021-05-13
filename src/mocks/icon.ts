@@ -37,3 +37,27 @@ mock.onPost("/api/icon/profile").reply((config) => {
 
     return [200, data];
 })
+
+mock.onPost("/api/icon/view-organization").reply((config) => {
+    const viewOrganization = () => {
+        let data = [];
+        for (let i = 0; i < 7; i++) {
+            let item = {
+                id: i + 1,
+                key: i + 1,
+                name: "Singh Transport Logistics",
+                user: {tag: "User", userNumber: 1},
+                gateWay: 1,
+                sensors: 0,
+            };
+            data.push(item);
+        }
+        return data;
+    }
+
+    const data = {
+        data: viewOrganization(),
+    };
+
+    return [200, data];
+})
