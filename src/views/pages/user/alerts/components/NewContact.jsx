@@ -7,9 +7,25 @@ import "perfect-scrollbar/css/perfect-scrollbar.css";
 import Button from "components/CustomButtons/Button";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import { Form } from "react-final-form";
+import {Col, Row} from 'reactstrap';
+import {Field, Form} from "react-final-form";
 import BigTruckIcon from "components/Icons/BigTruckIcon";
 import HardDriveIcon from "components/Icons/HardDriveIcon";
+import {TextField} from "final-form-material-ui";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import DriverIcon from "components/Icons/DriverIcon";
+import PasswordIcon from "components/Icons/PasswordIcon";
+import PhoneIconField from "components/Icons/PhoneIconField";
+import EmailIcon from "components/Icons/EmailIcon";
+import CustomSelect from "components/CustomSelect/CustomSelect";
+import CheckSquareOutlined from "components/Icons/CheckSquareOutlined";
+import Checkbox from "@material-ui/core/Checkbox";
+import List from "@material-ui/core/List";
+import {ListItem} from "@material-ui/core";
+import {primaryColor} from "assets/jss/material-dashboard-pro-react";
+import RadioButton from "../../../../Components/RadioButton";
+import RadioGroup from '@material-ui/core/RadioGroup';
+import BuildingIcon from "components/Icons/BuildingIcon";
 
 const styles = {
 
@@ -89,7 +105,7 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function NewContact(props) {
-//   const {handleOpen,handleClose} = props;
+  //   const {handleOpen,handleClose} = props;
   const classes = useStyles();
   const [openForm, setOpenForm] = useState(false);
   const [clickDriver, setClickDriver] = useState(false);
@@ -100,7 +116,7 @@ export default function NewContact(props) {
   }
   const openAssignHOS = () => {
     // setOpenForm(true)
-    if (clickDriver || clickVehicleAsset){
+    if (clickDriver || clickVehicleAsset) {
       setOpenForm(true);
       // handleClose();
     }
@@ -117,14 +133,14 @@ export default function NewContact(props) {
 
   const handleChooseDriver = () => {
     setClickDriver(prev => !prev);
-    if (clickVehicleAsset){
+    if (clickVehicleAsset) {
       setClickVehicleAsset(false)
     }
   }
 
   const handleChooseVehicleAsset = () => {
     setClickVehicleAsset(prev => !prev);
-    if (clickDriver){
+    if (clickDriver) {
       setClickDriver(false);
     }
   }
@@ -146,7 +162,7 @@ export default function NewContact(props) {
     </GridItem>
 
   const normalVehicleAsset =
-    <GridItem className={classes.borderImageInitial} onClick ={handleChooseVehicleAsset}>
+    <GridItem className={classes.borderImageInitial} onClick={handleChooseVehicleAsset}>
       <GridContainer className={classes.setMargin}>
         <BigTruckIcon className={classes.image} />
         <GridItem xs={12} className={classes.choiceTitle}>Vehicle & Asset</GridItem>
@@ -163,39 +179,124 @@ export default function NewContact(props) {
 
   return (
     <div>
-        <Form
-          onSubmit={onSubmit}
-          render={({ handleSubmit, reset, submitting, pristine, values }) => (
-            <form onSubmit={handleSubmit} noValidate className={classes.form} style={{ maxWidth: "700" }}>
-              <GridContainer>
-                <GridItem xs={12} className={classes.title}>What type of data are you looking to report on?</GridItem>
-                <GridContainer className={classes.options}>
-                  {clickDriver ? onClickDriver : normalDriver}
-                  {clickVehicleAsset ? onClickVehicleAsset : normalVehicleAsset}
-                </GridContainer>
-              </GridContainer>
-
-              <div className={classes.footer}>
-                <div className={classes.selectButton}>
-                  <Button
-                    type="button"
-                    round
-                    className={`btn-round-active-2 ${classes.buttonSetting}`}
-                    onClick={props.handleNewContact}
-                  > Cancel
-                  </Button>
-                  <Button
-                    round
-                    className={`btn-round-active ${classes.buttonSetting}`}
-                    type="submit"
-                    disabled={submitting}
-                    // onClick={handleOpen}
-                  > Next</Button>
-                </div>
-              </div>
-            </form>
-          )}
-        />
+      <Form
+        onSubmit={onSubmit}
+        render={({ handleSubmit, reset, submitting, pristine, values }) => (
+          <form onSubmit={handleSubmit} noValidate className={classes.form} style={{ maxWidth: "700" }}>
+            <Row>
+              <Col>
+                <Field
+                  id="standard-full-width"
+                  label="First Name"
+                  placeholder="Start typing..."
+                  fullWidth
+                  margin="normal"
+                  name="firstName"
+                  InputLabelProps={{
+                    shrink: true,
+                    classes: { root: classes.textFieldRoot }
+                  }}
+                  InputProps={{
+                    classes: { input: classes.textInputRoot },
+                    endAdornment: (
+                      <InputAdornment position="start">
+                        <DriverIcon className={classes.inputAdornmentIcon} />
+                      </InputAdornment>
+                    ),
+                  }}
+                  component={TextField}
+                />
+              </Col>
+              <Col>
+                <Field
+                  id="standard-full-width"
+                  label="Last Name"
+                  placeholder="Start typing..."
+                  fullWidth
+                  margin="normal"
+                  name="lastName"
+                  InputLabelProps={{
+                    shrink: true,
+                    classes: { root: classes.textFieldRoot }
+                  }}
+                  InputProps={{
+                    classes: { input: classes.textInputRoot },
+                    endAdornment: (
+                      <InputAdornment position="start">
+                        <DriverIcon className={classes.inputAdornmentIcon} />
+                      </InputAdornment>
+                    ),
+                  }}
+                  component={TextField}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Field
+                  id="standard-full-width"
+                  label="Phone"
+                  placeholder="Start typing..."
+                  fullWidth
+                  margin="normal"
+                  name="phone"
+                  InputLabelProps={{
+                    shrink: true,
+                    classes: { root: classes.textFieldRoot }
+                  }}
+                  InputProps={{
+                    classes: { input: classes.textInputRoot },
+                    endAdornment: (
+                      <InputAdornment position="start">
+                        <PhoneIconField className={classes.inputAdornmentIcon} />
+                      </InputAdornment>
+                    ),
+                  }}
+                  component={TextField}
+                />
+              </Col>
+              <Col>
+                <Field
+                  id="standard-full-width"
+                  label="Email"
+                  placeholder="Start typing..."
+                  fullWidth
+                  margin="normal"
+                  name="email"
+                  InputLabelProps={{
+                    shrink: true,
+                    classes: { root: classes.textFieldRoot }
+                  }}
+                  InputProps={{
+                    classes: { input: classes.textInputRoot },
+                    endAdornment: (
+                      <InputAdornment position="start">
+                        <EmailIcon className={classes.inputAdornmentIcon} />
+                      </InputAdornment>
+                    ),
+                  }}
+                  component={TextField}
+                />
+              </Col>
+            </Row>
+            <div className={classes.selectButton}>
+              <Button
+                type="button"
+                round
+                className="btn-round-active-2 mr-2"
+                onClick={props.handleNewContact}
+              > Cancel
+              </Button>
+              <Button
+                round
+                className="btn-round-active mr-2"
+                type="submit"
+                // disabled={submitting}
+              > Save</Button>
+            </div>
+          </form>
+        )}
+      />
     </div>
   );
 }

@@ -183,6 +183,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#B4B4B4",
     display: "flex",
     alignItems: 'center',
+    cursor: "pointer !important",
   },
   organizationUpload: {
     "&>div": {

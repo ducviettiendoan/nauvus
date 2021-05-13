@@ -126,11 +126,25 @@ const styles = (theme) => ({
     padding: "0px !important",
   },
   footer: {
+    background: "rgba(37, 52, 92, 0.1)",
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
     paddingTop: "16px",
   },
+  dialogTitle: {
+    textAlign: 'center',
+    color: '#25345C',
+    fontWeight: 700,
+    fontSize: "22px",
+  },
+  dialogSubTitle: {
+    textAlign: "center",
+    color: "#B4B4B4",
+    fontWeight: "700",
+    fontSize: "14px",
+    padding: "4px 26px 0 26px",
+  } 
 });
 
 const useStyles = makeStyles(styles);

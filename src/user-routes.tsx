@@ -450,9 +450,9 @@ const dashRoutes = [
     {
         path: "/user-icon",
         name: "User Icon",
-        icon: InternalToolsIcon,
         component: UserIcon,
-        layout: ROUTE_PATH.USER
+        layout: ROUTE_PATH.USER,
+        isFixed: true,
     },
     {
         path: "/messages",
