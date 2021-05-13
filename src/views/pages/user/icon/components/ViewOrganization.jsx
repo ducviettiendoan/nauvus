@@ -10,11 +10,18 @@ import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
-
+import Button from "components/CustomButtons/Button";
+import Grid from "@material-ui/core/Grid";
+import AddOutlined from "@material-ui/icons/AddOutlined";
+import { getViewOrganization } from "reducers/icon";
+import { connect } from "react-redux";
+import Table from "components/Table/TableV1";
+import { MoreHoriz } from "@material-ui/icons";
 import {
   cardTitle,
   roseColor
 } from "assets/jss/material-dashboard-pro-react.js";
+import ViewOrganizationRow from "./ViewOrganizationRow";
 
 const styles = {
   cardTitle,
@@ -62,39 +69,50 @@ const styles = {
       height: "40px"
     }
   },
-  cardTestimonialDescription: {
-    fontStyle: "italic",
-    color: "#999999"
+  card: {
+    padding: "20px 16px 23px 16px",
+  },
+  title: {
+    fontSize: "18px",
+    fontWeight: 700,
+    color: "#25345C",
+    marginBottom: "26px",
   }
 };
 
 const useStyles = makeStyles(styles);
 
-export default function ViewOrganization() {
+function ViewOrganization(props) {
   const classes = useStyles();
+  React.useEffect(() => {
+    // Get list data
+    props.getViewOrganization();
+  }, []);
+
+  console.log(props.data);
+
   return (
     <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <GridContainer>
-            <GridItem xs={12} sm={12} md={12}>
-              <Card testimonial>
-                <div className={classes.testimonialIcon}>
-                  <FormatQuote />
-                </div>
-                <CardBody>
-                  <h5 className={classes.cardTestimonialDescription}>
-                    No Data
-                  </h5>
-                </CardBody>
-                <CardFooter testimonial>
-                  <h6 className={classes.cardCategory}>@nauvus</h6>
-                </CardFooter>
-              </Card>
-            </GridItem>
-          </GridContainer>
-        </GridItem>
-      </GridContainer>
-    </div>
+      <Card className={classes.card}>
+        <div className={classes.title}>Organisations</div>
+        {props.data && props.data.length>0 && props.data.map(item => {
+          return (
+          <ViewOrganizationRow item={item}/>
+          )
+        })}
+      </Card>
+    </div >
   );
 }
+
+const mapStateToProps = ({icon}) => {
+  return {
+    data: icon.viewOrganization.data,
+  };
+};
+
+const mapDispatchToProps = {
+  getViewOrganization,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ViewOrganization);
