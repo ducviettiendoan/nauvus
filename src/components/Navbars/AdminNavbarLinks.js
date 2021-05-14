@@ -27,11 +27,10 @@ import { logout } from 'reducers/authentication';
 import { IRootState } from 'reducers';
 
 import CustomizedDialogs from "components/CustomDialog/Dialog";
-import GetHelpDiaLog from "../../views/pages/user/help-feedback/GetHelpDiaLog";
 import TicketDialog from "../../views/pages/user/help-feedback/TicketDiaLog";
 import FeedBackDialog from "../../views/pages/user/help-feedback/FeedBackDiaLog";
 import FormFeedBack from "../../views/pages/user/help-feedback/FormFeedBack";
-
+import GetHelpDial from '../../views/pages/user/help-feedback/GetHelpDial';
 
 const useStyles = makeStyles(styles);
 
@@ -201,7 +200,7 @@ export function HeaderLinks(props) {
                       handleClose={handleClose}
                       open={openGetHelp}
                     >
-                      <GetHelpDiaLog/>
+                      <GetHelpDial/>
                     </CustomizedDialogs>
                       {/*end get help  */}
 
