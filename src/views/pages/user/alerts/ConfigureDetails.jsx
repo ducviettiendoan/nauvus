@@ -15,6 +15,9 @@ import AddButton from "components/CustomButtons/AddButton";
 import AddOutlined from "@material-ui/icons/AddOutlined";
 import DateTimeRangePicker from "components/CustomDateRangePicker/DateTimeRangePicker";
 import OpenInNewTabIcon from "components/Icons/OpenInNewTabIcon";
+import DiaLog from "components/CustomDialog/Dialog";
+import NewContact from "../alerts/components/NewContact";
+
 
 const styles = (theme) => ({
   configureHeaderContainer: {
@@ -123,11 +126,25 @@ const styles = (theme) => ({
     padding: "0px !important",
   },
   footer: {
+    background: "rgba(37, 52, 92, 0.1)",
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
     paddingTop: "16px",
   },
+  dialogTitle: {
+    textAlign: 'center',
+    color: '#25345C',
+    fontWeight: 700,
+    fontSize: "22px",
+  },
+  dialogSubTitle: {
+    textAlign: "center",
+    color: "#B4B4B4",
+    fontWeight: "700",
+    fontSize: "14px",
+    padding: "4px 26px 0 26px",
+  } 
 });
 
 const useStyles = makeStyles(styles);
@@ -159,6 +176,11 @@ export default function ConfigureDetails() {
     start: "12:00",
     end: "12:00",
   });
+
+  const [newContact, setNewContact] = React.useState(false);
+  const handleNewContact = () => {
+    setNewContact(prev => !prev);
+  }
 
   return (
     <>
@@ -356,6 +378,7 @@ export default function ConfigureDetails() {
             round
             className="btn-round-active w-88 h-42 mr-2"
             startIcon={<AddOutlined />}
+            onClick={handleNewContact}
           >
             New
           </Button>
@@ -435,6 +458,20 @@ export default function ConfigureDetails() {
         <Button round className="btn-round-active h-41 w-62">
           Save
         </Button>
+
+        <DiaLog
+          fullWidth={true}
+          maxWidth="sm"
+          renderTitle={<div className={classes.editHeader}>
+            <h3 className={classes.dialogTitle}>Add a new contact</h3>
+            <p className={classes.dialogSubTitle}>You are now creating an alert contact. Alert contacts to enable you to send alerts and reports to other people within or outside of your organization.</p>
+          </div>}
+          handleClose={handleNewContact}
+          open={newContact}
+        >
+          <NewContact handleNewContact={handleNewContact} />
+        </DiaLog>
+
       </div>
     </>
   );

@@ -11,21 +11,11 @@ import MenuList from "@material-ui/core/MenuList";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Paper from "@material-ui/core/Paper";
 import Grow from "@material-ui/core/Grow";
-import Hidden from "@material-ui/core/Hidden";
 import Popper from "@material-ui/core/Popper";
-import Divider from "@material-ui/core/Divider";
-
-// @material-ui/icons
-import Person from "@material-ui/icons/Person";
-import Dashboard from "@material-ui/icons/Dashboard";
-import Search from "@material-ui/icons/Search";
 import SearchIcon from "components/Icons/SearchIcon18";
 import QuestionIcon from "components/Icons/QuestionIcon";
-import HelpOutline from "@material-ui/icons/HelpOutline";
-import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 
 // core components
-import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle.js";
