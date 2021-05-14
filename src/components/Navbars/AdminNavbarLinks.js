@@ -14,6 +14,7 @@ import Grow from "@material-ui/core/Grow";
 import Popper from "@material-ui/core/Popper";
 import SearchIcon from "components/Icons/SearchIcon18";
 import QuestionIcon from "components/Icons/QuestionIcon";
+import Switch from "components/CustomSwitch/Switch.jsx";
 
 // core components
 import Button from "components/CustomButtons/Button.js";
@@ -66,7 +67,7 @@ export function HeaderLinks(props) {
     setOpenFormFeedBack(false)
     setOpenMore(false)
   }
-  
+
   const [openNotification, setOpenNotification] = React.useState(null);
   const handleClickNotification = event => {
     if (openNotification && openNotification.contains(event.target)) {
@@ -79,6 +80,10 @@ export function HeaderLinks(props) {
     setOpenNotification(null);
   };
   const [openProfile, setOpenProfile] = React.useState(null);
+
+  const handleUserProfile = () => {
+    history.push(`/u/user-icon`);
+  }
   const handleClickProfile = event => {
     if (openProfile && openProfile.contains(event.target)) {
       setOpenProfile(null);
@@ -124,17 +129,29 @@ export function HeaderLinks(props) {
   const managerClasses = classNames({
     [classes.managerClasses]: true
   });
+
+  //Switch change
+  const [checkedState, setCheckedState] = React.useState({
+    checkedB: false,
+  });
+
+  const handleChange = (event) => {
+    setCheckedState({
+      ...checkedState,
+      [event.target.name]: event.target.checked,
+    });
+  };
   return (
     <div className={wrapper}>
       <Button
-        color="white" 
+        color="white"
         aria-label="edit"
         justIcon
         round
         className={ `btn-36 ${searchButton} mr-2`}
         onClick = { ()=> setOpenTicket(true)}
       >
-        <SearchIcon style={{fontSize: 14}} className={classes.searchIcon} />
+        <SearchIcon style={{ fontSize: 14 }} className={classes.searchIcon} />
       </Button>
 
       {/* <DiaLog
@@ -150,10 +167,10 @@ export function HeaderLinks(props) {
         aria-label="edit"
         justIcon
         round
-        className={ `btn-36 ${searchButton}`}
+        className={`btn-36 ${searchButton}`}
         onClick={handleOpenMore}
       >
-        <QuestionIcon  className={classes.searchIcon} />
+        <QuestionIcon className={classes.searchIcon} />
       </Button>
     
       <Popper
