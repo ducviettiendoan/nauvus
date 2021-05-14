@@ -6,6 +6,13 @@ import {
 
 import customDropdownStyle from "assets/jss/material-dashboard-pro-react/components/customDropdownStyle.js";
 
+const pxToRem = (px, oneRemPx = 17) => `${px / oneRemPx}rem`;
+const borderWidth = 2;
+const width = pxToRem(40);
+const height = pxToRem(22);
+const size = pxToRem(16);
+const gap = (22 - 16) / 2;
+
 const adminNavbarLinksStyle = theme => ({
   ...customDropdownStyle(theme),
   search: {
@@ -165,9 +172,14 @@ const adminNavbarLinksStyle = theme => ({
     textAlign: "center"
   },
   dialog: {
-
+    "&>div>div": {
+      margin: "0px"
+    }
   },
-  dropdownItemTop: {
+  dropdownItemGetHelp: {
+    color: "#333",
+    lineHeight: "1.5em",
+    whiteSpace: "nowrap",
     height: "40px",
     padding: "2px 20px 0px 12px",
     position: "relative",
@@ -176,14 +188,112 @@ const adminNavbarLinksStyle = theme => ({
     background: "#FFFFFF",
     fontFamily: "Lato",
     fontWeight: 400,
+    marginTop: "20px"
+  },
+  dropdownItem: {
+    color: "#333",
+    lineHeight: "1.5em",
+    whiteSpace: "nowrap",
+    height: "40px",
+    padding: "2px 20px 0px 12px",
+    position: "relative",
+    bottom: "13px",
+    fontSize: "13px",
+    background: "#FFFFFF",
+    fontFamily: "Lato",
+    fontWeight: 400,
+  },
+  dropdownItemTop: {
+    color: "#333",
+    lineHeight: "1.5em",
+    whiteSpace: "nowrap",
+    height: "40px",
+    padding: "2px 0px 0px 12px",
+    position: "relative",
+    bottom: "13px",
+    fontSize: "13px",
+    background: "#FFFFFF",
+    fontFamily: "Lato",
+    fontWeight: 400,
+    marginTop: "20px"
+  },
+  dropdownItemContent: {
+    color: "#333",
+    lineHeight: "1.5em",
+    whiteSpace: "nowrap",
+    height: "40px",
+    padding: "2px 0px 0px 12px",
+    position: "relative",
+    bottom: "13px",
+    fontSize: "13px",
+    background: "#FFFFFF",
+    fontFamily: "Lato",
+    fontWeight: 400,
+  },
+  dropdownItemBottom: {
+    height: "40px",
+    padding: "2px 0px 0px 12px",
+    position: "relative",
+    bottom: "13px",
+    fontSize: "13px",
+    background: "#FFFFFF",
+    fontFamily: "Lato",
+    fontWeight: 400,
+    color: "#B4B4B4",
     "&:focus": {
-      background: "#FFFFFF",
-    },
-    borderRadius: "12px 12px 0 0",
+      background: "#FFFFFF"
+    }
   },
   dropdown: {
     borderRadius: "12px",
     paddingTop: "5px",
+  },
+  root: {
+    width,
+    height,
+    padding: 0,
+    margin: theme.spacing(1),
+    overflow: 'unset',
+  },
+  switchBase: {
+    padding: pxToRem(gap),
+    '&$checked': {
+      color: '#fff',
+      transform: `translateX(calc(${width} - ${size} - ${pxToRem(2 * gap)}))`,
+      '& + $track': {
+        backgroundColor: "black",
+        opacity: 1,
+        border: 'none',
+      },
+      '& $thumb': {
+        backgroundColor: '#fff',
+      },
+    },
+  },
+  track: {
+    borderRadius: 40,
+    border: `solid ${theme.palette.grey[400]}`,
+    borderWidth,
+    backgroundColor: theme.palette.grey[50],
+    opacity: 1,
+    transition: theme.transitions.create(['background-color', 'border']),
+    boxSizing: 'border-box',
+  },
+  thumb: {
+    boxShadow: 'none',
+    backgroundColor: theme.palette.grey[400],
+    width: size,
+    height: size,
+  },
+  checked:{},
+  switchPosition: {
+    "&>span": {
+      marginLeft: '15px',
+    }  
+  },
+  whatsNewPosition: {
+    display: "flex",
+    justifyContent: "space-between",
   }
 });
 

@@ -452,7 +452,8 @@ const dashRoutes = [
         name: "User Icon",
         component: UserIcon,
         layout: ROUTE_PATH.USER,
-        isFixed: true,
+        // isFixed: true,
+        hidden: true,
     },
     {
         path: "/messages",
