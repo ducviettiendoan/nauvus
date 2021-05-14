@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import Switch from '@material-ui/core/Switch';
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
@@ -14,7 +15,7 @@ import Grow from "@material-ui/core/Grow";
 import Popper from "@material-ui/core/Popper";
 import SearchIcon from "components/Icons/SearchIcon18";
 import QuestionIcon from "components/Icons/QuestionIcon";
-import Switch from "components/CustomSwitch/Switch.jsx";
+
 
 // core components
 import Button from "components/CustomButtons/Button.js";
@@ -129,7 +130,7 @@ export function HeaderLinks(props) {
     [classes.managerClasses]: true
   });
 
-  //Switch change
+  //Switch 
   const [checkedState, setCheckedState] = React.useState({
     checkedB: false,
   });
@@ -279,57 +280,129 @@ export function HeaderLinks(props) {
             <img src={avatar} alt="..." />
             <div className="online-badge-dot" />
           </div>
-          {/* <Hidden mdUp implementation="css">
-            <span onClick={handleClickProfile} className={classes.linkText}>
-              {rtlActive ? "الملف الشخصي" : "Profile"}
-            </span>
-          </Hidden> */}
         </Button>
-        <Popper
-          open={Boolean(openProfile)}
-          anchorEl={openProfile}
-          transition
-          disablePortal
-          placement="bottom"
-          className={classNames({
-            [classes.popperClose]: !openProfile,
-            [classes.popperResponsive]: true,
-            [classes.popperNav]: true
-          })}
-        >
-          {({ TransitionProps }) => (
-            <Grow
-              {...TransitionProps}
-              id="profile-menu-list"
-              style={{ transformOrigin: "0 0 0" }}
-            >
-              <Paper className={classes.dropdown}>
-                <ClickAwayListener onClickAway={handleCloseProfile}>
-                  <MenuList role="menu"  style={{ zIndex: '9999'}}>
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={dropdownItem}
-                    >
-                      {rtlActive ? "الملف الشخصي" : "Profile"}
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={dropdownItem}
-                    >
-                      {rtlActive ? "الإعدادات" : "Settings"}
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleLogout}
-                      className={dropdownItem}
-                    >
-                      {rtlActive ? "الخروج" : "Log out"}
-                    </MenuItem>
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
+
+        <div className={classes.popper}>
+          <Popper
+            open={Boolean(openProfile)}
+            anchorEl={openProfile}
+            transition
+            disablePortal
+            placement="bottom"
+            className={classNames({
+              [classes.popperClose]: !openProfile,
+              [classes.popperResponsive]: true,
+              [classes.popperNav]: true
+            })}
+          >
+            {({ TransitionProps }) => (
+              <Grow
+                {...TransitionProps}
+                id="profile-menu-list"
+                style={{ transformOrigin: "0 0 0" }}
+              >
+                <Paper className={classes.dropdown}>
+                  <ClickAwayListener onClickAway={handleCloseProfile}>
+                    <MenuList role="menu" style={{ zIndex: '9999' }}>
+                      <MenuItem
+                        onClick={handleUserProfile}
+                        className={classes.dropdownItemTop}
+                      >
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: "center" }}>
+                          <div>
+                            <div>Tatle</div>
+                            <div>alisingh493@gmail.com</div>
+                          </div>
+                          <div className={classes.switchPosition}>
+                            <Switch
+                              checked={checkedState.checkedB}
+                              classes={{
+                                root: classes.root,
+                                switchBase: classes.switchBase,
+                                thumb: classes.thumb,
+                                track: classes.track,
+                                checked: classes.checked,
+                              }}
+                              name="checkedB"
+                              onChange={handleChange}
+                            />
+                          </div>
+                        </div>
+                      </MenuItem>
+                      <MenuItem
+                        onClick={handleUserProfile}
+                        className={classes.dropdownItemContent}
+                      >
+                        {rtlActive ? "الملف الشخصي" : "Profile"}
+                      </MenuItem>
+                      <MenuItem
+                        onClick={handleCloseProfile}
+                        className={classes.dropdownItemContent}
+                      >
+                        {rtlActive ? "الملف الشخصي" : "What's new"}
+                      </MenuItem>
+                      <MenuItem
+                        onClick={handleCloseProfile}
+                        className={classes.dropdownItemContent}
+                      >
+                        {rtlActive ? "الملف الشخصي" : "Orders"}
+                      </MenuItem>
+                      <MenuItem
+                        onClick={handleCloseProfile}
+                        className={classes.dropdownItemContent}
+                      >
+                        {rtlActive ? "الملف الشخصي" : "Activate Devices"}
+                      </MenuItem>
+                      <MenuItem
+                        onClick={handleCloseProfile}
+                        className={classes.dropdownItemContent}
+                      >
+                        {rtlActive ? "الملف الشخصي" : "Exchange Cable"}
+                      </MenuItem>
+                                            <MenuItem
+                        onClick={handleCloseProfile}
+                        className={classes.dropdownItemContent}
+                      >
+                        {rtlActive ? "الملف الشخصي" : "Shop"}
+                      </MenuItem>
+                      <MenuItem
+                        onClick={handleCloseProfile}
+                        className={classes.dropdownItemContent}
+                      >
+                        {rtlActive ? "الملف الشخصي" : "Organisation Settings"}
+                      </MenuItem>
+                      <MenuItem
+                        onClick={handleCloseProfile}
+                        className={classes.dropdownItemContent}
+                      >
+                        {rtlActive ? "الإعدادات" : "Settings"}
+                      </MenuItem>
+                      <MenuItem
+                        onClick={handleLogout}
+                        className={classes.dropdownItemContent}
+                      >
+                        {rtlActive ? "الخروج" : "Log out"}
+                      </MenuItem>
+                      <MenuItem
+                        onClick={handleCloseProfile}
+                        className={classes.dropdownItemBottom}
+                      >
+                        {rtlActive ? "الخروج" : "Term of service"}
+                      </MenuItem>
+                      <MenuItem
+                        onClick={handleCloseProfile}
+                        className={classes.dropdownItemBottom}
+                      >
+                        {rtlActive ? "الخروج" : "Privacy"}
+                      </MenuItem>
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
+        </div>
+        
       </div>
     </div>
   );

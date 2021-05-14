@@ -13,11 +13,6 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Paper from "@material-ui/core/Paper";
 import Grow from "@material-ui/core/Grow";
 import { MoreHoriz } from "@material-ui/icons";
-import SunIcon from "../../../../../components/Icons/SunIcon";
-import {
-    cardTitle,
-    roseColor
-} from "assets/jss/material-dashboard-pro-react.js";
 
 const styles = {
     moreAction: {
@@ -28,7 +23,7 @@ const styles = {
         height: "42px !important",
         minWidth: "42px !important",
     },
-    numberButton:{
+    numberButton: {
         width: "36px !important",
         height: "36px !important",
         minWidth: "36px !important",
@@ -181,9 +176,8 @@ export default function ViewOrganizationRow(props) {
         setOpenMore(true)
         setAnchorEl(event.currentTarget);
     };
-    // const dropdownItem = classNames(classes.dropdownItem, classes.grayHover);
 
-    const addButton = 
+    const addButton =
         item.id === 1 ?
             <Button
                 round
@@ -200,26 +194,26 @@ export default function ViewOrganizationRow(props) {
             >
                 Add Devices
             </Button>
-            
+
 
     return (
         <div className={classes.row}>
             {/* <SunIcon/> */}
             <Grid container className={classes.container}>
-                <Grid xs={4} md={4} lg={3} xl={3} style={{ display: "flex", alignItem: "center", paddingLeft: "16px" }}>
+                <Grid xs={5} md={5} lg={3} xl={3} style={{ display: "flex", alignItem: "center", paddingLeft: "16px" }}>
                     <Button
                         color="white"
                         aria-label="edit"
                         justIcon
                         round
                         className={`${classes.numberButton} mr-2`}
-                    // onClick={handleOpenMore}
+
                     >
                         {item.id}
                     </Button>
                     <div className={classes.textTitle}>{item.name}</div>
                 </Grid>
-                <Grid xs={4} md={4} lg={1} xl={1} className={classes.textPosition}>
+                <Grid xs={3} md={3} lg={1} xl={1} className={classes.textPosition}>
                     <span className={classes.space}>{item.user.tag}</span>
                     <span className={classes.number}>{item.user.userNumber}</span>
                 </Grid>
@@ -238,7 +232,6 @@ export default function ViewOrganizationRow(props) {
                     <Button
                         round
                         className={classes.button2}
-                    // onClick={openAssignHOS}
                     >
                         <div>View Dashboard</div>
                     </Button>
