@@ -14,6 +14,7 @@ import Grow from "@material-ui/core/Grow";
 import Popper from "@material-ui/core/Popper";
 import SearchIcon from "components/Icons/SearchIcon18";
 import QuestionIcon from "components/Icons/QuestionIcon";
+import Switch from "components/CustomSwitch/Switch.jsx";
 
 // core components
 import Button from "components/CustomButtons/Button.js";
@@ -25,23 +26,24 @@ import { connect } from 'react-redux';
 import { logout } from 'reducers/authentication';
 import { IRootState } from 'reducers';
 
-import DiaLog from "components/CustomDialog/Dialog";
+import CustomizedDialogs from "components/CustomDialog/Dialog";
 import GetHelpDiaLog from "../../views/pages/user/help-feedback/GetHelpDiaLog";
 import TicketDialog from "../../views/pages/user/help-feedback/TicketDiaLog";
 import FeedBackDialog from "../../views/pages/user/help-feedback/FeedBackDiaLog";
+import FormFeedBack from "../../views/pages/user/help-feedback/FormFeedBack";
 
 
 const useStyles = makeStyles(styles);
 
 export function HeaderLinks(props) {
   const history = useHistory();
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [openGetHelp, setOpenGetHelp] = React.useState(false);
   const [openTicket, setOpenTicket] = React.useState(false);
   const [openMore, setOpenMore] = React.useState(false);
   const [openSendFeedback, setOpenSendFeedback] = React.useState(false);
+  const [openFormFeedBack, setOpenFormFeedBack] = React.useState(false);
 
   const handleCloseMore = () => setOpenMore(false);
   const handleOpenMore = (event) => {
@@ -49,16 +51,23 @@ export function HeaderLinks(props) {
     setAnchorEl(event.currentTarget);
   }
 
- 
-
+  const handleOpenSendFeedback = () =>{
+    setOpenSendFeedback(prev => !prev);
+    setOpenFormFeedBack(prev => !prev);
+  }
+  const handleFormFeedBack = () =>{
+    setOpenSendFeedback(prev => !prev);
+    setOpenFormFeedBack(prev => !prev);
+  }
   const handleClose = () => {
     setOpen(false)
     setOpenTicket(false)
     setOpenGetHelp(false)
     setOpenSendFeedback(false)
+    setOpenFormFeedBack(false)
     setOpenMore(false)
   }
-  
+
   const [openNotification, setOpenNotification] = React.useState(null);
   const handleClickNotification = event => {
     if (openNotification && openNotification.contains(event.target)) {
@@ -71,6 +80,10 @@ export function HeaderLinks(props) {
     setOpenNotification(null);
   };
   const [openProfile, setOpenProfile] = React.useState(null);
+
+  const handleUserProfile = () => {
+    history.push(`/u/user-icon`);
+  }
   const handleClickProfile = event => {
     if (openProfile && openProfile.contains(event.target)) {
       setOpenProfile(null);
@@ -81,6 +94,10 @@ export function HeaderLinks(props) {
   const handleCloseProfile = () => {
     setOpenProfile(null);
   };
+
+  const handleWhatsNew = ()=>{
+    history.push("/u/help-feedback/what's-new")
+  }
 
   const handleLogout = () => {
     props.logout();
@@ -112,115 +129,140 @@ export function HeaderLinks(props) {
   const managerClasses = classNames({
     [classes.managerClasses]: true
   });
+
+  //Switch change
+  const [checkedState, setCheckedState] = React.useState({
+    checkedB: false,
+  });
+
+  const handleChange = (event) => {
+    setCheckedState({
+      ...checkedState,
+      [event.target.name]: event.target.checked,
+    });
+  };
   return (
     <div className={wrapper}>
       <Button
-        color="white" 
+        color="white"
         aria-label="edit"
         justIcon
         round
         className={ `btn-36 ${searchButton} mr-2`}
+        onClick = { ()=> setOpenTicket(true)}
       >
-        <SearchIcon style={{fontSize: 14}} className={classes.searchIcon} />
+        <SearchIcon style={{ fontSize: 14 }} className={classes.searchIcon} />
       </Button>
+
+      {/* <DiaLog
+        renderTitle={<h3 className={classes.dialogTitle}>Submit Support Ticket</h3>}
+        handleClose={handleClose}
+        open={openTicket}
+      >
+        <TicketDialog handleClose={setOpenTicket} />
+      </DiaLog> */}
 
       <Button
         color="white"
         aria-label="edit"
         justIcon
         round
-        className={ `btn-36 ${searchButton}`}
+        className={`btn-36 ${searchButton}`}
         onClick={handleOpenMore}
       >
-        <QuestionIcon  className={classes.searchIcon} />
+        <QuestionIcon className={classes.searchIcon} />
       </Button>
     
-        <Popper
-          open={openMore}
-          anchorEl={anchorEl}
-          transition
-          disablePortal
-          placement="bottom"
-            
-        >   
-          {({ TransitionProps }) => (
-              <Grow
-                {...TransitionProps}
-                id="profile-menu-list"
-                style={{ transformOrigin: "0 0 0" }}
-              >
-                <Paper className={classes.dropdown}>
-                  <ClickAwayListener onClickAway={handleCloseMore}>
-                    <MenuList role="menu"  style={{ zIndex: '9999'}}>
-                      {/*start get help  */}
-                      <MenuItem
-                        onClick={() => setOpenGetHelp(true)}
-                        className={dropdownItem}
-                      >
-                        {rtlActive ? "الملف الشخصي" : "Get Help"} 
-                      </MenuItem>
-                      <DiaLog
-                        renderTitle={<h3 className={classes.dialogTitle}>Compliance Reports Help</h3>}
-                        handleClose={handleClose}
-                        open={openGetHelp}
-                      >
-                        <GetHelpDiaLog/>
-                      </DiaLog>
-                       {/*end get help  */}
+      <Popper
+        open={openMore}
+        anchorEl={anchorEl}
+        transition
+        disablePortal
+        placement="bottom"   
+      >   
+        {({ TransitionProps }) => (
+            <Grow
+              {...TransitionProps}
+              id="profile-menu-list"
+              style={{ transformOrigin: "0 0 0" }}
+            >
+              <Paper className={classes.dropdown}>
+                <ClickAwayListener onClickAway={handleCloseMore}>
+                  <MenuList role="menu"  style={{ zIndex: '9999'}}>
+                    {/*start get help  */}
+                    <MenuItem
+                      onClick={() => setOpenGetHelp(true)}
+                      className={dropdownItem}
+                    >
+                      {rtlActive ? "الملف الشخصي" : "Get Help"} 
+                    </MenuItem>
+                    <CustomizedDialogs
+                      renderTitle={<h3 className={classes.dialogTitle}>Compliance Reports Help</h3>}
+                      handleClose={handleClose}
+                      open={openGetHelp}
+                    >
+                      <GetHelpDiaLog/>
+                    </CustomizedDialogs>
+                      {/*end get help  */}
 
-                        {/* start dialog my tickets */}
-                      <MenuItem
-                        onClick={() => setOpenTicket(true)}
-                        className={dropdownItem}
-                      >
-                        {rtlActive ? "الإعدادات" : "My open Tickets"}
-                      </MenuItem>
-                      <DiaLog
-                        renderTitle={<h3 className={classes.dialogTitle}>Submit Support Ticket</h3>}
-                        handleClose={handleClose}
-                        open={openTicket}
-                      >
-                        <TicketDialog/>
-                      </DiaLog>
-                        {/* end dialog my tickets */}
+                      {/* start dialog my tickets */}
+                    <MenuItem
+                      onClick={() => setOpenTicket(true)}
+                      className={dropdownItem}
+                    >
+                      {rtlActive ? "الإعدادات" : "My open Tickets"}
+                    </MenuItem>
+                    <CustomizedDialogs
+                      renderTitle={<h3 className={classes.dialogTitle}>Submit Support Ticket</h3>}
+                      handleClose={handleClose}
+                      open={openTicket}
+                    >
+                      <TicketDialog handleClose={setOpenTicket} />
+                    </CustomizedDialogs>
+                      {/* end dialog my tickets */}
 
-                      <MenuItem
-                        
-                        className={dropdownItem}
-                      >
-                        {rtlActive ? "الخروج" : "Training Center"}
-                      </MenuItem>
-                      <MenuItem
-                        
-                        className={dropdownItem}
-                      >
-                        {rtlActive ? "الخروج" : "Exchange Cable"}
-                      </MenuItem>
-                      <MenuItem
-                        
-                        className={dropdownItem}
-                      >
-                        {rtlActive ? "الخروج" : "What's New"}
-                      </MenuItem>
-                      <MenuItem
-                        onClick={() => setOpenSendFeedback(true)}
-                        className={dropdownItem}
-                      >
-                        {rtlActive ? "الخروج" : "Send Feedback"}
-                      </MenuItem>
-                      <DiaLog
-                        renderTitle={<h3 className={classes.dialogTitle}>Feedback or Support?</h3>}
-                        handleClose={handleClose}
-                        open={openSendFeedback}
-                      >
-                        <FeedBackDialog/>
-                      </DiaLog>
-                    </MenuList>
-                  </ClickAwayListener>
-                </Paper>
-              </Grow>
-            )}
-        </Popper>
+                    <MenuItem
+                      className={dropdownItem}
+                    >
+                      {rtlActive ? "الخروج" : "Training Center"}
+                    </MenuItem>
+                    <MenuItem
+                      className={dropdownItem}
+                    >
+                      {rtlActive ? "الخروج" : "Exchange Cable"}
+                    </MenuItem>
+                    <MenuItem
+                      className={dropdownItem}
+                      onClick = {handleWhatsNew}
+                    >
+                      {rtlActive ? "الخروج" : "What's New"}
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => setOpenSendFeedback(true)}
+                      className={dropdownItem}
+                    >
+                      {rtlActive ? "الخروج" : "Send Feedback"}
+                    </MenuItem>
+                    <CustomizedDialogs
+                      renderTitle={<h3 className={classes.dialogTitle}></h3>}
+                      handleClose={handleClose}
+                      open={openSendFeedback}
+                    >
+                      <FeedBackDialog handleOpen={handleFormFeedBack} handleClose={handleOpenSendFeedback}/>
+                    </CustomizedDialogs>
+                    <CustomizedDialogs
+                      renderTitle={<h3 className={classes.dialogTitle}>Feedback</h3>}
+                      handleClose={handleClose}
+                      open={openFormFeedBack}
+                    >
+                      <FormFeedBack handleClose={handleFormFeedBack} />
+                    </CustomizedDialogs>
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+      </Popper>
         
       <div className={managerClasses}>
         <Button

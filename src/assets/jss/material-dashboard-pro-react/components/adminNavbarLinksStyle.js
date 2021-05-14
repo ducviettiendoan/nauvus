@@ -89,7 +89,7 @@ const adminNavbarLinksStyle = theme => ({
       marginLeft: "-5px"
     }
   },
-  popperQuestionIcon:{
+  popperQuestionIcon: {
     height: "236px",
     width: '214px',
     left: "0px",
@@ -163,8 +163,28 @@ const adminNavbarLinksStyle = theme => ({
     color: "#25345C",
     margin: "24px",
     textAlign: "center"
-},
+  },
+  dialog: {
 
+  },
+  dropdownItemTop: {
+    height: "40px",
+    padding: "2px 20px 0px 12px",
+    position: "relative",
+    bottom: "13px",
+    fontSize: "13px",
+    background: "#FFFFFF",
+    fontFamily: "Lato",
+    fontWeight: 400,
+    "&:focus": {
+      background: "#FFFFFF",
+    },
+    borderRadius: "12px 12px 0 0",
+  },
+  dropdown: {
+    borderRadius: "12px",
+    paddingTop: "5px",
+  }
 });
 
 export default adminNavbarLinksStyle;

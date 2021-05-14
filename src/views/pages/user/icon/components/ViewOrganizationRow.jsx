@@ -13,6 +13,7 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Paper from "@material-ui/core/Paper";
 import Grow from "@material-ui/core/Grow";
 import { MoreHoriz } from "@material-ui/icons";
+import SunIcon from "../../../../../components/Icons/SunIcon";
 import {
     cardTitle,
     roseColor
@@ -21,12 +22,22 @@ import {
 const styles = {
     moreAction: {
         background: "#FFFFFF !important",
-        border: "1px solid #ECEEF0 !important"
+        border: "1px solid #ECEEF0 !important",
+        marginLeft: "8px",
+        width: "42px !important",
+        height: "42px !important",
+        minWidth: "42px !important",
+    },
+    numberButton:{
+        width: "36px !important",
+        height: "36px !important",
+        minWidth: "36px !important",
+        background: "#FFFFFF !important",
     },
     button: {
         background: '#25345C !important',
         borderRadius: '28px !important',
-        padding: '8px 12px !important',
+        padding: '12px 17px !important',
         textTransform: 'initial !important',
         fontSize: ' 14px !important',
         fontStyle: 'normal!important',
@@ -39,7 +50,7 @@ const styles = {
         color: "#25345C",
         background: "rgba(37, 52, 92, 0.1)",
         borderRadius: '28px !important',
-        padding: '8px 12px !important',
+        padding: '12px 17px !important',
         textTransform: 'initial !important',
         fontSize: ' 14px !important',
         fontStyle: 'normal!important',
@@ -54,11 +65,12 @@ const styles = {
         color: "black",
         borderRadius: '28px !important',
         border: "1px solid #ECEEF0",
-        padding: '8px 12px !important',
+        padding: '12px 17px !important',
         textTransform: 'initial !important',
         fontSize: ' 14px !important',
         fontStyle: 'normal!important',
         fontWeight: 700,
+        boxShadow: "none",
         "&>span>span": {
             marginRight: "0px !important",
         },
@@ -151,7 +163,8 @@ const styles = {
         color: "#B4B4B4",
         fontSize: "14px",
         fontWeight: 400,
-    }
+    },
+
 };
 
 const useStyles = makeStyles(styles);
@@ -191,6 +204,7 @@ export default function ViewOrganizationRow(props) {
 
     return (
         <div className={classes.row}>
+            {/* <SunIcon/> */}
             <Grid container className={classes.container}>
                 <Grid xs={4} md={4} lg={3} xl={3} style={{ display: "flex", alignItem: "center", paddingLeft: "16px" }}>
                     <Button
@@ -198,7 +212,7 @@ export default function ViewOrganizationRow(props) {
                         aria-label="edit"
                         justIcon
                         round
-                        className={`btn-36 ${classes.moreAction} mr-2`}
+                        className={`${classes.numberButton} mr-2`}
                     // onClick={handleOpenMore}
                     >
                         {item.id}
@@ -239,7 +253,7 @@ export default function ViewOrganizationRow(props) {
                             aria-label="edit"
                             justIcon
                             round
-                            className={`btn-36 ${classes.moreAction} mr-2`}
+                            className={`${classes.moreAction} mr-2`}
                             onClick={handleOpenMore}
                         >
                             <MoreHoriz />
@@ -278,7 +292,7 @@ export default function ViewOrganizationRow(props) {
                             aria-label="edit"
                             justIcon
                             round
-                            className={`btn-36 ${classes.moreAction} mr-2`}
+                            className={`${classes.moreAction} mr-2`}
                             onClick={handleOpenMore}
                         >
                             <MoreHoriz />
