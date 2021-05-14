@@ -11,21 +11,11 @@ import MenuList from "@material-ui/core/MenuList";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Paper from "@material-ui/core/Paper";
 import Grow from "@material-ui/core/Grow";
-import Hidden from "@material-ui/core/Hidden";
 import Popper from "@material-ui/core/Popper";
-import Divider from "@material-ui/core/Divider";
-
-// @material-ui/icons
-import Person from "@material-ui/icons/Person";
-import Dashboard from "@material-ui/icons/Dashboard";
-import Search from "@material-ui/icons/Search";
 import SearchIcon from "components/Icons/SearchIcon18";
 import QuestionIcon from "components/Icons/QuestionIcon";
-import HelpOutline from "@material-ui/icons/HelpOutline";
-import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 
 // core components
-import CustomInput from "components/CustomInput/CustomInput.js";
 import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-dashboard-pro-react/components/adminNavbarLinksStyle.js";
@@ -38,8 +28,8 @@ import { IRootState } from 'reducers';
 import DiaLog from "components/CustomDialog/Dialog";
 import GetHelpDiaLog from "../../views/pages/user/help-feedback/GetHelpDiaLog";
 import TicketDialog from "../../views/pages/user/help-feedback/TicketDiaLog";
-import { FormatListNumbered } from "@material-ui/icons";
-import { set } from "date-fns";
+import FeedBackDialog from "../../views/pages/user/help-feedback/FeedBackDiaLog";
+
 
 const useStyles = makeStyles(styles);
 
@@ -48,21 +38,10 @@ export function HeaderLinks(props) {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
-  // const [openSubTickets, setOpenSubTickets] = React.useState(false);
-
-  const [openPopper, setOpenPopper] = React.useState({
-    open: false,
-    openSubTickets: false,
-  })
-
-  const handleOpen = (choice) => {
-    setOpenPopper(prev => ({
-      ...prev,
-      [choice]: true,
-    }))
-  }
-
+  const [openGetHelp, setOpenGetHelp] = React.useState(false);
+  const [openTicket, setOpenTicket] = React.useState(false);
   const [openMore, setOpenMore] = React.useState(false);
+  const [openSendFeedback, setOpenSendFeedback] = React.useState(false);
 
   const handleCloseMore = () => setOpenMore(false);
   const handleOpenMore = (event) => {
@@ -70,16 +49,16 @@ export function HeaderLinks(props) {
     setAnchorEl(event.currentTarget);
   }
 
-  const handleClose = (choice) => {
-    setOpen(false),
-      setOpenMore(false)
-    console.log(choice)
-    setOpenPopper(prev => ({
-      ...prev,
-      [choice]: false,
-    }))
-  }
+ 
 
+  const handleClose = () => {
+    setOpen(false)
+    setOpenTicket(false)
+    setOpenGetHelp(false)
+    setOpenSendFeedback(false)
+    setOpenMore(false)
+  }
+  
   const [openNotification, setOpenNotification] = React.useState(null);
   const handleClickNotification = event => {
     if (openNotification && openNotification.contains(event.target)) {
@@ -92,23 +71,16 @@ export function HeaderLinks(props) {
     setOpenNotification(null);
   };
   const [openProfile, setOpenProfile] = React.useState(null);
-
-  // const history = useHistory();
   const handleClickProfile = event => {
     if (openProfile && openProfile.contains(event.target)) {
       setOpenProfile(null);
     } else {
       setOpenProfile(event.currentTarget);
     }
-
   };
   const handleCloseProfile = () => {
     setOpenProfile(null);
   };
-
-  const handleOpenUserProfile = () => {
-    history.push(`/u/user-icon`);
-  }
 
   const handleLogout = () => {
     props.logout();
@@ -143,13 +115,13 @@ export function HeaderLinks(props) {
   return (
     <div className={wrapper}>
       <Button
-        color="white"
+        color="white" 
         aria-label="edit"
         justIcon
         round
-        className={`btn-36 ${searchButton} mr-2`}
+        className={ `btn-36 ${searchButton} mr-2`}
       >
-        <SearchIcon style={{ fontSize: 14 }} className={classes.searchIcon} />
+        <SearchIcon style={{fontSize: 14}} className={classes.searchIcon} />
       </Button>
 
       <Button
@@ -157,94 +129,99 @@ export function HeaderLinks(props) {
         aria-label="edit"
         justIcon
         round
-        className={`btn-36 ${searchButton}`}
+        className={ `btn-36 ${searchButton}`}
         onClick={handleOpenMore}
       >
-        <QuestionIcon className={classes.searchIcon} />
+        <QuestionIcon  className={classes.searchIcon} />
       </Button>
+    
+        <Popper
+          open={openMore}
+          anchorEl={anchorEl}
+          transition
+          disablePortal
+          placement="bottom"
+            
+        >   
+          {({ TransitionProps }) => (
+              <Grow
+                {...TransitionProps}
+                id="profile-menu-list"
+                style={{ transformOrigin: "0 0 0" }}
+              >
+                <Paper className={classes.dropdown}>
+                  <ClickAwayListener onClickAway={handleCloseMore}>
+                    <MenuList role="menu"  style={{ zIndex: '9999'}}>
+                      {/*start get help  */}
+                      <MenuItem
+                        onClick={() => setOpenGetHelp(true)}
+                        className={dropdownItem}
+                      >
+                        {rtlActive ? "الملف الشخصي" : "Get Help"} 
+                      </MenuItem>
+                      <DiaLog
+                        renderTitle={<h3 className={classes.dialogTitle}>Compliance Reports Help</h3>}
+                        handleClose={handleClose}
+                        open={openGetHelp}
+                      >
+                        <GetHelpDiaLog/>
+                      </DiaLog>
+                       {/*end get help  */}
 
-      <Popper
-        open={openMore}
-        anchorEl={anchorEl}
-        transition
-        disablePortal
-        placement="bottom"
+                        {/* start dialog my tickets */}
+                      <MenuItem
+                        onClick={() => setOpenTicket(true)}
+                        className={dropdownItem}
+                      >
+                        {rtlActive ? "الإعدادات" : "My open Tickets"}
+                      </MenuItem>
+                      <DiaLog
+                        renderTitle={<h3 className={classes.dialogTitle}>Submit Support Ticket</h3>}
+                        handleClose={handleClose}
+                        open={openTicket}
+                      >
+                        <TicketDialog/>
+                      </DiaLog>
+                        {/* end dialog my tickets */}
 
-      >
-        {({ TransitionProps }) => (
-          <Grow
-            {...TransitionProps}
-            id="profile-menu-list"
-            style={{ transformOrigin: "0 0 0" }}
-          >
-            <Paper className={classes.dropdown}>
-              <ClickAwayListener onClickAway={handleCloseMore}>
-                <MenuList role="menu" style={{ zIndex: '9999' }}>
-                  {/*start get help  */}
-                  <MenuItem
-                    onClick={() => handleOpen(Object.keys(openPopper)[0])}
-                    className={dropdownItem}
-                  >
-                    {rtlActive ? "الملف الشخصي" : "Get Help"}
-                  </MenuItem>
-                  <DiaLog
-                    fullWidth={true}
-                    maxWidth="md"
-                    // renderTitle={<h3 className={classes.dialogTitle}>Compliance Reports Help</h3>}
-                    handleClose={() => handleClose(Object.keys(openPopper)[0])}
-                    open={openPopper.open}
-                  >
-                    <GetHelpDiaLog />
-                  </DiaLog>
-                  {/*end get help  */}
-
-                  {/* start dialog my tickets */}
-                  <MenuItem
-                    onClick={() => handleOpen(Object.keys(openPopper)[1])}
-                    className={dropdownItem}
-                  >
-                    {rtlActive ? "الإعدادات" : "My open Tickets"}
-                  </MenuItem>
-                  <DiaLog
-                    renderTitle={<h3 className={classes.dialogTitle}>Submit Support Ticket</h3>}
-                    handleClose={() => handleClose(Object.keys(openPopper)[1])}
-                    open={openPopper.openSubTickets}
-                  >
-                    <TicketDialog />
-                  </DiaLog>
-                  {/* end dialog my tickets */}
-
-                  <MenuItem
-
-                    className={dropdownItem}
-                  >
-                    {rtlActive ? "الخروج" : "Training Center"}
-                  </MenuItem>
-                  <MenuItem
-
-                    className={dropdownItem}
-                  >
-                    {rtlActive ? "الخروج" : "Exchange Cable"}
-                  </MenuItem>
-                  <MenuItem
-
-                    className={dropdownItem}
-                  >
-                    {rtlActive ? "الخروج" : "What's New"}
-                  </MenuItem>
-                  <MenuItem
-
-                    className={dropdownItem}
-                  >
-                    {rtlActive ? "الخروج" : "Send Feedback"}
-                  </MenuItem>
-                </MenuList>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
-        )}
-      </Popper>
-
+                      <MenuItem
+                        
+                        className={dropdownItem}
+                      >
+                        {rtlActive ? "الخروج" : "Training Center"}
+                      </MenuItem>
+                      <MenuItem
+                        
+                        className={dropdownItem}
+                      >
+                        {rtlActive ? "الخروج" : "Exchange Cable"}
+                      </MenuItem>
+                      <MenuItem
+                        
+                        className={dropdownItem}
+                      >
+                        {rtlActive ? "الخروج" : "What's New"}
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => setOpenSendFeedback(true)}
+                        className={dropdownItem}
+                      >
+                        {rtlActive ? "الخروج" : "Send Feedback"}
+                      </MenuItem>
+                      <DiaLog
+                        renderTitle={<h3 className={classes.dialogTitle}>Feedback or Support?</h3>}
+                        handleClose={handleClose}
+                        open={openSendFeedback}
+                      >
+                        <FeedBackDialog/>
+                      </DiaLog>
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+        </Popper>
+        
       <div className={managerClasses}>
         <Button
           color="transparent"
@@ -287,9 +264,9 @@ export function HeaderLinks(props) {
             >
               <Paper className={classes.dropdown}>
                 <ClickAwayListener onClickAway={handleCloseProfile}>
-                  <MenuList role="menu" style={{ zIndex: '9999' }}>
+                  <MenuList role="menu"  style={{ zIndex: '9999'}}>
                     <MenuItem
-                      onClick={handleOpenUserProfile}
+                      onClick={handleCloseProfile}
                       className={dropdownItem}
                     >
                       {rtlActive ? "الملف الشخصي" : "Profile"}

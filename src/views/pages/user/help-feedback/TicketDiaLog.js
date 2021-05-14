@@ -1,14 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import Button from "components/CustomButtons/Button";
 import Select from "components/CustomSelect/Select";
-import CustomInput from "components/CustomInput/CustomInput";
+import MenuItem from "@material-ui/core/MenuItem";
 import defaultImage from "assets/img/Upload.png";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
 import {Field, Form} from "react-final-form";
 import {TextField} from "final-form-material-ui";
+import Grid from '@material-ui/core/Grid';
 import CustomTextArea from "components/CustomTextArea/CustomTextArea";
+import InputLabel from "@material-ui/core/InputLabel";
 
 const styles ={
     text: {
@@ -27,7 +29,8 @@ const styles ={
         lineHeight: "17px",
         opacity: 0.9,
         marginTop:"20px",
-        padding:"-15px" 
+        padding:"-15px",
+        cursor:"pointer"
     },
     pictureSrc:{
         color: "#B4B4B4",
@@ -36,14 +39,58 @@ const styles ={
         height: "22px",
         marginTop:"20px",
         padding:"-15px" 
-    }
-   
+    },
+    uploadSection: {
+        display: "flex",
+        alignItems: "center",
+        marginTop:"15px",
+    },
+    organizationUpload: {
+        "&>div": {
+          margin: "0px !important",
+        },
+        display: "flex",
+        cursor: "pointer !important",
+    },
+    pictureContainer: {
+        width: "30px !important",
+        height: "32px !important",
+        margin: "80px auto 0 auto !important",
+        backgroundColor: "transparent !important",
+        border: "none !important",
+        borderRadius: "0 !important",
+        "&>img": {
+          width: "80% !important",
+        },
+    },
+    txtChooseFile: {
+        fontWeight: "normal",
+        fontSize: "14px",
+        lineHeight: "14px",
+        color: "#B4B4B4",
+        display: "flex",
+        alignItems: 'center',
+    },
+    alignItemsCenter: {
+        display: "flex",
+        alignItems: "center",
+    },
+    textSelect: {
+        fontWeight: 700,
+        fontStyle: 'normal',
+        fontSize: '12px',
+        color: '#25345C',
+      },
+    formRow: {
+        marginBottom: 16
+      },
 }
 const useStyles = makeStyles(styles);
 
 export default function TicketDialog(props) {
     const classes = useStyles();
     const [imagePreviewUrl, setImagePreviewUrl] = React.useState(defaultImage);
+    const [file, setFile] = React.useState(null);
     const handleImageChange = e => {
         e.preventDefault();
         let reader = new FileReader();
@@ -56,33 +103,6 @@ export default function TicketDialog(props) {
           reader.readAsDataURL(newFile);
         }
       };
-    const [openDialog, setOpenDialog] = React.useState(false)
-    const statusOptions = [
-        {
-          label: (
-            <div className={classes.alignItemsCenter}>           
-              <div className={classes.textSelect}>Driving</div>
-            </div>
-          ),
-          value: "Value1",
-        },
-        {
-          label: (
-            <div className={classes.alignItemsCenter}>            
-              <div className={classes.textSelect}>On Duty</div>
-            </div>
-          ),
-          value: "Value2",
-        },
-        {
-          label: (
-            <div className={classes.alignItemsCenter}>
-              <div className={classes.textSelect}>Sleep</div>
-            </div>
-          ),
-          value: "Value3",
-        }
-      ]
 
     const onSubmit = async (values) => {
         console.log(values);
@@ -92,28 +112,43 @@ export default function TicketDialog(props) {
         if (!values.serialNumbers) errors.serialNumbers = 'Please enter at least 1 serial number!';
         return errors;
     };
+    const statusOptions = [
+        {
+          label: "aaaaa",
+          value: "Value1",
+        },
+        {
+          label: "bbbb",
+          value: "Value2",
+        },
+        {
+          label: "ccccc",
+          value: "Value3",
+        }
+      ]
     
     return (
-        <div>
-            
+        <div>  
             <Form
                 onSubmit={onSubmit}
                 validate={validate}
                 render={({ handleSubmit, reset, submitting, pristine, values }) => {
                     return (
                         <form onSubmit={handleSubmit} noValidate>
-                            <GridContainer justify="space-between" className={classes.formRow}> 
-                                <GridItem xs={12}>   
-                                    <div className={classes.text}>
+                            <GridContainer justify="space-between"> 
+                                <GridItem xs={12} className={classes.formRow}>   
+                                    <InputLabel className={classes.text}>
                                         What can we help you with?
-                                    </div>
-                                    <Select
-                                        label="Status"
+                                    </InputLabel>
+                                    <Select  
+                                        label="Remark"
                                         fullWidth={true}
-                                        defaultValue={null}
+                                        defaultValue={"Value1"}
                                         options={statusOptions}
                                         placeholder="Start typing..."
-                                        SelectProps={{ isClearable: false }}
+                                        SelectProps={{ 
+                                            isClearable: false
+                                        }}
                                         onChange={(value) => {
                                             console.log(value);
                                         }}
@@ -169,12 +204,17 @@ export default function TicketDialog(props) {
                                     </div>
                                 </GridItem>
                                 
-                                    <GridItem xs={4}>
-                                        <div className={classes.upLoadFile}>Upload your attachment</div>  
-                                    </GridItem>
-                                    <GridItem xs={2} className={`picture ${ classes.pictureContainer }`}  onChange={e => handleImageChange(e)}>
-                                    <img src={imagePreviewUrl} className={classes.pictureSrc} alt="..." />
-                                    </GridItem>
+                                <GridItem xs={6}>
+                                <Grid item className={classes.uploadSection}>
+                                    <div className={`picture-container ${classes.organizationUpload}`}>
+                                        <div className={`${classes.txtChooseFile}`}>Upload your attachment</div>
+                                        <div className={`picture ${classes.pictureContainer}`}>
+                                            <img src={imagePreviewUrl} className="picture-src" alt="..."/>
+                                            <input type="file" onChange={e => handleImageChange(e)}/>
+                                        </div>
+                                    </div>
+                                </Grid>
+                                </GridItem>
                             </GridContainer>
 
 
