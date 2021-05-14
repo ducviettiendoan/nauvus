@@ -53,7 +53,7 @@ import ViewDetail from "views/pages/user/reports/dashboard/ViewDetail";
 import CustomReport from "views/pages/user/reports/CustomReport";
 import CustomReportName from "views/pages/user/reports/custom-report/CustomReportName";
 import UserIcon from "views/pages/user/icon/UserIcon";
-
+import WhatsNew from "views/pages/user/help-feedback/WhatsNew"
 
 // @material-ui/icons
 import OverviewIcon from "components/Icons/OverviewIcon";
@@ -311,7 +311,7 @@ const dashRoutes = [
         name: "DVIR",
         component: DriverVehicleReport,
         layout: ROUTE_PATH.USER,
-        isFixed: true
+        hidden: true
     },
     {
         path: "/dispatch",
@@ -448,11 +448,20 @@ const dashRoutes = [
     },
 
     {
+        path: "/help-feedback/what's-new",
+        name: "What's New",
+        //icon: InternalToolsIcon,
+        component: WhatsNew,
+        layout: ROUTE_PATH.USER,
+        hidden: true
+        //isFixed:true
+    },
+
+    {
         path: "/user-icon",
         name: "User Icon",
         component: UserIcon,
         layout: ROUTE_PATH.USER,
-        // isFixed: true,
         hidden: true,
     },
     {
