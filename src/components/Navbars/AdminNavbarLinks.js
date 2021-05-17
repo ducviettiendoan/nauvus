@@ -150,7 +150,7 @@ export function HeaderLinks(props) {
         justIcon
         round
         className={`btn-36 ${searchButton} mr-2`}
-        onClick={() => setOpenTicket(true)}
+        //onClick={() => setOpenTicket(true)}
       >
         <SearchIcon style={{ fontSize: 14 }} className={classes.searchIcon} />
       </Button>
