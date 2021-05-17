@@ -32,6 +32,7 @@ import TicketDialog from "../../views/pages/user/help-feedback/TicketDiaLog";
 import FeedBackDialog from "../../views/pages/user/help-feedback/FeedBackDiaLog";
 import FormFeedBack from "../../views/pages/user/help-feedback/FormFeedBack";
 import GetHelpDial from '../../views/pages/user/help-feedback/GetHelpDial';
+import FullWidthDiaLog from '../CustomDialog/FullWidthDialog';
 
 const useStyles = makeStyles(styles);
 
@@ -51,11 +52,11 @@ export function HeaderLinks(props) {
     setAnchorEl(event.currentTarget);
   }
 
-  const handleOpenSendFeedback = () =>{
+  const handleOpenSendFeedback = () => {
     setOpenSendFeedback(prev => !prev);
     setOpenFormFeedBack(prev => !prev);
   }
-  const handleFormFeedBack = () =>{
+  const handleFormFeedBack = () => {
     setOpenSendFeedback(prev => !prev);
     setOpenFormFeedBack(prev => !prev);
   }
@@ -95,7 +96,7 @@ export function HeaderLinks(props) {
     setOpenProfile(null);
   };
 
-  const handleWhatsNew = ()=>{
+  const handleWhatsNew = () => {
     history.push("/u/help-feedback/what's-new")
   }
 
@@ -148,8 +149,8 @@ export function HeaderLinks(props) {
         aria-label="edit"
         justIcon
         round
-        className={ `btn-36 ${searchButton} mr-2`}
-        onClick = { ()=> setOpenTicket(true)}
+        className={`btn-36 ${searchButton} mr-2`}
+        onClick={() => setOpenTicket(true)}
       >
         <SearchIcon style={{ fontSize: 14 }} className={classes.searchIcon} />
       </Button>
@@ -172,98 +173,99 @@ export function HeaderLinks(props) {
       >
         <QuestionIcon className={classes.searchIcon} />
       </Button>
-    
+
       <Popper
         open={openMore}
         anchorEl={anchorEl}
         transition
         disablePortal
-        placement="bottom"   
-      >   
+        placement="bottom"
+      >
         {({ TransitionProps }) => (
-            <Grow
-              {...TransitionProps}
-              id="profile-menu-list"
-              style={{ transformOrigin: "0 0 0" }}
-            >
-              <Paper className={classes.dropdown}>
-                <ClickAwayListener onClickAway={handleCloseMore}>
-                  <MenuList role="menu"  style={{ zIndex: '9999'}}>
-                    {/*start get help  */}
-                    <MenuItem
-                      onClick={() => setOpenGetHelp(true)}
-                      className={dropdownItem}
-                    >
-                      {rtlActive ? "الملف الشخصي" : "Get Help"} 
-                    </MenuItem>
-                    <CustomizedDialogs
-                      renderTitle={<h3 className={classes.dialogTitle}>Compliance Reports Help</h3>}
-                      handleClose={handleClose}
-                      open={openGetHelp}
-                    >
-                      <GetHelpDial/>
-                    </CustomizedDialogs>
-                      {/*end get help  */}
+          <Grow
+            {...TransitionProps}
+            id="profile-menu-list"
+            style={{ transformOrigin: "0 0 0", position:"absolute", top: "10px",left: '-150px' }}
+          >
+            <Paper className={classes.dropdownNavBar}>
+              <ClickAwayListener onClickAway={handleCloseMore}>
+                <MenuList role="menu" className={classes.menuList}>
+                  {/*start get help  */}
+                  <MenuItem
+                    onClick={() => setOpenGetHelp(true)}
+                    className={classes.dropdownItemGetHelp}
+                  >
+                    {rtlActive ? "الملف الشخصي" : "Get Help"}
+                  </MenuItem>
+                  <FullWidthDiaLog
+                    handleClose={handleClose}
+                    open={openGetHelp}
+                    fullwidth={true}
+                    maxWidth="md"
+                  >
+                    <GetHelpDial />
+                  </FullWidthDiaLog>
+                  {/*end get help  */}
 
-                      {/* start dialog my tickets */}
-                    <MenuItem
-                      onClick={() => setOpenTicket(true)}
-                      className={dropdownItem}
-                    >
-                      {rtlActive ? "الإعدادات" : "My open Tickets"}
-                    </MenuItem>
-                    <CustomizedDialogs
-                      renderTitle={<h3 className={classes.dialogTitle}>Submit Support Ticket</h3>}
-                      handleClose={handleClose}
-                      open={openTicket}
-                    >
-                      <TicketDialog handleClose={setOpenTicket} />
-                    </CustomizedDialogs>
-                      {/* end dialog my tickets */}
+                  {/* start dialog my tickets */}
+                  <MenuItem
+                    onClick={() => setOpenTicket(true)}
+                    className={classes.dropdownItemRest}
+                  >
+                    {rtlActive ? "الإعدادات" : "My open Tickets"}
+                  </MenuItem>
+                  <CustomizedDialogs
+                    renderTitle={<h3 className={classes.dialogTitle}>Submit Support Ticket</h3>}
+                    handleClose={handleClose}
+                    open={openTicket}
+                  >
+                    <TicketDialog handleClose={setOpenTicket} />
+                  </CustomizedDialogs>
+                  {/* end dialog my tickets */}
 
-                    <MenuItem
-                      className={dropdownItem}
-                    >
-                      {rtlActive ? "الخروج" : "Training Center"}
-                    </MenuItem>
-                    <MenuItem
-                      className={dropdownItem}
-                    >
-                      {rtlActive ? "الخروج" : "Exchange Cable"}
-                    </MenuItem>
-                    <MenuItem
-                      className={dropdownItem}
-                      onClick = {handleWhatsNew}
-                    >
-                      {rtlActive ? "الخروج" : "What's New"}
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => setOpenSendFeedback(true)}
-                      className={dropdownItem}
-                    >
-                      {rtlActive ? "الخروج" : "Send Feedback"}
-                    </MenuItem>
-                    <CustomizedDialogs
-                      renderTitle={<h3 className={classes.dialogTitle}></h3>}
-                      handleClose={handleClose}
-                      open={openSendFeedback}
-                    >
-                      <FeedBackDialog handleOpen={handleFormFeedBack} handleClose={handleOpenSendFeedback}/>
-                    </CustomizedDialogs>
-                    <CustomizedDialogs
-                      renderTitle={<h3 className={classes.dialogTitle}>Feedback</h3>}
-                      handleClose={handleClose}
-                      open={openFormFeedBack}
-                    >
-                      <FormFeedBack handleClose={handleFormFeedBack} />
-                    </CustomizedDialogs>
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
+                  <MenuItem
+                    className={classes.dropdownItemRest}
+                  >
+                    {rtlActive ? "الخروج" : "Training Center"}
+                  </MenuItem>
+                  <MenuItem
+                    className={classes.dropdownItemRest}
+                  >
+                    {rtlActive ? "الخروج" : "Exchange Cable"}
+                  </MenuItem>
+                  <MenuItem
+                    className={classes.dropdownItemRest}
+                    onClick={handleWhatsNew}
+                  >
+                    {rtlActive ? "الخروج" : "What's New"}
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => setOpenSendFeedback(true)}
+                    className={classes.dropdownItemRest}
+                  >
+                    {rtlActive ? "الخروج" : "Send Feedback"}
+                  </MenuItem>
+                  <CustomizedDialogs
+                    renderTitle={<h3 className={classes.dialogTitle}></h3>}
+                    handleClose={handleClose}
+                    open={openSendFeedback}
+                  >
+                    <FeedBackDialog handleOpen={handleFormFeedBack} handleClose={handleOpenSendFeedback} />
+                  </CustomizedDialogs>
+                  <CustomizedDialogs
+                    renderTitle={<h3 className={classes.dialogTitle}>Feedback</h3>}
+                    handleClose={handleClose}
+                    open={openFormFeedBack}
+                  >
+                    <FormFeedBack handleClose={handleFormFeedBack} />
+                  </CustomizedDialogs>
+                </MenuList>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
       </Popper>
-        
+
       <div className={managerClasses}>
         <Button
           color="transparent"
@@ -282,127 +284,120 @@ export function HeaderLinks(props) {
           </div>
         </Button>
 
-        <div className={classes.popper}>
-          <Popper
-            open={Boolean(openProfile)}
-            anchorEl={openProfile}
-            transition
-            disablePortal
-            placement="bottom"
-            className={classNames({
-              [classes.popperClose]: !openProfile,
-              [classes.popperResponsive]: true,
-              [classes.popperNav]: true
-            })}
-          >
-            {({ TransitionProps }) => (
-              <Grow
-                {...TransitionProps}
-                id="profile-menu-list"
-                style={{ transformOrigin: "0 0 0" }}
-              >
-                <Paper className={classes.dropdown}>
-                  <ClickAwayListener onClickAway={handleCloseProfile}>
-                    <MenuList role="menu" style={{ zIndex: '9999' }}>
-                      <MenuItem
-                        onClick={handleUserProfile}
-                        className={classes.dropdownItemTop}
-                      >
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: "center" }}>
-                          <div>
-                            <div>Tatle</div>
-                            <div>alisingh493@gmail.com</div>
-                          </div>
-                          <div className={classes.switchPosition}>
-                            <Switch
-                              checked={checkedState.checkedB}
-                              classes={{
-                                root: classes.root,
-                                switchBase: classes.switchBase,
-                                thumb: classes.thumb,
-                                track: classes.track,
-                                checked: classes.checked,
-                              }}
-                              name="checkedB"
-                              onChange={handleChange}
-                            />
-                          </div>
-                        </div>
-                      </MenuItem>
-                      <MenuItem
-                        onClick={handleUserProfile}
-                        className={classes.dropdownItemContent}
-                      >
-                        {rtlActive ? "الملف الشخصي" : "Profile"}
-                      </MenuItem>
-                      <MenuItem
-                        onClick={handleCloseProfile}
-                        className={classes.dropdownItemContent}
-                      >
-                        {rtlActive ? "الملف الشخصي" : "What's new"}
-                      </MenuItem>
-                      <MenuItem
-                        onClick={handleCloseProfile}
-                        className={classes.dropdownItemContent}
-                      >
-                        {rtlActive ? "الملف الشخصي" : "Orders"}
-                      </MenuItem>
-                      <MenuItem
-                        onClick={handleCloseProfile}
-                        className={classes.dropdownItemContent}
-                      >
-                        {rtlActive ? "الملف الشخصي" : "Activate Devices"}
-                      </MenuItem>
-                      <MenuItem
-                        onClick={handleCloseProfile}
-                        className={classes.dropdownItemContent}
-                      >
-                        {rtlActive ? "الملف الشخصي" : "Exchange Cable"}
-                      </MenuItem>
-                                            <MenuItem
-                        onClick={handleCloseProfile}
-                        className={classes.dropdownItemContent}
-                      >
-                        {rtlActive ? "الملف الشخصي" : "Shop"}
-                      </MenuItem>
-                      <MenuItem
-                        onClick={handleCloseProfile}
-                        className={classes.dropdownItemContent}
-                      >
-                        {rtlActive ? "الملف الشخصي" : "Organisation Settings"}
-                      </MenuItem>
-                      <MenuItem
-                        onClick={handleCloseProfile}
-                        className={classes.dropdownItemContent}
-                      >
-                        {rtlActive ? "الإعدادات" : "Settings"}
-                      </MenuItem>
-                      <MenuItem
-                        onClick={handleLogout}
-                        className={classes.dropdownItemContent}
-                      >
-                        {rtlActive ? "الخروج" : "Log out"}
-                      </MenuItem>
-                      <MenuItem
-                        onClick={handleCloseProfile}
-                        className={classes.dropdownItemBottom}
-                      >
-                        {rtlActive ? "الخروج" : "Term of service"}
-                      </MenuItem>
-                      <MenuItem
-                        onClick={handleCloseProfile}
-                        className={classes.dropdownItemBottom}
-                      >
-                        {rtlActive ? "الخروج" : "Privacy"}
-                      </MenuItem>
-                    </MenuList>
-                  </ClickAwayListener>
-                </Paper>
-              </Grow>
-            )}
-          </Popper>
-        </div>
-        
+        <Popper
+          open={Boolean(openProfile)}
+          anchorEl={openProfile}
+          transition
+          disablePortal
+          placement="bottom"
+          className={classNames({
+            [classes.popperClose]: !openProfile,
+            [classes.popperResponsive]: true,
+            [classes.popperNav]: true
+          })}
+        >
+          {({ TransitionProps }) => (
+            <Grow
+              {...TransitionProps}
+              id="profile-menu-list"
+              style={{ transformOrigin: "0 0 0" }}
+            >
+              <Paper className={classes.dropdownNavBar}>
+                <ClickAwayListener onClickAway={handleCloseProfile}>
+                  <MenuList role="menu" style={{ zIndex: '9999' }}>
+                    <div className={classes.dropdownItemTop}>
+                      <div>
+                        <div>Tatle</div>
+                        <div>alisingh493@gmail.com</div>
+                      </div>
+                      <div className={classes.switchPosition}>
+                        <Switch
+                          checked={checkedState.checkedB}
+                          classes={{
+                            root: classes.root,
+                            switchBase: classes.switchBase,
+                            thumb: classes.thumb,
+                            track: classes.track,
+                            checked: classes.checked,
+                          }}
+                          name="checkedB"
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
+                    <MenuItem
+                      onClick={handleUserProfile}
+                      className={classes.dropdownItemContent}
+                    >
+                      {rtlActive ? "الملف الشخصي" : "Profile"}
+                    </MenuItem>
+                    <MenuItem
+                      onClick={handleCloseProfile}
+                      className={classes.dropdownItemContent}
+                    >
+                      {rtlActive ? "الملف الشخصي" : "What's new"}
+                    </MenuItem>
+                    <MenuItem
+                      onClick={handleCloseProfile}
+                      className={classes.dropdownItemContent}
+                    >
+                      {rtlActive ? "الملف الشخصي" : "Orders"}
+                    </MenuItem>
+                    <MenuItem
+                      onClick={handleCloseProfile}
+                      className={classes.dropdownItemContent}
+                    >
+                      {rtlActive ? "الملف الشخصي" : "Activate Devices"}
+                    </MenuItem>
+                    <MenuItem
+                      onClick={handleCloseProfile}
+                      className={classes.dropdownItemContent}
+                    >
+                      {rtlActive ? "الملف الشخصي" : "Exchange Cable"}
+                    </MenuItem>
+                    <MenuItem
+                      onClick={handleCloseProfile}
+                      className={classes.dropdownItemContent}
+                    >
+                      {rtlActive ? "الملف الشخصي" : "Shop"}
+                    </MenuItem>
+                    <MenuItem
+                      onClick={handleCloseProfile}
+                      className={classes.dropdownItemContent}
+                    >
+                      {rtlActive ? "الملف الشخصي" : "Organisation Settings"}
+                    </MenuItem>
+                    <MenuItem
+                      onClick={handleCloseProfile}
+                      className={classes.dropdownItemContent}
+                    >
+                      {rtlActive ? "الإعدادات" : "Settings"}
+                    </MenuItem>
+                    <MenuItem
+                      onClick={handleLogout}
+                      className={classes.dropdownItemContent}
+                    >
+                      {rtlActive ? "الخروج" : "Log out"}
+                    </MenuItem>
+                    <MenuItem
+                      onClick={handleCloseProfile}
+                      className={classes.dropdownItemBottom}
+                    >
+                      {rtlActive ? "الخروج" : "Term of service"}
+                    </MenuItem>
+                    <MenuItem
+                      onClick={handleCloseProfile}
+                      className={classes.dropdownItemBottom}
+                    >
+                      {rtlActive ? "الخروج" : "Privacy"}
+                    </MenuItem>
+                  </MenuList>
+                </ClickAwayListener>
+              </Paper>
+            </Grow>
+          )}
+        </Popper>
+
       </div>
     </div>
   );

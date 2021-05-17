@@ -180,7 +180,7 @@ const adminNavbarLinksStyle = theme => ({
     color: "#333",
     lineHeight: "1.5em",
     whiteSpace: "nowrap",
-    height: "40px",
+    height: "30px",
     padding: "2px 20px 0px 12px",
     position: "relative",
     bottom: "13px",
@@ -188,13 +188,13 @@ const adminNavbarLinksStyle = theme => ({
     background: "#FFFFFF",
     fontFamily: "Lato",
     fontWeight: 400,
-    marginTop: "20px"
+    marginTop: "12px"
   },
   dropdownItem: {
     color: "#333",
     lineHeight: "1.5em",
     whiteSpace: "nowrap",
-    height: "40px",
+    height: "30px",
     padding: "2px 20px 0px 12px",
     position: "relative",
     bottom: "13px",
@@ -215,14 +215,21 @@ const adminNavbarLinksStyle = theme => ({
     background: "#FFFFFF",
     fontFamily: "Lato",
     fontWeight: 400,
-    marginTop: "20px"
+    marginTop: "20px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: 'center',
+    "&:focus": {
+      background: "none",
+      // color: "#FFFFFF"
+    }
   },
   dropdownItemContent: {
     color: "#333",
     lineHeight: "1.5em",
     whiteSpace: "nowrap",
     height: "40px",
-    padding: "2px 0px 0px 12px",
+    padding: "2px 15px 0px 12px",
     position: "relative",
     bottom: "13px",
     fontSize: "13px",
@@ -244,7 +251,7 @@ const adminNavbarLinksStyle = theme => ({
       background: "#FFFFFF"
     }
   },
-  dropdown: {
+  dropdownNavBar: {
     borderRadius: "12px",
     paddingTop: "5px",
   },
@@ -294,6 +301,17 @@ const adminNavbarLinksStyle = theme => ({
   whatsNewPosition: {
     display: "flex",
     justifyContent: "space-between",
+  },
+  popper: {
+    position: "absolute",
+    transform: "translate3d(921px, 52px, 0px)",
+    top: "0px",
+    left: "-120px",
+  },
+  menuList: {
+    zIndex: '9999',
+    width: "170px",
+    paddingBottom: "0px",
   }
 });
 
