@@ -307,13 +307,6 @@ const dashRoutes = [
         layout: ROUTE_PATH.USER,
     },
     {
-        path: "/dvir",
-        name: "DVIR",
-        component: DriverVehicleReport,
-        layout: ROUTE_PATH.USER,
-        hidden: true
-    },
-    {
         path: "/dispatch",
         name: "Dispatch",
         icon: DispatchIcon,
@@ -450,19 +443,26 @@ const dashRoutes = [
     {
         path: "/help-feedback/what's-new",
         name: "What's New",
-        //icon: InternalToolsIcon,
         component: WhatsNew,
         layout: ROUTE_PATH.USER,
-        hidden: true
-        //isFixed:true
+        hidden: true,
+        redirect: true
     },
-
+    {
+        path: "/dvir",
+        name: "DVIR",
+        component: DriverVehicleReport,
+        layout: ROUTE_PATH.USER,
+        hidden: true,
+        redirect: true
+    },
     {
         path: "/user-icon",
         name: "User Icon",
         component: UserIcon,
         layout: ROUTE_PATH.USER,
         hidden: true,
+        redirect: true
     },
     {
         path: "/messages",
