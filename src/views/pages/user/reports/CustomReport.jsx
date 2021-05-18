@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 // @material-ui/core components
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import AddOutlined from "@material-ui/icons/AddOutlined";
 // @material-ui/icons
 // core components
@@ -77,7 +77,7 @@ const styles = {
     borderRadius: '28px !important',
     padding: '10px 20px !important',
     textTransform: 'initial !important',
-    fontSize:' 14px !important',
+    fontSize: ' 14px !important',
     /* font-family: Lato!important; */
     fontStyle: 'normal!important',
     fontWeight: 700,
@@ -131,7 +131,7 @@ function CustomReport(props) {
               <GridContainer>
                 <GridItem xs={12} sm={12} md={12}>
                   <GridContainer className={classes.topHeader}>
-                    <GridItem xs={12} sm={11} md={6} xl={6} className={classes.topHeaderTitle}>
+                    <GridItem xs={12} sm={6} md={6} xl={6} className={classes.topHeaderTitle}>
                       <RoundedTabs
                         tabs={[
                           `All Report (${props.pageSize})`,
@@ -140,13 +140,13 @@ function CustomReport(props) {
                         tabValue={handleChangeTab}
                       />
                     </GridItem>
-                    <GridItem xs={12} sm={4} md={6} xl={6} className={classes.topHeaderButton}>
-                        <Button
+                    <GridItem xs={12} sm={6} md={6} xl={6} className={classes.topHeaderButton}>
+                      <Button
                         round
-                        className= {classes.button}
+                        className={classes.button}
                         startIcon={<AddOutlined />}
-                        // onClick={openAssignHOS}
-                    >
+                      // onClick={openAssignHOS}
+                      >
                         Create Custom Report
                     </Button>
                     </GridItem>
@@ -155,25 +155,26 @@ function CustomReport(props) {
               </GridContainer>
             </GridItem>
           </GridContainer>
-          {tab === 0 && <AllReport/>}
-          {tab === 1 && <MyReport/>}
+          {tab === 0 && <AllReport />}
+          {tab === 1 && <MyReport />}
         </GridItem>
       </GridContainer>
+     
     </div>
   );
 }
 
 const mapStateToProps = ({ report }) => {
-    return {
-      data: report.allReport.data,
-      page: report.allReport.page,
-      total: report.allReport.total,
-      pageSize: report.allReport.pageSize,
-    };
+  return {
+    data: report.allReport.data,
+    page: report.allReport.page,
+    total: report.allReport.total,
+    pageSize: report.allReport.pageSize,
   };
-  
+};
+
 const mapDispatchToProps = {
-    getAllReport,
+  getAllReport,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CustomReport);

@@ -6,6 +6,13 @@ import {
 
 import customDropdownStyle from "assets/jss/material-dashboard-pro-react/components/customDropdownStyle.js";
 
+const pxToRem = (px, oneRemPx = 17) => `${px / oneRemPx}rem`;
+const borderWidth = 2;
+const width = pxToRem(40);
+const height = pxToRem(22);
+const size = pxToRem(16);
+const gap = (22 - 16) / 2;
+
 const adminNavbarLinksStyle = theme => ({
   ...customDropdownStyle(theme),
   search: {
@@ -89,6 +96,14 @@ const adminNavbarLinksStyle = theme => ({
       marginLeft: "-5px"
     }
   },
+  popperQuestionIcon: {
+    height: "236px",
+    width: '214px',
+    left: "0px",
+    top: "0px",
+    borderRadius: "8px !important",
+  },
+
   notifications: {
     zIndex: "4",
     [theme.breakpoints.up("md")]: {
@@ -148,6 +163,158 @@ const adminNavbarLinksStyle = theme => ({
     }
   },
 
+  dialogTitle: {
+    fontWeight: "bold",
+    fontSize: "22px",
+    lineHeight: "26px",
+    color: "#25345C",
+    margin: "24px",
+    textAlign: "center"
+  },
+  dialog: {
+    "&>div>div": {
+      margin: "0px"
+    }
+  },
+  dropdownItemGetHelp: {
+    color: "#333",
+    lineHeight: "1.5em",
+    whiteSpace: "nowrap",
+    height: "30px",
+    padding: "2px 20px 0px 12px",
+    position: "relative",
+    bottom: "10px",
+    fontSize: "16px",
+    background: "#FFFFFF",
+    fontFamily: "Lato",
+    fontWeight: 400,
+    marginTop: "10px",
+    borderRadius:"50px",  
+  },
+  dropdownItem: {
+    color: "#333",
+    lineHeight: "1.5em",
+    whiteSpace: "nowrap",
+    height: "30px",
+    padding: "2px 20px 0px 12px",
+    position: "relative",
+    bottom: "13px",
+    fontSize: "13px",
+    background: "#FFFFFF",
+    fontFamily: "Lato",
+    fontWeight: 400,
+  },
+  dropdownItemTop: {
+    color: "#333",
+    lineHeight: "1.5em",
+    whiteSpace: "nowrap",
+    height: "40px",
+    padding: "2px 0px 0px 12px",
+    position: "relative",
+    bottom: "13px",
+    fontSize: "13px",
+    background: "#FFFFFF",
+    fontFamily: "Lato",
+    fontWeight: 400,
+    marginTop: "20px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: 'center',
+    "&:focus": {
+      background: "none",
+      // color: "#FFFFFF"
+    }
+  },
+  dropdownItemContent: {
+    color: "#333",
+    lineHeight: "1.5em",
+    whiteSpace: "nowrap",
+    borderRadius:"50px",    
+    height: "40px",
+    padding: "2px 15px 0px 12px",
+    position: "relative",
+    bottom: "13px",
+    fontSize: "13px",
+    background: "#FFFFFF",
+    fontFamily: "Lato",
+    fontWeight: 400,
+  },
+  dropdownItemBottom: {
+    height: "40px",
+    padding: "2px 0px 0px 12px",
+    position: "relative",
+    bottom: "13px",
+    fontSize: "13px",
+    background: "#FFFFFF",
+    fontFamily: "Lato",
+    fontWeight: 400,
+    color: "#B4B4B4",
+    "&:focus": {
+      background: "#FFFFFF"
+    }
+  },
+  dropdownNavBar: {
+    borderRadius: "12px",
+    paddingTop: "0px",
+  },
+  root: {
+    width,
+    height,
+    padding: 0,
+    margin: theme.spacing(1),
+    overflow: 'unset',
+  },
+  switchBase: {
+    padding: pxToRem(gap),
+    '&$checked': {
+      color: '#fff',
+      transform: `translateX(calc(${width} - ${size} - ${pxToRem(2 * gap)}))`,
+      '& + $track': {
+        backgroundColor: "black",
+        opacity: 1,
+        border: 'none',
+      },
+      '& $thumb': {
+        backgroundColor: '#fff',
+      },
+    },
+  },
+  track: {
+    borderRadius: 40,
+    border: `solid ${theme.palette.grey[400]}`,
+    borderWidth,
+    backgroundColor: theme.palette.grey[50],
+    opacity: 1,
+    transition: theme.transitions.create(['background-color', 'border']),
+    boxSizing: 'border-box',
+  },
+  thumb: {
+    boxShadow: 'none',
+    backgroundColor: theme.palette.grey[400],
+    width: size,
+    height: size,
+  },
+  checked:{},
+  switchPosition: {
+    "&>span": {
+      marginLeft: '15px',
+    }  
+  },
+  whatsNewPosition: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  popper: {
+    position: "absolute",
+    transform: "translate3d(921px, 52px, 0px)",
+    top: "0px",
+    left: "-120px",
+  },
+  menuList: {
+    zIndex: '9999',
+    width: "170px",
+    paddingBottom: "0px",
+  }
 });
 
 export default adminNavbarLinksStyle;

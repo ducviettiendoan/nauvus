@@ -224,11 +224,11 @@ const CustomSelect = (props) => {
                 {selectValue === "none" && <option value="none" disabled style={{ display: "none" }} >
                     {placeholder}
                 </option>}
-                {listValues?.map((value, i) => <MenuItem key={i} value={value}>{value}</MenuItem>)}
+                {listValues?.map((value, i) => <MenuItem key={i} name={name} value={value}>{value}</MenuItem>)}
                 {listContent?.map((item, i) => {
                     console.log(item)
                     return (
-                      <MenuItem key={i} value={item.value}>{item.content}</MenuItem>
+                      <MenuItem key={i} name={item.name} value={item.value}>{item.content}</MenuItem>
                     )
                 })}
             </Select>

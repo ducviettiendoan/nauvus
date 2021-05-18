@@ -223,7 +223,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   tableContent: {
-
+    "&>div>div": {
+      height: "750px",
+    }
   }
 
 }));
@@ -319,12 +321,10 @@ function AllReport(props) {
             <Table
               renderTitle={
                 <Grid container className={classes.gridTitle}>
-                  <Grid item xs={12} sm={12} md={6}>
-                    <Grid container className={classes.headContainer}>
+                  <Grid item xs={12} sm={6} md={6} className={classes.headContainer}>
                         {props.pageSize} selected for{" "}
-                    </Grid>
                   </Grid>
-                  <Grid xs={12} sm={12} md={6} className={classes.headLeft}>
+                  <Grid item xs={12} sm={6} md={6} className={classes.headLeft}>
                     <ToolboxButton
                       placeholder="Search asset"
                     />

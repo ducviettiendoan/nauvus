@@ -16,3 +16,4 @@ import "./document";
 import "./maintainance";
 import "./report";
 import "./alerts";
+import "./icon";

@@ -176,8 +176,8 @@ export function UnassignedHOS(props) {
     setChipData([])
   }
 
-  const viewDetail = () => {
-    props.history.push("/u/compliance/unassigned-hos-report/123456789")
+  const viewDetail = (id) => {
+    props.history.push(`/u/compliance/unassigned-hos-report/${id}`)
   }
 
   const columns = [

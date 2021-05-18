@@ -242,9 +242,9 @@ export function Drivers(props) {
     },
   ]
 
-  const viewDetail = () => {
+  const viewDetail = (id) => {
     props.setOpenDrawer(!props.openDrawer)
-    props.history.push("/o/drivers/123456789")
+    props.history.push(`/o/drivers-details/${id}`)
   }
 
   const onPageChange = (page, pageSize) => {

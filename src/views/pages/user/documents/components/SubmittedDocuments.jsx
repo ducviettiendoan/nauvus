@@ -281,8 +281,8 @@ export function SubmittedDocuments(props) {
     console.log(page, pageSize)
   }
 
-  const viewDetail = () => {
-    history.push("/u/documents/submitted/123")
+  const viewDetail = (id) => {
+    history.push(`/u/documents/submitted/${id}`)
   }
 
   // popper

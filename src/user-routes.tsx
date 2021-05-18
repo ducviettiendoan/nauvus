@@ -52,7 +52,8 @@ import DashboardReport from "views/pages/user/reports/DashboardReport";
 import ViewDetail from "views/pages/user/reports/dashboard/ViewDetail";
 import CustomReport from "views/pages/user/reports/CustomReport";
 import CustomReportName from "views/pages/user/reports/custom-report/CustomReportName";
-
+import UserIcon from "views/pages/user/icon/UserIcon";
+import WhatsNew from "views/pages/user/help-feedback/WhatsNew"
 
 // @material-ui/icons
 import OverviewIcon from "components/Icons/OverviewIcon";
@@ -106,7 +107,7 @@ const dashRoutes = [
                 layout: ROUTE_PATH.OVERVIEW
             },
             {
-                path: "/drivers/:id",
+                path: "/drivers-details",
                 name: "Drivers Detail",
                 component: DriverDetail,
                 layout: ROUTE_PATH.OVERVIEW,
@@ -161,7 +162,7 @@ const dashRoutes = [
                 layout: ROUTE_PATH.SAFETY
             },
             {
-                path: "/driver-assignment/:id",
+                path: "/driver-assignment-details",
                 name: "Driver Assignment Details",
                 component: UnassignedDetail,
                 layout: ROUTE_PATH.SAFETY,
@@ -306,13 +307,6 @@ const dashRoutes = [
         layout: ROUTE_PATH.USER,
     },
     {
-        path: "/dvir",
-        name: "DVIR",
-        component: DriverVehicleReport,
-        layout: ROUTE_PATH.USER,
-        isFixed: true
-    },
-    {
         path: "/dispatch",
         name: "Dispatch",
         icon: DispatchIcon,
@@ -340,15 +334,16 @@ const dashRoutes = [
             },
             {
                 path: "/fuel-energy/driver-efficiency",
-                name: "Driver Efficiency Report",
+                name: "Driver Efficiency",
                 component: DriverEfficiency,
                 layout: ROUTE_PATH.USER
             },
             {
                 path: "/fuel-energy/driver-efficiencies-report",
-                name: "Driver Efficiency",
+                name: "Driver Efficiency Report",
                 component: DriverEfficiencyReport,
                 layout: ROUTE_PATH.USER,
+                isFixed: true
             },
 
             {
@@ -443,6 +438,31 @@ const dashRoutes = [
         icon: InternalToolsIcon,
         component: InternalTools,
         layout: ROUTE_PATH.USER
+    },
+
+    {
+        path: "/help-feedback/what's-new",
+        name: "What's New",
+        component: WhatsNew,
+        layout: ROUTE_PATH.USER,
+        hidden: true,
+        redirect: true
+    },
+    {
+        path: "/dvir",
+        name: "DVIR",
+        component: DriverVehicleReport,
+        layout: ROUTE_PATH.USER,
+        hidden: true,
+        redirect: true
+    },
+    {
+        path: "/user-icon",
+        name: "User Icon",
+        component: UserIcon,
+        layout: ROUTE_PATH.USER,
+        hidden: true,
+        redirect: true
     },
     {
         path: "/messages",

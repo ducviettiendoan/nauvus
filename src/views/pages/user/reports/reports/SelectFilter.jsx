@@ -9,8 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import { Col, Row } from 'reactstrap';
 import { Field, Form } from "react-final-form";
 import { TextField } from "final-form-material-ui";
-// import CalendarIcon from "../Icons/CalendarIcon";
-import Calendar from "components/Calendar/Calendar";
+import CustomDateRangePicker from "components/CustomDateRangePicker/CustomDateRangePicker";
+
 
 const styles = {
   title: {
@@ -131,7 +131,7 @@ const styles = {
   calendar: {
     "&>div":{
       display: "flex",
-      justifyContent: "flex-start"
+      justifyContent: "space-between"
     }
   }
 };
@@ -232,8 +232,8 @@ export default function SelectFilter(props) {
               <div className={classes.contentBody}>Select up to 90 days of data. Reports containing more than 14 days of data will be emailed.</div>
             </Grid>
 
-            <Grid item xs={12} lg={12} className={classes.calendar}>         
-              <Calendar placeholder="Day"/>
+            <Grid item xs={12} md={9} className={classes.calendar}>         
+              <CustomDateRangePicker/>
             </Grid> 
             <div className={classes.footer}>
               <div className={classes.selectButton}>
@@ -249,8 +249,8 @@ export default function SelectFilter(props) {
                   className={`btn-round-active ${classes.buttonSetting}`}
                   type="submit"
                   disabled={submitting}
-                  onClick={openAssignHOS}
-                > Next
+                  onClick={props.handleCloseAll}
+                > Save
                 </Button>
               </div>
             </div>

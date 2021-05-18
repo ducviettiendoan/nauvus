@@ -144,8 +144,8 @@ function Unassigned(props) {
     props.getUnassignedData()
   }, [])
 
-  const viewDetail = () => {
-    history.push("/safety/driver-assignment/123")
+  const viewDetail = (id) => {
+    history.push(`/safety/driver-assignment-details/${id}`)
   }
 
   const [chipData, setChipData] = React.useState([

@@ -180,8 +180,8 @@ export function DriverHOSAudit(props) {
     props.getHOSAudit({ page, pageSize });
   }
 
-  const showDetails = () => {
-    props.history.push("/u/compliance/driver-hos-audit-report/123456789")
+  const showDetails = (id) => {
+    props.history.push(`/u/compliance/driver-hos-audit-report/${id}`)
   }
 
   return (
