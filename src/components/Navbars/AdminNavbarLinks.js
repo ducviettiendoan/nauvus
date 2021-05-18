@@ -210,7 +210,7 @@ export function HeaderLinks(props) {
                   {/* start dialog my tickets */}
                   <MenuItem
                     onClick={() => setOpenTicket(true)}
-                    className={classes.dropdownItemRest}
+                    className={classes.dropdownItemGetHelp}
                   >
                     {rtlActive ? "الإعدادات" : "My open Tickets"}
                   </MenuItem>
@@ -219,29 +219,29 @@ export function HeaderLinks(props) {
                     handleClose={handleClose}
                     open={openTicket}
                   >
-                    <TicketDialog handleClose={setOpenTicket} />
+                    <TicketDialog openTicket={openTicket} handleClose={setOpenTicket} />
                   </CustomizedDialogs>
                   {/* end dialog my tickets */}
 
                   <MenuItem
-                    className={classes.dropdownItemRest}
+                    className={classes.dropdownItemGetHelp}
                   >
                     {rtlActive ? "الخروج" : "Training Center"}
                   </MenuItem>
                   <MenuItem
-                    className={classes.dropdownItemRest}
+                    className={classes.dropdownItemGetHelp}
                   >
                     {rtlActive ? "الخروج" : "Exchange Cable"}
                   </MenuItem>
                   <MenuItem
-                    className={classes.dropdownItemRest}
+                    className={classes.dropdownItemGetHelp}
                     onClick={handleWhatsNew}
                   >
                     {rtlActive ? "الخروج" : "What's New"}
                   </MenuItem>
                   <MenuItem
                     onClick={() => setOpenSendFeedback(true)}
-                    className={classes.dropdownItemRest}
+                    className={classes.dropdownItemGetHelp}
                   >
                     {rtlActive ? "الخروج" : "Send Feedback"}
                   </MenuItem>
