@@ -126,7 +126,8 @@ export default function TicketDialog(props) {
           value: "Value3",
         }
       ]
-    
+
+      console.log(props)
     return (
         <div>  
             <Form
@@ -143,7 +144,7 @@ export default function TicketDialog(props) {
                                     <Select  
                                         label="Remark"
                                         fullWidth={true}
-                                        defaultValue={"Value1"}
+                                        // defaultValue={"Value1"}
                                         options={statusOptions}
                                         placeholder="Start typing..."
                                         SelectProps={{ 
@@ -185,6 +186,7 @@ export default function TicketDialog(props) {
                                             name="serialNumbers"
                                             placeholder="Start typing..."
                                             component={CustomTextArea}
+                                            
                                         />
                                 </GridItem>
                                 <GridItem xs={12}>   
@@ -223,7 +225,9 @@ export default function TicketDialog(props) {
                                     type="button"
                                     round
                                     className="btn-round-active-2 mr-2"
-                                    onClick={props.handleClose}
+                                    onClick={() => {
+                                        props.handleClose(false)
+                                    }}
                                 > Cancel</Button>
                                 <Button
                                     round

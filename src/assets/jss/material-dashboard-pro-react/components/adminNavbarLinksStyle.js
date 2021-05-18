@@ -183,12 +183,13 @@ const adminNavbarLinksStyle = theme => ({
     height: "30px",
     padding: "2px 20px 0px 12px",
     position: "relative",
-    bottom: "13px",
-    fontSize: "13px",
+    bottom: "10px",
+    fontSize: "16px",
     background: "#FFFFFF",
     fontFamily: "Lato",
     fontWeight: 400,
-    marginTop: "12px"
+    marginTop: "10px",
+    borderRadius:"50px",  
   },
   dropdownItem: {
     color: "#333",
@@ -228,6 +229,7 @@ const adminNavbarLinksStyle = theme => ({
     color: "#333",
     lineHeight: "1.5em",
     whiteSpace: "nowrap",
+    borderRadius:"50px",    
     height: "40px",
     padding: "2px 15px 0px 12px",
     position: "relative",
@@ -253,7 +255,7 @@ const adminNavbarLinksStyle = theme => ({
   },
   dropdownNavBar: {
     borderRadius: "12px",
-    paddingTop: "5px",
+    paddingTop: "0px",
   },
   root: {
     width,
