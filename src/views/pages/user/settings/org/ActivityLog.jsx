@@ -92,7 +92,7 @@ export function ActivityLog(props) {
   const columns = [
     {
       title: 'Log Event',
-      key: 'logEvent',
+      key: 'logevent',
       onHeaderCell: { className: classes.onHeaderCell },
       render: event => (
             <div className={classes.textName}>{event}</div>
@@ -104,8 +104,7 @@ export function ActivityLog(props) {
       onHeaderCell: { className: classes.onHeaderCell },
       render: operation => (
           <>
-            <div className={classes.textName}>{`updated org id '${operation.id}': `}</div>
-            <div className={classes.textName}>{operation.operation}</div>
+            <div className={classes.textName}>{operation}</div>
           </>
       )
     },

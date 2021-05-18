@@ -14,7 +14,7 @@ import { ThemeProvider } from '@material-ui/styles';
 import AppComponent from './app';
 
 // Mock data
-import "mocks";
+// import "mocks";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "assets/scss/material-dashboard-pro-react.scss?v=1.9.0";

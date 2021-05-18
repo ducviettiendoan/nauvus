@@ -200,7 +200,7 @@ export const getTags = (request) => async (dispatch) => {
 export const getActivityLogs = (request) => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_ACTIVITY_LOGS,
-    payload: axios.post("/api/setting/org/activity-log/search", request),
+    payload: axios.get("/api/activities"),
   });
 };
 

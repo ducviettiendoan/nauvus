@@ -145,10 +145,10 @@ export const loginByCognito = async (username, password) => {
   console.log(`loginByCognito`)
   try {
     const user = await Auth.signIn(username, password);
-    // let accessToken = user.signInUserSession.accessToken.jwtToken;
-    // console.log(accessToken);
+    let accessToken = user.signInUserSession.accessToken.jwtToken;
+    console.log(accessToken);
     // // Store 
-    // storeAuthToken(accessToken);
+    storeAuthToken(accessToken);
     return { success: true, accessToken: "accessToken"};
   } catch (error) {
     let messageError = error && error.message ? error.message : 'NotAuthorizedException';
