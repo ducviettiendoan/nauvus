@@ -6,14 +6,14 @@ import {showLoading, hideLoading} from 'react-redux-loading-bar'
 
 export const ACTION_TYPES = {
   GET_GATEWAY: 'setting/device/GET_GATEWAY',
-  GET_SENSOR: 'setting/device/GET_SENSOR'
+  GET_SENSOR: 'setting/device/GET_SENSOR',
 };
 
 const initialState = {
   errorMessage: null,
   loading: false,
   gateways: [],
-  sensors: []
+  sensors: [],
 };
 
 export type SettingDeviceState = Readonly<typeof initialState>;
@@ -55,7 +55,7 @@ export default (state: SettingDeviceState = initialState, action): SettingDevice
 export const getGateway = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_GATEWAY,
-    payload: axios.post("api/setting/device/gateway/search", request)
+    payload: axios.get("/api/devices")
   });
 };
 
