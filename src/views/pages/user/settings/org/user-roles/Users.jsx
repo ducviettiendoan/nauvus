@@ -15,7 +15,7 @@ import DotIcon from "components/Icons/DotIcon";
 import EditIcon from "components/Icons/EditIcon";
 import avatar from "assets/img/faces/avatar.jpg";
 import ChipSelect from 'components/Chip/ChipSelect';
-import { getUserRoles } from "reducers/setting-org";
+import { getUserRoles, postUserRoles} from "reducers/setting-org";
 import DiaLog from "components/CustomDialog/Dialog";
 import GridContainer from "components/Grid/GridContainer";
 import GridItem from "components/Grid/GridItem";
@@ -23,6 +23,7 @@ import OrganizationUpload from "components/CustomUpload/OrganizationUpload";
 
 import { connect } from 'react-redux';
 import InviteUserForm from "./InviteUserForm";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   selected: {
@@ -124,24 +125,86 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function Users(props) {
+function Users(props) {
 
   const classes = useStyles();
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
   React.useEffect(() => {
+    axios.post('/api/users', {
+    firstName: 'First name',
+    lastName: 'Last name'
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
     props.getUserRoles();
   }, []);
 
-  const columns = [
+  // const columns = [
+  //   {
+  //     title: 'User',
+  //     key: 'user',
+  //     onHeaderCell: { className: classes.onHeaderCell },
+  //     render: user => (
+  //       <div className={classes.alignItemsCenter}>
+  //         <div><img src={avatar} alt="user-avatar" className={classes.avatarImage} /></div>
+  //         <div className={classes.textName}>{user}</div>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     title: 'E-Mail',
+  //     key: 'email',
+  //     onHeaderCell: { className: classes.onHeaderCell },
+  //     render: email => <div className={classes.textEmail}>{email}</div>
+  //   },
+  //   {
+  //     title: 'Roles',
+  //     key: 'roles',
+  //     onHeaderCell: { className: classes.onHeaderCell },
+  //     render: roles => (
+  //       <div className={classes.alignItemsCenter}>
+  //         <div><DotIcon className={classes.dotIcon} /></div>
+  //         <div className={classes.textRoles}>{roles}</div>
+  //       </div>
+  //     )
+  //   },
+  //   {
+  //     title: 'Access',
+  //     key: 'access',
+  //     onHeaderCell: { className: classes.onHeaderCell },
+  //     render: access => <div className={classes.textAccess}>{access}</div>
+  //   },
+  //   {
+  //     title: 'Actions',
+  //     key: 'action',
+  //     onHeaderCell: { className: classes.onHeaderCell },
+  //     render: () => (
+  //       <div className={classes.actionButton}>
+  //         <Button justIcon color="twitter" simple>
+  //           <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
+  //         </Button>
+  //         <Button justIcon color="google" simple>
+  //           <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px' }} />
+  //         </Button>
+  //       </div>
+  //     )
+  //   }
+  // ];
+
+    const columns = [
     {
-      title: 'User',
-      key: 'user',
+      title: 'Created At',
+      key: 'created_at',
       onHeaderCell: { className: classes.onHeaderCell },
-      render: user => (
+      render: created_at => (
         <div className={classes.alignItemsCenter}>
           <div><img src={avatar} alt="user-avatar" className={classes.avatarImage} /></div>
-          <div className={classes.textName}>{user}</div>
+          <div className={classes.textName}>{created_at}</div>
         </div>
       ),
     },
@@ -152,34 +215,29 @@ export function Users(props) {
       render: email => <div className={classes.textEmail}>{email}</div>
     },
     {
-      title: 'Roles',
-      key: 'roles',
+      title: 'ID',
+      key: 'id',
       onHeaderCell: { className: classes.onHeaderCell },
-      render: roles => (
+      render: id => (
         <div className={classes.alignItemsCenter}>
           <div><DotIcon className={classes.dotIcon} /></div>
-          <div className={classes.textRoles}>{roles}</div>
+          <div className={classes.textRoles}>{id}</div>
         </div>
       )
     },
     {
-      title: 'Access',
-      key: 'access',
+      title: 'Status',
+      key: 'status',
       onHeaderCell: { className: classes.onHeaderCell },
-      render: access => <div className={classes.textAccess}>{access}</div>
+      render: status => <div className={classes.textAccess}>{status}</div>
     },
     {
-      title: 'Actions',
-      key: 'action',
+      title: 'User Name',
+      key: 'username',
       onHeaderCell: { className: classes.onHeaderCell },
-      render: () => (
-        <div className={classes.actionButton}>
-          <Button justIcon color="twitter" simple>
-            <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
-          </Button>
-          <Button justIcon color="google" simple>
-            <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px' }} />
-          </Button>
+      render: (username) => (
+        <div>
+        <div className={classes.textEmail}>{username}</div>
         </div>
       )
     }

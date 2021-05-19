@@ -94,10 +94,10 @@ export default (
       };
     }
 
-    case ACTION_TYPES.GET_ROLES: {
+    case SUCCESS(ACTION_TYPES.GET_ROLES): {
       return {
         ...state,
-        roles: action.payload,
+        roles: action.payload.data,
       };
     }
     case ACTION_TYPES.GET_PENDING_INVITATION: {
@@ -168,7 +168,14 @@ export default (
 export const getUserRoles = (request) => async (dispatch) => {
   dispatch({
     type: ACTION_TYPES.GET_USER_ROLES,
-    payload: axios.post(`/api/setting/org/user-roles/search`, request),
+    payload: axios.get("/api/users"),
+  });
+};
+
+export const getRoles = (request) => async (dispatch) => {
+  dispatch({
+    type: ACTION_TYPES.GET_ROLES,
+    payload: axios.get("/api/roles"),
   });
 };
 
