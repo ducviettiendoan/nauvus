@@ -149,12 +149,14 @@ export function Gateway(props) {
     props.getGateway();
   }, []);
 
+  // console.log(props.data)
+
   const columns = [
     {
       title: 'Gateway Serial',
-      key: 'gatewaySerial',
+      key: 'serialnumber',
       onHeaderCell: {className: classes.onHeaderCell},
-      render: gatewaySerial => <div className={classes.textName}>{gatewaySerial}</div>
+      render: serialnumber => <div className={classes.textName}>{serialnumber}</div>
     },
     {
       title: 'Gateway',
@@ -164,15 +166,15 @@ export function Gateway(props) {
     },
     {
       title: 'Name',
-      key: 'name',
+      key: 'status',
       onHeaderCell: {className: classes.onHeaderCell},
-      render: name => <div className={classes.textEmail}>{name}</div>
+      render: status => <div className={classes.textEmail}>{status}</div>
     },
     {
       title: 'Data Used (This Month)',
-      key: 'dataUsed',
+      key: 'data_used',
       onHeaderCell: {className: classes.onHeaderCell},
-      render: dataUsed => <div className={classes.textEmail}>{dataUsed}</div>
+      render: data_used => <div className={classes.textEmail}>{data_used}</div>
     },
     {
       title: 'Connectivity',
@@ -193,9 +195,9 @@ export function Gateway(props) {
     },
     {
       title: 'Power State',
-      key: 'powerState',
+      key: 'power_state',
       onHeaderCell: {className: classes.onHeaderCell},
-      render: powerState => <div className={classes.textEmail}>{powerState}</div>
+      render: power_state => <div className={classes.textEmail}>{power_state}</div>
     },
     {
       title: 'Actions',
@@ -252,7 +254,7 @@ export function Gateway(props) {
           onChange: onSelectChange,
         }}
         pagination={{
-          total: props.total,
+          total: 64,
           current: props.page,
           pageSize: props.pageSize,
           onChange: onPageChange,
@@ -304,8 +306,8 @@ const mapStateToProps = ({settingDevice}) => {
   return {
     data: settingDevice.gateways.data,
     page: settingDevice.gateways.page,
-    total: settingDevice.gateways.total,
-    pageSize: settingDevice.gateways.pageSize
+    // total: settingDevice.gateways.total,
+    // pageSize: settingDevice.gateways.per_page
   };
 };
 
