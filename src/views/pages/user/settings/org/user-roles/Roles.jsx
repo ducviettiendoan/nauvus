@@ -10,7 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import Table from "components/Table/TableV1";
 import EditIcon from "components/Icons/EditIcon";
 
-import { getUserRoles } from "reducers/setting-org";
+import { getRoles } from "reducers/setting-org";
 import { connect } from 'react-redux';
 import { IRootState } from "reducers";
 
@@ -123,12 +123,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export function Roles(props) {
+function Roles(props) {
   const classes = useStyles();
 
   React.useEffect(() => {
     // Get list data
-    props.getUserRoles();
+    props.getRoles();
   }, []);
 
   const [chipData, setChipData] = React.useState([
@@ -144,26 +144,60 @@ export function Roles(props) {
     setChipData([])
   }
 
+  // const columns = [
+  //   {
+  //     title: 'Roles',
+  //     key: 'roles',
+  //     onHeaderCell: { className: classes.onHeaderCell },
+  //     render: role => (
+  //       <div className={classes.alignItemsCenter}>
+  //         <div className={classes.textName}>{role}</div>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     title: 'Permission',
+  //     key: 'permissions',
+  //     onHeaderCell: { className: classes.onHeaderCell },
+  //     render: permission => <div className={classes.textEmail}>{permission}</div>
+  //   },
+  //   {
+  //     title: 'Actions',
+  //     key: 'action',
+  //     onHeaderCell: { className: classes.onHeaderCell },
+  //     render: () => (
+  //       <div className={classes.actionButton}>
+  //         <Button justIcon color="twitter" simple>
+  //           <EditIcon className={classes.iconButton} style={{ color: "#ffffff", width: '22px', height: '22px' }} />
+  //         </Button>
+  //         <Button justIcon color="google" simple>
+  //           <DeleteIcon className={classes.iconButton} style={{ color: "#C4C4C4", width: '24px', height: '24px' }} />
+  //         </Button>
+  //       </div>
+  //     )
+  //   }
+  // ]
+
   const columns = [
     {
       title: 'Roles',
-      key: 'roles',
+      key: 'name',
       onHeaderCell: { className: classes.onHeaderCell },
-      render: role => (
+      render: name => (
         <div className={classes.alignItemsCenter}>
-          <div className={classes.textName}>{role}</div>
+          <div className={classes.textName}>{name}</div>
         </div>
       ),
     },
     {
       title: 'Permission',
-      key: 'permissions',
+      key: 'description',
       onHeaderCell: { className: classes.onHeaderCell },
-      render: permission => <div className={classes.textEmail}>{permission}</div>
+      render: description => <div className={classes.textEmail}>{description}</div>
     },
     {
       title: 'Actions',
-      key: 'action',
+      key: 'id',
       onHeaderCell: { className: classes.onHeaderCell },
       render: () => (
         <div className={classes.actionButton}>
@@ -186,6 +220,7 @@ export function Roles(props) {
     props.getUserRoles({ page, pageSize });
   }
 
+  console.log(props.data);
   return (
     <div>
       <Table
@@ -236,15 +271,15 @@ export function Roles(props) {
 
 const mapStateToProps = ({ settingOrg }) => {
   return {
-    data: settingOrg.userRoles.data,
-    page: settingOrg.userRoles.page,
-    total: settingOrg.userRoles.total,
-    pageSize: settingOrg.userRoles.pageSize
+    data: settingOrg.roles.data,
+    page: settingOrg.roles.page,
+    total: settingOrg.roles.total,
+    pageSize: settingOrg.roles.pageSize
   };
 };
 
 const mapDispatchToProps = {
-  getUserRoles
+  getRoles
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Roles);
