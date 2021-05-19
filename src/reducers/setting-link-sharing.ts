@@ -100,7 +100,7 @@ export default (state: SettingLinkSharingState = initialState, action): SettingL
 export const getAlertContact = (request) => async dispatch => {
   dispatch({
     type: ACTION_TYPES.GET_ALERT_CONTACT,
-    payload: axios.post(`/api/setting/link-sharing/alert-contact`, request),
+    payload: axios.get("/api/alert-contacts"),
   });
 };
 
