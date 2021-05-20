@@ -26,8 +26,9 @@ import OrganizationUpload from "components/CustomUpload/OrganizationUpload";
 import InputLabel from "@material-ui/core/InputLabel";
 import {Field, Form} from "react-final-form";
 import {TextField} from "final-form-material-ui";
-import {getAlertContact} from "reducers/setting-link-sharing";
+import {getAlertContact, addAlertContact, deleteAlertContact, updateAlertContact} from "reducers/setting-link-sharing";
 import Table from "components/Table/TableV1";
+import { id } from "date-fns/locale";
 
 const styles = {
   liveSharingHeader: {
@@ -150,13 +151,28 @@ export function AlertContacts(props) {
   const [openMore, setOpenMore] = React.useState(false);
   const [openUpload, setOpenUpload] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [fname, setFname] = React.useState('')
+  const [lname, setLname] = React.useState('')
+  const [phone, setPhone] = React.useState('')
+  const [email, setEmail] = React.useState('')
+  const [update, setUpdate] = React.useState(false)
+  const [contactId, setContactId] = React.useState('')
 
   const validate = (values) => {
+    console.log(values)
+    if (update == true) {
+      if (fname != '') values.fname = fname
+      if (lname != '') values.lname = lname
+      if (phone != '') values.phone = phone
+      if (email != '') values.email = email
+    }
+    
     const errors = {};
     if (!values.fname) errors.fname = 'First name must not be empty!';
     if (!values.lname) errors.lname = 'Last name must not be empty!';
     if (!values.phone) errors.phone = 'Phone must not be empty!';
     if (!values.email) errors.email = 'Email must not be empty!';
+    console.log(errors)
     return errors;
   };
   const handleCloseMore = () => setOpenMore(false)
@@ -166,13 +182,49 @@ export function AlertContacts(props) {
   }
 
   const onSubmit = async (values) => {
+    if(contactId == '') {
+      let email = values.email
+      let fullName = values.fname + ' ' + values.lname
+      let phone = values.phone
+      let request = {
+        email: email,
+        name: fullName,
+        phone: phone
+      }
+      props.addAlertContact(request)
+    } else {
+      let email = values.email
+      let fullName = values.fname + ' ' + values.lname
+      let phone = values.phone
+      let request = {
+        email: email,
+        id: contactId,
+        name: fullName,
+        phone: phone
+      }
+      props.updateAlertContact(request)
+      setFname('')
+      setLname('')
+      setEmail('')
+      setPhone('')
+      setContactId('')
+    }
+    
+    setOpen(false)
     console.log(values);
+    props.getAlertContact()
   }
 
   const handleClose = () => {
     setOpen(false)
     setOpenMore(false)
     setOpenUpload(false)
+    setFname('')
+    setLname('')
+    setEmail('')
+    setPhone('')
+    setContactId('')
+    setUpdate(false)
   }
   React.useEffect(() => {
     // Get list data
@@ -187,6 +239,11 @@ export function AlertContacts(props) {
   const onPageChange = (page, pageSize) => {
     console.log(page, pageSize)
     props.getAlertContact({page, pageSize});
+  }
+
+  const deleteContact = (contact) => {
+    props.deleteAlertContact(contact.id)
+    props.getAlertContact()
   }
 
   const columns = [
@@ -216,12 +273,24 @@ export function AlertContacts(props) {
       title: 'Actions',
       key: 'action',
       onHeaderCell: {className: classes.onHeaderCell},
-      render: () => (
+      render: (key, cell) => (
         <div className={classes.actionButton}>
-          <Button justIcon color="twitter" simple>
+          <Button justIcon color="twitter" simple onClick={() => {
+            console.log('hhh', props)
+            setOpen(true)
+            let fullName = cell.name.split(' ')
+            setFname(fullName[0])
+            if(fullName.length > 0) {
+              setLname(fullName[1])
+            }
+            setEmail(cell.email)
+            setContactId(cell.id)
+            setPhone(cell.phone)
+            setUpdate(true)
+          }}>
             <EditIcon className={classes.iconButton} style={{color: "#ffffff", width: '22px', height: '22px'}}/>
           </Button>
-          <Button justIcon color="google" simple>
+          <Button justIcon color="google" simple onClick={() => deleteContact(cell)}>
             <DeleteIcon className={classes.iconButton} style={{color: "#C4C4C4", width: '24px', height: '24px'}}/>
           </Button>
         </div>
@@ -264,6 +333,7 @@ export function AlertContacts(props) {
                                 <Field
                                   fullWidth
                                   required
+                                  defaultValue={fname}
                                   name="fname"
                                   type="text"
                                   component={TextField}
@@ -275,7 +345,9 @@ export function AlertContacts(props) {
                                   fullWidth
                                   required
                                   name="lname"
+                                  defaultValue={lname}
                                   type="text"
+                                  onChange={() => hangdleChangeName()}
                                   component={TextField}
                                 />
                               </GridItem>
@@ -285,6 +357,7 @@ export function AlertContacts(props) {
                                   fullWidth
                                   required
                                   name="phone"
+                                  defaultValue={phone}
                                   type="text"
                                   placeholder="3605550110"
                                   component={TextField}
@@ -296,6 +369,7 @@ export function AlertContacts(props) {
                                   fullWidth
                                   required
                                   name="email"
+                                  defaultValue={email}
                                   type="text"
                                   placeholder="email@example.com"
                                   component={TextField}
@@ -307,7 +381,7 @@ export function AlertContacts(props) {
                                 type="button"
                                 round
                                 className="btn-round-active-2 mr-2"
-                                onClick={props.handleClose}
+                                onClick={handleClose}
                               > Cancel</Button>
                               <Button
                                 round
@@ -370,7 +444,7 @@ export function AlertContacts(props) {
                 renderTitle={
                   <GridContainer justify="space-between" className={classes.gridTitle}>
                     <GridItem className={classes.liveSharingTitle}>
-                      22 contacts
+                      {props.data?.length} contacts
                     </GridItem>
                     <GridItem className={classes.liveSharingButton}>
                       <ToolboxButton placeholder={"Search contacts"}/>
@@ -441,7 +515,10 @@ const mapStateToProps = ({settingLinkSharing}) => {
 };
 
 const mapDispatchToProps = {
-  getAlertContact
+  getAlertContact,
+  addAlertContact,
+  deleteAlertContact,
+  updateAlertContact
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AlertContacts);
